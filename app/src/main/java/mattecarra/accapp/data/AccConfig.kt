@@ -1,6 +1,7 @@
 package mattecarra.accapp.data
 
 import mattecarra.accapp.AccUtils
+import org.jetbrains.anko.doAsync
 
 class Cooldown(charge: Int, pause: Int) {
     var charge: Int = charge
@@ -16,7 +17,11 @@ class Cooldown(charge: Int, pause: Int) {
         }
 
     private fun updateAcc() {
-        AccUtils.updateCoolDown(charge, pause)
+        doAsync {
+            synchronized(this@Cooldown) {
+                AccUtils.updateCoolDown(charge, pause)
+            }
+        }
     }
 }
 
@@ -46,7 +51,11 @@ class Capacity(shutdownCapacity: Int, coolDownCapacity: Int, resumeCapacity: Int
         }
 
     private fun updateAcc() {
-        AccUtils.updateCapacity(shutdownCapacity, coolDownCapacity, resumeCapacity, pauseCapacity)
+        doAsync {
+            synchronized(this@Capacity) {
+                AccUtils.updateCapacity(shutdownCapacity, coolDownCapacity, resumeCapacity, pauseCapacity)
+            }
+        }
     }
 }
 
@@ -70,7 +79,11 @@ class Temp(coolDownTemp: Int, pauseChargingTemp: Int, waitSeconds: Int) {
         }
 
     private fun updateAcc() {
-        AccUtils.updateTemp(coolDownTemp, pauseChargingTemp, waitSeconds)
+        doAsync {
+            synchronized(this@Temp) {
+                AccUtils.updateTemp(coolDownTemp, pauseChargingTemp, waitSeconds)
+            }
+        }
     }
 }
 
@@ -83,6 +96,10 @@ class AccConfig(
     var resetUnplugged: Boolean = resetUnplugged
         set(value) {
             field = value
-            AccUtils.updateResetUnplugged(value)
+            doAsync {
+                synchronized(this@AccConfig) {
+                    AccUtils.updateResetUnplugged(value)
+                }
+            }
         }
 }

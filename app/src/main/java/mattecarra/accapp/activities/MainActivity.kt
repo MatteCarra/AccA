@@ -22,9 +22,12 @@ import mattecarra.accapp.data.Cooldown
 import mattecarra.accapp.data.Temp
 import java.lang.Exception
 import android.os.Handler
+import android.view.MotionEvent
+import android.view.View
 
 
 class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, CompoundButton.OnCheckedChangeListener {
+
     private val PERMISSION_REQUEST: Int = 0
     private lateinit var config: AccConfig
     private val handler = Handler()
