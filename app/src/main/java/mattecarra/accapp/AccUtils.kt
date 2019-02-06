@@ -124,11 +124,6 @@ object AccUtils {
         return Shell.su("acc -R").exec().isSuccess
     }
 
-    fun isBatteryCharging(): Boolean {
-        return Shell.su("acc -i").exec().out.find { it.matches(Regex("STATUS=(Charging|Discharging)")) } == "STATUS=Charging"
-    }
-
-
     private val STATUS_REGEXP = "^\\s*STATUS=(Charging|Discharging)".toRegex(RegexOption.MULTILINE)
     private val HEALTH_REGEXP = "^\\s*HEALTH=([a-zA-Z]+)".toRegex(RegexOption.MULTILINE)
     private val CURRENT_NOW_REGEXP = "^\\s*CURRENT_NOW=(\\d+)".toRegex(RegexOption.MULTILINE)
@@ -146,6 +141,10 @@ object AccUtils {
             TEMP_REGEXP.find(info)?.destructured?.component1()?.toIntOrNull()?.let { it/10 } ?: -1
         )
 
+    }
+
+    fun isBatteryCharging(): Boolean {
+        return Shell.su("acc -i").exec().out.find { it.matches(STATUS_REGEXP) } == "STATUS=Charging"
     }
 
     fun isAccdRunning(): Boolean {
