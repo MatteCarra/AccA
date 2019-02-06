@@ -92,14 +92,24 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
 
         when(picker.id) {
             //capacity
-            R.id.shutdown_capacity_picker ->
+            R.id.shutdown_capacity_picker -> {
                 config.capacity.shutdownCapacity = newVal
 
-            R.id.resume_capacity_picker ->
+                resume_capacity_picker.minValue = config.capacity.shutdownCapacity
+                cooldown_percentage_picker.minValue = config.capacity.shutdownCapacity
+            }
+
+            R.id.resume_capacity_picker -> {
                 config.capacity.resumeCapacity = newVal
 
-            R.id.pause_capacity_picker ->
+                pause_capacity_picker.minValue = config.capacity.resumeCapacity + 1
+            }
+
+            R.id.pause_capacity_picker -> {
                 config.capacity.pauseCapacity = newVal
+
+                resume_capacity_picker.maxValue = config.capacity.pauseCapacity - 1
+            }
 
             //temp
             R.id.cooldown_temp_picker ->
@@ -195,7 +205,7 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
         resume_capacity_picker.value = config.capacity.resumeCapacity
         resume_capacity_picker.setOnValueChangedListener(this)
 
-        pause_capacity_picker.minValue = config.capacity.resumeCapacity
+        pause_capacity_picker.minValue = config.capacity.resumeCapacity + 1
         pause_capacity_picker.maxValue = 100
         pause_capacity_picker.value = config.capacity.pauseCapacity
         pause_capacity_picker.setOnValueChangedListener(this)
