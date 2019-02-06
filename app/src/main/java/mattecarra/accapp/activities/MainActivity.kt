@@ -33,17 +33,16 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
     private val handler = Handler()
     private val updateUIRunnable = object : Runnable {
         override fun run() {
-            val r = this //need to make this recursive
+            val r = this //need this to make it recursive
             doAsync {
                 val batteryInfo = AccUtils.getBatteryInfo()
                 uiThread {
                     status.text = batteryInfo.status
                     battery_info.text = getString(R.string.battery_info, batteryInfo.health, batteryInfo.temp, batteryInfo.current / 1000, batteryInfo.voltage / 1000000f)
 
-                    handler.postDelayed(r, 1000)// Repeat this the same runnable code block again another 1 seconds
+                    handler.postDelayed(r, 1000)// Repeat the same runnable code block again after 1 seconds
                 }
             }
-
         }
     }
 
@@ -79,7 +78,6 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
                 } else {
                     cooldown_percentage_picker.value = 101
                     config.capacity.coolDownCapacity = 101
-
                 }
             }
 
@@ -138,6 +136,7 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
                 }
                 config.cooldown?.pause = newVal
             }
+
             else -> {}
         }
     }
