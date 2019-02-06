@@ -14,7 +14,7 @@
     <string name="reset_unplugged">Reset battery stats when unplugged</string>
     <string name="reset_stats">Reset stats</string>
     <string name="enable_cooldown">Enable cool down:</string>
-    <string name="cooldown_capacity">Start cooling down at:</string>
+    <string name="cooldown_capacity">Start cooling down at %:</string>
     <string name="resume_charge">Resume charging at:</string>
     <string name="stop_charge">Stop charging at:</string>
     <string name="enable_temp_check">Temperature check (°C)</string>

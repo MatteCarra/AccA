@@ -115,12 +115,19 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
             R.id.cooldown_percentage_picker ->
                 config.capacity.coolDownCapacity = newVal
 
-            R.id.charge_ratio_picker ->
-                config.cooldown?.charge = newVal //config.cooldown can't be null here. If it's null it's disabled
+            R.id.charge_ratio_picker -> {
+                if(config.cooldown == null) {
+                    config.cooldown = Cooldown(newVal, 10)
+                }
+                config.cooldown?.charge = newVal
+            }
 
-            R.id.pause_ratio_picker ->
-                config.cooldown?.pause = newVal //config.cooldown can't be null here. If it's null it's disabled
-
+            R.id.pause_ratio_picker -> {
+                if(config.cooldown == null) {
+                    config.cooldown = Cooldown(50, newVal)
+                }
+                config.cooldown?.pause = newVal
+            }
             else -> {}
         }
     }

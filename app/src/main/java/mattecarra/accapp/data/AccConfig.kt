@@ -89,7 +89,7 @@ class Temp(coolDownTemp: Int, pauseChargingTemp: Int, waitSeconds: Int) {
 
 class AccConfig(
     val capacity: Capacity,
-    val cooldown: Cooldown?,
+    var cooldown: Cooldown?,
     val temp: Temp,
     resetUnplugged: Boolean) {
 
