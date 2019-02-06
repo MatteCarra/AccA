@@ -20,24 +20,34 @@ import mattecarra.accapp.data.AccConfig
 import mattecarra.accapp.data.Capacity
 import mattecarra.accapp.data.Cooldown
 import mattecarra.accapp.data.Temp
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 
 class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, CompoundButton.OnCheckedChangeListener {
-
     private val PERMISSION_REQUEST: Int = 0
+
     private lateinit var config: AccConfig
+
+    //Used to update battery info every second
     private val handler = Handler()
     private val updateUIRunnable = object : Runnable {
         override fun run() {
-            val batteryInfo = AccUtils.getBatteryInfo()
-            status.text = batteryInfo.status
-            battery_info.text = getString(R.string.battery_info, batteryInfo.health, batteryInfo.temp, batteryInfo.current / 1000, batteryInfo.voltage / 1000000f)
+            val r = this //need to make this recursive
+            doAsync {
+                val batteryInfo = AccUtils.getBatteryInfo()
+                uiThread {
+                    status.text = batteryInfo.status
+                    battery_info.text = getString(R.string.battery_info, batteryInfo.health, batteryInfo.temp, batteryInfo.current / 1000, batteryInfo.voltage / 1000000f)
 
-            handler.postDelayed(this, 1000)// Repeat this the same runnable code block again another 1 seconds
+                    handler.postDelayed(r, 1000)// Repeat this the same runnable code block again another 1 seconds
+                }
+            }
+
         }
     }
 
-
+    //Listener to enable/disable temp control and cool down
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
         if(buttonView == null) return
         when(buttonView.id) {
@@ -65,10 +75,11 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
 
                 if(isChecked) {
                     cooldown_percentage_picker.value = 60
-
                     config.capacity.coolDownCapacity = 60
                 } else {
-                    config.temp.coolDownTemp = 101
+                    cooldown_percentage_picker.value = 101
+                    config.capacity.coolDownCapacity = 101
+
                 }
             }
 
@@ -207,7 +218,7 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
         pause_seconds_picker.setOnValueChangedListener(this)
 
         //cooldown
-        if(config.cooldown == null) {
+        if(config.cooldown == null || config.capacity.coolDownCapacity > 100) {
             cooldown_switch.isChecked = false
             cooldown_percentage_picker.isEnabled = false
             charge_ratio_picker.isEnabled = false

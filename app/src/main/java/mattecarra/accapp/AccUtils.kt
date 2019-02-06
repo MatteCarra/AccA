@@ -140,7 +140,6 @@ object AccUtils {
             VOLTAGE_NOW_REGEXP.find(info)?.destructured?.component1()?.toIntOrNull() ?: -1,
             TEMP_REGEXP.find(info)?.destructured?.component1()?.toIntOrNull()?.let { it/10 } ?: -1
         )
-
     }
 
     fun isBatteryCharging(): Boolean {

@@ -365,7 +365,7 @@
                                 android:layout_weight="1"
                                 android:textSize="14sp"
                                 android:textColor="@color/black"
-                                android:text="@string/cooldown_temp"/>
+                                android:text="@string/cooldown_capacity"/>
 
                         <TextView
                                 android:id="@+id/charge_ratio"
