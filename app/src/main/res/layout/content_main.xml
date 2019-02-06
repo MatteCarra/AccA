@@ -19,26 +19,27 @@
                 android:orientation="vertical">
 
             <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="@dimen/card_margin"
-                                                android:layout_marginLeft="@dimen/card_margin"
-                                                android:layout_marginRight="@dimen/card_margin"
-                                                android:foreground="?selectableItemBackground"
-                                                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                                                card_view:cardElevation="3dp"
-                                                card_view:contentPadding="@dimen/card_content_padding">
+                                               xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                               android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               android:layout_marginTop="@dimen/card_margin"
+                                               android:layout_marginLeft="@dimen/card_margin"
+                                               android:layout_marginRight="@dimen/card_margin"
+                                               android:foreground="?selectableItemBackground"
+                                               card_view:cardCornerRadius="@dimen/card_corner_radius"
+                                               card_view:cardElevation="3dp"
+                                               card_view:contentPadding="@dimen/card_content_padding">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                     <TextView
+                            android:id="@+id/deamon_start_stop_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
-                            android:text="@string/acc_deamon_enable"
+                            android:text="@string/acc_deamon_status_running"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -67,63 +68,68 @@
                                                card_view:cardElevation="3dp"
                                                card_view:contentPadding="@dimen/card_content_padding">
 
-                <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:orientation="vertical">
 
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/status_label"
-                            android:text="@string/status_label"
-                            android:textSize="16sp"
-                            android:layout_marginRight="5dp"
-                            android:layout_marginEnd="5dp"
-                            android:textColor="@color/black"/>
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="horizontal">
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/status_label"
+                                android:text="@string/status_label"
+                                android:textSize="16sp"
 
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/status"
-                            android:textSize="16sp"
-                            android:layout_toRightOf="@+id/status_label"
-                            android:layout_toEndOf="@+id/status_label"/>
+                                android:layout_marginRight="5dp"
+                                android:layout_marginEnd="5dp"
+                                android:textColor="@color/black"/>
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/status"
+                                android:textSize="16sp"/>
+                    </LinearLayout>
 
 
-                    <TextView
-                            android:id="@+id/battery_info_label"
-                            android:text="@string/battery_info_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/status"
-                            android:textSize="16sp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginRight="5dp"
-                            android:layout_marginEnd="5dp"
-                            android:textColor="@color/black"/>
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="horizontal"
+                                  android:layout_marginTop="8dp">
 
-                    <TextView
-                            android:id="@+id/battery_info"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:layout_toRightOf="@+id/battery_info_label"
-                            android:layout_toEndOf="@+id/battery_info_label"/>
+                        <TextView
+                                android:id="@+id/battery_info_label"
+                                android:text="@string/battery_info_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginEnd="5dp"
+                                android:textColor="@color/black"/>
 
-                </RelativeLayout>
+                        <TextView
+                                android:id="@+id/battery_info"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"/>
+                    </LinearLayout>
+
+                </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="@dimen/card_margin"
-                                                android:layout_marginLeft="@dimen/card_margin"
-                                                android:layout_marginRight="@dimen/card_margin"
-                                                android:foreground="?selectableItemBackground"
-                                                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                                                card_view:cardElevation="3dp"
-                                                card_view:contentPadding="@dimen/card_content_padding">
+                                               xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                               android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               android:layout_marginTop="@dimen/card_margin"
+                                               android:layout_marginLeft="@dimen/card_margin"
+                                               android:layout_marginRight="@dimen/card_margin"
+                                               android:foreground="?selectableItemBackground"
+                                               card_view:cardCornerRadius="@dimen/card_corner_radius"
+                                               card_view:cardElevation="3dp"
+                                               card_view:contentPadding="@dimen/card_content_padding">
 
                 <RelativeLayout
                         android:layout_width="match_parent"
@@ -421,17 +427,17 @@
 
             <!-- Bottom most card - include android:layout_marginBottom for proper looks -->
             <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="@dimen/card_margin"
-                                                android:layout_marginLeft="@dimen/card_margin"
-                                                android:layout_marginRight="@dimen/card_margin"
-                                                android:layout_marginBottom="@dimen/card_bottom_margin"
-                                                android:foreground="?selectableItemBackground"
-                                                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                                                card_view:cardElevation="3dp"
-                                                card_view:contentPadding="@dimen/card_content_padding">
+                                               xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                               android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               android:layout_marginTop="@dimen/card_margin"
+                                               android:layout_marginLeft="@dimen/card_margin"
+                                               android:layout_marginRight="@dimen/card_margin"
+                                               android:layout_marginBottom="@dimen/card_bottom_margin"
+                                               android:foreground="?selectableItemBackground"
+                                               card_view:cardCornerRadius="@dimen/card_corner_radius"
+                                               card_view:cardElevation="3dp"
+                                               card_view:contentPadding="@dimen/card_content_padding">
 
                 <RelativeLayout
                         android:layout_width="match_parent"

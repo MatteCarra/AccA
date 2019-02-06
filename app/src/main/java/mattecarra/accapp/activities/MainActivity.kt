@@ -3,6 +3,7 @@ package mattecarra.accapp.activities
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.widget.CompoundButton
 import android.widget.NumberPicker
@@ -20,10 +21,23 @@ import mattecarra.accapp.data.Capacity
 import mattecarra.accapp.data.Cooldown
 import mattecarra.accapp.data.Temp
 import java.lang.Exception
+import android.os.Handler
+
 
 class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, CompoundButton.OnCheckedChangeListener {
     private val PERMISSION_REQUEST: Int = 0
     private lateinit var config: AccConfig
+    private val handler = Handler()
+    private val updateUIRunnable = object : Runnable {
+        override fun run() {
+            val batteryInfo = AccUtils.getBatteryInfo()
+            status.text = batteryInfo.status
+            battery_info.text = getString(R.string.battery_info, batteryInfo.health, batteryInfo.temp, batteryInfo.current / 1000, batteryInfo.voltage / 1000000f)
+
+            handler.postDelayed(this, 1000)// Repeat this the same runnable code block again another 1 seconds
+        }
+    }
+
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
         if(buttonView == null) return
@@ -131,94 +145,91 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
     private fun initUi() {
         try {
             val isDeamonRunning = AccUtils.isAccdRunning()
+            deamon_start_stop_label.text = getString(if(isDeamonRunning) R.string.acc_deamon_status_running else R.string.acc_deamon_status_not_running)
             deamon_start_stop.text = getString(if(isDeamonRunning) R.string.stop else R.string.start)
 
-            status.text = if(AccUtils.isBatteryCharging()) "Charging" else "Discharging"
+            handler.post(updateUIRunnable) // Start the initial runnable task by posting through the handler
 
             reset_stats_on_unplugged_switch.setOnCheckedChangeListener { _, isChecked -> config.resetUnplugged = isChecked }
             reset_battery_stats.setOnClickListener { AccUtils.resetBatteryStats() }
 
             val config = AccUtils.readConfig()
-            if(config != null) {
-                this.config = config
-                //capacity
-                shutdown_capacity_picker.minValue = 0
-                shutdown_capacity_picker.maxValue = 40
-                shutdown_capacity_picker.value = config.capacity.shutdownCapacity
-                shutdown_capacity_picker.setOnValueChangedListener(this)
-
-                resume_capacity_picker.minValue = config.capacity.shutdownCapacity
-                resume_capacity_picker.maxValue = config.capacity.pauseCapacity - 1
-                resume_capacity_picker.value = config.capacity.resumeCapacity
-                resume_capacity_picker.setOnValueChangedListener(this)
-
-                pause_capacity_picker.minValue = config.capacity.resumeCapacity
-                pause_capacity_picker.maxValue = 100
-                pause_capacity_picker.value = config.capacity.pauseCapacity
-                pause_capacity_picker.setOnValueChangedListener(this)
-
-                //temps
-                if(config.temp.coolDownTemp >= 900 && config.temp.pauseChargingTemp >= 950) {
-                    temp_switch.isChecked = false
-                    cooldown_temp_picker.isEnabled = false
-                    pause_temp_picker.isEnabled = false
-                    pause_seconds_picker.isEnabled = false
-                }
-                temp_switch.setOnCheckedChangeListener(this)
-
-                cooldown_temp_picker.minValue = 20
-                cooldown_temp_picker.maxValue = 89
-                cooldown_temp_picker.value = config.temp.coolDownTemp / 10
-                cooldown_temp_picker.setOnValueChangedListener(this)
-
-                pause_temp_picker.minValue = config.temp.coolDownTemp / 10
-                pause_temp_picker.maxValue = 94
-                pause_temp_picker.value = config.temp.pauseChargingTemp / 10
-                pause_temp_picker.setOnValueChangedListener(this)
-
-                pause_seconds_picker.minValue = 10
-                pause_seconds_picker.maxValue = 120
-                pause_seconds_picker.value = config.temp.waitSeconds
-                pause_seconds_picker.setOnValueChangedListener(this)
-
-                //cooldown
-                if(config.cooldown == null) {
-                    cooldown_switch.isChecked = false
-                    cooldown_percentage_picker.isEnabled = false
-                    charge_ratio_picker.isEnabled = false
-                    pause_ratio_picker.isEnabled = false
-                }
-                cooldown_switch.setOnCheckedChangeListener(this)
-
-                cooldown_percentage_picker.minValue = config.capacity.shutdownCapacity
-                cooldown_percentage_picker.maxValue = 101 //if someone wants to disable it should use the switch but I'm gonna leave it there
-                cooldown_percentage_picker.value = config.capacity.coolDownCapacity
-                cooldown_percentage_picker.setOnValueChangedListener(this)
-
-                charge_ratio_picker.minValue = 1
-                charge_ratio_picker.maxValue = 120 //no reason behind this value
-                charge_ratio_picker.value = config.cooldown?.charge ?: 50
-                charge_ratio_picker.setOnValueChangedListener(this)
-
-                pause_ratio_picker.minValue = 1
-                pause_ratio_picker.maxValue = 120 //no reason behind this value
-                pause_ratio_picker.value = config.cooldown?.charge ?: 10
-                pause_ratio_picker.setOnValueChangedListener(this)
-            } else {
+            if(config == null)
                 showConfigReadError()
 
-                //default config
-                this.config = AccConfig(
-                    Capacity(5, 60, 70, 80),
-                    Cooldown(50, 10),
-                    Temp(40, 45, 90),
-                    false
-                )
-            }
+            this.config = config ?: AccConfig(
+                Capacity(5, 60, 70, 80),
+                Cooldown(50, 10),
+                Temp(40, 45, 90),
+                false
+            ) //if config is null I use default config values.
         } catch (ex: Exception) {
             ex.printStackTrace()
             showConfigReadError()
         }
+
+        shutdown_capacity_picker.minValue = 0
+        shutdown_capacity_picker.maxValue = 40
+        shutdown_capacity_picker.value = config.capacity.shutdownCapacity
+        shutdown_capacity_picker.setOnValueChangedListener(this)
+
+        resume_capacity_picker.minValue = config.capacity.shutdownCapacity
+        resume_capacity_picker.maxValue = config.capacity.pauseCapacity - 1
+        resume_capacity_picker.value = config.capacity.resumeCapacity
+        resume_capacity_picker.setOnValueChangedListener(this)
+
+        pause_capacity_picker.minValue = config.capacity.resumeCapacity
+        pause_capacity_picker.maxValue = 100
+        pause_capacity_picker.value = config.capacity.pauseCapacity
+        pause_capacity_picker.setOnValueChangedListener(this)
+
+        //temps
+        if(config.temp.coolDownTemp >= 90 && config.temp.pauseChargingTemp >= 95) {
+            temp_switch.isChecked = false
+            cooldown_temp_picker.isEnabled = false
+            pause_temp_picker.isEnabled = false
+            pause_seconds_picker.isEnabled = false
+        }
+        temp_switch.setOnCheckedChangeListener(this)
+
+        cooldown_temp_picker.minValue = 20
+        cooldown_temp_picker.maxValue = 90
+        cooldown_temp_picker.value = config.temp.coolDownTemp
+        cooldown_temp_picker.setOnValueChangedListener(this)
+
+        pause_temp_picker.minValue = 20
+        pause_temp_picker.maxValue = 95
+        pause_temp_picker.value = config.temp.pauseChargingTemp
+        pause_temp_picker.setOnValueChangedListener(this)
+
+        pause_seconds_picker.minValue = 10
+        pause_seconds_picker.maxValue = 120
+        pause_seconds_picker.value = config.temp.waitSeconds
+        pause_seconds_picker.setOnValueChangedListener(this)
+
+        //cooldown
+        if(config.cooldown == null) {
+            cooldown_switch.isChecked = false
+            cooldown_percentage_picker.isEnabled = false
+            charge_ratio_picker.isEnabled = false
+            pause_ratio_picker.isEnabled = false
+        }
+        cooldown_switch.setOnCheckedChangeListener(this)
+
+        cooldown_percentage_picker.minValue = config.capacity.shutdownCapacity
+        cooldown_percentage_picker.maxValue = 101 //if someone wants to disable it should use the switch but I'm gonna leave it there
+        cooldown_percentage_picker.value = config.capacity.coolDownCapacity
+        cooldown_percentage_picker.setOnValueChangedListener(this)
+
+        charge_ratio_picker.minValue = 1
+        charge_ratio_picker.maxValue = 120 //no reason behind this value
+        charge_ratio_picker.value = config.cooldown?.charge ?: 50
+        charge_ratio_picker.setOnValueChangedListener(this)
+
+        pause_ratio_picker.minValue = 1
+        pause_ratio_picker.maxValue = 120 //no reason behind this value
+        pause_ratio_picker.value = config.cooldown?.pause ?: 10
+        pause_ratio_picker.setOnValueChangedListener(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -254,5 +265,11 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
         }
 
         initUi()
+    }
+
+    override fun onDestroy() {
+        handler.removeCallbacks(updateUIRunnable)
+
+        super.onDestroy()
     }
 }

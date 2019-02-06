@@ -20,19 +20,24 @@ class AccTileService: TileService(){
         super.onClick()
 
         val accdRunning = isAccdRunning()
+
         _updateTile(!accdRunning)
 
         //This will give the user the feeling that his actions are handled immediately. I hope no one will spam on the button.
         //otherwise this enable/disable cycle will take forever
         //I've considered to disable the tile while it's updating but it doesn't look great and google is not doing either with wifi.
         synchronized(this) {
-            val res =
                 if (accdRunning) {
-                    accStopDeamon() //this one takes a bit, so I moved _updateTile before that
+                    val tile = qsTile
+                    tile.label = "Please wait" //stop deamon a bit, so I moved _updateTile before that
+                    tile.updateTile()
+
+                    accStopDeamon()
+
+                    tile.label = getString(R.string.tile_acc_disabled)
+                    tile.updateTile()
                 } else
                     accStartDeamon()
-
-            Log.d(LOG_TAG, "onClick result $res. Setting accdRunning=$accdRunning")
         }
     }
 
