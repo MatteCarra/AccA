@@ -110,7 +110,7 @@ object AccUtils {
     }
 
     fun updateCapacity(shutdown: Int, coolDown: Int, resume: Int, pause: Int): Boolean {
-        return Shell.su("acc -s coolDown ${shutdown},${coolDown},${resume}-${pause}").exec().isSuccess
+        return Shell.su("acc -s capacity ${shutdown},${coolDown},${resume}-${pause}").exec().isSuccess
     }
 
     fun updateResetUnplugged(resetUnplugged: Boolean): Boolean {
