@@ -3,7 +3,7 @@ package mattecarra.accapp.activities
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
 import android.view.KeyEvent
 import android.widget.CompoundButton
 import android.widget.NumberPicker
@@ -20,10 +20,6 @@ import mattecarra.accapp.data.AccConfig
 import mattecarra.accapp.data.Capacity
 import mattecarra.accapp.data.Cooldown
 import mattecarra.accapp.data.Temp
-import java.lang.Exception
-import android.os.Handler
-import android.view.MotionEvent
-import android.view.View
 
 
 class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, CompoundButton.OnCheckedChangeListener {
