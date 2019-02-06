@@ -29,7 +29,7 @@ class AccTileService: TileService(){
         synchronized(this) {
                 if (accdRunning) {
                     val tile = qsTile
-                    tile.label = "Please wait" //stop deamon a bit, so I moved _updateTile before that
+                    tile.label = getString(R.string.wait) //stop deamon a bit, so I moved _updateTile before that
                     tile.updateTile()
 
                     accStopDeamon()

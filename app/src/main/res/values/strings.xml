@@ -29,4 +29,5 @@
         installed ACC and that your error does not contain errors. You will still be able to edit the settings.
     </string>
     <string name="battery_info">Health=%1$s, Battery temp=%2$d°C\nCurrent=%3$dmA, Voltage=%4$.2fV</string>
+    <string name="wait">Please wait</string>
 </resources>
