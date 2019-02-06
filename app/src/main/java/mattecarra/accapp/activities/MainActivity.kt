@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.KeyEvent
 import android.widget.CompoundButton
 import android.widget.NumberPicker
@@ -190,6 +191,8 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
                 false
             ) //if config is null I use default config values.
         }
+
+        reset_stats_on_unplugged_switch.isChecked = config.resetUnplugged
 
         shutdown_capacity_picker.minValue = 0
         shutdown_capacity_picker.maxValue = 40
