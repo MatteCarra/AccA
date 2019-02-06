@@ -17,28 +17,6 @@ object AccUtils {
     const val RESET_UNPLUGGED_PREFIX = "resetUnplugged="
     const val COOL_DOWN_PREFIX = "coolDown="
 
-    fun updateConfig(config: AccConfig) {
-        val capacity = config.capacity
-        val coolDown = config.cooldown
-        val temp = config.temp
-
-        val oldConfig = readConfigToStringArray()
-        val newConfig = mutableListOf<String>()
-
-        oldConfig.forEach {
-            if(it.startsWith(CAPACITY_PREFIX))
-                newConfig.add("$CAPACITY_PREFIX${capacity.shutdownCapacity},${capacity.coolDownCapacity},${capacity.resumeCapacity}-${capacity.pauseCapacity} # <shutdown,coolDownTemp,resume-pause> -- ideally, <resume> shouldn't be more than 10 units below <pause>. To disable <shutdown>, and <coolDownTemp>, set these to 0 and 101, respectively (e.g., capacity=0,101,70-80). Note that the latter doesn't disable the cooling feature entirely, since it works not only based on battery capacity, but temperature as well.")
-            else if(it.startsWith(TEMP_PREFIX))
-                newConfig.add("$TEMP_PREFIX${temp.coolDownTemp}-${temp.pauseChargingTemp}_${temp.waitSeconds}")
-            else if(it.startsWith(RESET_UNPLUGGED_PREFIX))
-                newConfig.add("$RESET_UNPLUGGED_PREFIX${config.resetUnplugged}")
-            else if(it.startsWith(COOL_DOWN_PREFIX) && coolDown != null)
-                newConfig.add("$COOL_DOWN_PREFIX${coolDown.charge}/${coolDown.pause} # Charge/pause ratio (in seconds) -- reduces battery temperature and voltage induced stress by periodically pausing charging. This can be disabled with a null value or a preceding hashtag. If charging is too slow, turn this off or change the charge/pause ratio. Disabling this nullifies <coolDownTemp capacity> and <lower temperature> values -- leaving only a temperature limit with a cooling timeout.")
-            else
-                newConfig.add(it)
-        }
-    }
-
     fun readConfig(): AccConfig? {
         val config = readConfigToStringArray()
         val numberRegexp = "\\d+".toPattern()
@@ -88,6 +66,31 @@ object AccUtils {
             config.readText(charset = Charsets.UTF_8).split("\n")
         else
             emptyList()
+    }
+
+    //not used. I'm using "acc -s key value" commands instead
+    fun updateConfig(config: AccConfig) {
+        val capacity = config.capacity
+        val coolDown = config.cooldown
+        val temp = config.temp
+
+        val oldConfig = readConfigToStringArray()
+        val newConfig = mutableListOf<String>()
+
+        oldConfig.forEach {
+            if(it.startsWith(CAPACITY_PREFIX))
+                newConfig.add("$CAPACITY_PREFIX${capacity.shutdownCapacity},${capacity.coolDownCapacity},${capacity.resumeCapacity}-${capacity.pauseCapacity} # <shutdown,coolDownTemp,resume-pause> -- ideally, <resume> shouldn't be more than 10 units below <pause>. To disable <shutdown>, and <coolDownTemp>, set these to 0 and 101, respectively (e.g., capacity=0,101,70-80). Note that the latter doesn't disable the cooling feature entirely, since it works not only based on battery capacity, but temperature as well.")
+            else if(it.startsWith(TEMP_PREFIX))
+                newConfig.add("$TEMP_PREFIX${temp.coolDownTemp}-${temp.pauseChargingTemp}_${temp.waitSeconds}")
+            else if(it.startsWith(RESET_UNPLUGGED_PREFIX))
+                newConfig.add("$RESET_UNPLUGGED_PREFIX${config.resetUnplugged}")
+            else if(it.startsWith(COOL_DOWN_PREFIX) && coolDown != null)
+                newConfig.add("$COOL_DOWN_PREFIX${coolDown.charge}/${coolDown.pause} # Charge/pause ratio (in seconds) -- reduces battery temperature and voltage induced stress by periodically pausing charging. This can be disabled with a null value or a preceding hashtag. If charging is too slow, turn this off or change the charge/pause ratio. Disabling this nullifies <coolDownTemp capacity> and <lower temperature> values -- leaving only a temperature limit with a cooling timeout.")
+            else
+                newConfig.add(it)
+        }
+
+        writeConfigFromStringArray(newConfig)
     }
 
     @Throws(IOException::class)
