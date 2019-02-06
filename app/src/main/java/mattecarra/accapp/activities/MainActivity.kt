@@ -179,19 +179,16 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
             reset_stats_on_unplugged_switch.setOnCheckedChangeListener { _, isChecked -> config.resetUnplugged = isChecked }
             reset_battery_stats.setOnClickListener { AccUtils.resetBatteryStats() }
 
-            val config = AccUtils.readConfig()
-            if(config == null)
-                showConfigReadError()
-
-            this.config = config ?: AccConfig(
+            this.config = AccUtils.readConfig()
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            showConfigReadError()
+            this.config = AccConfig(
                 Capacity(5, 60, 70, 80),
                 Cooldown(50, 10),
                 Temp(40, 45, 90),
                 false
             ) //if config is null I use default config values.
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-            showConfigReadError()
         }
 
         shutdown_capacity_picker.minValue = 0

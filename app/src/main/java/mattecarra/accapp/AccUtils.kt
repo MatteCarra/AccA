@@ -1,62 +1,45 @@
 package mattecarra.accapp
 
 import android.os.Environment
-import android.util.Log
 import com.topjohnwu.superuser.Shell
 import mattecarra.accapp.data.*
 import java.io.File
 import java.io.IOException
-import java.lang.Exception
-import java.util.regex.Matcher
 
 
 object AccUtils {
+    val CAPACITY_CONFIG_REGEXP = """^\s*capacity=(\d*),(\d*),(\d+)-(\d+)""".toRegex(RegexOption.MULTILINE)
+    val COOLDOWN_CONFIG_REGEXP = """^\s*coolDown=(\d*)/(\d*)""".toRegex(RegexOption.MULTILINE)
+    val TEMP_CONFIG_REGEXP = """^\s*temp=(\d*)-(\d*)_(\d*)""".toRegex(RegexOption.MULTILINE)
+    val RESET_UNPLUGGED_CONFIG_REGEXP = """^\s*resetUnplugged=(true|false)""".toRegex(RegexOption.MULTILINE)
 
-    const val CAPACITY_PREFIX = "capacity="
-    const val TEMP_PREFIX = "temp="
-    const val RESET_UNPLUGGED_PREFIX = "resetUnplugged="
-    const val COOL_DOWN_PREFIX = "coolDown="
+    fun readConfig(): AccConfig {
+        val config = readConfigToStringArray().joinToString(separator = "\n")
 
-    fun readConfig(): AccConfig? {
-        val config = readConfigToStringArray()
-        val numberRegexp = "\\d+".toPattern()
+        val (shutdown, coolDown, resume, pause) = CAPACITY_CONFIG_REGEXP.find(config)!!.destructured
+        val capacity = Capacity(shutdown.toIntOrNull() ?: 0, coolDown.toInt() ?: 101, resume.toInt(), pause.toInt())
 
-        var capacity: Capacity? = null //this must be not null
-        var coolDown: Cooldown? = null //this can be null
-        var temp: Temp? = null //this must be not null
-        var resetUnplugged = false //default false
-
-        //I use this function to match the pattern and convert it to int at the same time
-        val getInt: (Matcher) -> Int = {
-            if(it.find())
-                it.group().toInt()
-            else throw IllegalStateException("Could not find an int")
-        }
-
-        config.forEach {
-            try {
-                if(it.startsWith(CAPACITY_PREFIX)) {
-                    println(it.substring(CAPACITY_PREFIX.length))
-                    val m = numberRegexp.matcher(it.substring(CAPACITY_PREFIX.length))
-                    capacity = Capacity(getInt(m), getInt(m), getInt(m), getInt(m))
-                } else if(it.startsWith(TEMP_PREFIX)) {
-                    val m = numberRegexp.matcher(it.substring(TEMP_PREFIX.length))
-                    temp = Temp(getInt(m) / 10, getInt(m) / 10, getInt(m))
-                } else if(it.startsWith(RESET_UNPLUGGED_PREFIX))
-                    resetUnplugged = !it.startsWith("resetUnplugged=false")
-                else if(it.startsWith(COOL_DOWN_PREFIX)) {
-                    val m = numberRegexp.matcher(it.substring(COOL_DOWN_PREFIX.length))
-                    coolDown = Cooldown(getInt(m), getInt(m))
+        val coolDownMatchResult = COOLDOWN_CONFIG_REGEXP.find(config)
+        val cooldown: Cooldown? =
+            coolDownMatchResult?.let {
+                val (coolDownChargeSeconds, coolDownPauseSeconds) = coolDownMatchResult.destructured
+                coolDownChargeSeconds.toIntOrNull()?.let { chargeInt ->
+                    coolDownPauseSeconds.toIntOrNull()?.let { Cooldown(chargeInt, it) }
                 }
-            } catch (ex: Exception) {
-                ex.printStackTrace() //Malformed config
             }
-        }
 
-        return if(capacity != null && temp != null)
-            AccConfig(capacity!!, coolDown, temp!!, resetUnplugged) //success
-        else
-            null //failed
+        val (coolDownTemp, pauseChargingTemp, waitSeconds) = TEMP_CONFIG_REGEXP.find(config)!!.destructured
+        val temp = Temp(
+            coolDownTemp.toIntOrNull()?.let { it/10 } ?: 90,
+            pauseChargingTemp.toIntOrNull()?.let { it/10 } ?: 95,
+            waitSeconds.toIntOrNull() ?: 90
+        )
+
+        return AccConfig(
+            capacity,
+            cooldown,
+            temp,
+            RESET_UNPLUGGED_CONFIG_REGEXP.find(config)?.destructured?.component1() == "true")
     }
 
     @Throws(IOException::class)
@@ -78,14 +61,14 @@ object AccUtils {
         val newConfig = mutableListOf<String>()
 
         oldConfig.forEach {
-            if(it.startsWith(CAPACITY_PREFIX))
-                newConfig.add("$CAPACITY_PREFIX${capacity.shutdownCapacity},${capacity.coolDownCapacity},${capacity.resumeCapacity}-${capacity.pauseCapacity} # <shutdown,coolDownTemp,resume-pause> -- ideally, <resume> shouldn't be more than 10 units below <pause>. To disable <shutdown>, and <coolDownTemp>, set these to 0 and 101, respectively (e.g., capacity=0,101,70-80). Note that the latter doesn't disable the cooling feature entirely, since it works not only based on battery capacity, but temperature as well.")
-            else if(it.startsWith(TEMP_PREFIX))
-                newConfig.add("$TEMP_PREFIX${temp.coolDownTemp}-${temp.pauseChargingTemp}_${temp.waitSeconds}")
-            else if(it.startsWith(RESET_UNPLUGGED_PREFIX))
-                newConfig.add("$RESET_UNPLUGGED_PREFIX${config.resetUnplugged}")
-            else if(it.startsWith(COOL_DOWN_PREFIX) && coolDown != null)
-                newConfig.add("$COOL_DOWN_PREFIX${coolDown.charge}/${coolDown.pause} # Charge/pause ratio (in seconds) -- reduces battery temperature and voltage induced stress by periodically pausing charging. This can be disabled with a null value or a preceding hashtag. If charging is too slow, turn this off or change the charge/pause ratio. Disabling this nullifies <coolDownTemp capacity> and <lower temperature> values -- leaving only a temperature limit with a cooling timeout.")
+            if(it.startsWith("capacity="))
+                newConfig.add("capacity=${capacity.shutdownCapacity},${capacity.coolDownCapacity},${capacity.resumeCapacity}-${capacity.pauseCapacity} # <shutdown,coolDownTemp,resume-pause> -- ideally, <resume> shouldn't be more than 10 units below <pause>. To disable <shutdown>, and <coolDownTemp>, set these to 0 and 101, respectively (e.g., capacity=0,101,70-80). Note that the latter doesn't disable the cooling feature entirely, since it works not only based on battery capacity, but temperature as well.")
+            else if(it.startsWith("temp="))
+                newConfig.add("temp=${temp.coolDownTemp}-${temp.pauseChargingTemp}_${temp.waitSeconds}")
+            else if(it.startsWith("resetUnplugged="))
+                newConfig.add("resetUnplugged=${config.resetUnplugged}")
+            else if(it.startsWith("coolDown=") && coolDown != null)
+                newConfig.add("coolDown=${coolDown.charge}/${coolDown.pause} # Charge/pause ratio (in seconds) -- reduces battery temperature and voltage induced stress by periodically pausing charging. This can be disabled with a null value or a preceding hashtag. If charging is too slow, turn this off or change the charge/pause ratio. Disabling this nullifies <coolDownTemp capacity> and <lower temperature> values -- leaving only a temperature limit with a cooling timeout.")
             else
                 newConfig.add(it)
         }
