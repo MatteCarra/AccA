@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AccApp</string>
+    <string name="app_name">Acc</string>
     <string name="tile_acc_no_root">No root</string>
     <string name="tile_acc_enabled">Acc enabled</string>
     <string name="tile_acc_disabled">Acc disabled</string>
@@ -25,9 +25,7 @@
     <string name="shutdown_capacity">Shutdown at:</string>
     <string name="no_root_message">This app requires ROOT.</string>
     <string name="config_error_title">Config read error</string>
-    <string name="config_error_dialog">I wasn\'t unable to parse/find the ACC config file. Please check to have
-        installed ACC and that your error does not contain errors. You will still be able to edit the settings.
-    </string>
+    <string name="config_error_dialog">ACC IS A PRE-REQUISITE! If you haven\'t installed it please check xda. I wasn\'t able to parse/find the ACC config file. Please check if your config contains errors. You will still be able to edit the settings, but the result can\'t be guaranteed.</string>
     <string name="battery_info">Health=%1$s, Battery temp=%2$d°C\nCurrent=%3$dmA, Voltage=%4$.2fV</string>
     <string name="wait">Please wait</string>
     <string name="exit_on_boot_switch">Exit on boot</string>
