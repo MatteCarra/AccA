@@ -4,15 +4,18 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
+import android.preference.EditTextPreference
 import android.util.Log
 import android.view.KeyEvent
 import android.widget.CompoundButton
 import android.widget.NumberPicker
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.input.input
 import com.topjohnwu.superuser.Shell
 import kotlinx.android.synthetic.main.content_main.*
 import mattecarra.accapp.AccUtils
@@ -37,7 +40,11 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
             val r = this //need this to make it recursive
             doAsync {
                 val batteryInfo = AccUtils.getBatteryInfo()
+                val isDeamonRunning = AccUtils.isAccdRunning()
                 uiThread {
+                    deamon_start_stop_label.text = getString(if(isDeamonRunning) R.string.acc_deamon_status_running else R.string.acc_deamon_status_not_running)
+                    deamon_start_stop.text = getString(if(isDeamonRunning) R.string.stop else R.string.start)
+
                     status.text = batteryInfo.status
                     battery_info.text = getString(R.string.battery_info, batteryInfo.health, batteryInfo.temp, batteryInfo.current / 1000, batteryInfo.voltage / 1000000f)
 
@@ -171,15 +178,6 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
 
     private fun initUi() {
         try {
-            val isDeamonRunning = AccUtils.isAccdRunning()
-            deamon_start_stop_label.text = getString(if(isDeamonRunning) R.string.acc_deamon_status_running else R.string.acc_deamon_status_not_running)
-            deamon_start_stop.text = getString(if(isDeamonRunning) R.string.stop else R.string.start)
-
-            handler.post(updateUIRunnable) // Start the initial runnable task by posting through the handler
-
-            reset_stats_on_unplugged_switch.setOnCheckedChangeListener { _, isChecked -> config.resetUnplugged = isChecked }
-            reset_battery_stats.setOnClickListener { AccUtils.resetBatteryStats() }
-
             this.config = AccUtils.readConfig()
         } catch (ex: Exception) {
             ex.printStackTrace()
@@ -188,11 +186,42 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
                 Capacity(5, 60, 70, 80),
                 Cooldown(50, 10),
                 Temp(40, 45, 90),
-                false
+                false,
+                false,
+                null
             ) //if config is null I use default config values.
         }
 
+        handler.post(updateUIRunnable) // Start the initial runnable task by posting through the handler
+
+        deamon_start_stop.setOnClickListener {
+            Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
+
+            if(AccUtils.isAccdRunning())
+                AccUtils.accStopDeamon()
+            else
+                AccUtils.accStartDeamon()
+        }
+
+        reset_stats_on_unplugged_switch.setOnCheckedChangeListener { _, isChecked -> config.resetUnplugged = isChecked }
         reset_stats_on_unplugged_switch.isChecked = config.resetUnplugged
+        reset_battery_stats.setOnClickListener { AccUtils.resetBatteryStats() }
+
+        on_boot_text.text = config.onBoot?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
+        exit_on_boot_switch.isChecked = config.onBootExit
+        exit_on_boot_switch.setOnCheckedChangeListener { _, isChecked -> config.onBootExit = isChecked}
+        edit_on_boot.setOnClickListener {
+            MaterialDialog(this@MainActivity).show {
+                title(R.string.edit_on_boot)
+                message(R.string.edit_on_boot_dialog_message)
+                input(prefill = this@MainActivity.config.onBoot ?: "", allowEmpty = true, hintRes = R.string.edit_on_boot_dialog_hint) { _, text ->
+                    this@MainActivity.config.onBoot = text.toString()
+                    this@MainActivity.on_boot_text.text = if(text.isBlank()) getString(R.string.not_set) else text
+                }
+                positiveButton(R.string.save)
+                negativeButton(android.R.string.cancel)
+            }
+        }
 
         shutdown_capacity_picker.minValue = 0
         shutdown_capacity_picker.maxValue = 40

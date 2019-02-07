@@ -91,7 +91,10 @@ class AccConfig(
     val capacity: Capacity,
     var cooldown: Cooldown?,
     val temp: Temp,
-    resetUnplugged: Boolean) {
+    resetUnplugged: Boolean,
+    onBootExit: Boolean,
+    onBoot: String?
+) {
 
     var resetUnplugged: Boolean = resetUnplugged
         set(value) {
@@ -99,6 +102,26 @@ class AccConfig(
             doAsync {
                 synchronized(this@AccConfig) {
                     AccUtils.updateResetUnplugged(value)
+                }
+            }
+        }
+
+    var onBootExit: Boolean = onBootExit
+        set(value) {
+            field = value
+            doAsync {
+                synchronized(this@AccConfig) {
+                    AccUtils.updateOnBootExit(value)
+                }
+            }
+        }
+
+    var onBoot: String? = onBoot
+        set(value) {
+            field = value
+            doAsync {
+                synchronized(this@AccConfig) {
+                    AccUtils.updateOnBoot(onBoot)
                 }
             }
         }

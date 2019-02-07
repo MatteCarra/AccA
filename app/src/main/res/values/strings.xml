@@ -30,4 +30,11 @@
     </string>
     <string name="battery_info">Health=%1$s, Battery temp=%2$d°C\nCurrent=%3$dmA, Voltage=%4$.2fV</string>
     <string name="wait">Please wait</string>
+    <string name="exit_on_boot_switch">Exit on boot</string>
+    <string name="on_boot_label">On boot:</string>
+    <string name="edit_on_boot">Edit on boot value</string>
+    <string name="not_set">Not set</string>
+    <string name="edit_on_boot_dialog_hint">Leave blank to disable</string>
+    <string name="save">Save</string>
+    <string name="edit_on_boot_dialog_message">These settings are applied on boot. Leave blank to disable.</string>
 </resources>

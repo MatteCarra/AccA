@@ -12,6 +12,8 @@ object AccUtils {
     val COOLDOWN_CONFIG_REGEXP = """^\s*coolDown=(\d*)/(\d*)""".toRegex(RegexOption.MULTILINE)
     val TEMP_CONFIG_REGEXP = """^\s*temp=(\d*)-(\d*)_(\d*)""".toRegex(RegexOption.MULTILINE)
     val RESET_UNPLUGGED_CONFIG_REGEXP = """^\s*resetUnplugged=(true|false)""".toRegex(RegexOption.MULTILINE)
+    val ON_BOOT_EXIT = """^\s*onBootExit=(true|false)""".toRegex(RegexOption.MULTILINE)
+    val ON_BOOT = """^\s*onBoot=([^#]+)""".toRegex(RegexOption.MULTILINE)
 
     fun readConfig(): AccConfig {
         val config = readConfigToStringArray().joinToString(separator = "\n")
@@ -39,7 +41,9 @@ object AccUtils {
             capacity,
             cooldown,
             temp,
-            RESET_UNPLUGGED_CONFIG_REGEXP.find(config)?.destructured?.component1() == "true")
+            RESET_UNPLUGGED_CONFIG_REGEXP.find(config)?.destructured?.component1() == "true",
+            ON_BOOT_EXIT.find(config)?.destructured?.component1() == "true",
+            ON_BOOT.find(config)?.destructured?.component1())
     }
 
     @Throws(IOException::class)
@@ -101,6 +105,14 @@ object AccUtils {
 
     fun updateResetUnplugged(resetUnplugged: Boolean): Boolean {
         return Shell.su("acc -s resetUnplugged $resetUnplugged").exec().isSuccess
+    }
+
+    fun updateOnBootExit(value: Boolean): Boolean {
+        return Shell.su("acc -s onBootExit $value").exec().isSuccess
+    }
+
+    fun updateOnBoot(value: String?): Boolean {
+        return Shell.su("acc -s onBoot ${value ?: ""}").exec().isSuccess
     }
 
     fun resetBatteryStats(): Boolean {
