@@ -48,8 +48,6 @@ class LogViewerActivity : AppCompatActivity() {
                         for (i in adapter.size() until newList.size) {
                             adapter.add(newList[i])
                         }
-                    } else {
-                        adapter.add("test")
                     }
 
                     if (onBottom) {
