@@ -1,12 +1,15 @@
 package mattecarra.accapp.activities
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.preference.EditTextPreference
 import android.util.Log
 import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.CompoundButton
 import android.widget.NumberPicker
 import android.widget.Toast
@@ -192,8 +195,6 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
             ) //if config is null I use default config values.
         }
 
-        handler.post(updateUIRunnable) // Start the initial runnable task by posting through the handler
-
         deamon_start_stop.setOnClickListener {
             Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
 
@@ -224,7 +225,7 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
         }
 
         shutdown_capacity_picker.minValue = 0
-        shutdown_capacity_picker.maxValue = 40
+        shutdown_capacity_picker.maxValue = 20
         shutdown_capacity_picker.value = config.capacity.shutdownCapacity
         shutdown_capacity_picker.setOnValueChangedListener(this)
 
@@ -322,9 +323,34 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
         initUi()
     }
 
-    override fun onDestroy() {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        when(item.itemId) {
+            R.id.actions_logs -> {
+                startActivity(Intent(this, LogViewerActivity::class.java))
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onResume() {
+        handler.post(updateUIRunnable) // Start the initial runnable task by posting through the handler
+
+        super.onResume()
+    }
+
+    override fun onPause() {
         handler.removeCallbacks(updateUIRunnable)
 
-        super.onDestroy()
+        super.onPause()
     }
 }

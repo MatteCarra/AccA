@@ -22,6 +22,15 @@
             </intent-filter>
         </activity>
 
+        <activity
+                android:name=".activities.LogViewerActivity"
+                android:label="@string/title_activity_log_view"
+                android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="mattecarra.accapp.activities.MainActivity"/>
+        </activity>
+
         <service
                 android:name=".AccTileService"
                 android:icon="@drawable/ic_battery_charging_80"
