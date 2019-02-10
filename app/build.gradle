@@ -46,5 +46,8 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:2.0.0'
     implementation 'com.afollestad.material-dialogs:input:2.0.0'
 
+
+    implementation 'com.github.javiersantos:AppUpdater:2.7'
+
     implementation "com.github.topjohnwu.libsu:core:${versions.libsuVersion}"
 }

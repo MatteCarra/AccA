@@ -5,8 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
-import android.preference.EditTextPreference
-import android.util.Log
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -19,6 +17,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
+import com.github.javiersantos.appupdater.AppUpdater
+import com.github.javiersantos.appupdater.enums.Display
+import com.github.javiersantos.appupdater.enums.UpdateFrom
 import com.topjohnwu.superuser.Shell
 import kotlinx.android.synthetic.main.content_main.*
 import mattecarra.accapp.AccUtils
@@ -29,7 +30,6 @@ import mattecarra.accapp.data.Cooldown
 import mattecarra.accapp.data.Temp
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
-
 
 class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, CompoundButton.OnCheckedChangeListener {
     private val PERMISSION_REQUEST: Int = 0
@@ -294,6 +294,12 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+
+        val appUpdater = AppUpdater(this)
+            .setDisplay(Display.NOTIFICATION)
+            .setUpdateFrom(UpdateFrom.GITHUB)
+            .setGitHubUserAndRepo("MatteCarra", "AccA")
+        appUpdater.start()
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST)
