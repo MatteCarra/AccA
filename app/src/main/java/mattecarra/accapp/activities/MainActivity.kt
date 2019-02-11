@@ -299,6 +299,7 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
             .setDisplay(Display.NOTIFICATION)
             .setUpdateFrom(UpdateFrom.GITHUB)
             .setGitHubUserAndRepo("MatteCarra", "AccA")
+            //.setIcon(R.drawable.app_icon)
         appUpdater.start()
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
