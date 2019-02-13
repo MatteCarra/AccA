@@ -6,12 +6,11 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.CompoundButton
-import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -22,22 +21,23 @@ import com.afollestad.materialdialogs.input.input
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.Display
 import com.github.javiersantos.appupdater.enums.UpdateFrom
+import com.google.gson.Gson
 import com.topjohnwu.superuser.Shell
 import kotlinx.android.synthetic.main.content_main.*
 import mattecarra.accapp.AccUtils
 import mattecarra.accapp.R
 import mattecarra.accapp.data.AccConfig
-import mattecarra.accapp.data.Capacity
-import mattecarra.accapp.data.Cooldown
-import mattecarra.accapp.data.Temp
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
     private val LOG_TAG = "MainActivity"
     private val PERMISSION_REQUEST: Int = 0
     private val ACC_CONFIG_EDITOR_REQUEST: Int = 1
+    private val ACC_PROFILE_CREATOR_REQUEST: Int = 2
     private lateinit var config: AccConfig
+    private val gson: Gson = Gson()
 
     //Used to update battery info every second
     private val handler = Handler()
@@ -102,6 +102,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        create_acc_profile.setOnClickListener {
+            Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+                startActivityForResult(intent, ACC_PROFILE_CREATOR_REQUEST)
+            }
+        }
+
         deamon_start_stop.setOnClickListener {
             Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
 
@@ -114,7 +120,13 @@ class MainActivity : AppCompatActivity() {
         reset_stats_on_unplugged_switch.setOnCheckedChangeListener { _, isChecked ->
             config.resetUnplugged = isChecked
             AccUtils.updateResetUnplugged(isChecked)
+
+            //If I manually modify the config I have to set current profile to null (custom profile)
+            val editor = PreferenceManager.getDefaultSharedPreferences(this).edit()
+            editor.putString("PROFILE", null)
+            editor.apply()
         }
+
         reset_stats_on_unplugged_switch.isChecked = config.resetUnplugged
         reset_battery_stats.setOnClickListener {
             AccUtils.resetBatteryStats()
@@ -166,15 +178,50 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == ACC_CONFIG_EDITOR_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                Log.d(LOG_TAG, "onActivityResult ACC_CONFIG_EDITOR_REQUEST result ok")
                 if(data?.getBooleanExtra("hasChanges", false) == true) {
-                    Log.d(LOG_TAG, "Unparcelling config")
                     config = data.getParcelableExtra("config")
                     doAsync {
-                        Log.d(LOG_TAG, "Saving config")
                         config.updateAcc()
-                        Log.d(LOG_TAG, "Saved")
+
+                        //If I manually modify the config I have to set current profile to null (custom profile)
+                        val editor = PreferenceManager.getDefaultSharedPreferences(this@MainActivity).edit()
+                        editor.putString("PROFILE", null)
+                        editor.apply()
                     }
+                }
+            }
+        } else if(requestCode == ACC_PROFILE_CREATOR_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                if(data?.getBooleanExtra("hasChanges", false) == true) {
+                    config = data.getParcelableExtra("config")
+
+                    MaterialDialog(this)
+                        .show {
+                            title(R.string.profile_name)
+                            message(R.string.dialog_profile_name_message)
+                            input { _, charSequence ->
+                                //profiles index
+                                val profiles = File(context.filesDir, "profiles")
+                                val profileList =
+                                    if(!profiles.exists())
+                                        mutableListOf()
+                                    else
+                                        gson.fromJson(profiles.readText(), Array<String>::class.java).toMutableList()
+
+                                if(!profileList.contains(charSequence.toString())) { //if not modifying element
+                                    profileList.add(charSequence.toString())
+                                    val profilesJson = gson.toJson(profileList)
+                                    profiles.writeText(profilesJson)
+                                }
+
+                                //Saving profile
+                                val f = File(context.filesDir, "$charSequence.profile")
+                                val json = gson.toJson(this@MainActivity.config)
+                                f.writeText(json)
+                            }
+                            positiveButton(R.string.save)
+                            negativeButton(android.R.string.cancel)
+                        }
                 }
             }
         }

@@ -1,4 +1,4 @@
-package mattecarra.accapp
+package mattecarra.accapp.services
 
 import android.annotation.TargetApi
 import android.graphics.drawable.Icon
@@ -11,10 +11,11 @@ import mattecarra.accapp.AccUtils.accStartDeamon
 import mattecarra.accapp.AccUtils.accStopDeamon
 import mattecarra.accapp.AccUtils.isAccdRunning
 import mattecarra.accapp.AccUtils.isBatteryCharging
+import mattecarra.accapp.R
 
 @TargetApi(Build.VERSION_CODES.N)
-class AccTileService: TileService(){
-    private val LOG_TAG = "AccTileService"
+class AccdTileService: TileService(){
+    private val LOG_TAG = "AccdTileService"
 
     override fun onClick() {
         super.onClick()

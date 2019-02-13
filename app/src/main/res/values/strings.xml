@@ -47,4 +47,9 @@
     <string name="close_without_saving">Discard</string>
     <string name="edit_config">Edit config</string>
     <string name="unsaved_changes_message">You have some unsaved changes. Do you want to save them?</string>
+    <string name="create_acc_profile">Create config profile</string>
+    <string name="profile_name">Profile name</string>
+    <string name="dialog_profile_name_message">Enter you want to assign to this profile:</string>
+    <string name="no_profiles">Profiles not set</string>
+    <string name="profile_not_selected">Custom settings</string>
 </resources>

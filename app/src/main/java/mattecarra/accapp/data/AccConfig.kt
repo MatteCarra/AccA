@@ -1,6 +1,7 @@
 package mattecarra.accapp.data
 
 import android.os.Parcelable
+import com.google.gson.Gson
 import kotlinx.android.parcel.Parcelize
 import mattecarra.accapp.AccUtils
 
