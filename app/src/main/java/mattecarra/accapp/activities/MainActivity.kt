@@ -1,10 +1,12 @@
 package mattecarra.accapp.activities
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -31,9 +33,10 @@ import mattecarra.accapp.data.Temp
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, CompoundButton.OnCheckedChangeListener {
+class MainActivity : AppCompatActivity() {
+    private val LOG_TAG = "MainActivity"
     private val PERMISSION_REQUEST: Int = 0
-
+    private val ACC_CONFIG_EDITOR_REQUEST: Int = 1
     private lateinit var config: AccConfig
 
     //Used to update battery info every second
@@ -54,101 +57,6 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
                     handler.postDelayed(r, 1000)// Repeat the same runnable code block again after 1 seconds
                 }
             }
-        }
-    }
-
-    //Listener to enable/disable temp control and cool down
-    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        if(buttonView == null) return
-        when(buttonView.id) {
-            R.id.temp_switch -> {
-                cooldown_temp_picker.isEnabled = isChecked
-                pause_temp_picker.isEnabled = isChecked
-                pause_seconds_picker.isEnabled = isChecked
-
-                if(isChecked) {
-                    cooldown_temp_picker.value = 40
-                    pause_temp_picker.value = 45
-
-                    config.temp.coolDownTemp = 40
-                    config.temp.pauseChargingTemp = 45
-                } else {
-                    config.temp.coolDownTemp = 90
-                    config.temp.pauseChargingTemp = 95
-                }
-            }
-
-            R.id.cooldown_switch -> {
-                cooldown_percentage_picker.isEnabled = isChecked
-                charge_ratio_picker.isEnabled = isChecked
-                pause_ratio_picker.isEnabled = isChecked
-
-                if(isChecked) {
-                    cooldown_percentage_picker.value = 60
-                    config.capacity.coolDownCapacity = 60
-                } else {
-                    cooldown_percentage_picker.value = 101
-                    config.capacity.coolDownCapacity = 101
-                }
-            }
-
-            else -> {}
-        }
-    }
-
-    override fun onValueChange(picker: NumberPicker?, oldVal: Int, newVal: Int) {
-        if(picker == null) return
-
-        when(picker.id) {
-            //capacity
-            R.id.shutdown_capacity_picker -> {
-                config.capacity.shutdownCapacity = newVal
-
-                resume_capacity_picker.minValue = config.capacity.shutdownCapacity
-                cooldown_percentage_picker.minValue = config.capacity.shutdownCapacity
-            }
-
-            R.id.resume_capacity_picker -> {
-                config.capacity.resumeCapacity = newVal
-
-                pause_capacity_picker.minValue = config.capacity.resumeCapacity + 1
-            }
-
-            R.id.pause_capacity_picker -> {
-                config.capacity.pauseCapacity = newVal
-
-                resume_capacity_picker.maxValue = config.capacity.pauseCapacity - 1
-            }
-
-            //temp
-            R.id.cooldown_temp_picker ->
-                config.temp.coolDownTemp = newVal
-
-            R.id.pause_temp_picker ->
-                config.temp.pauseChargingTemp = newVal
-
-            R.id.pause_seconds_picker ->
-                config.temp.waitSeconds = newVal
-
-            //coolDown
-            R.id.cooldown_percentage_picker ->
-                config.capacity.coolDownCapacity = newVal
-
-            R.id.charge_ratio_picker -> {
-                if(config.cooldown == null) {
-                    config.cooldown = Cooldown(newVal, 10)
-                }
-                config.cooldown?.charge = newVal
-            }
-
-            R.id.pause_ratio_picker -> {
-                if(config.cooldown == null) {
-                    config.cooldown = Cooldown(50, newVal)
-                }
-                config.cooldown?.pause = newVal
-            }
-
-            else -> {}
         }
     }
 
@@ -185,14 +93,13 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
         } catch (ex: Exception) {
             ex.printStackTrace()
             showConfigReadError()
-            this.config = AccConfig(
-                Capacity(5, 60, 70, 80),
-                Cooldown(50, 10),
-                Temp(40, 45, 90),
-                false,
-                false,
-                null
-            ) //if config is null I use default config values.
+            this.config = AccUtils.defaultConfig //if config is null I use default config values.
+        }
+
+        edit_config.setOnClickListener {
+            Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+                startActivityForResult(intent, ACC_CONFIG_EDITOR_REQUEST)
+            }
         }
 
         deamon_start_stop.setOnClickListener {
@@ -204,88 +111,14 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
                 AccUtils.accStartDeamon()
         }
 
-        reset_stats_on_unplugged_switch.setOnCheckedChangeListener { _, isChecked -> config.resetUnplugged = isChecked }
+        reset_stats_on_unplugged_switch.setOnCheckedChangeListener { _, isChecked ->
+            config.resetUnplugged = isChecked
+            AccUtils.updateResetUnplugged(isChecked)
+        }
         reset_stats_on_unplugged_switch.isChecked = config.resetUnplugged
-        reset_battery_stats.setOnClickListener { AccUtils.resetBatteryStats() }
-
-        on_boot_text.text = config.onBoot?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
-        exit_on_boot_switch.isChecked = config.onBootExit
-        exit_on_boot_switch.setOnCheckedChangeListener { _, isChecked -> config.onBootExit = isChecked}
-        edit_on_boot.setOnClickListener {
-            MaterialDialog(this@MainActivity).show {
-                title(R.string.edit_on_boot)
-                message(R.string.edit_on_boot_dialog_message)
-                input(prefill = this@MainActivity.config.onBoot ?: "", allowEmpty = true, hintRes = R.string.edit_on_boot_dialog_hint) { _, text ->
-                    this@MainActivity.config.onBoot = text.toString()
-                    this@MainActivity.on_boot_text.text = if(text.isBlank()) getString(R.string.not_set) else text
-                }
-                positiveButton(R.string.save)
-                negativeButton(android.R.string.cancel)
-            }
+        reset_battery_stats.setOnClickListener {
+            AccUtils.resetBatteryStats()
         }
-
-        shutdown_capacity_picker.minValue = 0
-        shutdown_capacity_picker.maxValue = 20
-        shutdown_capacity_picker.value = config.capacity.shutdownCapacity
-        shutdown_capacity_picker.setOnValueChangedListener(this)
-
-        resume_capacity_picker.minValue = config.capacity.shutdownCapacity
-        resume_capacity_picker.maxValue = config.capacity.pauseCapacity - 1
-        resume_capacity_picker.value = config.capacity.resumeCapacity
-        resume_capacity_picker.setOnValueChangedListener(this)
-
-        pause_capacity_picker.minValue = config.capacity.resumeCapacity + 1
-        pause_capacity_picker.maxValue = 100
-        pause_capacity_picker.value = config.capacity.pauseCapacity
-        pause_capacity_picker.setOnValueChangedListener(this)
-
-        //temps
-        if(config.temp.coolDownTemp >= 90 && config.temp.pauseChargingTemp >= 95) {
-            temp_switch.isChecked = false
-            cooldown_temp_picker.isEnabled = false
-            pause_temp_picker.isEnabled = false
-            pause_seconds_picker.isEnabled = false
-        }
-        temp_switch.setOnCheckedChangeListener(this)
-
-        cooldown_temp_picker.minValue = 20
-        cooldown_temp_picker.maxValue = 90
-        cooldown_temp_picker.value = config.temp.coolDownTemp
-        cooldown_temp_picker.setOnValueChangedListener(this)
-
-        pause_temp_picker.minValue = 20
-        pause_temp_picker.maxValue = 95
-        pause_temp_picker.value = config.temp.pauseChargingTemp
-        pause_temp_picker.setOnValueChangedListener(this)
-
-        pause_seconds_picker.minValue = 10
-        pause_seconds_picker.maxValue = 120
-        pause_seconds_picker.value = config.temp.waitSeconds
-        pause_seconds_picker.setOnValueChangedListener(this)
-
-        //cooldown
-        if(config.cooldown == null || config.capacity.coolDownCapacity > 100) {
-            cooldown_switch.isChecked = false
-            cooldown_percentage_picker.isEnabled = false
-            charge_ratio_picker.isEnabled = false
-            pause_ratio_picker.isEnabled = false
-        }
-        cooldown_switch.setOnCheckedChangeListener(this)
-
-        cooldown_percentage_picker.minValue = config.capacity.shutdownCapacity
-        cooldown_percentage_picker.maxValue = 101 //if someone wants to disable it should use the switch but I'm gonna leave it there
-        cooldown_percentage_picker.value = config.capacity.coolDownCapacity
-        cooldown_percentage_picker.setOnValueChangedListener(this)
-
-        charge_ratio_picker.minValue = 1
-        charge_ratio_picker.maxValue = 120 //no reason behind this value
-        charge_ratio_picker.value = config.cooldown?.charge ?: 50
-        charge_ratio_picker.setOnValueChangedListener(this)
-
-        pause_ratio_picker.minValue = 1
-        pause_ratio_picker.maxValue = 120 //no reason behind this value
-        pause_ratio_picker.value = config.cooldown?.pause ?: 10
-        pause_ratio_picker.setOnValueChangedListener(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -330,9 +163,26 @@ class MainActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, Co
         initUi()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == ACC_CONFIG_EDITOR_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                Log.d(LOG_TAG, "onActivityResult ACC_CONFIG_EDITOR_REQUEST result ok")
+                if(data?.getBooleanExtra("hasChanges", false) == true) {
+                    Log.d(LOG_TAG, "Unparcelling config")
+                    config = data.getParcelableExtra("config")
+                    doAsync {
+                        Log.d(LOG_TAG, "Saving config")
+                        config.updateAcc()
+                        Log.d(LOG_TAG, "Saved")
+                    }
+                }
+            }
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu, menu)
+        // Inflate the main_activity_menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.main_activity_menu, menu)
         return true
     }
 

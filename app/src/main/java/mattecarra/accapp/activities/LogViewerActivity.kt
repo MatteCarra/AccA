@@ -98,6 +98,7 @@ class LogViewerActivity : AppCompatActivity() {
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val regexp = """acc-daemon-(.+)\.log""".toRegex()
         val logsDir = File(Environment.getExternalStorageDirectory(), "acc/logs/")

@@ -15,6 +15,15 @@ object AccUtils {
     val ON_BOOT_EXIT = """^\s*onBootExit=(true|false)""".toRegex(RegexOption.MULTILINE)
     val ON_BOOT = """^\s*onBoot=([^#]+)""".toRegex(RegexOption.MULTILINE)
 
+    val defaultConfig: AccConfig = AccConfig(
+        Capacity(5, 60, 70, 80),
+        Cooldown(50, 10),
+        Temp(40, 45, 90),
+        false,
+        false,
+        null
+    )
+
     fun readConfig(): AccConfig {
         val config = readConfigToStringArray().joinToString(separator = "\n")
 
