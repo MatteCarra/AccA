@@ -111,7 +111,6 @@ class MainActivity : AppCompatActivity() {
 
             val layoutManager = GridLayoutManager(this, 3)
             profilesAdapter = ProfilesViewAdapter(ArrayList(profileList.map { Profile(it) }), currentProfile) { profile, longPress ->
-                //TODO handle profile select
                 if(longPress) {
                     MaterialDialog(this@MainActivity).show {
                         listItems(R.array.profile_long_press_options) { _, index, _ ->
@@ -271,35 +270,37 @@ class MainActivity : AppCompatActivity() {
             }
         } else if(requestCode == ACC_PROFILE_CREATOR_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                MaterialDialog(this)
-                    .show {
-                        title(R.string.profile_name)
-                        message(R.string.dialog_profile_name_message)
-                        input { _, charSequence ->
-                            val config: AccConfig = data.getParcelableExtra("config")
+                if(data != null) {
+                    MaterialDialog(this)
+                        .show {
+                            title(R.string.profile_name)
+                            message(R.string.dialog_profile_name_message)
+                            input { _, charSequence ->
+                                val config: AccConfig = data.getParcelableExtra("config")
 
-                            //profiles index
-                            val profileList = ProfileUtils.listProfiles(this@MainActivity, gson).toMutableList()
+                                //profiles index
+                                val profileList = ProfileUtils.listProfiles(this@MainActivity, gson).toMutableList()
 
-                            if(!profileList.contains(charSequence.toString())) {
-                                profileList.add(charSequence.toString())
-                                ProfileUtils.writeProfiles(this@MainActivity, profileList, gson) //Update profiles file with new profile
+                                if(!profileList.contains(charSequence.toString())) {
+                                    profileList.add(charSequence.toString())
+                                    ProfileUtils.writeProfiles(this@MainActivity, profileList, gson) //Update profiles file with new profile
+                                }
+
+                                //Saving profile
+                                val f = File(context.filesDir, "$charSequence.profile")
+                                val json = gson.toJson(config)
+                                f.writeText(json)
+
+                                if(profileList.size == 1) {
+                                    initProfiles()
+                                } else {
+                                    profilesAdapter?.add(Profile(charSequence.toString()))
+                                }
                             }
-
-                            //Saving profile
-                            val f = File(context.filesDir, "$charSequence.profile")
-                            val json = gson.toJson(config)
-                            f.writeText(json)
-
-                            if(profileList.size == 1) {
-                                initProfiles()
-                            } else {
-                                profilesAdapter?.add(Profile(charSequence.toString()))
-                            }
+                            positiveButton(R.string.save)
+                            negativeButton(android.R.string.cancel)
                         }
-                        positiveButton(R.string.save)
-                        negativeButton(android.R.string.cancel)
-                    }
+                }
             }
         } else if(requestCode == ACC_PROFILE_EDITOR_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
