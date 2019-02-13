@@ -3,11 +3,11 @@ package mattecarra.accapp.activities
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -16,17 +16,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
+import com.afollestad.materialdialogs.list.listItems
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.Display
 import com.github.javiersantos.appupdater.enums.UpdateFrom
 import com.google.gson.Gson
 import com.topjohnwu.superuser.Shell
 import kotlinx.android.synthetic.main.content_main.*
-import mattecarra.accapp.AccUtils
+import mattecarra.accapp.utils.AccUtils
 import mattecarra.accapp.R
+import mattecarra.accapp.adapters.Profile
+import mattecarra.accapp.adapters.ProfilesViewAdapter
 import mattecarra.accapp.data.AccConfig
+import mattecarra.accapp.utils.ProfileUtils
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.io.File
@@ -36,8 +41,13 @@ class MainActivity : AppCompatActivity() {
     private val PERMISSION_REQUEST: Int = 0
     private val ACC_CONFIG_EDITOR_REQUEST: Int = 1
     private val ACC_PROFILE_CREATOR_REQUEST: Int = 2
+    private val ACC_PROFILE_EDITOR_REQUEST: Int = 3
+
     private lateinit var config: AccConfig
+    private lateinit var sharedPrefs: SharedPreferences
     private val gson: Gson = Gson()
+
+    private var profilesAdapter: ProfilesViewAdapter? = null
 
     //Used to update battery info every second
     private val handler = Handler()
@@ -87,7 +97,74 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initUi() {
+    private fun initProfiles(savedInstanceState: Bundle? = null) {
+        val profiles = File(filesDir, "profiles")
+
+        val profileList =
+            if(!profiles.exists())
+                emptyList()
+            else
+                gson.fromJson(profiles.readText(), Array<String>::class.java).toList()
+
+        if(profileList.isNotEmpty()) {
+            val currentProfile = sharedPrefs.getString("PROFILE", null)
+
+            val layoutManager = GridLayoutManager(this, 3)
+            profilesAdapter = ProfilesViewAdapter(ArrayList(profileList.map { Profile(it) }), currentProfile) { profile, longPress ->
+                //TODO handle profile select
+                if(longPress) {
+                    MaterialDialog(this@MainActivity).show {
+                        listItems(R.array.profile_long_press_options) { _, index, _ ->
+                            when(index) {
+                                0 -> {
+                                    Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+                                        intent.putExtra("profileName", profile.profileName)
+                                        intent.putExtra("config", ProfileUtils.readProfile(profile.profileName, this@MainActivity, gson))
+                                        startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
+                                    }
+                                }
+                                1 -> {
+                                    val f = File(context.filesDir, "$profile.profile")
+                                    f.delete()
+
+                                    ProfileUtils.writeProfiles(
+                                        this@MainActivity,
+                                        ProfileUtils
+                                            .listProfiles(this@MainActivity, gson).filter { it != profile.profileName },
+                                        gson
+                                    ) //update profile list without this element
+
+                                    profilesAdapter?.remove(profile)
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    //apply profile
+                    val profileConfig = ProfileUtils.readProfile(profile.profileName, this@MainActivity, gson)
+
+                    doAsync {
+                        profileConfig.updateAcc()
+
+                        ProfileUtils.saveCurrentProfile(profile.profileName, sharedPrefs)
+                    }
+
+                    profilesAdapter?.selectedProfile = profile.profileName
+                    profilesAdapter?.notifyDataSetChanged()
+                }
+            }
+            profiles_recyclerview.layoutManager = layoutManager
+            profiles_recyclerview.adapter = profilesAdapter
+
+            if(savedInstanceState != null) profilesAdapter!!.restoreState(savedInstanceState)
+
+            profiles_cardview.visibility = android.view.View.VISIBLE
+        } else {
+            profiles_cardview.visibility = android.view.View.GONE
+        }
+    }
+
+    private fun initUi(savedInstanceState: Bundle? = null) {
         try {
             this.config = AccUtils.readConfig()
         } catch (ex: Exception) {
@@ -96,6 +173,10 @@ class MainActivity : AppCompatActivity() {
             this.config = AccUtils.defaultConfig //if config is null I use default config values.
         }
 
+        //profiles
+        initProfiles(savedInstanceState)
+
+        //Rest of the UI
         edit_config.setOnClickListener {
             Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
                 startActivityForResult(intent, ACC_CONFIG_EDITOR_REQUEST)
@@ -122,9 +203,7 @@ class MainActivity : AppCompatActivity() {
             AccUtils.updateResetUnplugged(isChecked)
 
             //If I manually modify the config I have to set current profile to null (custom profile)
-            val editor = PreferenceManager.getDefaultSharedPreferences(this).edit()
-            editor.putString("PROFILE", null)
-            editor.apply()
+            ProfileUtils.saveCurrentProfile(null, sharedPrefs)
         }
 
         reset_stats_on_unplugged_switch.isChecked = config.resetUnplugged
@@ -146,6 +225,8 @@ class MainActivity : AppCompatActivity() {
             .setGitHubUserAndRepo("MatteCarra", "AccA")
             //.setIcon(R.drawable.app_icon)
         appUpdater.start()
+
+        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST)
@@ -172,7 +253,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        initUi()
+        initUi(savedInstanceState)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -184,44 +265,54 @@ class MainActivity : AppCompatActivity() {
                         config.updateAcc()
 
                         //If I manually modify the config I have to set current profile to null (custom profile)
-                        val editor = PreferenceManager.getDefaultSharedPreferences(this@MainActivity).edit()
-                        editor.putString("PROFILE", null)
-                        editor.apply()
+                        ProfileUtils.saveCurrentProfile(null, sharedPrefs)
                     }
                 }
             }
         } else if(requestCode == ACC_PROFILE_CREATOR_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 if(data?.getBooleanExtra("hasChanges", false) == true) {
-                    config = data.getParcelableExtra("config")
-
                     MaterialDialog(this)
                         .show {
                             title(R.string.profile_name)
                             message(R.string.dialog_profile_name_message)
                             input { _, charSequence ->
-                                //profiles index
-                                val profiles = File(context.filesDir, "profiles")
-                                val profileList =
-                                    if(!profiles.exists())
-                                        mutableListOf()
-                                    else
-                                        gson.fromJson(profiles.readText(), Array<String>::class.java).toMutableList()
+                                val config: AccConfig = data.getParcelableExtra("config")
 
-                                if(!profileList.contains(charSequence.toString())) { //if not modifying element
+                                //profiles index
+                                val profileList = ProfileUtils.listProfiles(this@MainActivity, gson).toMutableList()
+
+                                if(!profileList.contains(charSequence.toString())) {
                                     profileList.add(charSequence.toString())
-                                    val profilesJson = gson.toJson(profileList)
-                                    profiles.writeText(profilesJson)
+                                    ProfileUtils.writeProfiles(this@MainActivity, profileList, gson) //Update profiles file with new profile
                                 }
 
                                 //Saving profile
                                 val f = File(context.filesDir, "$charSequence.profile")
-                                val json = gson.toJson(this@MainActivity.config)
+                                val json = gson.toJson(config)
                                 f.writeText(json)
+
+                                if(profileList.size == 1) {
+                                    initProfiles()
+                                } else {
+                                    profilesAdapter?.add(Profile(charSequence.toString()))
+                                }
                             }
                             positiveButton(R.string.save)
                             negativeButton(android.R.string.cancel)
                         }
+                }
+            }
+        } else if(requestCode == ACC_PROFILE_EDITOR_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                if(data?.getBooleanExtra("hasChanges", false) == true) {
+                    val config: AccConfig = data.getParcelableExtra("config")
+                    val profileName = data.getStringExtra("profileName")
+
+                    //Saving profile
+                    val f = File(this@MainActivity.filesDir, "$profileName.profile")
+                    val json = gson.toJson(config)
+                    f.writeText(json)
                 }
             }
         }

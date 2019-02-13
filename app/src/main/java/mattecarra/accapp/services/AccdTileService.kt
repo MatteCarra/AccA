@@ -7,10 +7,10 @@ import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import android.util.Log
 import com.topjohnwu.superuser.Shell
-import mattecarra.accapp.AccUtils.accStartDeamon
-import mattecarra.accapp.AccUtils.accStopDeamon
-import mattecarra.accapp.AccUtils.isAccdRunning
-import mattecarra.accapp.AccUtils.isBatteryCharging
+import mattecarra.accapp.utils.AccUtils.accStartDeamon
+import mattecarra.accapp.utils.AccUtils.accStopDeamon
+import mattecarra.accapp.utils.AccUtils.isAccdRunning
+import mattecarra.accapp.utils.AccUtils.isBatteryCharging
 import mattecarra.accapp.R
 
 @TargetApi(Build.VERSION_CODES.N)

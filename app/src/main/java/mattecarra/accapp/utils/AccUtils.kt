@@ -1,4 +1,4 @@
-package mattecarra.accapp
+package mattecarra.accapp.utils
 
 import android.os.Environment
 import com.topjohnwu.superuser.Shell

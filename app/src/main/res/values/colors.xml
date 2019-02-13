@@ -4,5 +4,7 @@
     <color name="colorPrimaryDark">#9a0007</color>
     <color name="colorAccent">#1976d2</color>
     <color name="black">#000000</color>
-
+    <color name="pressed_color">#1976d2</color>
+    <color name="selected_color">#d81b60</color>
+    <color name="focused_color">#689f38</color>
 </resources>

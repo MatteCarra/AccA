@@ -52,4 +52,11 @@
     <string name="dialog_profile_name_message">Enter you want to assign to this profile:</string>
     <string name="no_profiles">Profiles not set</string>
     <string name="profile_not_selected">Custom settings</string>
+    <string name="profile_tile_label">Profile: %1$s</string>
+    <string name="profiles_text_view">Profiles (long press to edit/delete):</string>
+
+    <string-array name="profile_long_press_options">
+        <item>Edit</item>
+        <item>Delete</item>
+    </string-array>
 </resources>

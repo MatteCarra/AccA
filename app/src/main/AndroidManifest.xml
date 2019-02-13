@@ -34,9 +34,9 @@
         </activity>
 
         <service
-                android:name=".services.AccdTileService"
+                android:name=".services.AccProfileTileService"
                 android:icon="@drawable/ic_battery_charging_80"
-                android:label="Accd manager"
+                android:label="Acc profile editor"
                 android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE"/>
@@ -44,9 +44,9 @@
         </service>
 
         <service
-                android:name=".services.AccProfileTileService"
+                android:name=".services.AccdTileService"
                 android:icon="@drawable/ic_battery_charging_80"
-                android:label="Acc profile editor"
+                android:label="Accd manager"
                 android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE"/>

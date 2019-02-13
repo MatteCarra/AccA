@@ -10,6 +10,7 @@ import android.service.quicksettings.TileService
 import com.google.gson.Gson
 import mattecarra.accapp.R
 import mattecarra.accapp.data.AccConfig
+import mattecarra.accapp.utils.ProfileUtils
 import org.jetbrains.anko.doAsync
 import java.io.File
 
@@ -17,22 +18,18 @@ import java.io.File
 class AccProfileTileService: TileService() {
     private val LOG_TAG = "AccProfileTileService"
 
-    fun updateTile() {
-        val sharedPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-
+    private fun updateTile() {
         val profiles = File(this.filesDir, "profiles")
         val tile = qsTile
-
-
 
         if(!profiles.exists()) {
             tile.label = getString(R.string.no_profiles)
             tile.state =  Tile.STATE_UNAVAILABLE
             tile.icon = Icon.createWithResource(this, R.drawable.ic_battery_charging_full) //use acc icon once ready
         } else {
-            val currentProfile = sharedPrefs.getString("PROFILE", null)
+            val currentProfile = ProfileUtils.getCurrentProfile(PreferenceManager.getDefaultSharedPreferences(this))
             if(currentProfile != null) {
-                tile.label =  currentProfile
+                tile.label =  getString(R.string.profile_tile_label, currentProfile)
                 tile.state =  Tile.STATE_ACTIVE
             } else {
                 tile.label = getString(R.string.profile_not_selected)
@@ -56,19 +53,14 @@ class AccProfileTileService: TileService() {
 
     override fun onClick() {
         super.onClick()
-        val sharedPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         //Get profiles list and increment current profile of one unit.
-        val gson: Gson = Gson()
-        val profiles = File(filesDir, "profiles")
+        val gson = Gson()
+        val sharedPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
-        val profileList =
-            if(!profiles.exists())
-                emptyList()
-            else
-                gson.fromJson(profiles.readText(), Array<String>::class.java).toList()
+        val profileList = ProfileUtils.listProfiles(this, gson)
 
-        val currentProfile = sharedPrefs.getString("PROFILE", null)
+        val currentProfile = ProfileUtils.getCurrentProfile(sharedPrefs)
 
         var index = (currentProfile?.let { profileList.indexOf(it) } ?: -1) + 1
         if(index >= profileList.size)
@@ -76,20 +68,18 @@ class AccProfileTileService: TileService() {
 
         val profileToApply = profileList[index]
 
-        //Update tile infos
-        qsTile.state =  Tile.STATE_ACTIVE
-        qsTile.label =  profileToApply
-        qsTile.updateTile()
-
         //apply profile
-        val file = File(filesDir, "$profileToApply.profile")
-        val profileConfig = gson.fromJson(file.readText(), AccConfig::class.java)
+        val profileConfig = ProfileUtils.readProfile(profileToApply, this, gson)
+
         doAsync {
             profileConfig.updateAcc()
 
-            val editor = PreferenceManager.getDefaultSharedPreferences(this@AccProfileTileService).edit()
-            editor.putString("PROFILE", profileToApply)
-            editor.apply()
+            ProfileUtils.saveCurrentProfile(profileToApply, sharedPrefs)
         }
+
+        //Update tile infos
+        qsTile.state =  Tile.STATE_ACTIVE
+        qsTile.label =  getString(R.string.profile_tile_label, profileToApply)
+        qsTile.updateTile()
     }
 }

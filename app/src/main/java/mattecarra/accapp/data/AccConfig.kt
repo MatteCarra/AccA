@@ -1,9 +1,8 @@
 package mattecarra.accapp.data
 
 import android.os.Parcelable
-import com.google.gson.Gson
 import kotlinx.android.parcel.Parcelize
-import mattecarra.accapp.AccUtils
+import mattecarra.accapp.utils.AccUtils
 
 @Parcelize
 class Cooldown(var charge: Int, var pause: Int): Parcelable {

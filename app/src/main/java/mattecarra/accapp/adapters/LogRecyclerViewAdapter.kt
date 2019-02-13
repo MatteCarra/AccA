@@ -13,11 +13,11 @@ import kotlin.math.log
 class LogRecyclerViewAdapter(val lines: ArrayList<String>, private val listener: (String) -> Unit) : RecyclerView.Adapter<LogRecyclerViewAdapter.LogViewHolder>() {
 
     fun saveState(bundle: Bundle) {
-        bundle.putStringArrayList("lines", lines)
+        bundle.putStringArrayList("profiles", lines)
     }
 
     fun restoreState(bundle: Bundle) {
-        bundle.getStringArrayList("lines")?.let {
+        bundle.getStringArrayList("profiles")?.let {
             lines.addAll(it)
         }
     }

@@ -11,7 +11,7 @@ import androidx.appcompat.widget.Toolbar
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
 import kotlinx.android.synthetic.main.content_acc_config_editor.*
-import mattecarra.accapp.AccUtils
+import mattecarra.accapp.utils.AccUtils
 import mattecarra.accapp.R
 import mattecarra.accapp.data.AccConfig
 import mattecarra.accapp.data.Cooldown
@@ -27,6 +27,8 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         returnIntent.putExtra("hasChanges", unsavedChanges)
         if(unsavedChanges)
             returnIntent.putExtra("config", config)
+        if(intent.hasExtra("profileName"))
+            returnIntent.putExtra("profileName", intent.getStringExtra("profileName"))
         setResult(Activity.RESULT_OK, returnIntent)
         finish()
     }
@@ -40,12 +42,16 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        try {
-            this.config = AccUtils.readConfig()
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-            showConfigReadError()
-            this.config = AccUtils.defaultConfig //if config is null I use default config values.
+        if(intent.hasExtra("config")) {
+            this.config = intent.getParcelableExtra("config")
+        } else {
+            try {
+                this.config = AccUtils.readConfig()
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+                showConfigReadError()
+                this.config = AccUtils.defaultConfig //if config is null I use default config values.
+            }
         }
 
         initUi()
