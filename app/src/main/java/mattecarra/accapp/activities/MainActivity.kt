@@ -271,37 +271,35 @@ class MainActivity : AppCompatActivity() {
             }
         } else if(requestCode == ACC_PROFILE_CREATOR_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                if(data?.getBooleanExtra("hasChanges", false) == true) {
-                    MaterialDialog(this)
-                        .show {
-                            title(R.string.profile_name)
-                            message(R.string.dialog_profile_name_message)
-                            input { _, charSequence ->
-                                val config: AccConfig = data.getParcelableExtra("config")
+                MaterialDialog(this)
+                    .show {
+                        title(R.string.profile_name)
+                        message(R.string.dialog_profile_name_message)
+                        input { _, charSequence ->
+                            val config: AccConfig = data.getParcelableExtra("config")
 
-                                //profiles index
-                                val profileList = ProfileUtils.listProfiles(this@MainActivity, gson).toMutableList()
+                            //profiles index
+                            val profileList = ProfileUtils.listProfiles(this@MainActivity, gson).toMutableList()
 
-                                if(!profileList.contains(charSequence.toString())) {
-                                    profileList.add(charSequence.toString())
-                                    ProfileUtils.writeProfiles(this@MainActivity, profileList, gson) //Update profiles file with new profile
-                                }
-
-                                //Saving profile
-                                val f = File(context.filesDir, "$charSequence.profile")
-                                val json = gson.toJson(config)
-                                f.writeText(json)
-
-                                if(profileList.size == 1) {
-                                    initProfiles()
-                                } else {
-                                    profilesAdapter?.add(Profile(charSequence.toString()))
-                                }
+                            if(!profileList.contains(charSequence.toString())) {
+                                profileList.add(charSequence.toString())
+                                ProfileUtils.writeProfiles(this@MainActivity, profileList, gson) //Update profiles file with new profile
                             }
-                            positiveButton(R.string.save)
-                            negativeButton(android.R.string.cancel)
+
+                            //Saving profile
+                            val f = File(context.filesDir, "$charSequence.profile")
+                            val json = gson.toJson(config)
+                            f.writeText(json)
+
+                            if(profileList.size == 1) {
+                                initProfiles()
+                            } else {
+                                profilesAdapter?.add(Profile(charSequence.toString()))
+                            }
                         }
-                }
+                        positiveButton(R.string.save)
+                        negativeButton(android.R.string.cancel)
+                    }
             }
         } else if(requestCode == ACC_PROFILE_EDITOR_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
