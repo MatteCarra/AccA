@@ -13,20 +13,9 @@ import mattecarra.accapp.R
 import java.util.ArrayList
 
 @Parcelize
-data class Profile(val profileName: String): Parcelable
+data class Profile(var profileName: String): Parcelable
 
 class ProfilesViewAdapter(val profiles: ArrayList<Profile>, var selectedProfile: String?, private val listener: (Profile, Boolean) -> Unit) : RecyclerView.Adapter<ProfilesViewAdapter.ProfileViewHolder>() {
-
-    fun saveState(bundle: Bundle) {
-        bundle.putParcelableArrayList("profiles", profiles)
-    }
-
-    fun restoreState(bundle: Bundle) {
-        bundle.getParcelableArrayList<Profile>("profiles")?.let {
-            profiles.addAll(it)
-        }
-    }
-
     fun add(profile: Profile) {
         profiles.add(profile)
         notifyItemInserted(profiles.size - 1)
@@ -36,7 +25,14 @@ class ProfilesViewAdapter(val profiles: ArrayList<Profile>, var selectedProfile:
         val index = profiles.indexOf(profile)
         if(index != -1) {
             profiles.removeAt(index)
-            notifyItemRemoved(profiles.size - 1)
+            notifyItemRemoved(index)
+        }
+    }
+
+    fun notifyItemChanged(profile: Profile) {
+        val index = profiles.indexOf(profile)
+        if(index != -1) {
+            notifyItemChanged(index)
         }
     }
 

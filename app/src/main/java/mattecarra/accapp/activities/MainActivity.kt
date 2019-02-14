@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initProfiles(savedInstanceState: Bundle? = null) {
+    private fun initProfiles() {
         val profiles = File(filesDir, "profiles")
 
         val profileList =
@@ -123,6 +123,35 @@ class MainActivity : AppCompatActivity() {
                                     }
                                 }
                                 1 -> {
+                                    MaterialDialog(this@MainActivity)
+                                        .show {
+                                            title(R.string.profile_name)
+                                            message(R.string.dialog_profile_name_message)
+                                            input(prefill = profile.profileName) { _, charSequence ->
+                                                //profiles index
+                                                val profileList: MutableList<String> = ProfileUtils.listProfiles(this@MainActivity, gson).toMutableList()
+
+                                                if(profileList.contains(charSequence.toString())) {
+                                                    //TODO input not valid
+                                                    return@input
+                                                }
+
+                                                profileList.add(charSequence.toString())
+                                                profileList.remove(profile.profileName) //remove all profile name
+                                                ProfileUtils.writeProfiles(this@MainActivity, profileList, gson) //Update profiles file with new profile
+
+                                                //Saving profile
+                                                val f = File(context.filesDir, "${profile.profileName}.profile")
+                                                f.renameTo(File(context.filesDir, "$charSequence.profile"))
+
+                                                profile.profileName = charSequence.toString()
+                                                profilesAdapter?.notifyItemChanged(profile)
+                                            }
+                                            positiveButton(R.string.save)
+                                            negativeButton(android.R.string.cancel)
+                                        }
+                                }
+                                2 -> {
                                     val f = File(context.filesDir, "$profile.profile")
                                     f.delete()
 
@@ -155,15 +184,13 @@ class MainActivity : AppCompatActivity() {
             profiles_recyclerview.layoutManager = layoutManager
             profiles_recyclerview.adapter = profilesAdapter
 
-            if(savedInstanceState != null) profilesAdapter!!.restoreState(savedInstanceState)
-
             profiles_cardview.visibility = android.view.View.VISIBLE
         } else {
             profiles_cardview.visibility = android.view.View.GONE
         }
     }
 
-    private fun initUi(savedInstanceState: Bundle? = null) {
+    private fun initUi() {
         try {
             this.config = AccUtils.readConfig()
         } catch (ex: Exception) {
@@ -173,7 +200,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         //profiles
-        initProfiles(savedInstanceState)
+        initProfiles()
 
         //Rest of the UI
         edit_config.setOnClickListener {
@@ -252,7 +279,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        initUi(savedInstanceState)
+        initUi()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

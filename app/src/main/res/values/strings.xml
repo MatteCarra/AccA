@@ -57,6 +57,7 @@
 
     <string-array name="profile_long_press_options">
         <item>Edit</item>
+        <item>Rename</item>
         <item>Delete</item>
     </string-array>
 </resources>
