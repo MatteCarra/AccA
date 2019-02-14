@@ -265,19 +265,25 @@ class MainActivity : AppCompatActivity() {
 
                         //If I manually modify the config I have to set current profile to null (custom profile)
                         ProfileUtils.saveCurrentProfile(null, sharedPrefs)
+                        profilesAdapter?.let { adapter ->
+                            uiThread {
+                                adapter.selectedProfile = null
+                                adapter.notifyDataSetChanged()
+                            }
+                        }
                     }
                 }
             }
         } else if(requestCode == ACC_PROFILE_CREATOR_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 if(data != null) {
+                    val config: AccConfig = data.getParcelableExtra("config")
+
                     MaterialDialog(this)
                         .show {
                             title(R.string.profile_name)
                             message(R.string.dialog_profile_name_message)
                             input { _, charSequence ->
-                                val config: AccConfig = data.getParcelableExtra("config")
-
                                 //profiles index
                                 val profileList = ProfileUtils.listProfiles(this@MainActivity, gson).toMutableList()
 
