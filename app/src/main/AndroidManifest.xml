@@ -52,5 +52,7 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE"/>
             </intent-filter>
         </service>
+
+        <receiver android:name="com.github.javiersantos.appupdater.NotificationReceiver"/>
     </application>
 </manifest>
