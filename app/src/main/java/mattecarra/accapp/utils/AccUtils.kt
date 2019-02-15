@@ -155,7 +155,11 @@ object AccUtils {
     }
 
     fun accStartDeamon(): Boolean {
-        return Shell.su("accd").exec().isSuccess
+        return Shell.su("acc -D start").exec().isSuccess
+    }
+
+    fun accRestartDeamon(): Boolean {
+        return Shell.su("acc -D restart").exec().isSuccess
     }
 
     fun accStopDeamon(): Boolean {

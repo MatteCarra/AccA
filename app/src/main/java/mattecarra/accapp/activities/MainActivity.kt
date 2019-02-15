@@ -224,6 +224,10 @@ class MainActivity : AppCompatActivity() {
                 AccUtils.accStartDeamon()
         }
 
+        deamon_restart.setOnClickListener {
+            AccUtils.accRestartDeamon()
+        }
+
         reset_stats_on_unplugged_switch.setOnCheckedChangeListener { _, isChecked ->
             config.resetUnplugged = isChecked
             AccUtils.updateResetUnplugged(isChecked)

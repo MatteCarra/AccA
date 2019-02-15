@@ -7,8 +7,8 @@
     <string name="title_activity_log_view_file_name">Logs: %1$s</string>
 
 
-    <string name="acc_deamon_status_running">ACC deamon is running</string>
-    <string name="acc_deamon_status_not_running">ACC deamon is not running</string>
+    <string name="acc_deamon_status_running">ACC is running</string>
+    <string name="acc_deamon_status_not_running">ACC is not running</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
     <string name="status_label">Status:</string>
@@ -54,6 +54,7 @@
     <string name="profile_not_selected">Custom settings</string>
     <string name="profile_tile_label">Profile: %1$s</string>
     <string name="profiles_text_view">Profiles (long press to edit/delete):</string>
+    <string name="restart">Restart</string>
 
     <string-array name="profile_long_press_options">
         <item>Edit</item>
