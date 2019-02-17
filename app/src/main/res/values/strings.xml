@@ -55,6 +55,11 @@
     <string name="profile_tile_label">Profile: %1$s</string>
     <string name="profiles_text_view">Profiles (long press to edit/delete):</string>
     <string name="restart">Restart</string>
+    <string name="schedule_config_set">Schedule job</string>
+    <string name="invalid_chars">The filename contains invalid characters</string>
+    <string name="recurrent_schedule">Run only once</string>
+    <string name="execution_time">Execution time</string>
+    <string name="new_config">New custom config</string>
 
     <string-array name="profile_long_press_options">
         <item>Edit</item>

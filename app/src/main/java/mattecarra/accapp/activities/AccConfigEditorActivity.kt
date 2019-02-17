@@ -17,6 +17,7 @@ import mattecarra.accapp.data.AccConfig
 import mattecarra.accapp.data.Cooldown
 import android.app.Activity
 import android.content.Intent
+import android.os.Parcelable
 
 class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, CompoundButton.OnCheckedChangeListener {
     private var unsavedChanges = false
@@ -24,10 +25,10 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
 
     private fun returnResults() {
         val returnIntent = Intent()
+        if(intent.hasExtra("data")) //data is redirected to the result for convenience
+            returnIntent.putExtra("data", intent.getBundleExtra("config"))
         returnIntent.putExtra("hasChanges", unsavedChanges)
         returnIntent.putExtra("config", config)
-        if(intent.hasExtra("profileName"))
-            returnIntent.putExtra("profileName", intent.getStringExtra("profileName"))
         setResult(Activity.RESULT_OK, returnIntent)
         finish()
     }

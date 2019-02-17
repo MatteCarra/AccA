@@ -140,6 +140,14 @@
                         android:text="@string/create_acc_profile"
                         android:layout_gravity="center_horizontal"/>
 
+                <Button
+                        android:id="@+id/create_schedule"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schedule_config_set"
+                        android:layout_gravity="center_horizontal"/>
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

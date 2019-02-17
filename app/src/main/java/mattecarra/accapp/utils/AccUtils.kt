@@ -100,28 +100,46 @@ object AccUtils {
         }
     }
 
+    //update temp command
+    fun updateTempCommand(cooldDownTemp: Int, pauseChargingTemp: Int, waitSeconds: Int) = "acc -s temp ${cooldDownTemp*10}-${pauseChargingTemp*10}_$waitSeconds"
+
     fun updateTemp(cooldDownTemp: Int, pauseChargingTemp: Int, waitSeconds: Int): Boolean {
-        return Shell.su("acc -s temp ${cooldDownTemp*10}-${pauseChargingTemp*10}_${waitSeconds}").exec().isSuccess
+        return Shell.su(updateTempCommand(cooldDownTemp, pauseChargingTemp, waitSeconds)).exec().isSuccess
     }
+
+    //Update cool down command
+    fun updateCoolDownCommand(charge: Int, pause: Int) = "acc -s coolDown $charge/$pause"
 
     fun updateCoolDown(charge: Int, pause: Int): Boolean {
-        return Shell.su("acc -s coolDown ${charge}/${pause}").exec().isSuccess
+        return Shell.su(updateCoolDownCommand(charge, pause)).exec().isSuccess
     }
+
+    //Update capacity command
+    fun updateCapacityCommand(shutdown: Int, coolDown: Int, resume: Int, pause: Int): String = "acc -s capacity $shutdown,$coolDown,$resume-$pause"
 
     fun updateCapacity(shutdown: Int, coolDown: Int, resume: Int, pause: Int): Boolean {
-        return Shell.su("acc -s capacity ${shutdown},${coolDown},${resume}-${pause}").exec().isSuccess
+        return Shell.su(updateCapacityCommand(shutdown, coolDown, resume, pause)).exec().isSuccess
     }
+
+    //reset unplugged command
+    fun updateResetUnpluggedCommand(resetUnplugged: Boolean): String = "acc -s resetUnplugged $resetUnplugged"
 
     fun updateResetUnplugged(resetUnplugged: Boolean): Boolean {
-        return Shell.su("acc -s resetUnplugged $resetUnplugged").exec().isSuccess
+        return Shell.su(updateResetUnpluggedCommand(resetUnplugged)).exec().isSuccess
     }
+
+    //update on boot exit
+    fun updateOnBootExitCommand(value: Boolean): String = "acc -s onBootExit $value"
 
     fun updateOnBootExit(value: Boolean): Boolean {
-        return Shell.su("acc -s onBootExit $value").exec().isSuccess
+        return Shell.su(updateOnBootExitCommand(value)).exec().isSuccess
     }
 
+    //Update on boot
+    fun updateOnBootCommand(value: String?): String = "acc -s onBoot ${value ?: ""}"
+
     fun updateOnBoot(value: String?): Boolean {
-        return Shell.su("acc -s onBoot ${value ?: ""}").exec().isSuccess
+        return Shell.su(updateOnBootCommand(value)).exec().isSuccess
     }
 
     fun resetBatteryStats(): Boolean {
@@ -164,5 +182,9 @@ object AccUtils {
 
     fun accStopDeamon(): Boolean {
         return Shell.su("acc -D stop").exec().isSuccess
+    }
+
+    fun schedule(once: Boolean, hour: Int, minute: Int, commands: List<String>): Boolean {
+        return Shell.su("djs ${if(once) 'o' else 'o' } $hour $minute \"${commands.joinToString(separator = "; ")}\"").exec().isSuccess
     }
 }

@@ -5,13 +5,14 @@ import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceManager
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
@@ -20,6 +21,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItems
@@ -45,6 +48,7 @@ class MainActivity : AppCompatActivity() {
     private val ACC_CONFIG_EDITOR_REQUEST: Int = 1
     private val ACC_PROFILE_CREATOR_REQUEST: Int = 2
     private val ACC_PROFILE_EDITOR_REQUEST: Int = 3
+    private val ACC_PROFILE_SCHEDULER_REQUEST: Int = 4
 
     private lateinit var config: AccConfig
     private lateinit var sharedPrefs: SharedPreferences
@@ -101,13 +105,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initProfiles() {
-        val profiles = File(filesDir, "profiles")
-
-        val profileList =
-            if(!profiles.exists())
-                emptyList()
-            else
-                gson.fromJson(profiles.readText(), Array<String>::class.java).toList()
+        val profileList = ProfileUtils.listProfiles(this, gson)
 
         if(profileList.isNotEmpty()) {
             val currentProfile = sharedPrefs.getString("PROFILE", null)
@@ -120,7 +118,10 @@ class MainActivity : AppCompatActivity() {
                             when(index) {
                                 0 -> {
                                     Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-                                        intent.putExtra("profileName", profile.profileName)
+                                        val dataBundle = Bundle()
+                                        dataBundle.putString("profileName", profile.profileName)
+
+                                        intent.putExtra("data", dataBundle)
                                         intent.putExtra("config", ProfileUtils.readProfile(profile.profileName, this@MainActivity, gson))
                                         startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
                                     }
@@ -216,6 +217,55 @@ class MainActivity : AppCompatActivity() {
             Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
                 startActivityForResult(intent, ACC_PROFILE_CREATOR_REQUEST)
             }
+        }
+
+        create_schedule.setOnClickListener {
+            val dialog = MaterialDialog(this@MainActivity).show {
+                customView(R.layout.schedule_dialog)
+                positiveButton(R.string.save) { dialog ->
+                    val view = dialog.getCustomView()
+                    val spinner = view.findViewById<Spinner>(R.id.profile_selector)
+                    val executeOnceCheckBox = view.findViewById<CheckBox>(R.id.schedule_recurrency)
+                    val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
+                    val hour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.hour else timePicker.currentHour
+                    val minute = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.minute else timePicker.currentMinute
+
+                    if(spinner.selectedItemId == 0.toLong()) {
+                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+                            val dataBundle = Bundle()
+                            dataBundle.putInt("hour", hour)
+                            dataBundle.putInt("minute", minute)
+                            dataBundle.putBoolean("executeOnce", executeOnceCheckBox.isChecked)
+
+                            intent.putExtra("data", dataBundle)
+                            startActivityForResult(intent, ACC_PROFILE_SCHEDULER_REQUEST)
+                        }
+                    } else {
+                        val profile = spinner.selectedItem as String
+                        val configProfile = ProfileUtils.readProfile(profile, this@MainActivity, gson)
+
+                        AccUtils.schedule(
+                            executeOnceCheckBox.isChecked,
+                            hour,
+                            minute,
+                            configProfile.getCommands()
+                        )
+                    }
+                }
+                negativeButton(android.R.string.cancel)
+            }
+
+            val profiles = ArrayList<String>()
+            profiles.add(getString(R.string.new_config))
+            profiles.addAll(ProfileUtils.listProfiles(this, gson))
+            val view = dialog.getCustomView()
+            val spinner = view.findViewById<Spinner>(R.id.profile_selector)
+            val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, profiles)
+
+            view.findViewById<TimePicker>(R.id.time_picker).setIs24HourView(true)
+
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.adapter = adapter;
         }
 
         deamon_start_stop.setOnClickListener {
@@ -355,13 +405,24 @@ class MainActivity : AppCompatActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 if(data?.getBooleanExtra("hasChanges", false) == true) {
                     val config: AccConfig = data.getParcelableExtra("config")
-                    val profileName = data.getStringExtra("profileName")
+                    val profileName = data.getBundleExtra("data").getString("profileName")
 
                     //Saving profile
                     val f = File(this@MainActivity.filesDir, "$profileName.profile")
                     val json = gson.toJson(config)
                     f.writeText(json)
                 }
+            }
+        } else if(requestCode == ACC_PROFILE_SCHEDULER_REQUEST && resultCode == Activity.RESULT_OK) {
+            if(data?.hasExtra("data") == true) {
+                val dataBundle = data.getBundleExtra("data")
+
+                AccUtils.schedule(
+                    dataBundle.getBoolean("executeOnce"),
+                    dataBundle.getInt("hour"),
+                    dataBundle.getInt("minute"),
+                    data.getParcelableExtra<AccConfig>("config").getCommands()
+                )
             }
         }
     }
