@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/voltage_control_file"
+            android:textColor="#000000"
+            android:textAppearance="?android:textAppearanceMedium"
+    />
+
+    <EditText
+            android:id="@+id/voltage_control_file"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:hint="@string/voltage_control_file"/>
+
+    <CheckBox
+            android:id="@+id/enable_voltage_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="18dp"
+            android:gravity="center"
+            android:text="@string/enable_voltage_limit"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/voltage_max"
+            android:textColor="#000000"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:textAppearance="?android:textAppearanceMedium"
+    />
+
+    <EditText
+            android:id="@+id/voltage_max"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:hint="@string/voltage_max"
+            android:inputType="number"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"/>
+
+</LinearLayout>

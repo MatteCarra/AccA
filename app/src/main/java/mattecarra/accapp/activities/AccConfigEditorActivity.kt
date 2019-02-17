@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.CompoundButton
-import android.widget.NumberPicker
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.afollestad.materialdialogs.MaterialDialog
@@ -18,6 +16,13 @@ import mattecarra.accapp.data.Cooldown
 import android.app.Activity
 import android.content.Intent
 import android.os.Parcelable
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.*
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.setActionButtonEnabled
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 
 class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, CompoundButton.OnCheckedChangeListener {
     private var unsavedChanges = false
@@ -25,8 +30,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
 
     private fun returnResults() {
         val returnIntent = Intent()
-        if(intent.hasExtra("data")) //data is redirected to the result for convenience
-            returnIntent.putExtra("data", intent.getBundleExtra("config"))
+        returnIntent.putExtra("data", intent.getBundleExtra("data"))
         returnIntent.putExtra("hasChanges", unsavedChanges)
         returnIntent.putExtra("config", config)
         setResult(Activity.RESULT_OK, returnIntent)
@@ -187,6 +191,55 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         pause_ratio_picker.maxValue = 120 //no reason behind this value
         pause_ratio_picker.value = config.cooldown?.pause ?: 10
         pause_ratio_picker.setOnValueChangedListener(this)
+
+        //voltage control
+        voltage_control_file.text = config.voltControl.voltFile ?: "Not supported"
+        voltage_max.text = config.voltControl.voltMax?.let { "${it} mV" } ?: getString(R.string.disabled)
+        edit_voltage_limit.setOnClickListener {
+            val dialog = MaterialDialog(this@AccConfigEditorActivity).show {
+                customView(R.layout.voltage_control_editor_dialog)
+                positiveButton(android.R.string.ok) { dialog ->
+                    val view = dialog.getCustomView()
+                    val voltageControl = view.findViewById<EditText>(R.id.voltage_control_file)
+                    val voltageMax = view.findViewById<EditText>(R.id.voltage_max)
+                    val checkBox = dialog.findViewById<CheckBox>(R.id.enable_voltage_max)
+
+                    val voltageMaxInt = voltageMax.text.toString().toIntOrNull()
+                    if(checkBox.isChecked && voltageMaxInt != null) {
+                        this@AccConfigEditorActivity.config.voltControl.voltMax = voltageMaxInt
+                        this@AccConfigEditorActivity.config.voltControl.voltFile = voltageControl.text.toString()
+                    } else {
+                        this@AccConfigEditorActivity.config.voltControl.voltFile = null
+                    }
+                    unsavedChanges = true
+                }
+                negativeButton(android.R.string.cancel)
+            }
+            val view = dialog.getCustomView()
+            val voltageControl = view.findViewById<EditText>(R.id.voltage_control_file)
+            val voltageMax = view.findViewById<EditText>(R.id.voltage_max)
+            val checkBox = dialog.findViewById<CheckBox>(R.id.enable_voltage_max)
+            voltageMax.setText(config.voltControl.voltMax?.toString() ?: "", TextView.BufferType.EDITABLE)
+            checkBox.setOnCheckedChangeListener { _, isChecked ->
+                voltageMax.isEnabled = isChecked
+                val isValid = !voltageMax.text.isEmpty() || !isChecked
+                voltageMax.error = if (isValid) null else getString(R.string.invalid_chars)
+                dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
+            }
+            checkBox.isChecked = config.voltControl.voltMax != null
+            voltageControl.setText(config.voltControl.voltFile ?: "", TextView.BufferType.EDITABLE)
+            voltageMax.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {}
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    val isValid = s?.isEmpty() == false
+                    voltageMax.error = if(isValid) null else getString(R.string.invalid_chars)
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
+                }
+            })
+        }
     }
 
     //Listener to enable/disable temp control and cool down

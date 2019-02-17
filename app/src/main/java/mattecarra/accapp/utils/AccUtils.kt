@@ -14,15 +14,21 @@ object AccUtils {
     val RESET_UNPLUGGED_CONFIG_REGEXP = """^\s*resetUnplugged=(true|false)""".toRegex(RegexOption.MULTILINE)
     val ON_BOOT_EXIT = """^\s*onBootExit=(true|false)""".toRegex(RegexOption.MULTILINE)
     val ON_BOOT = """^\s*onBoot=([^#]+)""".toRegex(RegexOption.MULTILINE)
+    val VOLT_FILE = """^\s*voltFile=([^#]+)""".toRegex(RegexOption.MULTILINE)
 
     val defaultConfig: AccConfig = AccConfig(
         Capacity(5, 60, 70, 80),
         Cooldown(50, 10),
         Temp(40, 45, 90),
+        VoltControl(null, null),
         false,
         false,
         null
     )
+
+    fun getVoltageMax(voltageFile: String): Int? {
+        return Shell.su("acc -v $voltageFile:-").exec().out.joinToString(separator = "\n").toIntOrNull()
+    }
 
     fun readConfig(): AccConfig {
         val config = readConfigToStringArray().joinToString(separator = "\n")
@@ -46,10 +52,14 @@ object AccUtils {
             waitSeconds.toIntOrNull() ?: 90
         )
 
+        val voltFile = VOLT_FILE.find(config)?.destructured?.component1()
+        val voltControl = VoltControl(voltFile, voltFile?.let { getVoltageMax(it) })
+
         return AccConfig(
             capacity,
             cooldown,
             temp,
+            voltControl,
             RESET_UNPLUGGED_CONFIG_REGEXP.find(config)?.destructured?.component1() == "true",
             ON_BOOT_EXIT.find(config)?.destructured?.component1() == "true",
             ON_BOOT.find(config)?.destructured?.component1())
@@ -62,31 +72,6 @@ object AccUtils {
             config.readText(charset = Charsets.UTF_8).split("\n")
         else
             emptyList()
-    }
-
-    //not used. I'm using "acc -s key value" commands instead
-    fun updateConfig(config: AccConfig) {
-        val capacity = config.capacity
-        val coolDown = config.cooldown
-        val temp = config.temp
-
-        val oldConfig = readConfigToStringArray()
-        val newConfig = mutableListOf<String>()
-
-        oldConfig.forEach {
-            if(it.startsWith("capacity="))
-                newConfig.add("capacity=${capacity.shutdownCapacity},${capacity.coolDownCapacity},${capacity.resumeCapacity}-${capacity.pauseCapacity} # <shutdown,coolDownTemp,resume-pause> -- ideally, <resume> shouldn't be more than 10 units below <pause>. To disable <shutdown>, and <coolDownTemp>, set these to 0 and 101, respectively (e.g., capacity=0,101,70-80). Note that the latter doesn't disable the cooling feature entirely, since it works not only based on battery capacity, but temperature as well.")
-            else if(it.startsWith("temp="))
-                newConfig.add("temp=${temp.coolDownTemp}-${temp.pauseChargingTemp}_${temp.waitSeconds}")
-            else if(it.startsWith("resetUnplugged="))
-                newConfig.add("resetUnplugged=${config.resetUnplugged}")
-            else if(it.startsWith("coolDown=") && coolDown != null)
-                newConfig.add("coolDown=${coolDown.charge}/${coolDown.pause} # Charge/pause ratio (in seconds) -- reduces battery temperature and voltage induced stress by periodically pausing charging. This can be disabled with a null value or a preceding hashtag. If charging is too slow, turn this off or change the charge/pause ratio. Disabling this nullifies <coolDownTemp capacity> and <lower temperature> values -- leaving only a temperature limit with a cooling timeout.")
-            else
-                newConfig.add(it)
-        }
-
-        writeConfigFromStringArray(newConfig)
     }
 
     @Throws(IOException::class)
@@ -140,6 +125,18 @@ object AccUtils {
 
     fun updateOnBoot(value: String?): Boolean {
         return Shell.su(updateOnBootCommand(value)).exec().isSuccess
+    }
+
+    //Update volt file
+    fun updateVoltageCommand(voltControl: String?, voltMax: Int?): String {
+        if(voltControl != null && voltMax != null)
+            return "acc -v $voltControl:$voltMax"
+        else
+            return "acc -v "
+    }
+
+    fun updateVoltage(voltControl: String?, voltMax: Int?): Boolean {
+        return Shell.su(updateVoltageCommand(voltControl, voltMax)).exec().isSuccess
     }
 
     fun resetBatteryStats(): Boolean {

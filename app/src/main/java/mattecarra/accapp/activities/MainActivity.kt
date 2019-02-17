@@ -121,8 +121,8 @@ class MainActivity : AppCompatActivity() {
                                         val dataBundle = Bundle()
                                         dataBundle.putString("profileName", profile.profileName)
 
-                                        intent.putExtra("data", dataBundle)
                                         intent.putExtra("config", ProfileUtils.readProfile(profile.profileName, this@MainActivity, gson))
+                                        intent.putExtra("data", dataBundle)
                                         startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
                                     }
                                 }
@@ -403,7 +403,7 @@ class MainActivity : AppCompatActivity() {
             }
         } else if(requestCode == ACC_PROFILE_EDITOR_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                if(data?.getBooleanExtra("hasChanges", false) == true) {
+                if(data?.getBooleanExtra("hasChanges", false) == true && data.hasExtra("data")) {
                     val config: AccConfig = data.getParcelableExtra("config")
                     val profileName = data.getBundleExtra("data").getString("profileName")
 

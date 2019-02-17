@@ -134,13 +134,27 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                <Switch
-                        android:id="@+id/exit_on_boot_switch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/exit_on_boot_switch"
-                        android:textSize="16sp"
-                        android:layout_marginBottom="10dp" />
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:layout_marginBottom="10dp">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/voltage_control_file_title"
+                            android:text="@string/voltage_control_file"
+                            android:textSize="16sp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:textColor="@color/black"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/voltage_control_file"
+                            android:textSize="16sp"/>
+
+                </LinearLayout>
 
                 <LinearLayout android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
@@ -149,10 +163,9 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/on_boot_label"
-                            android:text="@string/on_boot_label"
+                            android:id="@+id/voltage_max_title"
+                            android:text="@string/voltage_max"
                             android:textSize="16sp"
-
                             android:layout_marginRight="5dp"
                             android:layout_marginEnd="5dp"
                             android:textColor="@color/black"/>
@@ -160,7 +173,7 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/on_boot_text"
+                            android:id="@+id/voltage_max"
                             android:textSize="16sp"/>
 
                 </LinearLayout>
@@ -168,8 +181,8 @@
                 <Button style="@style/Widget.AppCompat.Button.Colored"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/edit_on_boot"
-                        android:id="@+id/edit_on_boot"
+                        android:text="@string/edit_voltage_limit"
+                        android:id="@+id/edit_voltage_limit"
                         android:layout_gravity="center_horizontal"/>
 
             </LinearLayout>
@@ -276,6 +289,65 @@
                 </LinearLayout>
 
             </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                           xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                           android:layout_width="match_parent"
+                                           android:layout_height="wrap_content"
+                                           android:layout_marginTop="@dimen/card_margin"
+                                           android:layout_marginLeft="@dimen/card_margin"
+                                           android:layout_marginRight="@dimen/card_margin"
+                                           android:layout_marginBottom="@dimen/card_bottom_margin"
+                                           android:foreground="?selectableItemBackground"
+                                           card_view:cardCornerRadius="@dimen/card_corner_radius"
+                                           card_view:cardElevation="3dp"
+                                           card_view:contentPadding="@dimen/card_content_padding">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <Switch
+                        android:id="@+id/exit_on_boot_switch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/exit_on_boot_switch"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="10dp" />
+
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:layout_marginBottom="10dp">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/on_boot_label"
+                            android:text="@string/on_boot_label"
+                            android:textSize="16sp"
+
+                            android:layout_marginRight="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:textColor="@color/black"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/on_boot_text"
+                            android:textSize="16sp"/>
+
+                </LinearLayout>
+
+                <Button style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit_on_boot"
+                        android:id="@+id/edit_on_boot"
+                        android:layout_gravity="center_horizontal"/>
+
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
 
