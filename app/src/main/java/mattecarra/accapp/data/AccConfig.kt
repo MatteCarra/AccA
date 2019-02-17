@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 import mattecarra.accapp.utils.AccUtils
 
 @Parcelize
-class Cooldown(var charge: Int, var pause: Int): Parcelable {
+data class Cooldown(var charge: Int, var pause: Int): Parcelable {
     fun updateAcc() {
         AccUtils.updateCoolDown(charge, pause)
     }
@@ -19,7 +19,7 @@ data class Capacity(var shutdownCapacity: Int, var coolDownCapacity: Int, var re
 }
 
 @Parcelize
-class Temp(var coolDownTemp: Int, var pauseChargingTemp: Int, var waitSeconds: Int): Parcelable {
+data class Temp(var coolDownTemp: Int, var pauseChargingTemp: Int, var waitSeconds: Int): Parcelable {
     fun updateAcc() {
         AccUtils.updateTemp(coolDownTemp, pauseChargingTemp, waitSeconds)
     }
@@ -41,5 +41,7 @@ data class AccConfig(
         AccUtils.updateResetUnplugged(resetUnplugged)
         AccUtils.updateOnBootExit(onBootExit)
         AccUtils.updateOnBoot(onBoot)
+        if(onBoot != null && AccUtils.isAccdRunning())
+            AccUtils.accRestartDeamon()
     }
 }
