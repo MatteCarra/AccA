@@ -18,6 +18,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.setActionButtonEnabled
+import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItems
 import com.github.javiersantos.appupdater.AppUpdater
@@ -309,32 +312,41 @@ class MainActivity : AppCompatActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 if(data != null) {
                     val config: AccConfig = data.getParcelableExtra("config")
-
+                    val fileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
                     MaterialDialog(this)
                         .show {
                             title(R.string.profile_name)
                             message(R.string.dialog_profile_name_message)
-                            input { _, charSequence ->
+                            input(waitForPositiveButton = false) { dialog, charSequence ->
+                                val inputField = dialog.getInputField()
+                                val isValid = fileNameRegex.matches(charSequence)
+
+                                inputField.error = if (isValid) null else getString(R.string.invalid_chars)
+                                dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
+                            }
+                            positiveButton(R.string.save) { dialog ->
+                                val input = dialog.getInputField().text.toString()
+
                                 //profiles index
                                 val profileList = ProfileUtils.listProfiles(this@MainActivity, gson).toMutableList()
 
-                                if(!profileList.contains(charSequence.toString())) {
-                                    profileList.add(charSequence.toString())
+                                if(!profileList.contains(input)) {
+                                    profileList.add(input)
                                     ProfileUtils.writeProfiles(this@MainActivity, profileList, gson) //Update profiles file with new profile
                                 }
 
                                 //Saving profile
-                                val f = File(context.filesDir, "$charSequence.profile")
+                                val f = File(context.filesDir, "$input.profile")
                                 val json = gson.toJson(config)
                                 f.writeText(json)
 
                                 if(profileList.size == 1) {
                                     initProfiles()
                                 } else {
-                                    profilesAdapter?.add(Profile(charSequence.toString()))
+                                    profilesAdapter?.add(Profile(input))
                                 }
+
                             }
-                            positiveButton(R.string.save)
                             negativeButton(android.R.string.cancel)
                         }
                 }
