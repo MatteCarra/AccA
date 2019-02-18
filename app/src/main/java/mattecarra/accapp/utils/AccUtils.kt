@@ -2,6 +2,7 @@ package mattecarra.accapp.utils
 
 import android.os.Environment
 import com.topjohnwu.superuser.Shell
+import mattecarra.accapp.adapters.Schedule
 import mattecarra.accapp.data.*
 import java.io.File
 import java.io.IOException
@@ -26,8 +27,8 @@ object AccUtils {
         null
     )
 
-    fun getVoltageMax(voltageFile: String): Int? {
-        return Shell.su("acc -v $voltageFile:-").exec().out.joinToString(separator = "\n").toIntOrNull()
+    private fun getVoltageMax(): Int? {
+        return Shell.su("acc -v -").exec().out.joinToString(separator = "\n").trim().toIntOrNull()
     }
 
     fun readConfig(): AccConfig {
@@ -53,7 +54,7 @@ object AccUtils {
         )
 
         val voltFile = VOLT_FILE.find(config)?.destructured?.component1()
-        val voltControl = VoltControl(voltFile, voltFile?.let { getVoltageMax(it) })
+        val voltControl = VoltControl(voltFile, getVoltageMax())
 
         return AccConfig(
             capacity,
@@ -121,7 +122,7 @@ object AccUtils {
     }
 
     //Update on boot
-    fun updateOnBootCommand(value: String?): String = "acc -s onBoot ${value ?: ""}"
+    fun updateOnBootCommand(value: String?): String = "acc -s onBoot${" $value" ?: ""}"
 
     fun updateOnBoot(value: String?): Boolean {
         return Shell.su(updateOnBootCommand(value)).exec().isSuccess
@@ -129,10 +130,14 @@ object AccUtils {
 
     //Update volt file
     fun updateVoltageCommand(voltControl: String?, voltMax: Int?): String {
-        if(voltControl != null && voltMax != null)
-            return "acc -v $voltControl:$voltMax"
+        return if(voltControl != null && voltMax != null)
+            "acc -v $voltControl:$voltMax"
+        else if(voltMax != null)
+            "acc -v $voltMax"
+        else if(voltControl != null)
+            "acc -v $voltControl:"
         else
-            return "acc -v "
+            "acc -v "
     }
 
     fun updateVoltage(voltControl: String?, voltMax: Int?): Boolean {
@@ -148,6 +153,7 @@ object AccUtils {
     private val CURRENT_NOW_REGEXP = "^\\s*CURRENT_NOW=(-?\\d+)".toRegex(RegexOption.MULTILINE)
     private val VOLTAGE_NOW_REGEXP = "^\\s*VOLTAGE_NOW=(\\d+)".toRegex(RegexOption.MULTILINE)
     private val TEMP_REGEXP = "^\\s*TEMP=(\\d+)".toRegex(RegexOption.MULTILINE)
+    //private val VOLTAGE_REGEXP = "^\\s*VOLTAGE_MAX=(\\d+)".toRegex(RegexOption.MULTILINE)
 
     fun getBatteryInfo(): BatteryInfo {
         val info =  Shell.su("acc -i").exec().out.joinToString(separator = "\n")
@@ -181,7 +187,24 @@ object AccUtils {
         return Shell.su("acc -D stop").exec().isSuccess
     }
 
+    fun deleteSchedule(once: Boolean, name: String): Boolean {
+        return Shell.su("djs cancel ${if(once) "once" else "daily" } $name").exec().isSuccess
+    }
+
     fun schedule(once: Boolean, hour: Int, minute: Int, commands: List<String>): Boolean {
-        return Shell.su("djs ${if(once) 'o' else 'o' } $hour $minute \"${commands.joinToString(separator = "; ")}\"").exec().isSuccess
+        return AccUtils.schedule(once, hour, minute, commands.joinToString(separator = "; "))
+    }
+
+    fun schedule(once: Boolean, hour: Int, minute: Int, commands: String): Boolean {
+        return Shell.su("djs ${if(once) 'o' else 'd' } $hour $minute \"${commands}\"").exec().isSuccess
+    }
+
+    private val SCHEDULE_REGEXP = """^\s*([od])([0-9]{2})([0-9]{2}): (.*)$""".toRegex()
+
+    fun listSchedules(): List<Schedule> {
+        return Shell.su("djs i").exec().out.filter { it.matches(SCHEDULE_REGEXP) }.map {
+            val (onceRec, hour, minute, command) = SCHEDULE_REGEXP.find(it)!!.destructured
+            Schedule("$onceRec$hour$minute", onceRec == "o", hour.toInt(), minute.toInt(), command)
+        }
     }
 }

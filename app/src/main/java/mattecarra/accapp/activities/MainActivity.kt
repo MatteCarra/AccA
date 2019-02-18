@@ -9,15 +9,18 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceManager
+import android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
@@ -36,6 +39,8 @@ import mattecarra.accapp.utils.AccUtils
 import mattecarra.accapp.R
 import mattecarra.accapp.adapters.Profile
 import mattecarra.accapp.adapters.ProfilesViewAdapter
+import mattecarra.accapp.adapters.Schedule
+import mattecarra.accapp.adapters.ScheduleRecyclerViewAdapter
 import mattecarra.accapp.data.AccConfig
 import mattecarra.accapp.utils.ProfileUtils
 import org.jetbrains.anko.doAsync
@@ -55,6 +60,24 @@ class MainActivity : AppCompatActivity() {
     private val gson: Gson = Gson()
 
     private var profilesAdapter: ProfilesViewAdapter? = null
+
+    private lateinit var scheduleAdapter: ScheduleRecyclerViewAdapter
+    val addSchedule: (Schedule) -> Unit = { schedule ->
+        if(scheduleAdapter.itemCount == 0) {
+            no_schedules_jobs_textview.visibility = View.GONE
+            scheduled_jobs_recyclerview.visibility = View.VISIBLE
+        }
+        scheduleAdapter.add(schedule)
+    }
+    val deleteSchedule: (Schedule) -> Unit = { schedule ->
+        AccUtils.deleteSchedule(schedule.executeOnce, schedule.name)
+        scheduleAdapter.remove(schedule)
+
+        if(scheduleAdapter.itemCount == 0) {
+            no_schedules_jobs_textview.visibility = View.VISIBLE
+            scheduled_jobs_recyclerview.visibility = View.GONE
+        }
+    }
 
     //Used to update battery info every second
     private val handler = Handler()
@@ -219,55 +242,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        create_schedule.setOnClickListener {
-            val dialog = MaterialDialog(this@MainActivity).show {
-                customView(R.layout.schedule_dialog)
-                positiveButton(R.string.save) { dialog ->
-                    val view = dialog.getCustomView()
-                    val spinner = view.findViewById<Spinner>(R.id.profile_selector)
-                    val executeOnceCheckBox = view.findViewById<CheckBox>(R.id.schedule_recurrency)
-                    val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
-                    val hour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.hour else timePicker.currentHour
-                    val minute = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.minute else timePicker.currentMinute
-
-                    if(spinner.selectedItemId == 0.toLong()) {
-                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-                            val dataBundle = Bundle()
-                            dataBundle.putInt("hour", hour)
-                            dataBundle.putInt("minute", minute)
-                            dataBundle.putBoolean("executeOnce", executeOnceCheckBox.isChecked)
-
-                            intent.putExtra("data", dataBundle)
-                            startActivityForResult(intent, ACC_PROFILE_SCHEDULER_REQUEST)
-                        }
-                    } else {
-                        val profile = spinner.selectedItem as String
-                        val configProfile = ProfileUtils.readProfile(profile, this@MainActivity, gson)
-
-                        AccUtils.schedule(
-                            executeOnceCheckBox.isChecked,
-                            hour,
-                            minute,
-                            configProfile.getCommands()
-                        )
-                    }
-                }
-                negativeButton(android.R.string.cancel)
-            }
-
-            val profiles = ArrayList<String>()
-            profiles.add(getString(R.string.new_config))
-            profiles.addAll(ProfileUtils.listProfiles(this, gson))
-            val view = dialog.getCustomView()
-            val spinner = view.findViewById<Spinner>(R.id.profile_selector)
-            val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, profiles)
-
-            view.findViewById<TimePicker>(R.id.time_picker).setIs24HourView(true)
-
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner.adapter = adapter;
-        }
-
         deamon_start_stop.setOnClickListener {
             Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
 
@@ -293,6 +267,89 @@ class MainActivity : AppCompatActivity() {
         reset_battery_stats.setOnClickListener {
             AccUtils.resetBatteryStats()
         }
+
+
+        val schedules = ArrayList(AccUtils.listSchedules())
+        if(schedules.isEmpty()) {
+            no_schedules_jobs_textview.visibility = View.VISIBLE
+            scheduled_jobs_recyclerview.visibility = View.GONE
+        }
+
+        scheduleAdapter = ScheduleRecyclerViewAdapter(schedules) { schedule, delete ->
+            if(delete) {
+                deleteSchedule(schedule)
+            } else {
+                MaterialDialog(this).show {
+                    title(R.string.schedule_job)
+                    message(R.string.edit_scheduled_command)
+                    input(prefill = schedule.command, inputType = TYPE_TEXT_FLAG_NO_SUGGESTIONS, allowEmpty = false) { _, charSequence ->
+                        schedule.command =  charSequence.toString()
+                        AccUtils.schedule(schedule.executeOnce, schedule.hour, schedule.minute, charSequence.toString())
+                    }
+                    positiveButton(R.string.save)
+                    negativeButton(android.R.string.cancel)
+                    neutralButton(R.string.delete) {
+                        deleteSchedule(schedule)
+                    }
+                }
+            }
+        }
+
+
+        val layoutManager = LinearLayoutManager(this)
+        scheduled_jobs_recyclerview.layoutManager = layoutManager
+        scheduled_jobs_recyclerview.adapter = scheduleAdapter
+
+        create_schedule.setOnClickListener {
+            val dialog = MaterialDialog(this@MainActivity).show {
+                customView(R.layout.schedule_dialog)
+                positiveButton(R.string.save) { dialog ->
+                    val view = dialog.getCustomView()
+                    val spinner = view.findViewById<Spinner>(R.id.profile_selector)
+                    val executeOnceCheckBox = view.findViewById<CheckBox>(R.id.schedule_recurrency)
+                    val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
+                    val hour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.hour else timePicker.currentHour
+                    val minute = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.minute else timePicker.currentMinute
+
+                    if(spinner.selectedItemId == 0.toLong()) {
+                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+                            val dataBundle = Bundle()
+                            dataBundle.putInt("hour", hour)
+                            dataBundle.putInt("minute", minute)
+                            dataBundle.putBoolean("executeOnce", executeOnceCheckBox.isChecked)
+
+                            intent.putExtra("data", dataBundle)
+                            startActivityForResult(intent, ACC_PROFILE_SCHEDULER_REQUEST)
+                        }
+                    } else {
+                        val profile = spinner.selectedItem as String
+                        val configProfile = ProfileUtils.readProfile(profile, this@MainActivity, gson)
+
+                        addSchedule(Schedule("${if(executeOnceCheckBox.isChecked) 'o' else 'd'}$hour$minute", executeOnceCheckBox.isChecked, hour, minute, configProfile.getCommands().joinToString(separator = "; ")))
+
+                        AccUtils.schedule(
+                            executeOnceCheckBox.isChecked,
+                            hour,
+                            minute,
+                            configProfile.getCommands()
+                        )
+                    }
+                }
+                negativeButton(android.R.string.cancel)
+            }
+
+            val profiles = ArrayList<String>()
+            profiles.add(getString(R.string.new_config))
+            profiles.addAll(ProfileUtils.listProfiles(this, gson))
+            val view = dialog.getCustomView()
+            val spinner = view.findViewById<Spinner>(R.id.profile_selector)
+            val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, profiles)
+
+            view.findViewById<TimePicker>(R.id.time_picker).setIs24HourView(true)
+
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.adapter = adapter;
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -306,7 +363,7 @@ class MainActivity : AppCompatActivity() {
             .setDisplay(Display.NOTIFICATION)
             .setUpdateFrom(UpdateFrom.GITHUB)
             .setGitHubUserAndRepo("MatteCarra", "AccA")
-            //.setIcon(R.drawable.app_icon)
+        //.setIcon(R.drawable.app_icon)
         appUpdater.start()
 
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
@@ -417,11 +474,18 @@ class MainActivity : AppCompatActivity() {
             if(data?.hasExtra("data") == true) {
                 val dataBundle = data.getBundleExtra("data")
 
+                val hour = dataBundle.getInt("hour")
+                val minute = dataBundle.getInt("minute")
+                val executeOnce = dataBundle.getBoolean("executeOnce")
+                val commands = data.getParcelableExtra<AccConfig>("config").getCommands()
+
+                addSchedule(Schedule("${if(executeOnce) 'o' else 'd'}$hour$minute", executeOnce, hour, minute, commands.joinToString(separator = "; ")))
+
                 AccUtils.schedule(
-                    dataBundle.getBoolean("executeOnce"),
-                    dataBundle.getInt("hour"),
-                    dataBundle.getInt("minute"),
-                    data.getParcelableExtra<AccConfig>("config").getCommands()
+                    executeOnce,
+                    hour,
+                    minute,
+                    commands
                 )
             }
         }

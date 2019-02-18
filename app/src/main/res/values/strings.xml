@@ -55,7 +55,7 @@
     <string name="profile_tile_label">Profile: %1$s</string>
     <string name="profiles_text_view">Profiles (long press to edit/delete):</string>
     <string name="restart">Restart</string>
-    <string name="schedule_config_set">Schedule job</string>
+    <string name="schedule_job">Schedule job</string>
     <string name="invalid_chars">The filename contains invalid characters</string>
     <string name="recurrent_schedule">Run only once</string>
     <string name="execution_time">Execution time</string>
@@ -65,6 +65,12 @@
     <string name="edit_voltage_limit">Edit voltage limit</string>
     <string name="voltage_max">Voltage max (mV):</string>
     <string name="disabled">Disabled</string>
+    <string name="schedule_row_text">%1$sJob scheduled at %2$d:%3$d</string>
+    <string name="delete">Delete</string>
+    <string name="no_schedules">No schedules set</string>
+    <string name="edit_scheduled_command">You can edit the scheduled command. If you want the nice UI you should delete
+        it and recreate it.
+    </string>
 
     <string-array name="profile_long_press_options">
         <item>Edit</item>
