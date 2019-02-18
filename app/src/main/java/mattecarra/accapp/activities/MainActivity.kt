@@ -325,7 +325,7 @@ class MainActivity : AppCompatActivity() {
                         val profile = spinner.selectedItem as String
                         val configProfile = ProfileUtils.readProfile(profile, this@MainActivity, gson)
 
-                        addSchedule(Schedule("${if(executeOnceCheckBox.isChecked) 'o' else 'd'}$hour$minute", executeOnceCheckBox.isChecked, hour, minute, configProfile.getCommands().joinToString(separator = "; ")))
+                        addSchedule(Schedule("$hour$minute", executeOnceCheckBox.isChecked, hour, minute, configProfile.getCommands().joinToString(separator = "; ")))
 
                         AccUtils.schedule(
                             executeOnceCheckBox.isChecked,
@@ -479,7 +479,7 @@ class MainActivity : AppCompatActivity() {
                 val executeOnce = dataBundle.getBoolean("executeOnce")
                 val commands = data.getParcelableExtra<AccConfig>("config").getCommands()
 
-                addSchedule(Schedule("${if(executeOnce) 'o' else 'd'}$hour$minute", executeOnce, hour, minute, commands.joinToString(separator = "; ")))
+                addSchedule(Schedule("$hour$minute", executeOnce, hour, minute, commands.joinToString(separator = "; ")))
 
                 AccUtils.schedule(
                     executeOnce,

@@ -204,7 +204,7 @@ object AccUtils {
     fun listSchedules(): List<Schedule> {
         return Shell.su("djs i").exec().out.filter { it.matches(SCHEDULE_REGEXP) }.map {
             val (onceRec, hour, minute, command) = SCHEDULE_REGEXP.find(it)!!.destructured
-            Schedule("$onceRec$hour$minute", onceRec == "o", hour.toInt(), minute.toInt(), command)
+            Schedule("$hour$minute", onceRec == "o", hour.toInt(), minute.toInt(), command)
         }
     }
 }
