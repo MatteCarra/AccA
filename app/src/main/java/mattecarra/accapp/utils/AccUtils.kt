@@ -203,7 +203,7 @@ object AccUtils {
 
     fun listSchedules(once: Boolean): List<Schedule> {
         return Shell.su("djs i ${if(once) 'o' else 'd'}").exec().out.filter { it.matches(SCHEDULE_REGEXP) }.map {
-            val (onceRec, hour, minute, command) = SCHEDULE_REGEXP.find(it)!!.destructured
+            val (hour, minute, command) = SCHEDULE_REGEXP.find(it)!!.destructured
             Schedule("$hour$minute", once, hour.toInt(), minute.toInt(), command)
         }
     }
