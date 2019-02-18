@@ -269,7 +269,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        val schedules = ArrayList(AccUtils.listSchedules())
+        val schedules = ArrayList(AccUtils.listAllSchedules())
         if(schedules.isEmpty()) {
             no_schedules_jobs_textview.visibility = View.VISIBLE
             scheduled_jobs_recyclerview.visibility = View.GONE

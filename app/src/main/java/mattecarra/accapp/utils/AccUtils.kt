@@ -199,12 +199,18 @@ object AccUtils {
         return Shell.su("djs ${if(once) 'o' else 'd' } $hour $minute \"${commands}\"").exec().isSuccess
     }
 
-    private val SCHEDULE_REGEXP = """^\s*([od])([0-9]{2})([0-9]{2}): (.*)$""".toRegex()
+    private val SCHEDULE_REGEXP = """^\s*([0-9]{2})([0-9]{2}): (.*)$""".toRegex()
 
-    fun listSchedules(): List<Schedule> {
-        return Shell.su("djs i").exec().out.filter { it.matches(SCHEDULE_REGEXP) }.map {
+    fun listSchedules(once: Boolean): List<Schedule> {
+        return Shell.su("djs i ${if(once) 'o' else 'd'}").exec().out.filter { it.matches(SCHEDULE_REGEXP) }.map {
             val (onceRec, hour, minute, command) = SCHEDULE_REGEXP.find(it)!!.destructured
-            Schedule("$hour$minute", onceRec == "o", hour.toInt(), minute.toInt(), command)
+            Schedule("$hour$minute", once, hour.toInt(), minute.toInt(), command)
         }
+    }
+
+    fun listAllSchedules(): List<Schedule> {
+        val res = ArrayList<Schedule>(listSchedules(true))
+        res.addAll(listSchedules(false))
+        return res
     }
 }

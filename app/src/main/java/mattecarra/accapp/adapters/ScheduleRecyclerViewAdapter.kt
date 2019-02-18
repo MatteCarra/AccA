@@ -16,17 +16,6 @@ import java.util.ArrayList
 data class Schedule(val name: String, val executeOnce: Boolean, val hour: Int, val minute: Int, var command: String): Parcelable
 
 class ScheduleRecyclerViewAdapter(val schedules: ArrayList<Schedule>, private val listener: (Schedule, Boolean) -> Unit) : RecyclerView.Adapter<ScheduleRecyclerViewAdapter.ScheduleViewHolder>() {
-
-    fun saveState(bundle: Bundle) {
-        bundle.putParcelableArrayList("schedules", schedules)
-    }
-
-    fun restoreState(bundle: Bundle) {
-        bundle.getParcelableArrayList<Schedule>("schedules")?.let {
-            schedules.addAll(it)
-        }
-    }
-
     fun add(schedule: Schedule) {
         schedules.add(schedule)
         notifyItemInserted(schedules.size - 1)
