@@ -14,8 +14,9 @@ object AccUtils {
     val TEMP_CONFIG_REGEXP = """^\s*temp=(\d*)-(\d*)_(\d*)""".toRegex(RegexOption.MULTILINE)
     val RESET_UNPLUGGED_CONFIG_REGEXP = """^\s*resetUnplugged=(true|false)""".toRegex(RegexOption.MULTILINE)
     val ON_BOOT_EXIT = """^\s*onBootExit=(true|false)""".toRegex(RegexOption.MULTILINE)
-    val ON_BOOT = """^\s*onBoot=([^#]+)""".toRegex(RegexOption.MULTILINE)
-    val VOLT_FILE = """^\s*voltFile=([^#]+)""".toRegex(RegexOption.MULTILINE)
+    val ON_BOOT = """^\s*onBoot=([^#\s]+)""".toRegex(RegexOption.MULTILINE)
+    val VOLT_FILE = """^\s*voltFile=([^#\s]+)""".toRegex(RegexOption.MULTILINE)
+    val VOLTAGE_MAX = """(\d+)""".toRegex(RegexOption.MULTILINE)
 
     val defaultConfig: AccConfig = AccConfig(
         Capacity(5, 60, 70, 80),
@@ -28,7 +29,7 @@ object AccUtils {
     )
 
     private fun getVoltageMax(): Int? {
-        return Shell.su("acc -v -").exec().out.joinToString(separator = "\n").trim().toIntOrNull()
+        return VOLTAGE_MAX.find(Shell.su("acc -v -").exec().out.joinToString(separator = "\n"))?.destructured?.component1()?.toIntOrNull()
     }
 
     fun readConfig(): AccConfig {
