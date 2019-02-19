@@ -363,7 +363,7 @@ class MainActivity : AppCompatActivity() {
             .setDisplay(Display.NOTIFICATION)
             .setUpdateFrom(UpdateFrom.GITHUB)
             .setGitHubUserAndRepo("MatteCarra", "AccA")
-        //.setIcon(R.drawable.app_icon)
+            .setIcon(R.drawable.ic_notification)
         appUpdater.start()
 
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
@@ -479,7 +479,7 @@ class MainActivity : AppCompatActivity() {
                 val executeOnce = dataBundle.getBoolean("executeOnce")
                 val commands = data.getParcelableExtra<AccConfig>("config").getCommands()
 
-                addSchedule(Schedule("$hour$minute", executeOnce, hour, minute, commands.joinToString(separator = "; ")))
+                addSchedule(Schedule("${String.format("%02d", hour)}${String.format("%02d", minute)}", executeOnce, hour, minute, commands.joinToString(separator = "; ")))
 
                 AccUtils.schedule(
                     executeOnce,

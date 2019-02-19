@@ -196,7 +196,7 @@ object AccUtils {
     }
 
     fun schedule(once: Boolean, hour: Int, minute: Int, commands: String): Boolean {
-        return Shell.su("djs ${if(once) 'o' else 'd' } $hour $minute \"${commands}\"").exec().isSuccess
+        return Shell.su("djs ${if(once) 'o' else 'd' } ${String.format("%02d", hour)} ${String.format("%02d", minute)} \"${commands}\"").exec().isSuccess
     }
 
     private val SCHEDULE_REGEXP = """^\s*([0-9]{2})([0-9]{2}): (.*)$""".toRegex()
