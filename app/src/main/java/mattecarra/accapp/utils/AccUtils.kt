@@ -122,7 +122,7 @@ object AccUtils {
     }
 
     //Update on boot
-    fun updateOnBootCommand(value: String?): String = "acc -s onBoot${" $value" ?: ""}"
+    fun updateOnBootCommand(value: String?): String = "acc -s onBoot${ value?.let{ " $it" } ?: ""}"
 
     fun updateOnBoot(value: String?): Boolean {
         return Shell.su(updateOnBootCommand(value)).exec().isSuccess

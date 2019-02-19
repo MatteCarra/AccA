@@ -102,7 +102,5 @@ data class AccConfig(
         AccUtils.updateResetUnplugged(resetUnplugged)
         AccUtils.updateOnBootExit(onBootExit)
         AccUtils.updateOnBoot(onBoot)
-        if(onBoot != null && AccUtils.isAccdRunning())
-            AccUtils.accRestartDeamon()
     }
 }
