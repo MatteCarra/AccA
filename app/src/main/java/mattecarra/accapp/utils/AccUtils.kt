@@ -14,7 +14,7 @@ object AccUtils {
     val TEMP_CONFIG_REGEXP = """^\s*temp=(\d*)-(\d*)_(\d*)""".toRegex(RegexOption.MULTILINE)
     val RESET_UNPLUGGED_CONFIG_REGEXP = """^\s*resetUnplugged=(true|false)""".toRegex(RegexOption.MULTILINE)
     val ON_BOOT_EXIT = """^\s*onBootExit=(true|false)""".toRegex(RegexOption.MULTILINE)
-    val ON_BOOT = """^\s*onBoot=([^#\s]+)""".toRegex(RegexOption.MULTILINE)
+    val ON_BOOT = """^\s*onBoot=([^#]+)""".toRegex(RegexOption.MULTILINE)
     val VOLT_FILE = """^\s*voltFile=([^#\s]+)""".toRegex(RegexOption.MULTILINE)
     val VOLTAGE_MAX = """(\d+)""".toRegex(RegexOption.MULTILINE)
 
@@ -135,10 +135,8 @@ object AccUtils {
             "acc -v $voltControl:$voltMax"
         else if(voltMax != null)
             "acc -v $voltMax"
-        else if(voltControl != null)
-            "acc -v $voltControl:"
         else
-            "acc -v "
+            "acc -v"
     }
 
     fun updateVoltage(voltControl: String?, voltMax: Int?): Boolean {

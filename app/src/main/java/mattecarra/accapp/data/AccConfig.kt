@@ -5,10 +5,20 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import mattecarra.accapp.utils.AccUtils
 
+data class UpdateResult(
+    val capacityUpdateSuccessful: Boolean,
+    val coolDownUpdateSuccessful: Boolean,
+    val tempUpdateSuccessful: Boolean,
+    val voltControlUpdateSuccessful: Boolean,
+    val resetUnpluggedUpdateSuccessful: Boolean,
+    val onBootExitUpdateSuccessful: Boolean,
+    val onBootUpdateSuccessful: Boolean
+)
+
 @Parcelize
 data class Cooldown(var charge: Int, var pause: Int): Parcelable {
-    fun updateAcc() {
-        AccUtils.updateCoolDown(charge, pause)
+    fun updateAcc(): Boolean {
+        return AccUtils.updateCoolDown(charge, pause)
     }
 
     fun getUpdateAccCommand(): String {
@@ -18,8 +28,8 @@ data class Cooldown(var charge: Int, var pause: Int): Parcelable {
 
 @Parcelize
 data class Capacity(var shutdownCapacity: Int, var coolDownCapacity: Int, var resumeCapacity: Int, var pauseCapacity: Int): Parcelable {
-    fun updateAcc() {
-        AccUtils.updateCapacity(shutdownCapacity, coolDownCapacity, resumeCapacity, pauseCapacity)
+    fun updateAcc(): Boolean {
+        return AccUtils.updateCapacity(shutdownCapacity, coolDownCapacity, resumeCapacity, pauseCapacity)
     }
 
     fun getUpdateAccCommand(): String {
@@ -29,8 +39,8 @@ data class Capacity(var shutdownCapacity: Int, var coolDownCapacity: Int, var re
 
 @Parcelize
 data class Temp(var coolDownTemp: Int, var pauseChargingTemp: Int, var waitSeconds: Int): Parcelable {
-    fun updateAcc() {
-        AccUtils.updateTemp(coolDownTemp, pauseChargingTemp, waitSeconds)
+    fun updateAcc(): Boolean {
+        return AccUtils.updateTemp(coolDownTemp, pauseChargingTemp, waitSeconds)
     }
 
     fun getUpdateAccCommand(): String {
@@ -42,8 +52,8 @@ data class Temp(var coolDownTemp: Int, var pauseChargingTemp: Int, var waitSecon
 data class VoltControl(var voltFile: String?, var voltMax: Int?): Parcelable {
     constructor(parcel: Parcel) : this(parcel.readString(), parcel.readValue(Int::class.java.classLoader) as Int?)
 
-    fun updateAcc() {
-        AccUtils.updateVoltage(voltFile, voltMax)
+    fun updateAcc(): Boolean {
+        return AccUtils.updateVoltage(voltFile, voltMax)
     }
 
     fun getUpdateAccCommand(): String {
@@ -94,13 +104,15 @@ data class AccConfig(
         ).filterNotNull()
     }
 
-    fun updateAcc() {
-        capacity.updateAcc()
-        cooldown?.updateAcc()
-        temp.updateAcc()
-        voltControl.updateAcc()
-        AccUtils.updateResetUnplugged(resetUnplugged)
-        AccUtils.updateOnBootExit(onBootExit)
-        AccUtils.updateOnBoot(onBoot)
+    fun updateAcc(): UpdateResult {
+        return UpdateResult(
+            capacity.updateAcc(),
+            cooldown?.updateAcc() ?: true,
+            temp.updateAcc(),
+            voltControl.updateAcc(),
+            AccUtils.updateResetUnplugged(resetUnplugged),
+            AccUtils.updateOnBootExit(onBootExit),
+            AccUtils.updateOnBoot(onBoot)
+        )
     }
 }

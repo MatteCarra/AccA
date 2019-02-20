@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceManager
 import android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+import android.util.Log
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -199,9 +200,15 @@ class MainActivity : AppCompatActivity() {
                     val profileConfig = ProfileUtils.readProfile(profile.profileName, this@MainActivity, gson)
 
                     doAsync {
-                        profileConfig.updateAcc()
+                        val res = profileConfig.updateAcc()
 
                         ProfileUtils.saveCurrentProfile(profile.profileName, sharedPrefs)
+
+                        if(!res.voltControlUpdateSuccessful) {
+                            uiThread {
+                                Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
+                            }
+                        }
                     }
 
                     profilesAdapter?.selectedProfile = profile.profileName
@@ -403,12 +410,16 @@ class MainActivity : AppCompatActivity() {
                 if(data?.getBooleanExtra("hasChanges", false) == true) {
                     config = data.getParcelableExtra("config")
                     doAsync {
-                        config.updateAcc()
+                        val res = config.updateAcc()
 
                         //If I manually modify the config I have to set current profile to null (custom profile)
                         ProfileUtils.saveCurrentProfile(null, sharedPrefs)
                         profilesAdapter?.let { adapter ->
                             uiThread {
+                                if(!res.voltControlUpdateSuccessful) {
+                                    Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
+                                }
+
                                 adapter.selectedProfile = null
                                 adapter.notifyDataSetChanged()
                             }

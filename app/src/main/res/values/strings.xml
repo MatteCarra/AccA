@@ -71,6 +71,9 @@
     <string name="edit_scheduled_command">You can edit the scheduled command. If you want the nice UI you should delete
         it and recreate it.
     </string>
+    <string name="wrong_volt_file">You are either using an unsupported voltage max control file or your kernel does not
+        support this feature.
+    </string>
 
     <string-array name="profile_long_press_options">
         <item>Edit</item>

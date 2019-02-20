@@ -195,6 +195,8 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         //voltage control
         voltage_control_file.text = config.voltControl.voltFile ?: "Not supported"
         voltage_max.text = config.voltControl.voltMax?.let { "$it mV" } ?: getString(R.string.disabled)
+
+        //Edit voltage dialog
         edit_voltage_limit.setOnClickListener {
             val dialog = MaterialDialog(this@AccConfigEditorActivity).show {
                 customView(R.layout.voltage_control_editor_dialog)
@@ -221,6 +223,8 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                 }
                 negativeButton(android.R.string.cancel)
             }
+
+            //initialize dialog custom view:
             val view = dialog.getCustomView()
             val voltageControl = view.findViewById<EditText>(R.id.voltage_control_file)
             val voltageMax = view.findViewById<EditText>(R.id.voltage_max)
@@ -233,6 +237,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                 dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
             }
             checkBox.isChecked = config.voltControl.voltMax != null
+            voltageMax.isEnabled = checkBox.isChecked
             voltageControl.setText(config.voltControl.voltFile ?: "", TextView.BufferType.EDITABLE)
             voltageMax.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {}
