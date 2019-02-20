@@ -252,14 +252,20 @@ class MainActivity : AppCompatActivity() {
         deamon_start_stop.setOnClickListener {
             Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
 
-            if(AccUtils.isAccdRunning())
-                AccUtils.accStopDeamon()
-            else
-                AccUtils.accStartDeamon()
+            doAsync {
+                if(AccUtils.isAccdRunning())
+                    AccUtils.accStopDeamon()
+                else
+                    AccUtils.accStartDeamon()
+            }
         }
 
         deamon_restart.setOnClickListener {
-            AccUtils.accRestartDeamon()
+            Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
+
+            doAsync {
+                AccUtils.accRestartDeamon()
+            }
         }
 
         reset_stats_on_unplugged_switch.setOnCheckedChangeListener { _, isChecked ->

@@ -32,7 +32,7 @@
         edit the settings, but the result can\'t be guaranteed.
     </string>
     <string name="battery_info">Health=%1$s, Battery temp=%2$d°C\nCurrent=%3$dmA, Voltage=%4$.2fV</string>
-    <string name="wait">Please wait</string>
+    <string name="wait">Please wait, it may take some seconds</string>
     <string name="exit_on_boot_switch">Exit on boot</string>
     <string name="on_boot_label">On boot:</string>
     <string name="edit_on_boot">Edit on boot value</string>
