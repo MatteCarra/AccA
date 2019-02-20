@@ -15,12 +15,11 @@
             android:textAppearance="?android:textAppearanceMedium"
     />
 
-    <EditText
+    <Spinner
             android:id="@+id/voltage_control_file"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:hint="@string/voltage_control_file"/>
+            android:layout_marginTop="4dp"/>
 
     <CheckBox
             android:id="@+id/enable_voltage_max"

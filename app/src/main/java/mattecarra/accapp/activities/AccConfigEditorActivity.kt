@@ -202,16 +202,16 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                 customView(R.layout.voltage_control_editor_dialog)
                 positiveButton(android.R.string.ok) { dialog ->
                     val view = dialog.getCustomView()
-                    val voltageControl = view.findViewById<EditText>(R.id.voltage_control_file)
+                    val voltageControl = view.findViewById<Spinner>(R.id.voltage_control_file)
                     val voltageMax = view.findViewById<EditText>(R.id.voltage_max)
                     val checkBox = dialog.findViewById<CheckBox>(R.id.enable_voltage_max)
 
                     val voltageMaxInt = voltageMax.text.toString().toIntOrNull()
                     if(checkBox.isChecked && voltageMaxInt != null) {
                         this@AccConfigEditorActivity.config.voltControl.voltMax = voltageMaxInt
-                        this@AccConfigEditorActivity.config.voltControl.voltFile = voltageControl.text.toString()
+                        this@AccConfigEditorActivity.config.voltControl.voltFile = voltageControl.selectedItem as String
 
-                        this@AccConfigEditorActivity.voltage_control_file.text = voltageControl.text.toString()
+                        this@AccConfigEditorActivity.voltage_control_file.text = voltageControl.selectedItem as String
                         this@AccConfigEditorActivity.voltage_max.text = "$voltageMaxInt mV"
                     } else {
                         this@AccConfigEditorActivity.config.voltControl.voltMax = null
@@ -226,7 +226,6 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
 
             //initialize dialog custom view:
             val view = dialog.getCustomView()
-            val voltageControl = view.findViewById<EditText>(R.id.voltage_control_file)
             val voltageMax = view.findViewById<EditText>(R.id.voltage_max)
             val checkBox = dialog.findViewById<CheckBox>(R.id.enable_voltage_max)
             voltageMax.setText(config.voltControl.voltMax?.toString() ?: "", TextView.BufferType.EDITABLE)
@@ -238,7 +237,6 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             }
             checkBox.isChecked = config.voltControl.voltMax != null
             voltageMax.isEnabled = checkBox.isChecked
-            voltageControl.setText(config.voltControl.voltFile ?: "", TextView.BufferType.EDITABLE)
             voltageMax.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {}
 
@@ -250,6 +248,18 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                     dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
                 }
             })
+
+            val voltageControl = view.findViewById<Spinner>(R.id.voltage_control_file)
+            val supportedVoltageControlFiles = ArrayList(AccUtils.listVoltageSupportedControlFiles())
+            val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, supportedVoltageControlFiles)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            voltageControl.adapter = adapter
+            if(config.voltControl.voltFile != null) {
+                if(!supportedVoltageControlFiles.contains(config.voltControl.voltFile)) {
+                    supportedVoltageControlFiles.add(config.voltControl.voltFile)
+                }
+                voltageControl.setSelection(supportedVoltageControlFiles.indexOf(config.voltControl.voltFile))
+            }
         }
     }
 

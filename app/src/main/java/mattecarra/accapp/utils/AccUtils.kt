@@ -28,10 +28,6 @@ object AccUtils {
         null
     )
 
-    private fun getVoltageMax(): Int? {
-        return VOLTAGE_MAX.find(Shell.su("acc -v -").exec().out.joinToString(separator = "\n"))?.destructured?.component1()?.toIntOrNull()
-    }
-
     fun readConfig(): AccConfig {
         val config = readConfigToStringArray().joinToString(separator = "\n")
 
@@ -141,6 +137,15 @@ object AccUtils {
 
     fun updateVoltage(voltControl: String?, voltMax: Int?): Boolean {
         return Shell.su(updateVoltageCommand(voltControl, voltMax)).exec().isSuccess
+    }
+
+    private fun getVoltageMax(): Int? {
+        return VOLTAGE_MAX.find(Shell.su("acc -v -").exec().out.joinToString(separator = "\n"))?.destructured?.component1()?.toIntOrNull()
+    }
+
+    fun listVoltageSupportedControlFiles(): List<String> {
+        val res = Shell.su("acc -v :").exec()
+        return if(res.isSuccess) res.out.filter { it.isNotEmpty() } else emptyList()
     }
 
     fun resetBatteryStats(): Boolean {
