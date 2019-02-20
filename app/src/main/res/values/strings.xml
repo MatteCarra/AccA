@@ -74,6 +74,7 @@
     <string name="wrong_volt_file">You are either using an unsupported voltage max control file or your kernel does not
         support this feature.
     </string>
+    <string name="invalid_voltage_max">Voltage max should a number between 3920 and 4199 (mV)</string>
 
     <string-array name="profile_long_press_options">
         <item>Edit</item>

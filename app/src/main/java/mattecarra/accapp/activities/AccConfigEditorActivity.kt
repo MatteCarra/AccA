@@ -231,8 +231,10 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             voltageMax.setText(config.voltControl.voltMax?.toString() ?: "", TextView.BufferType.EDITABLE)
             checkBox.setOnCheckedChangeListener { _, isChecked ->
                 voltageMax.isEnabled = isChecked
-                val isValid = !voltageMax.text.isEmpty() || !isChecked
-                voltageMax.error = if (isValid) null else getString(R.string.invalid_chars)
+
+                val voltageMaxVal = voltageMax.text?.toString()?.toIntOrNull()
+                val isValid = voltageMaxVal != null && voltageMaxVal >= 3920 && voltageMaxVal < 4200
+                voltageMax.error = if (isValid) null else getString(R.string.invalid_voltage_max)
                 dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
             }
             checkBox.isChecked = config.voltControl.voltMax != null
@@ -243,8 +245,9 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    val isValid = s?.isEmpty() == false
-                    voltageMax.error = if(isValid) null else getString(R.string.invalid_chars)
+                    val voltageMaxVal = s?.toString()?.toIntOrNull()
+                    val isValid = voltageMaxVal != null && voltageMaxVal >= 3920 && voltageMaxVal < 4200
+                    voltageMax.error = if(isValid) null else getString(R.string.invalid_voltage_max)
                     dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
                 }
             })
