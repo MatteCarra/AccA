@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
                     deamon_start_stop.text = getString(if(isDeamonRunning) R.string.stop else R.string.start)
 
                     status.text = batteryInfo.status
-                    battery_info.text = getString(R.string.battery_info, batteryInfo.health, batteryInfo.temp, batteryInfo.current / 1000, batteryInfo.voltage / 1000000f)
+                    battery_info.text = getString(R.string.battery_info, batteryInfo.health, batteryInfo.temp, batteryInfo.current / 1000, batteryInfo.voltage)
 
                     handler.postDelayed(r, 1000)// Repeat the same runnable code block again after 1 seconds
                 }
