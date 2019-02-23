@@ -29,7 +29,9 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
+import com.afollestad.materialdialogs.list.getListAdapter
 import com.afollestad.materialdialogs.list.listItems
+import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.Display
 import com.github.javiersantos.appupdater.enums.UpdateFrom
@@ -131,96 +133,103 @@ class MainActivity : AppCompatActivity() {
     private fun initProfiles() {
         val profileList = ProfileUtils.listProfiles(this, gson)
 
-        if(profileList.isNotEmpty()) {
-            val currentProfile = sharedPrefs.getString("PROFILE", null)
+        val currentProfile = sharedPrefs.getString("PROFILE", null)
 
-            val layoutManager = GridLayoutManager(this, 3)
-            profilesAdapter = ProfilesViewAdapter(ArrayList(profileList.map { Profile(it) }), currentProfile) { profile, longPress ->
-                if(longPress) {
-                    MaterialDialog(this@MainActivity).show {
-                        listItems(R.array.profile_long_press_options) { _, index, _ ->
-                            when(index) {
-                                0 -> {
-                                    Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-                                        val dataBundle = Bundle()
-                                        dataBundle.putString("profileName", profile.profileName)
+        val layoutManager = GridLayoutManager(this, 3)
+        profilesAdapter = ProfilesViewAdapter(ArrayList(profileList.map { Profile(it) }), currentProfile) { profile, longPress ->
+            if(longPress) {
+                MaterialDialog(this@MainActivity).show {
+                    listItems(R.array.profile_long_press_options) { _, index, _ ->
+                        when(index) {
+                            0 -> {
+                                Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+                                    val dataBundle = Bundle()
+                                    dataBundle.putString("profileName", profile.profileName)
 
-                                        intent.putExtra("config", ProfileUtils.readProfile(profile.profileName, this@MainActivity, gson))
-                                        intent.putExtra("data", dataBundle)
-                                        startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
-                                    }
+                                    intent.putExtra("config", ProfileUtils.readProfile(profile.profileName, this@MainActivity, gson))
+                                    intent.putExtra("data", dataBundle)
+                                    startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
                                 }
-                                1 -> {
-                                    MaterialDialog(this@MainActivity)
-                                        .show {
-                                            title(R.string.profile_name)
-                                            message(R.string.dialog_profile_name_message)
-                                            input(prefill = profile.profileName) { _, charSequence ->
-                                                //profiles index
-                                                val profileList: MutableList<String> = ProfileUtils.listProfiles(this@MainActivity, gson).toMutableList()
+                            }
+                            1 -> {
+                                MaterialDialog(this@MainActivity)
+                                    .show {
+                                        title(R.string.profile_name)
+                                        message(R.string.dialog_profile_name_message)
+                                        input(prefill = profile.profileName) { _, charSequence ->
+                                            //profiles index
+                                            val profileList: MutableList<String> = ProfileUtils.listProfiles(this@MainActivity, gson).toMutableList()
 
-                                                if(profileList.contains(charSequence.toString())) {
-                                                    //TODO input not valid
-                                                    return@input
-                                                }
-
-                                                profileList.add(charSequence.toString())
-                                                profileList.remove(profile.profileName) //remove all profile name
-                                                ProfileUtils.writeProfiles(this@MainActivity, profileList, gson) //Update profiles file with new profile
-
-                                                //Saving profile
-                                                val f = File(context.filesDir, "${profile.profileName}.profile")
-                                                f.renameTo(File(context.filesDir, "$charSequence.profile"))
-
-                                                profile.profileName = charSequence.toString()
-                                                profilesAdapter?.notifyItemChanged(profile)
+                                            if(profileList.contains(charSequence.toString())) {
+                                                //TODO input not valid
+                                                return@input
                                             }
-                                            positiveButton(R.string.save)
-                                            negativeButton(android.R.string.cancel)
+
+                                            profileList.add(charSequence.toString())
+                                            profileList.remove(profile.profileName) //remove all profile name
+                                            ProfileUtils.writeProfiles(this@MainActivity, profileList, gson) //Update profiles file with new profile
+
+                                            //Saving profile
+                                            val f = File(context.filesDir, "${profile.profileName}.profile")
+                                            f.renameTo(File(context.filesDir, "$charSequence.profile"))
+
+                                            profile.profileName = charSequence.toString()
+                                            profilesAdapter?.notifyItemChanged(profile)
                                         }
-                                }
-                                2 -> {
-                                    val f = File(context.filesDir, "$profile.profile")
-                                    f.delete()
+                                        positiveButton(R.string.save)
+                                        negativeButton(android.R.string.cancel)
+                                    }
+                            }
+                            2 -> {
+                                val f = File(context.filesDir, "$profile.profile")
+                                f.delete()
 
-                                    ProfileUtils.writeProfiles(
-                                        this@MainActivity,
-                                        ProfileUtils
-                                            .listProfiles(this@MainActivity, gson).filter { it != profile.profileName },
-                                        gson
-                                    ) //update profile list without this element
+                                ProfileUtils.writeProfiles(
+                                    this@MainActivity,
+                                    ProfileUtils
+                                        .listProfiles(this@MainActivity, gson).filter { it != profile.profileName },
+                                    gson
+                                ) //update profile list without this element
 
-                                    profilesAdapter?.remove(profile)
+                                profilesAdapter?.remove(profile)
+                                if(profilesAdapter?.itemCount == 0) {
+                                    this@MainActivity.profiles_recyclerview.visibility = android.view.View.GONE
+                                    this@MainActivity.no_profiles_textview.visibility = android.view.View.VISIBLE
                                 }
                             }
                         }
                     }
-                } else {
-                    //apply profile
-                    val profileConfig = ProfileUtils.readProfile(profile.profileName, this@MainActivity, gson)
-
-                    doAsync {
-                        val res = profileConfig.updateAcc()
-
-                        ProfileUtils.saveCurrentProfile(profile.profileName, sharedPrefs)
-
-                        if(!res.voltControlUpdateSuccessful) {
-                            uiThread {
-                                Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
-                            }
-                        }
-                    }
-
-                    profilesAdapter?.selectedProfile = profile.profileName
-                    profilesAdapter?.notifyDataSetChanged()
                 }
-            }
-            profiles_recyclerview.layoutManager = layoutManager
-            profiles_recyclerview.adapter = profilesAdapter
+            } else {
+                //apply profile
+                val profileConfig = ProfileUtils.readProfile(profile.profileName, this@MainActivity, gson)
 
-            profiles_cardview.visibility = android.view.View.VISIBLE
+                doAsync {
+                    val res = profileConfig.updateAcc()
+
+                    ProfileUtils.saveCurrentProfile(profile.profileName, sharedPrefs)
+
+                    if(!res.voltControlUpdateSuccessful) {
+                        uiThread {
+                            Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+
+                profilesAdapter?.selectedProfile = profile.profileName
+                profilesAdapter?.notifyDataSetChanged()
+            }
+        }
+
+        profiles_recyclerview.layoutManager = layoutManager
+        profiles_recyclerview.adapter = profilesAdapter
+
+        if(profileList.isNotEmpty()) {
+            profiles_recyclerview.visibility = android.view.View.VISIBLE
+            no_profiles_textview.visibility = android.view.View.GONE
         } else {
-            profiles_cardview.visibility = android.view.View.GONE
+            profiles_recyclerview.visibility = android.view.View.GONE
+            no_profiles_textview.visibility = android.view.View.VISIBLE
         }
     }
 
@@ -240,6 +249,45 @@ class MainActivity : AppCompatActivity() {
         edit_config.setOnClickListener {
             Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
                 startActivityForResult(intent, ACC_CONFIG_EDITOR_REQUEST)
+            }
+        }
+
+        edit_charging_switch.setOnClickListener {
+            val chargingSwitches = AccUtils.listChargingSwitches()
+
+            var currentSwitch = AccUtils.getCurrentChargingSwitch()
+
+            MaterialDialog(this@MainActivity).show {
+                noAutoDismiss()
+                title(R.string.edit_charging_switch)
+                listItemsSingleChoice(items = chargingSwitches, initialSelection = chargingSwitches.indexOf(currentSwitch))  { _, _, text ->
+                    currentSwitch = text
+                }
+                positiveButton(R.string.save) {
+                    currentSwitch?.let {
+                        AccUtils.setChargingSwitch(it)
+                    }
+                    dismiss()
+                }
+                neutralButton(R.string.test) {
+                    val description = currentSwitch?.let {
+                        when(AccUtils.testChargingSwitch(it)) {
+                            0 -> R.string.charging_switch_works
+                            1 -> R.string.charging_switch_does_not_work
+                            2 -> R.string.plug_battery_to_test
+                            else -> null
+                        }
+                    } ?: R.string.no_option_selected
+
+                    MaterialDialog(this@MainActivity).show {
+                        title(R.string.test)
+                        message(description)
+                        positiveButton(android.R.string.ok)
+                    }
+                }
+                negativeButton(android.R.string.cancel) {
+                    dismiss()
+                }
             }
         }
 
@@ -465,11 +513,12 @@ class MainActivity : AppCompatActivity() {
                                 val json = gson.toJson(config)
                                 f.writeText(json)
 
-                                if(profileList.size == 1) {
-                                    initProfiles()
-                                } else {
-                                    profilesAdapter?.add(Profile(input))
+                                if(profilesAdapter?.itemCount == 0) {
+                                    this@MainActivity.profiles_recyclerview.visibility = android.view.View.VISIBLE
+                                    this@MainActivity.no_profiles_textview.visibility = android.view.View.GONE
                                 }
+
+                                profilesAdapter?.add(Profile(input))
 
                             }
                             negativeButton(android.R.string.cancel)

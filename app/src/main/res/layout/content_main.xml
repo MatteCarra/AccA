@@ -124,6 +124,7 @@
                             android:textSize="16sp"/>
                 </LinearLayout>
 
+
                 <Button
                         android:id="@+id/edit_config"
                         style="@style/Widget.AppCompat.Button.Colored"
@@ -133,18 +134,17 @@
                         android:layout_gravity="center_horizontal"/>
 
                 <Button
-                        android:id="@+id/create_acc_profile"
+                        android:id="@+id/edit_charging_switch"
                         style="@style/Widget.AppCompat.Button.Colored"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/create_acc_profile"
+                        android:text="@string/edit_charging_switch"
                         android:layout_gravity="center_horizontal"/>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-                android:id="@+id/profiles_cardview"
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
@@ -155,27 +155,46 @@
                 android:foreground="?selectableItemBackground"
                 card_view:cardCornerRadius="@dimen/card_corner_radius"
                 card_view:cardElevation="3dp"
-                card_view:contentPadding="@dimen/card_content_padding"
-                android:visibility="gone">
+                card_view:contentPadding="@dimen/card_content_padding">
 
             <LinearLayout android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:orientation="vertical">
 
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/profiles_text_view"
-                        android:textSize="16sp"
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profiles_text_view"
+                            android:textSize="16sp"
 
-                        android:layout_marginRight="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:textColor="@color/black"/>
+                            android:layout_marginRight="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:textColor="@color/black"/>
+
+                    <TextView
+                            android:id="@+id/no_profiles_textview"
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/no_profiles"/>
+                </LinearLayout>
+
 
                 <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/profiles_recyclerview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
+
+                <Button
+                        android:id="@+id/create_acc_profile"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/create_acc_profile"
+                        android:layout_gravity="center_horizontal"/>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
