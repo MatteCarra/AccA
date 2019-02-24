@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceManager
 import android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-import android.util.Log
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -29,7 +28,6 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
-import com.afollestad.materialdialogs.list.getListAdapter
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.github.javiersantos.appupdater.AppUpdater
@@ -260,8 +258,10 @@ class MainActivity : AppCompatActivity() {
             MaterialDialog(this@MainActivity).show {
                 noAutoDismiss()
                 title(R.string.edit_charging_switch)
-                listItemsSingleChoice(items = chargingSwitches, initialSelection = chargingSwitches.indexOf(currentSwitch))  { _, _, text ->
+                listItemsSingleChoice(items = chargingSwitches, initialSelection = chargingSwitches.indexOf(currentSwitch), waitForPositiveButton = false)  { _, _, text ->
                     currentSwitch = text
+                    setActionButtonEnabled(WhichButton.POSITIVE, true)
+                    setActionButtonEnabled(WhichButton.NEUTRAL, true)
                 }
                 positiveButton(R.string.save) {
                     currentSwitch?.let {
@@ -269,18 +269,19 @@ class MainActivity : AppCompatActivity() {
                     }
                     dismiss()
                 }
-                neutralButton(R.string.test) {
+                neutralButton(R.string.test_switch) {
                     val description = currentSwitch?.let {
-                        when(AccUtils.testChargingSwitch(it)) {
+                        val res = AccUtils.testChargingSwitch(it)
+                        when(res) {
                             0 -> R.string.charging_switch_works
                             1 -> R.string.charging_switch_does_not_work
                             2 -> R.string.plug_battery_to_test
                             else -> null
                         }
-                    } ?: R.string.no_option_selected
+                    } ?: R.string.no_option_selected //should never happen
 
                     MaterialDialog(this@MainActivity).show {
-                        title(R.string.test)
+                        title(R.string.test_switch)
                         message(description)
                         positiveButton(android.R.string.ok)
                     }
@@ -288,6 +289,9 @@ class MainActivity : AppCompatActivity() {
                 negativeButton(android.R.string.cancel) {
                     dismiss()
                 }
+
+                if(currentSwitch == null)
+                    setActionButtonEnabled(WhichButton.NEUTRAL, false)
             }
         }
 
