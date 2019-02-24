@@ -17,7 +17,7 @@ object AccUtils {
     val ON_BOOT = """^\s*onBoot=([^#]+)""".toRegex(RegexOption.MULTILINE)
     val VOLT_FILE = """^\s*voltFile=([^#\s]+)""".toRegex(RegexOption.MULTILINE)
     val VOLTAGE_MAX = """(\d+)""".toRegex(RegexOption.MULTILINE)
-    val SWITCH = """^\s*switch=([^#\s]+)""".toRegex(RegexOption.MULTILINE)
+    val SWITCH = """^\s*switch=([^#]+)""".toRegex(RegexOption.MULTILINE)
 
     val defaultConfig: AccConfig = AccConfig(
         Capacity(5, 60, 70, 80),
@@ -222,7 +222,7 @@ object AccUtils {
     //Charging switches
     fun listChargingSwitches(): List<String> {
         val res = Shell.su("acc -s s:").exec()
-        return if(res.isSuccess) res.out.filter { it.isNotEmpty() } else emptyList()
+        return if(res.isSuccess) res.out.map { it.trim() }.filter { it.isNotEmpty() } else emptyList()
     }
 
     fun setChargingSwitch(chargingSwitch: String): Boolean {
@@ -234,6 +234,6 @@ object AccUtils {
     }
 
     fun getCurrentChargingSwitch(): String? {
-        return SWITCH.find(readConfigToStringArray().joinToString(separator = "\n"))?.destructured?.component1()
+        return SWITCH.find(readConfigToStringArray().joinToString(separator = "\n"))?.destructured?.component1()?.trim()
     }
 }

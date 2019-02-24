@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.DialogCallback
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
@@ -252,23 +253,38 @@ class MainActivity : AppCompatActivity() {
 
         edit_charging_switch.setOnClickListener {
             val chargingSwitches = AccUtils.listChargingSwitches()
-
             var currentSwitch = AccUtils.getCurrentChargingSwitch()
 
-            MaterialDialog(this@MainActivity).show {
-                noAutoDismiss()
-                title(R.string.edit_charging_switch)
-                listItemsSingleChoice(items = chargingSwitches, initialSelection = chargingSwitches.indexOf(currentSwitch), waitForPositiveButton = false)  { _, _, text ->
-                    currentSwitch = text
-                    setActionButtonEnabled(WhichButton.POSITIVE, true)
-                    setActionButtonEnabled(WhichButton.NEUTRAL, true)
+            MaterialDialog(this).show {
+                if(currentSwitch == null) {
+                    setActionButtonEnabled(WhichButton.POSITIVE, false)
+                    setActionButtonEnabled(WhichButton.NEUTRAL, false)
                 }
+
+                title(R.string.edit_charging_switch)
+                noAutoDismiss()
+
+                if(chargingSwitches.isNotEmpty()) {
+                    listItemsSingleChoice(items = chargingSwitches, initialSelection = chargingSwitches.indexOf(currentSwitch), waitForPositiveButton = false)  { _, _, text ->
+                        currentSwitch = text
+                        setActionButtonEnabled(WhichButton.POSITIVE, true)
+                        setActionButtonEnabled(WhichButton.NEUTRAL, true)
+                    }
+                } else {
+                    input(prefill = currentSwitch, waitForPositiveButton = false) { _, newSwitch ->
+                        currentSwitch = newSwitch.toString()
+                        setActionButtonEnabled(WhichButton.POSITIVE, true)
+                        setActionButtonEnabled(WhichButton.NEUTRAL, true)
+                    }
+                }
+
                 positiveButton(R.string.save) {
                     currentSwitch?.let {
                         AccUtils.setChargingSwitch(it)
                     }
                     dismiss()
                 }
+
                 neutralButton(R.string.test_switch) {
                     val description = currentSwitch?.let {
                         val res = AccUtils.testChargingSwitch(it)
@@ -289,9 +305,6 @@ class MainActivity : AppCompatActivity() {
                 negativeButton(android.R.string.cancel) {
                     dismiss()
                 }
-
-                if(currentSwitch == null)
-                    setActionButtonEnabled(WhichButton.NEUTRAL, false)
             }
         }
 
