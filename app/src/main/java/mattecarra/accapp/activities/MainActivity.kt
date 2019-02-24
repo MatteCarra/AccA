@@ -252,6 +252,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         edit_charging_switch.setOnClickListener {
+            val automaticString = getString(R.string.automatic)
             val chargingSwitches = AccUtils.listChargingSwitches()
             var currentSwitch = AccUtils.getCurrentChargingSwitch()
 
@@ -265,7 +266,7 @@ class MainActivity : AppCompatActivity() {
                 noAutoDismiss()
 
                 if(chargingSwitches.isNotEmpty()) {
-                    listItemsSingleChoice(items = chargingSwitches, initialSelection = chargingSwitches.indexOf(currentSwitch), waitForPositiveButton = false)  { _, _, text ->
+                    listItemsSingleChoice(items = listOf(automaticString, *chargingSwitches.toTypedArray()), initialSelection = chargingSwitches.indexOf(currentSwitch) + 1, waitForPositiveButton = false)  { _, _, text ->
                         currentSwitch = text
                         setActionButtonEnabled(WhichButton.POSITIVE, true)
                         setActionButtonEnabled(WhichButton.NEUTRAL, true)
@@ -280,6 +281,9 @@ class MainActivity : AppCompatActivity() {
 
                 positiveButton(R.string.save) {
                     currentSwitch?.let {
+                        if(it == automaticString)
+                            AccUtils.unsetChargingSwitch()
+                        else
                         AccUtils.setChargingSwitch(it)
                     }
                     dismiss()
@@ -287,7 +291,7 @@ class MainActivity : AppCompatActivity() {
 
                 neutralButton(R.string.test_switch) {
                     val description = currentSwitch?.let {
-                        val res = AccUtils.testChargingSwitch(it)
+                        val res = if(it == automaticString) AccUtils.testChargingSwitch() else AccUtils.testChargingSwitch(it)
                         when(res) {
                             0 -> R.string.charging_switch_works
                             1 -> R.string.charging_switch_does_not_work

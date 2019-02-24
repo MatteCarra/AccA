@@ -83,6 +83,7 @@
     <string name="plug_battery_to_test">Battery must be charging before testing. Try again after plugging it to the
         charger!
     </string>
+    <string name="automatic">Automatic</string>
 
     <string-array name="profile_long_press_options">
         <item>Edit</item>

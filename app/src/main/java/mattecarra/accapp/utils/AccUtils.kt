@@ -120,7 +120,7 @@ object AccUtils {
     }
 
     //Update on boot
-    fun updateOnBootCommand(value: String?): String = "acc -s onBoot${ value?.let{ " $it" } ?: ""}"
+    fun updateOnBootCommand(value: String?): String = "acc -s onBoot${value?.let{ " $it" } ?: ""}"
 
     fun updateOnBoot(value: String?): Boolean {
         return Shell.su(updateOnBootCommand(value)).exec().isSuccess
@@ -229,11 +229,15 @@ object AccUtils {
         return Shell.su("acc -s s $chargingSwitch").exec().isSuccess
     }
 
-    fun testChargingSwitch(chargingSwitch: String): Int {
-        return Shell.su("acc -t $chargingSwitch").exec().code
+    fun testChargingSwitch(chargingSwitch: String? = null): Int {
+        return Shell.su("acc -t${chargingSwitch?.let{" $it"} ?: ""}").exec().code
     }
 
     fun getCurrentChargingSwitch(): String? {
         return SWITCH.find(readConfigToStringArray().joinToString(separator = "\n"))?.destructured?.component1()?.trim()
+    }
+
+    fun unsetChargingSwitch(): Boolean {
+        return Shell.su("acc -s s-").exec().isSuccess
     }
 }
