@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceManager
 import android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+import android.util.Log
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -253,57 +254,50 @@ class MainActivity : AppCompatActivity() {
 
         edit_charging_switch.setOnClickListener {
             val automaticString = getString(R.string.automatic)
-            val chargingSwitches = AccUtils.listChargingSwitches()
-            var currentSwitch = AccUtils.getCurrentChargingSwitch()
+            val chargingSwitches = listOf(automaticString, *AccUtils.listChargingSwitches().toTypedArray())
+            var currentSwitch = AccUtils.getCurrentChargingSwitch() ?: automaticString
 
             MaterialDialog(this).show {
-                if(currentSwitch == null) {
-                    setActionButtonEnabled(WhichButton.POSITIVE, false)
-                    setActionButtonEnabled(WhichButton.NEUTRAL, false)
-                }
-
                 title(R.string.edit_charging_switch)
                 noAutoDismiss()
 
-                if(chargingSwitches.isNotEmpty()) {
-                    listItemsSingleChoice(items = listOf(automaticString, *chargingSwitches.toTypedArray()), initialSelection = chargingSwitches.indexOf(currentSwitch) + 1, waitForPositiveButton = false)  { _, _, text ->
-                        currentSwitch = text
-                        setActionButtonEnabled(WhichButton.POSITIVE, true)
-                        setActionButtonEnabled(WhichButton.NEUTRAL, true)
-                    }
-                } else {
-                    input(prefill = currentSwitch, waitForPositiveButton = false) { _, newSwitch ->
-                        currentSwitch = newSwitch.toString()
-                        setActionButtonEnabled(WhichButton.POSITIVE, true)
-                        setActionButtonEnabled(WhichButton.NEUTRAL, true)
-                    }
+                listItemsSingleChoice(items = chargingSwitches, initialSelection = chargingSwitches.indexOf(currentSwitch), waitForPositiveButton = false)  { _, _, text ->
+                    currentSwitch = text
                 }
 
                 positiveButton(R.string.save) {
-                    currentSwitch?.let {
-                        if(it == automaticString)
+                    val switch = currentSwitch
+
+                    doAsync {
+                        if(switch == automaticString)
                             AccUtils.unsetChargingSwitch()
                         else
-                        AccUtils.setChargingSwitch(it)
+                            AccUtils.setChargingSwitch(switch)
                     }
+
                     dismiss()
                 }
 
                 neutralButton(R.string.test_switch) {
-                    val description = currentSwitch?.let {
-                        val res = if(it == automaticString) AccUtils.testChargingSwitch() else AccUtils.testChargingSwitch(it)
-                        when(res) {
-                            0 -> R.string.charging_switch_works
-                            1 -> R.string.charging_switch_does_not_work
-                            2 -> R.string.plug_battery_to_test
-                            else -> null
-                        }
-                    } ?: R.string.no_option_selected //should never happen
+                    val switch = currentSwitch
 
-                    MaterialDialog(this@MainActivity).show {
-                        title(R.string.test_switch)
-                        message(description)
-                        positiveButton(android.R.string.ok)
+                    Toast.makeText(this@MainActivity, R.string.wait, Toast.LENGTH_LONG).show()
+                    doAsync {
+                        val description =
+                            when(if(switch == automaticString) AccUtils.testChargingSwitch() else AccUtils.testChargingSwitch(switch)) {
+                                0 -> R.string.charging_switch_works
+                                1 -> R.string.charging_switch_does_not_work
+                                2 -> R.string.plug_battery_to_test
+                                else -> R.string.error_occurred
+                            }
+
+                        uiThread {
+                            MaterialDialog(this@MainActivity).show {
+                                title(R.string.test_switch)
+                                message(description)
+                                positiveButton(android.R.string.ok)
+                            }
+                        }
                     }
                 }
                 negativeButton(android.R.string.cancel) {

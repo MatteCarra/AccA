@@ -84,6 +84,7 @@
         charger!
     </string>
     <string name="automatic">Automatic</string>
+    <string name="error_occurred">An error has occurred</string>
 
     <string-array name="profile_long_press_options">
         <item>Edit</item>
