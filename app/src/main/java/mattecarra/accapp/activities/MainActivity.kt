@@ -255,21 +255,29 @@ class MainActivity : AppCompatActivity() {
         edit_charging_switch.setOnClickListener {
             val automaticString = getString(R.string.automatic)
             val chargingSwitches = listOf(automaticString, *AccUtils.listChargingSwitches().toTypedArray())
-            var currentSwitch = AccUtils.getCurrentChargingSwitch() ?: automaticString
+            val initialSwitch = AccUtils.getCurrentChargingSwitch()
+            var currentIndex = chargingSwitches.indexOf(initialSwitch ?: automaticString)
 
             MaterialDialog(this).show {
                 title(R.string.edit_charging_switch)
                 noAutoDismiss()
 
-                listItemsSingleChoice(items = chargingSwitches, initialSelection = chargingSwitches.indexOf(currentSwitch), waitForPositiveButton = false)  { _, _, text ->
-                    currentSwitch = text
+                setActionButtonEnabled(WhichButton.POSITIVE, currentIndex != -1)
+                setActionButtonEnabled(WhichButton.NEUTRAL, currentIndex > 0) // != 0 and != 1
+
+                listItemsSingleChoice(items = chargingSwitches, initialSelection = currentIndex, waitForPositiveButton = false)  { _, index, text ->
+                    currentIndex = index
+
+                    setActionButtonEnabled(WhichButton.POSITIVE, index != -1)
+                    setActionButtonEnabled(WhichButton.NEUTRAL, index > 0) // != 0 and != 1
                 }
 
                 positiveButton(R.string.save) {
-                    val switch = currentSwitch
+                    val index = currentIndex
+                    val switch = chargingSwitches[index]
 
                     doAsync {
-                        if(switch == automaticString)
+                        if(index == 0)
                             AccUtils.unsetChargingSwitch()
                         else
                             AccUtils.setChargingSwitch(switch)
@@ -279,12 +287,12 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 neutralButton(R.string.test_switch) {
-                    val switch = currentSwitch
+                    val switch = chargingSwitches[currentIndex]
 
                     Toast.makeText(this@MainActivity, R.string.wait, Toast.LENGTH_LONG).show()
                     doAsync {
                         val description =
-                            when(if(switch == automaticString) AccUtils.testChargingSwitch() else AccUtils.testChargingSwitch(switch)) {
+                            when(AccUtils.testChargingSwitch(switch)) {
                                 0 -> R.string.charging_switch_works
                                 1 -> R.string.charging_switch_does_not_work
                                 2 -> R.string.plug_battery_to_test
@@ -300,6 +308,7 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
+
                 negativeButton(android.R.string.cancel) {
                     dismiss()
                 }

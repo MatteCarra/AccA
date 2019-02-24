@@ -234,7 +234,8 @@ object AccUtils {
     }
 
     fun getCurrentChargingSwitch(): String? {
-        return SWITCH.find(readConfigToStringArray().joinToString(separator = "\n"))?.destructured?.component1()?.trim()
+        val switch = SWITCH.find(readConfigToStringArray().joinToString(separator = "\n"))?.destructured?.component1()?.trim()
+        return if(switch?.isNotEmpty() == true) switch else null
     }
 
     fun unsetChargingSwitch(): Boolean {
