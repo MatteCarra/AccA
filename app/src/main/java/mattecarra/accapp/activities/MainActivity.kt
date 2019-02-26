@@ -263,13 +263,13 @@ class MainActivity : AppCompatActivity() {
                 noAutoDismiss()
 
                 setActionButtonEnabled(WhichButton.POSITIVE, currentIndex != -1)
-                setActionButtonEnabled(WhichButton.NEUTRAL, currentIndex > 0) // != 0 and != 1
+                setActionButtonEnabled(WhichButton.NEUTRAL, currentIndex != -1)
 
                 listItemsSingleChoice(items = chargingSwitches, initialSelection = currentIndex, waitForPositiveButton = false)  { _, index, text ->
                     currentIndex = index
 
                     setActionButtonEnabled(WhichButton.POSITIVE, index != -1)
-                    setActionButtonEnabled(WhichButton.NEUTRAL, index > 0) // != 0 and != 1
+                    setActionButtonEnabled(WhichButton.NEUTRAL, index != -1)
                 }
 
                 positiveButton(R.string.save) {
@@ -287,7 +287,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 neutralButton(R.string.test_switch) {
-                    val switch = chargingSwitches[currentIndex]
+                    val switch = if(currentIndex == 0) null else chargingSwitches[currentIndex]
 
                     Toast.makeText(this@MainActivity, R.string.wait, Toast.LENGTH_LONG).show()
                     doAsync {
