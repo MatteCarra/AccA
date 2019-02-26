@@ -4,7 +4,7 @@
     <string name="tile_acc_enabled">Acc enabled</string>
     <string name="tile_acc_disabled">Acc disabled</string>
     <string name="title_activity_log_view">Logs</string>
-    <string name="title_activity_log_view_file_name">Logs: %1$s</string>
+    <string name="title_activity_log_view_file_name">Logs</string>
 
 
     <string name="acc_deamon_status_running">ACC is running</string>

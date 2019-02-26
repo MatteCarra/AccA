@@ -22,9 +22,10 @@ class LogRecyclerViewAdapter(val lines: ArrayList<String>, private val listener:
         }
     }
 
-    fun add(line: String) {
+    fun add(line: String, notify: Boolean = true) {
         lines.add(line)
-        notifyItemInserted(lines.size - 1)
+        if(notify)
+            notifyItemInserted(lines.size - 1)
     }
 
     fun setList(logs: List<String>) {

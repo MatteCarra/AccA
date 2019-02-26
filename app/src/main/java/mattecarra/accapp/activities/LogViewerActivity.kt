@@ -13,11 +13,14 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.MainThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
+import com.topjohnwu.superuser.CallbackList
+import com.topjohnwu.superuser.Shell
 import mattecarra.accapp.R
 import mattecarra.accapp.adapters.LogRecyclerViewAdapter
 import org.jetbrains.anko.doAsync
@@ -31,34 +34,9 @@ class LogViewerActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: LogRecyclerViewAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var file: File
     private var onBottom = true
-
-    private val handler = Handler()
-    private val readLogFile = object : Runnable {
-        override fun run() {
-            Log.d(LOG_TAG, "Reading log file...")
-            val r = this //need this to make it recursive
-            doAsync {
-                val newList = readLogs()
-                uiThread {
-                    if(newList.size < adapter.size()) {
-                        adapter.setList(newList)
-                    } else if(newList.size > adapter.size()) {
-                        for (i in adapter.size() until newList.size) {
-                            adapter.add(newList[i])
-                        }
-                    }
-
-                    if (onBottom) {
-                        scrollToBottom()
-                    }
-
-                    handler.postDelayed(r, 1000)// Repeat the same runnable code block again after 1 seconds
-                }
-            }
-        }
-    }
+    private lateinit var job: Shell.Job
+    private var isPaused = false
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
@@ -69,10 +47,6 @@ class LogViewerActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
-    }
-
-    fun readLogs(): List<String> {
-        return file.readText(charset = Charsets.UTF_8).split("\n")
     }
 
     private fun scrollToBottom() {
@@ -100,39 +74,12 @@ class LogViewerActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        val regexp = """acc-daemon-(.+)\.log""".toRegex()
-        val logsDir = File(Environment.getExternalStorageDirectory(), "acc/logs/")
-        val file = logsDir.listFiles().find {
-            regexp.matches(it.name)
-        }
-
-        if(file?.exists() != true) {
-            val dialog = MaterialDialog(this).show {
-                title(R.string.log_file_not_found_title)
-                message(R.string.log_file_not_found_title)
-                positiveButton(android.R.string.ok) {
-                    finish()
-                }
-                cancelOnTouchOutside(false)
-            }
-            dialog.setOnKeyListener { _, keyCode, _ ->
-                if(keyCode == KeyEvent.KEYCODE_BACK) {
-                    dialog.dismiss()
-                    finish()
-                    false
-                } else true
-            }
-            return
-        }
-
-        this.file = file
-
-        supportActionBar?.title = getString(R.string.title_activity_log_view_file_name, this.file.name)
+        supportActionBar?.title = getString(R.string.title_activity_log_view_file_name)
 
         recyclerView = findViewById<View>(R.id.log_recycler) as RecyclerView
         linearLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = linearLayoutManager
-        adapter = LogRecyclerViewAdapter(ArrayList(readLogs()), clickerListener)
+        adapter = LogRecyclerViewAdapter(ArrayList(), clickerListener)
         if (savedInstanceState != null) {
             this.adapter.restoreState(savedInstanceState)
         }
@@ -154,19 +101,40 @@ class LogViewerActivity : AppCompatActivity() {
                 }
             }
         })
+
+        job = Shell.su("acc -L")
+            .to(object : CallbackList<String>() {
+                override fun onAddElement(e: String?) {
+                    e?.let {
+                        adapter.add(it, !isPaused)
+                        if(!isPaused)
+                            scrollToBottom()
+                    }
+                }
+
+            })
+
+        job.submit {
+                println(it.code)
+            }
+    }
+
+    override fun onDestroy() {
+        Shell.getCachedShell()?.close()
+        super.onDestroy()
     }
 
     override fun onResume() {
         Log.d(LOG_TAG, "onResume")
-        handler.post(readLogFile) // Start the initial runnable task by posting through the handler
-
+        adapter.notifyDataSetChanged()
+        scrollToBottom()
+        isPaused = false
         super.onResume()
     }
 
     override fun onPause() {
         Log.d(LOG_TAG, "onPause")
-        handler.removeCallbacks(readLogFile)
-
+        isPaused = true
         super.onPause()
     }
 }
