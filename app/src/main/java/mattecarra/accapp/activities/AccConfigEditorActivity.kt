@@ -228,6 +228,8 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             val view = dialog.getCustomView()
             val voltageMax = view.findViewById<EditText>(R.id.voltage_max)
             val checkBox = dialog.findViewById<CheckBox>(R.id.enable_voltage_max)
+            val voltageControl = view.findViewById<Spinner>(R.id.voltage_control_file)
+
             voltageMax.setText(config.voltControl.voltMax?.toString() ?: "", TextView.BufferType.EDITABLE)
             checkBox.setOnCheckedChangeListener { _, isChecked ->
                 voltageMax.isEnabled = isChecked
@@ -235,7 +237,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                 val voltageMaxVal = voltageMax.text?.toString()?.toIntOrNull()
                 val isValid = voltageMaxVal != null && voltageMaxVal >= 3920 && voltageMaxVal < 4200
                 voltageMax.error = if (isValid) null else getString(R.string.invalid_voltage_max)
-                dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
+                dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid  && voltageControl.selectedItemPosition != -1)
             }
             checkBox.isChecked = config.voltControl.voltMax != null
             voltageMax.isEnabled = checkBox.isChecked
@@ -248,20 +250,35 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                     val voltageMaxVal = s?.toString()?.toIntOrNull()
                     val isValid = voltageMaxVal != null && voltageMaxVal >= 3920 && voltageMaxVal < 4200
                     voltageMax.error = if(isValid) null else getString(R.string.invalid_voltage_max)
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid  && voltageControl.selectedItemPosition != -1)
                 }
             })
 
-            val voltageControl = view.findViewById<Spinner>(R.id.voltage_control_file)
             val supportedVoltageControlFiles = ArrayList(AccUtils.listVoltageSupportedControlFiles())
+            config.voltControl.voltFile?.let {
+                if(!supportedVoltageControlFiles.contains(it)) {
+                    supportedVoltageControlFiles.add(it)
+                }
+            }
             val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, supportedVoltageControlFiles)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             voltageControl.adapter = adapter
-            if(config.voltControl.voltFile != null) {
-                if(!supportedVoltageControlFiles.contains(config.voltControl.voltFile)) {
-                    supportedVoltageControlFiles.add(config.voltControl.voltFile)
+            config.voltControl.voltFile?.let {
+                voltageControl.setSelection(supportedVoltageControlFiles.indexOf(it))
+            }
+            if(voltageControl.selectedItemPosition == -1) {
+                dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
+            }
+            voltageControl.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
                 }
-                voltageControl.setSelection(supportedVoltageControlFiles.indexOf(config.voltControl.voltFile))
+
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    val voltageMaxVal = voltageMax.text?.toString()?.toIntOrNull()
+                    val isValid = voltageMaxVal != null && voltageMaxVal >= 3920 && voltageMaxVal < 4200
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid && position != -1)
+                }
             }
         }
     }
