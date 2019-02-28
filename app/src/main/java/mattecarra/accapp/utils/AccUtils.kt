@@ -141,7 +141,12 @@ object AccUtils {
     }
 
     private fun getVoltageMax(): Int? {
-        return VOLTAGE_MAX.find(Shell.su("acc -v -").exec().out.joinToString(separator = "\n"))?.destructured?.component1()?.toIntOrNull()
+        return VOLTAGE_MAX.find(Shell.su("acc -v -").exec().out.joinToString(separator = "\n"))?.destructured?.component1()?.toIntOrNull()?.let {
+            if(it > 1000000) //convert uV to mV
+                it / 1000
+            else
+                it
+        }
     }
 
     fun listVoltageSupportedControlFiles(): List<String> {
