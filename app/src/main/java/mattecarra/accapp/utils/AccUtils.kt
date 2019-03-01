@@ -15,7 +15,7 @@ object AccUtils {
     val RESET_UNPLUGGED_CONFIG_REGEXP = """^\s*resetUnplugged=(true|false)""".toRegex(RegexOption.MULTILINE)
     val ON_BOOT_EXIT = """^\s*onBootExit=(true|false)""".toRegex(RegexOption.MULTILINE)
     val ON_BOOT = """^\s*onBoot=([^#]+)""".toRegex(RegexOption.MULTILINE)
-    val VOLT_FILE = """^\s*voltFile=([^#\s]+)""".toRegex(RegexOption.MULTILINE)
+    val VOLT_FILE = """^\s*cVolt=([^:#\s]+):(\d+)""".toRegex(RegexOption.MULTILINE)
     val VOLTAGE_MAX = """(\d+)""".toRegex(RegexOption.MULTILINE)
     val SWITCH = """^\s*switch=([^#]+)""".toRegex(RegexOption.MULTILINE)
 
@@ -51,8 +51,8 @@ object AccUtils {
             waitSeconds.toIntOrNull() ?: 90
         )
 
-        val voltFile = VOLT_FILE.find(config)?.destructured?.component1()
-        val voltControl = VoltControl(voltFile, getVoltageMax())
+        val cVolt = VOLT_FILE.find(config)?.destructured
+        val voltControl = VoltControl(cVolt?.component1(), cVolt?.component2()?.toIntOrNull())
 
         return AccConfig(
             capacity,
@@ -138,15 +138,6 @@ object AccUtils {
 
     fun updateVoltage(voltControl: String?, voltMax: Int?): Boolean {
         return Shell.su(updateVoltageCommand(voltControl, voltMax)).exec().isSuccess
-    }
-
-    private fun getVoltageMax(): Int? {
-        return VOLTAGE_MAX.find(Shell.su("acc -v -").exec().out.joinToString(separator = "\n"))?.destructured?.component1()?.toIntOrNull()?.let {
-            if(it > 1000000) //convert uV to mV
-                it / 1000
-            else
-                it
-        }
     }
 
     fun listVoltageSupportedControlFiles(): List<String> {
