@@ -46,6 +46,7 @@ import mattecarra.accapp.adapters.Schedule
 import mattecarra.accapp.adapters.ScheduleRecyclerViewAdapter
 import mattecarra.accapp.data.AccConfig
 import mattecarra.accapp.utils.ProfileUtils
+import mattecarra.accapp.utils.progress
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.io.File
@@ -437,6 +438,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkPermissions(): Boolean {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST)
+            return false
+        }
+        return true
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -474,12 +483,34 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST)
+        if(!AccUtils.isAccInstalled()) {
+            val dialog = MaterialDialog(this).show {
+                title(R.string.installing_acc)
+                progress(R.string.wait)
+                cancelOnTouchOutside(false)
+            }
+            dialog.setOnKeyListener { _, keyCode, _ ->
+                keyCode == KeyEvent.KEYCODE_BACK
+            }
+
+            doAsync {
+                val res = AccUtils.installAccModule(this@MainActivity).isSuccess
+                uiThread {
+                    dialog.cancel()
+
+                    if(!res) {
+                        finish()
+                    } else {
+                        if(checkPermissions())
+                            initUi()
+                    }
+                }
+            }
             return
         }
 
-        initUi()
+        if(checkPermissions())
+            initUi()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

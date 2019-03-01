@@ -1,11 +1,15 @@
 package mattecarra.accapp.utils
 
+import android.content.Context
 import android.os.Environment
 import com.topjohnwu.superuser.Shell
 import mattecarra.accapp.adapters.Schedule
 import mattecarra.accapp.data.*
+import java.io.BufferedInputStream
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
+import java.net.URL
 
 
 object AccUtils {
@@ -16,7 +20,6 @@ object AccUtils {
     val ON_BOOT_EXIT = """^\s*onBootExit=(true|false)""".toRegex(RegexOption.MULTILINE)
     val ON_BOOT = """^\s*onBoot=([^#]+)""".toRegex(RegexOption.MULTILINE)
     val VOLT_FILE = """^\s*cVolt=([^:#\s]+):(\d+)""".toRegex(RegexOption.MULTILINE)
-    val VOLTAGE_MAX = """(\d+)""".toRegex(RegexOption.MULTILINE)
     val SWITCH = """^\s*switch=([^#]+)""".toRegex(RegexOption.MULTILINE)
 
     val defaultConfig: AccConfig = AccConfig(
@@ -236,5 +239,30 @@ object AccUtils {
 
     fun unsetChargingSwitch(): Boolean {
         return Shell.su("acc -s s-").exec().isSuccess
+    }
+
+    fun isAccInstalled(): Boolean {
+        return Shell.su("which acc 1>/dev/null").exec().isSuccess
+    }
+
+    fun installAccModule(context: Context): Shell.Result {
+        val scriptFile = File(context.filesDir, "updater.sh")
+        val path = scriptFile.absolutePath
+
+        BufferedInputStream(URL("https://raw.githubusercontent.com/Magisk-Modules-Repo/acc/master/common/upgrade.sh").openStream())
+            .use { inStream ->
+                FileOutputStream(scriptFile)
+                    .use {
+                        val buf = ByteArray(1024)
+                        var bytesRead = inStream.read(buf, 0, 1024)
+
+                        while (bytesRead != -1) {
+                            it.write(buf, 0, bytesRead)
+                            bytesRead = inStream.read(buf, 0, 1024)
+                        }
+                    }
+            }
+
+        return Shell.su("chmod +x $path", "sh $path").exec()
     }
 }
