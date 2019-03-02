@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceManager
 import android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-import android.util.Log
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -22,7 +21,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.afollestad.materialdialogs.DialogCallback
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
@@ -446,6 +444,29 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    private fun showRebootDialog() {
+        val dialog = MaterialDialog(this)
+            .show {
+                title(R.string.reboot_dialog_title)
+                message(R.string.reboot_dialog_description)
+                positiveButton(R.string.reboot) {
+                    Shell.su("am start -a android.intent.action.REBOOT").exec()
+                }
+                negativeButton(android.R.string.cancel) {
+                    finish()
+                }
+                cancelOnTouchOutside(false)
+            }
+
+        dialog.setOnKeyListener { _, keyCode, _ ->
+            if(keyCode == KeyEvent.KEYCODE_BACK) {
+                dialog.dismiss()
+                finish()
+                false
+            } else true
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -484,6 +505,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         if(!AccUtils.isAccInstalled()) {
+            if(Shell.su("test -f /dev/acc/install.sh").exec().code == 0) {
+                showRebootDialog()
+                return
+            }
+
             val dialog = MaterialDialog(this).show {
                 title(R.string.installing_acc)
                 progress(R.string.wait)
@@ -501,8 +527,7 @@ class MainActivity : AppCompatActivity() {
                     if(!res) {
                         finish()
                     } else {
-                        if(checkPermissions())
-                            initUi()
+                        showRebootDialog()
                     }
                 }
             }

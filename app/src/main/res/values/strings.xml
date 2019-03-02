@@ -86,6 +86,9 @@
     <string name="automatic">Automatic</string>
     <string name="error_occurred">An error has occurred</string>
     <string name="installing_acc">Initializing required files</string>
+    <string name="reboot_dialog_title">Do you want to reboot now?</string>
+    <string name="reboot_dialog_description">Acc will be fully working after rebooting.\nIf the installation just finished please wait 2 minutes before rebooting.</string>
+    <string name="reboot">Reboot</string>
 
     <string-array name="profile_long_press_options">
         <item>Edit</item>
