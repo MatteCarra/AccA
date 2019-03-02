@@ -9,6 +9,7 @@ import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.lang.Exception
 import java.net.URL
 
 
@@ -245,24 +246,29 @@ object AccUtils {
         return Shell.su("which acc 1>/dev/null").exec().isSuccess
     }
 
-    fun installAccModule(context: Context): Shell.Result {
-        val scriptFile = File(context.filesDir, "updater.sh")
-        val path = scriptFile.absolutePath
+    fun installAccModule(context: Context): Shell.Result? {
+        try {
+            val scriptFile = File(context.filesDir, "updater.sh")
+            val path = scriptFile.absolutePath
 
-        BufferedInputStream(URL("https://raw.githubusercontent.com/Magisk-Modules-Repo/acc/master/common/upgrade.sh").openStream())
-            .use { inStream ->
-                FileOutputStream(scriptFile)
-                    .use {
-                        val buf = ByteArray(1024)
-                        var bytesRead = inStream.read(buf, 0, 1024)
+            BufferedInputStream(URL("https://raw.githubusercontent.com/Magisk-Modules-Repo/acc/master/common/upgrade.sh").openStream())
+                .use { inStream ->
+                    FileOutputStream(scriptFile)
+                        .use {
+                            val buf = ByteArray(1024)
+                            var bytesRead = inStream.read(buf, 0, 1024)
 
-                        while (bytesRead != -1) {
-                            it.write(buf, 0, bytesRead)
-                            bytesRead = inStream.read(buf, 0, 1024)
+                            while (bytesRead != -1) {
+                                it.write(buf, 0, bytesRead)
+                                bytesRead = inStream.read(buf, 0, 1024)
+                            }
                         }
-                    }
-            }
+                }
 
-        return Shell.su("chmod +x $path", "sh $path").exec()
+            return Shell.su("chmod +x $path", "sh $path").exec()
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            return null
+        }
     }
 }

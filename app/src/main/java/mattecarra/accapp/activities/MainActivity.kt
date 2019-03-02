@@ -467,6 +467,61 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkAccInstalled(): Boolean {
+        if(!AccUtils.isAccInstalled()) {
+            if(Shell.su("test -f /dev/acc/install.sh").exec().code == 0) {
+                showRebootDialog()
+                return false
+            }
+
+            val dialog = MaterialDialog(this).show {
+                title(R.string.installing_acc)
+                progress(R.string.wait)
+                cancelOnTouchOutside(false)
+            }
+
+            dialog.setOnKeyListener { _, keyCode, _ ->
+                keyCode == KeyEvent.KEYCODE_BACK
+            }
+
+            doAsync {
+                val res = AccUtils.installAccModule(this@MainActivity)?.isSuccess == true
+                uiThread {
+                    dialog.cancel()
+
+                    if(!res) {
+                        val failureDialog = MaterialDialog(this@MainActivity)
+                            .show {
+                                title(R.string.installation_failed_title)
+                                message(R.string.installation_failed)
+                                positiveButton(R.string.retry) {
+                                    if(checkAccInstalled() && checkPermissions())
+                                        initUi()
+                                }
+                                negativeButton {
+                                    finish()
+                                }
+                                cancelOnTouchOutside(false)
+                            }
+
+                        failureDialog.setOnKeyListener { _, keyCode, _ ->
+                            if(keyCode == KeyEvent.KEYCODE_BACK) {
+                                dialog.dismiss()
+                                finish()
+                                false
+                            } else true
+                        }
+                    } else {
+                        showRebootDialog()
+                    }
+                }
+            }
+            return false
+        }
+
+        return true
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -504,37 +559,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        if(!AccUtils.isAccInstalled()) {
-            if(Shell.su("test -f /dev/acc/install.sh").exec().code == 0) {
-                showRebootDialog()
-                return
-            }
-
-            val dialog = MaterialDialog(this).show {
-                title(R.string.installing_acc)
-                progress(R.string.wait)
-                cancelOnTouchOutside(false)
-            }
-            dialog.setOnKeyListener { _, keyCode, _ ->
-                keyCode == KeyEvent.KEYCODE_BACK
-            }
-
-            doAsync {
-                val res = AccUtils.installAccModule(this@MainActivity).isSuccess
-                uiThread {
-                    dialog.cancel()
-
-                    if(!res) {
-                        finish()
-                    } else {
-                        showRebootDialog()
-                    }
-                }
-            }
-            return
-        }
-
-        if(checkPermissions())
+        if(checkAccInstalled() && checkPermissions())
             initUi()
     }
 
