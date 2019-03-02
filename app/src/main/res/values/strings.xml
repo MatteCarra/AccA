@@ -85,6 +85,13 @@
     </string>
     <string name="automatic">Automatic</string>
     <string name="error_occurred">An error has occurred</string>
+    <string name="installing_acc">Initializing required files</string>
+    <string name="reboot_dialog_title">Do you want to reboot now?</string>
+    <string name="reboot_dialog_description">Acc will be fully working after rebooting.\nIf you want to reboot now press Reboot!</string>
+    <string name="reboot">Reboot</string>
+    <string name="installation_failed">Something went wrong while installing acc. Please ensure that you have a working internet connection. If you continue to see this message please contact us on XDA.</string>
+    <string name="installation_failed_title">Installation failed</string>
+    <string name="retry">Retry</string>
 
     <string-array name="profile_long_press_options">
         <item>Edit</item>

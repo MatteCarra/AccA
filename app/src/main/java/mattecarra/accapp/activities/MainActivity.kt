@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceManager
 import android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-import android.util.Log
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -22,7 +21,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.afollestad.materialdialogs.DialogCallback
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
@@ -46,6 +44,7 @@ import mattecarra.accapp.adapters.Schedule
 import mattecarra.accapp.adapters.ScheduleRecyclerViewAdapter
 import mattecarra.accapp.data.AccConfig
 import mattecarra.accapp.utils.ProfileUtils
+import mattecarra.accapp.utils.progress
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.io.File
@@ -437,6 +436,92 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkPermissions(): Boolean {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST)
+            return false
+        }
+        return true
+    }
+
+    private fun showRebootDialog() {
+        val dialog = MaterialDialog(this)
+            .show {
+                title(R.string.reboot_dialog_title)
+                message(R.string.reboot_dialog_description)
+                positiveButton(R.string.reboot) {
+                    Shell.su("am start -a android.intent.action.REBOOT").exec()
+                }
+                negativeButton(android.R.string.cancel) {
+                    finish()
+                }
+                cancelOnTouchOutside(false)
+            }
+
+        dialog.setOnKeyListener { _, keyCode, _ ->
+            if(keyCode == KeyEvent.KEYCODE_BACK) {
+                dialog.dismiss()
+                finish()
+                false
+            } else true
+        }
+    }
+
+    private fun checkAccInstalled(): Boolean {
+        if(!AccUtils.isAccInstalled()) {
+            if(Shell.su("test -f /dev/acc/install.sh").exec().code == 0) {
+                showRebootDialog()
+                return false
+            }
+
+            val dialog = MaterialDialog(this).show {
+                title(R.string.installing_acc)
+                progress(R.string.wait)
+                cancelOnTouchOutside(false)
+            }
+
+            dialog.setOnKeyListener { _, keyCode, _ ->
+                keyCode == KeyEvent.KEYCODE_BACK
+            }
+
+            doAsync {
+                val res = AccUtils.installAccModule(this@MainActivity)?.isSuccess == true
+                uiThread {
+                    dialog.cancel()
+
+                    if(!res) {
+                        val failureDialog = MaterialDialog(this@MainActivity)
+                            .show {
+                                title(R.string.installation_failed_title)
+                                message(R.string.installation_failed)
+                                positiveButton(R.string.retry) {
+                                    if(checkAccInstalled() && checkPermissions())
+                                        initUi()
+                                }
+                                negativeButton {
+                                    finish()
+                                }
+                                cancelOnTouchOutside(false)
+                            }
+
+                        failureDialog.setOnKeyListener { _, keyCode, _ ->
+                            if(keyCode == KeyEvent.KEYCODE_BACK) {
+                                dialog.dismiss()
+                                finish()
+                                false
+                            } else true
+                        }
+                    } else {
+                        showRebootDialog()
+                    }
+                }
+            }
+            return false
+        }
+
+        return true
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -474,12 +559,8 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST)
-            return
-        }
-
-        initUi()
+        if(checkAccInstalled() && checkPermissions())
+            initUi()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
