@@ -117,7 +117,16 @@ class MainActivity : AppCompatActivity() {
             tv_main_accdStatus.text = getString(R.string.acc_deamon_status_not_running)
             fl_status_container.background = ColorDrawable(resources.getColor(R.color.colorError))
             iv_main_status_icon.setImageResource(R.drawable.ic_baseline_error_24px)
+
         }
+    }
+
+    /**
+     * Function for ACCD status card OnClick
+     */
+    fun accdOnClick(view: View) {
+
+        if (consLay_accdButtons.visibility == GONE) consLay_accdButtons.visibility = VISIBLE else consLay_accdButtons.visibility = GONE
     }
 
     private fun showConfigReadError() {
