@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Acc</string>
+    <string name="app_name">ACCA</string>
     <string name="tile_acc_no_root">No root</string>
     <string name="tile_acc_enabled">ACC Enabled</string>
     <string name="tile_acc_disabled">ACC Disabled</string>
@@ -11,9 +11,15 @@
     <string name="title_profiles">Profiles</string>
     <string name="title_settings">Settings</string>
 
-
+    <!-- ACC Daemon Status -->
+    <string name="title_daemonStatus">ACCD Status</string>
     <string name="acc_deamon_status_running">ACC is running</string>
     <string name="acc_deamon_status_not_running">ACC is not running</string>
+
+    <!-- ACC Daemon Toggle -->
+    <string name="menu_stop_accd">Stop ACC Daemon</string>
+    <string name="menu_start_accd">Start ACC Daemon</string>
+
     <string name="start">Start</string>
     <string name="stop">Stop</string>
     <string name="status_label">Status:</string>
