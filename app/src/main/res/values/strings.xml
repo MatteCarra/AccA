@@ -6,6 +6,11 @@
     <string name="title_activity_log_view">Logs</string>
     <string name="title_activity_log_view_file_name">Logs</string>
 
+    <!-- Navigation Strings -->
+    <string name="title_main">Main</string>
+    <string name="title_profiles">Profiles</string>
+    <string name="title_settings">Settings</string>
+
 
     <string name="acc_deamon_status_running">ACC is running</string>
     <string name="acc_deamon_status_not_running">ACC is not running</string>
