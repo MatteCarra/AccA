@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -90,7 +91,11 @@ class MainActivity : AppCompatActivity() {
                 val batteryInfo = AccUtils.getBatteryInfo()
                 val isDeamonRunning = AccUtils.isAccdRunning()
                 uiThread {
-                    deamon_start_stop_label.text = getString(if(isDeamonRunning) R.string.acc_deamon_status_running else R.string.acc_deamon_status_not_running)
+//                    deamon_start_stop_label.text = getString(if(isDeamonRunning) R.string.acc_deamon_status_running else R.string.acc_deamon_status_not_running)
+
+                    // Run accd UI check
+                    updateAccdStatus(isDeamonRunning)
+
                     deamon_start_stop.text = getString(if(isDeamonRunning) R.string.stop else R.string.start)
 
                     status.text = batteryInfo.status
@@ -99,6 +104,19 @@ class MainActivity : AppCompatActivity() {
                     handler.postDelayed(r, 1000)// Repeat the same runnable code block again after 1 seconds
                 }
             }
+        }
+    }
+
+    private fun updateAccdStatus(isDaemonRunning: Boolean) {
+
+        if (isDaemonRunning) {
+            tv_main_accdStatus.text = getString(R.string.acc_deamon_status_running)
+            fl_status_container.background = ColorDrawable(resources.getColor(R.color.colorSuccessful))
+            iv_main_status_icon.setImageResource(R.drawable.ic_baseline_check_circle_24px)
+        } else {
+            tv_main_accdStatus.text = getString(R.string.acc_deamon_status_not_running)
+            fl_status_container.background = ColorDrawable(resources.getColor(R.color.colorError))
+            iv_main_status_icon.setImageResource(R.drawable.ic_baseline_error_24px)
         }
     }
 
