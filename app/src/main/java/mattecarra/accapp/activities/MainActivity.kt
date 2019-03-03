@@ -339,6 +339,24 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        edit_charging_limit_once_bt.setOnClickListener {
+            val dialog = MaterialDialog(this).show {
+                title(R.string.edit_charging_limit_once)
+                message(R.string.edit_charging_limit_once_dialog_msg)
+                customView(R.layout.edit_charging_limit_once_dialog)
+                positiveButton(R.string.apply) {
+                    AccUtils.setChargingLimitForOneCharge(getCustomView().findViewById<NumberPicker>(R.id.charging_limit).value)
+                    Toast.makeText(this@MainActivity, R.string.done, Toast.LENGTH_LONG).show()
+                }
+                negativeButton(android.R.string.cancel)
+            }
+
+            val picker = dialog.getCustomView().findViewById<NumberPicker>(R.id.charging_limit)
+            picker.maxValue = 100
+            picker.minValue = config.capacity.pauseCapacity
+            picker.value = 100
+        }
+
         reset_stats_on_unplugged_switch.setOnCheckedChangeListener { _, isChecked ->
             config.resetUnplugged = isChecked
             AccUtils.updateResetUnplugged(isChecked)

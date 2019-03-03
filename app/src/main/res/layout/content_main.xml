@@ -101,7 +101,6 @@
                             android:textSize="16sp"/>
                 </LinearLayout>
 
-
                 <LinearLayout android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:orientation="horizontal"
@@ -124,22 +123,43 @@
                             android:textSize="16sp"/>
                 </LinearLayout>
 
-
-                <Button
-                        android:id="@+id/edit_config"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="wrap_content"
+                <!-- Buttons -->
+                <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/edit_config"
-                        android:layout_gravity="center_horizontal"/>
+                        android:orientation="vertical"
+                        android:gravity="center">
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_marginTop="8dp">
+                        <Button
+                                android:id="@+id/edit_config"
+                                style="@style/Widget.AppCompat.Button.Colored"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="match_parent"
+                                android:text="@string/edit_config"/>
 
-                <Button
-                        android:id="@+id/edit_charging_switch"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/edit_charging_switch"
-                        android:layout_gravity="center_horizontal"/>
+                        <Button
+                                android:id="@+id/edit_charging_switch"
+                                style="@style/Widget.AppCompat.Button.Colored"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:text="@string/edit_charging_switch"/>
+                    </LinearLayout>
+
+                    <Button style="@style/Widget.AppCompat.Button.Colored"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/edit_charging_limit_once"
+                            android:id="@+id/edit_charging_limit_once_bt"/>
+                </LinearLayout>
+
+
+
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -272,14 +292,13 @@
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
                 <Switch
                         android:id="@+id/reset_stats_on_unplugged_switch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/reset_unplugged"
                         android:textSize="16sp"
-                        android:layout_marginBottom="10dp" />
+                        android:layout_marginBottom="10dp"/>
 
                 <Button style="@style/Widget.AppCompat.Button.Colored"
                         android:layout_width="wrap_content"
