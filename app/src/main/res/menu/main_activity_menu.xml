@@ -4,12 +4,6 @@
       tools:context=".activities.MainActivity">
 
     <item
-        android:id="@+id/menu_toggleAccd"
-        android:title="@string/menu_stop_accd"
-        android:icon="@drawable/ic_outline_stop_24px"
-        app:showAsAction="ifRoom" />
-
-    <item
             android:id="@+id/actions_logs"
             android:icon="@drawable/ic_menu_log"
             android:title="@string/logs"
