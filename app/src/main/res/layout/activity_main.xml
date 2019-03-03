@@ -30,8 +30,6 @@
         android:layout_marginBottom="?attr/actionBarSize"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include layout="@layout/content_main"/>
-
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
