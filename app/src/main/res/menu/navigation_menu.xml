@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/botNav_home"
+        android:title="@string/title_main"
+        android:icon="@drawable/ic_outline_dashboard_24px"/>
+    <item
+        android:id="@+id/botNav_profiles"
+        android:title="@string/title_profiles"
+        android:icon="@drawable/ic_outline_recent_actors_24px"/>
+    <item
+        android:id="@+id/botNav_settings"
+        android:title="@string/title_settings"
+        android:icon="@drawable/ic_outline_settings_24px"/>
+</menu>
