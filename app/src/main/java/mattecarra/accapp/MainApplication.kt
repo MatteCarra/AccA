@@ -8,7 +8,7 @@ class MainApplication: Application() {
         init {
             Shell.Config.setFlags(Shell.FLAG_REDIRECT_STDERR)
             Shell.Config.verboseLogging(false /*BuildConfig.DEBUG*/)
-            Shell.Config.setTimeout(10);
+            Shell.Config.setTimeout(10)
         }
     }
 }
