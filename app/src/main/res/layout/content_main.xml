@@ -23,7 +23,9 @@
             android:layout_marginRight="@dimen/card_margin"
             android:foreground="?selectableItemBackground"
             app:cardCornerRadius="@dimen/card_corner_radius"
-            app:cardElevation="3dp">
+            app:cardElevation="3dp"
+            android:onClick="accdOnClick"
+            >
 
             <LinearLayout android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,6 +57,44 @@
                     android:gravity="center"
                     android:text="@string/title_daemonStatus" />
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/consLay_accdButtons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/deamon_start_stop_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="@string/acc_deamon_status_running"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/deamon_start_stop"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <Button style="@style/Widget.AppCompat.Button.Colored"
+                        android:id="@+id/deamon_start_stop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/stop"
+                        app:layout_constraintEnd_toStartOf="@+id/deamon_restart"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <Button style="@style/Widget.AppCompat.Button.Colored"
+                        android:id="@+id/deamon_restart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/restart"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -71,40 +111,6 @@
             card_view:cardElevation="3dp"
             card_view:contentPadding="@dimen/card_content_padding">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/deamon_start_stop_label"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:text="@string/acc_deamon_status_running"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/deamon_start_stop"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-                <Button style="@style/Widget.AppCompat.Button.Colored"
-                    android:id="@+id/deamon_start_stop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/stop"
-                    app:layout_constraintEnd_toStartOf="@+id/deamon_restart"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-                <Button style="@style/Widget.AppCompat.Button.Colored"
-                    android:id="@+id/deamon_restart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/restart"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
