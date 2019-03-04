@@ -111,20 +111,6 @@
             card_view:cardElevation="3dp"
             card_view:contentPadding="@dimen/card_content_padding">
 
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/card_margin"
-            android:layout_marginLeft="@dimen/card_margin"
-            android:layout_marginRight="@dimen/card_margin"
-            android:foreground="?selectableItemBackground"
-            card_view:cardCornerRadius="@dimen/card_corner_radius"
-            card_view:cardElevation="3dp"
-            card_view:contentPadding="@dimen/card_content_padding">
-
             <LinearLayout android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -150,7 +136,6 @@
                         android:textSize="16sp"/>
                 </LinearLayout>
 
-
                 <LinearLayout android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -173,22 +158,41 @@
                         android:textSize="16sp"/>
                 </LinearLayout>
 
+              
+                <!-- Buttons -->
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_marginTop="8dp">
+                        <Button
+                                android:id="@+id/edit_config"
+                                style="@style/Widget.AppCompat.Button.Colored"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="match_parent"
+                                android:text="@string/edit_config"/>
 
-                <Button
-                    android:id="@+id/edit_config"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/edit_config"
-                    android:layout_gravity="center_horizontal"/>
+                        <Button
+                                android:id="@+id/edit_charging_switch"
+                                style="@style/Widget.AppCompat.Button.Colored"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:text="@string/edit_charging_switch"/>
+                    </LinearLayout>
 
-                <Button
-                    android:id="@+id/edit_charging_switch"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/edit_charging_switch"
-                    android:layout_gravity="center_horizontal"/>
+                    <Button style="@style/Widget.AppCompat.Button.Colored"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/edit_charging_limit_once"
+                            android:id="@+id/edit_charging_limit_once_bt"/>
+                </LinearLayout>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -329,6 +333,8 @@
                     android:text="@string/reset_unplugged"
                     android:textSize="16sp"
                     android:layout_marginBottom="10dp" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                 <Button style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
