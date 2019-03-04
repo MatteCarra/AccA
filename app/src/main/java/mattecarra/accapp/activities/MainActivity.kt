@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -14,6 +15,8 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -90,8 +93,9 @@ class MainActivity : AppCompatActivity() {
                 val batteryInfo = AccUtils.getBatteryInfo()
                 val isDeamonRunning = AccUtils.isAccdRunning()
                 uiThread {
-                    deamon_start_stop_label.text = getString(if(isDeamonRunning) R.string.acc_deamon_status_running else R.string.acc_deamon_status_not_running)
-                    deamon_start_stop.text = getString(if(isDeamonRunning) R.string.stop else R.string.start)
+
+                    // Run accd UI check
+                    updateAccdStatus(isDeamonRunning)
 
                     status.text = batteryInfo.status
                     battery_info.text = getString(R.string.battery_info, batteryInfo.health, batteryInfo.temp, batteryInfo.current / 1000, batteryInfo.voltage)
@@ -100,6 +104,32 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun updateAccdStatus(isDaemonRunning: Boolean) {
+
+        if (isDaemonRunning) {
+            // ACCD Status Card
+            tv_main_accdStatus.text = getString(R.string.acc_deamon_status_running)
+            fl_status_container.background = ColorDrawable(resources.getColor(R.color.colorSuccessful))
+            iv_main_status_icon.setImageResource(R.drawable.ic_baseline_check_circle_24px)
+
+
+        } else {
+            // ACCD Status Card
+            tv_main_accdStatus.text = getString(R.string.acc_deamon_status_not_running)
+            fl_status_container.background = ColorDrawable(resources.getColor(R.color.colorError))
+            iv_main_status_icon.setImageResource(R.drawable.ic_baseline_error_24px)
+
+        }
+    }
+
+    /**
+     * Function for ACCD status card OnClick
+     */
+    fun accdOnClick(view: View) {
+
+        if (consLay_accdButtons.visibility == GONE) consLay_accdButtons.visibility = VISIBLE else consLay_accdButtons.visibility = GONE
     }
 
     private fun showConfigReadError() {

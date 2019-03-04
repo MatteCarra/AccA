@@ -7,4 +7,9 @@
     <color name="pressed_color">#1976d2</color>
     <color name="selected_color">#d81b60</color>
     <color name="focused_color">#689f38</color>
+
+    <color name="colorSuccessful">#00C853</color>
+    <color name="colorError">#F44336</color>
+
+    <color name="colorImageTint">#fafafa</color>
 </resources>
