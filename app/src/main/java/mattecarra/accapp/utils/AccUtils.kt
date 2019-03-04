@@ -242,6 +242,10 @@ object AccUtils {
         return Shell.su("acc -s s-").exec().isSuccess
     }
 
+    fun setChargingLimitForOneCharge(limit: Int): Boolean {
+        return Shell.su("acc -f $limit").exec().isSuccess
+    }
+
     fun isAccInstalled(): Boolean {
         return Shell.su("which acc 1>/dev/null").exec().isSuccess
     }
