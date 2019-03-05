@@ -7,8 +7,8 @@ import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import android.util.Log
 import com.topjohnwu.superuser.Shell
-import mattecarra.accapp.utils.AccUtils.accStartDeamon
-import mattecarra.accapp.utils.AccUtils.accStopDeamon
+import mattecarra.accapp.utils.AccUtils.abcStartDaemon
+import mattecarra.accapp.utils.AccUtils.abcStopDaemon
 import mattecarra.accapp.utils.AccUtils.isAccdRunning
 import mattecarra.accapp.utils.AccUtils.isBatteryCharging
 import mattecarra.accapp.R
@@ -33,19 +33,19 @@ class AccdTileService: TileService(){
                     tile.label = getString(R.string.wait) //stop deamon a bit, so I moved _updateTile before that
                     tile.updateTile()
 
-                    accStopDeamon()
+                    abcStopDaemon()
 
                     tile.label = getString(R.string.tile_acc_disabled)
                     tile.updateTile()
                 } else
-                    accStartDeamon()
+                    abcStartDaemon()
         }
     }
 
     override fun onTileRemoved() {
         super.onTileRemoved()
 
-        accStartDeamon()
+        abcStartDaemon()
         // Do something when the user removes the Tile
     }
 

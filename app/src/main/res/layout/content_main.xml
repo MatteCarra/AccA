@@ -1,128 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".activities.MainActivity"
-        tools:showIn="@layout/activity_main">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activities.MainActivity">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="@dimen/card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:foreground="?selectableItemBackground"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="3dp"
+            android:onClick="accdOnClick"
+            >
 
-        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                           xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                           android:layout_width="match_parent"
-                                           android:layout_height="wrap_content"
-                                           android:layout_marginTop="@dimen/card_margin"
-                                           android:layout_marginLeft="@dimen/card_margin"
-                                           android:layout_marginRight="@dimen/card_margin"
-                                           android:foreground="?selectableItemBackground"
-                                           card_view:cardCornerRadius="@dimen/card_corner_radius"
-                                           card_view:cardElevation="3dp"
-                                           card_view:contentPadding="@dimen/card_content_padding">
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+                <FrameLayout
+                    android:id="@+id/fl_status_container"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="100dp"
+                    android:foregroundGravity="center"
+                    android:background="@color/colorError"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_main_status_icon"
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
+                        android:tint="@color/colorImageTint"
+                        android:layout_gravity="center"/>
+
+                </FrameLayout>
 
                 <TextView
-                        android:id="@+id/deamon_start_stop_label"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:text="@string/acc_deamon_status_running"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/deamon_start_stop"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                    android:id="@+id/tv_main_accdStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:text="@string/title_daemonStatus" />
 
-                <Button style="@style/Widget.AppCompat.Button.Colored"
-                        android:id="@+id/deamon_start_stop"
+                <LinearLayout
+                    android:id="@+id/consLay_accdButtons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <Button style="@style/Widget.AppCompat.Button.Colored"
+                        android:id="@+id/daemon_start_stop"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/stop"
-                        app:layout_constraintEnd_toStartOf="@+id/deamon_restart"
+                        android:drawableLeft="@drawable/ic_outline_stop_24px"
+                        android:drawableStart="@drawable/ic_outline_stop_24px"
+                        android:drawableTint="@color/colorImageTint"
+                        app:layout_constraintEnd_toStartOf="@+id/daemon_restart"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_weight="1"/>
 
-                <Button style="@style/Widget.AppCompat.Button.Colored"
-                        android:id="@+id/deamon_restart"
+                    <Button style="@style/Widget.AppCompat.Button.Colored"
+                        android:id="@+id/daemon_restart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/restart"
+                        android:drawableLeft="@drawable/ic_sync_black_24dp"
+                        android:drawableStart="@drawable/ic_sync_black_24dp"
+                        android:drawableTint="@color/colorImageTint"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_weight="1"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+
         <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                           xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                           android:layout_width="match_parent"
-                                           android:layout_height="wrap_content"
-                                           android:layout_marginTop="@dimen/card_margin"
-                                           android:layout_marginLeft="@dimen/card_margin"
-                                           android:layout_marginRight="@dimen/card_margin"
-                                           android:foreground="?selectableItemBackground"
-                                           card_view:cardCornerRadius="@dimen/card_corner_radius"
-                                           card_view:cardElevation="3dp"
-                                           card_view:contentPadding="@dimen/card_content_padding">
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:foreground="?selectableItemBackground"
+            card_view:cardCornerRadius="@dimen/card_corner_radius"
+            card_view:cardElevation="3dp"
+            card_view:contentPadding="@dimen/card_content_padding">
 
             <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <LinearLayout android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
                     <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/status_label"
-                            android:text="@string/status_label"
-                            android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/status_label"
+                        android:text="@string/status_label"
+                        android:textSize="16sp"
 
-                            android:layout_marginRight="5dp"
-                            android:layout_marginEnd="5dp"
-                            android:textColor="@color/black"/>
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:textColor="@color/black"/>
 
                     <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/status"
-                            android:textSize="16sp"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/status"
+                        android:textSize="16sp"/>
                 </LinearLayout>
 
                 <LinearLayout android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:orientation="horizontal"
-                              android:layout_marginTop="8dp">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp">
 
                     <TextView
-                            android:id="@+id/battery_info_label"
-                            android:text="@string/battery_info_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:layout_marginRight="5dp"
-                            android:layout_marginEnd="5dp"
-                            android:textColor="@color/black"/>
+                        android:id="@+id/battery_info_label"
+                        android:text="@string/battery_info_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:textColor="@color/black"/>
 
                     <TextView
-                            android:id="@+id/battery_info"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"/>
+                        android:id="@+id/battery_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"/>
                 </LinearLayout>
 
+              
                 <!-- Buttons -->
                 <LinearLayout
                         android:layout_width="match_parent"
@@ -158,155 +194,153 @@
                             android:id="@+id/edit_charging_limit_once_bt"/>
                 </LinearLayout>
 
-
-
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/card_margin"
-                android:layout_marginLeft="@dimen/card_margin"
-                android:layout_marginRight="@dimen/card_margin"
-                android:foreground="?selectableItemBackground"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                card_view:cardElevation="3dp"
-                card_view:contentPadding="@dimen/card_content_padding">
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:foreground="?selectableItemBackground"
+            card_view:cardCornerRadius="@dimen/card_corner_radius"
+            card_view:cardElevation="3dp"
+            card_view:contentPadding="@dimen/card_content_padding">
 
             <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                     <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/profiles_text_view"
-                            android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/profiles_text_view"
+                        android:textSize="16sp"
 
-                            android:layout_marginRight="5dp"
-                            android:layout_marginEnd="5dp"
-                            android:textColor="@color/black"/>
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:textColor="@color/black"/>
 
                     <TextView
-                            android:id="@+id/no_profiles_textview"
-                            android:visibility="gone"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/no_profiles"/>
+                        android:id="@+id/no_profiles_textview"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no_profiles"/>
                 </LinearLayout>
 
 
                 <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/profiles_recyclerview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                    android:id="@+id/profiles_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
                 <Button
-                        android:id="@+id/create_acc_profile"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/create_acc_profile"
-                        android:layout_gravity="center_horizontal"/>
+                    android:id="@+id/create_acc_profile"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/create_acc_profile"
+                    android:layout_gravity="center_horizontal"/>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                           xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                           android:layout_width="match_parent"
-                                           android:layout_height="wrap_content"
-                                           android:layout_marginTop="@dimen/card_margin"
-                                           android:layout_marginLeft="@dimen/card_margin"
-                                           android:layout_marginRight="@dimen/card_margin"
-                                           android:foreground="?selectableItemBackground"
-                                           card_view:cardCornerRadius="@dimen/card_corner_radius"
-                                           card_view:cardElevation="3dp"
-                                           card_view:contentPadding="@dimen/card_content_padding">
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:foreground="?selectableItemBackground"
+            card_view:cardCornerRadius="@dimen/card_corner_radius"
+            card_view:cardElevation="3dp"
+            card_view:contentPadding="@dimen/card_content_padding">
 
             <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Scheduled jobs:"
-                            android:textSize="16sp"
+                        android:text="Scheduled jobs:"
+                        android:textSize="16sp"
 
-                            android:layout_marginRight="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:textColor="@color/black"/>
+                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:textColor="@color/black"/>
 
                     <TextView
-                            android:id="@+id/no_schedules_jobs_textview"
-                            android:visibility="gone"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/no_schedules"/>
+                        android:id="@+id/no_schedules_jobs_textview"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no_schedules"/>
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/scheduled_jobs_recyclerview"
-                        android:layout_marginTop="8dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                    android:id="@+id/scheduled_jobs_recyclerview"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
                 <Button
-                        android:id="@+id/create_schedule"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/schedule_job"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="8dp"/>
+                    android:id="@+id/create_schedule"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schedule_job"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"/>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <!-- Bottom most card - include android:layout_marginBottom for proper looks -->
         <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                           xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                           android:layout_width="match_parent"
-                                           android:layout_height="wrap_content"
-                                           android:layout_marginTop="@dimen/card_margin"
-                                           android:layout_marginLeft="@dimen/card_margin"
-                                           android:layout_marginRight="@dimen/card_margin"
-                                           android:layout_marginBottom="@dimen/card_bottom_margin"
-                                           android:foreground="?selectableItemBackground"
-                                           card_view:cardCornerRadius="@dimen/card_corner_radius"
-                                           card_view:cardElevation="3dp"
-                                           card_view:contentPadding="@dimen/card_content_padding">
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:layout_marginBottom="@dimen/card_bottom_margin"
+            android:foreground="?selectableItemBackground"
+            card_view:cardCornerRadius="@dimen/card_corner_radius"
+            card_view:cardElevation="3dp"
+            card_view:contentPadding="@dimen/card_content_padding">
 
             <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
                 <Switch
-                        android:id="@+id/reset_stats_on_unplugged_switch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/reset_unplugged"
-                        android:textSize="16sp"
-                        android:layout_marginBottom="10dp"/>
+                    android:id="@+id/reset_stats_on_unplugged_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reset_unplugged"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="10dp" />
 
                 <Button style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/reset_stats"
-                        android:id="@+id/reset_battery_stats"
-                        android:layout_centerHorizontal="true"
-                        android:layout_below="@+id/reset_stats_on_unplugged_switch" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reset_stats"
+                    android:id="@+id/reset_battery_stats"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/reset_stats_on_unplugged_switch" />
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
