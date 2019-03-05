@@ -114,13 +114,16 @@ class MainActivity : AppCompatActivity() {
             fl_status_container.background = ColorDrawable(resources.getColor(R.color.colorSuccessful))
             iv_main_status_icon.setImageResource(R.drawable.ic_baseline_check_circle_24px)
 
-
+            daemon_start_stop.text = getString(R.string.stop)
+            daemon_start_stop.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_outline_stop_24px, 0, 0, 0)
         } else {
             // ACCD Status Card
             tv_main_accdStatus.text = getString(R.string.acc_daemon_status_not_running)
             fl_status_container.background = ColorDrawable(resources.getColor(R.color.colorError))
             iv_main_status_icon.setImageResource(R.drawable.ic_baseline_error_24px)
 
+            daemon_start_stop.text = getString(R.string.start)
+            daemon_start_stop.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_outline_play_arrow_24px, 0, 0, 0)
         }
     }
 
