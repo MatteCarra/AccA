@@ -252,10 +252,10 @@ object AccUtils {
 
     fun installAccModule(context: Context): Shell.Result? {
         try {
-            val scriptFile = File(context.filesDir, "updater.sh")
+            val scriptFile = File(context.filesDir, "install.sh")
             val path = scriptFile.absolutePath
 
-            BufferedInputStream(URL("https://raw.githubusercontent.com/Magisk-Modules-Repo/acc/master/common/upgrade.sh").openStream())
+            BufferedInputStream(URL("https://raw.githubusercontent.com/Magisk-Modules-Repo/acc/master/install.sh").openStream())
                 .use { inStream ->
                     FileOutputStream(scriptFile)
                         .use {

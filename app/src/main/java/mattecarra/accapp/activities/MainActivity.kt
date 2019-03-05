@@ -114,13 +114,16 @@ class MainActivity : AppCompatActivity() {
             fl_status_container.background = ColorDrawable(resources.getColor(R.color.colorSuccessful))
             iv_main_status_icon.setImageResource(R.drawable.ic_baseline_check_circle_24px)
 
-
+            daemon_start_stop.text = getString(R.string.stop)
+            daemon_start_stop.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_outline_stop_24px, 0, 0, 0)
         } else {
             // ACCD Status Card
             tv_main_accdStatus.text = getString(R.string.acc_daemon_status_not_running)
             fl_status_container.background = ColorDrawable(resources.getColor(R.color.colorError))
             iv_main_status_icon.setImageResource(R.drawable.ic_baseline_error_24px)
 
+            daemon_start_stop.text = getString(R.string.start)
+            daemon_start_stop.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_outline_play_arrow_24px, 0, 0, 0)
         }
     }
 
@@ -498,7 +501,7 @@ class MainActivity : AppCompatActivity() {
                 title(R.string.reboot_dialog_title)
                 message(R.string.reboot_dialog_description)
                 positiveButton(R.string.reboot) {
-                    Shell.su("am start -a android.intent.action.REBOOT").exec()
+                    Shell.su("reboot").exec()
                 }
                 negativeButton(android.R.string.cancel) {
                     finish()
@@ -517,7 +520,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkAccInstalled(): Boolean {
         if(!AccUtils.isAccInstalled()) {
-            if(Shell.su("test -f /dev/acc/install.sh").exec().code == 0) {
+            if(Shell.su("test -f /dev/acc/installed").exec().code == 0) {
                 showRebootDialog()
                 return false
             }
