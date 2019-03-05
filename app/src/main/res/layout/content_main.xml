@@ -57,42 +57,42 @@
                     android:gravity="center"
                     android:text="@string/title_daemonStatus" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:id="@+id/consLay_accdButtons"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/deamon_start_stop_label"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:text="@string/acc_deamon_status_running"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/deamon_start_stop"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
                     <Button style="@style/Widget.AppCompat.Button.Colored"
-                        android:id="@+id/deamon_start_stop"
+                        android:id="@+id/daemon_start_stop"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/stop"
-                        app:layout_constraintEnd_toStartOf="@+id/deamon_restart"
+                        android:drawableLeft="@drawable/ic_outline_stop_24px"
+                        android:drawableStart="@drawable/ic_outline_stop_24px"
+                        android:drawableTint="@color/colorImageTint"
+                        app:layout_constraintEnd_toStartOf="@+id/daemon_restart"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_weight="1"/>
 
                     <Button style="@style/Widget.AppCompat.Button.Colored"
-                        android:id="@+id/deamon_restart"
+                        android:id="@+id/daemon_restart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/restart"
+                        android:drawableLeft="@drawable/ic_sync_black_24dp"
+                        android:drawableStart="@drawable/ic_sync_black_24dp"
+                        android:drawableTint="@color/colorImageTint"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_weight="1"/>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
 
 
             </LinearLayout>
@@ -333,8 +333,6 @@
                     android:text="@string/reset_unplugged"
                     android:textSize="16sp"
                     android:layout_marginBottom="10dp" />
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
                 <Button style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
