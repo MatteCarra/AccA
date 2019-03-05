@@ -75,16 +75,16 @@
                         app:layout_constraintBottom_toBottomOf="parent"/>
 
                     <Button style="@style/Widget.AppCompat.Button.Colored"
-                        android:id="@+id/deamon_start_stop"
+                        android:id="@+id/daemon_start_stop"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/stop"
-                        app:layout_constraintEnd_toStartOf="@+id/deamon_restart"
+                        app:layout_constraintEnd_toStartOf="@+id/daemon_restart"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"/>
 
                     <Button style="@style/Widget.AppCompat.Button.Colored"
-                        android:id="@+id/deamon_restart"
+                        android:id="@+id/daemon_restart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/restart"

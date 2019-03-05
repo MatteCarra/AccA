@@ -13,8 +13,8 @@
 
     <!-- ACC Daemon Status -->
     <string name="title_daemonStatus">ACCD Status</string>
-    <string name="acc_deamon_status_running">ACC is running</string>
-    <string name="acc_deamon_status_not_running">ACC is not running</string>
+    <string name="acc_daemon_status_running">ACC is running</string>
+    <string name="acc_daemon_status_not_running">ACC is not running</string>
 
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">Stop ACC Daemon</string>

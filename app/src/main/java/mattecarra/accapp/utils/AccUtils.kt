@@ -180,15 +180,15 @@ object AccUtils {
         return Shell.su("acc -D").exec().out.find { it.contains("accd is running") } != null
     }
 
-    fun accStartDeamon(): Boolean {
+    fun abcStartDaemon(): Boolean {
         return Shell.su("acc -D start").exec().isSuccess
     }
 
-    fun accRestartDeamon(): Boolean {
+    fun abcRestartDaemon(): Boolean {
         return Shell.su("acc -D restart").exec().isSuccess
     }
 
-    fun accStopDeamon(): Boolean {
+    fun abcStopDaemon(): Boolean {
         return Shell.su("acc -D stop").exec().isSuccess
     }
 
