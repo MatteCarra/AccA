@@ -501,7 +501,7 @@ class MainActivity : AppCompatActivity() {
                 title(R.string.reboot_dialog_title)
                 message(R.string.reboot_dialog_description)
                 positiveButton(R.string.reboot) {
-                    Shell.su("am start -a android.intent.action.REBOOT").exec()
+                    Shell.su("reboot").exec()
                 }
                 negativeButton(android.R.string.cancel) {
                     finish()
