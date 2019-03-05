@@ -355,9 +355,9 @@ class MainActivity : AppCompatActivity() {
 
             doAsync {
                 if(AccUtils.isAccdRunning())
-                    AccUtils.accStopDeamon()
+                    AccUtils.abcStopDaemon()
                 else
-                    AccUtils.accStartDeamon()
+                    AccUtils.abcStartDaemon()
             }
         }
 
@@ -365,7 +365,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
 
             doAsync {
-                AccUtils.accRestartDeamon()
+                AccUtils.abcRestartDaemon()
             }
         }
 
