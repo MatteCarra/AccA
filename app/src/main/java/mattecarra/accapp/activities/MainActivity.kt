@@ -91,11 +91,11 @@ class MainActivity : AppCompatActivity() {
             val r = this //need this to make it recursive
             doAsync {
                 val batteryInfo = AccUtils.getBatteryInfo()
-                val isDeamonRunning = AccUtils.isAccdRunning()
+                val isDaemonRunning = AccUtils.isAccdRunning()
                 uiThread {
 
                     // Run accd UI check
-                    updateAccdStatus(isDeamonRunning)
+                    updateAccdStatus(isDaemonRunning)
 
                     status.text = batteryInfo.status
                     battery_info.text = getString(R.string.battery_info, batteryInfo.health, batteryInfo.temp, batteryInfo.current / 1000, batteryInfo.voltage)
@@ -110,14 +110,14 @@ class MainActivity : AppCompatActivity() {
 
         if (isDaemonRunning) {
             // ACCD Status Card
-            tv_main_accdStatus.text = getString(R.string.acc_deamon_status_running)
+            tv_main_accdStatus.text = getString(R.string.acc_daemon_status_running)
             fl_status_container.background = ColorDrawable(resources.getColor(R.color.colorSuccessful))
             iv_main_status_icon.setImageResource(R.drawable.ic_baseline_check_circle_24px)
 
 
         } else {
             // ACCD Status Card
-            tv_main_accdStatus.text = getString(R.string.acc_deamon_status_not_running)
+            tv_main_accdStatus.text = getString(R.string.acc_daemon_status_not_running)
             fl_status_container.background = ColorDrawable(resources.getColor(R.color.colorError))
             iv_main_status_icon.setImageResource(R.drawable.ic_baseline_error_24px)
 
@@ -350,22 +350,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        deamon_start_stop.setOnClickListener {
+        daemon_start_stop.setOnClickListener {
             Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
 
             doAsync {
                 if(AccUtils.isAccdRunning())
-                    AccUtils.accStopDeamon()
+                    AccUtils.abcStopDaemon()
                 else
-                    AccUtils.accStartDeamon()
+                    AccUtils.abcStartDaemon()
             }
         }
 
-        deamon_restart.setOnClickListener {
+        daemon_restart.setOnClickListener {
             Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
 
             doAsync {
-                AccUtils.accRestartDeamon()
+                AccUtils.abcRestartDaemon()
             }
         }
 
