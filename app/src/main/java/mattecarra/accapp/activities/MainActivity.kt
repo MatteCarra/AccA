@@ -520,7 +520,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkAccInstalled(): Boolean {
         if(!AccUtils.isAccInstalled()) {
-            if(Shell.su("test -f /dev/acc/install.sh").exec().code == 0) {
+            if(Shell.su("test -f /dev/acc/installed").exec().code == 0) {
                 showRebootDialog()
                 return false
             }
