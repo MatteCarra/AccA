@@ -4,7 +4,7 @@
 
     <dimen name="card_corner_radius">2dp</dimen>
     <dimen name="card_content_padding">18dp</dimen>
-    <dimen name="card_margin">7dp</dimen>
+    <dimen name="card_margin">8dp</dimen>
     <dimen name="card_bottom_margin">10dp</dimen>
 
     <!-- Label and Value text sizes -->
