@@ -155,72 +155,92 @@
                     android:text="@string/title_battery"
                     android:layout_alignParentLeft="true" />
 
-                <TableLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/card_content_padding"
-                    android:stretchColumns="1">
+                    android:orientation="horizontal">
 
-                    <!-- Battery Charging Status -->
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/label_text"
-                            android:text="@string/info_status"/>
+                    <com.dinuscxj.progressbar.CircleProgressBar
+                        android:id="@+id/progressBar_capacity"
+                        app:style="solid_line"
+                        app:progress_stroke_cap="round"
+                        app:progress_stroke_width="5dp"
+                        app:progress_end_color="@color/colorSuccessful"
+                        app:progress_start_color="@color/colorError"
+                        app:progress_shader="sweep"
+                        app:progress_text_color="@color/black"
+                        app:progress_text_size="@dimen/label_text"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"/>
 
-                        <TextView
-                            android:id="@+id/tv_main_batteryStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="end"/>
-                    </TableRow>
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/card_content_padding"
+                        android:stretchColumns="1">
 
-                    <!-- Battery Charging Speed -->
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/label_text"
-                            android:text="@string/info_speed" />
+                        <!-- Battery Charging Status -->
+                        <TableRow>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/label_text"
+                                android:text="@string/info_status"/>
 
-                        <TextView
-                            android:id="@+id/tv_main_batterySpeed"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="end"/>
-                    </TableRow>
+                            <TextView
+                                android:id="@+id/tv_main_batteryStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"/>
+                        </TableRow>
 
-                    <!-- Battery Temperature -->
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/label_text"
-                            android:text="@string/info_temperature"/>
+                        <!-- Battery Charging Speed -->
+                        <TableRow>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/label_text"
+                                android:text="@string/info_speed" />
 
-                        <TextView
-                            android:id="@+id/tv_main_batteryTemp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="end" />
-                    </TableRow>
+                            <TextView
+                                android:id="@+id/tv_main_batterySpeed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"/>
+                        </TableRow>
 
-                    <!-- Battery Health -->
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/label_text"
-                            android:text="@string/info_health"/>
+                        <!-- Battery Temperature -->
+                        <TableRow>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/label_text"
+                                android:text="@string/info_temperature"/>
 
-                        <TextView
-                            android:id="@+id/tv_main_batteryHealth"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="end" />
-                    </TableRow>
-                </TableLayout>
+                            <TextView
+                                android:id="@+id/tv_main_batteryTemp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="end" />
+                        </TableRow>
+
+                        <!-- Battery Health -->
+                        <TableRow>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/label_text"
+                                android:text="@string/info_health"/>
+
+                            <TextView
+                                android:id="@+id/tv_main_batteryHealth"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="end" />
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
 
                 <!-- Buttons -->
                 <LinearLayout
