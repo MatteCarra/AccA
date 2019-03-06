@@ -88,6 +88,6 @@ class BatteryInfo(val name: String,
      */
     fun getSimpleCurrentNow(): Int {
 
-        return (currentNow/1000).inv()
+        return (currentNow/1000)
     }
 }
