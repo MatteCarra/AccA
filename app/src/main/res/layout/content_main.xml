@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- ACCd Status Card -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,12 +25,45 @@
             android:foreground="?selectableItemBackground"
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="3dp"
-            android:onClick="accdOnClick"
-            >
+            android:onClick="accdOnClick">
 
             <LinearLayout android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <!-- Title and Settings Button -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/card_content_padding"
+                    android:paddingLeft="@dimen/card_content_padding"
+                    android:paddingStart="@dimen/card_content_padding"
+                    android:paddingRight="9dp"
+                    android:paddingEnd="9dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:text="@string/title_status"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_outline_settings_24px"
+                        android:onClick="batteryConfigOnClick"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"/>
+
+                </RelativeLayout>
 
                 <FrameLayout
                     android:id="@+id/fl_status_container"
@@ -54,8 +88,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:padding="10dp"
-                    android:gravity="center"
-                    android:text="@string/title_daemonStatus" />
+                    android:gravity="center" />
 
                 <LinearLayout
                     android:id="@+id/consLay_accdButtons"
@@ -99,116 +132,157 @@
         </androidx.cardview.widget.CardView>
 
 
-        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/card_margin"
             android:layout_marginLeft="@dimen/card_margin"
             android:layout_marginRight="@dimen/card_margin"
             android:foreground="?selectableItemBackground"
-            card_view:cardCornerRadius="@dimen/card_corner_radius"
-            card_view:cardElevation="3dp"
-            card_view:contentPadding="@dimen/card_content_padding">
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="3dp"
+            app:contentPadding="@dimen/card_content_padding">
 
             <LinearLayout android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout android:layout_width="wrap_content"
+                <!-- Title: Battery -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                    android:text="@string/title_battery"
+                    android:layout_alignParentLeft="true" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/status_label"
-                        android:text="@string/status_label"
-                        android:textSize="16sp"
 
-                        android:layout_marginRight="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:textColor="@color/black"/>
+                    <com.dinuscxj.progressbar.CircleProgressBar
+                        android:id="@+id/progressBar_capacity"
+                        app:style="solid_line"
+                        app:progress_stroke_cap="round"
+                        app:progress_stroke_width="5dp"
+                        app:progress_end_color="@color/colorSuccessful"
+                        app:progress_start_color="@color/colorError"
+                        app:progress_shader="sweep"
+                        app:progress_text_color="@color/black"
+                        app:progress_text_size="@dimen/label_text"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/status"
-                        android:textSize="16sp"/>
-                </LinearLayout>
-
-                <LinearLayout android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp">
-
-                    <TextView
-                        android:id="@+id/battery_info_label"
-                        android:text="@string/battery_info_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:id="@+id/battery_info"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"/>
-                </LinearLayout>
-
-              
-                <!-- Buttons -->
-                <LinearLayout
+                    <TableLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center">
-                    <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:layout_marginTop="8dp">
-                        <Button
-                                android:id="@+id/edit_config"
-                                style="@style/Widget.AppCompat.Button.Colored"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="match_parent"
-                                android:text="@string/edit_config"/>
+                        android:padding="@dimen/card_content_padding"
+                        android:stretchColumns="1">
 
-                        <Button
-                                android:id="@+id/edit_charging_switch"
-                                style="@style/Widget.AppCompat.Button.Colored"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
+                        <!-- Battery Charging Status -->
+                        <TableRow>
+                            <TextView
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/edit_charging_switch"/>
-                    </LinearLayout>
+                                android:textSize="@dimen/label_text"
+                                android:text="@string/info_status"/>
 
-                    <Button style="@style/Widget.AppCompat.Button.Colored"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/edit_charging_limit_once"
-                            android:id="@+id/edit_charging_limit_once_bt"/>
+                            <TextView
+                                android:id="@+id/tv_main_batteryStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"/>
+                        </TableRow>
+
+                        <!-- Battery Charging Speed -->
+                        <TableRow>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/label_text"
+                                android:text="@string/info_speed" />
+
+                            <TextView
+                                android:id="@+id/tv_main_batterySpeed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"/>
+                        </TableRow>
+
+                        <!-- Battery Temperature -->
+                        <TableRow>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/label_text"
+                                android:text="@string/info_temperature"/>
+
+                            <TextView
+                                android:id="@+id/tv_main_batteryTemp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="end" />
+                        </TableRow>
+
+                        <!-- Battery Health -->
+                        <TableRow>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/label_text"
+                                android:text="@string/info_health"/>
+
+                            <TextView
+                                android:id="@+id/tv_main_batteryHealth"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="end" />
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
+
+                <!-- Buttons -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center">
+
+                    <Button
+                        android:id="@+id/edit_charging_switch"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_outline_edit_24px"
+                        android:drawableStart="@drawable/ic_outline_edit_24px"
+                        android:drawableTint="@color/colorImageTint"
+                        android:text="@string/edit_charging_switch"/>
+
+                    <Button
+                        android:id="@+id/edit_charging_limit_once_bt"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_outline_edit_24px"
+                        android:drawableStart="@drawable/ic_outline_edit_24px"
+                        android:drawableTint="@color/colorImageTint"
+                        android:text="@string/edit_charging_limit_once" />
                 </LinearLayout>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/card_margin"
             android:layout_marginLeft="@dimen/card_margin"
             android:layout_marginRight="@dimen/card_margin"
             android:foreground="?selectableItemBackground"
-            card_view:cardCornerRadius="@dimen/card_corner_radius"
-            card_view:cardElevation="3dp"
-            card_view:contentPadding="@dimen/card_content_padding">
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="3dp"
+            app:contentPadding="@dimen/card_content_padding">
 
             <LinearLayout android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -252,17 +326,16 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/card_margin"
             android:layout_marginLeft="@dimen/card_margin"
             android:layout_marginRight="@dimen/card_margin"
             android:foreground="?selectableItemBackground"
-            card_view:cardCornerRadius="@dimen/card_corner_radius"
-            card_view:cardElevation="3dp"
-            card_view:contentPadding="@dimen/card_content_padding">
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="3dp"
+            app:contentPadding="@dimen/card_content_padding">
 
             <LinearLayout android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -309,8 +382,7 @@
         </androidx.cardview.widget.CardView>
 
         <!-- Bottom most card - include android:layout_marginBottom for proper looks -->
-        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/card_margin"
@@ -318,9 +390,9 @@
             android:layout_marginRight="@dimen/card_margin"
             android:layout_marginBottom="@dimen/card_bottom_margin"
             android:foreground="?selectableItemBackground"
-            card_view:cardCornerRadius="@dimen/card_corner_radius"
-            card_view:cardElevation="3dp"
-            card_view:contentPadding="@dimen/card_content_padding">
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="3dp"
+            app:contentPadding="@dimen/card_content_padding">
 
             <RelativeLayout
                 android:layout_width="match_parent"
