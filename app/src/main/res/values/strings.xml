@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">ACCA</string>
     <string name="tile_acc_no_root">No root</string>
+
     <string name="tile_acc_enabled">ACC Enabled</string>
     <string name="tile_acc_disabled">ACC Disabled</string>
+
     <string name="title_activity_log_view">Logs</string>
     <string name="title_activity_log_view_file_name">Logs</string>
 
@@ -12,9 +14,9 @@
     <string name="title_settings">Settings</string>
 
     <!-- ACC Daemon Status -->
-    <string name="title_daemonStatus">ACCD Status</string>
-    <string name="acc_daemon_status_running">ACC is running</string>
-    <string name="acc_daemon_status_not_running">ACC is not running</string>
+    <string name="title_daemonStatus">acc daemon Status</string>
+    <string name="acc_daemon_status_running">ACC Daemon is Running</string>
+    <string name="acc_daemon_status_not_running">ACC Daemon is not Running</string>
 
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">Stop ACC Daemon</string>
@@ -43,7 +45,7 @@
         edit the settings, but the result can\'t be guaranteed.
     </string>
     <string name="battery_info">Health=%1$s, Battery temp=%2$d°C\nCurrent=%3$dmA, Voltage=%4$.2fV</string>
-    <string name="wait">Please wait, it may take some seconds</string>
+    <string name="wait">Please wait, it may take a few seconds</string>
     <string name="exit_on_boot_switch">Exit on boot</string>
     <string name="on_boot_label">On boot:</string>
     <string name="edit_on_boot">Edit on boot value</string>
@@ -54,10 +56,10 @@
     <string name="logs">Logs</string>
     <string name="text_copied_to_clipboard">Text copied to clipboard!</string>
     <string name="log_file_not_found_title">Log file not found</string>
-    <string name="unsaved_changes">You have some unsaved changes</string>
+    <string name="unsaved_changes">You have unsaved changes</string>
     <string name="close_without_saving">Discard</string>
     <string name="edit_config">Edit config</string>
-    <string name="unsaved_changes_message">You have some unsaved changes. Do you want to save them?</string>
+    <string name="unsaved_changes_message">You have unsaved changes. Do you want to save them?</string>
     <string name="create_acc_profile">Create config profile</string>
     <string name="profile_name">Profile name</string>
     <string name="dialog_profile_name_message">Enter you want to assign to this profile:</string>
