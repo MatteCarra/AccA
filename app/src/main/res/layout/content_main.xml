@@ -147,83 +147,107 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout android:layout_width="wrap_content"
+                <!-- Title: Battery -->
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/status_label"
-                        android:text="@string/status_label"
-                        android:textSize="16sp"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                    android:text="@string/title_battery"
+                    android:layout_alignParentLeft="true" />
 
-                        android:layout_marginRight="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/status"
-                        android:textSize="16sp"/>
-                </LinearLayout>
-
-                <LinearLayout android:layout_width="wrap_content"
+                <TableLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginBottom="@dimen/card_content_padding"
+                    android:stretchColumns="1">
 
-                    <TextView
-                        android:id="@+id/battery_info_label"
-                        android:text="@string/battery_info_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:textColor="@color/black"/>
+                    <!-- Battery Charging Status -->
+                    <TableRow>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/label_text"
+                            android:text="@string/info_status"/>
 
-                    <TextView
-                        android:id="@+id/battery_info"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"/>
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/tv_main_batteryStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"/>
+                    </TableRow>
 
-              
+                    <!-- Battery Charging Speed -->
+                    <TableRow>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/label_text"
+                            android:text="@string/info_speed" />
+
+                        <TextView
+                            android:id="@+id/tv_main_batterySpeed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"/>
+                    </TableRow>
+
+                    <!-- Battery Temperature -->
+                    <TableRow>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/label_text"
+                            android:text="@string/info_temperature"/>
+
+                        <TextView
+                            android:id="@+id/tv_main_batteryTemp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="end" />
+                    </TableRow>
+
+                    <!-- Battery Health -->
+                    <TableRow>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/label_text"
+                            android:text="@string/info_health"/>
+
+                        <TextView
+                            android:id="@+id/tv_main_batteryHealth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="end" />
+                    </TableRow>
+                </TableLayout>
+
                 <!-- Buttons -->
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center">
+
+                    <Button
+                        android:id="@+id/edit_charging_switch"
+                        style="@style/Widget.AppCompat.Button.Colored"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center">
-                    <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:layout_marginTop="8dp">
-                        <Button
-                                android:id="@+id/edit_config"
-                                style="@style/Widget.AppCompat.Button.Colored"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="match_parent"
-                                android:text="@string/edit_config"/>
+                        android:drawableLeft="@drawable/ic_outline_edit_24px"
+                        android:drawableStart="@drawable/ic_outline_edit_24px"
+                        android:drawableTint="@color/colorImageTint"
+                        android:text="@string/edit_charging_switch"/>
 
-                        <Button
-                                android:id="@+id/edit_charging_switch"
-                                style="@style/Widget.AppCompat.Button.Colored"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                android:text="@string/edit_charging_switch"/>
-                    </LinearLayout>
-
-                    <Button style="@style/Widget.AppCompat.Button.Colored"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/edit_charging_limit_once"
-                            android:id="@+id/edit_charging_limit_once_bt"/>
+                    <Button
+                        android:id="@+id/edit_charging_limit_once_bt"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_outline_edit_24px"
+                        android:drawableStart="@drawable/ic_outline_edit_24px"
+                        android:drawableTint="@color/colorImageTint"
+                        android:text="@string/edit_charging_limit_once" />
                 </LinearLayout>
 
             </LinearLayout>
