@@ -96,7 +96,8 @@ class MainActivity : AppCompatActivity() {
 
                     // Run accd UI check
                     updateAccdStatus(isDaemonRunning)
-
+                    // Battery Capacity
+                    progressBar_capacity.progress = batteryInfo.capacity
                     // Battery Status (Charging (Fast)
                     tv_main_batteryStatus.text = getString(R.string.info_status_extended, batteryInfo.status, batteryInfo.chargeType)
                     // Battery Speed (5mA at 4.11V)
