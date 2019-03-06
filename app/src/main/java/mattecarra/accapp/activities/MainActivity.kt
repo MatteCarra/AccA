@@ -131,7 +131,6 @@ class MainActivity : AppCompatActivity() {
      * Function for ACCD status card OnClick
      */
     fun accdOnClick(view: View) {
-
         if (consLay_accdButtons.visibility == GONE) consLay_accdButtons.visibility = VISIBLE else consLay_accdButtons.visibility = GONE
     }
 
@@ -274,7 +273,7 @@ class MainActivity : AppCompatActivity() {
             this.config = AccUtils.defaultConfig //if config is null I use default config values.
         }
 
-        //profiles
+        //Profiles
         initProfiles()
 
         //Rest of the UI
