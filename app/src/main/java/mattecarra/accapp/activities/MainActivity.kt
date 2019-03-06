@@ -134,6 +134,15 @@ class MainActivity : AppCompatActivity() {
         if (consLay_accdButtons.visibility == GONE) consLay_accdButtons.visibility = VISIBLE else consLay_accdButtons.visibility = GONE
     }
 
+    /**
+     * Function for Status Card Settings OnClick (Configuration)
+     */
+    fun batteryConfigOnClick(view: View) {
+        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+            startActivityForResult(intent, ACC_CONFIG_EDITOR_REQUEST)
+        }
+    }
+
     private fun showConfigReadError() {
         MaterialDialog(this).show {
             title(R.string.config_error_title)
