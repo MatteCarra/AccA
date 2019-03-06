@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- ACCd Status Card -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
