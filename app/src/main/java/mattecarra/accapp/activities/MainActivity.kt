@@ -278,12 +278,6 @@ class MainActivity : AppCompatActivity() {
         initProfiles()
 
         //Rest of the UI
-        edit_config.setOnClickListener {
-            Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-                startActivityForResult(intent, ACC_CONFIG_EDITOR_REQUEST)
-            }
-        }
-
         edit_charging_switch.setOnClickListener {
             val automaticString = getString(R.string.automatic)
             val chargingSwitches = listOf(automaticString, *AccUtils.listChargingSwitches().toTypedArray())
