@@ -87,8 +87,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:padding="10dp"
-                    android:gravity="center"
-                    android:text="@string/title_daemonStatus" />
+                    android:gravity="center" />
 
                 <LinearLayout
                     android:id="@+id/consLay_accdButtons"
