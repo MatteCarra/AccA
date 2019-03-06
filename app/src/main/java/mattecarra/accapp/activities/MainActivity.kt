@@ -96,9 +96,16 @@ class MainActivity : AppCompatActivity() {
 
                     // Run accd UI check
                     updateAccdStatus(isDaemonRunning)
-
-                    status.text = batteryInfo.status
-                    battery_info.text = getString(R.string.battery_info, batteryInfo.health, batteryInfo.temp, batteryInfo.current / 1000, batteryInfo.voltage)
+                    // Battery Capacity
+                    progressBar_capacity.progress = batteryInfo.capacity
+                    // Battery Status (Charging (Fast)
+                    tv_main_batteryStatus.text = getString(R.string.info_status_extended, batteryInfo.status, batteryInfo.chargeType)
+                    // Battery Speed (5mA at 4.11V)
+                    tv_main_batterySpeed.text = getString(R.string.info_charging_speed_extended, batteryInfo.getSimpleCurrentNow(), batteryInfo.getVoltageNow())
+                    // Battery Temperature
+                    tv_main_batteryTemp.text = batteryInfo.temperature.toString().plus(Typography.degree)
+                    // Battery Health
+                    tv_main_batteryHealth.text = batteryInfo.health
 
                     handler.postDelayed(r, 1000)// Repeat the same runnable code block again after 1 seconds
                 }
@@ -131,8 +138,16 @@ class MainActivity : AppCompatActivity() {
      * Function for ACCD status card OnClick
      */
     fun accdOnClick(view: View) {
-
         if (consLay_accdButtons.visibility == GONE) consLay_accdButtons.visibility = VISIBLE else consLay_accdButtons.visibility = GONE
+    }
+
+    /**
+     * Function for Status Card Settings OnClick (Configuration)
+     */
+    fun batteryConfigOnClick(view: View) {
+        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+            startActivityForResult(intent, ACC_CONFIG_EDITOR_REQUEST)
+        }
     }
 
     private fun showConfigReadError() {
@@ -274,16 +289,10 @@ class MainActivity : AppCompatActivity() {
             this.config = AccUtils.defaultConfig //if config is null I use default config values.
         }
 
-        //profiles
+        //Profiles
         initProfiles()
 
         //Rest of the UI
-        edit_config.setOnClickListener {
-            Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-                startActivityForResult(intent, ACC_CONFIG_EDITOR_REQUEST)
-            }
-        }
-
         edit_charging_switch.setOnClickListener {
             val automaticString = getString(R.string.automatic)
             val chargingSwitches = listOf(automaticString, *AccUtils.listChargingSwitches().toTypedArray())

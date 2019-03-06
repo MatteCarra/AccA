@@ -55,4 +55,7 @@ dependencies {
     implementation project(':updater')
 
     implementation "com.github.topjohnwu.libsu:core:${versions.libsuVersion}"
+
+    // CircleProgressBar - https://github.com/dinuscxj/CircleProgressBar
+    implementation 'com.dinuscxj:circleprogressbar:1.3.0'
 }
