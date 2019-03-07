@@ -60,8 +60,12 @@
         edit the settings, but the result can\'t be guaranteed.
     </string>
     <string name="wait">Please wait, it may take a few seconds</string>
-    <string name="exit_on_boot_switch">Exit on boot</string>
-    <string name="on_boot_label">On boot:</string>
+
+    <!-- Exit On Boot Card Strings -->
+    <string name="title_exit_on_boot">Exit after On Boot</string>
+    <string name="description_exit_on_boot">When enabled, the daemon will stop after the \'On Boot\' command is executed.</string>
+    <string name="label_on_boot_not_set">On Boot: Not set.</string>
+
     <string name="edit_on_boot">Edit on boot value</string>
     <string name="not_set">Not set</string>
     <string name="edit_on_boot_dialog_hint">Leave blank to disable</string>
