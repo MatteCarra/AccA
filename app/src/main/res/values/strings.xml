@@ -55,9 +55,7 @@
     <string name="shutdown_capacity">Shutdown at:</string>
     <string name="no_root_message">This app requires ROOT.</string>
     <string name="config_error_title">Config read error</string>
-    <string name="config_error_dialog">ACC IS A PRE-REQUISITE! If you haven\'t installed it please check XDA. I wasn\'t
-        able to parse/find the ACC config file. Please check if your config contains errors. You will still be able to
-        edit the settings, but the result can\'t be guaranteed.
+    <string name="config_error_dialog">I wasn\'t able to parse/find the ACC config file. Please check if your config contains errors. You will still be able to edit the settings, but the result can\'t be guaranteed.
     </string>
     <string name="wait">Please wait, it may take a few seconds</string>
     <string name="exit_on_boot_switch">Exit on boot</string>
