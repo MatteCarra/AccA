@@ -138,7 +138,13 @@ class MainActivity : AppCompatActivity() {
      * Function for ACCD status card OnClick
      */
     fun accdOnClick(view: View) {
-        if (consLay_accdButtons.visibility == GONE) consLay_accdButtons.visibility = VISIBLE else consLay_accdButtons.visibility = GONE
+        if (consLay_accdButtons.visibility == GONE) {
+            consLay_accdButtons.visibility = VISIBLE
+            tv_main_title_accdStatus.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_arrow_drop_up_24px, 0)
+        } else {
+            consLay_accdButtons.visibility = GONE
+            tv_main_title_accdStatus.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_arrow_drop_down_24px, 0)
+        }
     }
 
     /**
