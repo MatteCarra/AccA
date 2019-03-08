@@ -1,114 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".activities.MainActivity"
-        tools:showIn="@layout/activity_main">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activities.AccConfigEditorActivity">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-        
-        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                           xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                           android:layout_width="match_parent"
-                                           android:layout_height="wrap_content"
-                                           android:layout_marginTop="@dimen/card_margin"
-                                           android:layout_marginLeft="@dimen/card_margin"
-                                           android:layout_marginRight="@dimen/card_margin"
-                                           android:foreground="?selectableItemBackground"
-                                           card_view:cardCornerRadius="@dimen/card_corner_radius"
-                                           card_view:cardElevation="3dp"
-                                           card_view:contentPadding="@dimen/card_content_padding">
+            android:layout_marginTop="@dimen/card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:foreground="?selectableItemBackground"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="3dp"
+            app:contentPadding="@dimen/card_content_padding">
 
             <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <LinearLayout
-                        android:id="@+id/limits"
-                        android:layout_width="match_parent"
+                    android:id="@+id/limits"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="3"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/shutdown_capacity_label"
+                        android:gravity="center_horizontal"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:weightSum="3"
-                        android:orientation="horizontal"
-                        android:gravity="center_horizontal">
+                        android:layout_weight="1"
+                        android:textSize="16sp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginRight="6dp"
+                        android:textColor="@color/black"
+                        android:text="@string/shutdown_capacity"/>
 
                     <TextView
-                            android:id="@+id/shutdown_capacity_label"
-                            android:gravity="center_horizontal"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="16sp"
-                            android:layout_marginEnd="6dp"
-                            android:layout_marginRight="6dp"
-                            android:textColor="@color/black"
-                            android:text="@string/shutdown_capacity"/>
+                        android:id="@+id/resume_capacity_label"
+                        android:gravity="center_horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="16sp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginRight="6dp"
+                        android:textColor="@color/black"
+                        android:text="@string/resume_charge"/>
 
                     <TextView
-                            android:id="@+id/resume_capacity_label"
-                            android:gravity="center_horizontal"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="16sp"
-                            android:layout_marginEnd="6dp"
-                            android:layout_marginRight="6dp"
-                            android:textColor="@color/black"
-                            android:text="@string/resume_charge"/>
-
-                    <TextView
-                            android:id="@+id/pause_capacity_label"
-                            android:gravity="center_horizontal"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="16sp"
-                            android:layout_marginStart="6dp"
-                            android:layout_marginLeft="6dp"
-                            android:textColor="@color/black"
-                            android:text="@string/stop_charge"/>
+                        android:id="@+id/pause_capacity_label"
+                        android:gravity="center_horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="16sp"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginLeft="6dp"
+                        android:textColor="@color/black"
+                        android:text="@string/stop_charge"/>
 
                 </LinearLayout>
 
                 <LinearLayout
-                        android:id="@+id/num_pickers"
-                        android:layout_width="match_parent"
+                    android:id="@+id/num_pickers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/limits"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <NumberPicker
+                        android:id="@+id/shutdown_capacity_picker"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="3"
-                        android:layout_below="@+id/limits">
+                        android:layout_marginEnd="3dp"
+                        android:layout_marginRight="3dp"
+                        android:layout_weight="1" />
 
                     <NumberPicker
-                            android:id="@+id/shutdown_capacity_picker"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="3dp"
-                            android:layout_marginRight="3dp" />
+                        android:id="@+id/resume_capacity_picker"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="3dp"
+                        android:layout_marginRight="3dp"
+                        android:layout_weight="1" />
 
                     <NumberPicker
-                            android:id="@+id/resume_capacity_picker"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="3dp"
-                            android:layout_marginRight="3dp" />
-
-                    <NumberPicker
-                            android:id="@+id/pause_capacity_picker"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
-                            android:layout_marginLeft="3dp" />
+                        android:id="@+id/pause_capacity_picker"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_weight="1" />
 
                 </LinearLayout>
 
@@ -116,341 +113,326 @@
         </androidx.cardview.widget.CardView>
 
 
-        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                           xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                           android:layout_width="match_parent"
-                                           android:layout_height="wrap_content"
-                                           android:layout_marginTop="@dimen/card_margin"
-                                           android:layout_marginLeft="@dimen/card_margin"
-                                           android:layout_marginRight="@dimen/card_margin"
-                                           android:layout_marginBottom="@dimen/card_bottom_margin"
-                                           android:foreground="?selectableItemBackground"
-                                           card_view:cardCornerRadius="@dimen/card_corner_radius"
-                                           card_view:cardElevation="3dp"
-                                           card_view:contentPadding="@dimen/card_content_padding">
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:foreground="?selectableItemBackground"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="3dp"
+            app:contentPadding="@dimen/card_content_padding">
 
             <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <LinearLayout android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:orientation="horizontal"
-                              android:layout_marginBottom="10dp">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
                     <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/voltage_control_file_title"
-                            android:text="@string/voltage_control_file"
-                            android:textSize="16sp"
-                            android:layout_marginRight="5dp"
-                            android:layout_marginEnd="5dp"
-                            android:textColor="@color/black"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/voltage_control_file_title"
+                        android:text="@string/voltage_control_file"
+                        android:textSize="16sp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:textColor="@color/black"/>
 
                     <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/voltage_control_file"
-                            android:textSize="16sp"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/voltage_control_file"
+                        android:textSize="16sp"/>
 
                 </LinearLayout>
 
                 <LinearLayout android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:orientation="horizontal"
-                              android:layout_marginBottom="10dp">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
                     <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/voltage_max_title"
-                            android:text="@string/voltage_max"
-                            android:textSize="16sp"
-                            android:layout_marginRight="5dp"
-                            android:layout_marginEnd="5dp"
-                            android:textColor="@color/black"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/voltage_max_title"
+                        android:text="@string/voltage_max"
+                        android:textSize="16sp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:textColor="@color/black"/>
 
                     <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/voltage_max"
-                            android:textSize="16sp"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/voltage_max"
+                        android:textSize="16sp"/>
 
                 </LinearLayout>
 
                 <Button style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/edit_voltage_limit"
-                        android:id="@+id/edit_voltage_limit"
-                        android:layout_gravity="center_horizontal"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit_voltage_limit"
+                    android:id="@+id/edit_voltage_limit"
+                    android:layout_gravity="center_horizontal"/>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                           xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                           android:layout_width="match_parent"
-                                           android:layout_height="wrap_content"
-                                           android:layout_marginTop="@dimen/card_margin"
-                                           android:layout_marginLeft="@dimen/card_margin"
-                                           android:layout_marginRight="@dimen/card_margin"
-                                           android:foreground="?selectableItemBackground"
-                                           card_view:cardCornerRadius="@dimen/card_corner_radius"
-                                           card_view:cardElevation="3dp"
-                                           card_view:contentPadding="@dimen/card_content_padding">
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:foreground="?selectableItemBackground"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="3dp"
+            app:contentPadding="@dimen/card_content_padding">
 
             <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <Switch
-                        android:id="@+id/temp_switch"
-                        android:checked="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/enable_temp_check"
-                        android:textSize="16sp"
-                        android:layout_marginBottom="16dp" />
+                    android:id="@+id/temp_switch"
+                    android:checked="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/enable_temp_check"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="16dp" />
 
                 <LinearLayout
-                        android:id="@+id/temps_labels"
-                        android:layout_width="match_parent"
+                    android:id="@+id/temps_labels"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/temp_switch"
+                    android:layout_marginBottom="8dp"
+                    android:weightSum="3"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/cooldown_temp"
+                        android:gravity="center_horizontal"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/temp_switch"
-                        android:layout_marginBottom="8dp"
-                        android:weightSum="3"
-                        android:orientation="horizontal"
-                        android:gravity="center_horizontal">
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:text="@string/cooldown_temp"/>
 
                     <TextView
-                            android:id="@+id/cooldown_temp"
-                            android:gravity="center_horizontal"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="14sp"
-                            android:textColor="@color/black"
-                            android:text="@string/cooldown_temp"/>
+                        android:id="@+id/pause_charging_temp"
+                        android:gravity="center_horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:text="@string/max_temp"/>
 
                     <TextView
-                            android:id="@+id/pause_charging_temp"
-                            android:gravity="center_horizontal"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="14sp"
-                            android:textColor="@color/black"
-                            android:text="@string/max_temp"/>
-
-                    <TextView
-                            android:id="@+id/pause_label"
-                            android:gravity="center_horizontal"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="14sp"
-                            android:textColor="@color/black"
-                            android:text="@string/pause_seconds"/>
+                        android:id="@+id/pause_label"
+                        android:gravity="center_horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:text="@string/pause_seconds"/>
 
                 </LinearLayout>
 
                 <LinearLayout
-                        android:id="@+id/temp_pickers"
-                        android:layout_width="match_parent"
+                    android:id="@+id/temp_pickers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3"
+                    android:layout_below="@+id/temps_labels">
+
+                    <NumberPicker
+                        android:id="@+id/cooldown_temp_picker"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="3"
-                        android:layout_below="@+id/temps_labels">
+                        android:layout_marginEnd="3dp"
+                        android:layout_marginRight="3dp"/>
 
                     <NumberPicker
-                            android:id="@+id/cooldown_temp_picker"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="3dp"
-                            android:layout_marginRight="3dp"/>
+                        android:id="@+id/pause_temp_picker"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginLeft="3dp" />
 
                     <NumberPicker
-                            android:id="@+id/pause_temp_picker"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
-                            android:layout_marginLeft="3dp" />
-
-                    <NumberPicker
-                            android:id="@+id/pause_seconds_picker"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
-                            android:layout_marginLeft="3dp" />
+                        android:id="@+id/pause_seconds_picker"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginLeft="3dp" />
                 </LinearLayout>
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                           xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                           android:layout_width="match_parent"
-                                           android:layout_height="wrap_content"
-                                           android:layout_marginTop="@dimen/card_margin"
-                                           android:layout_marginLeft="@dimen/card_margin"
-                                           android:layout_marginRight="@dimen/card_margin"
-                                           android:layout_marginBottom="@dimen/card_bottom_margin"
-                                           android:foreground="?selectableItemBackground"
-                                           card_view:cardCornerRadius="@dimen/card_corner_radius"
-                                           card_view:cardElevation="3dp"
-                                           card_view:contentPadding="@dimen/card_content_padding">
+        <!-- Exit On Boot Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:foreground="?selectableItemBackground"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="3dp"
+            app:contentPadding="@dimen/card_content_padding">
 
             <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <Switch
-                        android:id="@+id/exit_on_boot_switch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/exit_on_boot_switch"
-                        android:textSize="16sp"
-                        android:layout_marginBottom="10dp" />
+                    android:id="@+id/exit_on_boot_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_exit_on_boot"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="@dimen/card_bottom_margin" />
 
-                <LinearLayout android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:orientation="horizontal"
-                              android:layout_marginBottom="10dp">
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/on_boot_label"
-                            android:text="@string/on_boot_label"
-                            android:textSize="16sp"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/card_content_margin"
+                    android:text="@string/description_exit_on_boot"
+                    android:textSize="@dimen/value_text"/>
 
-                            android:layout_marginRight="5dp"
-                            android:layout_marginEnd="5dp"
-                            android:textColor="@color/black"/>
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/on_boot_text"
-                            android:textSize="16sp"/>
-
-                </LinearLayout>
-
-                <Button style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/edit_on_boot"
-                        android:id="@+id/edit_on_boot"
-                        android:layout_gravity="center_horizontal"/>
+                <TextView
+                    android:id="@+id/tv_config_on_boot"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:padding="8dp"
+                    android:text="@string/label_on_boot_not_set"
+                    android:textSize="16sp"
+                    android:drawableRight="@drawable/ic_outline_edit_24px"
+                    android:drawableEnd="@drawable/ic_outline_edit_24px"
+                    android:onClick="editOnBootOnClick"
+                    android:background="?selectableItemBackground"/>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-
-        <!-- Bottom most card - include android:layout_marginBottom for proper looks -->
-        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                           xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                           android:layout_width="match_parent"
-                                           android:layout_height="wrap_content"
-                                           android:layout_marginTop="@dimen/card_margin"
-                                           android:layout_marginLeft="@dimen/card_margin"
-                                           android:layout_marginRight="@dimen/card_margin"
-                                           android:layout_marginBottom="@dimen/card_bottom_margin"
-                                           android:foreground="?selectableItemBackground"
-                                           card_view:cardCornerRadius="@dimen/card_corner_radius"
-                                           card_view:cardElevation="3dp"
-                                           card_view:contentPadding="@dimen/card_content_padding">
+        <!-- Enable Cool Down Card : Bottom most card - include android:layout_marginBottom for proper looks. -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:layout_marginBottom="@dimen/card_bottom_margin"
+            android:foreground="?selectableItemBackground"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="3dp"
+            app:contentPadding="@dimen/card_content_padding">
 
             <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <Switch
-                        android:id="@+id/cooldown_switch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/enable_cooldown"
-                        android:textSize="16sp"
-                        android:checked="true"
-                        android:layout_marginBottom="16dp" />
+                    android:id="@+id/cooldown_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/enable_cooldown"
+                    android:textSize="16sp"
+                    android:checked="true"
+                    android:layout_marginBottom="16dp" />
 
                 <LinearLayout
-                        android:id="@+id/cooldown_labels"
-                        android:layout_width="match_parent"
+                    android:id="@+id/cooldown_labels"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cooldown_switch"
+                    android:layout_marginBottom="8dp"
+                    android:weightSum="3"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/cooldown_percentage"
+                        android:gravity="center_horizontal"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/cooldown_switch"
-                        android:layout_marginBottom="8dp"
-                        android:weightSum="3"
-                        android:orientation="horizontal"
-                        android:gravity="center_horizontal">
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:text="@string/cooldown_capacity"/>
 
                     <TextView
-                            android:id="@+id/cooldown_percentage"
-                            android:gravity="center_horizontal"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="14sp"
-                            android:textColor="@color/black"
-                            android:text="@string/cooldown_capacity"/>
+                        android:id="@+id/charge_ratio"
+                        android:gravity="center_horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:text="@string/charge_seconds"/>
 
                     <TextView
-                            android:id="@+id/charge_ratio"
-                            android:gravity="center_horizontal"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="14sp"
-                            android:textColor="@color/black"
-                            android:text="@string/charge_seconds"/>
-
-                    <TextView
-                            android:id="@+id/pause_ratio"
-                            android:gravity="center_horizontal"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="14sp"
-                            android:textColor="@color/black"
-                            android:text="@string/pause_seconds"/>
+                        android:id="@+id/pause_ratio"
+                        android:gravity="center_horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:text="@string/pause_seconds"/>
 
                 </LinearLayout>
 
                 <LinearLayout
-                        android:id="@+id/cooldown_pickers"
-                        android:layout_width="match_parent"
+                    android:id="@+id/cooldown_pickers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3"
+                    android:layout_below="@+id/cooldown_labels">
+
+                    <NumberPicker
+                        android:id="@+id/cooldown_percentage_picker"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="3"
-                        android:layout_below="@+id/cooldown_labels">
+                        android:layout_marginEnd="3dp"
+                        android:layout_marginRight="3dp" />
 
                     <NumberPicker
-                            android:id="@+id/cooldown_percentage_picker"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="3dp"
-                            android:layout_marginRight="3dp" />
+                        android:id="@+id/charge_ratio_picker"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginLeft="3dp" />
 
                     <NumberPicker
-                            android:id="@+id/charge_ratio_picker"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
-                            android:layout_marginLeft="3dp" />
-
-                    <NumberPicker
-                            android:id="@+id/pause_ratio_picker"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
-                            android:layout_marginLeft="3dp" />
+                        android:id="@+id/pause_ratio_picker"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginLeft="3dp" />
                 </LinearLayout>
 
             </RelativeLayout>
