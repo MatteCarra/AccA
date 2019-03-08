@@ -15,7 +15,6 @@ import mattecarra.accapp.data.AccConfig
 import mattecarra.accapp.data.Cooldown
 import android.app.Activity
 import android.content.Intent
-import android.os.Parcelable
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.*
@@ -107,26 +106,32 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         }
     }
 
-    private fun initUi() {
-        on_boot_text.text = config.onBoot?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
-        exit_on_boot_switch.isChecked = config.onBootExit
-        exit_on_boot_switch.setOnCheckedChangeListener { _, isChecked ->
-            config.onBootExit = isChecked
-            unsavedChanges = true
-        }
-        edit_on_boot.setOnClickListener {
-            MaterialDialog(this@AccConfigEditorActivity).show {
-                title(R.string.edit_on_boot)
+    /**
+     * Function for On Boot ImageView OnClick.
+     * Opens the dialog to edit the On Boot config parameter.
+     */
+    fun editOnBootOnClick(view: View) {
+
+        MaterialDialog(this@AccConfigEditorActivity).show {
+                            title(R.string.edit_on_boot)
                 message(R.string.edit_on_boot_dialog_message)
                 input(prefill = this@AccConfigEditorActivity.config.onBoot ?: "", allowEmpty = true, hintRes = R.string.edit_on_boot_dialog_hint) { _, text ->
                     this@AccConfigEditorActivity.config.onBoot = text.toString()
-                    this@AccConfigEditorActivity.on_boot_text.text = if(text.isBlank()) getString(R.string.not_set) else text
+                    this@AccConfigEditorActivity.tv_config_on_boot.text = if(text.isBlank()) getString(R.string.not_set) else text
 
                     unsavedChanges = true
                 }
                 positiveButton(R.string.save)
                 negativeButton(android.R.string.cancel)
             }
+    }
+
+    private fun initUi() {
+        tv_config_on_boot.text = config.onBoot?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
+        exit_on_boot_switch.isChecked = config.onBootExit
+        exit_on_boot_switch.setOnCheckedChangeListener { _, isChecked ->
+            config.onBootExit = isChecked
+            unsavedChanges = true
         }
 
         shutdown_capacity_picker.minValue = 0
