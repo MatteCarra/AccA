@@ -180,7 +180,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/card_content_padding"
-                        android:shrinkColumns="0">
+                        android:shrinkColumns="0"
+                        android:stretchColumns="1">
 
                         <!-- Battery Charging Status -->
                         <TableRow>
