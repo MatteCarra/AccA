@@ -134,7 +134,6 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
      * Opens the dialog to edit the On Boot config parameter.
      */
     fun editOnBootOnClick(view: View) {
-
         MaterialDialog(this@AccConfigEditorActivity).show {
                             title(R.string.edit_on_boot)
                 message(R.string.edit_on_boot_dialog_message)
@@ -147,6 +146,21 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                 positiveButton(R.string.save)
                 negativeButton(android.R.string.cancel)
             }
+    }
+
+    fun editOnPluggedOnClick(v: View) {
+        MaterialDialog(this@AccConfigEditorActivity).show {
+            title(R.string.edit_on_plugged)
+            message(R.string.edit_on_plugged_dialog_message)
+            input(prefill = this@AccConfigEditorActivity.config.onPlugged ?: "", allowEmpty = true, hintRes = R.string.edit_on_boot_dialog_hint) { _, text ->
+                this@AccConfigEditorActivity.config.onPlugged = text.toString()
+                this@AccConfigEditorActivity.config_on_plugged_textview.text = if(text.isBlank()) getString(R.string.not_set) else text
+
+                unsavedChanges = true
+            }
+            positiveButton(R.string.save)
+            negativeButton(android.R.string.cancel)
+        }
     }
 
     fun editChargingSwitchOnClick(v: View) {
@@ -216,6 +230,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             R.id.temperature_control_info -> R.string.temperature_control_info
             R.id.exit_on_boot_info -> R.string.description_exit_on_boot
             R.id.cooldown_info -> R.string.cooldown_info
+            R.id.on_plugged_info -> R.string.on_plugged_info
             else -> null
         }?.let {
             Tooltip.Builder(this)
@@ -239,6 +254,8 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             config.onBootExit = isChecked
             unsavedChanges = true
         }
+
+        config_on_plugged_textview.text = config.onPlugged?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
 
         shutdown_capacity_picker.minValue = 0
         shutdown_capacity_picker.maxValue = 20

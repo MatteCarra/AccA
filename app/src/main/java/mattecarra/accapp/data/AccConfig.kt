@@ -13,6 +13,7 @@ data class UpdateResult(
     val resetUnpluggedUpdateSuccessful: Boolean,
     val onBootExitUpdateSuccessful: Boolean,
     val onBootUpdateSuccessful: Boolean,
+    val onPluggedUpdateSuccesful: Boolean,
     val chargingSwitchUpdateSuccessFul: Boolean
 )
 
@@ -90,6 +91,7 @@ data class AccConfig(
     var resetUnplugged: Boolean,
     var onBootExit: Boolean,
     var onBoot: String?,
+    var onPlugged: String?,
     var chargingSwitch: String?
 ): Parcelable {
 
@@ -102,6 +104,7 @@ data class AccConfig(
             AccUtils.updateResetUnpluggedCommand(resetUnplugged),
             AccUtils.updateOnBootExitCommand(onBootExit),
             AccUtils.updateOnBootCommand(onBoot),
+            AccUtils.updateOnPluggedCommand(onPlugged),
             chargingSwitch?.let { AccUtils.setChargingSwitchCommand(it) } ?: AccUtils.unsetChargingSwitchCommand(),
             "acc -D restart"
         ).filterNotNull()
@@ -116,6 +119,7 @@ data class AccConfig(
             AccUtils.updateResetUnplugged(resetUnplugged),
             AccUtils.updateOnBootExit(onBootExit),
             AccUtils.updateOnBoot(onBoot),
+            AccUtils.updateOnPlugged(onPlugged),
             chargingSwitch?.let { AccUtils.setChargingSwitch(it) } ?: AccUtils.unsetChargingSwitch()
         )
     }

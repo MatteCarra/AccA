@@ -462,8 +462,8 @@
                         android:textSize="16sp"
                         android:textColor="@color/black"
                         android:text="@string/label_on_boot"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginEnd="8dp"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"/>
 
@@ -481,6 +481,82 @@
                         android:drawableEnd="@drawable/ic_outline_edit_24px"
                         android:onClick="editOnBootOnClick"
                         android:background="?selectableItemBackground"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginLeft="@dimen/card_margin"
+                android:layout_marginRight="@dimen/card_margin"
+                android:foreground="?selectableItemBackground"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="3dp"
+                app:contentPadding="@dimen/card_content_padding">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/card_content_padding">
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                            android:text="@string/title_on_plugged" />
+
+                    <ImageView
+                            android:id="@+id/on_plugged_info"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:padding="10dp"
+                            android:foregroundGravity="center"
+                            android:background="?selectableItemBackground"
+                            app:srcCompat="@drawable/ic_baseline_info"
+                            android:onClick="onInfoClick"
+                            android:contentDescription="@string/info" />
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:textSize="16sp"
+                            android:textColor="@color/black"
+                            android:text="@string/label_on_plugged"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"/>
+
+                    <TextView
+                            android:id="@+id/config_on_plugged_textview"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="@string/not_set"
+                            android:textSize="16sp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:drawableRight="@drawable/ic_outline_edit_24px"
+                            android:drawableEnd="@drawable/ic_outline_edit_24px"
+                            android:onClick="editOnPluggedOnClick"
+                            android:background="?selectableItemBackground"/>
                 </LinearLayout>
 
             </LinearLayout>

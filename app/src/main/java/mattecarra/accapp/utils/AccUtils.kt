@@ -29,6 +29,7 @@ object AccUtils {
     val RESET_UNPLUGGED_CONFIG_REGEXP = """^\s*resetUnplugged=(true|false)""".toRegex(RegexOption.MULTILINE)
     val ON_BOOT_EXIT = """^\s*onBootExit=(true|false)""".toRegex(RegexOption.MULTILINE)
     val ON_BOOT = """^\s*onBoot=([^#]+)""".toRegex(RegexOption.MULTILINE)
+    val ON_PLUGGED = """^\s*onPlugged=([^#]+)""".toRegex(RegexOption.MULTILINE)
     val VOLT_FILE = """^\s*cVolt=([^:#\s]+):(\d+)""".toRegex(RegexOption.MULTILINE)
     val SWITCH = """^\s*switch=([^#]+)""".toRegex(RegexOption.MULTILINE)
 
@@ -39,6 +40,7 @@ object AccUtils {
         VoltControl(null, null),
         false,
         false,
+        null,
         null,
         null
     )
@@ -76,6 +78,7 @@ object AccUtils {
             RESET_UNPLUGGED_CONFIG_REGEXP.find(config)?.destructured?.component1() == "true",
             ON_BOOT_EXIT.find(config)?.destructured?.component1() == "true",
             ON_BOOT.find(config)?.destructured?.component1(),
+            ON_PLUGGED.find(config)?.destructured?.component1(),
             getCurrentChargingSwitch()
         )
     }
@@ -140,6 +143,13 @@ object AccUtils {
 
     fun updateOnBoot(value: String?): Boolean {
         return Shell.su(updateOnBootCommand(value)).exec().isSuccess
+    }
+
+    //Update on plugged
+    fun updateOnPluggedCommand(value: String?): String = "acc -s onPlugged${value?.let{ " $it" } ?: ""}"
+
+    fun updateOnPlugged(value: String?): Boolean {
+        return Shell.su(updateOnPluggedCommand(value)).exec().isSuccess
     }
 
     //Update volt file

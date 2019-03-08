@@ -140,6 +140,13 @@
     <string name="profile_creator">Profile creator</string>
     <string name="schedule_creator">Schedule creator</string>
     <string name="charging_switch_label">Charging switch:</string>
+    <string name="title_on_plugged">On plugged options</string>
+    <string name="label_on_plugged">On plugged:</string>
+    <string name="edit_on_plugged">Edit on plugged value:</string>
+    <string name="edit_on_plugged_dialog_message">These settings are applied when you connect to a charger. Leave black
+        to disable
+    </string>
+    <string name="on_plugged_info">You can set \"On Plugged\" setting to update files every time you connect to a power source. This is particular useful to set voltage/current max for wireless chargers: \"./wireless/voltage_max:V_MAX\" and \"./usb/current_max:CURR_MAX\"</string>
 
     <string-array name="profile_long_press_options">
         <item>Edit</item>
