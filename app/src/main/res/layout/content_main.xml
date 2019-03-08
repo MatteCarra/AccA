@@ -32,7 +32,7 @@
                 android:orientation="vertical">
 
                 <!-- Title and Settings Button -->
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/card_content_padding"
@@ -42,24 +42,30 @@
                     android:layout_gravity="center_vertical">
 
                     <TextView
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
+                        android:id="@+id/tv_main_title_accdStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:paddingTop="@dimen/card_content_padding"
                         android:paddingBottom="@dimen/card_content_padding"
-                        android:layout_height="wrap_content"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                        android:text="@string/title_status" />
+                        android:text="@string/title_status"
+                        android:drawablePadding="@dimen/card_content_margin"
+                        android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24px"
+                        android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24px"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:padding="16dp"
                         android:foregroundGravity="center"
-                        android:layout_gravity="center_vertical"
                         android:background="?selectableItemBackground"
                         app:srcCompat="@drawable/ic_outline_settings_24px"
                         android:onClick="batteryConfigOnClick" />
-                </LinearLayout>
+                </RelativeLayout>
 
                 <FrameLayout
                     android:id="@+id/fl_status_container"
@@ -174,6 +180,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/card_content_padding"
+                        android:shrinkColumns="0"
                         android:stretchColumns="1">
 
                         <!-- Battery Charging Status -->
