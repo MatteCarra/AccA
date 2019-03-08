@@ -30,12 +30,40 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
+                    android:id="@+id/charging_control_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/card_content_padding">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:text="@string/title_capacity_control" />
+
+                    <ImageView
+                        android:id="@+id/capacity_control_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_info"
+                        android:onClick="onInfoClick"
+                        android:contentDescription="@string/info" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/limits"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:weightSum="3"
                     android:orientation="horizontal"
-                    android:gravity="center_horizontal">
+                    android:gravity="center_horizontal"
+                    android:layout_below="@+id/charging_control_title">
 
                     <TextView
                         android:id="@+id/shutdown_capacity_label"
@@ -129,7 +157,34 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/card_content_padding">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:text="@string/title_voltage_control" />
+
+                    <ImageView
+                        android:id="@+id/voltage_control_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_info"
+                        android:onClick="onInfoClick"
+                        android:contentDescription="@string/info" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginBottom="10dp">
@@ -198,6 +253,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <LinearLayout
+                    android:id="@+id/temp_control_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/card_content_padding">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:text="@string/title_temperature_control" />
+
+                    <ImageView
+                        android:id="@+id/temperature_control_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_info"
+                        android:onClick="onInfoClick"
+                        android:contentDescription="@string/info" />
+                </LinearLayout>
+
                 <Switch
                     android:id="@+id/temp_switch"
                     android:checked="true"
@@ -205,7 +287,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/enable_temp_check"
                     android:textSize="16sp"
-                    android:layout_marginBottom="16dp" />
+                    android:layout_marginBottom="16dp"
+                    android:layout_below="@+id/temp_control_title"/>
 
                 <LinearLayout
                     android:id="@+id/temps_labels"
@@ -302,6 +385,32 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/card_content_padding">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:text="@string/title_on_boot" />
+
+                    <ImageView
+                        android:id="@+id/exit_on_boot_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_info"
+                        android:onClick="onInfoClick"
+                        android:contentDescription="@string/info" />
+                </LinearLayout>
+
                 <Switch
                     android:id="@+id/exit_on_boot_switch"
                     android:layout_width="match_parent"
@@ -310,26 +419,34 @@
                     android:textSize="16sp"
                     android:layout_marginBottom="@dimen/card_bottom_margin" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/card_content_margin"
-                    android:text="@string/description_exit_on_boot"
-                    android:textSize="@dimen/value_text"/>
-
-                <TextView
-                    android:id="@+id/tv_config_on_boot"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:padding="8dp"
-                    android:text="@string/label_on_boot_not_set"
-                    android:textSize="16sp"
-                    android:drawableRight="@drawable/ic_outline_edit_24px"
-                    android:drawableEnd="@drawable/ic_outline_edit_24px"
-                    android:onClick="editOnBootOnClick"
-                    android:background="?selectableItemBackground"/>
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:text="@string/label_on_boot"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_config_on_boot"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/not_set"
+                        android:textSize="16sp"
+                        android:drawableRight="@drawable/ic_outline_edit_24px"
+                        android:drawableEnd="@drawable/ic_outline_edit_24px"
+                        android:onClick="editOnBootOnClick"
+                        android:background="?selectableItemBackground"/>
+                </LinearLayout>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -351,7 +468,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <LinearLayout
+                    android:id="@+id/cooldown_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/card_content_padding">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:text="@string/title_cooldown_control" />
+
+                    <ImageView
+                        android:id="@+id/cooldown_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_info"
+                        android:onClick="onInfoClick"
+                        android:contentDescription="@string/info" />
+                </LinearLayout>
+
                 <Switch
+                    android:layout_below="@+id/cooldown_title"
                     android:id="@+id/cooldown_switch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

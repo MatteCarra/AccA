@@ -142,11 +142,11 @@ object AccUtils {
     //Update volt file
     fun updateVoltageCommand(voltControl: String?, voltMax: Int?): String {
         return if(voltControl != null && voltMax != null)
-            "acc -v $voltControl:$voltMax"
+            "acc --set cVolt $voltControl:$voltMax"
         else if(voltMax != null)
-            "acc -v $voltMax"
+            "acc --set cVolt $voltMax"
         else
-            "acc -v"
+            "acc --set cVolt"
     }
 
     fun updateVoltage(voltControl: String?, voltMax: Int?): Boolean {

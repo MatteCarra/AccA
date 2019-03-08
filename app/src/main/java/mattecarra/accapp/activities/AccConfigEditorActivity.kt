@@ -14,14 +14,22 @@ import mattecarra.accapp.R
 import mattecarra.accapp.data.AccConfig
 import mattecarra.accapp.data.Cooldown
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Gravity
 import android.widget.*
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
+import android.widget.LinearLayout
+import android.view.LayoutInflater
+import it.sephiroth.android.library.xtooltip.ClosePolicy
+import it.sephiroth.android.library.xtooltip.Tooltip
+
 
 class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, CompoundButton.OnCheckedChangeListener {
     private var unsavedChanges = false
@@ -36,16 +44,28 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         finish()
     }
 
+    override fun onSaveInstanceState(outState: Bundle?) {
+        outState?.putParcelable("config", config)
+        outState?.putBoolean("unsavedChanges", unsavedChanges)
+
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_acc_config_editor)
 
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
+        supportActionBar?.title = intent?.getStringExtra("title") ?: getString(R.string.acc_config_editor)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        if(intent.hasExtra("config")) {
+        unsavedChanges = savedInstanceState?.getBoolean("hasChanges", false) ?: false
+
+        if(savedInstanceState?.containsKey("config") == true) {
+            this.config = savedInstanceState.getParcelable("config")!!
+        } else if(intent.hasExtra("config")) {
             this.config = intent.getParcelableExtra("config")
         } else {
             try {
@@ -117,7 +137,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                 message(R.string.edit_on_boot_dialog_message)
                 input(prefill = this@AccConfigEditorActivity.config.onBoot ?: "", allowEmpty = true, hintRes = R.string.edit_on_boot_dialog_hint) { _, text ->
                     this@AccConfigEditorActivity.config.onBoot = text.toString()
-                    this@AccConfigEditorActivity.tv_config_on_boot.text = if(text.isBlank()) getString(R.string.label_on_boot_not_set) else text
+                    this@AccConfigEditorActivity.tv_config_on_boot.text = if(text.isBlank()) getString(R.string.not_set) else text
 
                     unsavedChanges = true
                 }
@@ -126,8 +146,31 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             }
     }
 
+    fun onInfoClick(v: View) {
+        when(v.id) {
+            R.id.capacity_control_info -> R.string.capacity_control_info
+            R.id.voltage_control_info -> R.string.voltage_control_info
+            R.id.temperature_control_info -> R.string.temperature_control_info
+            R.id.exit_on_boot_info -> R.string.description_exit_on_boot
+            R.id.cooldown_info -> R.string.cooldown_info
+            else -> null
+        }?.let {
+            Tooltip.Builder(this)
+                .anchor(v, 0, 0, false)
+                .text(it)
+                .arrow(true)
+                .closePolicy(ClosePolicy.TOUCH_ANYWHERE_CONSUME)
+                .showDuration(-1)
+                .overlay(false)
+                .maxWidth((resources.displayMetrics.widthPixels / 1.5).toInt())
+                .create()
+                .show(v, Tooltip.Gravity.CENTER, true)
+        }
+
+    }
+
     private fun initUi() {
-        tv_config_on_boot.text = config.onBoot?.let { if(it.isBlank()) getString(R.string.label_on_boot_not_set) else it } ?: getString(R.string.label_on_boot_not_set)
+        tv_config_on_boot.text = config.onBoot?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
         exit_on_boot_switch.isChecked = config.onBootExit
         exit_on_boot_switch.setOnCheckedChangeListener { _, isChecked ->
             config.onBootExit = isChecked
@@ -352,6 +395,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             R.id.pause_capacity_picker -> {
                 config.capacity.pauseCapacity = newVal
 
+                resume_capacity_picker.maxValue = config.capacity.pauseCapacity - 1
                 resume_capacity_picker.maxValue = config.capacity.pauseCapacity - 1
             }
 

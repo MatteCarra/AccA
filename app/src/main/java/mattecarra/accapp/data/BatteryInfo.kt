@@ -1,5 +1,8 @@
 package mattecarra.accapp.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 /**
  * A POJO for recording and reading data from 'acc -i'.
  *
@@ -36,6 +39,7 @@ package mattecarra.accapp.data
  * @param inputCurrentMax
  * @param cycleCount Returns the number of charge cycles completed by the battery.
  */
+@Parcelize
 class BatteryInfo(val name: String,
                   val isInputSuspend: Boolean,
                   val status: String,
@@ -67,7 +71,7 @@ class BatteryInfo(val name: String,
                   val chargeControlLimitMax: Int,
                   val chargeControlLimit: Int,
                   val inputCurrentMax: Int,
-                  val cycleCount: Int) {
+                  val cycleCount: Int): Parcelable {
 
     /**
      * Returns voltage now as float.
