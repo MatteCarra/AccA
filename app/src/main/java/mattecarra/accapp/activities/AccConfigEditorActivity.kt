@@ -117,7 +117,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                 message(R.string.edit_on_boot_dialog_message)
                 input(prefill = this@AccConfigEditorActivity.config.onBoot ?: "", allowEmpty = true, hintRes = R.string.edit_on_boot_dialog_hint) { _, text ->
                     this@AccConfigEditorActivity.config.onBoot = text.toString()
-                    this@AccConfigEditorActivity.tv_config_on_boot.text = if(text.isBlank()) getString(R.string.not_set) else text
+                    this@AccConfigEditorActivity.tv_config_on_boot.text = if(text.isBlank()) getString(R.string.label_on_boot_not_set) else text
 
                     unsavedChanges = true
                 }
@@ -127,7 +127,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
     }
 
     private fun initUi() {
-        tv_config_on_boot.text = config.onBoot?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
+        tv_config_on_boot.text = config.onBoot?.let { if(it.isBlank()) getString(R.string.label_on_boot_not_set) else it } ?: getString(R.string.label_on_boot_not_set)
         exit_on_boot_switch.isChecked = config.onBootExit
         exit_on_boot_switch.setOnCheckedChangeListener { _, isChecked ->
             config.onBootExit = isChecked
