@@ -252,16 +252,6 @@
                     android:layout_gravity="center">
 
                     <Button
-                        android:id="@+id/edit_charging_switch"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_outline_edit_24px"
-                        android:drawableStart="@drawable/ic_outline_edit_24px"
-                        android:drawableTint="@color/colorImageTint"
-                        android:text="@string/edit_charging_switch"/>
-
-                    <Button
                         android:id="@+id/edit_charging_limit_once_bt"
                         style="@style/Widget.AppCompat.Button.Colored"
                         android:layout_width="match_parent"

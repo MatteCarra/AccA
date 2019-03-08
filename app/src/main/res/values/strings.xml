@@ -132,13 +132,14 @@
     <string name="title_on_boot">On boot options</string>
     <string name="title_temperature_control">Temperature control</string>
     <string name="title_capacity_control">Capacity control</string>
-    <string name="capacity_control_info">Use \"shutdown at\" to automatically shutdown your phone when battery capacity goes below selected percentage.\nUse\"Stop\" and \"Resume\" charging to set when charging should stop and when it should restart.</string>
+    <string name="capacity_control_info">Use \"shutdown at\" to automatically shutdown your phone when battery capacity goes below selected percentage.\nUse\"Stop\" and \"Resume\" charging to set when charging should stop and when it should restart.\nCharging switch is the file that is used to tell the device to stop charging. Acc by default cycles all of them until it finds a working one.</string>
     <string name="voltage_control_info">This settings let you set maximum charging voltage.\nLower voltages help battery stay cooler and live longer.\nSome devices/kernels do not support this option.</string>
     <string name="temperature_control_info">It allows you to stop charging when battery gets too hot.\nYou can set a temperature when acc should start cooling down (alternating charge and discharge for a fixed amount of seconds) or the max temperature when charging should paused for the specified seconds.</string>
     <string name="cooldown_info">When you are charging your phone usually the battery gets hot.\nCool down helps you limit this by alternating charge on and off once battery capacity reaches the percentage you specify for the amount of seconds you specify.\nIn fact usually battery becomes hot after reaching 60% because voltage starts to rise.</string>
     <string name="acc_config_editor">Acc config editor</string>
     <string name="profile_creator">Profile creator</string>
     <string name="schedule_creator">Schedule creator</string>
+    <string name="charging_switch_label">Charging switch:</string>
 
     <string-array name="profile_long_press_options">
         <item>Edit</item>

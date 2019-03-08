@@ -137,6 +137,39 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_below="@+id/num_pickers">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:textSize="16sp"
+                            android:textColor="@color/black"
+                            android:text="@string/charging_switch_label"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"/>
+
+                    <TextView
+                            android:id="@+id/charging_switch_textview"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="@string/automatic"
+                            android:textSize="16sp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:drawableRight="@drawable/ic_outline_edit_24px"
+                            android:drawableEnd="@drawable/ic_outline_edit_24px"
+                            android:onClick="editChargingSwitchOnClick"
+                            android:background="?selectableItemBackground"/>
+                </LinearLayout>
+
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
@@ -442,6 +475,8 @@
                         android:gravity="center_vertical"
                         android:text="@string/not_set"
                         android:textSize="16sp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginEnd="8dp"
                         android:drawableRight="@drawable/ic_outline_edit_24px"
                         android:drawableEnd="@drawable/ic_outline_edit_24px"
                         android:onClick="editOnBootOnClick"

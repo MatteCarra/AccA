@@ -27,8 +27,11 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import android.widget.LinearLayout
 import android.view.LayoutInflater
+import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import it.sephiroth.android.library.xtooltip.ClosePolicy
 import it.sephiroth.android.library.xtooltip.Tooltip
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 
 class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, CompoundButton.OnCheckedChangeListener {
@@ -146,6 +149,66 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             }
     }
 
+    fun editChargingSwitchOnClick(v: View) {
+        val automaticString = getString(R.string.automatic)
+        val chargingSwitches = listOf(automaticString, *AccUtils.listChargingSwitches().toTypedArray())
+        val initialSwitch = AccUtils.getCurrentChargingSwitch()
+        var currentIndex = chargingSwitches.indexOf(initialSwitch ?: automaticString)
+
+        MaterialDialog(this).show {
+            title(R.string.edit_charging_switch)
+            noAutoDismiss()
+
+            setActionButtonEnabled(WhichButton.POSITIVE, currentIndex != -1)
+            setActionButtonEnabled(WhichButton.NEUTRAL, currentIndex != -1)
+
+            listItemsSingleChoice(items = chargingSwitches, initialSelection = currentIndex, waitForPositiveButton = false)  { _, index, text ->
+                currentIndex = index
+
+                setActionButtonEnabled(WhichButton.POSITIVE, index != -1)
+                setActionButtonEnabled(WhichButton.NEUTRAL, index != -1)
+            }
+
+            positiveButton(R.string.save) {
+                val index = currentIndex
+                val switch = chargingSwitches[index]
+
+                doAsync {
+                    this@AccConfigEditorActivity.config.chargingSwitch = if(index == 0) null else switch
+                }
+
+                dismiss()
+            }
+
+            neutralButton(R.string.test_switch) {
+                val switch = if(currentIndex == 0) null else chargingSwitches[currentIndex]
+
+                Toast.makeText(this@AccConfigEditorActivity, R.string.wait, Toast.LENGTH_LONG).show()
+                doAsync {
+                    val description =
+                        when(AccUtils.testChargingSwitch(switch)) {
+                            0 -> R.string.charging_switch_works
+                            1 -> R.string.charging_switch_does_not_work
+                            2 -> R.string.plug_battery_to_test
+                            else -> R.string.error_occurred
+                        }
+
+                    uiThread {
+                        MaterialDialog(this@AccConfigEditorActivity).show {
+                            title(R.string.test_switch)
+                            message(description)
+                            positiveButton(android.R.string.ok)
+                        }
+                    }
+                }
+            }
+
+            negativeButton(android.R.string.cancel) {
+                dismiss()
+            }
+        }
+    }
+
     fun onInfoClick(v: View) {
         when(v.id) {
             R.id.capacity_control_info -> R.string.capacity_control_info
@@ -162,9 +225,9 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                 .closePolicy(ClosePolicy.TOUCH_ANYWHERE_CONSUME)
                 .showDuration(-1)
                 .overlay(false)
-                .maxWidth((resources.displayMetrics.widthPixels / 1.5).toInt())
+                .maxWidth((resources.displayMetrics.widthPixels / 1.3).toInt())
                 .create()
-                .show(v, Tooltip.Gravity.CENTER, true)
+                .show(v, Tooltip.Gravity.LEFT, true)
         }
 
     }

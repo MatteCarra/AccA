@@ -39,6 +39,7 @@ object AccUtils {
         VoltControl(null, null),
         false,
         false,
+        null,
         null
     )
 
@@ -74,7 +75,9 @@ object AccUtils {
             voltControl,
             RESET_UNPLUGGED_CONFIG_REGEXP.find(config)?.destructured?.component1() == "true",
             ON_BOOT_EXIT.find(config)?.destructured?.component1() == "true",
-            ON_BOOT.find(config)?.destructured?.component1())
+            ON_BOOT.find(config)?.destructured?.component1(),
+            getCurrentChargingSwitch()
+        )
     }
 
     @Throws(IOException::class)
@@ -328,8 +331,12 @@ object AccUtils {
         return if(res.isSuccess) res.out.map { it.trim() }.filter { it.isNotEmpty() } else emptyList()
     }
 
+    fun setChargingSwitchCommand(chargingSwitch: String): String {
+        return "acc -s s $chargingSwitch"
+    }
+
     fun setChargingSwitch(chargingSwitch: String): Boolean {
-        return Shell.su("acc -s s $chargingSwitch").exec().isSuccess
+        return Shell.su(setChargingSwitchCommand(chargingSwitch)).exec().isSuccess
     }
 
     fun testChargingSwitch(chargingSwitch: String? = null): Int {
@@ -341,8 +348,13 @@ object AccUtils {
         return if(switch?.isNotEmpty() == true) switch else null
     }
 
+
+    fun unsetChargingSwitchCommand(): String {
+        return "acc -s s-"
+    }
+
     fun unsetChargingSwitch(): Boolean {
-        return Shell.su("acc -s s-").exec().isSuccess
+        return Shell.su(unsetChargingSwitchCommand()).exec().isSuccess
     }
 
     fun setChargingLimitForOneCharge(limit: Int): Boolean {

@@ -310,69 +310,6 @@ class MainActivity : AppCompatActivity() {
         initProfiles()
 
         //Rest of the UI
-        edit_charging_switch.setOnClickListener {
-            val automaticString = getString(R.string.automatic)
-            val chargingSwitches = listOf(automaticString, *AccUtils.listChargingSwitches().toTypedArray())
-            val initialSwitch = AccUtils.getCurrentChargingSwitch()
-            var currentIndex = chargingSwitches.indexOf(initialSwitch ?: automaticString)
-
-            MaterialDialog(this).show {
-                title(R.string.edit_charging_switch)
-                noAutoDismiss()
-
-                setActionButtonEnabled(WhichButton.POSITIVE, currentIndex != -1)
-                setActionButtonEnabled(WhichButton.NEUTRAL, currentIndex != -1)
-
-                listItemsSingleChoice(items = chargingSwitches, initialSelection = currentIndex, waitForPositiveButton = false)  { _, index, text ->
-                    currentIndex = index
-
-                    setActionButtonEnabled(WhichButton.POSITIVE, index != -1)
-                    setActionButtonEnabled(WhichButton.NEUTRAL, index != -1)
-                }
-
-                positiveButton(R.string.save) {
-                    val index = currentIndex
-                    val switch = chargingSwitches[index]
-
-                    doAsync {
-                        if(index == 0)
-                            AccUtils.unsetChargingSwitch()
-                        else
-                            AccUtils.setChargingSwitch(switch)
-                    }
-
-                    dismiss()
-                }
-
-                neutralButton(R.string.test_switch) {
-                    val switch = if(currentIndex == 0) null else chargingSwitches[currentIndex]
-
-                    Toast.makeText(this@MainActivity, R.string.wait, Toast.LENGTH_LONG).show()
-                    doAsync {
-                        val description =
-                            when(AccUtils.testChargingSwitch(switch)) {
-                                0 -> R.string.charging_switch_works
-                                1 -> R.string.charging_switch_does_not_work
-                                2 -> R.string.plug_battery_to_test
-                                else -> R.string.error_occurred
-                            }
-
-                        uiThread {
-                            MaterialDialog(this@MainActivity).show {
-                                title(R.string.test_switch)
-                                message(description)
-                                positiveButton(android.R.string.ok)
-                            }
-                        }
-                    }
-                }
-
-                negativeButton(android.R.string.cancel) {
-                    dismiss()
-                }
-            }
-        }
-
         create_acc_profile.setOnClickListener {
             Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
                 intent.putExtra("title", this@MainActivity.getString(R.string.profile_creator))
