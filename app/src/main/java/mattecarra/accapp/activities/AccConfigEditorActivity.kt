@@ -303,16 +303,21 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             })
 
             val supportedVoltageControlFiles = ArrayList(AccUtils.listVoltageSupportedControlFiles())
-            config.voltControl.voltFile?.let {
-                if(!supportedVoltageControlFiles.contains(it)) {
-                    supportedVoltageControlFiles.add(it)
+            val currentVoltageFile = config.voltControl.voltFile?.let { currentVoltFile ->
+                val currentVoltFileRegex = currentVoltFile.replace("/", """\/""").replace(".", """\.""").replace("?", ".").toRegex()
+                val match = supportedVoltageControlFiles.find { currentVoltFileRegex.matches(it) }
+                if(match == null) {
+                    supportedVoltageControlFiles.add(currentVoltFile)
+                    currentVoltFile
+                } else {
+                    match
                 }
             }
             val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, supportedVoltageControlFiles)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             voltageControl.adapter = adapter
-            config.voltControl.voltFile?.let {
-                voltageControl.setSelection(supportedVoltageControlFiles.indexOf(it))
+            currentVoltageFile?.let {
+                voltageControl.setSelection(supportedVoltageControlFiles.indexOf(currentVoltageFile))
             }
             if(voltageControl.selectedItemPosition == -1) {
                 dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
