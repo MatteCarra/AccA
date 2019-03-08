@@ -67,7 +67,6 @@
     <string name="label_on_boot_not_set">On Boot: Not set.</string>
 
     <string name="edit_on_boot">Edit on boot value</string>
-    <string name="not_set">Not set</string>
     <string name="edit_on_boot_dialog_hint">Leave blank to disable</string>
     <string name="save">Save</string>
     <string name="edit_on_boot_dialog_message">These settings are applied on boot. Leave blank to disable.</string>
