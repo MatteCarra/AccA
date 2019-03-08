@@ -303,42 +303,33 @@
                 android:orientation="vertical">
 
                 <Switch
-                        android:id="@+id/exit_on_boot_switch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/exit_on_boot_switch"
-                        android:textSize="16sp"
-                        android:layout_marginBottom="10dp" />
+                    android:id="@+id/exit_on_boot_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_exit_on_boot"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="@dimen/card_bottom_margin" />
 
-                <LinearLayout android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:orientation="horizontal"
-                              android:layout_marginBottom="10dp">
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/on_boot_label"
-                            android:text="@string/on_boot_label"
-                            android:textSize="16sp"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/card_content_margin"
+                    android:text="@string/description_exit_on_boot"
+                    android:textSize="@dimen/value_text"/>
 
-                            android:layout_marginRight="5dp"
-                            android:layout_marginEnd="5dp"
-                            android:textColor="@color/black"/>
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/on_boot_text"
-                            android:textSize="16sp"/>
-
-                </LinearLayout>
-
-                <Button style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/edit_on_boot"
-                        android:id="@+id/edit_on_boot"
-                        android:layout_gravity="center_horizontal"/>
+                <TextView
+                    android:id="@+id/tv_config_on_boot"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:padding="8dp"
+                    android:text="@string/label_on_boot_not_set"
+                    android:textSize="16sp"
+                    android:drawableRight="@drawable/ic_outline_edit_24px"
+                    android:drawableEnd="@drawable/ic_outline_edit_24px"
+                    android:onClick="editOnBootOnClick"
+                    android:background="?selectableItemBackground"/>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
