@@ -166,7 +166,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
     fun editChargingSwitchOnClick(v: View) {
         val automaticString = getString(R.string.automatic)
         val chargingSwitches = listOf(automaticString, *AccUtils.listChargingSwitches().toTypedArray())
-        val initialSwitch = AccUtils.getCurrentChargingSwitch()
+        val initialSwitch = config.chargingSwitch
         var currentIndex = chargingSwitches.indexOf(initialSwitch ?: automaticString)
 
         MaterialDialog(this).show {
@@ -189,6 +189,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
 
                 doAsync {
                     this@AccConfigEditorActivity.config.chargingSwitch = if(index == 0) null else switch
+                    this@AccConfigEditorActivity.charging_switch_textview.text = this@AccConfigEditorActivity.config.chargingSwitch ?: getString(R.string.automatic)
                 }
 
                 dismiss()
