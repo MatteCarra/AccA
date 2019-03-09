@@ -78,7 +78,6 @@ class BatteryInfo(val name: String,
      * @return current battery operating voltage.
      */
     fun getVoltageNow(): Float {
-
         if (voltageNow > 1000000) {
             return voltageNow / 1000000f
         } else {
@@ -87,11 +86,18 @@ class BatteryInfo(val name: String,
     }
 
     /**
-     * Returns inverted, friendly value for CURRENT_NOW. Divided by 1000 to get mAh, from uAh.
+     * Returns inverted, friendly value for CURRENT_NOW expressed in mAh
      * @return current mAh draw.
      */
     fun getSimpleCurrentNow(): Int {
+        if (currentNow > 10000 || currentNow < -10000) { //if abs(currentNow) is > 10000 it's probably expressed in uAh
+            return (currentNow / 1000)
+        } else { //else it's probably expressed in mAh
+            return currentNow
+        }
+    }
 
-        return (currentNow/1000)
+    fun isCharging(): Boolean {
+        return status == "Charging"
     }
 }

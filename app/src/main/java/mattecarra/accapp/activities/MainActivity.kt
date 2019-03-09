@@ -114,8 +114,10 @@ class MainActivity : AppCompatActivity() {
         progressBar_capacity.progress = batteryInfo.capacity
         // Battery Status (Charging (Fast)
         tv_main_batteryStatus.text = getString(R.string.info_status_extended, batteryInfo.status, batteryInfo.chargeType)
-        // Battery Speed (5mA at 4.11V)
-        tv_main_batterySpeed.text = getString(R.string.info_charging_speed_extended, batteryInfo.getSimpleCurrentNow(), batteryInfo.getVoltageNow())
+        // Battery Speed (500mA at 4.11V)
+        val charging = batteryInfo.isCharging()
+        charging_discharging_speed_label.text = if(charging) getString(R.string.info_charging_speed) else getString(R.string.info_discharging_speed)
+        tv_main_batterySpeed.text = getString(if(charging) R.string.info_charging_speed_extended else R.string.info_discharging_speed_extended, batteryInfo.getSimpleCurrentNow() * (if(charging) -1 else 1), batteryInfo.getVoltageNow())
         // Battery Temperature
         tv_main_batteryTemp.text = batteryInfo.temperature.toString().plus(Typography.degree)
         // Battery Health

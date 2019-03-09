@@ -200,10 +200,11 @@
                         <!-- Battery Charging Speed -->
                         <TableRow>
                             <TextView
+                                android:id="@+id/charging_discharging_speed_label"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/label_text"
-                                android:text="@string/info_speed" />
+                                android:text="@string/info_charging_speed" />
 
                             <TextView
                                 android:id="@+id/tv_main_batterySpeed"

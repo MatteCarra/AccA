@@ -29,7 +29,8 @@
     <!-- Battery Card Strings -->
     <string name="title_battery">Battery</string>
     <string name="info_status">Status</string>
-    <string name="info_speed">Charging Speed</string>
+    <string name="info_charging_speed">Charging Speed</string>
+    <string name="info_discharging_speed">Discharging Speed</string>
     <string name="info_capacity">Capacity</string>
     <string name="info_temperature">Temperature</string>
     <string name="info_health">Health</string>
@@ -37,6 +38,7 @@
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
     <string name="info_charging_speed_extended">%1$dmA at %2$.2fV</string>
+    <string name="info_discharging_speed_extended">%1$dmA</string>
 
     <string name="status_label">Status:</string>
     <string name="battery_info_label">Info:</string>
