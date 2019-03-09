@@ -77,8 +77,8 @@ object AccUtils {
             voltControl,
             RESET_UNPLUGGED_CONFIG_REGEXP.find(config)?.destructured?.component1() == "true",
             ON_BOOT_EXIT.find(config)?.destructured?.component1() == "true",
-            ON_BOOT.find(config)?.destructured?.component1(),
-            ON_PLUGGED.find(config)?.destructured?.component1(),
+            ON_BOOT.find(config)?.destructured?.component1()?.trim(),
+            ON_PLUGGED.find(config)?.destructured?.component1()?.trim(),
             getCurrentChargingSwitch()
         )
     }
