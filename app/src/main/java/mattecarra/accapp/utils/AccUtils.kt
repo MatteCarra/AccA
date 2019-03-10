@@ -29,6 +29,7 @@ object AccUtils {
     val RESET_UNPLUGGED_CONFIG_REGEXP = """^\s*resetUnplugged=(true|false)""".toRegex(RegexOption.MULTILINE)
     val ON_BOOT_EXIT = """^\s*onBootExit=(true|false)""".toRegex(RegexOption.MULTILINE)
     val ON_BOOT = """^\s*onBoot=([^#]+)""".toRegex(RegexOption.MULTILINE)
+    val ON_PLUGGED = """^\s*onPlugged=([^#]+)""".toRegex(RegexOption.MULTILINE)
     val VOLT_FILE = """^\s*cVolt=([^:#\s]+):(\d+)""".toRegex(RegexOption.MULTILINE)
     val SWITCH = """^\s*switch=([^#]+)""".toRegex(RegexOption.MULTILINE)
 
@@ -39,6 +40,8 @@ object AccUtils {
         VoltControl(null, null),
         false,
         false,
+        null,
+        null,
         null
     )
 
@@ -74,7 +77,10 @@ object AccUtils {
             voltControl,
             RESET_UNPLUGGED_CONFIG_REGEXP.find(config)?.destructured?.component1() == "true",
             ON_BOOT_EXIT.find(config)?.destructured?.component1() == "true",
-            ON_BOOT.find(config)?.destructured?.component1())
+            ON_BOOT.find(config)?.destructured?.component1()?.trim(),
+            ON_PLUGGED.find(config)?.destructured?.component1()?.trim(),
+            getCurrentChargingSwitch()
+        )
     }
 
     @Throws(IOException::class)
@@ -139,14 +145,21 @@ object AccUtils {
         return Shell.su(updateOnBootCommand(value)).exec().isSuccess
     }
 
+    //Update on plugged
+    fun updateOnPluggedCommand(value: String?): String = "acc -s onPlugged${value?.let{ " $it" } ?: ""}"
+
+    fun updateOnPlugged(value: String?): Boolean {
+        return Shell.su(updateOnPluggedCommand(value)).exec().isSuccess
+    }
+
     //Update volt file
     fun updateVoltageCommand(voltControl: String?, voltMax: Int?): String {
         return if(voltControl != null && voltMax != null)
-            "acc -v $voltControl:$voltMax"
+            "acc --set cVolt $voltControl:$voltMax"
         else if(voltMax != null)
-            "acc -v $voltMax"
+            "acc --set cVolt $voltMax"
         else
-            "acc -v"
+            "acc --set cVolt"
     }
 
     fun updateVoltage(voltControl: String?, voltMax: Int?): Boolean {
@@ -166,53 +179,53 @@ object AccUtils {
      * Regex for acc -i (info)
      */
     // Regex for determining NAME of BATTERY
-    private val NAME_REGEXP = "^\\s*NAME=([a-zA-Z0-9]+)".toRegex(RegexOption.MULTILINE)
+    private val NAME_REGEXP = """^\s*NAME=([a-zA-Z0-9]+)""".toRegex(RegexOption.MULTILINE)
     // Regex for INPUT_SUSPEND
-    private val INPUT_SUSPEND_REGEXP = "^\\s*INPUT_SUSPEND=(0|1)".toRegex(RegexOption.MULTILINE)
-    private val STATUS_REGEXP = "^\\s*STATUS=(Charging|Discharging|Not charging)".toRegex(RegexOption.MULTILINE)
-    private val HEALTH_REGEXP = "^\\s*HEALTH=([a-zA-Z]+)".toRegex(RegexOption.MULTILINE)
+    private val INPUT_SUSPEND_REGEXP = """^\s*INPUT_SUSPEND=(0|1)""".toRegex(RegexOption.MULTILINE)
+    private val STATUS_REGEXP = """^\s*STATUS=(Charging|Discharging|Not charging)""".toRegex(RegexOption.MULTILINE)
+    private val HEALTH_REGEXP = """^\s*HEALTH=([a-zA-Z]+)""".toRegex(RegexOption.MULTILINE)
     // Regex for PRESENT value
-    private val PRESENT_REGEXP = "^\\s*PRESENT=(\\d+)".toRegex(RegexOption.MULTILINE)
+    private val PRESENT_REGEXP = """^\s*PRESENT=(\d+)""".toRegex(RegexOption.MULTILINE)
     // Regex for determining CHARGE_TYPE
-    private val CHARGE_TYPE_REGEXP = "^\\s*CHARGE_TYPE=(N/A|[a-zA-Z]+)".toRegex(RegexOption.MULTILINE)
+    private val CHARGE_TYPE_REGEXP = """^\s*CHARGE_TYPE=(N/A|[a-zA-Z]+)""".toRegex(RegexOption.MULTILINE)
     // Regex for battery CAPACITY
-    private val CAPACTIY_REGEXP = "^\\s*CAPACITY=(\\d+)".toRegex(RegexOption.MULTILINE)
+    private val CAPACTIY_REGEXP = """^\s*CAPACITY=(\d+)""".toRegex(RegexOption.MULTILINE)
     // Regex for CHARGER_TEMP
-    private val CHARGER_TEMP_REGEXP = "^\\s*CHARGER_TEMP=(\\d+)".toRegex(RegexOption.MULTILINE)
+    private val CHARGER_TEMP_REGEXP = """^\s*CHARGER_TEMP=(\d+)""".toRegex(RegexOption.MULTILINE)
     // Regex for CHARGER_TEMP_MAX
-    private val CHARGER_TEMP_MAX_REGEXP = "^\\s*CHARGER_TEMP_MAX=(\\d+)".toRegex(RegexOption.MULTILINE)
+    private val CHARGER_TEMP_MAX_REGEXP = """^\s*CHARGER_TEMP_MAX=(\d+)""".toRegex(RegexOption.MULTILINE)
     // Regex for INPUT_CURRENT_LIMITED, 0 = false, 1 = true
-    private val INPUT_CURRENT_LIMITED_REGEXP = "^\\s*INPUT_CURRENT_LIMITED=(0|1)".toRegex(RegexOption.MULTILINE)
-    private val VOLTAGE_NOW_REGEXP = "^\\s*VOLTAGE_NOW=(\\d+)".toRegex(RegexOption.MULTILINE)
+    private val INPUT_CURRENT_LIMITED_REGEXP = """^\s*INPUT_CURRENT_LIMITED=(0|1)""".toRegex(RegexOption.MULTILINE)
+    private val VOLTAGE_NOW_REGEXP = """^\s*VOLTAGE_NOW=(\d+)""".toRegex(RegexOption.MULTILINE)
     // Regex for VOLTAGE_MAX
-    private val VOLTAGE_MAX_REGEXP = "^\\s*VOLTAGE_MAX=(\\d+)".toRegex(RegexOption.MULTILINE)
+    private val VOLTAGE_MAX_REGEXP = """^\s*VOLTAGE_MAX=(\d+)""".toRegex(RegexOption.MULTILINE)
     // Regex for VOLTAGE_QNOVO
-    private val VOLTAGE_QNOVO_REGEXP = "^\\s*VOLTAGE_QNOVO=(\\d+)".toRegex(RegexOption.MULTILINE)
-    private val CURRENT_NOW_REGEXP = "^\\s*CURRENT_NOW=(-?\\d+)".toRegex(RegexOption.MULTILINE)
+    private val VOLTAGE_QNOVO_REGEXP = """^\s*VOLTAGE_QNOVO=(\d+)""".toRegex(RegexOption.MULTILINE)
+    private val CURRENT_NOW_REGEXP = """^\s*CURRENT_NOW=(-?\d+)""".toRegex(RegexOption.MULTILINE)
     // Regex for CURRENT_QNOVO
-    private val CURRENT_QNOVO_REGEXP = "^\\s*CURRENT_NOW=(-?\\d+)".toRegex(RegexOption.MULTILINE)
+    private val CURRENT_QNOVO_REGEXP = """^\s*CURRENT_NOW=(-?\d+)""".toRegex(RegexOption.MULTILINE)
     // Regex for CONSTANT_CHARGE_CURRENT_MAX
-    private val CONSTANT_CHARGE_CURRENT_MAX_REGEXP = "^\\s*CONSTANT_CHARGE_CURRENT_MAX=(\\d+)".toRegex(RegexOption.MULTILINE)
-    private val TEMP_REGEXP = "^\\s*TEMP=(\\d+)".toRegex(RegexOption.MULTILINE)
+    private val CONSTANT_CHARGE_CURRENT_MAX_REGEXP = """^\s*CONSTANT_CHARGE_CURRENT_MAX=(\d+)""".toRegex(RegexOption.MULTILINE)
+    private val TEMP_REGEXP = """^\s*TEMP=(\d+)""".toRegex(RegexOption.MULTILINE)
     // Regex for remaining 'acc -i' values
-    private val TECHNOLOGY_REGEXP = "^\\s*TECHNOLOGY=([a-zA-Z\\-]+)".toRegex(RegexOption.MULTILINE)
-    private val STEP_CHARGING_ENABLED_REGEXP = "^\\s*STEP_CHARGING_ENABLED=(0|1)".toRegex(RegexOption.MULTILINE)
-    private val SW_JEITA_ENABLED_REGEXP = "^\\s*SW_JEITA_ENABLED=(0|1)".toRegex(RegexOption.MULTILINE)
-    private val TAPER_CONTROL_ENABLED_REGEXP = "^\\s*TAPER_CONTROL_ENABLED=(0|1)".toRegex(RegexOption.MULTILINE)
+    private val TECHNOLOGY_REGEXP = """^\s*TECHNOLOGY=([a-zA-Z\-]+)""".toRegex(RegexOption.MULTILINE)
+    private val STEP_CHARGING_ENABLED_REGEXP = """^\s*STEP_CHARGING_ENABLED=(0|1)""".toRegex(RegexOption.MULTILINE)
+    private val SW_JEITA_ENABLED_REGEXP = """^\s*SW_JEITA_ENABLED=(0|1)""".toRegex(RegexOption.MULTILINE)
+    private val TAPER_CONTROL_ENABLED_REGEXP = """^\s*TAPER_CONTROL_ENABLED=(0|1)""".toRegex(RegexOption.MULTILINE)
     // CHARGE_DISABLE is true when ACC disables charging due to conditions
-    private val CHARGE_DISABLE_REGEXP = "^\\s*TAPER_CONTROL_ENABLED=(0|1)".toRegex(RegexOption.MULTILINE)
+    private val CHARGE_DISABLE_REGEXP = """^\s*TAPER_CONTROL_ENABLED=(0|1)""".toRegex(RegexOption.MULTILINE)
     // CHARGE_DONE is true when the battery is done charging.
-    private val CHARGE_DONE_REGEXP = "^\\s*CHARGE_DONE=(0|1)".toRegex(RegexOption.MULTILINE)
-    private val PARALLEL_DISABLE_REGEXP = "^\\s*PARALLEL_DISABLE=(0|1)".toRegex(RegexOption.MULTILINE)
-    private val SET_SHIP_MODE_REGEXP = "^\\s*SET_SHIP_MODE=(0|1)".toRegex(RegexOption.MULTILINE)
-    private val DIE_HEALTH_REGEXP = "^\\s*DIE_HEALTH=([a-zA-Z]+)".toRegex(RegexOption.MULTILINE)
-    private val RERUN_AICL_REGEXP = "^\\s*RERUN_AICL=(0|1)".toRegex(RegexOption.MULTILINE)
-    private val DP_DM_REGEXP = "^\\s*DP_DM=(\\d+)".toRegex(RegexOption.MULTILINE)
-    private val CHARGE_CONTROL_LIMIT_MAX_REGEXP = "^\\s*CHARGE_CONTROL_LIMIT_MAX=(\\d+)".toRegex(RegexOption.MULTILINE)
-    private val CHARGE_CONTROL_LIMIT_REGEXP = "^\\s*CHARGE_CONTROL_LIMIT=(\\d+)".toRegex(RegexOption.MULTILINE)
-    private val CHARGE_COUNTER_REGEXP = "^\\s*CHARGE_COUNTER=(\\d+)".toRegex(RegexOption.MULTILINE)
-    private val INPUT_CURRENT_MAX_REGEXP = "^\\s*INPUT_CURRENT_MAX=(\\d+)".toRegex(RegexOption.MULTILINE)
-    private val CYCLE_COUNT_REGEXP = "^\\s*CYCLE_COUNT=(\\d+)".toRegex(RegexOption.MULTILINE)
+    private val CHARGE_DONE_REGEXP = """^\s*CHARGE_DONE=(0|1)""".toRegex(RegexOption.MULTILINE)
+    private val PARALLEL_DISABLE_REGEXP = """^\s*PARALLEL_DISABLE=(0|1)""".toRegex(RegexOption.MULTILINE)
+    private val SET_SHIP_MODE_REGEXP = """^\s*SET_SHIP_MODE=(0|1)""".toRegex(RegexOption.MULTILINE)
+    private val DIE_HEALTH_REGEXP = """^\s*DIE_HEALTH=([a-zA-Z]+)""".toRegex(RegexOption.MULTILINE)
+    private val RERUN_AICL_REGEXP = """^\s*RERUN_AICL=(0|1)""".toRegex(RegexOption.MULTILINE)
+    private val DP_DM_REGEXP = """^\s*DP_DM=(\d+)""".toRegex(RegexOption.MULTILINE)
+    private val CHARGE_CONTROL_LIMIT_MAX_REGEXP = """^\s*CHARGE_CONTROL_LIMIT_MAX=(\d+)""".toRegex(RegexOption.MULTILINE)
+    private val CHARGE_CONTROL_LIMIT_REGEXP = """^\s*CHARGE_CONTROL_LIMIT=(\d+)""".toRegex(RegexOption.MULTILINE)
+    private val CHARGE_COUNTER_REGEXP = """^\s*CHARGE_COUNTER=(\d+)""".toRegex(RegexOption.MULTILINE)
+    private val INPUT_CURRENT_MAX_REGEXP = """^\s*INPUT_CURRENT_MAX=(\d+)""".toRegex(RegexOption.MULTILINE)
+    private val CYCLE_COUNT_REGEXP = """^\s*CYCLE_COUNT=(\d+)""".toRegex(RegexOption.MULTILINE)
 
     fun getBatteryInfo(): BatteryInfo {
         val info =  Shell.su("acc -i").exec().out.joinToString(separator = "\n")
@@ -328,8 +341,12 @@ object AccUtils {
         return if(res.isSuccess) res.out.map { it.trim() }.filter { it.isNotEmpty() } else emptyList()
     }
 
+    fun setChargingSwitchCommand(chargingSwitch: String): String {
+        return "acc -s s $chargingSwitch"
+    }
+
     fun setChargingSwitch(chargingSwitch: String): Boolean {
-        return Shell.su("acc -s s $chargingSwitch").exec().isSuccess
+        return Shell.su(setChargingSwitchCommand(chargingSwitch)).exec().isSuccess
     }
 
     fun testChargingSwitch(chargingSwitch: String? = null): Int {
@@ -341,8 +358,13 @@ object AccUtils {
         return if(switch?.isNotEmpty() == true) switch else null
     }
 
+
+    fun unsetChargingSwitchCommand(): String {
+        return "acc -s s-"
+    }
+
     fun unsetChargingSwitch(): Boolean {
-        return Shell.su("acc -s s-").exec().isSuccess
+        return Shell.su(unsetChargingSwitchCommand()).exec().isSuccess
     }
 
     fun setChargingLimitForOneCharge(limit: Int): Boolean {

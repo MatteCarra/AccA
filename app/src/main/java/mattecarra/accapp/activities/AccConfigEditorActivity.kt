@@ -14,14 +14,25 @@ import mattecarra.accapp.R
 import mattecarra.accapp.data.AccConfig
 import mattecarra.accapp.data.Cooldown
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Gravity
 import android.widget.*
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
+import android.widget.LinearLayout
+import android.view.LayoutInflater
+import com.afollestad.materialdialogs.list.listItemsSingleChoice
+import it.sephiroth.android.library.xtooltip.ClosePolicy
+import it.sephiroth.android.library.xtooltip.Tooltip
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
+
 
 class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, CompoundButton.OnCheckedChangeListener {
     private var unsavedChanges = false
@@ -36,16 +47,28 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         finish()
     }
 
+    override fun onSaveInstanceState(outState: Bundle?) {
+        outState?.putParcelable("config", config)
+        outState?.putBoolean("unsavedChanges", unsavedChanges)
+
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_acc_config_editor)
 
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
+        supportActionBar?.title = intent?.getStringExtra("title") ?: getString(R.string.acc_config_editor)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        if(intent.hasExtra("config")) {
+        unsavedChanges = savedInstanceState?.getBoolean("hasChanges", false) ?: false
+
+        if(savedInstanceState?.containsKey("config") == true) {
+            this.config = savedInstanceState.getParcelable("config")!!
+        } else if(intent.hasExtra("config")) {
             this.config = intent.getParcelableExtra("config")
         } else {
             try {
@@ -111,13 +134,12 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
      * Opens the dialog to edit the On Boot config parameter.
      */
     fun editOnBootOnClick(view: View) {
-
         MaterialDialog(this@AccConfigEditorActivity).show {
                             title(R.string.edit_on_boot)
                 message(R.string.edit_on_boot_dialog_message)
                 input(prefill = this@AccConfigEditorActivity.config.onBoot ?: "", allowEmpty = true, hintRes = R.string.edit_on_boot_dialog_hint) { _, text ->
                     this@AccConfigEditorActivity.config.onBoot = text.toString()
-                    this@AccConfigEditorActivity.tv_config_on_boot.text = if(text.isBlank()) getString(R.string.label_on_boot_not_set) else text
+                    this@AccConfigEditorActivity.tv_config_on_boot.text = if(text.isBlank()) getString(R.string.not_set) else text
 
                     unsavedChanges = true
                 }
@@ -126,13 +148,115 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             }
     }
 
+    fun editOnPluggedOnClick(v: View) {
+        MaterialDialog(this@AccConfigEditorActivity).show {
+            title(R.string.edit_on_plugged)
+            message(R.string.edit_on_plugged_dialog_message)
+            input(prefill = this@AccConfigEditorActivity.config.onPlugged ?: "", allowEmpty = true, hintRes = R.string.edit_on_boot_dialog_hint) { _, text ->
+                this@AccConfigEditorActivity.config.onPlugged = text.toString()
+                this@AccConfigEditorActivity.config_on_plugged_textview.text = if(text.isBlank()) getString(R.string.not_set) else text
+
+                unsavedChanges = true
+            }
+            positiveButton(R.string.save)
+            negativeButton(android.R.string.cancel)
+        }
+    }
+
+    fun editChargingSwitchOnClick(v: View) {
+        val automaticString = getString(R.string.automatic)
+        val chargingSwitches = listOf(automaticString, *AccUtils.listChargingSwitches().toTypedArray())
+        val initialSwitch = config.chargingSwitch
+        var currentIndex = chargingSwitches.indexOf(initialSwitch ?: automaticString)
+
+        MaterialDialog(this).show {
+            title(R.string.edit_charging_switch)
+            noAutoDismiss()
+
+            setActionButtonEnabled(WhichButton.POSITIVE, currentIndex != -1)
+            setActionButtonEnabled(WhichButton.NEUTRAL, currentIndex != -1)
+
+            listItemsSingleChoice(items = chargingSwitches, initialSelection = currentIndex, waitForPositiveButton = false)  { _, index, text ->
+                currentIndex = index
+
+                setActionButtonEnabled(WhichButton.POSITIVE, index != -1)
+                setActionButtonEnabled(WhichButton.NEUTRAL, index != -1)
+            }
+
+            positiveButton(R.string.save) {
+                val index = currentIndex
+                val switch = chargingSwitches[index]
+
+                doAsync {
+                    this@AccConfigEditorActivity.config.chargingSwitch = if(index == 0) null else switch
+                    this@AccConfigEditorActivity.charging_switch_textview.text = this@AccConfigEditorActivity.config.chargingSwitch ?: getString(R.string.automatic)
+                }
+
+                dismiss()
+            }
+
+            neutralButton(R.string.test_switch) {
+                val switch = if(currentIndex == 0) null else chargingSwitches[currentIndex]
+
+                Toast.makeText(this@AccConfigEditorActivity, R.string.wait, Toast.LENGTH_LONG).show()
+                doAsync {
+                    val description =
+                        when(AccUtils.testChargingSwitch(switch)) {
+                            0 -> R.string.charging_switch_works
+                            1 -> R.string.charging_switch_does_not_work
+                            2 -> R.string.plug_battery_to_test
+                            else -> R.string.error_occurred
+                        }
+
+                    uiThread {
+                        MaterialDialog(this@AccConfigEditorActivity).show {
+                            title(R.string.test_switch)
+                            message(description)
+                            positiveButton(android.R.string.ok)
+                        }
+                    }
+                }
+            }
+
+            negativeButton(android.R.string.cancel) {
+                dismiss()
+            }
+        }
+    }
+
+    fun onInfoClick(v: View) {
+        when(v.id) {
+            R.id.capacity_control_info -> R.string.capacity_control_info
+            R.id.voltage_control_info -> R.string.voltage_control_info
+            R.id.temperature_control_info -> R.string.temperature_control_info
+            R.id.exit_on_boot_info -> R.string.description_exit_on_boot
+            R.id.cooldown_info -> R.string.cooldown_info
+            R.id.on_plugged_info -> R.string.on_plugged_info
+            else -> null
+        }?.let {
+            Tooltip.Builder(this)
+                .anchor(v, 0, 0, false)
+                .text(it)
+                .arrow(true)
+                .closePolicy(ClosePolicy.TOUCH_ANYWHERE_CONSUME)
+                .showDuration(-1)
+                .overlay(false)
+                .maxWidth((resources.displayMetrics.widthPixels / 1.3).toInt())
+                .create()
+                .show(v, Tooltip.Gravity.LEFT, true)
+        }
+
+    }
+
     private fun initUi() {
-        tv_config_on_boot.text = config.onBoot?.let { if(it.isBlank()) getString(R.string.label_on_boot_not_set) else it } ?: getString(R.string.label_on_boot_not_set)
+        tv_config_on_boot.text = config.onBoot?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
         exit_on_boot_switch.isChecked = config.onBootExit
         exit_on_boot_switch.setOnCheckedChangeListener { _, isChecked ->
             config.onBootExit = isChecked
             unsavedChanges = true
         }
+
+        config_on_plugged_textview.text = config.onPlugged?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
 
         shutdown_capacity_picker.minValue = 0
         shutdown_capacity_picker.maxValue = 20
@@ -260,16 +384,21 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             })
 
             val supportedVoltageControlFiles = ArrayList(AccUtils.listVoltageSupportedControlFiles())
-            config.voltControl.voltFile?.let {
-                if(!supportedVoltageControlFiles.contains(it)) {
-                    supportedVoltageControlFiles.add(it)
+            val currentVoltageFile = config.voltControl.voltFile?.let { currentVoltFile ->
+                val currentVoltFileRegex = currentVoltFile.replace("/", """\/""").replace(".", """\.""").replace("?", ".").toRegex()
+                val match = supportedVoltageControlFiles.find { currentVoltFileRegex.matches(it) }
+                if(match == null) {
+                    supportedVoltageControlFiles.add(currentVoltFile)
+                    currentVoltFile
+                } else {
+                    match
                 }
             }
             val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, supportedVoltageControlFiles)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             voltageControl.adapter = adapter
-            config.voltControl.voltFile?.let {
-                voltageControl.setSelection(supportedVoltageControlFiles.indexOf(it))
+            currentVoltageFile?.let {
+                voltageControl.setSelection(supportedVoltageControlFiles.indexOf(currentVoltageFile))
             }
             if(voltageControl.selectedItemPosition == -1) {
                 dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
@@ -352,6 +481,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             R.id.pause_capacity_picker -> {
                 config.capacity.pauseCapacity = newVal
 
+                resume_capacity_picker.maxValue = config.capacity.pauseCapacity - 1
                 resume_capacity_picker.maxValue = config.capacity.pauseCapacity - 1
             }
 

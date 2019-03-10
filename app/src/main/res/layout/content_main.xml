@@ -32,7 +32,7 @@
                 android:orientation="vertical">
 
                 <!-- Title and Settings Button -->
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/card_content_padding"
@@ -42,24 +42,30 @@
                     android:layout_gravity="center_vertical">
 
                     <TextView
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
+                        android:id="@+id/tv_main_title_accdStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:paddingTop="@dimen/card_content_padding"
                         android:paddingBottom="@dimen/card_content_padding"
-                        android:layout_height="wrap_content"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                        android:text="@string/title_status" />
+                        android:text="@string/title_status"
+                        android:drawablePadding="@dimen/card_content_margin"
+                        android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24px"
+                        android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24px"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:padding="16dp"
                         android:foregroundGravity="center"
-                        android:layout_gravity="center_vertical"
                         android:background="?selectableItemBackground"
                         app:srcCompat="@drawable/ic_outline_settings_24px"
                         android:onClick="batteryConfigOnClick" />
-                </LinearLayout>
+                </RelativeLayout>
 
                 <FrameLayout
                     android:id="@+id/fl_status_container"
@@ -148,8 +154,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                    android:text="@string/title_battery"
-                    android:layout_alignParentLeft="true" />
+                    android:text="@string/title_battery" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -174,6 +179,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/card_content_padding"
+                        android:shrinkColumns="0"
                         android:stretchColumns="1">
 
                         <!-- Battery Charging Status -->
@@ -194,10 +200,11 @@
                         <!-- Battery Charging Speed -->
                         <TableRow>
                             <TextView
+                                android:id="@+id/charging_discharging_speed_label"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/label_text"
-                                android:text="@string/info_speed" />
+                                android:text="@string/info_charging_speed" />
 
                             <TextView
                                 android:id="@+id/tv_main_batterySpeed"
@@ -244,16 +251,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_gravity="center">
-
-                    <Button
-                        android:id="@+id/edit_charging_switch"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_outline_edit_24px"
-                        android:drawableStart="@drawable/ic_outline_edit_24px"
-                        android:drawableTint="@color/colorImageTint"
-                        android:text="@string/edit_charging_switch"/>
 
                     <Button
                         android:id="@+id/edit_charging_limit_once_bt"
