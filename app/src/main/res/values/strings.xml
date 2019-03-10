@@ -9,7 +9,7 @@
     <string name="tile_acc_disabled">ACC Disabled</string>
 
     <!-- Navigation Strings -->
-    <string name="title_main">Main</string>
+    <string name="title_dashboard">Dashboard</string>
     <string name="title_profiles">Profiles</string>
     <string name="title_settings">Settings</string>
 
