@@ -192,6 +192,8 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                     this@AccConfigEditorActivity.charging_switch_textview.text = this@AccConfigEditorActivity.config.chargingSwitch ?: getString(R.string.automatic)
                 }
 
+                this@AccConfigEditorActivity.unsavedChanges = true
+
                 dismiss()
             }
 
@@ -257,6 +259,8 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         }
 
         config_on_plugged_textview.text = config.onPlugged?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
+
+        charging_switch_textview.text = config.chargingSwitch ?: getString(R.string.automatic)
 
         shutdown_capacity_picker.minValue = 0
         shutdown_capacity_picker.maxValue = 20

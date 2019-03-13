@@ -337,12 +337,12 @@ object AccUtils {
 
     //Charging switches
     fun listChargingSwitches(): List<String> {
-        val res = Shell.su("acc -s s:").exec()
+        val res = Shell.su("acc --set switch:").exec()
         return if(res.isSuccess) res.out.map { it.trim() }.filter { it.isNotEmpty() } else emptyList()
     }
 
     fun setChargingSwitchCommand(chargingSwitch: String): String {
-        return "acc -s s $chargingSwitch"
+        return "acc --set switch $chargingSwitch"
     }
 
     fun setChargingSwitch(chargingSwitch: String): Boolean {
