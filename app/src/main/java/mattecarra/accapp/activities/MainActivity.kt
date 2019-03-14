@@ -89,25 +89,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //Used to update battery info every second
-    private val handler = Handler()
-    private val updateUIRunnable = object : Runnable {
-        override fun run() {
-            val r = this //need this to make it recursive
-            doAsync {
-                val batteryInfo = AccUtils.getBatteryInfo()
-                isDaemonRunning = AccUtils.isAccdRunning()
-                uiThread {
-                    // Run accd UI check
-                    updateAccdStatus(isDaemonRunning)
-
-                    setBatteryInfo(batteryInfo)
-
-                    handler.postDelayed(r, 1000)// Repeat the same runnable code block again after 1 seconds
-                }
-            }
-        }
-    }
+//    //Used to update battery info every second
+//    private val handler = Handler()
+//    private val updateUIRunnable = object : Runnable {
+//        override fun run() {
+//            val r = this //need this to make it recursive
+//            doAsync {
+//                val batteryInfo = AccUtils.getBatteryInfo()
+//                isDaemonRunning = AccUtils.isAccdRunning()
+//                uiThread {
+//                    // Run accd UI check
+//                    updateAccdStatus(isDaemonRunning)
+//
+//                    setBatteryInfo(batteryInfo)
+//
+//                    handler.postDelayed(r, 1000)// Repeat the same runnable code block again after 1 seconds
+//                }
+//            }
+//        }
+//    }
 
     private fun setBatteryInfo(batteryInfo: BatteryInfo) {
         // Battery Capacity
@@ -126,47 +126,9 @@ class MainActivity : AppCompatActivity() {
         this@MainActivity.batteryInfo = batteryInfo
     }
 
-    private fun updateAccdStatus(isDaemonRunning: Boolean) {
-        if (isDaemonRunning) {
-            // ACCD Status Card
-            tv_main_accdStatus.text = getString(R.string.acc_daemon_status_running)
-            fl_status_container.background = ColorDrawable(resources.getColor(R.color.colorSuccessful))
-            iv_main_status_icon.setImageResource(R.drawable.ic_baseline_check_circle_24px)
 
-            daemon_start_stop.text = getString(R.string.stop)
-            daemon_start_stop.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_outline_stop_24px, 0, 0, 0)
-        } else {
-            // ACCD Status Card
-            tv_main_accdStatus.text = getString(R.string.acc_daemon_status_not_running)
-            fl_status_container.background = ColorDrawable(resources.getColor(R.color.colorError))
-            iv_main_status_icon.setImageResource(R.drawable.ic_baseline_error_24px)
 
-            daemon_start_stop.text = getString(R.string.start)
-            daemon_start_stop.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_outline_play_arrow_24px, 0, 0, 0)
-        }
-    }
 
-    /**
-     * Function for ACCD status card OnClick
-     */
-    fun accdOnClick(view: View) {
-        if (consLay_accdButtons.visibility == GONE) {
-            consLay_accdButtons.visibility = VISIBLE
-            tv_main_title_accdStatus.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_arrow_drop_up_24px, 0)
-        } else {
-            consLay_accdButtons.visibility = GONE
-            tv_main_title_accdStatus.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_arrow_drop_down_24px, 0)
-        }
-    }
-
-    /**
-     * Function for Status Card Settings OnClick (Configuration)
-     */
-    fun batteryConfigOnClick(view: View) {
-        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-            startActivityForResult(intent, ACC_CONFIG_EDITOR_REQUEST)
-        }
-    }
 
     private fun showConfigReadError() {
         MaterialDialog(this).show {
@@ -714,15 +676,15 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onResume() {
-        handler.post(updateUIRunnable) // Start the initial runnable task by posting through the handler
-
-        super.onResume()
-    }
-
-    override fun onPause() {
-        handler.removeCallbacks(updateUIRunnable)
-
-        super.onPause()
+//    override fun onResume() {
+//        handler.post(updateUIRunnable) // Start the initial runnable task by posting through the handler
+//
+//        super.onResume()
+//    }
+//
+//    override fun onPause() {
+//        handler.removeCallbacks(updateUIRunnable)
+//
+//        super.onPause()
     }
 }
