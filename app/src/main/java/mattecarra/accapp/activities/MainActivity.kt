@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
@@ -37,8 +38,10 @@ import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.Display
 import com.github.javiersantos.appupdater.enums.UpdateFrom
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import com.topjohnwu.superuser.Shell
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import mattecarra.accapp.utils.AccUtils
 import mattecarra.accapp.R
@@ -48,13 +51,15 @@ import mattecarra.accapp.adapters.Schedule
 import mattecarra.accapp.adapters.ScheduleRecyclerViewAdapter
 import mattecarra.accapp.data.AccConfig
 import mattecarra.accapp.data.BatteryInfo
+import mattecarra.accapp.fragments.DashboardFragment
 import mattecarra.accapp.utils.ProfileUtils
 import mattecarra.accapp.utils.progress
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.io.File
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener  {
+
     private val LOG_TAG = "MainActivity"
     private val PERMISSION_REQUEST: Int = 0
     private val ACC_CONFIG_EDITOR_REQUEST: Int = 1
@@ -141,6 +146,33 @@ class MainActivity : AppCompatActivity() {
                 // Ignore all other requests.
             }
         }
+    }
+
+    override fun onNavigationItemSelected(m: MenuItem): Boolean {
+        when (m.itemId) {
+            R.id.botNav_home -> {
+                val mainFragment = DashboardFragment.newInstance()
+                loadFragment(mainFragment)
+                return true
+            }
+            R.id.botNav_profiles -> {
+                // TODO: Show Profiles fragment
+                return true
+            }
+            R.id.botNav_settings -> {
+                // TODO: Show settings fragment
+                return true
+            }
+        }
+
+        return false
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
 //    private fun initProfiles() {
@@ -257,6 +289,8 @@ class MainActivity : AppCompatActivity() {
             showConfigReadError()
             this.config = AccUtils.defaultConfig //if config is null I use default config values.
         }
+
+        // TODO: Init fragments and complete fragment transaction here
 
         // TODO: Move profiles to a new Profile Activity
         //Profiles
@@ -550,6 +584,10 @@ class MainActivity : AppCompatActivity() {
 //                }
 //            }
         }
+
+        // Set Bottom Navigation Bar Item Selected Listener
+        var mNavbar = botNav_main
+        mNavbar.setOnNavigationItemSelectedListener(this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
