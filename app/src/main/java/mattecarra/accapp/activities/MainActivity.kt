@@ -262,6 +262,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initUi() {
+
+        // Read ACC configuration
         try {
             this.config = AccUtils.readConfig()
         } catch (ex: Exception) {
@@ -270,149 +272,153 @@ class MainActivity : AppCompatActivity() {
             this.config = AccUtils.defaultConfig //if config is null I use default config values.
         }
 
+        // TODO: Move profiles to a new Profile Activity
         //Profiles
-        initProfiles()
+//        initProfiles()
 
         //Rest of the UI
-        create_acc_profile.setOnClickListener {
-            Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-                intent.putExtra("title", this@MainActivity.getString(R.string.profile_creator))
-                startActivityForResult(intent, ACC_PROFILE_CREATOR_REQUEST)
-            }
-        }
+        // TODO: Reposition the onClick handler so that it uses callbacks to the MainActivity
+//        create_acc_profile.setOnClickListener {
+//            Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+//                intent.putExtra("title", this@MainActivity.getString(R.string.profile_creator))
+//                startActivityForResult(intent, ACC_PROFILE_CREATOR_REQUEST)
+//            }
+//        }
 
-        daemon_start_stop.setOnClickListener {
-            Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
+//        daemon_start_stop.setOnClickListener {
+//            Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
+//
+//            doAsync {
+//                if(AccUtils.isAccdRunning())
+//                    AccUtils.abcStopDaemon()
+//                else
+//                    AccUtils.abcStartDaemon()
+//            }
+//        }
 
-            doAsync {
-                if(AccUtils.isAccdRunning())
-                    AccUtils.abcStopDaemon()
-                else
-                    AccUtils.abcStartDaemon()
-            }
-        }
+//        daemon_restart.setOnClickListener {
+//            Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
+//
+//            doAsync {
+//                AccUtils.abcRestartDaemon()
+//            }
+//        }
 
-        daemon_restart.setOnClickListener {
-            Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
+//        edit_charging_limit_once_bt.setOnClickListener {
+//            val dialog = MaterialDialog(this).show {
+//                title(R.string.edit_charging_limit_once)
+//                message(R.string.edit_charging_limit_once_dialog_msg)
+//                customView(R.layout.edit_charging_limit_once_dialog)
+//                positiveButton(R.string.apply) {
+//                    AccUtils.setChargingLimitForOneCharge(getCustomView().findViewById<NumberPicker>(R.id.charging_limit).value)
+//                    Toast.makeText(this@MainActivity, R.string.done, Toast.LENGTH_LONG).show()
+//                }
+//                negativeButton(android.R.string.cancel)
+//            }
+//
+//            val picker = dialog.getCustomView().findViewById<NumberPicker>(R.id.charging_limit)
+//            picker.maxValue = 100
+//            picker.minValue = config.capacity.pauseCapacity
+//            picker.value = 100
+//        }
+//
+//        reset_stats_on_unplugged_switch.setOnCheckedChangeListener { _, isChecked ->
+//            config.resetUnplugged = isChecked
+//            AccUtils.updateResetUnplugged(isChecked)
+//
+//            //If I manually modify the config I have to set current profile to null (custom profile)
+//            ProfileUtils.saveCurrentProfile(null, sharedPrefs)
+//        }
+//
+//        reset_stats_on_unplugged_switch.isChecked = config.resetUnplugged
+//        reset_battery_stats.setOnClickListener {
+//            AccUtils.resetBatteryStats()
+//        }
 
-            doAsync {
-                AccUtils.abcRestartDaemon()
-            }
-        }
+        // TODO: Integrate schedules into another fragment
+//        val schedules = ArrayList(AccUtils.listAllSchedules())
+//        if(schedules.isEmpty()) {
+//            no_schedules_jobs_textview.visibility = View.VISIBLE
+//            scheduled_jobs_recyclerview.visibility = View.GONE
+//        }
 
-        edit_charging_limit_once_bt.setOnClickListener {
-            val dialog = MaterialDialog(this).show {
-                title(R.string.edit_charging_limit_once)
-                message(R.string.edit_charging_limit_once_dialog_msg)
-                customView(R.layout.edit_charging_limit_once_dialog)
-                positiveButton(R.string.apply) {
-                    AccUtils.setChargingLimitForOneCharge(getCustomView().findViewById<NumberPicker>(R.id.charging_limit).value)
-                    Toast.makeText(this@MainActivity, R.string.done, Toast.LENGTH_LONG).show()
-                }
-                negativeButton(android.R.string.cancel)
-            }
-
-            val picker = dialog.getCustomView().findViewById<NumberPicker>(R.id.charging_limit)
-            picker.maxValue = 100
-            picker.minValue = config.capacity.pauseCapacity
-            picker.value = 100
-        }
-
-        reset_stats_on_unplugged_switch.setOnCheckedChangeListener { _, isChecked ->
-            config.resetUnplugged = isChecked
-            AccUtils.updateResetUnplugged(isChecked)
-
-            //If I manually modify the config I have to set current profile to null (custom profile)
-            ProfileUtils.saveCurrentProfile(null, sharedPrefs)
-        }
-
-        reset_stats_on_unplugged_switch.isChecked = config.resetUnplugged
-        reset_battery_stats.setOnClickListener {
-            AccUtils.resetBatteryStats()
-        }
-
-
-        val schedules = ArrayList(AccUtils.listAllSchedules())
-        if(schedules.isEmpty()) {
-            no_schedules_jobs_textview.visibility = View.VISIBLE
-            scheduled_jobs_recyclerview.visibility = View.GONE
-        }
-
-        scheduleAdapter = ScheduleRecyclerViewAdapter(schedules) { schedule, delete ->
-            if(delete) {
-                deleteSchedule(schedule)
-            } else {
-                MaterialDialog(this).show {
-                    title(R.string.schedule_job)
-                    message(R.string.edit_scheduled_command)
-                    input(prefill = schedule.command, inputType = TYPE_TEXT_FLAG_NO_SUGGESTIONS, allowEmpty = false) { _, charSequence ->
-                        schedule.command =  charSequence.toString()
-                        AccUtils.schedule(schedule.executeOnce, schedule.hour, schedule.minute, charSequence.toString())
-                    }
-                    positiveButton(R.string.save)
-                    negativeButton(android.R.string.cancel)
-                    neutralButton(R.string.delete) {
-                        deleteSchedule(schedule)
-                    }
-                }
-            }
-        }
+        // TODO: Move the recyclerview stuff into the respective ViewModels
+//        scheduleAdapter = ScheduleRecyclerViewAdapter(schedules) { schedule, delete ->
+//            if(delete) {
+//                deleteSchedule(schedule)
+//            } else {
+//                MaterialDialog(this).show {
+//                    title(R.string.schedule_job)
+//                    message(R.string.edit_scheduled_command)
+//                    input(prefill = schedule.command, inputType = TYPE_TEXT_FLAG_NO_SUGGESTIONS, allowEmpty = false) { _, charSequence ->
+//                        schedule.command =  charSequence.toString()
+//                        AccUtils.schedule(schedule.executeOnce, schedule.hour, schedule.minute, charSequence.toString())
+//                    }
+//                    positiveButton(R.string.save)
+//                    negativeButton(android.R.string.cancel)
+//                    neutralButton(R.string.delete) {
+//                        deleteSchedule(schedule)
+//                    }
+//                }
+//            }
+//        }
 
 
-        val layoutManager = LinearLayoutManager(this)
-        scheduled_jobs_recyclerview.layoutManager = layoutManager
-        scheduled_jobs_recyclerview.adapter = scheduleAdapter
+//        val layoutManager = LinearLayoutManager(this)
+//        scheduled_jobs_recyclerview.layoutManager = layoutManager
+//        scheduled_jobs_recyclerview.adapter = scheduleAdapter
 
-        create_schedule.setOnClickListener {
-            val dialog = MaterialDialog(this@MainActivity).show {
-                customView(R.layout.schedule_dialog)
-                positiveButton(R.string.save) { dialog ->
-                    val view = dialog.getCustomView()
-                    val spinner = view.findViewById<Spinner>(R.id.profile_selector)
-                    val executeOnceCheckBox = view.findViewById<CheckBox>(R.id.schedule_recurrency)
-                    val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
-                    val hour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.hour else timePicker.currentHour
-                    val minute = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.minute else timePicker.currentMinute
+        // TODO: Move schedule onClicks to the new Schedule fragment
+//        create_schedule.setOnClickListener {
+//            val dialog = MaterialDialog(this@MainActivity).show {
+//                customView(R.layout.schedule_dialog)
+//                positiveButton(R.string.save) { dialog ->
+//                    val view = dialog.getCustomView()
+//                    val spinner = view.findViewById<Spinner>(R.id.profile_selector)
+//                    val executeOnceCheckBox = view.findViewById<CheckBox>(R.id.schedule_recurrency)
+//                    val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
+//                    val hour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.hour else timePicker.currentHour
+//                    val minute = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.minute else timePicker.currentMinute
+//
+//                    if(spinner.selectedItemId == 0.toLong()) {
+//                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+//                            val dataBundle = Bundle()
+//                            dataBundle.putInt("hour", hour)
+//                            dataBundle.putInt("minute", minute)
+//                            dataBundle.putBoolean("executeOnce", executeOnceCheckBox.isChecked)
+//
+//                            intent.putExtra("data", dataBundle)
+//                            intent.putExtra("title", this@MainActivity.getString(R.string.schedule_creator))
+//                            startActivityForResult(intent, ACC_PROFILE_SCHEDULER_REQUEST)
+//                        }
+//                    } else {
+//                        val profile = spinner.selectedItem as String
+//                        val configProfile = ProfileUtils.readProfile(profile, this@MainActivity, gson)
+//
+//                        addSchedule(Schedule("$hour$minute", executeOnceCheckBox.isChecked, hour, minute, configProfile.getCommands().joinToString(separator = "; ")))
+//
+//                        AccUtils.schedule(
+//                            executeOnceCheckBox.isChecked,
+//                            hour,
+//                            minute,
+//                            configProfile.getCommands()
+//                        )
+//                    }
+//                }
+//                negativeButton(android.R.string.cancel)
+//            }
 
-                    if(spinner.selectedItemId == 0.toLong()) {
-                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-                            val dataBundle = Bundle()
-                            dataBundle.putInt("hour", hour)
-                            dataBundle.putInt("minute", minute)
-                            dataBundle.putBoolean("executeOnce", executeOnceCheckBox.isChecked)
-
-                            intent.putExtra("data", dataBundle)
-                            intent.putExtra("title", this@MainActivity.getString(R.string.schedule_creator))
-                            startActivityForResult(intent, ACC_PROFILE_SCHEDULER_REQUEST)
-                        }
-                    } else {
-                        val profile = spinner.selectedItem as String
-                        val configProfile = ProfileUtils.readProfile(profile, this@MainActivity, gson)
-
-                        addSchedule(Schedule("$hour$minute", executeOnceCheckBox.isChecked, hour, minute, configProfile.getCommands().joinToString(separator = "; ")))
-
-                        AccUtils.schedule(
-                            executeOnceCheckBox.isChecked,
-                            hour,
-                            minute,
-                            configProfile.getCommands()
-                        )
-                    }
-                }
-                negativeButton(android.R.string.cancel)
-            }
-
-            val profiles = ArrayList<String>()
-            profiles.add(getString(R.string.new_config))
-            profiles.addAll(ProfileUtils.listProfiles(this, gson))
-            val view = dialog.getCustomView()
-            val spinner = view.findViewById<Spinner>(R.id.profile_selector)
-            val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, profiles)
-
-            view.findViewById<TimePicker>(R.id.time_picker).setIs24HourView(true)
-
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner.adapter = adapter;
+//            val profiles = ArrayList<String>()
+//            profiles.add(getString(R.string.new_config))
+//            profiles.addAll(ProfileUtils.listProfiles(this, gson))
+//            val view = dialog.getCustomView()
+//            val spinner = view.findViewById<Spinner>(R.id.profile_selector)
+//            val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, profiles)
+//
+//            view.findViewById<TimePicker>(R.id.time_picker).setIs24HourView(true)
+//
+//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//            spinner.adapter = adapter;
         }
     }
 
@@ -548,12 +554,13 @@ class MainActivity : AppCompatActivity() {
         if(checkAccInstalled() && checkPermissions()) {
             initUi()
 
-            savedInstanceState?.let { bundle ->
-                updateAccdStatus(bundle.getBoolean("daemonRunning", false))
-                bundle.getParcelable<BatteryInfo>("batteryInfo")?.let {
-                    setBatteryInfo(it)
-                }
-            }
+            // TODO: Saved instance state
+//            savedInstanceState?.let { bundle ->
+//                updateAccdStatus(bundle.getBoolean("daemonRunning", false))
+//                bundle.getParcelable<BatteryInfo>("batteryInfo")?.let {
+//                    setBatteryInfo(it)
+//                }
+//            }
         }
     }
 
@@ -686,5 +693,5 @@ class MainActivity : AppCompatActivity() {
 //        handler.removeCallbacks(updateUIRunnable)
 //
 //        super.onPause()
-    }
+//    }
 }
