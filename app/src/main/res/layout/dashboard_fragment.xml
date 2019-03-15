@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".activities.MainActivity">
+        tools:context=".fragments.DashboardFragment">
 
     <LinearLayout
             android:layout_width="match_parent"
