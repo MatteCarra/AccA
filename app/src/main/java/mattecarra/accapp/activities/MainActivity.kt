@@ -62,14 +62,17 @@ class MainActivity : AppCompatActivity() {
     private val ACC_PROFILE_EDITOR_REQUEST: Int = 3
     private val ACC_PROFILE_SCHEDULER_REQUEST: Int = 4
 
+    // TODO: Check what the config does in the MainActivity
     private lateinit var config: AccConfig
+
     private lateinit var sharedPrefs: SharedPreferences
+    // TODO: Use Gson to export profiles, use internal SQLite database to store
     private val gson: Gson = Gson()
 
-    private var profilesAdapter: ProfilesViewAdapter? = null
-
-    private var batteryInfo: BatteryInfo? = null
-    private var isDaemonRunning = false
+//    private var profilesAdapter: ProfilesViewAdapter? = null
+//
+//    private var batteryInfo: BatteryInfo? = null
+//    private var isDaemonRunning = false
 
     // TODO: Move schedules to the Schedules Fragment
 //    private lateinit var scheduleAdapter: ScheduleRecyclerViewAdapter
@@ -112,26 +115,6 @@ class MainActivity : AppCompatActivity() {
 //        }
 //    }
 
-    private fun setBatteryInfo(batteryInfo: BatteryInfo) {
-        // Battery Capacity
-        progressBar_capacity.progress = batteryInfo.capacity
-        // Battery Status (Charging (Fast)
-        tv_main_batteryStatus.text = getString(R.string.info_status_extended, batteryInfo.status, batteryInfo.chargeType)
-        // Battery Speed (500mA at 4.11V)
-        val charging = batteryInfo.isCharging()
-        charging_discharging_speed_label.text = if(charging) getString(R.string.info_charging_speed) else getString(R.string.info_discharging_speed)
-        tv_main_batterySpeed.text = getString(if(charging) R.string.info_charging_speed_extended else R.string.info_discharging_speed_extended, batteryInfo.getSimpleCurrentNow() * (if(charging) -1 else 1), batteryInfo.getVoltageNow())
-        // Battery Temperature
-        tv_main_batteryTemp.text = batteryInfo.temperature.toString().plus(Typography.degree)
-        // Battery Health
-        tv_main_batteryHealth.text = batteryInfo.health
-
-        this@MainActivity.batteryInfo = batteryInfo
-    }
-
-
-
-
 
     private fun showConfigReadError() {
         MaterialDialog(this).show {
@@ -160,109 +143,109 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initProfiles() {
-        val profileList = ProfileUtils.listProfiles(this, gson)
-
-        val currentProfile = sharedPrefs.getString("PROFILE", null)
-
-        val layoutManager = GridLayoutManager(this, 3)
-        profilesAdapter = ProfilesViewAdapter(ArrayList(profileList.map { Profile(it) }), currentProfile) { profile, longPress ->
-            if(longPress) {
-                MaterialDialog(this@MainActivity).show {
-                    listItems(R.array.profile_long_press_options) { _, index, _ ->
-                        when(index) {
-                            0 -> {
-                                Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-                                    val dataBundle = Bundle()
-                                    dataBundle.putString("profileName", profile.profileName)
-
-                                    intent.putExtra("config", ProfileUtils.readProfile(profile.profileName, this@MainActivity, gson))
-                                    intent.putExtra("data", dataBundle)
-                                    intent.putExtra("title", this@MainActivity.getString(R.string.profile_creator))
-                                    startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
-                                }
-                            }
-                            1 -> {
-                                MaterialDialog(this@MainActivity)
-                                    .show {
-                                        title(R.string.profile_name)
-                                        message(R.string.dialog_profile_name_message)
-                                        input(prefill = profile.profileName) { _, charSequence ->
-                                            //profiles index
-                                            val profileList: MutableList<String> = ProfileUtils.listProfiles(this@MainActivity, gson).toMutableList()
-
-                                            if(profileList.contains(charSequence.toString())) {
-                                                //TODO input not valid
-                                                return@input
-                                            }
-
-                                            profileList.add(charSequence.toString())
-                                            profileList.remove(profile.profileName) //remove all profile name
-                                            ProfileUtils.writeProfiles(this@MainActivity, profileList, gson) //Update profiles file with new profile
-
-                                            //Saving profile
-                                            val f = File(context.filesDir, "${profile.profileName}.profile")
-                                            f.renameTo(File(context.filesDir, "$charSequence.profile"))
-
-                                            profile.profileName = charSequence.toString()
-                                            profilesAdapter?.notifyItemChanged(profile)
-                                        }
-                                        positiveButton(R.string.save)
-                                        negativeButton(android.R.string.cancel)
-                                    }
-                            }
-                            2 -> {
-                                val f = File(context.filesDir, "$profile.profile")
-                                f.delete()
-
-                                ProfileUtils.writeProfiles(
-                                    this@MainActivity,
-                                    ProfileUtils
-                                        .listProfiles(this@MainActivity, gson).filter { it != profile.profileName },
-                                    gson
-                                ) //update profile list without this element
-
-                                profilesAdapter?.remove(profile)
-                                if(profilesAdapter?.itemCount == 0) {
-                                    this@MainActivity.profiles_recyclerview.visibility = android.view.View.GONE
-                                    this@MainActivity.no_profiles_textview.visibility = android.view.View.VISIBLE
-                                }
-                            }
-                        }
-                    }
-                }
-            } else {
-                //apply profile
-                val profileConfig = ProfileUtils.readProfile(profile.profileName, this@MainActivity, gson)
-
-                doAsync {
-                    val res = profileConfig.updateAcc()
-
-                    ProfileUtils.saveCurrentProfile(profile.profileName, sharedPrefs)
-
-                    if(!res.voltControlUpdateSuccessful) {
-                        uiThread {
-                            Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
-                        }
-                    }
-                }
-
-                profilesAdapter?.selectedProfile = profile.profileName
-                profilesAdapter?.notifyDataSetChanged()
-            }
-        }
-
-        profiles_recyclerview.layoutManager = layoutManager
-        profiles_recyclerview.adapter = profilesAdapter
-
-        if(profileList.isNotEmpty()) {
-            profiles_recyclerview.visibility = android.view.View.VISIBLE
-            no_profiles_textview.visibility = android.view.View.GONE
-        } else {
-            profiles_recyclerview.visibility = android.view.View.GONE
-            no_profiles_textview.visibility = android.view.View.VISIBLE
-        }
-    }
+//    private fun initProfiles() {
+//        val profileList = ProfileUtils.listProfiles(this, gson)
+//
+//        val currentProfile = sharedPrefs.getString("PROFILE", null)
+//
+//        val layoutManager = GridLayoutManager(this, 3)
+//        profilesAdapter = ProfilesViewAdapter(ArrayList(profileList.map { Profile(it) }), currentProfile) { profile, longPress ->
+//            if(longPress) {
+//                MaterialDialog(this@MainActivity).show {
+//                    listItems(R.array.profile_long_press_options) { _, index, _ ->
+//                        when(index) {
+//                            0 -> {
+//                                Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+//                                    val dataBundle = Bundle()
+//                                    dataBundle.putString("profileName", profile.profileName)
+//
+//                                    intent.putExtra("config", ProfileUtils.readProfile(profile.profileName, this@MainActivity, gson))
+//                                    intent.putExtra("data", dataBundle)
+//                                    intent.putExtra("title", this@MainActivity.getString(R.string.profile_creator))
+//                                    startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
+//                                }
+//                            }
+//                            1 -> {
+//                                MaterialDialog(this@MainActivity)
+//                                    .show {
+//                                        title(R.string.profile_name)
+//                                        message(R.string.dialog_profile_name_message)
+//                                        input(prefill = profile.profileName) { _, charSequence ->
+//                                            //profiles index
+//                                            val profileList: MutableList<String> = ProfileUtils.listProfiles(this@MainActivity, gson).toMutableList()
+//
+//                                            if(profileList.contains(charSequence.toString())) {
+//                                                //TODO input not valid
+//                                                return@input
+//                                            }
+//
+//                                            profileList.add(charSequence.toString())
+//                                            profileList.remove(profile.profileName) //remove all profile name
+//                                            ProfileUtils.writeProfiles(this@MainActivity, profileList, gson) //Update profiles file with new profile
+//
+//                                            //Saving profile
+//                                            val f = File(context.filesDir, "${profile.profileName}.profile")
+//                                            f.renameTo(File(context.filesDir, "$charSequence.profile"))
+//
+//                                            profile.profileName = charSequence.toString()
+//                                            profilesAdapter?.notifyItemChanged(profile)
+//                                        }
+//                                        positiveButton(R.string.save)
+//                                        negativeButton(android.R.string.cancel)
+//                                    }
+//                            }
+//                            2 -> {
+//                                val f = File(context.filesDir, "$profile.profile")
+//                                f.delete()
+//
+//                                ProfileUtils.writeProfiles(
+//                                    this@MainActivity,
+//                                    ProfileUtils
+//                                        .listProfiles(this@MainActivity, gson).filter { it != profile.profileName },
+//                                    gson
+//                                ) //update profile list without this element
+//
+//                                profilesAdapter?.remove(profile)
+//                                if(profilesAdapter?.itemCount == 0) {
+//                                    this@MainActivity.profiles_recyclerview.visibility = android.view.View.GONE
+//                                    this@MainActivity.no_profiles_textview.visibility = android.view.View.VISIBLE
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            } else {
+//                //apply profile
+//                val profileConfig = ProfileUtils.readProfile(profile.profileName, this@MainActivity, gson)
+//
+//                doAsync {
+//                    val res = profileConfig.updateAcc()
+//
+//                    ProfileUtils.saveCurrentProfile(profile.profileName, sharedPrefs)
+//
+//                    if(!res.voltControlUpdateSuccessful) {
+//                        uiThread {
+//                            Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
+//                        }
+//                    }
+//                }
+//
+//                profilesAdapter?.selectedProfile = profile.profileName
+//                profilesAdapter?.notifyDataSetChanged()
+//            }
+//        }
+//
+//        profiles_recyclerview.layoutManager = layoutManager
+//        profiles_recyclerview.adapter = profilesAdapter
+//
+//        if(profileList.isNotEmpty()) {
+//            profiles_recyclerview.visibility = android.view.View.VISIBLE
+//            no_profiles_textview.visibility = android.view.View.GONE
+//        } else {
+//            profiles_recyclerview.visibility = android.view.View.GONE
+//            no_profiles_textview.visibility = android.view.View.VISIBLE
+//        }
+//    }
 
     private fun initUi() {
 
@@ -511,12 +494,14 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
-        outState?.putParcelable("batteryInfo", batteryInfo)
-        outState?.putBoolean("daemonRunning", isDaemonRunning)
+    // TODO: If necessary, imput this into the ViewModel and bind it.
 
-        super.onSaveInstanceState(outState)
-    }
+//    override fun onSaveInstanceState(outState: Bundle?) {
+//        outState?.putParcelable("batteryInfo", batteryInfo)
+//        outState?.putBoolean("daemonRunning", isDaemonRunning)
+//
+//        super.onSaveInstanceState(outState)
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -575,96 +560,99 @@ class MainActivity : AppCompatActivity() {
                     doAsync {
                         val res = config.updateAcc()
 
-                        //If I manually modify the config I have to set current profile to null (custom profile)
-                        ProfileUtils.saveCurrentProfile(null, sharedPrefs)
-                        profilesAdapter?.let { adapter ->
-                            uiThread {
-                                if(!res.voltControlUpdateSuccessful) {
-                                    Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
-                                }
 
-                                adapter.selectedProfile = null
-                                adapter.notifyDataSetChanged()
-                            }
-                        }
+                        // TODO: Implement this logic after profiles have been implemented. Use callbacks for that fragment.
+//                        //If I manually modify the config I have to set current profile to null (custom profile)
+//                        ProfileUtils.saveCurrentProfile(null, sharedPrefs)
+//                        profilesAdapter?.let { adapter ->
+//                            uiThread {
+//                                if(!res.voltControlUpdateSuccessful) {
+//                                    Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
+//                                }
+//
+//                                adapter.selectedProfile = null
+//                                adapter.notifyDataSetChanged()
+//                            }
+//                        }
                     }
                 }
             }
-        } else if(requestCode == ACC_PROFILE_CREATOR_REQUEST) {
-            if (resultCode == Activity.RESULT_OK) {
-                if(data != null) {
-                    val config: AccConfig = data.getParcelableExtra("config")
-                    val fileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
-                    MaterialDialog(this)
-                        .show {
-                            title(R.string.profile_name)
-                            message(R.string.dialog_profile_name_message)
-                            input(waitForPositiveButton = false) { dialog, charSequence ->
-                                val inputField = dialog.getInputField()
-                                val isValid = fileNameRegex.matches(charSequence)
-
-                                inputField.error = if (isValid) null else getString(R.string.invalid_chars)
-                                dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
-                            }
-                            positiveButton(R.string.save) { dialog ->
-                                val input = dialog.getInputField().text.toString()
-
-                                //profiles index
-                                val profileList = ProfileUtils.listProfiles(this@MainActivity, gson).toMutableList()
-
-                                if(!profileList.contains(input)) {
-                                    profileList.add(input)
-                                    ProfileUtils.writeProfiles(this@MainActivity, profileList, gson) //Update profiles file with new profile
-                                }
-
-                                //Saving profile
-                                val f = File(context.filesDir, "$input.profile")
-                                val json = gson.toJson(config)
-                                f.writeText(json)
-
-                                if(profilesAdapter?.itemCount == 0) {
-                                    this@MainActivity.profiles_recyclerview.visibility = android.view.View.VISIBLE
-                                    this@MainActivity.no_profiles_textview.visibility = android.view.View.GONE
-                                }
-
-                                profilesAdapter?.add(Profile(input))
-
-                            }
-                            negativeButton(android.R.string.cancel)
-                        }
-                }
-            }
-        } else if(requestCode == ACC_PROFILE_EDITOR_REQUEST) {
-            if (resultCode == Activity.RESULT_OK) {
-                if(data?.getBooleanExtra("hasChanges", false) == true && data.hasExtra("data")) {
-                    val config: AccConfig = data.getParcelableExtra("config")
-                    val profileName = data.getBundleExtra("data").getString("profileName")
-
-                    //Saving profile
-                    val f = File(this@MainActivity.filesDir, "$profileName.profile")
-                    val json = gson.toJson(config)
-                    f.writeText(json)
-                }
-            }
-        } else if(requestCode == ACC_PROFILE_SCHEDULER_REQUEST && resultCode == Activity.RESULT_OK) {
-            if(data?.hasExtra("data") == true) {
-                val dataBundle = data.getBundleExtra("data")
-
-                val hour = dataBundle.getInt("hour")
-                val minute = dataBundle.getInt("minute")
-                val executeOnce = dataBundle.getBoolean("executeOnce")
-                val commands = data.getParcelableExtra<AccConfig>("config").getCommands()
-
-                addSchedule(Schedule("${String.format("%02d", hour)}${String.format("%02d", minute)}", executeOnce, hour, minute, commands.joinToString(separator = "; ")))
-
-                AccUtils.schedule(
-                    executeOnce,
-                    hour,
-                    minute,
-                    commands
-                )
-            }
         }
+//        else if(requestCode == ACC_PROFILE_CREATOR_REQUEST) {
+//            if (resultCode == Activity.RESULT_OK) {
+//                if(data != null) {
+//                    val config: AccConfig = data.getParcelableExtra("config")
+//                    val fileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
+//                    MaterialDialog(this)
+//                        .show {
+//                            title(R.string.profile_name)
+//                            message(R.string.dialog_profile_name_message)
+//                            input(waitForPositiveButton = false) { dialog, charSequence ->
+//                                val inputField = dialog.getInputField()
+//                                val isValid = fileNameRegex.matches(charSequence)
+//
+//                                inputField.error = if (isValid) null else getString(R.string.invalid_chars)
+//                                dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
+//                            }
+//                            positiveButton(R.string.save) { dialog ->
+//                                val input = dialog.getInputField().text.toString()
+//
+//                                //profiles index
+//                                val profileList = ProfileUtils.listProfiles(this@MainActivity, gson).toMutableList()
+//
+//                                if(!profileList.contains(input)) {
+//                                    profileList.add(input)
+//                                    ProfileUtils.writeProfiles(this@MainActivity, profileList, gson) //Update profiles file with new profile
+//                                }
+//
+//                                //Saving profile
+//                                val f = File(context.filesDir, "$input.profile")
+//                                val json = gson.toJson(config)
+//                                f.writeText(json)
+//
+//                                if(profilesAdapter?.itemCount == 0) {
+//                                    this@MainActivity.profiles_recyclerview.visibility = android.view.View.VISIBLE
+//                                    this@MainActivity.no_profiles_textview.visibility = android.view.View.GONE
+//                                }
+//
+//                                profilesAdapter?.add(Profile(input))
+//
+//                            }
+//                            negativeButton(android.R.string.cancel)
+//                        }
+//                }
+//            }
+//        } else if(requestCode == ACC_PROFILE_EDITOR_REQUEST) {
+//            if (resultCode == Activity.RESULT_OK) {
+//                if(data?.getBooleanExtra("hasChanges", false) == true && data.hasExtra("data")) {
+//                    val config: AccConfig = data.getParcelableExtra("config")
+//                    val profileName = data.getBundleExtra("data").getString("profileName")
+//
+//                    //Saving profile
+//                    val f = File(this@MainActivity.filesDir, "$profileName.profile")
+//                    val json = gson.toJson(config)
+//                    f.writeText(json)
+//                }
+//            }
+//        } else if(requestCode == ACC_PROFILE_SCHEDULER_REQUEST && resultCode == Activity.RESULT_OK) {
+//            if(data?.hasExtra("data") == true) {
+//                val dataBundle = data.getBundleExtra("data")
+//
+//                val hour = dataBundle.getInt("hour")
+//                val minute = dataBundle.getInt("minute")
+//                val executeOnce = dataBundle.getBoolean("executeOnce")
+//                val commands = data.getParcelableExtra<AccConfig>("config").getCommands()
+//
+//                addSchedule(Schedule("${String.format("%02d", hour)}${String.format("%02d", minute)}", executeOnce, hour, minute, commands.joinToString(separator = "; ")))
+//
+//                AccUtils.schedule(
+//                    executeOnce,
+//                    hour,
+//                    minute,
+//                    commands
+//                )
+//            }
+//        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
