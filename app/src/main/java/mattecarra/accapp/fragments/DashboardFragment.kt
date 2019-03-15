@@ -43,6 +43,7 @@ class DashboardFragment : Fragment() {
 
         viewModel.getBatteryInfo().observe(this, Observer<BatteryInfo>{info ->
             // TODO: Update UI with info.
+            updateBatteryInfo(info)
         })
 
         viewModel.getIsDaemonRunning().observe(this, Observer<Boolean>{ daemon ->
@@ -93,6 +94,26 @@ class DashboardFragment : Fragment() {
         Intent(view.context, AccConfigEditorActivity::class.java).also { intent ->
             startActivityForResult(intent, ACC_CONFIG_EDITOR_REQUEST)
         }
+    }
+
+    /**
+     * Function for setting the respective battery text into their textviews.
+     * TODO: See if the performance is still a little jank, otherwise, use the handler to update UI elements within the observable.
+     */
+    private fun updateBatteryInfo(batteryInfo: BatteryInfo) {
+
+        // Battery Capacity
+        progressBar_capacity.progress = batteryInfo.capacity
+        // Battery Status (Charging (Fast)
+        tv_main_batteryStatus.text = getString(R.string.info_status_extended, batteryInfo.status, batteryInfo.chargeType)
+        // Battery Speed (500mA at 4.11V)
+        val charging = batteryInfo.isCharging()
+        charging_discharging_speed_label.text = if(charging) getString(R.string.info_charging_speed) else getString(R.string.info_discharging_speed)
+        tv_main_batterySpeed.text = getString(if(charging) R.string.info_charging_speed_extended else R.string.info_discharging_speed_extended, batteryInfo.getSimpleCurrentNow() * (if(charging) -1 else 1), batteryInfo.getVoltageNow())
+        // Battery Temperature
+        tv_main_batteryTemp.text = batteryInfo.temperature.toString().plus(Typography.degree)
+        // Battery Health
+        tv_main_batteryHealth.text = batteryInfo.health
     }
 
 }
