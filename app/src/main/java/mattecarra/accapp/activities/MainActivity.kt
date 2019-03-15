@@ -71,23 +71,26 @@ class MainActivity : AppCompatActivity() {
     private var batteryInfo: BatteryInfo? = null
     private var isDaemonRunning = false
 
-    private lateinit var scheduleAdapter: ScheduleRecyclerViewAdapter
-    val addSchedule: (Schedule) -> Unit = { schedule ->
-        if(scheduleAdapter.itemCount == 0) {
-            no_schedules_jobs_textview.visibility = View.GONE
-            scheduled_jobs_recyclerview.visibility = View.VISIBLE
-        }
-        scheduleAdapter.add(schedule)
-    }
-    val deleteSchedule: (Schedule) -> Unit = { schedule ->
-        AccUtils.deleteSchedule(schedule.executeOnce, schedule.name)
-        scheduleAdapter.remove(schedule)
-
-        if(scheduleAdapter.itemCount == 0) {
-            no_schedules_jobs_textview.visibility = View.VISIBLE
-            scheduled_jobs_recyclerview.visibility = View.GONE
-        }
-    }
+    // TODO: Move schedules to the Schedules Fragment
+//    private lateinit var scheduleAdapter: ScheduleRecyclerViewAdapter
+//
+//    val addSchedule: (Schedule) -> Unit = { schedule ->
+//        if(scheduleAdapter.itemCount == 0) {
+//            no_schedules_jobs_textview.visibility = View.GONE
+//            scheduled_jobs_recyclerview.visibility = View.VISIBLE
+//        }
+//        scheduleAdapter.add(schedule)
+//    }
+//
+//    val deleteSchedule: (Schedule) -> Unit = { schedule ->
+//        AccUtils.deleteSchedule(schedule.executeOnce, schedule.name)
+//        scheduleAdapter.remove(schedule)
+//
+//        if(scheduleAdapter.itemCount == 0) {
+//            no_schedules_jobs_textview.visibility = View.VISIBLE
+//            scheduled_jobs_recyclerview.visibility = View.GONE
+//        }
+//    }
 
 //    //Used to update battery info every second
 //    private val handler = Handler()
@@ -419,7 +422,7 @@ class MainActivity : AppCompatActivity() {
 //
 //            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //            spinner.adapter = adapter;
-        }
+//        }
     }
 
     private fun checkPermissions(): Boolean {
