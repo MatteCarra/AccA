@@ -90,7 +90,7 @@ class DashboardFragment : Fragment() {
      * Function for Status Card Settings OnClick (Configuration)
      */
     fun batteryConfigOnClick(view: View) {
-        Intent(this@DashboardFragment, AccConfigEditorActivity::class.java).also { intent ->
+        Intent(view.context, AccConfigEditorActivity::class.java).also { intent ->
             startActivityForResult(intent, ACC_CONFIG_EDITOR_REQUEST)
         }
     }
