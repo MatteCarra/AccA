@@ -38,4 +38,9 @@ class DashboardViewModel : ViewModel() {
     init {
         handler.post(updateBatteryInfoRunnable)
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        handler.removeCallbacks(updateBatteryInfoRunnable)
+    }
 }
