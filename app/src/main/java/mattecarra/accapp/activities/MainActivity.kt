@@ -5,36 +5,17 @@ import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.PersistableBundle
 import android.preference.PreferenceManager
-import android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
-import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.WhichButton
-import com.afollestad.materialdialogs.actions.setActionButtonEnabled
-import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.customview.getCustomView
-import com.afollestad.materialdialogs.input.getInputField
-import com.afollestad.materialdialogs.input.input
-import com.afollestad.materialdialogs.list.listItems
-import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.Display
 import com.github.javiersantos.appupdater.enums.UpdateFrom
@@ -42,21 +23,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import com.topjohnwu.superuser.Shell
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
 import mattecarra.accapp.utils.AccUtils
 import mattecarra.accapp.R
-import mattecarra.accapp.adapters.Profile
-import mattecarra.accapp.adapters.ProfilesViewAdapter
-import mattecarra.accapp.adapters.Schedule
-import mattecarra.accapp.adapters.ScheduleRecyclerViewAdapter
 import mattecarra.accapp.data.AccConfig
-import mattecarra.accapp.data.BatteryInfo
 import mattecarra.accapp.fragments.DashboardFragment
-import mattecarra.accapp.utils.ProfileUtils
 import mattecarra.accapp.utils.progress
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
-import java.io.File
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener  {
 
@@ -67,12 +40,16 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private val ACC_PROFILE_EDITOR_REQUEST: Int = 3
     private val ACC_PROFILE_SCHEDULER_REQUEST: Int = 4
 
-    // TODO: Check what the config does in the MainActivity
-    private lateinit var config: AccConfig
+    val mMainFragment = DashboardFragment.newInstance()
+//    val mProfilesFragment
+//    val mSchedulesFragment
 
-    private lateinit var sharedPrefs: SharedPreferences
+    // TODO: Check what the mAccConfig does in the MainActivity
+    private lateinit var mAccConfig: AccConfig
+
+    private lateinit var mSharedPrefs: SharedPreferences
     // TODO: Use Gson to export profiles, use internal SQLite database to store
-    private val gson: Gson = Gson()
+    private val mGson: Gson = Gson()
 
 //    private var profilesAdapter: ProfilesViewAdapter? = null
 //
@@ -151,8 +128,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onNavigationItemSelected(m: MenuItem): Boolean {
         when (m.itemId) {
             R.id.botNav_home -> {
-                val mainFragment = DashboardFragment.newInstance()
-                loadFragment(mainFragment)
+                loadFragment(mMainFragment)
                 return true
             }
             R.id.botNav_profiles -> {
@@ -178,7 +154,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //    private fun initProfiles() {
 //        val profileList = ProfileUtils.listProfiles(this, gson)
 //
-//        val currentProfile = sharedPrefs.getString("PROFILE", null)
+//        val currentProfile = mSharedPrefs.getString("PROFILE", null)
 //
 //        val layoutManager = GridLayoutManager(this, 3)
 //        profilesAdapter = ProfilesViewAdapter(ArrayList(profileList.map { Profile(it) }), currentProfile) { profile, longPress ->
@@ -191,7 +167,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //                                    val dataBundle = Bundle()
 //                                    dataBundle.putString("profileName", profile.profileName)
 //
-//                                    intent.putExtra("config", ProfileUtils.readProfile(profile.profileName, this@MainActivity, gson))
+//                                    intent.putExtra("mAccConfig", ProfileUtils.readProfile(profile.profileName, this@MainActivity, gson))
 //                                    intent.putExtra("data", dataBundle)
 //                                    intent.putExtra("title", this@MainActivity.getString(R.string.profile_creator))
 //                                    startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
@@ -253,7 +229,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //                doAsync {
 //                    val res = profileConfig.updateAcc()
 //
-//                    ProfileUtils.saveCurrentProfile(profile.profileName, sharedPrefs)
+//                    ProfileUtils.saveCurrentProfile(profile.profileName, mSharedPrefs)
 //
 //                    if(!res.voltControlUpdateSuccessful) {
 //                        uiThread {
@@ -281,14 +257,21 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun initUi() {
 
+        // Set Bottom Navigation Bar Item Selected Listener
+        var mNavbar = botNav_main
+        mNavbar.setOnNavigationItemSelectedListener(this)
+
         // Read ACC configuration
         try {
-            this.config = AccUtils.readConfig()
+            this.mAccConfig = AccUtils.readConfig()
         } catch (ex: Exception) {
             ex.printStackTrace()
             showConfigReadError()
-            this.config = AccUtils.defaultConfig //if config is null I use default config values.
+            this.mAccConfig = AccUtils.defaultConfig //if mAccConfig is null I use default mAccConfig values.
         }
+
+        // Load in dashboard fragment
+        loadFragment(mMainFragment)
 
         // TODO: Init fragments and complete fragment transaction here
 
@@ -338,19 +321,19 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //
 //            val picker = dialog.getCustomView().findViewById<NumberPicker>(R.id.charging_limit)
 //            picker.maxValue = 100
-//            picker.minValue = config.capacity.pauseCapacity
+//            picker.minValue = mAccConfig.capacity.pauseCapacity
 //            picker.value = 100
 //        }
 //
 //        reset_stats_on_unplugged_switch.setOnCheckedChangeListener { _, isChecked ->
-//            config.resetUnplugged = isChecked
+//            mAccConfig.resetUnplugged = isChecked
 //            AccUtils.updateResetUnplugged(isChecked)
 //
-//            //If I manually modify the config I have to set current profile to null (custom profile)
-//            ProfileUtils.saveCurrentProfile(null, sharedPrefs)
+//            //If I manually modify the mAccConfig I have to set current profile to null (custom profile)
+//            ProfileUtils.saveCurrentProfile(null, mSharedPrefs)
 //        }
 //
-//        reset_stats_on_unplugged_switch.isChecked = config.resetUnplugged
+//        reset_stats_on_unplugged_switch.isChecked = mAccConfig.resetUnplugged
 //        reset_battery_stats.setOnClickListener {
 //            AccUtils.resetBatteryStats()
 //        }
@@ -551,7 +534,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             .setIcon(R.drawable.ic_notification)
         appUpdater.start()
 
-        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
+        mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
 
         if(!Shell.rootAccess()) {
             val dialog = MaterialDialog(this).show {
@@ -584,24 +567,20 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //                }
 //            }
         }
-
-        // Set Bottom Navigation Bar Item Selected Listener
-        var mNavbar = botNav_main
-        mNavbar.setOnNavigationItemSelectedListener(this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == ACC_CONFIG_EDITOR_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 if(data?.getBooleanExtra("hasChanges", false) == true) {
-                    config = data.getParcelableExtra("config")
+                    mAccConfig = data.getParcelableExtra("mAccConfig")
                     doAsync {
-                        val res = config.updateAcc()
+                        val res = mAccConfig.updateAcc()
 
 
                         // TODO: Implement this logic after profiles have been implemented. Use callbacks for that fragment.
-//                        //If I manually modify the config I have to set current profile to null (custom profile)
-//                        ProfileUtils.saveCurrentProfile(null, sharedPrefs)
+//                        //If I manually modify the mAccConfig I have to set current profile to null (custom profile)
+//                        ProfileUtils.saveCurrentProfile(null, mSharedPrefs)
 //                        profilesAdapter?.let { adapter ->
 //                            uiThread {
 //                                if(!res.voltControlUpdateSuccessful) {
@@ -619,7 +598,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //        else if(requestCode == ACC_PROFILE_CREATOR_REQUEST) {
 //            if (resultCode == Activity.RESULT_OK) {
 //                if(data != null) {
-//                    val config: AccConfig = data.getParcelableExtra("config")
+//                    val mAccConfig: AccConfig = data.getParcelableExtra("mAccConfig")
 //                    val fileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
 //                    MaterialDialog(this)
 //                        .show {
@@ -645,7 +624,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //
 //                                //Saving profile
 //                                val f = File(context.filesDir, "$input.profile")
-//                                val json = gson.toJson(config)
+//                                val json = gson.toJson(mAccConfig)
 //                                f.writeText(json)
 //
 //                                if(profilesAdapter?.itemCount == 0) {
@@ -663,12 +642,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //        } else if(requestCode == ACC_PROFILE_EDITOR_REQUEST) {
 //            if (resultCode == Activity.RESULT_OK) {
 //                if(data?.getBooleanExtra("hasChanges", false) == true && data.hasExtra("data")) {
-//                    val config: AccConfig = data.getParcelableExtra("config")
+//                    val mAccConfig: AccConfig = data.getParcelableExtra("mAccConfig")
 //                    val profileName = data.getBundleExtra("data").getString("profileName")
 //
 //                    //Saving profile
 //                    val f = File(this@MainActivity.filesDir, "$profileName.profile")
-//                    val json = gson.toJson(config)
+//                    val json = gson.toJson(mAccConfig)
 //                    f.writeText(json)
 //                }
 //            }
@@ -679,7 +658,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //                val hour = dataBundle.getInt("hour")
 //                val minute = dataBundle.getInt("minute")
 //                val executeOnce = dataBundle.getBoolean("executeOnce")
-//                val commands = data.getParcelableExtra<AccConfig>("config").getCommands()
+//                val commands = data.getParcelableExtra<AccConfig>("mAccConfig").getCommands()
 //
 //                addSchedule(Schedule("${String.format("%02d", hour)}${String.format("%02d", minute)}", executeOnce, hour, minute, commands.joinToString(separator = "; ")))
 //
