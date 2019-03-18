@@ -57,20 +57,20 @@ class DashboardFragment : Fragment() {
     private fun updateAccdStatus(isDaemonRunning: Boolean) {
         if (isDaemonRunning) {
             // ACCD Status Card
-            tv_main_accdStatus.text = getString(R.string.acc_daemon_status_running)
-            fl_status_container.background = ColorDrawable(resources.getColor(R.color.colorSuccessful))
-            iv_main_status_icon.setImageResource(R.drawable.ic_baseline_check_circle_24px)
+            dash_accdStatus_textView.text = getString(R.string.acc_daemon_status_running)
+            dash_accdStatus_frameLay.background = ColorDrawable(resources.getColor(R.color.colorSuccessful))
+            dash_accdStatus_imageView.setImageResource(R.drawable.ic_baseline_check_circle_24px)
 
-            daemon_start_stop.text = getString(R.string.stop)
-            daemon_start_stop.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_outline_stop_24px, 0, 0, 0)
+            dash_daemonToggle_button.text = getString(R.string.stop)
+            dash_daemonToggle_button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_outline_stop_24px, 0, 0, 0)
         } else {
             // ACCD Status Card
-            tv_main_accdStatus.text = getString(R.string.acc_daemon_status_not_running)
-            fl_status_container.background = ColorDrawable(resources.getColor(R.color.colorError))
-            iv_main_status_icon.setImageResource(R.drawable.ic_baseline_error_24px)
+            dash_accdStatus_textView.text = getString(R.string.acc_daemon_status_not_running)
+            dash_accdStatus_frameLay.background = ColorDrawable(resources.getColor(R.color.colorError))
+            dash_accdStatus_imageView.setImageResource(R.drawable.ic_baseline_error_24px)
 
-            daemon_start_stop.text = getString(R.string.start)
-            daemon_start_stop.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_outline_play_arrow_24px, 0, 0, 0)
+            dash_daemonToggle_button.text = getString(R.string.start)
+            dash_daemonToggle_button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_outline_play_arrow_24px, 0, 0, 0)
         }
     }
 
@@ -78,12 +78,12 @@ class DashboardFragment : Fragment() {
      * Function for ACCD status card OnClick
      */
     fun accdOnClick(view: View) {
-        if (consLay_accdButtons.visibility == View.GONE) {
-            consLay_accdButtons.visibility = View.VISIBLE
-            tv_main_title_accdStatus.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_arrow_drop_up_24px, 0)
+        if (dash_accdButtons_linLay.visibility == View.GONE) {
+            dash_accdButtons_linLay.visibility = View.VISIBLE
+            dash_title_accdStatus_textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_arrow_drop_up_24px, 0)
         } else {
-            consLay_accdButtons.visibility = View.GONE
-            tv_main_title_accdStatus.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_arrow_drop_down_24px, 0)
+            dash_accdButtons_linLay.visibility = View.GONE
+            dash_title_accdStatus_textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_arrow_drop_down_24px, 0)
         }
     }
 
@@ -103,17 +103,17 @@ class DashboardFragment : Fragment() {
     private fun updateBatteryInfo(batteryInfo: BatteryInfo) {
 
         // Battery Capacity
-        progressBar_capacity.progress = batteryInfo.capacity
+        dash_batteryCapacity_pBar.progress = batteryInfo.capacity
         // Battery Status (Charging (Fast)
-        tv_main_batteryStatus.text = getString(R.string.info_status_extended, batteryInfo.status, batteryInfo.chargeType)
+        dash_batteryStatus_textView.text = getString(R.string.info_status_extended, batteryInfo.status, batteryInfo.chargeType)
         // Battery Speed (500mA at 4.11V)
         val charging = batteryInfo.isCharging()
         charging_discharging_speed_label.text = if(charging) getString(R.string.info_charging_speed) else getString(R.string.info_discharging_speed)
-        tv_main_batterySpeed.text = getString(if(charging) R.string.info_charging_speed_extended else R.string.info_discharging_speed_extended, batteryInfo.getSimpleCurrentNow() * (if(charging) -1 else 1), batteryInfo.getVoltageNow())
+        dash_chargingSpeed_textView.text = getString(if(charging) R.string.info_charging_speed_extended else R.string.info_discharging_speed_extended, batteryInfo.getSimpleCurrentNow() * (if(charging) -1 else 1), batteryInfo.getVoltageNow())
         // Battery Temperature
-        tv_main_batteryTemp.text = batteryInfo.temperature.toString().plus(Typography.degree)
+        dash_batteryTemperature_textView.text = batteryInfo.temperature.toString().plus(Typography.degree)
         // Battery Health
-        tv_main_batteryHealth.text = batteryInfo.health
+        dash_batteryHealth_textView.text = batteryInfo.health
     }
 
 }

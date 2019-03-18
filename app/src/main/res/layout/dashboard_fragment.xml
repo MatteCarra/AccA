@@ -42,7 +42,7 @@
                         android:layout_gravity="center_vertical">
 
                     <TextView
-                            android:id="@+id/tv_main_title_accdStatus"
+                            android:id="@+id/dash_title_accdStatus_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="@dimen/card_content_padding"
@@ -64,11 +64,11 @@
                             android:foregroundGravity="center"
                             android:background="?selectableItemBackground"
                             app:srcCompat="@drawable/ic_outline_settings_24px"
-                            android:onClick="batteryConfigOnClick" />
+                            android:onClick="batteryConfigOnClick"/>
                 </RelativeLayout>
 
                 <FrameLayout
-                        android:id="@+id/fl_status_container"
+                        android:id="@+id/dash_accdStatus_frameLay"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:foregroundGravity="center"
@@ -76,7 +76,7 @@
                         android:orientation="vertical">
 
                     <ImageView
-                            android:id="@+id/iv_main_status_icon"
+                            android:id="@+id/dash_accdStatus_imageView"
                             android:layout_width="84dp"
                             android:layout_height="84dp"
                             android:tint="@color/colorImageTint"
@@ -85,15 +85,15 @@
                 </FrameLayout>
 
                 <TextView
-                        android:id="@+id/tv_main_accdStatus"
+                        android:id="@+id/dash_accdStatus_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:padding="10dp"
-                        android:gravity="center" />
+                        android:gravity="center"/>
 
                 <LinearLayout
-                        android:id="@+id/consLay_accdButtons"
+                        android:id="@+id/dash_accdButtons_linLay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
@@ -102,20 +102,20 @@
                         tools:visibility="visible">
 
                     <Button style="@style/Widget.AppCompat.Button.Colored"
-                            android:id="@+id/daemon_start_stop"
+                            android:id="@+id/dash_daemonToggle_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/stop"
                             android:drawableLeft="@drawable/ic_outline_stop_24px"
                             android:drawableStart="@drawable/ic_outline_stop_24px"
                             android:drawableTint="@color/colorImageTint"
-                            app:layout_constraintEnd_toStartOf="@+id/daemon_restart"
+                            app:layout_constraintEnd_toStartOf="@+id/dash_daemonRestart_button"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             android:layout_weight="1"/>
 
                     <Button style="@style/Widget.AppCompat.Button.Colored"
-                            android:id="@+id/daemon_restart"
+                            android:id="@+id/dash_daemonRestart_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/restart"
@@ -154,7 +154,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                        android:text="@string/title_battery" />
+                        android:text="@string/title_battery"/>
 
                 <LinearLayout
                         android:layout_width="match_parent"
@@ -162,7 +162,7 @@
                         android:orientation="horizontal">
 
                     <com.dinuscxj.progressbar.CircleProgressBar
-                            android:id="@+id/progressBar_capacity"
+                            android:id="@+id/dash_batteryCapacity_pBar"
                             app:style="solid_line"
                             app:progress_stroke_cap="round"
                             app:progress_stroke_width="5dp"
@@ -191,7 +191,7 @@
                                     android:text="@string/info_status"/>
 
                             <TextView
-                                    android:id="@+id/tv_main_batteryStatus"
+                                    android:id="@+id/dash_batteryStatus_textView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="end"/>
@@ -200,14 +200,13 @@
                         <!-- Battery Charging Speed -->
                         <TableRow>
                             <TextView
-                                    android:id="@+id/charging_discharging_speed_label"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textSize="@dimen/label_text"
-                                    android:text="@string/info_charging_speed" />
+                                    android:text="@string/info_charging_speed"/>
 
                             <TextView
-                                    android:id="@+id/tv_main_batterySpeed"
+                                    android:id="@+id/dash_chargingSpeed_textView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="end"/>
@@ -222,10 +221,10 @@
                                     android:text="@string/info_temperature"/>
 
                             <TextView
-                                    android:id="@+id/tv_main_batteryTemp"
+                                    android:id="@+id/dash_batteryTemperature_textView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:gravity="end" />
+                                    android:gravity="end"/>
                         </TableRow>
 
                         <!-- Battery Health -->
@@ -237,10 +236,10 @@
                                     android:text="@string/info_health"/>
 
                             <TextView
-                                    android:id="@+id/tv_main_batteryHealth"
+                                    android:id="@+id/dash_batteryHealth_textView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:gravity="end" />
+                                    android:gravity="end"/>
                         </TableRow>
                     </TableLayout>
                 </LinearLayout>
@@ -252,15 +251,14 @@
                         android:orientation="vertical"
                         android:layout_gravity="center">
 
-                    <Button
-                            android:id="@+id/edit_charging_limit_once_bt"
+                    <Button android:id="@+id/dash_editCargingLimitOnce_button"
                             style="@style/Widget.AppCompat.Button.Colored"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawableLeft="@drawable/ic_outline_edit_24px"
                             android:drawableStart="@drawable/ic_outline_edit_24px"
                             android:drawableTint="@color/colorImageTint"
-                            android:text="@string/edit_charging_limit_once" />
+                            android:text="@string/edit_charging_limit_once"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -283,21 +281,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                <Switch
-                        android:id="@+id/reset_stats_on_unplugged_switch"
+                <Switch android:id="@+id/dash_resetStatusUnplug_switch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/reset_unplugged"
                         android:textSize="16sp"
-                        android:layout_marginBottom="10dp" />
+                        android:layout_marginBottom="10dp"/>
 
-                <Button style="@style/Widget.AppCompat.Button.Colored"
+                <Button android:id="@+id/dash_resetBatteryStats_button"
+                        style="@style/Widget.AppCompat.Button.Colored"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/reset_stats"
-                        android:id="@+id/reset_battery_stats"
                         android:layout_centerHorizontal="true"
-                        android:layout_below="@+id/reset_stats_on_unplugged_switch" />
+                        android:layout_below="@+id/dash_resetStatusUnplug_switch"/>
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
