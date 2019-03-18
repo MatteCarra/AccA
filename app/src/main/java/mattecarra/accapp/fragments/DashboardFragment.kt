@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.dashboard_fragment.*
 
 import mattecarra.accapp.R
 import mattecarra.accapp.activities.AccConfigEditorActivity
@@ -18,6 +18,7 @@ import mattecarra.accapp.data.BatteryInfo
 class DashboardFragment : Fragment() {
 
     private val LOG_TAG = "DashboardFragment"
+
     private val PERMISSION_REQUEST: Int = 0
     private val ACC_CONFIG_EDITOR_REQUEST: Int = 1
     private val ACC_PROFILE_CREATOR_REQUEST: Int = 2
@@ -42,7 +43,6 @@ class DashboardFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
 
         viewModel.getBatteryInfo().observe(this, Observer<BatteryInfo>{info ->
-            // TODO: Update UI with info.
             updateBatteryInfo(info)
         })
 
@@ -108,7 +108,7 @@ class DashboardFragment : Fragment() {
         dash_batteryStatus_textView.text = getString(R.string.info_status_extended, batteryInfo.status, batteryInfo.chargeType)
         // Battery Speed (500mA at 4.11V)
         val charging = batteryInfo.isCharging()
-        charging_discharging_speed_label.text = if(charging) getString(R.string.info_charging_speed) else getString(R.string.info_discharging_speed)
+        dash_batteryChargingSpeed_textView.text = if(charging) getString(R.string.info_charging_speed) else getString(R.string.info_discharging_speed)
         dash_chargingSpeed_textView.text = getString(if(charging) R.string.info_charging_speed_extended else R.string.info_discharging_speed_extended, batteryInfo.getSimpleCurrentNow() * (if(charging) -1 else 1), batteryInfo.getVoltageNow())
         // Battery Temperature
         dash_batteryTemperature_textView.text = batteryInfo.temperature.toString().plus(Typography.degree)
