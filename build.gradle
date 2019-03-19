@@ -6,6 +6,10 @@ buildscript {
                 kotlin: '1.3.21',
                 libsuVersion: '2.3.0'
         ]
+
+        roomVersion = '1.1.1'
+        archLifecycleVersion = '1.1.1'
+        coroutines = '0.26.1'
     }
     repositories {
         google()
