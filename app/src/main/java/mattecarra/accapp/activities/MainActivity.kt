@@ -27,6 +27,8 @@ import mattecarra.accapp.utils.AccUtils
 import mattecarra.accapp.R
 import mattecarra.accapp.data.AccConfig
 import mattecarra.accapp.fragments.DashboardFragment
+import mattecarra.accapp.fragments.ProfilesFragment
+import mattecarra.accapp.fragments.SchedulesFragment
 import mattecarra.accapp.utils.progress
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -41,8 +43,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private val ACC_PROFILE_SCHEDULER_REQUEST: Int = 4
 
     val mMainFragment = DashboardFragment.newInstance()
-//    val mProfilesFragment
-//    val mSchedulesFragment
+    val mProfilesFragment = ProfilesFragment.newInstance()
+    val mSchedulesFragment = SchedulesFragment.newInstance()
 
     // TODO: Check what the mAccConfig does in the MainActivity
     private lateinit var mAccConfig: AccConfig
@@ -132,11 +134,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 return true
             }
             R.id.botNav_profiles -> {
-                // TODO: Show Profiles fragment
+                loadFragment(mProfilesFragment)
                 return true
             }
+            // TODO: Chancge id of schedules menu item
             R.id.botNav_settings -> {
-                // TODO: Show settings fragment
+                loadFragment(mSchedulesFragment)
                 return true
             }
         }
