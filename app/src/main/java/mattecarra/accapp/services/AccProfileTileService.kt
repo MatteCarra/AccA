@@ -9,7 +9,6 @@ import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import com.google.gson.Gson
 import mattecarra.accapp.R
-import mattecarra.accapp.data.AccConfig
 import mattecarra.accapp.utils.ProfileUtils
 import org.jetbrains.anko.doAsync
 import java.io.File

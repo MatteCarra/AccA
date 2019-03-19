@@ -4,7 +4,7 @@ import android.os.Handler
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel;
-import mattecarra.accapp.data.BatteryInfo
+import mattecarra.accapp.models.BatteryInfo
 import mattecarra.accapp.utils.AccUtils
 import org.jetbrains.anko.doAsync
 

@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Environment
 import com.topjohnwu.superuser.Shell
 import mattecarra.accapp.adapters.Schedule
-import mattecarra.accapp.data.*
+import mattecarra.accapp.models.*
 import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileOutputStream

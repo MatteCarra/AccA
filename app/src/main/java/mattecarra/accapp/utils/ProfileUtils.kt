@@ -2,9 +2,8 @@ package mattecarra.accapp.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import com.google.gson.Gson
-import mattecarra.accapp.data.AccConfig
+import mattecarra.accapp.models.AccConfig
 import java.io.File
 
 object ProfileUtils {

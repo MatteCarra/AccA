@@ -25,7 +25,7 @@ import com.topjohnwu.superuser.Shell
 import kotlinx.android.synthetic.main.activity_main.*
 import mattecarra.accapp.utils.AccUtils
 import mattecarra.accapp.R
-import mattecarra.accapp.data.AccConfig
+import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.fragments.DashboardFragment
 import mattecarra.accapp.fragments.ProfilesFragment
 import mattecarra.accapp.fragments.SchedulesFragment

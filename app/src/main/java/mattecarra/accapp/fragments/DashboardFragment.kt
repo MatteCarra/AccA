@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.dashboard_fragment.*
 
 import mattecarra.accapp.R
 import mattecarra.accapp.activities.AccConfigEditorActivity
-import mattecarra.accapp.data.BatteryInfo
+import mattecarra.accapp.models.BatteryInfo
 
 class DashboardFragment : Fragment() {
 

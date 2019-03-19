@@ -1,4 +1,4 @@
-package mattecarra.accapp.data
+package mattecarra.accapp.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
