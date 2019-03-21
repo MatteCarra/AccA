@@ -40,6 +40,10 @@
     <string name="info_charging_speed_extended">%1$dmA at %2$.2fV</string>
     <string name="info_discharging_speed_extended">%1$dmA</string>
 
+    <!-- Profiles Item Labels -->
+    <string name="item_profile_capacity_label">Capacity:</string>
+    <string name="item_profile_temperature_label">Temperature:</string>
+
     <string name="status_label">Status:</string>
     <string name="battery_info_label">Info:</string>
 
