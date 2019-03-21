@@ -160,7 +160,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //        val currentProfile = mSharedPrefs.getString("PROFILE", null)
 //
 //        val layoutManager = GridLayoutManager(this, 3)
-//        profilesAdapter = ProfilesViewAdapter(ArrayList(profileList.map { Profile(it) }), currentProfile) { profile, longPress ->
+//        profilesAdapter = ProfilesViewAdapter(ArrayList(profileList.map { ProfileEntity(it) }), currentProfile) { profile, longPress ->
 //            if(longPress) {
 //                MaterialDialog(this@MainActivity).show {
 //                    listItems(R.array.profile_long_press_options) { _, index, _ ->
@@ -278,7 +278,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         // TODO: Init fragments and complete fragment transaction here
 
-        // TODO: Move profiles to a new Profile Activity
+        // TODO: Move profiles to a new ProfileEntity Activity
         //Profiles
 //        initProfiles()
 
@@ -635,7 +635,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //                                    this@MainActivity.no_profiles_textview.visibility = android.view.View.GONE
 //                                }
 //
-//                                profilesAdapter?.add(Profile(input))
+//                                profilesAdapter?.add(ProfileEntity(input))
 //
 //                            }
 //                            negativeButton(android.R.string.cancel)
