@@ -19,7 +19,9 @@
         <!-- Selected Status View -->
         <View android:id="@+id/item_profile_selectedIndicator_view"
               android:layout_width="10dp"
-              android:layout_height="match_parent"/>
+              android:layout_height="match_parent"
+              android:visibility="gone"
+              tools:visibility="visible"/>
 
         <!-- Details Linear Layout -->
         <LinearLayout android:layout_width="match_parent"
@@ -29,7 +31,11 @@
 
             <TextView
                     android:id="@+id/item_profile_title_textView"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:ellipsize="end"
+                    tools:text="@tools:sample/full_names"/>
 
             <RelativeLayout
                     android:layout_width="match_parent"
