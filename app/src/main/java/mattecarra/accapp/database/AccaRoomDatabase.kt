@@ -10,12 +10,13 @@ import mattecarra.accapp.models.ProfileEntity
 abstract class AccaRoomDatabase : RoomDatabase() {
 
     abstract fun profileDao(): ProfileDao
+    // abstract fun scheduleDao(): ScheduleDao
 
     companion object {
         @Volatile
         private var INSTANCE: AccaRoomDatabase? = null
 
-        val DATABASE_NAME = "acca_database"
+        const val DATABASE_NAME = "acca_database"
 
         fun getDatabase(context: Context): AccaRoomDatabase {
 
@@ -26,15 +27,18 @@ abstract class AccaRoomDatabase : RoomDatabase() {
 
             synchronized(this) {
                 // Create database instance here
-                val instance = Room.databaseBuilder(
+                INSTANCE = Room.databaseBuilder(
                     context.applicationContext,
                     AccaRoomDatabase::class.java,
                     DATABASE_NAME
                 ).build()
 
-                INSTANCE = instance
-                return instance
+                return INSTANCE as AccaRoomDatabase
             }
+        }
+
+        fun destroyInstance() {
+            INSTANCE = null
         }
     }
 
