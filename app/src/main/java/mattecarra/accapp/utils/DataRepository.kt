@@ -3,11 +3,12 @@ package mattecarra.accapp.utils
 import android.app.Application
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
+import kotlinx.coroutines.CoroutineScope
 import mattecarra.accapp.database.AccaRoomDatabase
 import mattecarra.accapp.database.ProfileDao
 import mattecarra.accapp.models.ProfileEntity
 
-class DataRepository(application: Application) {
+class DataRepository(application: Application, scope: CoroutineScope) {
 
     private val mProfileDao: ProfileDao
 
@@ -16,7 +17,7 @@ class DataRepository(application: Application) {
 
     init {
 
-        val accaDatabase = AccaRoomDatabase.getDatabase(application)
+        val accaDatabase = AccaRoomDatabase.getDatabase(application, scope)
         mProfileDao = accaDatabase.profileDao()
         mProfileListLiveData = mProfileDao.getAllProfiles()
     }
