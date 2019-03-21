@@ -7,10 +7,12 @@
         tools:context=".fragments.ProfilesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/profiles_profiles_recyclerView"
+            android:id="@+id/profile_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/profiles_item"/>
+
+    <!-- TODO: Empty Placeholder -->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/profiles_addProfile_fab"
