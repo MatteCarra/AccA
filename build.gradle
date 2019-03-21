@@ -9,7 +9,7 @@ buildscript {
 
         roomVersion = '1.1.1'
         archLifecycleVersion = '1.1.1'
-        coroutines = '0.26.1'
+        coroutines = '1.1.1'
     }
     repositories {
         google()
