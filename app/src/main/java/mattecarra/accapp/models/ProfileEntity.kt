@@ -4,8 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "profiles_table")
-data class Profile(
+data class ProfileEntity(
     @PrimaryKey(autoGenerate = true) val uid: Int,
+    var profileName: String,
     var cooldownCapacity: Int,
     var pauseCapacity: Int,
     var resumeCapacity: Int,
