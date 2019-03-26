@@ -28,11 +28,6 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
         mProfilesListLiveData = mDataRepository.getAllProfiles()
     }
 
-    fun insertProfile(profile: ProfileEntity) = mScope.launch(Dispatchers.IO) {
-
-        mDataRepository.insertProfile(profile)
-    }
-
     fun getProfiles() : LiveData<List<ProfileEntity>> {
 
         return mProfilesListLiveData
