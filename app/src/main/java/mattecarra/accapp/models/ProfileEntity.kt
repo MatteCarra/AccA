@@ -1,5 +1,6 @@
 package mattecarra.accapp.models
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -7,6 +8,7 @@ import androidx.room.PrimaryKey
 data class ProfileEntity(
     @PrimaryKey(autoGenerate = true) val uid: Int,
     var profileName: String,
+//    @Embedded var accConfig: AccConfig,
     var cooldownCapacity: Int,
     var pauseCapacity: Int,
     var resumeCapacity: Int,
