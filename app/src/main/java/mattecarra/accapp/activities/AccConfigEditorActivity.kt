@@ -18,6 +18,7 @@ import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.*
+import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.customview.customView
@@ -30,6 +31,7 @@ import org.jetbrains.anko.uiThread
 
 
 class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, CompoundButton.OnCheckedChangeListener {
+
     private var unsavedChanges = false
     private lateinit var config: AccConfig
 
