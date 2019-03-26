@@ -1,4 +1,4 @@
-package mattecarra.accapp.`interface`
+package mattecarra.accapp._interface
 
 import mattecarra.accapp.models.ProfileEntity
 
