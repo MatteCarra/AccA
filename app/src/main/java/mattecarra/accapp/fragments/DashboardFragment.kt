@@ -75,28 +75,6 @@ class DashboardFragment : Fragment() {
     }
 
     /**
-     * Function for ACCD status card OnClick
-     */
-    fun accdOnClick(view: View) {
-        if (dash_accdButtons_linLay.visibility == View.GONE) {
-            dash_accdButtons_linLay.visibility = View.VISIBLE
-            dash_title_accdStatus_textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_arrow_drop_up_24px, 0)
-        } else {
-            dash_accdButtons_linLay.visibility = View.GONE
-            dash_title_accdStatus_textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_arrow_drop_down_24px, 0)
-        }
-    }
-
-    /**
-     * Function for Status Card Settings OnClick (Configuration)
-     */
-    fun batteryConfigOnClick(view: View) {
-        Intent(view.context, AccConfigEditorActivity::class.java).also { intent ->
-            startActivityForResult(intent, ACC_CONFIG_EDITOR_REQUEST)
-        }
-    }
-
-    /**
      * Function for setting the respective battery text into their textviews.
      * TODO: See if the performance is still a little jank, otherwise, use the handler to update UI elements within the observable.
      */
