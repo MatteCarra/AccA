@@ -10,12 +10,19 @@ import android.preference.PreferenceManager
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.setActionButtonEnabled
+import com.afollestad.materialdialogs.input.getInputField
+import com.afollestad.materialdialogs.input.input
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.Display
 import com.github.javiersantos.appupdater.enums.UpdateFrom
@@ -23,17 +30,23 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import com.topjohnwu.superuser.Shell
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.dashboard_fragment.*
 import mattecarra.accapp.utils.AccUtils
 import mattecarra.accapp.R
+import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.fragments.DashboardFragment
 import mattecarra.accapp.fragments.ProfilesFragment
 import mattecarra.accapp.fragments.SchedulesFragment
+import mattecarra.accapp.models.ProfileEntity
 import mattecarra.accapp.utils.progress
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener  {
+class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, OnProfileClickListener {
+    override fun onProfileClick(profileEntity: ProfileEntity) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     private val LOG_TAG = "MainActivity"
     private val PERMISSION_REQUEST: Int = 0
@@ -41,6 +54,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private val ACC_PROFILE_CREATOR_REQUEST: Int = 2
     private val ACC_PROFILE_EDITOR_REQUEST: Int = 3
     private val ACC_PROFILE_SCHEDULER_REQUEST: Int = 4
+
+    private lateinit var mViewModel: MainActivityViewModel
 
     val mMainFragment = DashboardFragment.newInstance()
     val mProfilesFragment = ProfilesFragment.newInstance()
@@ -152,6 +167,64 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         transaction.replace(R.id.fragment_container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
+    }
+
+    /**
+     * Function for ACCD status card OnClick in DashboardFragment
+     */
+    fun accdOnClick(view: View) {
+        if (dash_accdButtons_linLay.visibility == View.GONE) {
+            dash_accdButtons_linLay.visibility = View.VISIBLE
+            dash_title_accdStatus_textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_arrow_drop_up_24px, 0)
+        } else {
+            dash_accdButtons_linLay.visibility = View.GONE
+            dash_title_accdStatus_textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_arrow_drop_down_24px, 0)
+        }
+    }
+
+    /**
+     * Function for Status Card Settings OnClick (Configuration)
+     */
+    fun batteryConfigOnClick(view: View) {
+        Intent(view.context, AccConfigEditorActivity::class.java).also { intent ->
+            startActivityForResult(intent, ACC_CONFIG_EDITOR_REQUEST)
+        }
+    }
+
+    /**
+     * Function for starting and stopping the ACCD
+     */
+    fun accdStartStopOnClick(view: View) {
+
+        Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
+
+        doAsync {
+            if(AccUtils.isAccdRunning())
+                AccUtils.abcStopDaemon()
+            else
+                AccUtils.abcStartDaemon()
+        }
+    }
+
+    /**
+     * Function for restarting the ACCD
+     */
+    fun accdRestartDaemonOnClick(view: View) {
+        Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
+
+        doAsync {
+            AccUtils.abcRestartDaemon()
+        }
+    }
+
+    /**
+     * Function for launching the profile creation Activity
+     */
+    fun accProfilesFabOnClick(view: View) {
+        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+            intent.putExtra("title", this@MainActivity.getString(R.string.profile_creator))
+            startActivityForResult(intent, ACC_PROFILE_CREATOR_REQUEST)
+        }
     }
 
 //    private fun initProfiles() {
@@ -276,8 +349,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         // Load in dashboard fragment
         loadFragment(mMainFragment)
 
-        // TODO: Init fragments and complete fragment transaction here
-
         // TODO: Move profiles to a new ProfileEntity Activity
         //Profiles
 //        initProfiles()
@@ -288,25 +359,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //            Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
 //                intent.putExtra("title", this@MainActivity.getString(R.string.profile_creator))
 //                startActivityForResult(intent, ACC_PROFILE_CREATOR_REQUEST)
-//            }
-//        }
-
-//        daemon_start_stop.setOnClickListener {
-//            Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
-//
-//            doAsync {
-//                if(AccUtils.isAccdRunning())
-//                    AccUtils.abcStopDaemon()
-//                else
-//                    AccUtils.abcStartDaemon()
-//            }
-//        }
-
-//        daemon_restart.setOnClickListener {
-//            Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
-//
-//            doAsync {
-//                AccUtils.abcRestartDaemon()
 //            }
 //        }
 
@@ -527,6 +579,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Assign ViewModel
+        mViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -576,7 +631,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         if (requestCode == ACC_CONFIG_EDITOR_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 if(data?.getBooleanExtra("hasChanges", false) == true) {
-                    mAccConfig = data.getParcelableExtra("mAccConfig")
+                    mAccConfig = data.getParcelableExtra("config")
                     doAsync {
                         val res = mAccConfig.updateAcc()
 
@@ -598,25 +653,50 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 }
             }
         }
-//        else if(requestCode == ACC_PROFILE_CREATOR_REQUEST) {
-//            if (resultCode == Activity.RESULT_OK) {
-//                if(data != null) {
-//                    val mAccConfig: AccConfig = data.getParcelableExtra("mAccConfig")
-//                    val fileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
-//                    MaterialDialog(this)
-//                        .show {
-//                            title(R.string.profile_name)
-//                            message(R.string.dialog_profile_name_message)
-//                            input(waitForPositiveButton = false) { dialog, charSequence ->
-//                                val inputField = dialog.getInputField()
-//                                val isValid = fileNameRegex.matches(charSequence)
-//
-//                                inputField.error = if (isValid) null else getString(R.string.invalid_chars)
-//                                dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
-//                            }
-//                            positiveButton(R.string.save) { dialog ->
-//                                val input = dialog.getInputField().text.toString()
-//
+        else if(requestCode == ACC_PROFILE_CREATOR_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                if (data != null) {
+                    val config: AccConfig = data.getParcelableExtra("config")
+                    val fileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
+                    MaterialDialog(this)
+                        .show {
+                            title(R.string.profile_name)
+                            message(R.string.dialog_profile_name_message)
+                            input(waitForPositiveButton = false) { dialog, charSequence ->
+                                val inputField = dialog.getInputField()
+                                val isValid = fileNameRegex.matches(charSequence)
+
+                                inputField.error = if (isValid) null else getString(R.string.invalid_chars)
+                                dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
+                            }
+                            positiveButton(R.string.save) { dialog ->
+                                val profileName = dialog.getInputField().text.toString()
+
+                                // Add Profile to Database via ViewModel function
+                                val profile = ProfileEntity(
+                                    0,
+                                    profileName,
+//                                    mAccConfig,
+                                    config.capacity.coolDownCapacity,
+                                    config.capacity.pauseCapacity,
+                                    config.capacity.pauseCapacity,
+                                    config.capacity.shutdownCapacity,
+                                    config.chargingSwitch,
+                                    config.cooldown!!.charge,
+                                    config.cooldown!!.pause,
+                                    config.onBoot,
+                                    config.onBootExit,
+                                    config.onPlugged,
+                                    config.resetUnplugged,
+                                    config.temp.coolDownTemp,
+                                    config.temp.pauseChargingTemp,
+                                    config.temp.waitSeconds,
+                                    config.voltControl.voltFile,
+                                    config.voltControl.voltMax
+                                )
+
+                                mViewModel.insertProfile(profile)
+
 //                                //profiles index
 //                                val profileList = ProfileUtils.listProfiles(this@MainActivity, gson).toMutableList()
 //
@@ -636,12 +716,13 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //                                }
 //
 //                                profilesAdapter?.add(ProfileEntity(input))
-//
-//                            }
-//                            negativeButton(android.R.string.cancel)
-//                        }
-//                }
-//            }
+
+                            }
+                            negativeButton(android.R.string.cancel)
+                        }
+                }
+            }
+        }
 //        } else if(requestCode == ACC_PROFILE_EDITOR_REQUEST) {
 //            if (resultCode == Activity.RESULT_OK) {
 //                if(data?.getBooleanExtra("hasChanges", false) == true && data.hasExtra("data")) {
