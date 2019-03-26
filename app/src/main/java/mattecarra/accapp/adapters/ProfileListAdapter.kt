@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import mattecarra.accapp.R
+import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.models.ProfileEntity
 
 class ProfileListAdapter internal constructor(context: Context) : RecyclerView.Adapter<ProfileListAdapter.ProfileViewHolder>() {
 
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private var mProfilesList = emptyList<ProfileEntity>()
+    private lateinit var mListener: OnProfileClickListener
 
     inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -29,9 +31,9 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
 
     override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
 
-        val current = mProfilesList[position]
-        holder.profileTitleItemView.text =current.profileName
-        holder.profileCapacityTextView.text = current.pauseCapacity.toString()
+        val profile = mProfilesList[position]
+        holder.profileTitleItemView.text = profile.profileName
+        holder.profileCapacityTextView.text = profile.cooldownCapacity.toString()
     }
 
     internal fun setProfiles(profiles: List<ProfileEntity>) {
@@ -43,5 +45,12 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
     override fun getItemCount(): Int {
 
         return mProfilesList.size
+    }
+
+    /**
+     * Set the OnProfileClickListener, the parent must implement the interface.
+     */
+    fun setOnClickListener(profileClickListener: OnProfileClickListener) {
+        mListener = profileClickListener
     }
 }
