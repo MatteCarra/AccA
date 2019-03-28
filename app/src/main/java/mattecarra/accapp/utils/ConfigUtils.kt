@@ -1,9 +1,5 @@
 package mattecarra.accapp.utils
 
-//import android.os.Parcel
-//import android.os.Parcelable
-//import androidx.room.Entity
-//import kotlinx.android.parcel.Parcelize
 import mattecarra.accapp.models.AccConfig
 
 object ConfigUtils {
@@ -38,134 +34,84 @@ object ConfigUtils {
 
 }
 
-
 /**
- * CoolDown related functions.
+ * Updates the cool down charge and pause durations.
  * @param charge seconds to charge for during the cool down phase.
  * @param pause seconds to pause for during the cool down phase.
+ * @return boolean if the command was successful.
  */
-data class CoolDown(var charge: Int, var pause: Int) {
-
-    fun updateAcc(): Boolean {
-        return AccUtils.updateCoolDown(charge, pause)
-    }
-
-    fun getUpdateAccCommand(): String {
-        return AccUtils.updateCoolDownCommand(charge, pause)
-    }
+fun updateAccCoolDown(charge: Int, pause: Int) : Boolean {
+    return AccUtils.updateCoolDown(charge, pause)
 }
 
 /**
- * Capactiy related functions.
- * @param shutdownCapacity shutdown the device at the specified percentage.
- * @param coolDownCapacity starts the cool down phase at the specified percentage.
- * @param resumeCapacity allows charging starting from the specified capacity.
- * @param pauseCapacity pauses charging at the specified capacity.
+ * Returns the cool down update command with provided values.
+ * @param charge seconds to charge for during the cool down phase.
+ * @param pause seconds to pause for during the cool down phase.
+ * @return ACC command string with the provided values.
  */
-data class Capacity(var shutdownCapacity: Int, var coolDownCapacity: Int, var resumeCapacity: Int, var pauseCapacity: Int) {
-
-    fun updateAcc(): Boolean {
-        return AccUtils.updateCapacity(shutdownCapacity, coolDownCapacity, resumeCapacity, pauseCapacity)
-    }
-
-    fun getUpdateAccCommand(): String {
-        return AccUtils.updateCapacityCommand(shutdownCapacity, coolDownCapacity, resumeCapacity, pauseCapacity)
-    }
+fun getUpdateAccCoolDownCommand(charge: Int, pause: Int) : String {
+    return AccUtils.updateCoolDownCommand(charge, pause)
 }
 
 /**
- * Temperature related functions.
- * @param coolDownTemp starts cool down phase at the specified temperature.
- * @param pauseChargingTemp pauses charging at the specified temperature.
- * @param waitSeconds seconds to wait until charging is resumed.
+ * Updates the capacity related settings of ACC.
+ * @param shutdown shutdown the device at the specified percentage.
+ * @param coolDown starts the cool down phase at the specified percentage.
+ * @param resume allows charging starting from the specified capacity.
+ * @param pause pauses charging at the specified capacity.
+ * @return boolean if the command was successful.
  */
-data class Temperature(var coolDownTemp: Int, var pauseChargingTemp: Int, var waitSeconds: Int) {
-
-    fun updateAcc(): Boolean {
-        return AccUtils.updateTemp(coolDownTemp, pauseChargingTemp, waitSeconds)
-    }
-
-    fun getUpdateAccCommand(): String {
-        return AccUtils.updateTempCommand(coolDownTemp, pauseChargingTemp, waitSeconds)
-    }
+fun updateAccCapacity(shutdown: Int, coolDown: Int, resume: Int, pause: Int) : Boolean {
+    return AccUtils.updateCapacity(shutdown, coolDown, resume, pause)
 }
 
 /**
- * Functions related to Voltage Control.
- * @param voltFile Path to the voltage file on the device.
- * @param voltMax Maximum voltage the phone should charge at.
+ * Returns the command used to update the capacity configuration in ACC.
+ * @param shutdown shutdown the device at the specified percentage.
+ * @param coolDown starts the cool down phase at the specified percentage.
+ * @param resume allows charging starting from the specified capacity.
+ * @param pause pauses charging at the specified capacity.
+ * @return ACC command string with the provided values.
  */
-data class VoltControl(var voltFile: String?, var voltMax: Int?) {
-//    constructor(parcel: Parcel) : this(parcel.readString(), parcel.readValue(Int::class.java.classLoader) as Int?)
-
-    fun updateAcc(): Boolean {
-        return AccUtils.updateVoltage(voltFile, voltMax)
-    }
-
-    fun getUpdateAccCommand(): String {
-        return AccUtils.updateVoltageCommand(voltFile, voltMax)
-    }
-
-//    override fun writeToParcel(parcel: Parcel, flags: Int) {
-//        parcel.writeString(voltFile)
-//        parcel.writeValue(voltMax)
-//    }
-//
-//    override fun describeContents(): Int {
-//        return 0
-//    }
-//
-//    companion object CREATOR : Parcelable.Creator<VoltControl> {
-//        override fun createFromParcel(parcel: Parcel): VoltControl {
-//            return VoltControl(parcel)
-//        }
-//
-//        override fun newArray(size: Int): Array<VoltControl?> {
-//            return arrayOfNulls(size)
-//        }
-//    }
+fun getUpdateAccCapacityCommand(shutdown: Int, coolDown: Int, resume: Int, pause: Int): String {
+    return AccUtils.updateCapacityCommand(shutdown, coolDown, resume, pause)
 }
 
-//@Parcelize
-//@Entity
-//data class AccConfig(
-//    val capacity: Capacity,
-//    var cooldown: CoolDown?,
-//    val temp: Temperature,
-//    val voltControl: VoltControl,
-//    var resetUnplugged: Boolean,
-//    var onBootExit: Boolean,
-//    var onBoot: String?,
-//    var onPlugged: String?,
-//    var chargingSwitch: String?
-//): Parcelable {
-//
-//    fun getCommands(): List<String> {
-//        return arrayOf(
-//            capacity.getUpdateAccCommand(),
-//            cooldown?.getUpdateAccCommand(),
-//            temp.getUpdateAccCommand(),
-//            voltControl.getUpdateAccCommand(),
-//            AccUtils.updateResetUnpluggedCommand(resetUnplugged),
-//            AccUtils.updateOnBootExitCommand(onBootExit),
-//            AccUtils.updateOnBootCommand(onBoot),
-//            AccUtils.updateOnPluggedCommand(onPlugged),
-//            chargingSwitch?.let { AccUtils.setChargingSwitchCommand(it) } ?: AccUtils.unsetChargingSwitchCommand(),
-//            "acc -D restart"
-//        ).filterNotNull()
-//    }
-//
-//    fun updateAcc(): UpdateResult {
-//        return UpdateResult(
-//            capacity.updateAcc(),
-//            cooldown?.updateAcc() ?: true,
-//            temp.updateAcc(),
-//            voltControl.updateAcc(),
-//            AccUtils.updateResetUnplugged(resetUnplugged),
-//            AccUtils.updateOnBootExit(onBootExit),
-//            AccUtils.updateOnBoot(onBoot),
-//            AccUtils.updateOnPlugged(onPlugged),
-//            chargingSwitch?.let { AccUtils.setChargingSwitch(it) } ?: AccUtils.unsetChargingSwitch()
-//        )
-//    }
+/**
+ * Updates the temperature related configuration in ACC.
+ * @param coolDown starts cool down phase at the specified temperature.
+ * @param pause pauses charging at the specified temperature.
+ * @param wait seconds to wait until charging is resumed.
+ */
+fun updateAccTemperature(coolDown: Int, pause: Int, wait: Int) : Boolean {
+    return AccUtils.updateTemp(coolDown, pause, wait)
+}
+
+/**
+ * Returns the command used to update the temperature configuration in ACC.
+ * @param coolDown starts cool down phase at the specified temperature.
+ * @param pause pauses charging at the specified temperature.
+ * @param wait seconds to wait until charging is resumed.
+ */
+fun getUpdateAccTemperatureCommand(coolDown: Int, pause: Int, wait: Int) : String {
+    return AccUtils.updateTempCommand(coolDown, pause, wait)
+}
+
+/**
+ * Updates the voltage related configuration in ACC.
+ * @param voltFile path to the voltage file on the device.
+ * @param voltMax maximum voltage the phone should charge at.
+ */
+fun updateAccVoltControl(voltFile: String?, voltMax: Int?) : Boolean {
+    return AccUtils.updateVoltage(voltFile, voltMax)
+}
+
+/**
+ * Updates the voltage related configuration in ACC.
+ * @param voltFile path to the voltage file on the device.
+ * @param voltMax maximum voltage the phone should charge at.
+ */
+fun updateAccVoltControlCommand(voltFile: String?, voltMax: Int?) : String {
+    return AccUtils.updateVoltageCommand(voltFile, voltMax)
 }
