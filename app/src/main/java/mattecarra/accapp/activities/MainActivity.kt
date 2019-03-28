@@ -313,23 +313,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //                    }
 //                }
 //            } else {
-//                //apply profile
-//                val profileConfig = ProfileUtils.readProfile(profile.profileName, this@MainActivity, gson)
 //
-//                doAsync {
-//                    val res = profileConfig.updateAcc()
-//
-//                    ProfileUtils.saveCurrentProfile(profile.profileName, mSharedPrefs)
-//
-//                    if(!res.voltControlUpdateSuccessful) {
-//                        uiThread {
-//                            Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
-//                        }
-//                    }
-//                }
-//
-//                profilesAdapter?.selectedProfile = profile.profileName
-//                profilesAdapter?.notifyDataSetChanged()
 //            }
 //        }
 //
