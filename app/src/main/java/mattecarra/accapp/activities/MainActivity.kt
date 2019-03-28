@@ -62,10 +62,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     // TODO: Check what the mAccConfig does in the MainActivity
     private lateinit var mAccConfig: AccConfig
 
-    private lateinit var mSharedPrefs: SharedPreferences
-    // TODO: Use Gson to export profiles, use internal SQLite database to store
-    private val mGson: Gson = Gson()
-
 //    private var profilesAdapter: ProfilesViewAdapter? = null
 //
 //    private var batteryInfo: BatteryInfo? = null
