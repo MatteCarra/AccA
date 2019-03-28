@@ -1,6 +1,10 @@
 package mattecarra.accapp.adapters
 
 import android.content.Context
+import android.content.SharedPreferences
+import android.graphics.Color
+import android.opengl.Visibility
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import mattecarra.accapp.R
 import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.models.AccaProfile
+import mattecarra.accapp.utils.Constants
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 class ProfileListAdapter internal constructor(context: Context) : RecyclerView.Adapter<ProfileListAdapter.ProfileViewHolder>() {
 
@@ -16,7 +23,37 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
     private var mProfilesList = emptyList<AccaProfile>()
     private lateinit var mListener: OnProfileClickListener
 
-    inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener{
+
+        override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+            if (key.equals(Constants.PROFILE_KEY)) {
+
+                doAsync {
+                    val profileId = sharedPreferences!!.getInt(key, -1)
+
+                    uiThread {
+                        if (mProfilesList[adapterPosition].uid == profileId) {
+                            profileSelectedView.visibility = View.VISIBLE
+                        } else {
+                            // Hide the profileSelectedView
+                            profileSelectedView.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+        }
+
+        override fun onClick(v: View?) {
+            mListener.onProfileClick(mProfilesList[adapterPosition])
+        }
+
+        init {
+            itemView.setOnClickListener(this)
+            val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(itemView.context)
+            prefs.registerOnSharedPreferenceChangeListener(this)
+
+            onSharedPreferenceChanged(prefs, Constants.PROFILE_KEY)
+        }
 
         val profileSelectedView: View = itemView.findViewById(R.id.item_profile_selectedIndicator_view)
         val profileTitleItemView: TextView = itemView.findViewById(R.id.item_profile_title_textView)
