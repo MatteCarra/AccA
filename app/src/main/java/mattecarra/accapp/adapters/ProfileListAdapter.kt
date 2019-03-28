@@ -8,12 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import mattecarra.accapp.R
 import mattecarra.accapp._interface.OnProfileClickListener
-import mattecarra.accapp.models.ProfileEntity
+import mattecarra.accapp.models.AccaProfile
 
 class ProfileListAdapter internal constructor(context: Context) : RecyclerView.Adapter<ProfileListAdapter.ProfileViewHolder>() {
 
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
-    private var mProfilesList = emptyList<ProfileEntity>()
+    private var mProfilesList = emptyList<AccaProfile>()
     private lateinit var mListener: OnProfileClickListener
 
     inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -36,7 +36,7 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
         holder.profileCapacityTextView.text = profile.cooldownCapacity.toString()
     }
 
-    internal fun setProfiles(profiles: List<ProfileEntity>) {
+    internal fun setProfiles(profiles: List<AccaProfile>) {
 
         mProfilesList = profiles
         notifyDataSetChanged()

@@ -6,7 +6,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import mattecarra.accapp.models.ProfileEntity
+import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.utils.DataRepository
 import kotlin.coroutines.CoroutineContext
 
@@ -25,7 +25,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         mDataRepository = DataRepository(application, mScope)
     }
 
-    fun insertProfile(profile: ProfileEntity) = mScope.launch(Dispatchers.IO) {
+    fun insertProfile(profile: AccaProfile) = mScope.launch(Dispatchers.IO) {
 
         mDataRepository.insertProfile(profile)
     }

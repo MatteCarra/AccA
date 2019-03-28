@@ -34,17 +34,17 @@ import kotlinx.android.synthetic.main.dashboard_fragment.*
 import mattecarra.accapp.utils.AccUtils
 import mattecarra.accapp.R
 import mattecarra.accapp._interface.OnProfileClickListener
-import mattecarra.accapp.models.AccConfig
+import mattecarra.accapp.utils.AccConfig
 import mattecarra.accapp.fragments.DashboardFragment
 import mattecarra.accapp.fragments.ProfilesFragment
 import mattecarra.accapp.fragments.SchedulesFragment
-import mattecarra.accapp.models.ProfileEntity
+import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.utils.progress
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, OnProfileClickListener {
-    override fun onProfileClick(profileEntity: ProfileEntity) {
+    override fun onProfileClick(accaProfile: AccaProfile) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -233,7 +233,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //        val currentProfile = mSharedPrefs.getString("PROFILE", null)
 //
 //        val layoutManager = GridLayoutManager(this, 3)
-//        profilesAdapter = ProfilesViewAdapter(ArrayList(profileList.map { ProfileEntity(it) }), currentProfile) { profile, longPress ->
+//        profilesAdapter = ProfilesViewAdapter(ArrayList(profileList.map { AccaProfile(it) }), currentProfile) { profile, longPress ->
 //            if(longPress) {
 //                MaterialDialog(this@MainActivity).show {
 //                    listItems(R.array.profile_long_press_options) { _, index, _ ->
@@ -349,7 +349,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         // Load in dashboard fragment
         loadFragment(mMainFragment)
 
-        // TODO: Move profiles to a new ProfileEntity Activity
+        // TODO: Move profiles to a new AccaProfile Activity
         //Profiles
 //        initProfiles()
 
@@ -673,26 +673,26 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                                 val profileName = dialog.getInputField().text.toString()
 
                                 // Add Profile to Database via ViewModel function
-                                val profile = ProfileEntity(
+                                val profile = AccaProfile(
                                     0,
                                     profileName,
-//                                    mAccConfig,
-                                    config.capacity.coolDownCapacity,
-                                    config.capacity.pauseCapacity,
-                                    config.capacity.pauseCapacity,
-                                    config.capacity.shutdownCapacity,
-                                    config.chargingSwitch,
-                                    config.cooldown!!.charge,
-                                    config.cooldown!!.pause,
-                                    config.onBoot,
-                                    config.onBootExit,
-                                    config.onPlugged,
-                                    config.resetUnplugged,
-                                    config.temp.coolDownTemp,
-                                    config.temp.pauseChargingTemp,
-                                    config.temp.waitSeconds,
-                                    config.voltControl.voltFile,
-                                    config.voltControl.voltMax
+                                    mAccConfig
+//                                    config.capacity.coolDownCapacity,
+//                                    config.capacity.pauseCapacity,
+//                                    config.capacity.pauseCapacity,
+//                                    config.capacity.shutdownCapacity,
+//                                    config.chargingSwitch,
+//                                    config.cooldown!!.charge,
+//                                    config.cooldown!!.pause,
+//                                    config.onBoot,
+//                                    config.onBootExit,
+//                                    config.onPlugged,
+//                                    config.resetUnplugged,
+//                                    config.temp.coolDownTemp,
+//                                    config.temp.pauseChargingTemp,
+//                                    config.temp.waitSeconds,
+//                                    config.voltControl.voltFile,
+//                                    config.voltControl.voltMax
                                 )
 
                                 mViewModel.insertProfile(profile)
@@ -715,7 +715,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //                                    this@MainActivity.no_profiles_textview.visibility = android.view.View.GONE
 //                                }
 //
-//                                profilesAdapter?.add(ProfileEntity(input))
+//                                profilesAdapter?.add(AccaProfile(input))
 
                             }
                             negativeButton(android.R.string.cancel)

@@ -7,14 +7,14 @@ import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 
-import mattecarra.accapp.models.ProfileEntity
+import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.utils.DataRepository
 
 class ProfilesViewModel(application: Application) : AndroidViewModel(application) {
 
     private val mDataRepository: DataRepository
 
-    private val mProfilesListLiveData: LiveData<List<ProfileEntity>>
+    private val mProfilesListLiveData: LiveData<List<AccaProfile>>
 
     private var mParentJob = Job()
     private val mCoroutineContext: CoroutineContext
@@ -28,7 +28,7 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
         mProfilesListLiveData = mDataRepository.getAllProfiles()
     }
 
-    fun getProfiles() : LiveData<List<ProfileEntity>> {
+    fun getProfiles() : LiveData<List<AccaProfile>> {
 
         return mProfilesListLiveData
     }

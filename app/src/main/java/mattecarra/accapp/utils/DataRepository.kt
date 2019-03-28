@@ -6,14 +6,14 @@ import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineScope
 import mattecarra.accapp.database.AccaRoomDatabase
 import mattecarra.accapp.database.ProfileDao
-import mattecarra.accapp.models.ProfileEntity
+import mattecarra.accapp.models.AccaProfile
 
 class DataRepository(application: Application, scope: CoroutineScope) {
 
     private val mProfileDao: ProfileDao
 
     // Live Data
-    private val mProfileListLiveData: LiveData<List<ProfileEntity>>
+    private val mProfileListLiveData: LiveData<List<AccaProfile>>
 
     init {
 
@@ -22,12 +22,12 @@ class DataRepository(application: Application, scope: CoroutineScope) {
         mProfileListLiveData = mProfileDao.getAllProfiles()
     }
 
-    fun getAllProfiles(): LiveData<List<ProfileEntity>> {
+    fun getAllProfiles(): LiveData<List<AccaProfile>> {
         return mProfileListLiveData
     }
 
     @WorkerThread
-    suspend fun insertProfile(profile: ProfileEntity) {
+    suspend fun insertProfile(profile: AccaProfile) {
         mProfileDao.insert(profile)
     }
 

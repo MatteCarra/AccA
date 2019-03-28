@@ -1,12 +1,12 @@
 package mattecarra.accapp._interface
 
-import mattecarra.accapp.models.ProfileEntity
+import mattecarra.accapp.models.AccaProfile
 
 /**
  * Interface for handling OnClick with a Profile
  */
 interface OnProfileClickListener {
 
-    fun onProfileClick(profileEntity: ProfileEntity)
+    fun onProfileClick(accaProfile: AccaProfile)
 
 }
