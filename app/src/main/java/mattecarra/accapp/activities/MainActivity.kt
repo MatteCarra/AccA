@@ -21,6 +21,7 @@ import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
+import com.afollestad.materialdialogs.list.listItems
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.Display
 import com.github.javiersantos.appupdater.enums.UpdateFrom
@@ -238,6 +239,59 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     }
 
+    override fun onProfileLongClick(accaProfile: AccaProfile) {
+        MaterialDialog(this@MainActivity).show {
+            listItems(R.array.profile_long_press_options) { _, index, _ ->
+                when(index) {
+                    0 -> {
+                        Toast.makeText(applicationContext, "Edit", Toast.LENGTH_SHORT).show()
+//                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+//                            val dataBundle = Bundle()
+//                            dataBundle.putString("profileName", profile.profileName)
+//
+//                            intent.putExtra("mAccConfig", ProfileUtils.readProfile(profile.profileName, this@MainActivity, gson))
+//                            intent.putExtra("data", dataBundle)
+//                            intent.putExtra("title", this@MainActivity.getString(R.string.profile_creator))
+//                            startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
+//                        }
+                    }
+                    1 -> {
+//                        MaterialDialog(this@MainActivity)
+//                            .show {
+//                                title(R.string.profile_name)
+//                                message(R.string.dialog_profile_name_message)
+//                                input(prefill = profile.profileName) { _, charSequence ->
+//                                    //profiles index
+//                                    val profileList: MutableList<String> = ProfileUtils.listProfiles(this@MainActivity, gson).toMutableList()
+//
+//                                    if(profileList.contains(charSequence.toString())) {
+//                                        //TODO input not valid
+//                                        return@input
+//                                    }
+//
+//                                    profileList.add(charSequence.toString())
+//                                    profileList.remove(profile.profileName) //remove all profile name
+//                                    ProfileUtils.writeProfiles(this@MainActivity, profileList, gson) //Update profiles file with new profile
+//
+//                                    //Saving profile
+//                                    val f = File(context.filesDir, "${profile.profileName}.profile")
+//                                    f.renameTo(File(context.filesDir, "$charSequence.profile"))
+//
+//                                    profile.profileName = charSequence.toString()
+//                                    profilesAdapter?.notifyItemChanged(profile)
+//                                }
+//                                positiveButton(R.string.save)
+//                                negativeButton(android.R.string.cancel)
+//                            }
+                    }
+                    2 -> {
+                        mViewModel.deleteProfile(accaProfile)
+                    }
+                }
+            }
+        }
+    }
+
 //    private fun initProfiles() {
 //        val profileList = ProfileUtils.listProfiles(this, gson)
 //
@@ -316,25 +370,25 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
 //    }
 
-    private fun initUi() {
+private fun initUi() {
 
-        // Set Bottom Navigation Bar Item Selected Listener
-        var mNavBar = botNav_main
-        mNavBar.setOnNavigationItemSelectedListener(this)
+    // Set Bottom Navigation Bar Item Selected Listener
+    var mNavBar = botNav_main
+    mNavBar.setOnNavigationItemSelectedListener(this)
 
-        // Read ACC configuration
-        try {
-            this.mAccConfig = AccUtils.readConfig()
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-            showConfigReadError()
-            this.mAccConfig = AccUtils.defaultConfig //if mAccConfig is null I use default mAccConfig values.
-        }
+    // Read ACC configuration
+    try {
+        this.mAccConfig = AccUtils.readConfig()
+    } catch (ex: Exception) {
+        ex.printStackTrace()
+        showConfigReadError()
+        this.mAccConfig = AccUtils.defaultConfig //if mAccConfig is null I use default mAccConfig values.
+    }
 
-        // Load in dashboard fragment
-        loadFragment(mMainFragment)
+    // Load in dashboard fragment
+    loadFragment(mMainFragment)
 
-        //Rest of the UI
+    //Rest of the UI
 
 //        edit_charging_limit_once_bt.setOnClickListener {
 //            val dialog = MaterialDialog(this).show {
@@ -367,14 +421,14 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //            AccUtils.resetBatteryStats()
 //        }
 
-        // TODO: Integrate schedules into another fragment
+    // TODO: Integrate schedules into another fragment
 //        val schedules = ArrayList(AccUtils.listAllSchedules())
 //        if(schedules.isEmpty()) {
 //            no_schedules_jobs_textview.visibility = View.VISIBLE
 //            scheduled_jobs_recyclerview.visibility = View.GONE
 //        }
 
-        // TODO: Move the recyclerview stuff into the respective ViewModels
+    // TODO: Move the recyclerview stuff into the respective ViewModels
 //        scheduleAdapter = ScheduleRecyclerViewAdapter(schedules) { schedule, delete ->
 //            if(delete) {
 //                deleteSchedule(schedule)
@@ -400,7 +454,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //        scheduled_jobs_recyclerview.layoutManager = layoutManager
 //        scheduled_jobs_recyclerview.adapter = scheduleAdapter
 
-        // TODO: Move schedule onClicks to the new Schedule fragment
+    // TODO: Move schedule onClicks to the new Schedule fragment
 //        create_schedule.setOnClickListener {
 //            val dialog = MaterialDialog(this@MainActivity).show {
 //                customView(R.layout.schedule_dialog)
@@ -452,95 +506,95 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //            spinner.adapter = adapter;
 //        }
-    }
+}
 
-    private fun checkPermissions(): Boolean {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST)
+private fun checkPermissions(): Boolean {
+    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST)
+        return false
+    }
+    return true
+}
+
+private fun showRebootDialog() {
+    val dialog = MaterialDialog(this)
+        .show {
+            title(R.string.reboot_dialog_title)
+            message(R.string.reboot_dialog_description)
+            positiveButton(R.string.reboot) {
+                Shell.su("reboot").exec()
+            }
+            negativeButton(android.R.string.cancel) {
+                finish()
+            }
+            cancelOnTouchOutside(false)
+        }
+
+    dialog.setOnKeyListener { _, keyCode, _ ->
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
+            dialog.dismiss()
+            finish()
+            false
+        } else true
+    }
+}
+
+private fun checkAccInstalled(): Boolean {
+    if(!AccUtils.isAccInstalled()) {
+        if(Shell.su("test -f /dev/acc/installed").exec().code == 0) {
+            showRebootDialog()
             return false
         }
-        return true
-    }
 
-    private fun showRebootDialog() {
-        val dialog = MaterialDialog(this)
-            .show {
-                title(R.string.reboot_dialog_title)
-                message(R.string.reboot_dialog_description)
-                positiveButton(R.string.reboot) {
-                    Shell.su("reboot").exec()
-                }
-                negativeButton(android.R.string.cancel) {
-                    finish()
-                }
-                cancelOnTouchOutside(false)
-            }
+        val dialog = MaterialDialog(this).show {
+            title(R.string.installing_acc)
+            progress(R.string.wait)
+            cancelOnTouchOutside(false)
+        }
 
         dialog.setOnKeyListener { _, keyCode, _ ->
-            if(keyCode == KeyEvent.KEYCODE_BACK) {
-                dialog.dismiss()
-                finish()
-                false
-            } else true
+            keyCode == KeyEvent.KEYCODE_BACK
         }
-    }
 
-    private fun checkAccInstalled(): Boolean {
-        if(!AccUtils.isAccInstalled()) {
-            if(Shell.su("test -f /dev/acc/installed").exec().code == 0) {
-                showRebootDialog()
-                return false
-            }
+        doAsync {
+            val res = AccUtils.installAccModule(this@MainActivity)?.isSuccess == true
+            uiThread {
+                dialog.cancel()
 
-            val dialog = MaterialDialog(this).show {
-                title(R.string.installing_acc)
-                progress(R.string.wait)
-                cancelOnTouchOutside(false)
-            }
-
-            dialog.setOnKeyListener { _, keyCode, _ ->
-                keyCode == KeyEvent.KEYCODE_BACK
-            }
-
-            doAsync {
-                val res = AccUtils.installAccModule(this@MainActivity)?.isSuccess == true
-                uiThread {
-                    dialog.cancel()
-
-                    if(!res) {
-                        val failureDialog = MaterialDialog(this@MainActivity)
-                            .show {
-                                title(R.string.installation_failed_title)
-                                message(R.string.installation_failed)
-                                positiveButton(R.string.retry) {
-                                    if(checkAccInstalled() && checkPermissions())
-                                        initUi()
-                                }
-                                negativeButton {
-                                    finish()
-                                }
-                                cancelOnTouchOutside(false)
+                if(!res) {
+                    val failureDialog = MaterialDialog(this@MainActivity)
+                        .show {
+                            title(R.string.installation_failed_title)
+                            message(R.string.installation_failed)
+                            positiveButton(R.string.retry) {
+                                if(checkAccInstalled() && checkPermissions())
+                                    initUi()
                             }
-
-                        failureDialog.setOnKeyListener { _, keyCode, _ ->
-                            if(keyCode == KeyEvent.KEYCODE_BACK) {
-                                dialog.dismiss()
+                            negativeButton {
                                 finish()
-                                false
-                            } else true
+                            }
+                            cancelOnTouchOutside(false)
                         }
-                    } else {
-                        showRebootDialog()
+
+                    failureDialog.setOnKeyListener { _, keyCode, _ ->
+                        if(keyCode == KeyEvent.KEYCODE_BACK) {
+                            dialog.dismiss()
+                            finish()
+                            false
+                        } else true
                     }
+                } else {
+                    showRebootDialog()
                 }
             }
-            return false
         }
-
-        return true
+        return false
     }
 
-    // TODO: If necessary, input this into the ViewModel and bind it.
+    return true
+}
+
+// TODO: If necessary, input this into the ViewModel and bind it.
 
 //    override fun onSaveInstanceState(outState: Bundle?) {
 //        outState?.putParcelable("batteryInfo", batteryInfo)
@@ -549,106 +603,106 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //        super.onSaveInstanceState(outState)
 //    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_main)
 
-        // Assign ViewModel
-        mViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+    // Assign ViewModel
+    mViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
+    val toolbar = findViewById<Toolbar>(R.id.toolbar)
+    setSupportActionBar(toolbar)
 
-        val appUpdater = AppUpdater(this)
-            .setDisplay(Display.NOTIFICATION)
-            .setUpdateFrom(UpdateFrom.GITHUB)
-            .setGitHubUserAndRepo("MatteCarra", "AccA")
-            .setIcon(R.drawable.ic_notification)
-        appUpdater.start()
+    val appUpdater = AppUpdater(this)
+        .setDisplay(Display.NOTIFICATION)
+        .setUpdateFrom(UpdateFrom.GITHUB)
+        .setGitHubUserAndRepo("MatteCarra", "AccA")
+        .setIcon(R.drawable.ic_notification)
+    appUpdater.start()
 
-        if(!Shell.rootAccess()) {
-            val dialog = MaterialDialog(this).show {
-                title(R.string.tile_acc_no_root)
-                message(R.string.no_root_message)
-                positiveButton(android.R.string.ok) {
-                    finish()
-                }
-                cancelOnTouchOutside(false)
+    if(!Shell.rootAccess()) {
+        val dialog = MaterialDialog(this).show {
+            title(R.string.tile_acc_no_root)
+            message(R.string.no_root_message)
+            positiveButton(android.R.string.ok) {
+                finish()
             }
-
-            dialog.setOnKeyListener { _, keyCode, _ ->
-                if(keyCode == KeyEvent.KEYCODE_BACK) {
-                    dialog.dismiss()
-                    finish()
-                    false
-                } else true
-            }
-            return
+            cancelOnTouchOutside(false)
         }
 
-        if(checkAccInstalled() && checkPermissions()) {
-            initUi()
+        dialog.setOnKeyListener { _, keyCode, _ ->
+            if(keyCode == KeyEvent.KEYCODE_BACK) {
+                dialog.dismiss()
+                finish()
+                false
+            } else true
+        }
+        return
+    }
 
-            // TODO: Saved instance state
+    if(checkAccInstalled() && checkPermissions()) {
+        initUi()
+
+        // TODO: Saved instance state
 //            savedInstanceState?.let { bundle ->
 //                updateAccdStatus(bundle.getBoolean("daemonRunning", false))
 //                bundle.getParcelable<BatteryInfo>("batteryInfo")?.let {
 //                    setBatteryInfo(it)
 //                }
 //            }
-        }
     }
+}
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == ACC_CONFIG_EDITOR_REQUEST) {
-            if (resultCode == Activity.RESULT_OK) {
-                if (data?.getBooleanExtra("hasChanges", false) == true) {
-                    mAccConfig = data.getParcelableExtra("config")
-                    doAsync {
-                        val result = ConfigUtils.updateAcc(mAccConfig)
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    if (requestCode == ACC_CONFIG_EDITOR_REQUEST) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (data?.getBooleanExtra("hasChanges", false) == true) {
+                mAccConfig = data.getParcelableExtra("config")
+                doAsync {
+                    val result = ConfigUtils.updateAcc(mAccConfig)
 
-                        // Remove the current selected profile
-                        mViewModel.clearCurrentSelectedProfile()
+                    // Remove the current selected profile
+                    mViewModel.clearCurrentSelectedProfile()
 
-                        uiThread {
-                            if (!result.voltControlUpdateSuccessful) {
-                                Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
-                            }
-                        }
-                    }
-                } else if (requestCode == ACC_PROFILE_CREATOR_REQUEST) {
-                    if (resultCode == Activity.RESULT_OK) {
-                        if (data != null) {
-                            val accConfig: AccConfig = data.getParcelableExtra("config")
-                            val profileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
-                            MaterialDialog(this)
-                                .show {
-                                    title(R.string.profile_name)
-                                    message(R.string.dialog_profile_name_message)
-                                    input(waitForPositiveButton = false) { dialog, charSequence ->
-                                        val inputField = dialog.getInputField()
-                                        val isValid = profileNameRegex.matches(charSequence)
-
-                                        inputField.error = if (isValid) null else getString(R.string.invalid_chars)
-                                        dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
-                                    }
-                                    positiveButton(R.string.save) { dialog ->
-                                        val profileName = dialog.getInputField().text.toString()
-
-                                        // Add Profile to Database via ViewModel function
-                                        val profile = AccaProfile(
-                                            0,
-                                            profileName,
-                                            accConfig
-                                        )
-
-                                        mViewModel.insertProfile(profile)
-                                    }
-                                    negativeButton(android.R.string.cancel)
-                                }
+                    uiThread {
+                        if (!result.voltControlUpdateSuccessful) {
+                            Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
                         }
                     }
                 }
+            } else if (requestCode == ACC_PROFILE_CREATOR_REQUEST) {
+                if (resultCode == Activity.RESULT_OK) {
+                    if (data != null) {
+                        val accConfig: AccConfig = data.getParcelableExtra("config")
+                        val profileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
+                        MaterialDialog(this)
+                            .show {
+                                title(R.string.profile_name)
+                                message(R.string.dialog_profile_name_message)
+                                input(waitForPositiveButton = false) { dialog, charSequence ->
+                                    val inputField = dialog.getInputField()
+                                    val isValid = profileNameRegex.matches(charSequence)
+
+                                    inputField.error = if (isValid) null else getString(R.string.invalid_chars)
+                                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
+                                }
+                                positiveButton(R.string.save) { dialog ->
+                                    val profileName = dialog.getInputField().text.toString()
+
+                                    // Add Profile to Database via ViewModel function
+                                    val profile = AccaProfile(
+                                        0,
+                                        profileName,
+                                        accConfig
+                                    )
+
+                                    mViewModel.insertProfile(profile)
+                                }
+                                negativeButton(android.R.string.cancel)
+                            }
+                    }
+                }
+            }
 //        } else if(requestCode == ACC_PROFILE_EDITOR_REQUEST) {
 //            if (resultCode == Activity.RESULT_OK) {
 //                if(data?.getBooleanExtra("hasChanges", false) == true && data.hasExtra("data")) {
@@ -680,28 +734,28 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //                )
 //            }
 //        }
-            }
+        }
+    }
+}
+
+override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    // Inflate the main_activity_menu; this adds items to the action bar if it is present.
+    menuInflater.inflate(R.menu.main_activity_menu, menu)
+    return true
+}
+
+override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    // Handle action bar item clicks here. The action bar will
+    // automatically handle clicks on the Home/Up button, so long
+    // as you specify a parent activity in AndroidManifest.xml.
+    when (item.itemId) {
+        R.id.actions_logs -> {
+            startActivity(Intent(this, LogViewerActivity::class.java))
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the main_activity_menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main_activity_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        when (item.itemId) {
-            R.id.actions_logs -> {
-                startActivity(Intent(this, LogViewerActivity::class.java))
-            }
-        }
-
-        return super.onOptionsItemSelected(item)
-    }
+    return super.onOptionsItemSelected(item)
+}
 
 //    override fun onResume() {
 //        handler.post(updateUIRunnable) // Start the initial runnable task by posting through the handler
