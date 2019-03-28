@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Capacity Card -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -173,7 +174,7 @@
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
-
+        <!-- Voltage Control Card -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -271,6 +272,7 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <!-- Temperature Card -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -486,6 +488,7 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <!-- On Plugged Card -->
         <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
