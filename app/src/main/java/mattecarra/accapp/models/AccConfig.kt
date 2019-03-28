@@ -5,9 +5,11 @@ data class AccConfig(var configCapacity: ConfigCapacity,
                      var configTemperature: ConfigTemperature,
                      var configOnBoot: ConfigOnBoot,
                      var configOnPlug: ConfigOnPlug,
-                     var configCooldown: ConfigCooldown) {
+                     var configCooldown: ConfigCooldown,
+                     var resetUnplugged: Boolean,
+                     var chargeSwitch: String?) {
 
-    data class ConfigCapacity (var shutdown: Int, var resume: Int, var pause: Int, var chargeSwitch: String?)
+    data class ConfigCapacity (var shutdown: Int, var resume: Int, var pause: Int)
     data class ConfigVoltage (var controlFile: String?, var max: Int)
     data class ConfigTemperature (var cooldown: Int, var max: Int, var pause: Int)
     data class ConfigOnBoot (var enabled: Boolean, var command: String?)

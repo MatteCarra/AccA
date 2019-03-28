@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.content_acc_config_editor.*
 import mattecarra.accapp.utils.AccUtils
 import mattecarra.accapp.R
 import mattecarra.accapp.utils.AccConfig
-import mattecarra.accapp.utils.Cooldown
+import mattecarra.accapp.utils.CoolDown
 import android.app.Activity
 import android.content.Intent
 import android.text.Editable
@@ -497,14 +497,14 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
 
             R.id.charge_ratio_picker -> {
                 if(config.cooldown == null) {
-                    config.cooldown = Cooldown(newVal, 10)
+                    config.cooldown = CoolDown(newVal, 10)
                 }
                 config.cooldown?.charge = newVal
             }
 
             R.id.pause_ratio_picker -> {
                 if(config.cooldown == null) {
-                    config.cooldown = Cooldown(50, newVal)
+                    config.cooldown = CoolDown(50, newVal)
                 }
                 config.cooldown?.pause = newVal
             }

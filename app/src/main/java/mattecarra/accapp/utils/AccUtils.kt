@@ -35,8 +35,8 @@ object AccUtils {
 
     val defaultConfig: AccConfig = AccConfig(
         Capacity(5, 60, 70, 80),
-        Cooldown(50, 10),
-        Temp(40, 45, 90),
+        CoolDown(50, 10),
+        Temperature(40, 45, 90),
         VoltControl(null, null),
         false,
         false,
@@ -57,16 +57,16 @@ object AccUtils {
         )
 
         val coolDownMatchResult = COOLDOWN_CONFIG_REGEXP.find(config)
-        val cooldown: Cooldown? =
+        val coolDown: CoolDown? =
             coolDownMatchResult?.let {
                 val (coolDownChargeSeconds, coolDownPauseSeconds) = coolDownMatchResult.destructured
                 coolDownChargeSeconds.toIntOrNull()?.let { chargeInt ->
-                    coolDownPauseSeconds.toIntOrNull()?.let { Cooldown(chargeInt, it) }
+                    coolDownPauseSeconds.toIntOrNull()?.let { CoolDown(chargeInt, it) }
                 }
             }
 
         val (coolDownTemp, pauseChargingTemp, waitSeconds) = TEMP_CONFIG_REGEXP.find(config)!!.destructured
-        val temp = Temp(
+        val temp = Temperature(
             coolDownTemp.toIntOrNull()?.let { it / 10 } ?: 90,
             pauseChargingTemp.toIntOrNull()?.let { it / 10 } ?: 95,
             waitSeconds.toIntOrNull() ?: 90
@@ -77,7 +77,7 @@ object AccUtils {
 
         return AccConfig(
             capacity,
-            cooldown,
+            coolDown,
             temp,
             voltControl,
             RESET_UNPLUGGED_CONFIG_REGEXP.find(config)?.destructured?.component1() == "true",
