@@ -67,14 +67,15 @@ class AccProfileTileService: TileService() {
 
         val profileToApply = profileList[index]
 
-        //apply profile
-        val profileConfig = ProfileUtils.readProfile(profileToApply, this, gson)
-
-        doAsync {
-            profileConfig.updateAcc()
-
-            ProfileUtils.saveCurrentProfile(profileToApply, sharedPrefs)
-        }
+        //TODO: Adjust profile application function
+//        //apply profile
+//        val profileConfig = ProfileUtils.readProfile(profileToApply, this, gson)
+//
+//        doAsync {
+//            profileConfig.updateAcc()
+//
+//            ProfileUtils.saveCurrentProfile(profileToApply, sharedPrefs)
+//        }
 
         //Update tile infos
         qsTile.state =  Tile.STATE_ACTIVE
