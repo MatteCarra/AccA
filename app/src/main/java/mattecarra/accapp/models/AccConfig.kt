@@ -1,6 +1,9 @@
 package mattecarra.accapp.models
 
+import android.os.Parcel
 import android.os.Parcelable
+import com.google.gson.Gson
+import kotlinx.android.parcel.Parceler
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
 
@@ -10,15 +13,27 @@ import kotlinx.android.parcel.RawValue
  * @param configChargeSwitch changes the charge switch file.
  */
 @Parcelize
-data class AccConfig(var configCapacity: @RawValue ConfigCapacity,
-                     var configVoltage: @RawValue ConfigVoltage,
-                     var configTemperature: @RawValue ConfigTemperature,
+data class AccConfig(var configCapacity: ConfigCapacity,
+                     var configVoltage: ConfigVoltage,
+                     var configTemperature: ConfigTemperature,
                      var configOnBootExit: Boolean,
                      var configOnBoot: String?,
                      var configOnPlug: String?,
-                     var configCoolDown: @RawValue ConfigCoolDown,
+                     var configCoolDown: ConfigCoolDown,
                      var configResetUnplugged: Boolean,
                      var configChargeSwitch: String?) : Parcelable {
+
+    private companion object : Parceler<AccConfig> {
+
+        override fun create(parcel: Parcel): AccConfig {
+            return Gson().fromJson(parcel.readString(), AccConfig::class.java)
+        }
+
+        override fun AccConfig.write(parcel: Parcel, flags: Int) {
+            // Convert this to a GSON string
+            parcel.writeString(Gson().toJson(this))
+        }
+    }
 
     /**
      * Capacity Configuration
