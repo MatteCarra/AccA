@@ -45,9 +45,6 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, OnProfileClickListener {
-    override fun onProfileClick(accaProfile: AccaProfile) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     private val LOG_TAG = "MainActivity"
     private val PERMISSION_REQUEST: Int = 0
@@ -226,6 +223,13 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             intent.putExtra("title", this@MainActivity.getString(R.string.profile_creator))
             startActivityForResult(intent, ACC_PROFILE_CREATOR_REQUEST)
         }
+    }
+
+    /**
+     * Override function for handling ProfileOnClicks
+     */
+    override fun onProfileClick(accaProfile: AccaProfile) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 //    private fun initProfiles() {
@@ -657,7 +661,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         else if(requestCode == ACC_PROFILE_CREATOR_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
-                    val config: AccConfig = data.getParcelableExtra("config")
+                    val accConfig: AccConfig = data.getParcelableExtra("config")
                     val fileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
                     MaterialDialog(this)
                         .show {
@@ -677,47 +681,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                                 val profile = AccaProfile(
                                     0,
                                     profileName,
-                                    mAccConfig
-//                                    config.capacity.coolDownCapacity,
-//                                    config.capacity.pauseCapacity,
-//                                    config.capacity.pauseCapacity,
-//                                    config.capacity.shutdownCapacity,
-//                                    config.chargingSwitch,
-//                                    config.coolDown!!.charge,
-//                                    config.coolDown!!.pause,
-//                                    config.onBoot,
-//                                    config.onBootExit,
-//                                    config.onPlugged,
-//                                    config.resetUnplugged,
-//                                    config.temp.coolDownTemp,
-//                                    config.temp.pauseChargingTemp,
-//                                    config.temp.waitSeconds,
-//                                    config.voltControl.voltFile,
-//                                    config.voltControl.voltMax
+                                    accConfig
                                 )
 
                                 mViewModel.insertProfile(profile)
-
-//                                //profiles index
-//                                val profileList = ProfileUtils.listProfiles(this@MainActivity, gson).toMutableList()
-//
-//                                if(!profileList.contains(input)) {
-//                                    profileList.add(input)
-//                                    ProfileUtils.writeProfiles(this@MainActivity, profileList, gson) //Update profiles file with new profile
-//                                }
-//
-//                                //Saving profile
-//                                val f = File(context.filesDir, "$input.profile")
-//                                val json = gson.toJson(mAccConfig)
-//                                f.writeText(json)
-//
-//                                if(profilesAdapter?.itemCount == 0) {
-//                                    this@MainActivity.profiles_recyclerview.visibility = android.view.View.VISIBLE
-//                                    this@MainActivity.no_profiles_textview.visibility = android.view.View.GONE
-//                                }
-//
-//                                profilesAdapter?.add(AccaProfile(input))
-
                             }
                             negativeButton(android.R.string.cancel)
                         }
