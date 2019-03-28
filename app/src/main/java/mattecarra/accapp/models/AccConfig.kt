@@ -1,5 +1,10 @@
 package mattecarra.accapp.models
 
+/**
+ * Data class for AccConfig.
+ * @param resetUnplugged Reset the battery stats upon unplugging the device.
+ * @param chargeSwitch changes the charge switch file.
+ */
 data class AccConfig(var configCapacity: ConfigCapacity,
                      var configVoltage: ConfigVoltage,
                      var configTemperature: ConfigTemperature,
@@ -22,7 +27,7 @@ data class AccConfig(var configCapacity: ConfigCapacity,
      * @param controlFile path to the device's voltage control file.
      * @param max the max voltage the device should take from the charger.
      */
-    data class ConfigVoltage (var controlFile: String?, var max: Int)
+    data class ConfigVoltage (var controlFile: String?, var max: Int?)
 
     /**
      * Temperature Configuration
