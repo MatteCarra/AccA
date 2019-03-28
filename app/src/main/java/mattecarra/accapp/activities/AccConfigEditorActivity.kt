@@ -11,30 +11,25 @@ import com.afollestad.materialdialogs.input.input
 import kotlinx.android.synthetic.main.content_acc_config_editor.*
 import mattecarra.accapp.utils.AccUtils
 import mattecarra.accapp.R
-import mattecarra.accapp.data.AccConfig
-import mattecarra.accapp.data.Cooldown
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.Gravity
 import android.widget.*
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
-import android.widget.LinearLayout
-import android.view.LayoutInflater
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import it.sephiroth.android.library.xtooltip.ClosePolicy
 import it.sephiroth.android.library.xtooltip.Tooltip
+import mattecarra.accapp.models.AccConfig
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 
 class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, CompoundButton.OnCheckedChangeListener {
+
     private var unsavedChanges = false
     private lateinit var config: AccConfig
 
@@ -137,8 +132,8 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         MaterialDialog(this@AccConfigEditorActivity).show {
                             title(R.string.edit_on_boot)
                 message(R.string.edit_on_boot_dialog_message)
-                input(prefill = this@AccConfigEditorActivity.config.onBoot ?: "", allowEmpty = true, hintRes = R.string.edit_on_boot_dialog_hint) { _, text ->
-                    this@AccConfigEditorActivity.config.onBoot = text.toString()
+                input(prefill = this@AccConfigEditorActivity.config.configOnBoot ?: "", allowEmpty = true, hintRes = R.string.edit_on_boot_dialog_hint) { _, text ->
+                    this@AccConfigEditorActivity.config.configOnBoot = text.toString()
                     this@AccConfigEditorActivity.tv_config_on_boot.text = if(text.isBlank()) getString(R.string.not_set) else text
 
                     unsavedChanges = true
@@ -152,8 +147,8 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         MaterialDialog(this@AccConfigEditorActivity).show {
             title(R.string.edit_on_plugged)
             message(R.string.edit_on_plugged_dialog_message)
-            input(prefill = this@AccConfigEditorActivity.config.onPlugged ?: "", allowEmpty = true, hintRes = R.string.edit_on_boot_dialog_hint) { _, text ->
-                this@AccConfigEditorActivity.config.onPlugged = text.toString()
+            input(prefill = this@AccConfigEditorActivity.config.configOnPlug ?: "", allowEmpty = true, hintRes = R.string.edit_on_boot_dialog_hint) { _, text ->
+                this@AccConfigEditorActivity.config.configOnPlug = text.toString()
                 this@AccConfigEditorActivity.config_on_plugged_textview.text = if(text.isBlank()) getString(R.string.not_set) else text
 
                 unsavedChanges = true
@@ -166,7 +161,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
     fun editChargingSwitchOnClick(v: View) {
         val automaticString = getString(R.string.automatic)
         val chargingSwitches = listOf(automaticString, *AccUtils.listChargingSwitches().toTypedArray())
-        val initialSwitch = config.chargingSwitch
+        val initialSwitch = config.configChargeSwitch
         var currentIndex = chargingSwitches.indexOf(initialSwitch ?: automaticString)
 
         MaterialDialog(this).show {
@@ -188,8 +183,8 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                 val switch = chargingSwitches[index]
 
                 doAsync {
-                    this@AccConfigEditorActivity.config.chargingSwitch = if(index == 0) null else switch
-                    this@AccConfigEditorActivity.charging_switch_textview.text = this@AccConfigEditorActivity.config.chargingSwitch ?: getString(R.string.automatic)
+                    this@AccConfigEditorActivity.config.configChargeSwitch = if(index == 0) null else switch
+                    this@AccConfigEditorActivity.charging_switch_textview.text = this@AccConfigEditorActivity.config.configChargeSwitch ?: getString(R.string.automatic)
                 }
 
                 this@AccConfigEditorActivity.unsavedChanges = true
@@ -251,34 +246,34 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
     }
 
     private fun initUi() {
-        tv_config_on_boot.text = config.onBoot?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
-        exit_on_boot_switch.isChecked = config.onBootExit
+        tv_config_on_boot.text = config.configOnBoot?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
+        exit_on_boot_switch.isChecked = config.configOnBootExit
         exit_on_boot_switch.setOnCheckedChangeListener { _, isChecked ->
-            config.onBootExit = isChecked
+            config.configOnBootExit = isChecked
             unsavedChanges = true
         }
 
-        config_on_plugged_textview.text = config.onPlugged?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
+        config_on_plugged_textview.text = config.configOnPlug?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
 
         charging_switch_textview.text = config.chargingSwitch ?: getString(R.string.automatic)
 
         shutdown_capacity_picker.minValue = 0
         shutdown_capacity_picker.maxValue = 20
-        shutdown_capacity_picker.value = config.capacity.shutdownCapacity
+        shutdown_capacity_picker.value = config.configCapacity.shutdown
         shutdown_capacity_picker.setOnValueChangedListener(this)
 
-        resume_capacity_picker.minValue = config.capacity.shutdownCapacity
-        resume_capacity_picker.maxValue = config.capacity.pauseCapacity - 1
-        resume_capacity_picker.value = config.capacity.resumeCapacity
+        resume_capacity_picker.minValue = config.configCapacity.shutdown
+        resume_capacity_picker.maxValue = config.configCapacity.pause - 1
+        resume_capacity_picker.value = config.configCapacity.resume
         resume_capacity_picker.setOnValueChangedListener(this)
 
-        pause_capacity_picker.minValue = config.capacity.resumeCapacity + 1
+        pause_capacity_picker.minValue = config.configCapacity.resume + 1
         pause_capacity_picker.maxValue = 100
-        pause_capacity_picker.value = config.capacity.pauseCapacity
+        pause_capacity_picker.value = config.configCapacity.pause
         pause_capacity_picker.setOnValueChangedListener(this)
 
         //temps
-        if(config.temp.coolDownTemp >= 90 && config.temp.pauseChargingTemp >= 95) {
+        if(config.configTemperature.coolDownTemperature >= 90 && config.configTemperature.pause >= 95) {
             temp_switch.isChecked = false
             cooldown_temp_picker.isEnabled = false
             pause_temp_picker.isEnabled = false
@@ -288,21 +283,21 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
 
         cooldown_temp_picker.minValue = 20
         cooldown_temp_picker.maxValue = 90
-        cooldown_temp_picker.value = config.temp.coolDownTemp
+        cooldown_temp_picker.value = config.configTemperature.coolDownTemperature
         cooldown_temp_picker.setOnValueChangedListener(this)
 
         pause_temp_picker.minValue = 20
         pause_temp_picker.maxValue = 95
-        pause_temp_picker.value = config.temp.pauseChargingTemp
+        pause_temp_picker.value = config.configTemperature.pause
         pause_temp_picker.setOnValueChangedListener(this)
 
         pause_seconds_picker.minValue = 10
         pause_seconds_picker.maxValue = 120
-        pause_seconds_picker.value = config.temp.waitSeconds
+        pause_seconds_picker.value = config.configTemperature.pause
         pause_seconds_picker.setOnValueChangedListener(this)
 
-        //cooldown
-        if(config.cooldown == null || config.capacity.coolDownCapacity > 100) {
+        //coolDown
+        if(config.configCoolDown.atPercent > 100) {
             cooldown_switch.isChecked = false
             cooldown_percentage_picker.isEnabled = false
             charge_ratio_picker.isEnabled = false
@@ -310,24 +305,24 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         }
         cooldown_switch.setOnCheckedChangeListener(this)
 
-        cooldown_percentage_picker.minValue = config.capacity.shutdownCapacity
+        cooldown_percentage_picker.minValue = config.configCapacity.shutdown
         cooldown_percentage_picker.maxValue = 101 //if someone wants to disable it should use the switch but I'm gonna leave it there
-        cooldown_percentage_picker.value = config.capacity.coolDownCapacity
+        cooldown_percentage_picker.value = config.configCoolDown.atPercent
         cooldown_percentage_picker.setOnValueChangedListener(this)
 
         charge_ratio_picker.minValue = 1
         charge_ratio_picker.maxValue = 120 //no reason behind this value
-        charge_ratio_picker.value = config.cooldown?.charge ?: 50
+        charge_ratio_picker.value = config.configCoolDown.charge ?: 50
         charge_ratio_picker.setOnValueChangedListener(this)
 
         pause_ratio_picker.minValue = 1
         pause_ratio_picker.maxValue = 120 //no reason behind this value
-        pause_ratio_picker.value = config.cooldown?.pause ?: 10
+        pause_ratio_picker.value = config.configCoolDown.pause ?: 10
         pause_ratio_picker.setOnValueChangedListener(this)
 
         //voltage control
-        voltage_control_file.text = config.voltControl.voltFile ?: "Not supported"
-        voltage_max.text = config.voltControl.voltMax?.let { "$it mV" } ?: getString(R.string.disabled)
+        voltage_control_file.text = config.configVoltage.controlFile ?: "Not supported"
+        voltage_max.text = config.configVoltage.max?.let { "$it mV" } ?: getString(R.string.disabled)
 
         //Edit voltage dialog
         edit_voltage_limit.setOnClickListener {
@@ -341,13 +336,13 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
 
                     val voltageMaxInt = voltageMax.text.toString().toIntOrNull()
                     if(checkBox.isChecked && voltageMaxInt != null) {
-                        this@AccConfigEditorActivity.config.voltControl.voltMax = voltageMaxInt
-                        this@AccConfigEditorActivity.config.voltControl.voltFile = voltageControl.selectedItem as String
+                        this@AccConfigEditorActivity.config.configVoltage.max = voltageMaxInt
+                        this@AccConfigEditorActivity.config.configVoltage.controlFile = voltageControl.selectedItem as String
 
                         this@AccConfigEditorActivity.voltage_control_file.text = voltageControl.selectedItem as String
                         this@AccConfigEditorActivity.voltage_max.text = "$voltageMaxInt mV"
                     } else {
-                        this@AccConfigEditorActivity.config.voltControl.voltMax = null
+                        this@AccConfigEditorActivity.config.configVoltage.max = null
 
                         this@AccConfigEditorActivity.voltage_max.text = getString(R.string.disabled)
                     }
@@ -363,7 +358,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             val checkBox = dialog.findViewById<CheckBox>(R.id.enable_voltage_max)
             val voltageControl = view.findViewById<Spinner>(R.id.voltage_control_file)
 
-            voltageMax.setText(config.voltControl.voltMax?.toString() ?: "", TextView.BufferType.EDITABLE)
+            voltageMax.setText(config.configVoltage.max?.toString() ?: "", TextView.BufferType.EDITABLE)
             checkBox.setOnCheckedChangeListener { _, isChecked ->
                 voltageMax.isEnabled = isChecked
 
@@ -372,7 +367,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                 voltageMax.error = if (isValid) null else getString(R.string.invalid_voltage_max)
                 dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid  && voltageControl.selectedItemPosition != -1)
             }
-            checkBox.isChecked = config.voltControl.voltMax != null
+            checkBox.isChecked = config.configVoltage.max != null
             voltageMax.isEnabled = checkBox.isChecked
             voltageMax.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {}
@@ -388,7 +383,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             })
 
             val supportedVoltageControlFiles = ArrayList(AccUtils.listVoltageSupportedControlFiles())
-            val currentVoltageFile = config.voltControl.voltFile?.let { currentVoltFile ->
+            val currentVoltageFile = config.configVoltage.controlFile?.let { currentVoltFile ->
                 val currentVoltFileRegex = currentVoltFile.replace("/", """\/""").replace(".", """\.""").replace("?", ".").toRegex()
                 val match = supportedVoltageControlFiles.find { currentVoltFileRegex.matches(it) }
                 if(match == null) {
@@ -434,12 +429,12 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                     cooldown_temp_picker.value = 40
                     pause_temp_picker.value = 45
 
-                    config.temp.coolDownTemp = 40
-                    config.temp.pauseChargingTemp = 45
+                    config.configTemperature.coolDownTemperature = 40
+                    config.configTemperature.pause = 45
                     unsavedChanges = true
                 } else {
-                    config.temp.coolDownTemp = 90
-                    config.temp.pauseChargingTemp = 95
+                    config.configTemperature.coolDownTemperature= 90
+                    config.configTemperature.pause = 95
                     unsavedChanges = true
                 }
             }
@@ -451,11 +446,11 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
 
                 if(isChecked) {
                     cooldown_percentage_picker.value = 60
-                    config.capacity.coolDownCapacity = 60
+                    config.configCoolDown.atPercent = 60
                     unsavedChanges = true
                 } else {
                     cooldown_percentage_picker.value = 101
-                    config.capacity.coolDownCapacity = 101
+                    config.configCoolDown.atPercent = 101
                     unsavedChanges = true
                 }
             }
@@ -470,51 +465,53 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         when(picker.id) {
             //capacity
             R.id.shutdown_capacity_picker -> {
-                config.capacity.shutdownCapacity = newVal
+                config.configCapacity.shutdown = newVal
 
-                resume_capacity_picker.minValue = config.capacity.shutdownCapacity
-                cooldown_percentage_picker.minValue = config.capacity.shutdownCapacity
+                resume_capacity_picker.minValue = config.configCapacity.shutdown
+                cooldown_percentage_picker.minValue = config.configCapacity.shutdown
             }
 
             R.id.resume_capacity_picker -> {
-                config.capacity.resumeCapacity = newVal
+                config.configCapacity.resume = newVal
 
-                pause_capacity_picker.minValue = config.capacity.resumeCapacity + 1
+                pause_capacity_picker.minValue = config.configCapacity.resume + 1
             }
 
             R.id.pause_capacity_picker -> {
-                config.capacity.pauseCapacity = newVal
+                config.configCapacity.pause = newVal
 
-                resume_capacity_picker.maxValue = config.capacity.pauseCapacity - 1
-                resume_capacity_picker.maxValue = config.capacity.pauseCapacity - 1
+                resume_capacity_picker.maxValue = config.configCapacity.pause - 1
+                resume_capacity_picker.maxValue = config.configCapacity.pause - 1
             }
 
             //temp
             R.id.cooldown_temp_picker ->
-                config.temp.coolDownTemp = newVal
+                config.configTemperature.coolDownTemperature = newVal
 
             R.id.pause_temp_picker ->
-                config.temp.pauseChargingTemp = newVal
+                config.configTemperature.pause = newVal
 
             R.id.pause_seconds_picker ->
-                config.temp.waitSeconds = newVal
+                config.configCoolDown.pause = newVal
 
             //coolDown
             R.id.cooldown_percentage_picker ->
-                config.capacity.coolDownCapacity = newVal
+                config.configCoolDown.atPercent = newVal
 
             R.id.charge_ratio_picker -> {
-                if(config.cooldown == null) {
-                    config.cooldown = Cooldown(newVal, 10)
+                if(config.configCoolDown.atPercent > 100) {
+                    config.configCoolDown.charge = newVal
+                    config.configCoolDown.pause = 10
                 }
-                config.cooldown?.charge = newVal
+                config.configCoolDown.charge = newVal
             }
 
             R.id.pause_ratio_picker -> {
-                if(config.cooldown == null) {
-                    config.cooldown = Cooldown(50, newVal)
+                if(config.configCoolDown.atPercent > 100) {
+                    config.configCoolDown.charge = 50
+                    config.configCoolDown.pause = newVal
                 }
-                config.cooldown?.pause = newVal
+                config.configCoolDown.pause = newVal
             }
 
             else -> {

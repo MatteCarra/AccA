@@ -9,7 +9,6 @@ import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import com.google.gson.Gson
 import mattecarra.accapp.R
-import mattecarra.accapp.data.AccConfig
 import mattecarra.accapp.utils.ProfileUtils
 import org.jetbrains.anko.doAsync
 import java.io.File
@@ -68,14 +67,15 @@ class AccProfileTileService: TileService() {
 
         val profileToApply = profileList[index]
 
-        //apply profile
-        val profileConfig = ProfileUtils.readProfile(profileToApply, this, gson)
-
-        doAsync {
-            profileConfig.updateAcc()
-
-            ProfileUtils.saveCurrentProfile(profileToApply, sharedPrefs)
-        }
+        //TODO: Adjust profile application function
+//        //apply profile
+//        val profileConfig = ProfileUtils.readProfile(profileToApply, this, gson)
+//
+//        doAsync {
+//            profileConfig.updateAcc()
+//
+//            ProfileUtils.saveCurrentProfile(profileToApply, sharedPrefs)
+//        }
 
         //Update tile infos
         qsTile.state =  Tile.STATE_ACTIVE

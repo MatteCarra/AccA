@@ -8,6 +8,10 @@
     <dimen name="card_margin">8dp</dimen>
     <dimen name="card_bottom_margin">10dp</dimen>
 
+    <dimen name="card_text_margin">5dp</dimen>
+
+    <dimen name="fab_margin">16dp</dimen>
+
     <!-- Label and Value text sizes -->
     <dimen name="label_text">16sp</dimen>
     <dimen name="value_text">12sp</dimen>

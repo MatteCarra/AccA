@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Environment
 import com.topjohnwu.superuser.Shell
 import mattecarra.accapp.adapters.Schedule
-import mattecarra.accapp.data.*
+import mattecarra.accapp.models.*
 import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -20,9 +20,7 @@ object AccUtils {
     private val STRING_DISCHARGING = "Discharging"
     private val STRING_CHARGING = "Charging"
 
-    /**
-     * ACC Config Regex
-     */
+    // ACC Config Regex
     val CAPACITY_CONFIG_REGEXP = """^\s*capacity=(\d*),(\d*),(\d+)-(\d+)""".toRegex(RegexOption.MULTILINE)
     val COOLDOWN_CONFIG_REGEXP = """^\s*coolDown=(\d*)/(\d*)""".toRegex(RegexOption.MULTILINE)
     val TEMP_CONFIG_REGEXP = """^\s*temp=(\d*)-(\d*)_(\d*)""".toRegex(RegexOption.MULTILINE)
@@ -34,51 +32,36 @@ object AccUtils {
     val SWITCH = """^\s*switch=([^#]+)""".toRegex(RegexOption.MULTILINE)
 
     val defaultConfig: AccConfig = AccConfig(
-        Capacity(5, 60, 70, 80),
-        Cooldown(50, 10),
-        Temp(40, 45, 90),
-        VoltControl(null, null),
-        false,
+        AccConfig.ConfigCapacity(5, 70, 80),
+        AccConfig.ConfigVoltage(null, null),
+        AccConfig.ConfigTemperature(400, 450, 90),
         false,
         null,
         null,
-        null
-    )
+        AccConfig.ConfigCoolDown(60, 50, 10),
+        false,
+        null)
 
     fun readConfig(): AccConfig {
         val config = readConfigToStringArray().joinToString(separator = "\n")
 
-        val (shutdown, coolDown, resume, pause) = CAPACITY_CONFIG_REGEXP.find(config)!!.destructured
-        val capacity = Capacity(shutdown.toIntOrNull() ?: 0, coolDown.toInt() ?: 101, resume.toInt(), pause.toInt())
-
+        val (capacityShutdown, capacityCoolDown, capacityResume, capacityPause) = CAPACITY_CONFIG_REGEXP.find(config)!!.destructured
         val coolDownMatchResult = COOLDOWN_CONFIG_REGEXP.find(config)
-        val cooldown: Cooldown? =
-            coolDownMatchResult?.let {
-                val (coolDownChargeSeconds, coolDownPauseSeconds) = coolDownMatchResult.destructured
-                coolDownChargeSeconds.toIntOrNull()?.let { chargeInt ->
-                    coolDownPauseSeconds.toIntOrNull()?.let { Cooldown(chargeInt, it) }
-                }
-            }
-
         val (coolDownTemp, pauseChargingTemp, waitSeconds) = TEMP_CONFIG_REGEXP.find(config)!!.destructured
-        val temp = Temp(
-            coolDownTemp.toIntOrNull()?.let { it/10 } ?: 90,
-            pauseChargingTemp.toIntOrNull()?.let { it/10 } ?: 95,
-            waitSeconds.toIntOrNull() ?: 90
-        )
-
+        val (coolDownChargeSeconds, coolDownPauseSeconds) = coolDownMatchResult!!.destructured
         val cVolt = VOLT_FILE.find(config)?.destructured
-        val voltControl = VoltControl(cVolt?.component1(), cVolt?.component2()?.toIntOrNull())
 
         return AccConfig(
-            capacity,
-            cooldown,
-            temp,
-            voltControl,
-            RESET_UNPLUGGED_CONFIG_REGEXP.find(config)?.destructured?.component1() == "true",
-            ON_BOOT_EXIT.find(config)?.destructured?.component1() == "true",
-            ON_BOOT.find(config)?.destructured?.component1()?.trim(),
-            ON_PLUGGED.find(config)?.destructured?.component1()?.trim(),
+            AccConfig.ConfigCapacity(capacityShutdown.toIntOrNull() ?: 0, capacityResume.toInt(), capacityPause.toInt()),
+            AccConfig.ConfigVoltage(cVolt?.component1(), cVolt?.component2()?.toIntOrNull()),
+            AccConfig.ConfigTemperature(coolDownTemp.toIntOrNull()?.let { it / 10 } ?: 90,
+                pauseChargingTemp.toIntOrNull()?.let { it / 10 } ?: 95,
+                waitSeconds.toIntOrNull() ?: 90),
+            getOnBootExit(config),
+            getOnBoot(config),
+            getOnPlugged(config),
+            AccConfig.ConfigCoolDown(capacityCoolDown.toInt(), coolDownChargeSeconds.toInt(), coolDownPauseSeconds.toInt()),
+            getResetUnplugged(config),
             getCurrentChargingSwitch()
         )
     }
@@ -101,6 +84,26 @@ object AccUtils {
         } else {
             return false
         }
+    }
+
+    // Returns OnBootExit value
+    fun getOnBootExit(config: CharSequence) : Boolean {
+        return ON_BOOT_EXIT.find(config)?.destructured?.component1() == "true"
+    }
+
+    // Returns OnBoot value
+    fun getOnBoot(config: CharSequence) : String? {
+        return ON_BOOT.find(config)?.destructured?.component1()?.trim()
+    }
+
+    // Returns OnPlugged value
+    fun getOnPlugged(config: CharSequence) : String? {
+        return ON_PLUGGED.find(config)?.destructured?.component1()?.trim()
+    }
+
+    // Returns ResetUnplugged value
+    fun getResetUnplugged(config: CharSequence) : Boolean {
+        return RESET_UNPLUGGED_CONFIG_REGEXP.find(config)?.destructured?.component1() == "true"
     }
 
     //update temp command

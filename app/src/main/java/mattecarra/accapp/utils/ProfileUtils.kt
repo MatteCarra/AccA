@@ -2,9 +2,7 @@ package mattecarra.accapp.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import com.google.gson.Gson
-import mattecarra.accapp.data.AccConfig
 import java.io.File
 
 object ProfileUtils {
@@ -32,8 +30,8 @@ object ProfileUtils {
         File(context.filesDir, "profiles").writeText(gson.toJson(profiles))
     }
 
-    fun readProfile(profileToApply: String, context: Context, gson: Gson = Gson()): AccConfig {
-        val file = File(context.filesDir, "$profileToApply.profile")
-        return gson.fromJson(file.readText(), AccConfig::class.java)
-    }
+//    fun readProfile(profileToApply: String, context: Context, gson: Gson = Gson()): AccConfig {
+//        val file = File(context.filesDir, "$profileToApply.profile")
+//        return gson.fromJson(file.readText(), AccConfig::class.java)
+//    }
 }

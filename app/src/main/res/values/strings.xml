@@ -9,7 +9,7 @@
     <string name="tile_acc_disabled">ACC Disabled</string>
 
     <!-- Navigation Strings -->
-    <string name="title_main">Main</string>
+    <string name="title_dashboard">Dashboard</string>
     <string name="title_profiles">Profiles</string>
     <string name="title_settings">Settings</string>
 
@@ -39,6 +39,10 @@
     <string name="info_status_extended">%1$s (%2$s)</string>
     <string name="info_charging_speed_extended">%1$dmA at %2$.2fV</string>
     <string name="info_discharging_speed_extended">%1$dmA</string>
+
+    <!-- Profiles Item Labels -->
+    <string name="item_profile_capacity_label">Capacity:</string>
+    <string name="item_profile_temperature_label">Temperature:</string>
 
     <string name="status_label">Status:</string>
     <string name="battery_info_label">Info:</string>
@@ -88,7 +92,7 @@
     <string name="profiles_text_view">Profiles (long press to edit/delete):</string>
     <string name="restart">Restart</string>
     <string name="schedule_job">Schedule job</string>
-    <string name="invalid_chars">The filename contains invalid characters</string>
+    <string name="invalid_chars">The profile name contains invalid characters</string>
     <string name="recurrent_schedule">Run only once</string>
     <string name="execution_time">Execution time</string>
     <string name="new_config">New custom config</string>
