@@ -332,8 +332,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private fun initUi() {
 
         // Set Bottom Navigation Bar Item Selected Listener
-        var mNavbar = botNav_main
-        mNavbar.setOnNavigationItemSelectedListener(this)
+        var mNavBar = botNav_main
+        mNavBar.setOnNavigationItemSelectedListener(this)
 
         // Read ACC configuration
         try {
