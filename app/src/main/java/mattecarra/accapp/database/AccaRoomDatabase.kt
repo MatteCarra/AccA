@@ -4,10 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import kotlinx.coroutines.CoroutineScope
 import mattecarra.accapp.models.AccaProfile
 
 @Database(entities = [AccaProfile::class], version = 1)
+@TypeConverters(ConfigConverter::class)
 abstract class AccaRoomDatabase : RoomDatabase() {
 
     abstract fun profileDao(): ProfileDao
