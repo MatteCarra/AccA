@@ -579,8 +579,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             .setIcon(R.drawable.ic_notification)
         appUpdater.start()
 
-        mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
-
         if(!Shell.rootAccess()) {
             val dialog = MaterialDialog(this).show {
                 title(R.string.tile_acc_no_root)
