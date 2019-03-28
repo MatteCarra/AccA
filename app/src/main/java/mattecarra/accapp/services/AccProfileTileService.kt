@@ -53,6 +53,7 @@ class AccProfileTileService: TileService() {
     override fun onClick() {
         super.onClick()
 
+        //TODO: Implement profile incrementer
         //Get profiles list and increment current profile of one unit.
         val gson = Gson()
         val sharedPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
