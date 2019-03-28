@@ -313,17 +313,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //
 //            }
 //        }
-//
-//        profiles_recyclerview.layoutManager = layoutManager
-//        profiles_recyclerview.adapter = profilesAdapter
-//
-//        if(profileList.isNotEmpty()) {
-//            profiles_recyclerview.visibility = android.view.View.VISIBLE
-//            no_profiles_textview.visibility = android.view.View.GONE
-//        } else {
-//            profiles_recyclerview.visibility = android.view.View.GONE
-//            no_profiles_textview.visibility = android.view.View.VISIBLE
-//        }
+
 //    }
 
     private fun initUi() {
