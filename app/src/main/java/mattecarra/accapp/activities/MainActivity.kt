@@ -34,11 +34,12 @@ import kotlinx.android.synthetic.main.dashboard_fragment.*
 import mattecarra.accapp.utils.AccUtils
 import mattecarra.accapp.R
 import mattecarra.accapp._interface.OnProfileClickListener
-import mattecarra.accapp.utils.AccConfig
 import mattecarra.accapp.fragments.DashboardFragment
 import mattecarra.accapp.fragments.ProfilesFragment
 import mattecarra.accapp.fragments.SchedulesFragment
+import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
+import mattecarra.accapp.utils.ConfigUtils
 import mattecarra.accapp.utils.progress
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -633,7 +634,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 if(data?.getBooleanExtra("hasChanges", false) == true) {
                     mAccConfig = data.getParcelableExtra("config")
                     doAsync {
-                        val res = mAccConfig.updateAcc()
+                        val res = ConfigUtils.updateAcc(mAccConfig)
 
 
                         // TODO: Implement this logic after profiles have been implemented. Use callbacks for that fragment.
