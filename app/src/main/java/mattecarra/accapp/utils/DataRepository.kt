@@ -17,7 +17,7 @@ class DataRepository(application: Application, scope: CoroutineScope) {
 
     init {
 
-        val accaDatabase = AccaRoomDatabase.getDatabase(application, scope)
+        val accaDatabase = AccaRoomDatabase.getDatabase(application)
         mProfileDao = accaDatabase.profileDao()
         mProfileListLiveData = mProfileDao.getAllProfiles()
     }
