@@ -49,7 +49,12 @@ object AccUtils {
         val config = readConfigToStringArray().joinToString(separator = "\n")
 
         val (shutdown, coolDown, resume, pause) = CAPACITY_CONFIG_REGEXP.find(config)!!.destructured
-        val capacity = Capacity(shutdown.toIntOrNull() ?: 0, coolDown.toInt() ?: 101, resume.toInt(), pause.toInt())
+        val capacity = Capacity(
+            shutdown.toIntOrNull() ?: 0,
+            coolDown.toInt() ?: 101,
+            resume.toInt(),
+            pause.toInt()
+        )
 
         val coolDownMatchResult = COOLDOWN_CONFIG_REGEXP.find(config)
         val cooldown: Cooldown? =
@@ -62,8 +67,8 @@ object AccUtils {
 
         val (coolDownTemp, pauseChargingTemp, waitSeconds) = TEMP_CONFIG_REGEXP.find(config)!!.destructured
         val temp = Temp(
-            coolDownTemp.toIntOrNull()?.let { it/10 } ?: 90,
-            pauseChargingTemp.toIntOrNull()?.let { it/10 } ?: 95,
+            coolDownTemp.toIntOrNull()?.let { it / 10 } ?: 90,
+            pauseChargingTemp.toIntOrNull()?.let { it / 10 } ?: 95,
             waitSeconds.toIntOrNull() ?: 90
         )
 
