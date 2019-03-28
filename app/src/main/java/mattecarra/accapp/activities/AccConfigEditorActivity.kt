@@ -293,7 +293,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         pause_seconds_picker.value = config.temp.waitSeconds
         pause_seconds_picker.setOnValueChangedListener(this)
 
-        //cooldown
+        //coolDown
         if(config.cooldown == null || config.capacity.coolDownCapacity > 100) {
             cooldown_switch.isChecked = false
             cooldown_percentage_picker.isEnabled = false

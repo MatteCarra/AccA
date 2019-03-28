@@ -31,11 +31,11 @@ data class AccConfig(var configCapacity: ConfigCapacity,
 
     /**
      * Temperature Configuration
-     * @param cooldown percentage when the cool down phase should start.
-     * @param max maximum temperature of the battery while charging. When met, charging will pause for <pause> seconds.
+     * @param coolDownTemperature percentage when the cool down phase should start.
+     * @param maxTemperature maximum temperature of the battery while charging. When met, charging will pause for <pause> seconds.
      * @param pause time in seconds to wait for the temperature to drop below <max>, to resume charging.
      */
-    data class ConfigTemperature (var cooldown: Int, var max: Int, var pause: Int)
+    data class ConfigTemperature (var coolDownTemperature: Int, var maxTemperature: Int, var pause: Int)
 
     /**
      * OnBoot Configuration
@@ -52,7 +52,7 @@ data class AccConfig(var configCapacity: ConfigCapacity,
 
     /**
      * Cool Down configuration
-     * @param atPercent cooldown starts at the specified percent.
+     * @param atPercent coolDown starts at the specified percent.
      * @param charge charge time in seconds.
      * @param pause pause time in seconds.
      */
