@@ -55,7 +55,7 @@ class ProfilesFragment : Fragment() {
         if (context is OnProfileClickListener) {
             mListener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnFirestoreItemClickListeners")
+            throw RuntimeException(context.toString() + " must implement OnProfileClickListener")
         }
     }
 }
