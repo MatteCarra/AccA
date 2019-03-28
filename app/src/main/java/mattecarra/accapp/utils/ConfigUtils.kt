@@ -37,7 +37,7 @@ object ConfigUtils {
             updateAccOnBootExit(accConfig.configOnBootExit),
             updateAccOnBoot(accConfig.configOnBoot),
             updateAccOnPlugged(accConfig.configOnPlug),
-            updateAccChargingSwitch(accConfig.chargeSwitch)
+            updateAccChargingSwitch(accConfig.configChargeSwitch)
             )
     }
 

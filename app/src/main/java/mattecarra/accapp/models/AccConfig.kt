@@ -1,14 +1,13 @@
 package mattecarra.accapp.models
 
 import android.os.Parcelable
-import androidx.room.TypeConverter
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
 
 /**
  * Data class for AccConfig.
- * @param resetUnplugged Reset the battery stats upon unplugging the device.
- * @param chargeSwitch changes the charge switch file.
+ * @param configResetUnplugged Reset the battery stats upon unplugging the device.
+ * @param configChargeSwitch changes the charge switch file.
  */
 @Parcelize
 data class AccConfig(var configCapacity: @RawValue ConfigCapacity,
@@ -18,8 +17,8 @@ data class AccConfig(var configCapacity: @RawValue ConfigCapacity,
                      var configOnBoot: String?,
                      var configOnPlug: String?,
                      var configCoolDown: @RawValue ConfigCoolDown,
-                     var resetUnplugged: Boolean,
-                     var chargeSwitch: String?) : Parcelable {
+                     var configResetUnplugged: Boolean,
+                     var configChargeSwitch: String?) : Parcelable {
 
     /**
      * Capacity Configuration
@@ -51,6 +50,6 @@ data class AccConfig(var configCapacity: @RawValue ConfigCapacity,
      * @param charge charge time in seconds.
      * @param pause pause time in seconds.
      */
-    data class ConfigCoolDown (var atPercent: Int, var charge: Int, var pause: Int)
+    data class ConfigCoolDown (var atPercent: Int, var charge: Int?, var pause: Int?)
 
 }
