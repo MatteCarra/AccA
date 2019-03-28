@@ -47,11 +47,11 @@ import org.jetbrains.anko.uiThread
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, OnProfileClickListener {
 
     private val LOG_TAG = "MainActivity"
-    private val PERMISSION_REQUEST: Int = 0
-    private val ACC_CONFIG_EDITOR_REQUEST: Int = 1
-    private val ACC_PROFILE_CREATOR_REQUEST: Int = 2
-    private val ACC_PROFILE_EDITOR_REQUEST: Int = 3
-    private val ACC_PROFILE_SCHEDULER_REQUEST: Int = 4
+    private val PERMISSION_REQUEST = 0
+    private val ACC_CONFIG_EDITOR_REQUEST = 1
+    private val ACC_PROFILE_CREATOR_REQUEST = 2
+    private val ACC_PROFILE_EDITOR_REQUEST = 3
+    private val ACC_PROFILE_SCHEDULER_REQUEST = 4
 
     private lateinit var mViewModel: MainActivityViewModel
 
