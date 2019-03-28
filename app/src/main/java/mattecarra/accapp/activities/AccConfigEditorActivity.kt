@@ -11,14 +11,13 @@ import com.afollestad.materialdialogs.input.input
 import kotlinx.android.synthetic.main.content_acc_config_editor.*
 import mattecarra.accapp.utils.AccUtils
 import mattecarra.accapp.R
-import mattecarra.accapp.models.AccConfig
-import mattecarra.accapp.models.Cooldown
+import mattecarra.accapp.utils.AccConfig
+import mattecarra.accapp.utils.Cooldown
 import android.app.Activity
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.*
-import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.customview.customView
