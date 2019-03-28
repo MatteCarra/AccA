@@ -3,10 +3,8 @@ package mattecarra.accapp.activities
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -27,7 +25,6 @@ import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.Display
 import com.github.javiersantos.appupdater.enums.UpdateFrom
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.gson.Gson
 import com.topjohnwu.superuser.Shell
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dashboard_fragment.*
@@ -553,7 +550,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         return true
     }
 
-    // TODO: If necessary, imput this into the ViewModel and bind it.
+    // TODO: If necessary, input this into the ViewModel and bind it.
 
 //    override fun onSaveInstanceState(outState: Bundle?) {
 //        outState?.putParcelable("batteryInfo", batteryInfo)
@@ -615,62 +612,53 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == ACC_CONFIG_EDITOR_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                if(data?.getBooleanExtra("hasChanges", false) == true) {
+                if (data?.getBooleanExtra("hasChanges", false) == true) {
                     mAccConfig = data.getParcelableExtra("config")
                     doAsync {
-                        val res = ConfigUtils.updateAcc(mAccConfig)
+                        val result = ConfigUtils.updateAcc(mAccConfig)
 
+                        // Remove the current selected profile
+                        mViewModel.clearCurrentSelectedProfile()
 
-                        // TODO: Implement this logic after profiles have been implemented. Use callbacks for that fragment.
-//                        //If I manually modify the mAccConfig I have to set current profile to null (custom profile)
-//                        ProfileUtils.saveCurrentProfile(null, mSharedPrefs)
-//                        profilesAdapter?.let { adapter ->
-//                            uiThread {
-//                                if(!res.voltControlUpdateSuccessful) {
-//                                    Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
-//                                }
-//
-//                                adapter.selectedProfile = null
-//                                adapter.notifyDataSetChanged()
-//                            }
-//                        }
+                        uiThread {
+                            if (!result.voltControlUpdateSuccessful) {
+                                Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    }
+                } else if (requestCode == ACC_PROFILE_CREATOR_REQUEST) {
+                    if (resultCode == Activity.RESULT_OK) {
+                        if (data != null) {
+                            val accConfig: AccConfig = data.getParcelableExtra("config")
+                            val profileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
+                            MaterialDialog(this)
+                                .show {
+                                    title(R.string.profile_name)
+                                    message(R.string.dialog_profile_name_message)
+                                    input(waitForPositiveButton = false) { dialog, charSequence ->
+                                        val inputField = dialog.getInputField()
+                                        val isValid = profileNameRegex.matches(charSequence)
+
+                                        inputField.error = if (isValid) null else getString(R.string.invalid_chars)
+                                        dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
+                                    }
+                                    positiveButton(R.string.save) { dialog ->
+                                        val profileName = dialog.getInputField().text.toString()
+
+                                        // Add Profile to Database via ViewModel function
+                                        val profile = AccaProfile(
+                                            0,
+                                            profileName,
+                                            accConfig
+                                        )
+
+                                        mViewModel.insertProfile(profile)
+                                    }
+                                    negativeButton(android.R.string.cancel)
+                                }
+                        }
                     }
                 }
-            }
-        }
-        else if(requestCode == ACC_PROFILE_CREATOR_REQUEST) {
-            if (resultCode == Activity.RESULT_OK) {
-                if (data != null) {
-                    val accConfig: AccConfig = data.getParcelableExtra("config")
-                    val fileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
-                    MaterialDialog(this)
-                        .show {
-                            title(R.string.profile_name)
-                            message(R.string.dialog_profile_name_message)
-                            input(waitForPositiveButton = false) { dialog, charSequence ->
-                                val inputField = dialog.getInputField()
-                                val isValid = fileNameRegex.matches(charSequence)
-
-                                inputField.error = if (isValid) null else getString(R.string.invalid_chars)
-                                dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
-                            }
-                            positiveButton(R.string.save) { dialog ->
-                                val profileName = dialog.getInputField().text.toString()
-
-                                // Add Profile to Database via ViewModel function
-                                val profile = AccaProfile(
-                                    0,
-                                    profileName,
-                                    accConfig
-                                )
-
-                                mViewModel.insertProfile(profile)
-                            }
-                            negativeButton(android.R.string.cancel)
-                        }
-                }
-            }
-        }
 //        } else if(requestCode == ACC_PROFILE_EDITOR_REQUEST) {
 //            if (resultCode == Activity.RESULT_OK) {
 //                if(data?.getBooleanExtra("hasChanges", false) == true && data.hasExtra("data")) {
@@ -702,6 +690,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //                )
 //            }
 //        }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -714,7 +704,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.actions_logs -> {
                 startActivity(Intent(this, LogViewerActivity::class.java))
             }
