@@ -43,6 +43,8 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
             }
         }
 
+        // TODO: Handle long press for more options (info, edit, delete).
+
         override fun onClick(v: View?) {
             mListener.onProfileClick(mProfilesList[adapterPosition])
         }
