@@ -8,6 +8,7 @@ package mattecarra.accapp.models
 data class AccConfig(var configCapacity: ConfigCapacity,
                      var configVoltage: ConfigVoltage,
                      var configTemperature: ConfigTemperature,
+                     var configOnBootExit: ConfigOnBootExit,
                      var configOnBoot: ConfigOnBoot,
                      var configOnPlug: ConfigOnPlug,
                      var configCoolDown: ConfigCoolDown,
@@ -38,11 +39,16 @@ data class AccConfig(var configCapacity: ConfigCapacity,
     data class ConfigTemperature (var coolDownTemperature: Int, var maxTemperature: Int, var pause: Int)
 
     /**
-     * OnBoot Configuration
+     * OnBootExit Configuration
      * @param enabled is the OnBoot option enabled.
+     */
+    data class ConfigOnBootExit (var enabled: Boolean)
+
+    /**
+     * OnBoot Configuration
      * @param command the command which is run on boot if <OnBoot> is enabled.
      */
-    data class ConfigOnBoot (var enabled: Boolean, var command: String?)
+    data class ConfigOnBoot (var command: String?)
 
     /**
      * OnPlug Configuration
