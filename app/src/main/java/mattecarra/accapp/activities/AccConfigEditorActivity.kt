@@ -11,8 +11,6 @@ import com.afollestad.materialdialogs.input.input
 import kotlinx.android.synthetic.main.content_acc_config_editor.*
 import mattecarra.accapp.utils.AccUtils
 import mattecarra.accapp.R
-import mattecarra.accapp.utils.AccConfig
-import mattecarra.accapp.utils.CoolDown
 import android.app.Activity
 import android.content.Intent
 import android.text.Editable
@@ -25,6 +23,7 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import it.sephiroth.android.library.xtooltip.ClosePolicy
 import it.sephiroth.android.library.xtooltip.Tooltip
+import mattecarra.accapp.models.AccConfig
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
