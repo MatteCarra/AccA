@@ -225,7 +225,20 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
      * Override function for handling ProfileOnClicks
      */
     override fun onProfileClick(accaProfile: AccaProfile) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        // Applies the selected profile
+
+        doAsync {
+            val result = ConfigUtils.updateAcc(accaProfile.accConfig)
+
+            if(!result.voltControlUpdateSuccessful) {
+                uiThread {
+                    Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
+                }
+            }
+
+            mViewModel.setCurrentSelectedProfile(accaProfile.uid)
+        }
+
     }
 
 //    private fun initProfiles() {
