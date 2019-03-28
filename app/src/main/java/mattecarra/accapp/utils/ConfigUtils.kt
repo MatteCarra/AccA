@@ -27,9 +27,13 @@ object ConfigUtils {
     fun updateAcc(accConfig: AccConfig): UpdateResult {
 
         // Initalise new UpdateResult data class to return
-        var updateResult: UpdateResult
+        var updateResult = ConfigUtils.UpdateResult(
+            updateAccCapacity(accConfig.configCapacity.shutdown, accConfig.configCoolDown.atPercent,
+                accConfig.configCapacity.resume, accConfig.configCapacity.pause),
+            updateAccVoltControl(accConfig.configVoltage.controlFile, accConfig.configVoltage.max),
+            )
 
-        // Apply Capacity
+        return updateResult
     }
 
 }
