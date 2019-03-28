@@ -34,7 +34,7 @@ object ConfigUtils {
             updateAccTemperature(accConfig.configTemperature.coolDownTemperature, accConfig.configTemperature.maxTemperature, accConfig.configTemperature.pause),
             updateAccCoolDown(accConfig.configCoolDown.charge, accConfig.configCoolDown.pause),
             accConfig.resetUnplugged,
-            updateAccOnBootExit(accConfig.configOnBoot.enabled),
+            updateAccOnBootExit(accConfig.configOnBootExit.enabled),
             updateAccOnBoot(accConfig.configOnBoot.command),
             updateAccOnPlugged(accConfig.configOnPlug.command),
             updateAccChargingSwitch(accConfig.chargeSwitch)

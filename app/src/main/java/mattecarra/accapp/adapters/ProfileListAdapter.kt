@@ -33,7 +33,7 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
 
         val profile = mProfilesList[position]
         holder.profileTitleItemView.text = profile.profileName
-        holder.profileCapacityTextView.text = profile.cooldownCapacity.toString()
+        holder.profileCapacityTextView.text = profile.accConfig.configCoolDown.atPercent.toString()
     }
 
     internal fun setProfiles(profiles: List<AccaProfile>) {
