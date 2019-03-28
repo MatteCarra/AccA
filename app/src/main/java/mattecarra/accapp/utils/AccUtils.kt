@@ -20,9 +20,7 @@ object AccUtils {
     private val STRING_DISCHARGING = "Discharging"
     private val STRING_CHARGING = "Charging"
 
-    /**
-     * ACC Config Regex
-     */
+    // ACC Config Regex
     val CAPACITY_CONFIG_REGEXP = """^\s*capacity=(\d*),(\d*),(\d+)-(\d+)""".toRegex(RegexOption.MULTILINE)
     val COOLDOWN_CONFIG_REGEXP = """^\s*coolDown=(\d*)/(\d*)""".toRegex(RegexOption.MULTILINE)
     val TEMP_CONFIG_REGEXP = """^\s*temp=(\d*)-(\d*)_(\d*)""".toRegex(RegexOption.MULTILINE)
@@ -34,46 +32,48 @@ object AccUtils {
     val SWITCH = """^\s*switch=([^#]+)""".toRegex(RegexOption.MULTILINE)
 
     val defaultConfig: AccConfig = AccConfig(
-        Capacity(5, 60, 70, 80),
-        CoolDown(50, 10),
-        Temperature(40, 45, 90),
-        VoltControl(null, null),
+        AccConfig.ConfigCapacity(5, 70, 80),
+        AccConfig.ConfigVoltage(null, null),
+        AccConfig.ConfigTemperature(400, 450, 90),
+        AccConfig.ConfigOnBoot(false, null),
+        AccConfig.ConfigOnPlug(null),
+        AccConfig.ConfigCoolDown(60, 50, 10),
         false,
-        false,
-        null,
-        null,
-        null
-    )
+        null)
 
     fun readConfig(): AccConfig {
         val config = readConfigToStringArray().joinToString(separator = "\n")
 
-        val (shutdown, coolDown, resume, pause) = CAPACITY_CONFIG_REGEXP.find(config)!!.destructured
-        val capacity = Capacity(
-            shutdown.toIntOrNull() ?: 0,
-            coolDown.toInt() ?: 101,
-            resume.toInt(),
-            pause.toInt()
-        )
-
+        val (capacityShutdown, capacityCoolDown, capacityResume, capacityPause) = CAPACITY_CONFIG_REGEXP.find(config)!!.destructured
         val coolDownMatchResult = COOLDOWN_CONFIG_REGEXP.find(config)
+        val (coolDownTemp, pauseChargingTemp, waitSeconds) = TEMP_CONFIG_REGEXP.find(config)!!.destructured
+        val (coolDownChargeSeconds, coolDownPauseSeconds) = coolDownMatchResult.destructured
+        val cVolt = VOLT_FILE.find(config)?.destructured
+        val voltControl = VoltControl(cVolt?.component1(), cVolt?.component2()?.toIntOrNull())
+
+        val configCapacity = AccConfig.ConfigCapacity(capacityShutdown.toIntOrNull() ?: 0,
+            capacityResume.toInt(), capacityPause.toInt())
+
+        val configVoltage = AccConfig.ConfigVoltage()
+
+
         val coolDown: CoolDown? =
             coolDownMatchResult?.let {
-                val (coolDownChargeSeconds, coolDownPauseSeconds) = coolDownMatchResult.destructured
+
                 coolDownChargeSeconds.toIntOrNull()?.let { chargeInt ->
                     coolDownPauseSeconds.toIntOrNull()?.let { CoolDown(chargeInt, it) }
                 }
             }
 
-        val (coolDownTemp, pauseChargingTemp, waitSeconds) = TEMP_CONFIG_REGEXP.find(config)!!.destructured
         val temp = Temperature(
             coolDownTemp.toIntOrNull()?.let { it / 10 } ?: 90,
             pauseChargingTemp.toIntOrNull()?.let { it / 10 } ?: 95,
             waitSeconds.toIntOrNull() ?: 90
         )
 
-        val cVolt = VOLT_FILE.find(config)?.destructured
-        val voltControl = VoltControl(cVolt?.component1(), cVolt?.component2()?.toIntOrNull())
+
+
+        return AccConfig()
 
         return AccConfig(
             capacity,
