@@ -1,19 +1,25 @@
 package mattecarra.accapp.models
 
+import android.os.Parcelable
+import androidx.room.TypeConverter
+import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
+
 /**
  * Data class for AccConfig.
  * @param resetUnplugged Reset the battery stats upon unplugging the device.
  * @param chargeSwitch changes the charge switch file.
  */
-data class AccConfig(var configCapacity: ConfigCapacity,
-                     var configVoltage: ConfigVoltage,
-                     var configTemperature: ConfigTemperature,
-                     var configOnBootExit: ConfigOnBootExit,
-                     var configOnBoot: ConfigOnBoot,
-                     var configOnPlug: ConfigOnPlug,
-                     var configCoolDown: ConfigCoolDown,
+@Parcelize
+data class AccConfig(var configCapacity: @RawValue ConfigCapacity,
+                     var configVoltage: @RawValue ConfigVoltage,
+                     var configTemperature: @RawValue ConfigTemperature,
+                     var configOnBootExit: Boolean,
+                     var configOnBoot: String?,
+                     var configOnPlug: String?,
+                     var configCoolDown: @RawValue ConfigCoolDown,
                      var resetUnplugged: Boolean,
-                     var chargeSwitch: String?) {
+                     var chargeSwitch: String?) : Parcelable {
 
     /**
      * Capacity Configuration
@@ -38,23 +44,6 @@ data class AccConfig(var configCapacity: ConfigCapacity,
      */
     data class ConfigTemperature (var coolDownTemperature: Int, var maxTemperature: Int, var pause: Int)
 
-    /**
-     * OnBootExit Configuration
-     * @param enabled is the OnBoot option enabled.
-     */
-    data class ConfigOnBootExit (var enabled: Boolean)
-
-    /**
-     * OnBoot Configuration
-     * @param command the command which is run on boot if <OnBoot> is enabled.
-     */
-    data class ConfigOnBoot (var command: String?)
-
-    /**
-     * OnPlug Configuration
-     * @param ConfigOnPlug the command to run when the device is plugged in.
-     */
-    data class ConfigOnPlug (var command: String?)
 
     /**
      * Cool Down configuration
