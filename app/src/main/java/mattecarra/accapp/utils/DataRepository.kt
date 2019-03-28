@@ -27,10 +27,13 @@ class DataRepository(application: Application, scope: CoroutineScope) {
     }
 
     @WorkerThread
-    suspend fun insertProfile(profile: AccaProfile) {
+    fun insertProfile(profile: AccaProfile) {
         mProfileDao.insert(profile)
     }
 
-
+    @WorkerThread
+    fun deleteProfile(profile: AccaProfile) {
+        mProfileDao.delete(profile)
+    }
 
 }
