@@ -347,18 +347,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         // Load in dashboard fragment
         loadFragment(mMainFragment)
 
-        // TODO: Move profiles to a new AccaProfile Activity
-        //Profiles
-//        initProfiles()
-
         //Rest of the UI
-        // TODO: Reposition the onClick handler so that it uses callbacks to the MainActivity
-//        create_acc_profile.setOnClickListener {
-//            Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-//                intent.putExtra("title", this@MainActivity.getString(R.string.profile_creator))
-//                startActivityForResult(intent, ACC_PROFILE_CREATOR_REQUEST)
-//            }
-//        }
 
 //        edit_charging_limit_once_bt.setOnClickListener {
 //            val dialog = MaterialDialog(this).show {
