@@ -285,84 +285,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
-//    private fun initProfiles() {
-//        val profileList = ProfileUtils.listProfiles(this, gson)
-//
-//        val currentProfile = mSharedPrefs.getString("PROFILE", null)
-//
-//        val layoutManager = GridLayoutManager(this, 3)
-//        profilesAdapter = ProfilesViewAdapter(ArrayList(profileList.map { AccaProfile(it) }), currentProfile) { profile, longPress ->
-//            if(longPress) {
-//                MaterialDialog(this@MainActivity).show {
-//                    listItems(R.array.profile_long_press_options) { _, index, _ ->
-//                        when(index) {
-//                            0 -> {
-//                                Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-//                                    val dataBundle = Bundle()
-//                                    dataBundle.putString("profileName", profile.profileName)
-//
-//                                    intent.putExtra("mAccConfig", ProfileUtils.readProfile(profile.profileName, this@MainActivity, gson))
-//                                    intent.putExtra("data", dataBundle)
-//                                    intent.putExtra("title", this@MainActivity.getString(R.string.profile_creator))
-//                                    startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
-//                                }
-//                            }
-//                            1 -> {
-//                                MaterialDialog(this@MainActivity)
-//                                    .show {
-//                                        title(R.string.profile_name)
-//                                        message(R.string.dialog_profile_name_message)
-//                                        input(prefill = profile.profileName) { _, charSequence ->
-//                                            //profiles index
-//                                            val profileList: MutableList<String> = ProfileUtils.listProfiles(this@MainActivity, gson).toMutableList()
-//
-//                                            if(profileList.contains(charSequence.toString())) {
-//                                                //TODO input not valid
-//                                                return@input
-//                                            }
-//
-//                                            profileList.add(charSequence.toString())
-//                                            profileList.remove(profile.profileName) //remove all profile name
-//                                            ProfileUtils.writeProfiles(this@MainActivity, profileList, gson) //Update profiles file with new profile
-//
-//                                            //Saving profile
-//                                            val f = File(context.filesDir, "${profile.profileName}.profile")
-//                                            f.renameTo(File(context.filesDir, "$charSequence.profile"))
-//
-//                                            profile.profileName = charSequence.toString()
-//                                            profilesAdapter?.notifyItemChanged(profile)
-//                                        }
-//                                        positiveButton(R.string.save)
-//                                        negativeButton(android.R.string.cancel)
-//                                    }
-//                            }
-//                            2 -> {
-//                                val f = File(context.filesDir, "$profile.profile")
-//                                f.delete()
-//
-//                                ProfileUtils.writeProfiles(
-//                                    this@MainActivity,
-//                                    ProfileUtils
-//                                        .listProfiles(this@MainActivity, gson).filter { it != profile.profileName },
-//                                    gson
-//                                ) //update profile list without this element
-//
-//                                profilesAdapter?.remove(profile)
-//                                if(profilesAdapter?.itemCount == 0) {
-//                                    this@MainActivity.profiles_recyclerview.visibility = android.view.View.GONE
-//                                    this@MainActivity.no_profiles_textview.visibility = android.view.View.VISIBLE
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            } else {
-//
-//            }
-//        }
-
-//    }
-
     private fun initUi() {
 
         // Set Bottom Navigation Bar Item Selected Listener
@@ -697,19 +619,17 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         }
                 }
             }
+        } else if(requestCode == ACC_PROFILE_EDITOR_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                if(data?.getBooleanExtra("hasChanges", false) == true && data.hasExtra("data")) {
+                    val accConfig: AccConfig = data.getParcelableExtra("accConfig")
+
+                    //TODO: Update the profile in the DB
+                    //mViewModel.updateProfile()
+                }
+            }
         }
-//        } else if(requestCode == ACC_PROFILE_EDITOR_REQUEST) {
-//            if (resultCode == Activity.RESULT_OK) {
-//                if(data?.getBooleanExtra("hasChanges", false) == true && data.hasExtra("data")) {
-//                    val mAccConfig: AccConfig = data.getParcelableExtra("mAccConfig")
-//                    val profileName = data.getBundleExtra("data").getString("profileName")
-//
-//                    //Saving profile
-//                    val f = File(this@MainActivity.filesDir, "$profileName.profile")
-//                    val json = gson.toJson(mAccConfig)
-//                    f.writeText(json)
-//                }
-//            }
+//        }
 //        } else if(requestCode == ACC_PROFILE_SCHEDULER_REQUEST && resultCode == Activity.RESULT_OK) {
 //            if(data?.hasExtra("data") == true) {
 //                val dataBundle = data.getBundleExtra("data")
