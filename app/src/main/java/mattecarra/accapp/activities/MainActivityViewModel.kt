@@ -38,6 +38,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         mDataRepository.deleteProfile(profile)
     }
 
+    fun updateProfile(profile: AccaProfile) = mScope.launch(Dispatchers.IO) {
+        mDataRepository.updateProfile(profile)
+    }
+
     /**
      * Clears the currently selected profile ID from Shared Preferences.
      */
