@@ -256,35 +256,28 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //                        }
                     }
                     1 -> {
-//                        MaterialDialog(this@MainActivity)
-//                            .show {
-//                                title(R.string.profile_name)
-//                                message(R.string.dialog_profile_name_message)
-//                                input(prefill = profile.profileName) { _, charSequence ->
-//                                    //profiles index
-//                                    val profileList: MutableList<String> = ProfileUtils.listProfiles(this@MainActivity, gson).toMutableList()
-//
-//                                    if(profileList.contains(charSequence.toString())) {
-//                                        //TODO input not valid
-//                                        return@input
-//                                    }
-//
-//                                    profileList.add(charSequence.toString())
-//                                    profileList.remove(profile.profileName) //remove all profile name
-//                                    ProfileUtils.writeProfiles(this@MainActivity, profileList, gson) //Update profiles file with new profile
-//
-//                                    //Saving profile
-//                                    val f = File(context.filesDir, "${profile.profileName}.profile")
-//                                    f.renameTo(File(context.filesDir, "$charSequence.profile"))
-//
-//                                    profile.profileName = charSequence.toString()
-//                                    profilesAdapter?.notifyItemChanged(profile)
-//                                }
-//                                positiveButton(R.string.save)
-//                                negativeButton(android.R.string.cancel)
-//                            }
+                        // Rename the selected profile (2nd option).
+                        MaterialDialog(this@MainActivity)
+                            .show {
+                                title(R.string.profile_name)
+                                message(R.string.dialog_profile_name_message)
+                                input(prefill = accaProfile.profileName) { _, charSequence ->
+                                    //TODO: Check if the profile name is valid
+//                                    val profileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
+//                                    val isValid = !profileNameRegex.matches(charSequence)
+
+                                    // Set profile name
+                                    accaProfile.profileName = charSequence.toString()
+
+                                    // Update the profile in the DB
+                                    mViewModel.updateProfile(accaProfile)
+                                }
+                                positiveButton(R.string.save)
+                                negativeButton(android.R.string.cancel)
+                            }
                     }
                     2 -> {
+                        // Delete the selected profile (3rd option).
                         mViewModel.deleteProfile(accaProfile)
                     }
                 }
