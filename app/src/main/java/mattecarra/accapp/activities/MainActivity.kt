@@ -38,6 +38,7 @@ import mattecarra.accapp.fragments.SchedulesFragment
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.utils.ConfigUtils
+import mattecarra.accapp.utils.Constants
 import mattecarra.accapp.utils.progress
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -244,16 +245,17 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             listItems(R.array.profile_long_press_options) { _, index, _ ->
                 when(index) {
                     0 -> {
-                        Toast.makeText(applicationContext, "Edit", Toast.LENGTH_SHORT).show()
-//                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-//                            val dataBundle = Bundle()
-//                            dataBundle.putString("profileName", profile.profileName)
-//
-//                            intent.putExtra("mAccConfig", ProfileUtils.readProfile(profile.profileName, this@MainActivity, gson))
-//                            intent.putExtra("data", dataBundle)
-//                            intent.putExtra("title", this@MainActivity.getString(R.string.profile_creator))
-//                            startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
-//                        }
+                        // Edit the configuration of the selected profile.
+                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+                            val dataBundle = Bundle()
+                            dataBundle.putInt(Constants.PROFILE_ID_KEY, accaProfile.uid)
+                            dataBundle.putParcelable(Constants.ACC_CONFIG_KEY, accaProfile.accConfig)
+
+                            // Insert the databundle into the intent.
+                            intent.putExtra("data", dataBundle)
+                            intent.putExtra("title", this@MainActivity.getString(R.string.profile_creator))
+                            startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
+                        }
                     }
                     1 -> {
                         // Rename the selected profile (2nd option).
