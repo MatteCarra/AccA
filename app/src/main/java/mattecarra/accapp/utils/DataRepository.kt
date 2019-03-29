@@ -36,4 +36,9 @@ class DataRepository(application: Application, scope: CoroutineScope) {
         mProfileDao.delete(profile)
     }
 
+    @WorkerThread
+    fun updateProfile(profile: AccaProfile) {
+        mProfileDao.update(profile)
+    }
+
 }
