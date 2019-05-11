@@ -9,11 +9,11 @@
     <string name="tile_acc_enabled">ACC Enabled</string>
     <string name="tile_acc_disabled">ACC Disabled</string>
     <!-- Navigation Strings -->
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_dashboard">Pannello di controllo</string>
     <string name="title_profiles">Profili</string>
-    <string name="title_settings">Settings</string>
+    <string name="title_settings">Impostazioni</string>
     <!-- ACC Daemon Status -->
-    <string name="title_status">Status</string>
+    <string name="title_status">Stato</string>
     <string name="title_acc_daemon">ACC Daemon</string>
     <string name="acc_daemon_status_running">ACC Daemon is Running</string>
     <string name="acc_daemon_status_not_running">ACC Daemon is not Running</string>
@@ -36,7 +36,7 @@
     <string name="info_discharging_speed_extended">%1$dmA</string>
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">Capacity:</string>
-    <string name="item_profile_temperature_label">Temperature:</string>
+    <string name="item_profile_temperature_label">Temperatura:</string>
     <string name="status_label">Status:</string>
     <string name="battery_info_label">Info:</string>
     <string name="reset_unplugged">Reset battery stats when unplugged</string>
@@ -50,9 +50,9 @@
     <string name="max_temp">Max temp:</string>
     <string name="pause_seconds">Pause seconds:</string>
     <string name="charge_seconds">Charge seconds:</string>
-    <string name="shutdown_capacity">Shutdown at:</string>
-    <string name="no_root_message">This app requires ROOT.</string>
-    <string name="config_error_title">Config read error</string>
+    <string name="shutdown_capacity">Spegni a:</string>
+    <string name="no_root_message">Questa app richiede il ROOT.</string>
+    <string name="config_error_title">Errore nella lettura del file di configurazione</string>
     <string name="config_error_dialog">I wasn\'t able to parse/find the ACC config file. Please check if your config contains errors. You will still be able to edit the settings, but the result can\'t be guaranteed.
     </string>
     <string name="wait">Please wait, it may take a few seconds</string>
@@ -81,7 +81,7 @@
     <string name="profiles_text_view">Profiles (long press to edit/delete):</string>
     <string name="restart">Restart</string>
     <string name="schedule_job">Schedule job</string>
-    <string name="invalid_chars">The profile name contains invalid characters</string>
+    <string name="invalid_chars">Il nome del profilo contiene caratteri non validi</string>
     <string name="recurrent_schedule">Run only once</string>
     <string name="execution_time">Execution time</string>
     <string name="new_config">New custom config</string>
