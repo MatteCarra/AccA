@@ -1,6 +1,5 @@
 package mattecarra.accapp.fragments
 
-import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -16,13 +15,12 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import kotlinx.android.synthetic.main.dashboard_fragment.*
 import kotlinx.android.synthetic.main.dashboard_fragment.view.*
+import kotlinx.android.synthetic.main.edit_charging_limit_once_dialog.view.*
 
 import mattecarra.accapp.R
-import mattecarra.accapp.models.AccConfig
+import mattecarra.accapp.activities.SharedViewModel
 import mattecarra.accapp.models.BatteryInfo
 import mattecarra.accapp.utils.AccUtils
-import mattecarra.accapp.utils.ProfileUtils
-import org.jetbrains.anko.defaultSharedPreferences
 
 class DashboardFragment : Fragment() {
 
@@ -39,7 +37,7 @@ class DashboardFragment : Fragment() {
     }
 
     private lateinit var viewModel: DashboardViewModel
-    private lateinit var configViewModel: AccConfigViewModel
+    private lateinit var configViewModel: SharedViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,7 +48,7 @@ class DashboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         activity?.let { it ->
-            configViewModel = ViewModelProviders.of(it).get(AccConfigViewModel::class.java)
+            configViewModel = ViewModelProviders.of(it).get(SharedViewModel::class.java)
 
             viewModel = ViewModelProviders.of(it).get(DashboardViewModel::class.java)
 
@@ -62,15 +60,15 @@ class DashboardFragment : Fragment() {
                 updateAccdStatus(daemon)
             })
 
-            configViewModel.observe(this, Observer { config ->
-                dash_resetStatusUnplug_switch.isChecked = config.configResetUnplugged
+            configViewModel.observeConfig(this, Observer { config ->
+                view.dash_resetStatusUnplug_switch.isChecked = config.configResetUnplugged
             })
 
-            dash_resetBatteryStats_button.setOnClickListener {
+            view.dash_resetBatteryStats_button.setOnClickListener {
                 AccUtils.resetBatteryStats()
             }
 
-            dash_editCargingLimitOnce_button.setOnClickListener {
+            view.dash_editCargingLimitOnce_button.setOnClickListener {
                 val dialog = MaterialDialog(it.context).show {
                     title(R.string.edit_charging_limit_once)
                     message(R.string.edit_charging_limit_once_dialog_msg)
@@ -82,20 +80,22 @@ class DashboardFragment : Fragment() {
                     negativeButton(android.R.string.cancel)
                 }
 
-                val picker = dialog.getCustomView().findViewById<NumberPicker>(R.id.charging_limit)
+                val picker = dialog.getCustomView().charging_limit
                 picker.maxValue = 100
-                picker.minValue = configViewModel.getValue { it.configCapacity.pause }
+                picker.minValue = configViewModel.getAccConfigValue { it.configCapacity.pause }
                 picker.value = 100
             }
 
-            dash_resetStatusUnplug_switch.setOnCheckedChangeListener { _, isChecked ->
-                configViewModel.updateValue {
+            view.dash_resetStatusUnplug_switch.setOnCheckedChangeListener { _, isChecked ->
+                configViewModel.updateAccConfigValue {
                     it.configResetUnplugged = isChecked
 
                     //If I manually modify the mAccConfig I have to set current profile to null (custom profile)
-                    //TODO set current profile
+                    configViewModel.setCurrentSelectedProfile(-1)
                 }
             }
+
+            view.status_card_view.setOnClickListener(::accdOnClick)
         }
     }
 

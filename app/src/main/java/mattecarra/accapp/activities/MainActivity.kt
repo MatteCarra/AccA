@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
@@ -28,11 +29,9 @@ import com.github.javiersantos.appupdater.enums.UpdateFrom
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.topjohnwu.superuser.Shell
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.dashboard_fragment.*
 import mattecarra.accapp.utils.AccUtils
 import mattecarra.accapp.R
 import mattecarra.accapp._interface.OnProfileClickListener
-import mattecarra.accapp.fragments.AccConfigViewModel
 import mattecarra.accapp.fragments.DashboardFragment
 import mattecarra.accapp.fragments.ProfilesFragment
 import mattecarra.accapp.fragments.SchedulesFragment
@@ -53,8 +52,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private val ACC_PROFILE_EDITOR_REQUEST = 3
     private val ACC_PROFILE_SCHEDULER_REQUEST = 4
 
-    private lateinit var mViewModel: MainActivityViewModel
-    private lateinit var configViewModel: AccConfigViewModel
+    private lateinit var mViewModel: SharedViewModel
 
     val mMainFragment = DashboardFragment.newInstance()
     val mProfilesFragment = ProfilesFragment.newInstance()
@@ -211,14 +209,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         // Applies the selected profile
 
         doAsync {
-            val result = configViewModel.updateConfig(accaProfile.accConfig)
-
-            if(!result.voltControlUpdateSuccessful) {
-                uiThread {
-                    Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
-                }
-            }
-
+            mViewModel.updateAccConfig(accaProfile.accConfig)
             mViewModel.setCurrentSelectedProfile(accaProfile.uid)
         }
 
@@ -256,7 +247,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                                     accaProfile.profileName = charSequence.toString()
 
                                     // Update the profile in the DB
-                                    mViewModel.updateProfile(accaProfile)
+                                    mViewModel.dataRepository.updateProfile(accaProfile)
                                 }
                                 positiveButton(R.string.save)
                                 negativeButton(android.R.string.cancel)
@@ -264,7 +255,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     }
                     2 -> {
                         // Delete the selected profile (3rd option).
-                        mViewModel.deleteProfile(accaProfile)
+                        mViewModel.dataRepository.deleteProfile(accaProfile)
                     }
                 }
             }
@@ -433,8 +424,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         setContentView(R.layout.activity_main)
 
         // Assign ViewModel
-        mViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
-        configViewModel = ViewModelProviders.of(this).get(AccConfigViewModel::class.java)
+        mViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -484,16 +474,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             if (resultCode == Activity.RESULT_OK) {
                 if (data?.getBooleanExtra("hasChanges", false) == true) {
                     doAsync {
-                        val result = configViewModel.updateConfig(data.getParcelableExtra("config"))
+                        val result = mViewModel.updateAccConfig(data.getParcelableExtra("config"))
 
                         // Remove the current selected profile
                         mViewModel.clearCurrentSelectedProfile()
-
-                        uiThread {
-                            if (!result.voltControlUpdateSuccessful) {
-                                Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
-                            }
-                        }
                     }
                 }
             }
@@ -523,7 +507,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                                     accConfig
                                 )
 
-                                mViewModel.insertProfile(profile)
+                                mViewModel.dataRepository.insertProfile(profile)
                             }
                             negativeButton(android.R.string.cancel)
                         }

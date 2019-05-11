@@ -1,5 +1,6 @@
 package mattecarra.accapp.utils
 
+import com.topjohnwu.superuser.Shell
 import mattecarra.accapp.models.AccConfig
 
 object ConfigUtils {
@@ -16,8 +17,32 @@ object ConfigUtils {
         val onBootExitUpdateSuccessful: Boolean,
         val onBootUpdateSuccessful: Boolean,
         val onPluggedUpdateSuccessful: Boolean,
-        val chargingSwitchUpdateSuccessFul: Boolean
-    )
+        val chargingSwitchUpdateSuccessful: Boolean
+    ) {
+        fun debug() {
+            if(!capacityUpdateSuccessful) println("Update capacity update failed")
+
+            if(!voltControlUpdateSuccessful) println("Volt control update failed")
+
+            if(!tempUpdateSuccessful) println("Temp update update failed")
+
+            if(!coolDownUpdateSuccessful) println("Cooldown update update failed")
+
+            if(!resetUnpluggedUpdateSuccessful) println("Reset unplugged update failed")
+
+            if(!onBootExitUpdateSuccessful) println("onBoot exit update failed")
+
+            if(!onBootUpdateSuccessful) println("onBoot update failed")
+
+            if(!onPluggedUpdateSuccessful) println("onPlugged update failed")
+
+            if(!chargingSwitchUpdateSuccessful) println("Charging switch update failed")
+        }
+
+        fun isSuccessful(): Boolean {
+            return capacityUpdateSuccessful && voltControlUpdateSuccessful && tempUpdateSuccessful && coolDownUpdateSuccessful && resetUnpluggedUpdateSuccessful && onBootExitUpdateSuccessful && onBootUpdateSuccessful && onPluggedUpdateSuccessful && chargingSwitchUpdateSuccessful
+        }
+    }
 
     /**
      * Function takes in AccConfig file and will apply it.
@@ -31,12 +56,8 @@ object ConfigUtils {
                 accConfig.configCapacity.resume, accConfig.configCapacity.pause),
             updateAccVoltControl(accConfig.configVoltage.controlFile, accConfig.configVoltage.max),
             updateAccTemperature(accConfig.configTemperature.coolDownTemperature, accConfig.configTemperature.maxTemperature, accConfig.configTemperature.pause),
-            accConfig.configCoolDown.charge?.let { charge ->
-                accConfig.configCoolDown.pause?.let { pause ->
-                    updateAccCoolDown(charge, pause)
-                }
-            } ?: true,
-            accConfig.configResetUnplugged,
+            updateAccCoolDown(accConfig.configCoolDown.charge, accConfig.configCoolDown.pause),
+            updateResetUnplugged(accConfig.configResetUnplugged),
             updateAccOnBootExit(accConfig.configOnBootExit),
             updateAccOnBoot(accConfig.configOnBoot),
             updateAccOnPlugged(accConfig.configOnPlug),
@@ -45,24 +66,23 @@ object ConfigUtils {
     }
 }
 
+//reset unplugged command
+fun updateResetUnplugged(resetUnplugged: Boolean): Boolean {
+    return Shell.su("acc -s resetBsOnUnplug $resetUnplugged").exec().isSuccess
+}
+
 /**
  * Updates the cool down charge and pause durations.
  * @param charge seconds to charge for during the cool down phase.
  * @param pause seconds to pause for during the cool down phase.
  * @return boolean if the command was successful.
  */
-fun updateAccCoolDown(charge: Int, pause: Int) : Boolean {
-    return AccUtils.updateCoolDown(charge, pause)
-}
-
-/**
- * Returns the cool down update command with provided values.
- * @param charge seconds to charge for during the cool down phase.
- * @param pause seconds to pause for during the cool down phase.
- * @return ACC command string with the provided values.
- */
-fun getUpdateAccCoolDownCommand(charge: Int, pause: Int) : String {
-    return AccUtils.updateCoolDownCommand(charge, pause)
+fun updateAccCoolDown(charge: Int?, pause: Int?) : Boolean {
+    return charge?.let { charge ->
+        pause?.let { pause ->
+            Shell.su("acc -s coolDownRatio $charge/$pause").exec().isSuccess
+        }
+    } ?: true
 }
 
 /**
@@ -74,19 +94,7 @@ fun getUpdateAccCoolDownCommand(charge: Int, pause: Int) : String {
  * @return boolean if the command was successful.
  */
 fun updateAccCapacity(shutdown: Int, coolDown: Int, resume: Int, pause: Int) : Boolean {
-    return AccUtils.updateCapacity(shutdown, coolDown, resume, pause)
-}
-
-/**
- * Returns the command used to update the capacity configuration in ACC.
- * @param shutdown shutdown the device at the specified percentage.
- * @param coolDown starts the cool down phase at the specified percentage.
- * @param resume allows charging starting from the specified capacity.
- * @param pause pauses charging at the specified capacity.
- * @return ACC command string with the provided values.
- */
-fun getUpdateAccCapacityCommand(shutdown: Int, coolDown: Int, resume: Int, pause: Int): String {
-    return AccUtils.updateCapacityCommand(shutdown, coolDown, resume, pause)
+    return Shell.su("acc -s capacity $shutdown,$coolDown,$resume-$pause").exec().isSuccess
 }
 
 /**
@@ -97,18 +105,7 @@ fun getUpdateAccCapacityCommand(shutdown: Int, coolDown: Int, resume: Int, pause
  * @return the boolean result of the command's execution.
  */
 fun updateAccTemperature(coolDownTemperature: Int, pauseTemperature: Int, wait: Int) : Boolean {
-    return AccUtils.updateTemp(coolDownTemperature, pauseTemperature, wait)
-}
-
-/**
- * Returns the command used to update the temperature configuration in ACC.
- * @param coolDown starts cool down phase at the specified temperature.
- * @param pause pauses charging at the specified temperature.
- * @param wait seconds to wait until charging is resumed.
- * @return command string for updating the temperature configuration in ACC.
- */
-fun getUpdateAccTemperatureCommand(coolDown: Int, pause: Int, wait: Int) : String {
-    return AccUtils.updateTempCommand(coolDown, pause, wait)
+    return Shell.su("acc -s temperature ${coolDownTemperature*10}-${pauseTemperature*10}_$wait").exec().isSuccess
 }
 
 /**
@@ -118,17 +115,14 @@ fun getUpdateAccTemperatureCommand(coolDown: Int, pause: Int, wait: Int) : Strin
  * @return the boolean result of the command's execution.
  */
 fun updateAccVoltControl(voltFile: String?, voltMax: Int?) : Boolean {
-    return AccUtils.updateVoltage(voltFile, voltMax)
-}
-
-/**
- * Returns the command used to update the voltage related configuration in ACC.
- * @param voltFile path to the voltage file on the device.
- * @param voltMax maximum voltage the phone should charge at.
- * @return command used to update the voltageFile & voltageMax.
- */
-fun getUpdateAccVoltControlCommand(voltFile: String?, voltMax: Int?) : String {
-    return AccUtils.updateVoltageCommand(voltFile, voltMax)
+    return Shell.su(
+        if(voltFile != null && voltMax != null)
+            "acc --set chargingVoltageLimit $voltFile:$voltMax"
+        else if(voltMax != null)
+            "acc --set chargingVoltageLimit $voltMax"
+        else
+            "acc --set chargingVoltageLimit"
+    ).exec().isSuccess
 }
 
 /**
@@ -137,16 +131,7 @@ fun getUpdateAccVoltControlCommand(voltFile: String?, voltMax: Int?) : String {
  * @return the boolean result of the command's execution.
  */
 fun updateAccOnBootExit(enabled: Boolean) : Boolean {
-    return AccUtils.updateOnBootExit(enabled)
-}
-
-/**
- * Returns the command used to update the onBootExit configuration in ACC.
- * @param enabled boolean: if OnBootExit should be enabled.
- * @return command used to update the onBootExit configuration.
- */
-fun getUpdateAccOnBootExitCommand(enabled: Boolean) : String {
-    return AccUtils.updateOnBootExitCommand(enabled)
+    return Shell.su("acc -s onBootExit $enabled").exec().isSuccess
 }
 
 /**
@@ -155,16 +140,7 @@ fun getUpdateAccOnBootExitCommand(enabled: Boolean) : String {
  * @return the boolean result of the command's execution.
  */
 fun updateAccOnBoot(command: String?) : Boolean {
-    return AccUtils.updateOnBoot(command)
-}
-
-/**
- * Returns the command used to update the OnBoot command configuration in ACC.
- * @param command the command to be run after the device starts (daemon starts).
- * @return command used to update the OnBoot command.
- */
-fun getUpdateAccOnBootCommand(command: String?) : String {
-    return AccUtils.updateOnBootCommand(command)
+    return Shell.su("acc -s applyOnBoot${command?.let{ " $it" } ?: ""}").exec().isSuccess
 }
 
 /**
@@ -173,21 +149,13 @@ fun getUpdateAccOnBootCommand(command: String?) : String {
  * @return the boolean result of the command's execution.
  */
 fun updateAccOnPlugged(command: String?) : Boolean {
-    return AccUtils.updateOnPlugged(command)
-}
-
-/**
- * Returns the command used to update the OnPlugged configuration in ACC.
- * @param command the command to be run when the device is plugged in.
- * @return command used to update the OnPlugged configuration.
- */
-fun getUpdateAccOnPluggedCommand(command: String?) : String {
-    return AccUtils.updateOnPluggedCommand(command)
+    return Shell.su("acc -s applyOnPlug${command?.let{ " $it" } ?: ""}").exec().isSuccess
 }
 
 fun updateAccChargingSwitch(switch: String?) : Boolean {
     if (switch.isNullOrBlank()) {
-        return AccUtils.unsetChargingSwitch()
+        return Shell.su("acc -s s-").exec().isSuccess
     }
-    return AccUtils.setChargingSwitch(switch)
+
+    return Shell.su("acc --set switch $switch").exec().isSuccess
 }

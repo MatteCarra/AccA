@@ -24,11 +24,11 @@ object AccUtils {
     val CAPACITY_CONFIG_REGEXP = """^\s*capacity=(\d*),(\d*),(\d+)-(\d+)""".toRegex(RegexOption.MULTILINE)
     val COOLDOWN_CONFIG_REGEXP = """^\s*coolDownRatio=(\d*)/(\d*)""".toRegex(RegexOption.MULTILINE)
     val TEMP_CONFIG_REGEXP = """^\s*temperature=(\d*)-(\d*)_(\d*)""".toRegex(RegexOption.MULTILINE)
-    val RESET_UNPLUGGED_CONFIG_REGEXP = """^\s*resetUnplugged=(true|false)""".toRegex(RegexOption.MULTILINE)
+    val RESET_UNPLUGGED_CONFIG_REGEXP = """^\s*resetBsOnUnplug=(true|false)""".toRegex(RegexOption.MULTILINE)
     val ON_BOOT_EXIT = """^\s*onBootExit=(true|false)""".toRegex(RegexOption.MULTILINE)
-    val ON_BOOT = """^\s*onBoot=([^#]+)""".toRegex(RegexOption.MULTILINE)
-    val ON_PLUGGED = """^\s*onPlugged=([^#]+)""".toRegex(RegexOption.MULTILINE)
-    val VOLT_FILE = """^\s*cVolt=([^:#\s]+):(\d+)""".toRegex(RegexOption.MULTILINE)
+    val ON_BOOT = """^\s*applyOnBoot=([^#]+)""".toRegex(RegexOption.MULTILINE)
+    val ON_PLUGGED = """^\s*applyOnPlug=([^#]+)""".toRegex(RegexOption.MULTILINE)
+    val VOLT_FILE = """^\s*chargingVoltageLimit=([^:#\s]+):(\d+)""".toRegex(RegexOption.MULTILINE)
     val SWITCH = """^\s*switch=([^#]+)""".toRegex(RegexOption.MULTILINE)
 
     val defaultConfig: AccConfig = AccConfig(
@@ -78,17 +78,6 @@ object AccUtils {
             emptyList()
     }
 
-    @Throws(IOException::class)
-    fun writeConfigFromStringArray(text: List<String>): Boolean {
-        val config = File(Environment.getExternalStorageDirectory(), "acc/config.txt")
-        if (config.exists()) {
-            config.writeText(text.joinToString(separator = "\n"))
-            return true
-        } else {
-            return false
-        }
-    }
-
     // Returns OnBootExit value
     fun getOnBootExit(config: CharSequence) : Boolean {
         return ON_BOOT_EXIT.find(config)?.destructured?.component1() == "true"
@@ -107,69 +96,6 @@ object AccUtils {
     // Returns ResetUnplugged value
     fun getResetUnplugged(config: CharSequence) : Boolean {
         return RESET_UNPLUGGED_CONFIG_REGEXP.find(config)?.destructured?.component1() == "true"
-    }
-
-    //update temp command
-    fun updateTempCommand(cooldDownTemp: Int, pauseChargingTemp: Int, waitSeconds: Int) = "acc -s temp ${cooldDownTemp*10}-${pauseChargingTemp*10}_$waitSeconds"
-
-    fun updateTemp(cooldDownTemp: Int, pauseChargingTemp: Int, waitSeconds: Int): Boolean {
-        return Shell.su(updateTempCommand(cooldDownTemp, pauseChargingTemp, waitSeconds)).exec().isSuccess
-    }
-
-    //Update cool down command
-    fun updateCoolDownCommand(charge: Int, pause: Int) = "acc -s coolDown $charge/$pause"
-
-    fun updateCoolDown(charge: Int, pause: Int): Boolean {
-        return Shell.su(updateCoolDownCommand(charge, pause)).exec().isSuccess
-    }
-
-    //Update capacity command
-    fun updateCapacityCommand(shutdown: Int, coolDown: Int, resume: Int, pause: Int): String = "acc -s capacity $shutdown,$coolDown,$resume-$pause"
-
-    fun updateCapacity(shutdown: Int, coolDown: Int, resume: Int, pause: Int): Boolean {
-        return Shell.su(updateCapacityCommand(shutdown, coolDown, resume, pause)).exec().isSuccess
-    }
-
-    //reset unplugged command
-    fun updateResetUnpluggedCommand(resetUnplugged: Boolean): String = "acc -s resetUnplugged $resetUnplugged"
-
-    fun updateResetUnplugged(resetUnplugged: Boolean): Boolean {
-        return Shell.su(updateResetUnpluggedCommand(resetUnplugged)).exec().isSuccess
-    }
-
-    //update on boot exit
-    fun updateOnBootExitCommand(value: Boolean): String = "acc -s onBootExit $value"
-
-    fun updateOnBootExit(value: Boolean): Boolean {
-        return Shell.su(updateOnBootExitCommand(value)).exec().isSuccess
-    }
-
-    //Update on boot
-    fun updateOnBootCommand(value: String?): String = "acc -s onBoot${value?.let{ " $it" } ?: ""}"
-
-    fun updateOnBoot(value: String?): Boolean {
-        return Shell.su(updateOnBootCommand(value)).exec().isSuccess
-    }
-
-    //Update on plugged
-    fun updateOnPluggedCommand(value: String?): String = "acc -s onPlugged${value?.let{ " $it" } ?: ""}"
-
-    fun updateOnPlugged(value: String?): Boolean {
-        return Shell.su(updateOnPluggedCommand(value)).exec().isSuccess
-    }
-
-    //Update volt file
-    fun updateVoltageCommand(voltControl: String?, voltMax: Int?): String {
-        return if(voltControl != null && voltMax != null)
-            "acc --set cVolt $voltControl:$voltMax"
-        else if(voltMax != null)
-            "acc --set cVolt $voltMax"
-        else
-            "acc --set cVolt"
-    }
-
-    fun updateVoltage(voltControl: String?, voltMax: Int?): Boolean {
-        return Shell.su(updateVoltageCommand(voltControl, voltMax)).exec().isSuccess
     }
 
     fun listVoltageSupportedControlFiles(): List<String> {
@@ -347,14 +273,6 @@ object AccUtils {
         return if(res.isSuccess) res.out.map { it.trim() }.filter { it.isNotEmpty() } else emptyList()
     }
 
-    fun setChargingSwitchCommand(chargingSwitch: String): String {
-        return "acc --set switch $chargingSwitch"
-    }
-
-    fun setChargingSwitch(chargingSwitch: String): Boolean {
-        return Shell.su(setChargingSwitchCommand(chargingSwitch)).exec().isSuccess
-    }
-
     fun testChargingSwitch(chargingSwitch: String? = null): Int {
         return Shell.su("acc -t${chargingSwitch?.let{" $it"} ?: ""}").exec().code
     }
@@ -362,15 +280,6 @@ object AccUtils {
     fun getCurrentChargingSwitch(): String? {
         val switch = SWITCH.find(readConfigToStringArray().joinToString(separator = "\n"))?.destructured?.component1()?.trim()
         return if(switch?.isNotEmpty() == true) switch else null
-    }
-
-
-    fun unsetChargingSwitchCommand(): String {
-        return "acc -s s-"
-    }
-
-    fun unsetChargingSwitch(): Boolean {
-        return Shell.su(unsetChargingSwitchCommand()).exec().isSuccess
     }
 
     fun setChargingLimitForOneCharge(limit: Int): Boolean {
