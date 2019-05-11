@@ -22,8 +22,8 @@ object AccUtils {
 
     // ACC Config Regex
     val CAPACITY_CONFIG_REGEXP = """^\s*capacity=(\d*),(\d*),(\d+)-(\d+)""".toRegex(RegexOption.MULTILINE)
-    val COOLDOWN_CONFIG_REGEXP = """^\s*coolDown=(\d*)/(\d*)""".toRegex(RegexOption.MULTILINE)
-    val TEMP_CONFIG_REGEXP = """^\s*temp=(\d*)-(\d*)_(\d*)""".toRegex(RegexOption.MULTILINE)
+    val COOLDOWN_CONFIG_REGEXP = """^\s*coolDownRatio=(\d*)/(\d*)""".toRegex(RegexOption.MULTILINE)
+    val TEMP_CONFIG_REGEXP = """^\s*temperature=(\d*)-(\d*)_(\d*)""".toRegex(RegexOption.MULTILINE)
     val RESET_UNPLUGGED_CONFIG_REGEXP = """^\s*resetUnplugged=(true|false)""".toRegex(RegexOption.MULTILINE)
     val ON_BOOT_EXIT = """^\s*onBootExit=(true|false)""".toRegex(RegexOption.MULTILINE)
     val ON_BOOT = """^\s*onBoot=([^#]+)""".toRegex(RegexOption.MULTILINE)
@@ -38,7 +38,7 @@ object AccUtils {
         false,
         null,
         null,
-        AccConfig.ConfigCoolDown(60, 50, 10),
+        AccConfig.ConfigCoolDown(60, null, null),
         false,
         null)
 
@@ -46,9 +46,12 @@ object AccUtils {
         val config = readConfigToStringArray().joinToString(separator = "\n")
 
         val (capacityShutdown, capacityCoolDown, capacityResume, capacityPause) = CAPACITY_CONFIG_REGEXP.find(config)!!.destructured
-        val coolDownMatchResult = COOLDOWN_CONFIG_REGEXP.find(config)
         val (coolDownTemp, pauseChargingTemp, waitSeconds) = TEMP_CONFIG_REGEXP.find(config)!!.destructured
-        val (coolDownChargeSeconds, coolDownPauseSeconds) = coolDownMatchResult!!.destructured
+
+        val coolDownMatchResult = COOLDOWN_CONFIG_REGEXP.find(config)?.destructured
+        val coolDownChargeSeconds = coolDownMatchResult?.component1()
+        val coolDownPauseSeconds = coolDownMatchResult?.component2()
+
         val cVolt = VOLT_FILE.find(config)?.destructured
 
         return AccConfig(
@@ -60,7 +63,7 @@ object AccUtils {
             getOnBootExit(config),
             getOnBoot(config),
             getOnPlugged(config),
-            AccConfig.ConfigCoolDown(capacityCoolDown.toInt(), coolDownChargeSeconds.toInt(), coolDownPauseSeconds.toInt()),
+            AccConfig.ConfigCoolDown(capacityCoolDown.toInt(), coolDownChargeSeconds?.toInt(), coolDownPauseSeconds?.toInt()),
             getResetUnplugged(config),
             getCurrentChargingSwitch()
         )
