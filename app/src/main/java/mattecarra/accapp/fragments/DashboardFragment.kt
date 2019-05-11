@@ -35,22 +35,21 @@ class DashboardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.dashboard_fragment, container, false)
-        view.status_card_view.setOnClickListener(::accdOnClick)
-        return view
+        return inflater.inflate(R.layout.dashboard_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        activity?.let {
+            viewModel = ViewModelProviders.of(it).get(DashboardViewModel::class.java)
 
-        viewModel.getBatteryInfo().observe(this, Observer<BatteryInfo>{info ->
-            updateBatteryInfo(info)
-        })
+            viewModel.getBatteryInfo().observe(this, Observer<BatteryInfo>{info ->
+                updateBatteryInfo(info)
+            })
 
-        viewModel.getIsDaemonRunning().observe(this, Observer<Boolean>{ daemon ->
-            updateAccdStatus(daemon)
-        })
+            viewModel.getIsDaemonRunning().observe(this, Observer<Boolean>{ daemon ->
+                updateAccdStatus(daemon)
+            })
+        }
     }
 
     /**

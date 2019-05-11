@@ -29,24 +29,26 @@ class ProfilesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        return inflater.inflate(R.layout.profiles_fragment, container, false)
+    }
 
-        val view = inflater.inflate(R.layout.profiles_fragment, container, false)
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val profilesRecycler: RecyclerView = view.findViewById(R.id.profile_recyclerView)
-        mProfilesAdapter = ProfileListAdapter(this.context!!)
+        mProfilesAdapter = ProfileListAdapter(context!!)
         mProfilesAdapter.setOnClickListener(mListener)
 
         profilesRecycler.adapter = mProfilesAdapter
-        profilesRecycler.layoutManager = LinearLayoutManager(this.context)
+        profilesRecycler.layoutManager = LinearLayoutManager(context)
 
-        mViewModel = ViewModelProviders.of(this).get(ProfilesViewModel::class.java)
+        activity?.let {
+            mViewModel = ViewModelProviders.of(it).get(ProfilesViewModel::class.java)
 
-        // Observe data
-        mViewModel.getProfiles().observe(this, Observer { profiles ->
-            mProfilesAdapter.setProfiles(profiles)
-        })
-
-        return view
+            // Observe data
+            mViewModel.getProfiles().observe(this, Observer { profiles ->
+                mProfilesAdapter.setProfiles(profiles)
+            })
+        }
     }
 
     override fun onAttach(context: Context?) {

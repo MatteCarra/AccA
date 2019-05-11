@@ -468,15 +468,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         return true
     }
 
-// TODO: If necessary, input this into the ViewModel and bind it.
-
-//    override fun onSaveInstanceState(outState: Bundle?) {
-//        outState?.putParcelable("batteryInfo", batteryInfo)
-//        outState?.putBoolean("daemonRunning", isDaemonRunning)
-//
-//        super.onSaveInstanceState(outState)
-//    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -516,14 +507,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         if(checkAccInstalled() && checkPermissions()) {
             initUi()
-
-            // TODO: Saved instance state
-//            savedInstanceState?.let { bundle ->
-//                updateAccdStatus(bundle.getBoolean("daemonRunning", false))
-//                bundle.getParcelable<BatteryInfo>("batteryInfo")?.let {
-//                    setBatteryInfo(it)
-//                }
-//            }
         }
     }
 
