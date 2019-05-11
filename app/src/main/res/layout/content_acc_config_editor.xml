@@ -446,14 +446,6 @@
                         android:contentDescription="@string/info" />
                 </LinearLayout>
 
-                <Switch
-                    android:id="@+id/exit_on_boot_switch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_exit_on_boot"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="@dimen/card_bottom_margin" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">

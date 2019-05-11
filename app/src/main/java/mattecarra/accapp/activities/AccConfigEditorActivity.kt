@@ -247,11 +247,6 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
 
     private fun initUi() {
         tv_config_on_boot.text = config.configOnBoot?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
-        exit_on_boot_switch.isChecked = config.configOnBootExit
-        exit_on_boot_switch.setOnCheckedChangeListener { _, isChecked ->
-            config.configOnBootExit = isChecked
-            unsavedChanges = true
-        }
 
         config_on_plugged_textview.text = config.configOnPlug?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
 

@@ -14,7 +14,6 @@ object ConfigUtils {
         val tempUpdateSuccessful: Boolean,
         val coolDownUpdateSuccessful: Boolean,
         val resetUnpluggedUpdateSuccessful: Boolean,
-        val onBootExitUpdateSuccessful: Boolean,
         val onBootUpdateSuccessful: Boolean,
         val onPluggedUpdateSuccessful: Boolean,
         val chargingSwitchUpdateSuccessful: Boolean
@@ -30,8 +29,6 @@ object ConfigUtils {
 
             if(!resetUnpluggedUpdateSuccessful) println("Reset unplugged update failed")
 
-            if(!onBootExitUpdateSuccessful) println("onBoot exit update failed")
-
             if(!onBootUpdateSuccessful) println("onBoot update failed")
 
             if(!onPluggedUpdateSuccessful) println("onPlugged update failed")
@@ -40,7 +37,7 @@ object ConfigUtils {
         }
 
         fun isSuccessful(): Boolean {
-            return capacityUpdateSuccessful && voltControlUpdateSuccessful && tempUpdateSuccessful && coolDownUpdateSuccessful && resetUnpluggedUpdateSuccessful && onBootExitUpdateSuccessful && onBootUpdateSuccessful && onPluggedUpdateSuccessful && chargingSwitchUpdateSuccessful
+            return capacityUpdateSuccessful && voltControlUpdateSuccessful && tempUpdateSuccessful && coolDownUpdateSuccessful && resetUnpluggedUpdateSuccessful && onBootUpdateSuccessful && onPluggedUpdateSuccessful && chargingSwitchUpdateSuccessful
         }
     }
 
@@ -58,7 +55,6 @@ object ConfigUtils {
             updateAccTemperature(accConfig.configTemperature.coolDownTemperature, accConfig.configTemperature.maxTemperature, accConfig.configTemperature.pause),
             updateAccCoolDown(accConfig.configCoolDown.charge, accConfig.configCoolDown.pause),
             updateResetUnplugged(accConfig.configResetUnplugged),
-            updateAccOnBootExit(accConfig.configOnBootExit),
             updateAccOnBoot(accConfig.configOnBoot),
             updateAccOnPlugged(accConfig.configOnPlug),
             updateAccChargingSwitch(accConfig.configChargeSwitch)

@@ -25,7 +25,6 @@ object AccUtils {
     val COOLDOWN_CONFIG_REGEXP = """^\s*coolDownRatio=(\d*)/(\d*)""".toRegex(RegexOption.MULTILINE)
     val TEMP_CONFIG_REGEXP = """^\s*temperature=(\d*)-(\d*)_(\d*)""".toRegex(RegexOption.MULTILINE)
     val RESET_UNPLUGGED_CONFIG_REGEXP = """^\s*resetBsOnUnplug=(true|false)""".toRegex(RegexOption.MULTILINE)
-    val ON_BOOT_EXIT = """^\s*onBootExit=(true|false)""".toRegex(RegexOption.MULTILINE)
     val ON_BOOT = """^\s*applyOnBoot=([^#]+)""".toRegex(RegexOption.MULTILINE)
     val ON_PLUGGED = """^\s*applyOnPlug=([^#]+)""".toRegex(RegexOption.MULTILINE)
     val VOLT_FILE = """^\s*chargingVoltageLimit=([^:#\s]+):(\d+)""".toRegex(RegexOption.MULTILINE)
@@ -35,10 +34,9 @@ object AccUtils {
         AccConfig.ConfigCapacity(5, 70, 80),
         AccConfig.ConfigVoltage(null, null),
         AccConfig.ConfigTemperature(400, 450, 90),
-        false,
         null,
         null,
-        AccConfig.ConfigCoolDown(60, null, null),
+        AccConfig.ConfigCoolDown(101, null, null),
         false,
         null)
 
@@ -60,7 +58,6 @@ object AccUtils {
             AccConfig.ConfigTemperature(coolDownTemp.toIntOrNull()?.let { it / 10 } ?: 90,
                 pauseChargingTemp.toIntOrNull()?.let { it / 10 } ?: 95,
                 waitSeconds.toIntOrNull() ?: 90),
-            getOnBootExit(config),
             getOnBoot(config),
             getOnPlugged(config),
             AccConfig.ConfigCoolDown(capacityCoolDown.toInt(), coolDownChargeSeconds?.toInt(), coolDownPauseSeconds?.toInt()),
@@ -76,11 +73,6 @@ object AccUtils {
             config.readText(charset = Charsets.UTF_8).split("\n")
         else
             emptyList()
-    }
-
-    // Returns OnBootExit value
-    fun getOnBootExit(config: CharSequence) : Boolean {
-        return ON_BOOT_EXIT.find(config)?.destructured?.component1() == "true"
     }
 
     // Returns OnBoot value

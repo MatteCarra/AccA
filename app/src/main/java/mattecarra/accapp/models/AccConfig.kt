@@ -16,7 +16,6 @@ import kotlinx.android.parcel.RawValue
 data class AccConfig(var configCapacity: ConfigCapacity,
                      var configVoltage: ConfigVoltage,
                      var configTemperature: ConfigTemperature,
-                     var configOnBootExit: Boolean,
                      var configOnBoot: String?,
                      var configOnPlug: String?,
                      var configCoolDown: ConfigCoolDown,
