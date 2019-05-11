@@ -17,6 +17,7 @@
 
         <!-- ACCd Status Card -->
         <androidx.cardview.widget.CardView
+            android:id="@+id/status_card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/card_margin"
@@ -24,8 +25,7 @@
             android:layout_marginRight="@dimen/card_margin"
             android:foreground="?selectableItemBackground"
             app:cardCornerRadius="@dimen/card_corner_radius"
-            app:cardElevation="3dp"
-            android:onClick="accdOnClick">
+            app:cardElevation="3dp">
 
             <LinearLayout android:layout_width="match_parent"
                 android:layout_height="wrap_content"

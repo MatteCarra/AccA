@@ -10,9 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.dashboard_fragment.*
+import kotlinx.android.synthetic.main.dashboard_fragment.view.*
 
 import mattecarra.accapp.R
-import mattecarra.accapp.activities.AccConfigEditorActivity
 import mattecarra.accapp.models.BatteryInfo
 
 class DashboardFragment : Fragment() {
@@ -35,7 +35,9 @@ class DashboardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.dashboard_fragment, container, false)
+        val view = inflater.inflate(R.layout.dashboard_fragment, container, false)
+        view.status_card_view.setOnClickListener(::accdOnClick)
+        return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -75,11 +77,23 @@ class DashboardFragment : Fragment() {
     }
 
     /**
+     * Function for ACCD status card OnClick in DashboardFragment
+     */
+    fun accdOnClick(view: View) {
+        if (dash_accdButtons_linLay.visibility == View.GONE) {
+            dash_accdButtons_linLay.visibility = View.VISIBLE
+            dash_title_accdStatus_textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_arrow_drop_up_24px, 0)
+        } else {
+            dash_accdButtons_linLay.visibility = View.GONE
+            dash_title_accdStatus_textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_arrow_drop_down_24px, 0)
+        }
+    }
+
+    /**
      * Function for setting the respective battery text into their textviews.
      * TODO: See if the performance is still a little jank, otherwise, use the handler to update UI elements within the observable.
      */
     private fun updateBatteryInfo(batteryInfo: BatteryInfo) {
-
         // Battery Capacity
         dash_batteryCapacity_pBar.progress = batteryInfo.capacity
         // Battery Status (Charging (Fast)
