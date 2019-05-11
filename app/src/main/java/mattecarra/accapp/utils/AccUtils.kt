@@ -375,7 +375,7 @@ object AccUtils {
     }
 
     fun isAccInstalled(): Boolean {
-        return Shell.su("which acc 1>/dev/null").exec().isSuccess
+        return Shell.su("test -f acc").exec().isSuccess
     }
 
     fun installAccModule(context: Context): Shell.Result? {

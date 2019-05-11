@@ -433,36 +433,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         return true
     }
 
-    private fun showRebootDialog() {
-        val dialog = MaterialDialog(this)
-            .show {
-                title(R.string.reboot_dialog_title)
-                message(R.string.reboot_dialog_description)
-                positiveButton(R.string.reboot) {
-                    Shell.su("reboot").exec()
-                }
-                negativeButton(android.R.string.cancel) {
-                    finish()
-                }
-                cancelOnTouchOutside(false)
-            }
-
-        dialog.setOnKeyListener { _, keyCode, _ ->
-            if(keyCode == KeyEvent.KEYCODE_BACK) {
-                dialog.dismiss()
-                finish()
-                false
-            } else true
-        }
-    }
-
     private fun checkAccInstalled(): Boolean {
         if(!AccUtils.isAccInstalled()) {
-            if(Shell.su("test -f /dev/acc/installed").exec().code == 0) {
-                showRebootDialog()
-                return false
-            }
-
             val dialog = MaterialDialog(this).show {
                 title(R.string.installing_acc)
                 progress(R.string.wait)
@@ -501,7 +473,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                             } else true
                         }
                     } else {
-                        showRebootDialog()
+                        if(checkPermissions())
+                            initUi()
                     }
                 }
             }
