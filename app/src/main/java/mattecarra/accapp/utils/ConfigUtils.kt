@@ -64,7 +64,7 @@ object ConfigUtils {
 
 //reset unplugged command
 fun updateResetUnplugged(resetUnplugged: Boolean): Boolean {
-    return Shell.su("acc -s resetBsOnUnplug $resetUnplugged").exec().isSuccess
+    return Shell.su("/dev/acc/modPath/acc -s resetBsOnUnplug $resetUnplugged").exec().isSuccess
 }
 
 /**
@@ -76,7 +76,7 @@ fun updateResetUnplugged(resetUnplugged: Boolean): Boolean {
 fun updateAccCoolDown(charge: Int?, pause: Int?) : Boolean {
     return charge?.let { charge ->
         pause?.let { pause ->
-            Shell.su("acc -s coolDownRatio $charge/$pause").exec().isSuccess
+            Shell.su("/dev/acc/modPath/acc -s coolDownRatio $charge/$pause").exec().isSuccess
         }
     } ?: true
 }
@@ -90,7 +90,7 @@ fun updateAccCoolDown(charge: Int?, pause: Int?) : Boolean {
  * @return boolean if the command was successful.
  */
 fun updateAccCapacity(shutdown: Int, coolDown: Int, resume: Int, pause: Int) : Boolean {
-    return Shell.su("acc -s capacity $shutdown,$coolDown,$resume-$pause").exec().isSuccess
+    return Shell.su("/dev/acc/modPath/acc -s capacity $shutdown,$coolDown,$resume-$pause").exec().isSuccess
 }
 
 /**
@@ -101,7 +101,7 @@ fun updateAccCapacity(shutdown: Int, coolDown: Int, resume: Int, pause: Int) : B
  * @return the boolean result of the command's execution.
  */
 fun updateAccTemperature(coolDownTemperature: Int, pauseTemperature: Int, wait: Int) : Boolean {
-    return Shell.su("acc -s temperature ${coolDownTemperature*10}-${pauseTemperature*10}_$wait").exec().isSuccess
+    return Shell.su("/dev/acc/modPath/acc -s temperature ${coolDownTemperature*10}-${pauseTemperature*10}_$wait").exec().isSuccess
 }
 
 /**
@@ -113,11 +113,11 @@ fun updateAccTemperature(coolDownTemperature: Int, pauseTemperature: Int, wait: 
 fun updateAccVoltControl(voltFile: String?, voltMax: Int?) : Boolean {
     return Shell.su(
         if(voltFile != null && voltMax != null)
-            "acc --set chargingVoltageLimit $voltFile:$voltMax"
+            "/dev/acc/modPath/acc --set chargingVoltageLimit $voltFile:$voltMax"
         else if(voltMax != null)
-            "acc --set chargingVoltageLimit $voltMax"
+            "/dev/acc/modPath/acc --set chargingVoltageLimit $voltMax"
         else
-            "acc --set chargingVoltageLimit"
+            "/dev/acc/modPath/acc --set chargingVoltageLimit"
     ).exec().isSuccess
 }
 
@@ -127,7 +127,7 @@ fun updateAccVoltControl(voltFile: String?, voltMax: Int?) : Boolean {
  * @return the boolean result of the command's execution.
  */
 fun updateAccOnBootExit(enabled: Boolean) : Boolean {
-    return Shell.su("acc -s onBootExit $enabled").exec().isSuccess
+    return Shell.su("/dev/acc/modPath/acc -s onBootExit $enabled").exec().isSuccess
 }
 
 /**
@@ -136,7 +136,7 @@ fun updateAccOnBootExit(enabled: Boolean) : Boolean {
  * @return the boolean result of the command's execution.
  */
 fun updateAccOnBoot(command: String?) : Boolean {
-    return Shell.su("acc -s applyOnBoot${command?.let{ " $it" } ?: ""}").exec().isSuccess
+    return Shell.su("/dev/acc/modPath/acc -s applyOnBoot${command?.let{ " $it" } ?: ""}").exec().isSuccess
 }
 
 /**
@@ -145,13 +145,13 @@ fun updateAccOnBoot(command: String?) : Boolean {
  * @return the boolean result of the command's execution.
  */
 fun updateAccOnPlugged(command: String?) : Boolean {
-    return Shell.su("acc -s applyOnPlug${command?.let{ " $it" } ?: ""}").exec().isSuccess
+    return Shell.su("/dev/acc/modPath/acc -s applyOnPlug${command?.let{ " $it" } ?: ""}").exec().isSuccess
 }
 
 fun updateAccChargingSwitch(switch: String?) : Boolean {
     if (switch.isNullOrBlank()) {
-        return Shell.su("acc -s s-").exec().isSuccess
+        return Shell.su("/dev/acc/modPath/acc -s s-").exec().isSuccess
     }
 
-    return Shell.su("acc --set switch $switch").exec().isSuccess
+    return Shell.su("/dev/acc/modPath/acc --set switch $switch").exec().isSuccess
 }
