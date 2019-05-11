@@ -38,9 +38,8 @@ object ConfigUtils {
             updateAccOnBoot(accConfig.configOnBoot),
             updateAccOnPlugged(accConfig.configOnPlug),
             updateAccChargingSwitch(accConfig.configChargeSwitch)
-            )
+        )
     }
-
 }
 
 /**

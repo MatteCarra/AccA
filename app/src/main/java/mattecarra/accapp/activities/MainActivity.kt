@@ -21,6 +21,7 @@ import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
+import com.afollestad.materialdialogs.list.listItems
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.Display
 import com.github.javiersantos.appupdater.enums.UpdateFrom
@@ -37,6 +38,7 @@ import mattecarra.accapp.fragments.SchedulesFragment
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.utils.ConfigUtils
+import mattecarra.accapp.utils.Constants
 import mattecarra.accapp.utils.progress
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -238,83 +240,52 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     }
 
-//    private fun initProfiles() {
-//        val profileList = ProfileUtils.listProfiles(this, gson)
-//
-//        val currentProfile = mSharedPrefs.getString("PROFILE", null)
-//
-//        val layoutManager = GridLayoutManager(this, 3)
-//        profilesAdapter = ProfilesViewAdapter(ArrayList(profileList.map { AccaProfile(it) }), currentProfile) { profile, longPress ->
-//            if(longPress) {
-//                MaterialDialog(this@MainActivity).show {
-//                    listItems(R.array.profile_long_press_options) { _, index, _ ->
-//                        when(index) {
-//                            0 -> {
-//                                Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-//                                    val dataBundle = Bundle()
-//                                    dataBundle.putString("profileName", profile.profileName)
-//
-//                                    intent.putExtra("mAccConfig", ProfileUtils.readProfile(profile.profileName, this@MainActivity, gson))
-//                                    intent.putExtra("data", dataBundle)
-//                                    intent.putExtra("title", this@MainActivity.getString(R.string.profile_creator))
-//                                    startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
-//                                }
-//                            }
-//                            1 -> {
-//                                MaterialDialog(this@MainActivity)
-//                                    .show {
-//                                        title(R.string.profile_name)
-//                                        message(R.string.dialog_profile_name_message)
-//                                        input(prefill = profile.profileName) { _, charSequence ->
-//                                            //profiles index
-//                                            val profileList: MutableList<String> = ProfileUtils.listProfiles(this@MainActivity, gson).toMutableList()
-//
-//                                            if(profileList.contains(charSequence.toString())) {
-//                                                //TODO input not valid
-//                                                return@input
-//                                            }
-//
-//                                            profileList.add(charSequence.toString())
-//                                            profileList.remove(profile.profileName) //remove all profile name
-//                                            ProfileUtils.writeProfiles(this@MainActivity, profileList, gson) //Update profiles file with new profile
-//
-//                                            //Saving profile
-//                                            val f = File(context.filesDir, "${profile.profileName}.profile")
-//                                            f.renameTo(File(context.filesDir, "$charSequence.profile"))
-//
-//                                            profile.profileName = charSequence.toString()
-//                                            profilesAdapter?.notifyItemChanged(profile)
-//                                        }
-//                                        positiveButton(R.string.save)
-//                                        negativeButton(android.R.string.cancel)
-//                                    }
-//                            }
-//                            2 -> {
-//                                val f = File(context.filesDir, "$profile.profile")
-//                                f.delete()
-//
-//                                ProfileUtils.writeProfiles(
-//                                    this@MainActivity,
-//                                    ProfileUtils
-//                                        .listProfiles(this@MainActivity, gson).filter { it != profile.profileName },
-//                                    gson
-//                                ) //update profile list without this element
-//
-//                                profilesAdapter?.remove(profile)
-//                                if(profilesAdapter?.itemCount == 0) {
-//                                    this@MainActivity.profiles_recyclerview.visibility = android.view.View.GONE
-//                                    this@MainActivity.no_profiles_textview.visibility = android.view.View.VISIBLE
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            } else {
-//
-//            }
-//        }
+    override fun onProfileLongClick(accaProfile: AccaProfile) {
+        MaterialDialog(this@MainActivity).show {
+            listItems(R.array.profile_long_press_options) { _, index, _ ->
+                when(index) {
+                    0 -> {
+                        // Edit the configuration of the selected profile.
+                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+                            val dataBundle = Bundle()
+                            dataBundle.putInt(Constants.PROFILE_ID_KEY, accaProfile.uid)
+                            dataBundle.putParcelable(Constants.ACC_CONFIG_KEY, accaProfile.accConfig)
 
-//    }
+                            // Insert the databundle into the intent.
+                            intent.putExtra("data", dataBundle)
+                            intent.putExtra("title", this@MainActivity.getString(R.string.profile_creator))
+                            startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
+                        }
+                    }
+                    1 -> {
+                        // Rename the selected profile (2nd option).
+                        MaterialDialog(this@MainActivity)
+                            .show {
+                                title(R.string.profile_name)
+                                message(R.string.dialog_profile_name_message)
+                                input(prefill = accaProfile.profileName) { _, charSequence ->
+                                    //TODO: Check if the profile name is valid
+//                                    val profileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
+//                                    val isValid = !profileNameRegex.matches(charSequence)
+
+                                    // Set profile name
+                                    accaProfile.profileName = charSequence.toString()
+
+                                    // Update the profile in the DB
+                                    mViewModel.updateProfile(accaProfile)
+                                }
+                                positiveButton(R.string.save)
+                                negativeButton(android.R.string.cancel)
+                            }
+                    }
+                    2 -> {
+                        // Delete the selected profile (3rd option).
+                        mViewModel.deleteProfile(accaProfile)
+                    }
+                }
+            }
+        }
+    }
 
     private fun initUi() {
 
@@ -540,7 +511,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         return true
     }
 
-    // TODO: If necessary, input this into the ViewModel and bind it.
+// TODO: If necessary, input this into the ViewModel and bind it.
 
 //    override fun onSaveInstanceState(outState: Bundle?) {
 //        outState?.putParcelable("batteryInfo", batteryInfo)
@@ -616,51 +587,51 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                             }
                         }
                     }
-                } else if (requestCode == ACC_PROFILE_CREATOR_REQUEST) {
-                    if (resultCode == Activity.RESULT_OK) {
-                        if (data != null) {
-                            val accConfig: AccConfig = data.getParcelableExtra("config")
-                            val profileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
-                            MaterialDialog(this)
-                                .show {
-                                    title(R.string.profile_name)
-                                    message(R.string.dialog_profile_name_message)
-                                    input(waitForPositiveButton = false) { dialog, charSequence ->
-                                        val inputField = dialog.getInputField()
-                                        val isValid = profileNameRegex.matches(charSequence)
-
-                                        inputField.error = if (isValid) null else getString(R.string.invalid_chars)
-                                        dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
-                                    }
-                                    positiveButton(R.string.save) { dialog ->
-                                        val profileName = dialog.getInputField().text.toString()
-
-                                        // Add Profile to Database via ViewModel function
-                                        val profile = AccaProfile(
-                                            0,
-                                            profileName,
-                                            accConfig
-                                        )
-
-                                        mViewModel.insertProfile(profile)
-                                    }
-                                    negativeButton(android.R.string.cancel)
-                                }
-                        }
-                    }
                 }
-//        } else if(requestCode == ACC_PROFILE_EDITOR_REQUEST) {
-//            if (resultCode == Activity.RESULT_OK) {
-//                if(data?.getBooleanExtra("hasChanges", false) == true && data.hasExtra("data")) {
-//                    val mAccConfig: AccConfig = data.getParcelableExtra("mAccConfig")
-//                    val profileName = data.getBundleExtra("data").getString("profileName")
-//
-//                    //Saving profile
-//                    val f = File(this@MainActivity.filesDir, "$profileName.profile")
-//                    val json = gson.toJson(mAccConfig)
-//                    f.writeText(json)
-//                }
-//            }
+            }
+        } else if (requestCode == ACC_PROFILE_CREATOR_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                if (data != null) {
+                    val accConfig: AccConfig = data.getParcelableExtra("config")
+                    val profileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
+                    MaterialDialog(this)
+                        .show {
+                            title(R.string.profile_name)
+                            message(R.string.dialog_profile_name_message)
+                            input(waitForPositiveButton = false) { dialog, charSequence ->
+                                val inputField = dialog.getInputField()
+                                val isValid = profileNameRegex.matches(charSequence)
+
+                                inputField.error = if (isValid) null else getString(R.string.invalid_chars)
+                                dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
+                            }
+                            positiveButton(R.string.save) { dialog ->
+                                val profileName = dialog.getInputField().text.toString()
+
+                                // Add Profile to Database via ViewModel function
+                                val profile = AccaProfile(
+                                    0,
+                                    profileName,
+                                    accConfig
+                                )
+
+                                mViewModel.insertProfile(profile)
+                            }
+                            negativeButton(android.R.string.cancel)
+                        }
+                }
+            }
+        } else if(requestCode == ACC_PROFILE_EDITOR_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                if(data?.getBooleanExtra("hasChanges", false) == true && data.hasExtra("data")) {
+                    val accConfig: AccConfig = data.getParcelableExtra("accConfig")
+
+                    //TODO: Update the profile in the DB
+                    //mViewModel.updateProfile()
+                }
+            }
+        }
+//        }
 //        } else if(requestCode == ACC_PROFILE_SCHEDULER_REQUEST && resultCode == Activity.RESULT_OK) {
 //            if(data?.hasExtra("data") == true) {
 //                val dataBundle = data.getBundleExtra("data")
@@ -680,8 +651,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //                )
 //            }
 //        }
-            }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -8,5 +8,5 @@ import mattecarra.accapp.models.AccaProfile
 interface OnProfileClickListener {
 
     fun onProfileClick(accaProfile: AccaProfile)
-
+    fun onProfileLongClick(accaProfile: AccaProfile)
 }

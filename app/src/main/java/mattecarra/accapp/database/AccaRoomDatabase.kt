@@ -21,7 +21,7 @@ abstract class AccaRoomDatabase : RoomDatabase() {
 
         const val DATABASE_NAME = "acca_database"
 
-        fun getDatabase(context: Context, scope: CoroutineScope): AccaRoomDatabase {
+        fun getDatabase(context: Context): AccaRoomDatabase {
 
             val tempInstance = INSTANCE
             if (tempInstance != null) {

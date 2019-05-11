@@ -23,7 +23,7 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
     private var mProfilesList = emptyList<AccaProfile>()
     private lateinit var mListener: OnProfileClickListener
 
-    inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener{
+    inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnLongClickListener, SharedPreferences.OnSharedPreferenceChangeListener{
 
         override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
             if (key.equals(Constants.PROFILE_KEY)) {
@@ -49,8 +49,14 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
             mListener.onProfileClick(mProfilesList[adapterPosition])
         }
 
+        override fun onLongClick(v: View?): Boolean {
+            mListener.onProfileLongClick(mProfilesList[adapterPosition])
+            return true
+        }
+
         init {
             itemView.setOnClickListener(this)
+            itemView.setOnLongClickListener(this)
             val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(itemView.context)
             prefs.registerOnSharedPreferenceChangeListener(this)
 

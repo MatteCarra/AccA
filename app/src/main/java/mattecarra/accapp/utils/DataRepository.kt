@@ -17,7 +17,7 @@ class DataRepository(application: Application, scope: CoroutineScope) {
 
     init {
 
-        val accaDatabase = AccaRoomDatabase.getDatabase(application, scope)
+        val accaDatabase = AccaRoomDatabase.getDatabase(application)
         mProfileDao = accaDatabase.profileDao()
         mProfileListLiveData = mProfileDao.getAllProfiles()
     }
@@ -27,10 +27,18 @@ class DataRepository(application: Application, scope: CoroutineScope) {
     }
 
     @WorkerThread
-    suspend fun insertProfile(profile: AccaProfile) {
+    fun insertProfile(profile: AccaProfile) {
         mProfileDao.insert(profile)
     }
 
+    @WorkerThread
+    fun deleteProfile(profile: AccaProfile) {
+        mProfileDao.delete(profile)
+    }
 
+    @WorkerThread
+    fun updateProfile(profile: AccaProfile) {
+        mProfileDao.update(profile)
+    }
 
 }
