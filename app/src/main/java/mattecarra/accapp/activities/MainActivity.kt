@@ -116,8 +116,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             PERMISSION_REQUEST -> {
                 // If request is cancelled, the result arrays are empty.
@@ -158,21 +157,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private fun loadFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, fragment)
-        transaction.addToBackStack(null)
         transaction.commit()
-    }
-
-    /**
-     * Function for ACCD status card OnClick in DashboardFragment
-     */
-    fun accdOnClick(view: View) {
-        if (dash_accdButtons_linLay.visibility == View.GONE) {
-            dash_accdButtons_linLay.visibility = View.VISIBLE
-            dash_title_accdStatus_textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_arrow_drop_up_24px, 0)
-        } else {
-            dash_accdButtons_linLay.visibility = View.GONE
-            dash_title_accdStatus_textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_arrow_drop_down_24px, 0)
-        }
     }
 
     /**
@@ -290,8 +275,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private fun initUi() {
 
         // Set Bottom Navigation Bar Item Selected Listener
-        var mNavBar = botNav_main
-        mNavBar.setOnNavigationItemSelectedListener(this)
+        botNav_main.setOnNavigationItemSelectedListener(this)
 
         // Read ACC configuration
         try {
@@ -540,6 +524,14 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //                    setBatteryInfo(it)
 //                }
 //            }
+        }
+    }
+
+    override fun onBackPressed() {
+        if(botNav_main.selectedItemId == R.id.botNav_home) {
+            super.onBackPressed()
+        } else {
+            botNav_main.selectedItemId = R.id.botNav_home
         }
     }
 
