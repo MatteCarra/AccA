@@ -9,7 +9,6 @@ import mattecarra.accapp.utils.AccUtils
 import org.jetbrains.anko.doAsync
 
 class DashboardViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
     private val batteryInfo: MutableLiveData<BatteryInfo> = MutableLiveData()
     private val isDaemonRunning: MutableLiveData<Boolean> = MutableLiveData()
 

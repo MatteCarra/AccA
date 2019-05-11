@@ -25,14 +25,17 @@ object ConfigUtils {
      * @return UpdateResult data class.
      */
     fun updateAcc(accConfig: AccConfig): UpdateResult {
-
         // Initalise new UpdateResult data class to return
-        return ConfigUtils.UpdateResult(
+        return UpdateResult(
             updateAccCapacity(accConfig.configCapacity.shutdown, accConfig.configCoolDown.atPercent,
                 accConfig.configCapacity.resume, accConfig.configCapacity.pause),
             updateAccVoltControl(accConfig.configVoltage.controlFile, accConfig.configVoltage.max),
             updateAccTemperature(accConfig.configTemperature.coolDownTemperature, accConfig.configTemperature.maxTemperature, accConfig.configTemperature.pause),
-            updateAccCoolDown(accConfig.configCoolDown.charge!!, accConfig.configCoolDown.pause!!),
+            accConfig.configCoolDown.charge?.let { charge ->
+                accConfig.configCoolDown.pause?.let { pause ->
+                    updateAccCoolDown(charge, pause)
+                }
+            } ?: true,
             accConfig.configResetUnplugged,
             updateAccOnBootExit(accConfig.configOnBootExit),
             updateAccOnBoot(accConfig.configOnBoot),

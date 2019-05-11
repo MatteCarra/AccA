@@ -8,12 +8,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.NumberPicker
+import android.widget.Toast
 import androidx.lifecycle.Observer
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import kotlinx.android.synthetic.main.dashboard_fragment.*
 import kotlinx.android.synthetic.main.dashboard_fragment.view.*
 
 import mattecarra.accapp.R
+import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.BatteryInfo
+import mattecarra.accapp.utils.AccUtils
+import mattecarra.accapp.utils.ProfileUtils
+import org.jetbrains.anko.defaultSharedPreferences
 
 class DashboardFragment : Fragment() {
 
@@ -30,6 +39,7 @@ class DashboardFragment : Fragment() {
     }
 
     private lateinit var viewModel: DashboardViewModel
+    private lateinit var configViewModel: AccConfigViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +49,9 @@ class DashboardFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        activity?.let {
+        activity?.let { it ->
+            configViewModel = ViewModelProviders.of(it).get(AccConfigViewModel::class.java)
+
             viewModel = ViewModelProviders.of(it).get(DashboardViewModel::class.java)
 
             viewModel.getBatteryInfo().observe(this, Observer<BatteryInfo>{info ->
@@ -49,6 +61,41 @@ class DashboardFragment : Fragment() {
             viewModel.getIsDaemonRunning().observe(this, Observer<Boolean>{ daemon ->
                 updateAccdStatus(daemon)
             })
+
+            configViewModel.observe(this, Observer { config ->
+                dash_resetStatusUnplug_switch.isChecked = config.configResetUnplugged
+            })
+
+            dash_resetBatteryStats_button.setOnClickListener {
+                AccUtils.resetBatteryStats()
+            }
+
+            dash_editCargingLimitOnce_button.setOnClickListener {
+                val dialog = MaterialDialog(it.context).show {
+                    title(R.string.edit_charging_limit_once)
+                    message(R.string.edit_charging_limit_once_dialog_msg)
+                    customView(R.layout.edit_charging_limit_once_dialog)
+                    positiveButton(R.string.apply) {
+                        AccUtils.setChargingLimitForOneCharge(getCustomView().findViewById<NumberPicker>(R.id.charging_limit).value)
+                        Toast.makeText(context, R.string.done, Toast.LENGTH_LONG).show()
+                    }
+                    negativeButton(android.R.string.cancel)
+                }
+
+                val picker = dialog.getCustomView().findViewById<NumberPicker>(R.id.charging_limit)
+                picker.maxValue = 100
+                picker.minValue = configViewModel.getValue { it.configCapacity.pause }
+                picker.value = 100
+            }
+
+            dash_resetStatusUnplug_switch.setOnCheckedChangeListener { _, isChecked ->
+                configViewModel.updateValue {
+                    it.configResetUnplugged = isChecked
+
+                    //If I manually modify the mAccConfig I have to set current profile to null (custom profile)
+                    //TODO set current profile
+                }
+            }
         }
     }
 

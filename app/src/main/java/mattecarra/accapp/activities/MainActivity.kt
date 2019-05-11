@@ -32,6 +32,7 @@ import kotlinx.android.synthetic.main.dashboard_fragment.*
 import mattecarra.accapp.utils.AccUtils
 import mattecarra.accapp.R
 import mattecarra.accapp._interface.OnProfileClickListener
+import mattecarra.accapp.fragments.AccConfigViewModel
 import mattecarra.accapp.fragments.DashboardFragment
 import mattecarra.accapp.fragments.ProfilesFragment
 import mattecarra.accapp.fragments.SchedulesFragment
@@ -53,13 +54,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private val ACC_PROFILE_SCHEDULER_REQUEST = 4
 
     private lateinit var mViewModel: MainActivityViewModel
+    private lateinit var configViewModel: AccConfigViewModel
 
     val mMainFragment = DashboardFragment.newInstance()
     val mProfilesFragment = ProfilesFragment.newInstance()
     val mSchedulesFragment = SchedulesFragment.newInstance()
-
-    // TODO: Check what the mAccConfig does in the MainActivity
-    private lateinit var mAccConfig: AccConfig
 
 //    private var profilesAdapter: ProfilesViewAdapter? = null
 //
@@ -212,7 +211,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         // Applies the selected profile
 
         doAsync {
-            val result = ConfigUtils.updateAcc(accaProfile.accConfig)
+            val result = configViewModel.updateConfig(accaProfile.accConfig)
 
             if(!result.voltControlUpdateSuccessful) {
                 uiThread {
@@ -277,50 +276,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         // Set Bottom Navigation Bar Item Selected Listener
         botNav_main.setOnNavigationItemSelectedListener(this)
 
-        // Read ACC configuration
-        try {
-            this.mAccConfig = AccUtils.readConfig()
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-            showConfigReadError()
-            this.mAccConfig = AccUtils.defaultConfig //if mAccConfig is null I use default mAccConfig values.
-        }
-
         // Load in dashboard fragment
         loadFragment(mMainFragment)
 
         //Rest of the UI
-
-//        edit_charging_limit_once_bt.setOnClickListener {
-//            val dialog = MaterialDialog(this).show {
-//                title(R.string.edit_charging_limit_once)
-//                message(R.string.edit_charging_limit_once_dialog_msg)
-//                customView(R.layout.edit_charging_limit_once_dialog)
-//                positiveButton(R.string.apply) {
-//                    AccUtils.setChargingLimitForOneCharge(getCustomView().findViewById<NumberPicker>(R.id.charging_limit).value)
-//                    Toast.makeText(this@MainActivity, R.string.done, Toast.LENGTH_LONG).show()
-//                }
-//                negativeButton(android.R.string.cancel)
-//            }
-//
-//            val picker = dialog.getCustomView().findViewById<NumberPicker>(R.id.charging_limit)
-//            picker.maxValue = 100
-//            picker.minValue = mAccConfig.capacity.pauseCapacity
-//            picker.value = 100
-//        }
-//
-//        reset_stats_on_unplugged_switch.setOnCheckedChangeListener { _, isChecked ->
-//            mAccConfig.resetUnplugged = isChecked
-//            AccUtils.updateResetUnplugged(isChecked)
-//
-//            //If I manually modify the mAccConfig I have to set current profile to null (custom profile)
-//            ProfileUtils.saveCurrentProfile(null, mSharedPrefs)
-//        }
-//
-//        reset_stats_on_unplugged_switch.isChecked = mAccConfig.resetUnplugged
-//        reset_battery_stats.setOnClickListener {
-//            AccUtils.resetBatteryStats()
-//        }
 
         // TODO: Integrate schedules into another fragment
 //        val schedules = ArrayList(AccUtils.listAllSchedules())
@@ -435,6 +394,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     dialog.cancel()
 
                     if(!res) {
+                        //TODO add an option to share logs
                         val failureDialog = MaterialDialog(this@MainActivity)
                             .show {
                                 title(R.string.installation_failed_title)
@@ -474,6 +434,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         // Assign ViewModel
         mViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+        configViewModel = ViewModelProviders.of(this).get(AccConfigViewModel::class.java)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -522,9 +483,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         if (requestCode == ACC_CONFIG_EDITOR_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data?.getBooleanExtra("hasChanges", false) == true) {
-                    mAccConfig = data.getParcelableExtra("config")
                     doAsync {
-                        val result = ConfigUtils.updateAcc(mAccConfig)
+                        val result = configViewModel.updateConfig(data.getParcelableExtra("config"))
 
                         // Remove the current selected profile
                         mViewModel.clearCurrentSelectedProfile()
