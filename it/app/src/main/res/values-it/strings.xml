@@ -10,10 +10,10 @@
     <string name="tile_acc_disabled">ACC Disabled</string>
     <!-- Navigation Strings -->
     <string name="title_main">Main</string>
-    <string name="title_profiles">Profiles</string>
-    <string name="title_settings">Settings</string>
+    <string name="title_profiles">Profili</string>
+    <string name="title_settings">Impostazioni</string>
     <!-- ACC Daemon Status -->
-    <string name="title_status">Status</string>
+    <string name="title_status">Stato</string>
     <string name="title_acc_daemon">ACC Daemon</string>
     <string name="acc_daemon_status_running">ACC Daemon is Running</string>
     <string name="acc_daemon_status_not_running">ACC Daemon is not Running</string>
@@ -47,9 +47,9 @@
     <string name="max_temp">Max temp:</string>
     <string name="pause_seconds">Pause seconds:</string>
     <string name="charge_seconds">Charge seconds:</string>
-    <string name="shutdown_capacity">Shutdown at:</string>
-    <string name="no_root_message">This app requires ROOT.</string>
-    <string name="config_error_title">Config read error</string>
+    <string name="shutdown_capacity">Spegni a:</string>
+    <string name="no_root_message">Questa app richiede il ROOT.</string>
+    <string name="config_error_title">Errore nella lettura del file di configurazione</string>
     <string name="config_error_dialog">I wasn\'t able to parse/find the ACC config file. Please check if your config contains errors. You will still be able to edit the settings, but the result can\'t be guaranteed.
     </string>
     <string name="wait">Please wait, it may take a few seconds</string>
