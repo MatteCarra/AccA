@@ -279,15 +279,15 @@ object AccUtils {
     }
 
     fun isAccInstalled(): Boolean {
-        return Shell.su("test -f /dev/acc/modPath/acc").exec().isSuccess
+        return Shell.su("which acc > /dev/null").exec().isSuccess
     }
 
     fun installAccModule(context: Context): Shell.Result? {
         try {
-            val scriptFile = File(context.filesDir, "install.sh")
+            val scriptFile = File(context.filesDir, "install-latest.sh")
             val path = scriptFile.absolutePath
 
-            BufferedInputStream(URL("https://raw.githubusercontent.com/Magisk-Modules-Repo/acc/master/install.sh").openStream())
+            BufferedInputStream(URL("https://raw.githubusercontent.com/VR-25/acc/master/install-latest.sh").openStream())
                 .use { inStream ->
                     FileOutputStream(scriptFile)
                         .use {

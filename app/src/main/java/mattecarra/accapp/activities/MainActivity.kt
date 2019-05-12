@@ -380,11 +380,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             doAsync {
-                val res = AccUtils.installAccModule(this@MainActivity)?.isSuccess == true
+                val res = AccUtils.installAccModule(this@MainActivity)
                 uiThread {
                     dialog.cancel()
 
-                    if(!res) {
+                    if(res?.isSuccess != true) {
                         //TODO add an option to share logs
                         val failureDialog = MaterialDialog(this@MainActivity)
                             .show {
