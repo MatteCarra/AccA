@@ -91,12 +91,12 @@ object AccUtils {
     }
 
     fun listVoltageSupportedControlFiles(): List<String> {
-        val res = Shell.su("/dev/acc/modPath/acc -v :").exec()
+        val res = Shell.su("acc -v :").exec()
         return if(res.isSuccess) res.out.filter { it.isNotEmpty() } else emptyList()
     }
 
     fun resetBatteryStats(): Boolean {
-        return Shell.su("/dev/acc/modPath/acc -R").exec().isSuccess
+        return Shell.su("acc -R").exec().isSuccess
     }
 
     /**
@@ -152,7 +152,7 @@ object AccUtils {
     private val CYCLE_COUNT_REGEXP = """^\s*CYCLE_COUNT=(\d+)""".toRegex(RegexOption.MULTILINE)
 
     fun getBatteryInfo(): BatteryInfo {
-        val info =  Shell.su("/dev/acc/modPath/acc -i").exec().out.joinToString(separator = "\n")
+        val info =  Shell.su("acc -i").exec().out.joinToString(separator = "\n")
 
         return BatteryInfo(
             NAME_REGEXP.find(info)?.destructured?.component1() ?: STRING_UNKNOWN,
@@ -213,23 +213,23 @@ object AccUtils {
     }
 
     fun isBatteryCharging(): Boolean {
-        return Shell.su("/dev/acc/modPath/acc -i").exec().out.find { it.matches(STATUS_REGEXP) } == "STATUS=Charging"
+        return Shell.su("acc -i").exec().out.find { it.matches(STATUS_REGEXP) } == "STATUS=Charging"
     }
 
     fun isAccdRunning(): Boolean {
-        return Shell.su("/dev/acc/modPath/acc -D").exec().out.find { it.contains("accd is running") } != null
+        return Shell.su("acc -D").exec().out.find { it.contains("accd is running") } != null
     }
 
     fun abcStartDaemon(): Boolean {
-        return Shell.su("/dev/acc/modPath/acc -D start").exec().isSuccess
+        return Shell.su("acc -D start").exec().isSuccess
     }
 
     fun abcRestartDaemon(): Boolean {
-        return Shell.su("/dev/acc/modPath/acc -D restart").exec().isSuccess
+        return Shell.su("acc -D restart").exec().isSuccess
     }
 
     fun abcStopDaemon(): Boolean {
-        return Shell.su("/dev/acc/modPath/acc -D stop").exec().isSuccess
+        return Shell.su("acc -D stop").exec().isSuccess
     }
 
     fun deleteSchedule(once: Boolean, name: String): Boolean {
@@ -261,12 +261,12 @@ object AccUtils {
 
     //Charging switches
     fun listChargingSwitches(): List<String> {
-        val res = Shell.su("/dev/acc/modPath/acc --set switch:").exec()
+        val res = Shell.su("acc --set switch:").exec()
         return if(res.isSuccess) res.out.map { it.trim() }.filter { it.isNotEmpty() } else emptyList()
     }
 
     fun testChargingSwitch(chargingSwitch: String? = null): Int {
-        return Shell.su("/dev/acc/modPath/acc -t${chargingSwitch?.let{" $it"} ?: ""}").exec().code
+        return Shell.su("acc -t${chargingSwitch?.let{" $it"} ?: ""}").exec().code
     }
 
     fun getCurrentChargingSwitch(): String? {
@@ -275,7 +275,7 @@ object AccUtils {
     }
 
     fun setChargingLimitForOneCharge(limit: Int): Boolean {
-        return Shell.su("/dev/acc/modPath/acc -f $limit").exec().isSuccess
+        return Shell.su("acc -f $limit").exec().isSuccess
     }
 
     fun isAccInstalled(): Boolean {
