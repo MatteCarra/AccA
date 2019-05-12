@@ -44,13 +44,13 @@ object ConfigConverter {
 
     @TypeConverter
     @JvmStatic
-    fun fromConfigCoolDown(configCoolDown: AccConfig.ConfigCoolDown) : String {
+    fun fromConfigCoolDown(configCoolDown: AccConfig.ConfigCoolDown?) : String {
         return Gson().toJson(configCoolDown)
     }
 
     @TypeConverter
     @JvmStatic
-    fun toConfigCoolDown(configCoolDown: String) : AccConfig.ConfigCoolDown {
+    fun toConfigCoolDown(configCoolDown: String) : AccConfig.ConfigCoolDown? {
         return Gson().fromJson(configCoolDown, AccConfig.ConfigCoolDown::class.java)
     }
 }

@@ -258,41 +258,43 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         shutdown_capacity_picker.setOnValueChangedListener(this)
 
         resume_capacity_picker.minValue = config.configCapacity.shutdown
-        resume_capacity_picker.maxValue = config.configCapacity.pause - 1
+        resume_capacity_picker.maxValue = if(config.configCapacity.pause == 101) 101 else config.configCapacity.pause - 1
         resume_capacity_picker.value = config.configCapacity.resume
         resume_capacity_picker.setOnValueChangedListener(this)
 
-        pause_capacity_picker.minValue = config.configCapacity.resume + 1
-        pause_capacity_picker.maxValue = 100
+        pause_capacity_picker.minValue = if(config.configCapacity.resume == 101) 101 else config.configCapacity.resume + 1
+        pause_capacity_picker.maxValue = 101
         pause_capacity_picker.value = config.configCapacity.pause
         pause_capacity_picker.setOnValueChangedListener(this)
 
         //temps
         if(config.configTemperature.coolDownTemperature >= 90 && config.configTemperature.pause >= 95) {
             temp_switch.isChecked = false
-            cooldown_temp_picker.isEnabled = false
-            pause_temp_picker.isEnabled = false
-            pause_seconds_picker.isEnabled = false
+            cooldown_temperature_picker.isEnabled = false
+            pause_temperature_picker.isEnabled = false
+            temperature_max_pause_seconds_picker.isEnabled = false
         }
         temp_switch.setOnCheckedChangeListener(this)
 
-        cooldown_temp_picker.minValue = 20
-        cooldown_temp_picker.maxValue = 90
-        cooldown_temp_picker.value = config.configTemperature.coolDownTemperature
-        cooldown_temp_picker.setOnValueChangedListener(this)
+        cooldown_temperature_picker.minValue = 20
+        cooldown_temperature_picker.maxValue = 90
+        cooldown_temperature_picker.value = config.configTemperature.coolDownTemperature
+        cooldown_temperature_picker.setOnValueChangedListener(this)
 
-        pause_temp_picker.minValue = 20
-        pause_temp_picker.maxValue = 95
-        pause_temp_picker.value = config.configTemperature.pause
-        pause_temp_picker.setOnValueChangedListener(this)
+        pause_temperature_picker.minValue = 20
+        pause_temperature_picker.maxValue = 95
+        pause_temperature_picker.value = config.configTemperature.pause
+        pause_temperature_picker.setOnValueChangedListener(this)
 
-        pause_seconds_picker.minValue = 10
-        pause_seconds_picker.maxValue = 120
-        pause_seconds_picker.value = config.configTemperature.pause
-        pause_seconds_picker.setOnValueChangedListener(this)
+        temperature_max_pause_seconds_picker.minValue = 10
+        temperature_max_pause_seconds_picker.maxValue = 120
+        temperature_max_pause_seconds_picker.value = config.configTemperature.pause
+        temperature_max_pause_seconds_picker.setOnValueChangedListener(this)
 
         //coolDown
-        if(config.configCoolDown.atPercent > 100) {
+        if(config.configCoolDown == null || config.configCoolDown?.atPercent?.let { it > 100 } == true) {
+            config.configCoolDown = null
+
             cooldown_switch.isChecked = false
             cooldown_percentage_picker.isEnabled = false
             charge_ratio_picker.isEnabled = false
@@ -301,18 +303,18 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         cooldown_switch.setOnCheckedChangeListener(this)
 
         cooldown_percentage_picker.minValue = config.configCapacity.shutdown
-        cooldown_percentage_picker.maxValue = 101 //if someone wants to disable it should use the switch but I'm gonna leave it there
-        cooldown_percentage_picker.value = config.configCoolDown.atPercent
+        cooldown_percentage_picker.maxValue = 100 //if someone wants to disable it should use the switch but I'm gonna leave it there
+        cooldown_percentage_picker.value = config.configCoolDown?.atPercent ?: 60
         cooldown_percentage_picker.setOnValueChangedListener(this)
 
         charge_ratio_picker.minValue = 1
         charge_ratio_picker.maxValue = 120 //no reason behind this value
-        charge_ratio_picker.value = config.configCoolDown.charge ?: 50
+        charge_ratio_picker.value = config.configCoolDown?.charge ?: 50
         charge_ratio_picker.setOnValueChangedListener(this)
 
         pause_ratio_picker.minValue = 1
         pause_ratio_picker.maxValue = 120 //no reason behind this value
-        pause_ratio_picker.value = config.configCoolDown.pause ?: 10
+        pause_ratio_picker.value = config.configCoolDown?.pause ?: 10
         pause_ratio_picker.setOnValueChangedListener(this)
 
         //voltage control
@@ -416,13 +418,13 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         if(buttonView == null) return
         when(buttonView.id) {
             R.id.temp_switch -> {
-                cooldown_temp_picker.isEnabled = isChecked
-                pause_temp_picker.isEnabled = isChecked
-                pause_seconds_picker.isEnabled = isChecked
+                cooldown_temperature_picker.isEnabled = isChecked
+                pause_temperature_picker.isEnabled = isChecked
+                temperature_max_pause_seconds_picker.isEnabled = isChecked
 
                 if(isChecked) {
-                    cooldown_temp_picker.value = 40
-                    pause_temp_picker.value = 45
+                    cooldown_temperature_picker.value = 40
+                    pause_temperature_picker.value = 45
 
                     config.configTemperature.coolDownTemperature = 40
                     config.configTemperature.pause = 45
@@ -441,11 +443,10 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
 
                 if(isChecked) {
                     cooldown_percentage_picker.value = 60
-                    config.configCoolDown.atPercent = 60
+                    config.configCoolDown = AccConfig.ConfigCoolDown(60, 50, 10)
                     unsavedChanges = true
                 } else {
-                    cooldown_percentage_picker.value = 101
-                    config.configCoolDown.atPercent = 101
+                    config.configCoolDown = null
                     unsavedChanges = true
                 }
             }
@@ -469,44 +470,35 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             R.id.resume_capacity_picker -> {
                 config.configCapacity.resume = newVal
 
-                pause_capacity_picker.minValue = config.configCapacity.resume + 1
+                pause_capacity_picker.minValue = if(newVal == 101) 101 else newVal + 1
             }
 
             R.id.pause_capacity_picker -> {
                 config.configCapacity.pause = newVal
 
-                resume_capacity_picker.maxValue = config.configCapacity.pause - 1
-                resume_capacity_picker.maxValue = config.configCapacity.pause - 1
+                resume_capacity_picker.maxValue = if(newVal == 101) 101 else newVal - 1
             }
 
             //temp
-            R.id.cooldown_temp_picker ->
+            R.id.cooldown_temperature_picker ->
                 config.configTemperature.coolDownTemperature = newVal
 
-            R.id.pause_temp_picker ->
-                config.configTemperature.pause = newVal
+            R.id.pause_temperature_picker ->
+                config.configTemperature.maxTemperature = newVal
 
-            R.id.pause_seconds_picker ->
-                config.configCoolDown.pause = newVal
+            R.id.temperature_max_pause_seconds_picker ->
+                config.configTemperature.pause = newVal
 
             //coolDown
             R.id.cooldown_percentage_picker ->
-                config.configCoolDown.atPercent = newVal
+                config.configCoolDown?.atPercent = newVal
 
             R.id.charge_ratio_picker -> {
-                if(config.configCoolDown.atPercent > 100) {
-                    config.configCoolDown.charge = newVal
-                    config.configCoolDown.pause = 10
-                }
-                config.configCoolDown.charge = newVal
+                config.configCoolDown?.charge = newVal
             }
 
             R.id.pause_ratio_picker -> {
-                if(config.configCoolDown.atPercent > 100) {
-                    config.configCoolDown.charge = 50
-                    config.configCoolDown.pause = newVal
-                }
-                config.configCoolDown.pause = newVal
+                config.configCoolDown?.pause = newVal
             }
 
             else -> {

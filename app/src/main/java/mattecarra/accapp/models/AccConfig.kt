@@ -18,7 +18,7 @@ data class AccConfig(var configCapacity: ConfigCapacity,
                      var configTemperature: ConfigTemperature,
                      var configOnBoot: String?,
                      var configOnPlug: String?,
-                     var configCoolDown: ConfigCoolDown,
+                     var configCoolDown: ConfigCoolDown?,
                      var configResetUnplugged: Boolean,
                      var configChargeSwitch: String?) : Parcelable {
 
@@ -64,6 +64,6 @@ data class AccConfig(var configCapacity: ConfigCapacity,
      * @param charge charge time in seconds.
      * @param pause pause time in seconds.
      */
-    data class ConfigCoolDown (var atPercent: Int, var charge: Int?, var pause: Int?)
+    data class ConfigCoolDown (var atPercent: Int, var charge: Int, var pause: Int)
 
 }

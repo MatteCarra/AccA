@@ -36,7 +36,7 @@ object AccUtils {
         AccConfig.ConfigTemperature(400, 450, 90),
         null,
         null,
-        AccConfig.ConfigCoolDown(101, null, null),
+        null,
         false,
         null)
 
@@ -47,8 +47,6 @@ object AccUtils {
         val (coolDownTemp, pauseChargingTemp, waitSeconds) = TEMP_CONFIG_REGEXP.find(config)!!.destructured
 
         val coolDownMatchResult = COOLDOWN_CONFIG_REGEXP.find(config)?.destructured
-        val coolDownChargeSeconds = coolDownMatchResult?.component1()
-        val coolDownPauseSeconds = coolDownMatchResult?.component2()
 
         val cVolt = VOLT_FILE.find(config)?.destructured
 
@@ -60,7 +58,9 @@ object AccUtils {
                 waitSeconds.toIntOrNull() ?: 90),
             getOnBoot(config),
             getOnPlugged(config),
-            AccConfig.ConfigCoolDown(capacityCoolDown.toInt(), coolDownChargeSeconds?.toInt(), coolDownPauseSeconds?.toInt()),
+            coolDownMatchResult?.let { (coolDownChargeSeconds, coolDownPauseSeconds) ->
+                AccConfig.ConfigCoolDown(capacityCoolDown.toInt(), coolDownChargeSeconds.toInt(), coolDownPauseSeconds.toInt())
+            },
             getResetUnplugged(config),
             getCurrentChargingSwitch()
         )

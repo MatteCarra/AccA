@@ -49,11 +49,11 @@ object ConfigUtils {
     fun updateAcc(accConfig: AccConfig): UpdateResult {
         // Initalise new UpdateResult data class to return
         return UpdateResult(
-            updateAccCapacity(accConfig.configCapacity.shutdown, accConfig.configCoolDown.atPercent,
+            updateAccCapacity(accConfig.configCapacity.shutdown, accConfig.configCoolDown?.atPercent ?: 101,
                 accConfig.configCapacity.resume, accConfig.configCapacity.pause),
             updateAccVoltControl(accConfig.configVoltage.controlFile, accConfig.configVoltage.max),
             updateAccTemperature(accConfig.configTemperature.coolDownTemperature, accConfig.configTemperature.maxTemperature, accConfig.configTemperature.pause),
-            updateAccCoolDown(accConfig.configCoolDown.charge, accConfig.configCoolDown.pause),
+            updateAccCoolDown(accConfig.configCoolDown?.charge, accConfig.configCoolDown?.pause),
             updateResetUnplugged(accConfig.configResetUnplugged),
             updateAccOnBoot(accConfig.configOnBoot),
             updateAccOnPlugged(accConfig.configOnPlug),
@@ -74,11 +74,10 @@ fun updateResetUnplugged(resetUnplugged: Boolean): Boolean {
  * @return boolean if the command was successful.
  */
 fun updateAccCoolDown(charge: Int?, pause: Int?) : Boolean {
-    return charge?.let { charge ->
-        pause?.let { pause ->
-            Shell.su("acc -s coolDownRatio $charge/$pause").exec().isSuccess
-        }
-    } ?: true
+    return if(charge != null && pause != null)
+        Shell.su("acc -s coolDownRatio $charge/$pause").exec().isSuccess
+    else
+        Shell.su("acc -s coolDownRatio").exec().isSuccess
 }
 
 /**
