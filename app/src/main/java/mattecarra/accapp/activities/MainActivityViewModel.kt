@@ -16,7 +16,7 @@ import kotlin.coroutines.CoroutineContext
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 
     private val mDataRepository: DataRepository
-    private lateinit var mSharedPrefs: SharedPreferences
+    private val mSharedPrefs: SharedPreferences
 
 
     private var mParentJob = Job()
@@ -40,6 +40,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     fun updateProfile(profile: AccaProfile) = mScope.launch(Dispatchers.IO) {
         mDataRepository.updateProfile(profile)
+    }
+
+    fun getProfileById(id: Int) : AccaProfile {
+        return mDataRepository.getProfileById(id)
     }
 
     /**
