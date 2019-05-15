@@ -252,8 +252,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                             dataBundle.putParcelable(Constants.ACC_CONFIG_KEY, accaProfile.accConfig)
 
                             // Insert the databundle into the intent.
-                            intent.putExtra("data", dataBundle)
-                            intent.putExtra("title", this@MainActivity.getString(R.string.profile_creator))
+                            intent.putExtra(Constants.DATA_KEY, dataBundle)
+                            intent.putExtra(Constants.TITLE_KEY, this@MainActivity.getString(R.string.profile_creator))
                             startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
                         }
                     }
@@ -625,9 +625,16 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             if (resultCode == Activity.RESULT_OK) {
                 if(data?.getBooleanExtra("hasChanges", false) == true && data.hasExtra("data")) {
                     val accConfig: AccConfig = data.getParcelableExtra("accConfig")
+                    // Extract the data
+                    val editorData = data.getBundleExtra(Constants.DATA_KEY)
+                    val profileId = editorData.getInt(Constants.PROFILE_ID_KEY)
+                    val selectedProfile: AccaProfile = mViewModel.getProfileById(profileId)
 
-                    //TODO: Update the profile in the DB
-                    //mViewModel.updateProfile()
+                    // Update the selected Profile
+                    selectedProfile.accConfig = accConfig
+
+                    // Update the profile
+                    mViewModel.updateProfile(selectedProfile)
                 }
             }
         }
