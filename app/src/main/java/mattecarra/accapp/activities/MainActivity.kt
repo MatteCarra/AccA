@@ -15,7 +15,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
@@ -37,7 +36,6 @@ import mattecarra.accapp.fragments.ProfilesFragment
 import mattecarra.accapp.fragments.SchedulesFragment
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
-import mattecarra.accapp.utils.ConfigUtils
 import mattecarra.accapp.utils.Constants
 import mattecarra.accapp.utils.progress
 import org.jetbrains.anko.doAsync
@@ -227,8 +225,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                             dataBundle.putParcelable(Constants.ACC_CONFIG_KEY, accaProfile.accConfig)
 
                             // Insert the databundle into the intent.
-                            intent.putExtra("data", dataBundle)
-                            intent.putExtra("title", this@MainActivity.getString(R.string.profile_creator))
+                            intent.putExtra(Constants.DATA_KEY, dataBundle)
+                            intent.putExtra(Constants.TITLE_KEY, this@MainActivity.getString(R.string.profile_creator))
                             startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
                         }
                     }
@@ -247,7 +245,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                                     accaProfile.profileName = charSequence.toString()
 
                                     // Update the profile in the DB
-                                    mViewModel.dataRepository.updateProfile(accaProfile)
+                                    mViewModel.mDataRepository.updateProfile(accaProfile)
                                 }
                                 positiveButton(R.string.save)
                                 negativeButton(android.R.string.cancel)
@@ -255,7 +253,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     }
                     2 -> {
                         // Delete the selected profile (3rd option).
-                        mViewModel.dataRepository.deleteProfile(accaProfile)
+                        mViewModel.mDataRepository.deleteProfile(accaProfile)
                     }
                 }
             }
@@ -507,7 +505,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                                     accConfig
                                 )
 
-                                mViewModel.dataRepository.insertProfile(profile)
+                                mViewModel.mDataRepository.insertProfile(profile)
                             }
                             negativeButton(android.R.string.cancel)
                         }
@@ -517,9 +515,16 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             if (resultCode == Activity.RESULT_OK) {
                 if(data?.getBooleanExtra("hasChanges", false) == true && data.hasExtra("data")) {
                     val accConfig: AccConfig = data.getParcelableExtra("accConfig")
+                    // Extract the data
+                    val editorData = data.getBundleExtra(Constants.DATA_KEY)
+                    val profileId = editorData.getInt(Constants.PROFILE_ID_KEY)
+                    val selectedProfile: AccaProfile = mViewModel.getProfileById(profileId)
 
-                    //TODO: Update the profile in the DB
-                    //mViewModel.updateProfile()
+                    // Update the selected Profile
+                    selectedProfile.accConfig = accConfig
+
+                    // Update the profile
+                    mViewModel.updateProfile(selectedProfile)
                 }
             }
         }

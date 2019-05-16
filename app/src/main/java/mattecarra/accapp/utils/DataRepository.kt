@@ -39,4 +39,8 @@ class DataRepository(application: Application, private val scope: CoroutineScope
         mProfileDao.update(profile)
     }
 
+    @WorkerThread
+    fun getProfileById(id: Int): AccaProfile {
+        return mProfileDao.getProfileById(id)
+    }
 }
