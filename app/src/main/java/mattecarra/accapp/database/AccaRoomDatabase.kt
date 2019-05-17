@@ -5,7 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import kotlinx.coroutines.CoroutineScope
+import androidx.sqlite.db.SupportSQLiteDatabase
+import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
 
 @Database(entities = [AccaProfile::class], version = 1)
@@ -22,7 +23,6 @@ abstract class AccaRoomDatabase : RoomDatabase() {
         const val DATABASE_NAME = "acca_database"
 
         fun getDatabase(context: Context): AccaRoomDatabase {
-
             val tempInstance = INSTANCE
             if (tempInstance != null) {
                 return tempInstance
@@ -34,10 +34,20 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                     context.applicationContext,
                     AccaRoomDatabase::class.java,
                     DATABASE_NAME
-                ).build()
+                ).addCallback(object : Callback() {
+                    override fun onCreate(db: SupportSQLiteDatabase) {
+                        super.onCreate(db)
+
+                        Thread(Runnable { prepopulateDb(context, getDatabase(context)) }).start()
+                    }
+                }).build()
 
                 return INSTANCE as AccaRoomDatabase
             }
+        }
+
+        private fun prepopulateDb(context: Context, db: AccaRoomDatabase) {
+            //TODO
         }
 
         fun destroyInstance() {
