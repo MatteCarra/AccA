@@ -518,13 +518,17 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     // Extract the data
                     val editorData = data.getBundleExtra(Constants.DATA_KEY)
                     val profileId = editorData.getInt(Constants.PROFILE_ID_KEY)
-                    val selectedProfile: AccaProfile = mViewModel.getProfileById(profileId)
+                    doAsync {
+                        val selectedProfile: AccaProfile = mViewModel.getProfileById(profileId)
 
-                    // Update the selected Profile
-                    selectedProfile.accConfig = accConfig
+                        runOnUiThread {
+                            // Update the selected Profile
+                            selectedProfile.accConfig = accConfig
 
-                    // Update the profile
-                    mViewModel.updateProfile(selectedProfile)
+                            // Update the profile
+                            mViewModel.updateProfile(selectedProfile)
+                        }
+                    }
                 }
             }
         }
