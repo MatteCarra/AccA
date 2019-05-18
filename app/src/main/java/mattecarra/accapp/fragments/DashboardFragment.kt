@@ -19,9 +19,8 @@ import kotlinx.android.synthetic.main.edit_charging_limit_once_dialog.view.*
 
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
-import mattecarra.accapp.activities.SharedViewModel
+import mattecarra.accapp.SharedViewModel
 import mattecarra.accapp.models.BatteryInfo
-import mattecarra.accapp.acc.v201905111.AccHandler
 
 class DashboardFragment : Fragment() {
 

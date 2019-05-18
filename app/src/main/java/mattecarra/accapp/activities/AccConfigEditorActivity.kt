@@ -38,7 +38,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
     private fun returnResults() {
         val returnIntent = Intent()
         returnIntent.putExtra(Constants.DATA_KEY, intent.getBundleExtra("data"))
-        returnIntent.putExtra("hasChanges", unsavedChanges)
+        returnIntent.putExtra(Constants.ACC_HAS_CHANGES, unsavedChanges)
         returnIntent.putExtra(Constants.ACC_CONFIG_KEY, mAccConfig)
         setResult(Activity.RESULT_OK, returnIntent)
         finish()

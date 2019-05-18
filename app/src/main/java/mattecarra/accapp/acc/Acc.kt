@@ -7,7 +7,10 @@ import com.topjohnwu.superuser.Shell
 import mattecarra.accapp.adapters.Schedule
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.BatteryInfo
+import java.io.BufferedInputStream
 import java.io.File
+import java.io.FileOutputStream
+import java.net.URL
 
 
 interface AccInterface {
@@ -49,21 +52,15 @@ interface AccInterface {
 
     fun setChargingLimitForOneCharge(limit: Int): Boolean
 
-    fun isAccInstalled(): Boolean
-
-    fun installAccModule(context: Context): Shell.Result?
-
     fun updateAccConfig(accConfig: AccConfig): ConfigUpdateResult
 }
 
 object Acc {
-    val instance: AccInterface
-
     private val VERSION_REGEXP = """^\s*versionCode=([\d*]+)""".toRegex(RegexOption.MULTILINE)
 
     private const val latestVersion = 201905111
 
-    init {
+    val instance: AccInterface by lazy {
         val config = File(Environment.getExternalStorageDirectory(), "acc/config.txt").readText()
 
         val version = VERSION_REGEXP.find(config)?.destructured?.component1()?.toIntOrNull() ?: latestVersion
@@ -71,11 +68,41 @@ object Acc {
         val constructor = try {
             val aClass = Class.forName("mattecarra.accapp.acc.v$version.AccHandler")
             aClass.getDeclaredConstructor()
-        } catch (ex: ClassNotFoundException) {
+        } catch (ex: Exception) {
             val aClass = Class.forName("mattecarra.accapp.acc.v$latestVersion.AccHandler")
             aClass.getDeclaredConstructor()
         }
 
-        instance = constructor.newInstance() as AccInterface
+        constructor.newInstance() as AccInterface
+    }
+
+    fun isAccInstalled(): Boolean {
+        return Shell.su("which acc > /dev/null").exec().isSuccess
+    }
+
+    fun installAccModule(context: Context): Shell.Result? {
+        try {
+            val scriptFile = File(context.filesDir, "install-latest.sh")
+            val path = scriptFile.absolutePath
+
+            BufferedInputStream(URL("https://raw.githubusercontent.com/VR-25/acc/master/install-latest.sh").openStream())
+                .use { inStream ->
+                    FileOutputStream(scriptFile)
+                        .use {
+                            val buf = ByteArray(1024)
+                            var bytesRead = inStream.read(buf, 0, 1024)
+
+                            while (bytesRead != -1) {
+                                it.write(buf, 0, bytesRead)
+                                bytesRead = inStream.read(buf, 0, 1024)
+                            }
+                        }
+                }
+
+            return Shell.su("chmod +x $path", "sh $path").exec()
+        } catch (ex: java.lang.Exception) {
+            ex.printStackTrace()
+            return null
+        }
     }
 }

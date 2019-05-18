@@ -1,4 +1,4 @@
-package mattecarra.accapp.activities
+package mattecarra.accapp
 
 import android.app.Application
 import android.content.SharedPreferences
@@ -14,14 +14,11 @@ import kotlinx.coroutines.launch
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
-import mattecarra.accapp.acc.v201905111.AccHandler
 import mattecarra.accapp.utils.Constants
 import mattecarra.accapp.utils.DataRepository
 import kotlin.coroutines.CoroutineContext
 
 class SharedViewModel(application: Application) : AndroidViewModel(application) {
-
-    val mDataRepository: DataRepository
     private val mSharedPrefs: SharedPreferences
     private val config: MutableLiveData<AccConfig> = MutableLiveData()
 
@@ -32,7 +29,6 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     private val mScope = CoroutineScope(mCoroutineContext)
 
     init {
-        mDataRepository = DataRepository(application, mScope)
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(application)
 
         try {
@@ -110,23 +106,6 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 config.postValue(currentConfigVal)
             }
         }
-    }
-
-
-    fun insertProfile(profile: AccaProfile) = mScope.launch(Dispatchers.IO) {
-        mDataRepository.insertProfile(profile)
-    }
-
-    fun deleteProfile(profile: AccaProfile) = mScope.launch(Dispatchers.IO) {
-        mDataRepository.deleteProfile(profile)
-    }
-
-    fun updateProfile(profile: AccaProfile) = mScope.launch(Dispatchers.IO) {
-        mDataRepository.updateProfile(profile)
-    }
-
-    fun getProfileById(id: Int) : AccaProfile {
-        return mDataRepository.getProfileById(id)
     }
 
     /**

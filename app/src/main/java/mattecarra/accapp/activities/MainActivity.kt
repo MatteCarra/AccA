@@ -28,8 +28,8 @@ import com.github.javiersantos.appupdater.enums.UpdateFrom
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.topjohnwu.superuser.Shell
 import kotlinx.android.synthetic.main.activity_main.*
-import mattecarra.accapp.acc.v201905111.AccHandler
 import mattecarra.accapp.R
+import mattecarra.accapp.SharedViewModel
 import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.fragments.DashboardFragment
@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private val ACC_PROFILE_SCHEDULER_REQUEST = 4
 
     private lateinit var mViewModel: SharedViewModel
+    private lateinit var mMainActivityViewModel: MainActivityViewModel
 
     val mMainFragment = DashboardFragment.newInstance()
     val mProfilesFragment = ProfilesFragment.newInstance()
@@ -131,6 +132,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onNavigationItemSelected(m: MenuItem): Boolean {
+        mMainActivityViewModel.selectedNavBarItem = m.itemId
+
         when (m.itemId) {
             R.id.botNav_home -> {
                 loadFragment(mMainFragment)
@@ -246,7 +249,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                                     accaProfile.profileName = charSequence.toString()
 
                                     // Update the profile in the DB
-                                    mViewModel.mDataRepository.updateProfile(accaProfile)
+                                    mMainActivityViewModel.updateProfile(accaProfile)
                                 }
                                 positiveButton(R.string.save)
                                 negativeButton(android.R.string.cancel)
@@ -254,7 +257,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     }
                     2 -> {
                         // Delete the selected profile (3rd option).
-                        mViewModel.mDataRepository.deleteProfile(accaProfile)
+                        mMainActivityViewModel.deleteProfile(accaProfile)
                     }
                 }
             }
@@ -264,12 +267,13 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private fun initUi() {
         // Assign ViewModel
         mViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
+        mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
 
         // Set Bottom Navigation Bar Item Selected Listener
         botNav_main.setOnNavigationItemSelectedListener(this)
 
         // Load in dashboard fragment
-        loadFragment(mMainFragment)
+        botNav_main.selectedItemId = mMainActivityViewModel.selectedNavBarItem
 
         //Rest of the UI
 
@@ -369,7 +373,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun checkAccInstalled(): Boolean {
-        if(!Acc.instance.isAccInstalled()) {
+        if(!Acc.isAccInstalled()) {
             val dialog = MaterialDialog(this).show {
                 title(R.string.installing_acc)
                 progress(R.string.wait)
@@ -381,7 +385,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             doAsync {
-                val res = Acc.instance.installAccModule(this@MainActivity)
+                val res = Acc.installAccModule(this@MainActivity)
                 uiThread {
                     dialog.cancel()
 
@@ -470,9 +474,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == ACC_CONFIG_EDITOR_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                if (data?.getBooleanExtra("hasChanges", false) == true) {
+                if (data?.getBooleanExtra(Constants.ACC_HAS_CHANGES, false) == true) {
                     doAsync {
-                        val result = mViewModel.updateAccConfig(data.getParcelableExtra("config"))
+                        val result = mViewModel.updateAccConfig(data.getParcelableExtra(Constants.ACC_CONFIG_KEY))
 
                         // Remove the current selected profile
                         mViewModel.clearCurrentSelectedProfile()
@@ -482,7 +486,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         } else if (requestCode == ACC_PROFILE_CREATOR_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
-                    val accConfig: AccConfig = data.getParcelableExtra("config")
+                    val accConfig: AccConfig = data.getParcelableExtra(Constants.ACC_CONFIG_KEY)
                     val profileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
                     MaterialDialog(this)
                         .show {
@@ -505,7 +509,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                                     accConfig
                                 )
 
-                                mViewModel.mDataRepository.insertProfile(profile)
+                                mMainActivityViewModel.insertProfile(profile)
                             }
                             negativeButton(android.R.string.cancel)
                         }
@@ -513,20 +517,20 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
         } else if(requestCode == ACC_PROFILE_EDITOR_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                if(data?.getBooleanExtra("hasChanges", false) == true && data.hasExtra("data")) {
-                    val accConfig: AccConfig = data.getParcelableExtra("accConfig")
+                if(data?.getBooleanExtra(Constants.ACC_HAS_CHANGES, false) == true && data.hasExtra(Constants.DATA_KEY)) {
+                    val accConfig: AccConfig = data.getParcelableExtra(Constants.ACC_CONFIG_KEY)
                     // Extract the data
                     val editorData = data.getBundleExtra(Constants.DATA_KEY)
                     val profileId = editorData.getInt(Constants.PROFILE_ID_KEY)
                     doAsync {
-                        val selectedProfile: AccaProfile = mViewModel.getProfileById(profileId)
+                        val selectedProfile: AccaProfile = mMainActivityViewModel.getProfileById(profileId)
 
                         runOnUiThread {
                             // Update the selected Profile
                             selectedProfile.accConfig = accConfig
 
                             // Update the profile
-                            mViewModel.updateProfile(selectedProfile)
+                            mMainActivityViewModel.updateProfile(selectedProfile)
                         }
                     }
                 }

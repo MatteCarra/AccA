@@ -284,37 +284,6 @@ class AccHandler(): AccInterface {
         return Shell.su("acc -f $limit").exec().isSuccess
     }
 
-    override fun isAccInstalled(): Boolean {
-        return Shell.su("which acc > /dev/null").exec().isSuccess
-    }
-
-    override fun installAccModule(context: Context): Shell.Result? {
-        try {
-            val scriptFile = File(context.filesDir, "install-latest.sh")
-            val path = scriptFile.absolutePath
-
-            BufferedInputStream(URL("https://raw.githubusercontent.com/VR-25/acc/master/install-latest.sh").openStream())
-                .use { inStream ->
-                    FileOutputStream(scriptFile)
-                        .use {
-                            val buf = ByteArray(1024)
-                            var bytesRead = inStream.read(buf, 0, 1024)
-
-                            while (bytesRead != -1) {
-                                it.write(buf, 0, bytesRead)
-                                bytesRead = inStream.read(buf, 0, 1024)
-                            }
-                        }
-                }
-
-            return Shell.su("chmod +x $path", "sh $path").exec()
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-            return null
-        }
-    }
-
-
     //Update config part:
 
     /**
