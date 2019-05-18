@@ -61,11 +61,11 @@ object Acc {
     private const val latestVersion = 201905111
 
     val instance: AccInterface by lazy {
-        val config = File(Environment.getExternalStorageDirectory(), "acc/config.txt").readText()
-
-        val version = VERSION_REGEXP.find(config)?.destructured?.component1()?.toIntOrNull() ?: latestVersion
-
         val constructor = try {
+            val config = File(Environment.getExternalStorageDirectory(), "acc/config.txt").readText()
+
+            val version = VERSION_REGEXP.find(config)?.destructured?.component1()?.toIntOrNull() ?: latestVersion
+
             val aClass = Class.forName("mattecarra.accapp.acc.v$version.AccHandler")
             aClass.getDeclaredConstructor()
         } catch (ex: Exception) {
