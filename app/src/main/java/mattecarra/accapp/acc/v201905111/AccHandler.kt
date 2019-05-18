@@ -34,7 +34,7 @@ class AccHandler(): AccInterface {
     override val defaultConfig: AccConfig = AccConfig(
         AccConfig.ConfigCapacity(5, 70, 80),
         AccConfig.ConfigVoltage(null, null),
-        AccConfig.ConfigTemperature(400, 450, 90),
+        AccConfig.ConfigTemperature(40, 45, 90),
         null,
         null,
         null,
@@ -45,7 +45,7 @@ class AccHandler(): AccInterface {
         val config = readConfigToString()
 
         val (capacityShutdown, capacityCoolDown, capacityResume, capacityPause) = CAPACITY_CONFIG_REGEXP.find(config)!!.destructured
-        val (coolDownTemp, pauseChargingTemp, waitSeconds) = TEMP_CONFIG_REGEXP.find(config)!!.destructured
+        val (temperatureCooldown, temperatureMax, waitSeconds) = TEMP_CONFIG_REGEXP.find(config)!!.destructured
 
         val coolDownMatchResult = COOLDOWN_CONFIG_REGEXP.find(config)?.destructured
 
@@ -54,8 +54,8 @@ class AccHandler(): AccInterface {
         return AccConfig(
             AccConfig.ConfigCapacity(capacityShutdown.toIntOrNull() ?: 0, capacityResume.toInt(), capacityPause.toInt()),
             AccConfig.ConfigVoltage(cVolt?.component1(), cVolt?.component2()?.toIntOrNull()),
-            AccConfig.ConfigTemperature(coolDownTemp.toIntOrNull()?.let { it / 10 } ?: 90,
-                pauseChargingTemp.toIntOrNull()?.let { it / 10 } ?: 95,
+            AccConfig.ConfigTemperature(temperatureCooldown.toIntOrNull() ?: 90,
+                temperatureMax.toIntOrNull() ?: 95,
                 waitSeconds.toIntOrNull() ?: 90),
             getOnBoot(config),
             getOnPlugged(config),
@@ -355,8 +355,8 @@ class AccHandler(): AccInterface {
      * @param wait seconds to wait until charging is resumed.
      * @return the boolean result of the command's execution.
      */
-    private fun updateAccTemperature(coolDownTemperature: Int, pauseTemperature: Int, wait: Int) : Boolean {
-        return Shell.su("acc -s temperature ${coolDownTemperature*10}-${pauseTemperature*10}_$wait").exec().isSuccess
+    private fun updateAccTemperature(coolDownTemperature: Int, temperatureMax: Int, wait: Int) : Boolean {
+        return Shell.su("acc -s temperature ${coolDownTemperature}-${temperatureMax}_$wait").exec().isSuccess
     }
 
     /**

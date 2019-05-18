@@ -9,7 +9,6 @@ import androidx.appcompat.widget.Toolbar
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
 import kotlinx.android.synthetic.main.content_acc_config_editor.*
-import mattecarra.accapp.acc.v201905111.AccHandler
 import mattecarra.accapp.R
 import android.app.Activity
 import android.content.Intent
@@ -271,23 +270,23 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         pause_capacity_picker.setOnValueChangedListener(this)
 
         //temps
-        if(mAccConfig.configTemperature.coolDownTemperature >= 90 && mAccConfig.configTemperature.pause >= 95) {
+        if(mAccConfig.configTemperature.coolDownTemperature >= 90 && mAccConfig.configTemperature.maxTemperature >= 95) {
             temp_switch.isChecked = false
-            cooldown_temperature_picker.isEnabled = false
-            pause_temperature_picker.isEnabled = false
+            temperature_cooldown_picker.isEnabled = false
+            temperature_max_picker.isEnabled = false
             temperature_max_pause_seconds_picker.isEnabled = false
         }
         temp_switch.setOnCheckedChangeListener(this)
 
-        cooldown_temperature_picker.minValue = 20
-        cooldown_temperature_picker.maxValue = 90
-        cooldown_temperature_picker.value = mAccConfig.configTemperature.coolDownTemperature
-        cooldown_temperature_picker.setOnValueChangedListener(this)
+        temperature_cooldown_picker.minValue = 20
+        temperature_cooldown_picker.maxValue = 90
+        temperature_cooldown_picker.value = mAccConfig.configTemperature.coolDownTemperature
+        temperature_cooldown_picker.setOnValueChangedListener(this)
 
-        pause_temperature_picker.minValue = 20
-        pause_temperature_picker.maxValue = 95
-        pause_temperature_picker.value = mAccConfig.configTemperature.pause
-        pause_temperature_picker.setOnValueChangedListener(this)
+        temperature_max_picker.minValue = 20
+        temperature_max_picker.maxValue = 95
+        temperature_max_picker.value = mAccConfig.configTemperature.maxTemperature
+        temperature_max_picker.setOnValueChangedListener(this)
 
         temperature_max_pause_seconds_picker.minValue = 10
         temperature_max_pause_seconds_picker.maxValue = 120
@@ -420,20 +419,20 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         if(buttonView == null) return
         when(buttonView.id) {
             R.id.temp_switch -> {
-                cooldown_temperature_picker.isEnabled = isChecked
-                pause_temperature_picker.isEnabled = isChecked
+                temperature_cooldown_picker.isEnabled = isChecked
+                temperature_max_picker.isEnabled = isChecked
                 temperature_max_pause_seconds_picker.isEnabled = isChecked
 
                 if(isChecked) {
-                    cooldown_temperature_picker.value = 40
-                    pause_temperature_picker.value = 45
+                    temperature_cooldown_picker.value = 40
+                    temperature_max_picker.value = 45
 
                     mAccConfig.configTemperature.coolDownTemperature = 40
-                    mAccConfig.configTemperature.pause = 45
+                    mAccConfig.configTemperature.maxTemperature = 45
                     unsavedChanges = true
                 } else {
                     mAccConfig.configTemperature.coolDownTemperature= 90
-                    mAccConfig.configTemperature.pause = 95
+                    mAccConfig.configTemperature.maxTemperature = 95
                     unsavedChanges = true
                 }
             }
@@ -482,10 +481,10 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             }
 
             //temp
-            R.id.cooldown_temperature_picker ->
+            R.id.temperature_cooldown_picker ->
                 mAccConfig.configTemperature.coolDownTemperature = newVal
 
-            R.id.pause_temperature_picker ->
+            R.id.temperature_max_picker ->
                 mAccConfig.configTemperature.maxTemperature = newVal
 
             R.id.temperature_max_pause_seconds_picker ->

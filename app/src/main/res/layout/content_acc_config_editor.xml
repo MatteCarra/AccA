@@ -376,7 +376,7 @@
                     android:layout_below="@+id/temps_labels">
 
                     <NumberPicker
-                        android:id="@+id/cooldown_temperature_picker"
+                        android:id="@+id/temperature_cooldown_picker"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -384,7 +384,7 @@
                         android:layout_marginRight="3dp"/>
 
                     <NumberPicker
-                        android:id="@+id/pause_temperature_picker"
+                        android:id="@+id/temperature_max_picker"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"

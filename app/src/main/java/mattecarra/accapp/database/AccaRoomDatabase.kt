@@ -59,7 +59,7 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                     AccConfig(
                         AccConfig.ConfigCapacity(5, 85, 90),
                         AccConfig.ConfigVoltage(null, null),
-                        AccConfig.ConfigTemperature(400, 450, 90),
+                        AccConfig.ConfigTemperature(40, 45, 90),
                         null,
                         "usb/current_max:500000",
                         null,
@@ -72,7 +72,7 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                     AccConfig(
                         AccConfig.ConfigCapacity(5, 70, 80),
                         AccConfig.ConfigVoltage(null, null),
-                        AccConfig.ConfigTemperature(400, 450, 90),
+                        AccConfig.ConfigTemperature(40, 45, 90),
                         null,
                         " usb/current_max:500000",
                         null,
@@ -85,7 +85,7 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                     AccConfig(
                         AccConfig.ConfigCapacity(5, 70, 80),
                         AccConfig.ConfigVoltage(null, null),
-                        AccConfig.ConfigTemperature(400, 450, 90),
+                        AccConfig.ConfigTemperature(40, 45, 90),
                         null,
                         null,
                         AccConfig.ConfigCoolDown(60, 50, 10),
