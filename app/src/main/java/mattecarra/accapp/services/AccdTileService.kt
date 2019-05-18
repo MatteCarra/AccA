@@ -7,11 +7,8 @@ import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import android.util.Log
 import com.topjohnwu.superuser.Shell
-import mattecarra.accapp.utils.AccUtils.abcStartDaemon
-import mattecarra.accapp.utils.AccUtils.abcStopDaemon
-import mattecarra.accapp.utils.AccUtils.isAccdRunning
-import mattecarra.accapp.utils.AccUtils.isBatteryCharging
 import mattecarra.accapp.R
+import mattecarra.accapp.acc.Acc
 
 @TargetApi(Build.VERSION_CODES.N)
 class AccdTileService: TileService(){
@@ -20,7 +17,7 @@ class AccdTileService: TileService(){
     override fun onClick() {
         super.onClick()
 
-        val accdRunning = isAccdRunning()
+        val accdRunning = Acc.instance.isAccdRunning()
 
         _updateTile(!accdRunning)
 
@@ -33,19 +30,19 @@ class AccdTileService: TileService(){
                     tile.label = getString(R.string.wait) //stop deamon a bit, so I moved _updateTile before that
                     tile.updateTile()
 
-                    abcStopDaemon()
+                    Acc.instance.abcStopDaemon()
 
                     tile.label = getString(R.string.tile_acc_disabled)
                     tile.updateTile()
                 } else
-                    abcStartDaemon()
+                    Acc.instance.abcStartDaemon()
         }
     }
 
     override fun onTileRemoved() {
         super.onTileRemoved()
 
-        abcStartDaemon()
+        Acc.instance.abcStartDaemon()
         // Do something when the user removes the Tile
     }
 
@@ -72,7 +69,7 @@ class AccdTileService: TileService(){
         }
     }
 
-    private fun _updateTile(accdRunning: Boolean = isAccdRunning(), charging: Boolean = isBatteryCharging()) {
+    private fun _updateTile(accdRunning: Boolean = Acc.instance.isAccdRunning(), charging: Boolean = Acc.instance.isBatteryCharging()) {
         Log.d(LOG_TAG, "_updateTile $accdRunning $charging")
 
         val tile = qsTile

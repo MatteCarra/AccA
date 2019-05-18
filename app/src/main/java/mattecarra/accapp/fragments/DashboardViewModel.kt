@@ -4,8 +4,9 @@ import android.os.Handler
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel;
+import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.models.BatteryInfo
-import mattecarra.accapp.utils.AccUtils
+import mattecarra.accapp.acc.v201905111.AccHandler
 import org.jetbrains.anko.doAsync
 
 class DashboardViewModel : ViewModel() {
@@ -18,8 +19,8 @@ class DashboardViewModel : ViewModel() {
         override fun run() {
             val r = this //need this to make it recursive
             doAsync {
-                batteryInfo.postValue(AccUtils.getBatteryInfo())
-                isDaemonRunning.postValue(AccUtils.isAccdRunning())
+                batteryInfo.postValue(Acc.instance.getBatteryInfo())
+                isDaemonRunning.postValue(Acc.instance.isAccdRunning())
 
                 handler.postDelayed(r, 1000)// Repeat the same runnable code block again after 1 seconds
             }

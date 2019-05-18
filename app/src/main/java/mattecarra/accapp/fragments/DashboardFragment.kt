@@ -18,9 +18,10 @@ import kotlinx.android.synthetic.main.dashboard_fragment.view.*
 import kotlinx.android.synthetic.main.edit_charging_limit_once_dialog.view.*
 
 import mattecarra.accapp.R
+import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.activities.SharedViewModel
 import mattecarra.accapp.models.BatteryInfo
-import mattecarra.accapp.utils.AccUtils
+import mattecarra.accapp.acc.v201905111.AccHandler
 
 class DashboardFragment : Fragment() {
 
@@ -65,7 +66,7 @@ class DashboardFragment : Fragment() {
             })
 
             view.dash_resetBatteryStats_button.setOnClickListener {
-                AccUtils.resetBatteryStats()
+                Acc.instance.resetBatteryStats()
             }
 
             view.dash_editCargingLimitOnce_button.setOnClickListener {
@@ -74,7 +75,7 @@ class DashboardFragment : Fragment() {
                     message(R.string.edit_charging_limit_once_dialog_msg)
                     customView(R.layout.edit_charging_limit_once_dialog)
                     positiveButton(R.string.apply) {
-                        AccUtils.setChargingLimitForOneCharge(getCustomView().findViewById<NumberPicker>(R.id.charging_limit).value)
+                        Acc.instance.setChargingLimitForOneCharge(getCustomView().findViewById<NumberPicker>(R.id.charging_limit).value)
                         Toast.makeText(context, R.string.done, Toast.LENGTH_LONG).show()
                     }
                     negativeButton(android.R.string.cancel)

@@ -28,9 +28,10 @@ import com.github.javiersantos.appupdater.enums.UpdateFrom
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.topjohnwu.superuser.Shell
 import kotlinx.android.synthetic.main.activity_main.*
-import mattecarra.accapp.utils.AccUtils
+import mattecarra.accapp.acc.v201905111.AccHandler
 import mattecarra.accapp.R
 import mattecarra.accapp._interface.OnProfileClickListener
+import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.fragments.DashboardFragment
 import mattecarra.accapp.fragments.ProfilesFragment
 import mattecarra.accapp.fragments.SchedulesFragment
@@ -172,10 +173,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
 
         doAsync {
-            if(AccUtils.isAccdRunning())
-                AccUtils.abcStopDaemon()
+            if(Acc.instance.isAccdRunning())
+                Acc.instance.abcStopDaemon()
             else
-                AccUtils.abcStartDaemon()
+                Acc.instance.abcStartDaemon()
         }
     }
 
@@ -186,7 +187,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
 
         doAsync {
-            AccUtils.abcRestartDaemon()
+            Acc.instance.abcRestartDaemon()
         }
     }
 
@@ -261,6 +262,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun initUi() {
+        // Assign ViewModel
+        mViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
 
         // Set Bottom Navigation Bar Item Selected Listener
         botNav_main.setOnNavigationItemSelectedListener(this)
@@ -366,7 +369,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun checkAccInstalled(): Boolean {
-        if(!AccUtils.isAccInstalled()) {
+        if(!Acc.instance.isAccInstalled()) {
             val dialog = MaterialDialog(this).show {
                 title(R.string.installing_acc)
                 progress(R.string.wait)
@@ -378,7 +381,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             doAsync {
-                val res = AccUtils.installAccModule(this@MainActivity)
+                val res = Acc.instance.installAccModule(this@MainActivity)
                 uiThread {
                     dialog.cancel()
 
@@ -420,9 +423,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        // Assign ViewModel
-        mViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)

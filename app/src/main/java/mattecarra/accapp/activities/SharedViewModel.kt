@@ -11,10 +11,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
-import mattecarra.accapp.utils.AccUtils
-import mattecarra.accapp.utils.ConfigUtils
+import mattecarra.accapp.acc.v201905111.AccHandler
 import mattecarra.accapp.utils.Constants
 import mattecarra.accapp.utils.DataRepository
 import kotlin.coroutines.CoroutineContext
@@ -36,11 +36,11 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(application)
 
         try {
-            this.config.value = AccUtils.readConfig()
+            this.config.value = Acc.instance.readConfig()
         } catch (ex: Exception) {
             ex.printStackTrace()
             //TODO showConfigReadError()
-            this.config.value = AccUtils.defaultConfig //if mAccConfig is null I use default mAccConfig values.
+            this.config.value = Acc.instance.defaultConfig //if mAccConfig is null I use default mAccConfig values.
         }
     }
 
@@ -91,7 +91,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     private val saveConfigLock = Object()
     private fun saveAccConfig(value: AccConfig) = mScope.launch {
         synchronized(saveConfigLock) {
-            val res = ConfigUtils.updateAcc(value)
+            val res = Acc.instance.updateAccConfig(value)
 
             if(!res.isSuccessful()) {
                 res.debug()
@@ -101,10 +101,10 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 }*/
 
                 val currentConfigVal = try {
-                    AccUtils.readConfig()
+                    Acc.instance.readConfig()
                 } catch (ex: Exception) {
                     ex.printStackTrace()
-                    AccUtils.defaultConfig
+                    Acc.instance.defaultConfig
                 }
 
                 config.postValue(currentConfigVal)

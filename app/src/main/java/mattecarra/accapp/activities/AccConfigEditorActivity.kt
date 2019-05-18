@@ -9,7 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
 import kotlinx.android.synthetic.main.content_acc_config_editor.*
-import mattecarra.accapp.utils.AccUtils
+import mattecarra.accapp.acc.v201905111.AccHandler
 import mattecarra.accapp.R
 import android.app.Activity
 import android.content.Intent
@@ -23,6 +23,7 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import it.sephiroth.android.library.xtooltip.ClosePolicy
 import it.sephiroth.android.library.xtooltip.Tooltip
+import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.utils.Constants
 import org.jetbrains.anko.doAsync
@@ -69,11 +70,11 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             mAccConfig = bundle.getParcelable(Constants.ACC_CONFIG_KEY)!!
         } else {
             try {
-                this.mAccConfig = AccUtils.readConfig()
+                this.mAccConfig = Acc.instance.readConfig()
             } catch (ex: Exception) {
                 ex.printStackTrace()
                 showConfigReadError()
-                this.mAccConfig = AccUtils.defaultConfig //if mAccConfig is null I use default mAccConfig values.
+                this.mAccConfig = Acc.instance.defaultConfig //if mAccConfig is null I use default mAccConfig values.
             }
         }
 
@@ -162,7 +163,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
 
     fun editChargingSwitchOnClick(v: View) {
         val automaticString = getString(R.string.automatic)
-        val chargingSwitches = listOf(automaticString, *AccUtils.listChargingSwitches().toTypedArray())
+        val chargingSwitches = listOf(automaticString, *Acc.instance.listChargingSwitches().toTypedArray())
         val initialSwitch = mAccConfig.configChargeSwitch
         var currentIndex = chargingSwitches.indexOf(initialSwitch ?: automaticString)
 
@@ -200,7 +201,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                 Toast.makeText(this@AccConfigEditorActivity, R.string.wait, Toast.LENGTH_LONG).show()
                 doAsync {
                     val description =
-                        when(AccUtils.testChargingSwitch(switch)) {
+                        when(Acc.instance.testChargingSwitch(switch)) {
                             0 -> R.string.charging_switch_works
                             1 -> R.string.charging_switch_does_not_work
                             2 -> R.string.plug_battery_to_test
@@ -380,7 +381,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                 }
             })
 
-            val supportedVoltageControlFiles = ArrayList(AccUtils.listVoltageSupportedControlFiles())
+            val supportedVoltageControlFiles = ArrayList(Acc.instance.listVoltageSupportedControlFiles())
             val currentVoltageFile = mAccConfig.configVoltage.controlFile?.let { currentVoltFile ->
                 val currentVoltFileRegex = currentVoltFile.replace("/", """\/""").replace(".", """\.""").replace("?", ".").toRegex()
                 val match = supportedVoltageControlFiles.find { currentVoltFileRegex.matches(it) }
