@@ -215,6 +215,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             mViewModel.setCurrentSelectedProfile(accaProfile.uid)
         }
 
+        // Display Toast for the user.
+        Toast.makeText(this, getString(R.string.profile_selected_toast, accaProfile.profileName), Toast.LENGTH_LONG).show()
+
     }
 
     override fun onProfileLongClick(accaProfile: AccaProfile) {
