@@ -159,4 +159,5 @@
         <item>Rename</item>
         <item>Delete</item>
     </string-array>
+    <string name="profile_selected_toast">%1$s profile selected.</string>
 </resources>
