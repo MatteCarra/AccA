@@ -361,7 +361,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                 voltageMax.isEnabled = isChecked
 
                 val voltageMaxVal = voltageMax.text?.toString()?.toIntOrNull()
-                val isValid = voltageMaxVal != null && voltageMaxVal >= 3920 && voltageMaxVal < 4200
+                val isValid = voltageMaxVal != null && voltageMaxVal >= 3920 && voltageMaxVal < 4350
                 voltageMax.error = if (isValid) null else getString(R.string.invalid_voltage_max)
                 dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid  && voltageControl.selectedItemPosition != -1)
             }
@@ -374,7 +374,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     val voltageMaxVal = s?.toString()?.toIntOrNull()
-                    val isValid = voltageMaxVal != null && voltageMaxVal >= 3920 && voltageMaxVal < 4200
+                    val isValid = voltageMaxVal != null && voltageMaxVal >= 3920 && voltageMaxVal < 4350
                     voltageMax.error = if(isValid) null else getString(R.string.invalid_voltage_max)
                     dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid  && voltageControl.selectedItemPosition != -1)
                 }
@@ -407,7 +407,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
 
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val voltageMaxVal = voltageMax.text?.toString()?.toIntOrNull()
-                    val isValid = voltageMaxVal != null && voltageMaxVal >= 3920 && voltageMaxVal < 4200
+                    val isValid = voltageMaxVal != null && voltageMaxVal >= 3920 && voltageMaxVal < 4350
                     dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid && position != -1)
                 }
             }
