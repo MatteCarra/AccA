@@ -99,7 +99,7 @@ object Acc {
                         }
                 }
 
-            return Shell.su("chmod +x $path", "sh $path").exec()
+            return Shell.su("sh $path").exec()
         } catch (ex: java.lang.Exception) {
             ex.printStackTrace()
             return null
