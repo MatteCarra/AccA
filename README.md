@@ -25,9 +25,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 Always read/reread this reference prior to installing/upgrading this software.
 
-While no cats have been harmed, the author assumes no responsibility for anything that might break due to the use/misuse of it.
+While no cats have been harmed, the authors assume no responsibility for anything that might break due to the use/misuse of it.
 
-To prevent fraud, do NOT mirror any link associated with this project; do NOT share builds (zips)! Share official links instead.
+To prevent fraud, do NOT mirror any link associated with this project; do NOT share APKs! Share the official [releases link](https://github.com/MatteCarra/AccA/releases/) instead.
 
 
 
@@ -35,7 +35,7 @@ To prevent fraud, do NOT mirror any link associated with this project; do NOT sh
 ## WARNING
 
 ACC manipulates Android low level (kernel) parameters which control the charging circuitry.
-While nothing went wrong with my devices so far, I assume no responsibility under anything that might break due to the use/misuse of this software.
+The author assumes no responsibility under anything that might break due to the use/misuse of this software.
 By choosing to use/misuse ACC, you agree to do so at your own risk!
 
 
@@ -43,64 +43,87 @@ By choosing to use/misuse ACC, you agree to do so at your own risk!
 ---
 ## DESCRIPTION
 
-AccA is an app that allows to have access to all ACC features without the need to open a terminal!
 ACC is primarily intended for extending battery service life. On the flip side, the name says it all.
+
+AccA is an official ACC configuration/management app. Its main target are those unfamiliar with terminal.
 
 
 
 ---
 ## PREREQUISITES
 
-- Magisk 17-19
+AccA won't run without ACC. the latter has prerequisites of its own. Refer to its documentation for details.
+
+When first launched, AccA attempts to install ACC automatically. Less than 100kb of data are downloaded.
+
+Future versions of the app will ship with ACC built-in.
+
 
 
 ---
 ## USAGE
 
-TODO
+ACC is designed to run out of the box, without user intervention. You can simply install it and forget. However, as it's been observed, most people will want to tweak settings - and obviously everyone will want to know whether the thing is actually working.
+
+AccA's user interface is intuitive and displays configuration information/tips so that users don't have to read documentation to find their way. However, it's still highly recommended to read [ACC's documentation](https://github.com/VR-25/acc/blob/master/README.md) in order to have a broader understanding of how things work.
+
+
 
 ---
 ## TROUBLESHOOTING
 
-- Charging switch
-By default, ACC cycles through all available charging control files until it finds one that works. However, things don't always go well.
+
+### Charging Switch
+
+By default, ACC cycles through all available charging control files until it finds one that works.
+
+However, things don't always go well.
 Some switches may be unreliable under certain conditions (e.g., screen off).
 Others may hold a wakelock - causing faster battery drain - while in plugged in, not charging state.
-Run `acc --set chargingSwitch` to enforce a particular switch.
-Test default/set switch(es) with `acc --test`.
-Evaluate custom switches with `acc --test <file onValue offValue>`.
 
-- Charging voltage limit
+In such situation a particular switch has to be enforced. In other words, the charging switch should NOT be set to "automatic".
+
+
+### Charging Voltage Limit
+
 Unfortunately, not all devices/kernels support custom charging voltage limit.
-Since I don't own every device under the sun, I cannot tell whether yours does.
-Use `acc --voltage :millivolts` (e.g., acc -v :4050) for evaluating charging voltage control files.
 
-- Restore default config
-`acc --set reset`
+Since the authors don't own every device under the sun, they cannot tell whether yours does - but AccA can and will.
 
-- Slow charging
-Nullify coolDownRatio (`acc --set coolDownRatio`) or change its value. By default, coolDownRatio is null.
 
-- Logs are stored at `/dev/acc/`. You can export all to `/sdcard/acc-logs-$device.tar.bz2` with `acc --log --export`.
+### Restore Default Config
+
+Delete `/sdcard/acc/config.txt` and restart ACC daemon.
+
+
+### Slow Charging
+
+Nullify `coolDownRatio` or change its value. By default, the value is null.
+
+
+### Logs
+
+Logs are stored at `/sbin/.acc/`. You can export all to `/sdcard/acc-logs-$device.tar.bz2` with `acc --log --export` (acc -l -e for short). In addition to acc logs, the archive includes `config.txt` and `magisk.log`. AccA has a button to display the log in real time. Future versions will be able to export the log as the aforementioned terminal command does.
+
 
 
 ---
-## Power Supply Log
+## POWER SUPPLY LOG
 
 
-Please upload `/dev/acc/acc-power_supply-*.log` to [this dropbox](https://www.dropbox.com/request/WYVDyCc0GkKQ8U5mLNlH/).
+Please upload `/sbin/.acc/acc-power_supply-*.log` to [this dropbox](https://www.dropbox.com/request/WYVDyCc0GkKQ8U5mLNlH/).
 This file contains invaluable power supply information, such as battery details and available charging control files.
-I'm creating a public database for mutual benefit.
+A public database is being built for mutual benefit.
 Your cooperation is greatly appreciated.
 
 
 Privacy Notes
 
-- When asked for a name, give your `XDA username`.
+- When asked for a name, give your `XDA username` or any random name.
 - For the email, you can type something like `noway@areyoucrazy.com`.
 
 Example
-- Name: `VR25 .`
+- Name: `user .`
 - Email: `myemail@iscool.com`
 
 
@@ -109,13 +132,11 @@ See current submissions [here](https://www.dropbox.com/sh/rolzxvqxtdkfvfa/AABceZ
 
 
 ---
-## LINKS
+## ACC LINKS
 
-- [ACC](https://github.com/vr25/Acc/)
+- [Git repository](https://github.com/vr25/Acc/)
 - [Battery University](http://batteryuniversity.com/learn/article/how_to_prolong_lithium_based_batteries/)
-- [Donate](https://paypal.me/vr25xda)
 - [Facebook page](https://facebook.com/VR25-at-xda-developers-258150974794782/)
-- [Git repository](https://github.com/VR-25/acc/)
 - [Telegram channel](https://t.me/vr25_xda/)
 - [Telegram group](https://t.me/acc_magisk/)
 - [Telegram profile](https://t.me/vr25xda/)
