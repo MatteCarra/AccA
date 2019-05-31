@@ -53,8 +53,8 @@
     <string name="shutdown_capacity">关机阀值:</string>
     <string name="no_root_message">此应用程序需要 ROOT 权限</string>
     <string name="config_error_title">配置读取错误</string>
-    <string name="config_error_dialog">"\"程序无法解析/查找 ACC 配置文件。请检查配置是否包含错误。您仍然可以编辑设置，但无法保证结果。
-    \""</string>
+    <string name="config_error_dialog">\"程序无法解析/查找 ACC 配置文件。请检查配置是否包含错误。您仍然可以编辑设置，但无法保证结果。
+    \"</string>
     <string name="wait">请稍等，给我几秒钟</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">启动(On Boot)后退出</string>
