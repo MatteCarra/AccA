@@ -34,7 +34,7 @@ To prevent fraud, do NOT mirror any link associated with this project; do NOT sh
 ---
 ## WARNING
 
-ACC manipulates Android low level (kernel) parameters which control the charging circuitry.
+ACC manipulates Android low level ([kernel](https://duckduckgo.com/?q=kernel+android)) parameters which control the charging circuitry.
 The author assumes no responsibility under anything that might break due to the use/misuse of this software.
 By choosing to use/misuse ACC, you agree to do so at your own risk!
 
@@ -43,7 +43,7 @@ By choosing to use/misuse ACC, you agree to do so at your own risk!
 ---
 ## DESCRIPTION
 
-ACC is primarily intended for extending battery service life. On the flip side, the name says it all.
+ACC is primarily intended for [extending battery service life](https://batteryuniversity.com/learn/article/how_to_prolong_lithium_based_batteries). On the flip side, the name says it all.
 
 AccA is an official ACC configuration/management app. Its main target are those unfamiliar with terminal.
 
@@ -52,11 +52,9 @@ AccA is an official ACC configuration/management app. Its main target are those 
 ---
 ## PREREQUISITES
 
-AccA won't run without ACC. the latter has prerequisites of its own. Refer to its documentation for details.
+AccA won't run without ACC. the latter has prerequisites of its own. Refer to its [documentation](https://github.com/VR-25/acc/blob/master/README.md) for details.
 
-When first launched, AccA attempts to install ACC automatically. Less than 100kb of data are downloaded.
-
-Future versions of the app will ship with ACC built-in.
+When first launched, AccA attempts to install ACC automatically. Less than 100kb of data are downloaded. Future versions of the app will ship with ACC built-in.
 
 
 
@@ -65,7 +63,7 @@ Future versions of the app will ship with ACC built-in.
 
 ACC is designed to run out of the box, without user intervention. You can simply install it and forget. However, as it's been observed, most people will want to tweak settings - and obviously everyone will want to know whether the thing is actually working.
 
-AccA's user interface is intuitive and displays configuration information/tips so that users don't have to read documentation to find their way. However, it's still highly recommended to read [ACC's documentation](https://github.com/VR-25/acc/blob/master/README.md) in order to have a broader understanding of how things work.
+AccA's user interface is intuitive and displays configuration information/tips so that users don't have to read documentation to find their way. However, it's still highly recommended to read [ACC's documentation](https://github.com/VR-25/acc/blob/master/README.md) in order to have a broader understanding of how AccA works with it.
 
 
 
@@ -73,37 +71,54 @@ AccA's user interface is intuitive and displays configuration information/tips s
 ## TROUBLESHOOTING
 
 
+### AccA Says "Daemon Is Not Running", Despite `acc -D` Showing Otherwise
+
+- AccA must run as root.
+- Make sure you have the latest versions.
+- Ensure ACC language is set to English (`language=en`). The app doesn't "understand" other languages.
+
+
 ### Charging Switch
 
-By default, ACC cycles through all available charging control files until it finds one that works.
+By default, ACC cycles through all available [charging control files](https://github.com/VR-25/acc/blob/master/acc/switches.txt) until it finds one that works.
+
+Charging switches that support battery idle mode take precedence - allowing the device to draw power directly from the external power supply when charging is paused.
 
 However, things don't always go well.
 Some switches may be unreliable under certain conditions (e.g., screen off).
-Others may hold a wakelock - causing faster battery drain - while in plugged in, not charging state.
+Others may hold a [wakelock](https://duckduckgo.com/?q=wakelock) - causing faster battery drain - while in plugged in, not charging state.
 
-In such situation a particular switch has to be enforced. In other words, the charging switch should NOT be set to "automatic".
+Run `acc --set chargingSwitch` (or `acc -s s` for short) to enforce a particular switch.
+
+Test default/set switch(es) with `acc --test`.
+
+Evaluate custom switches with `acc --test <file onValue offValue>`.
 
 
 ### Charging Voltage Limit
 
 Unfortunately, not all devices/kernels support custom charging voltage limit.
+Those that do are rare.
+Most OEMs don't care about that.
 
-Since the authors don't own every device under the sun, they cannot tell whether yours does - but AccA can and will.
+The existence of a potential voltage control file doesn't necessarily mean it works.
 
 
 ### Restore Default Config
 
-Delete `/sdcard/acc/config.txt` and restart ACC daemon.
+`acc --set reset` (or `acc -s r`)
 
 
 ### Slow Charging
 
-Nullify `coolDownRatio` or change its value. By default, the value is null.
+Check whether charging current in being limited by `applyOnPlug` or `applyOnBoot`.
+
+Nullify coolDownRatio (`acc --set coolDownRatio`) or change its value. By default, coolDownRatio is null.
 
 
 ### Logs
 
-Logs are stored at `/sbin/.acc/`. You can export all to `/sdcard/acc-logs-$device.tar.bz2` with `acc --log --export` (acc -l -e for short). In addition to acc logs, the archive includes `config.txt` and `magisk.log`. AccA has a button to display the log in real time. Future versions will be able to export the log as the aforementioned terminal command does.
+Logs are stored at `/sbin/.acc/`. You can export all to `/sdcard/acc-logs-$device.tar.bz2` with `acc --log --export`. In addition to acc logs, the archive includes `charging-ctrl-files.txt`, `charging-voltage-ctrl-files.txt`, `config.txt` and `magisk.log`.
 
 
 
@@ -129,6 +144,39 @@ Example
 
 See current submissions [here](https://www.dropbox.com/sh/rolzxvqxtdkfvfa/AABceZM3BBUHUykBqOW-0DYIa?dl=0).
 
+
+
+## TIPS
+
+
+### Generic
+
+Force fast charge: `applyOnBoot=/sys/kernel/fast_charge/force_fast_charge:1`
+
+
+### Google Pixel Family
+
+Force fast wireless charging with third party wireless chargers that are supposed to charge the battery faster: `applyOnPlug=wireless/voltage_max:9000000`.
+
+
+### Razer Phone
+
+Alternate charging control configuration:
+```
+capacity=5,60,0,101
+applyOnBoot=razer_charge_limit_enable:1 usb/device/razer_charge_limit_max:80 usb/device/razer_charge_limit_dropdown:70
+```
+
+### Samsung
+
+The following files could be used to control charging current and voltage (with `applyOnBoot`):
+```
+battery/batt_tune_fast_charge_current (default: 2100)
+
+battery/batt_tune_input_charge_current (default: 1800)
+
+battery/batt_tune_float_voltage (max: 4350)
+```
 
 
 ---
