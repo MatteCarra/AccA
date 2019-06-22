@@ -35,6 +35,14 @@ data class AccConfig(var configCapacity: ConfigCapacity,
         }
     }
 
+    fun getOnPlug(): String {
+        return if (configOnPlug.isNullOrBlank()) {
+            MainApplication.context.getString(R.string.not_set)
+        } else {
+            configOnPlug as String
+        }
+    }
+
     /**
      * Capacity Configuration
      * @param shutdown percentage when the device will be shutdown.
