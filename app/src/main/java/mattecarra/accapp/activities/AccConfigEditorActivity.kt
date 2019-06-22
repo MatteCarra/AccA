@@ -56,7 +56,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
 
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
-        supportActionBar?.title = intent?.getStringExtra("title") ?: getString(R.string.acc_config_editor)
+        supportActionBar?.title = intent?.getStringExtra("titleTv") ?: getString(R.string.acc_config_editor)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 

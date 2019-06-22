@@ -199,7 +199,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
      */
     fun accProfilesFabOnClick(view: View) {
         Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-            intent.putExtra("title", this@MainActivity.getString(R.string.profile_creator))
+            intent.putExtra("titleTv", this@MainActivity.getString(R.string.profile_creator))
             startActivityForResult(intent, ACC_PROFILE_CREATOR_REQUEST)
         }
     }
@@ -293,7 +293,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //                deleteSchedule(schedule)
 //            } else {
 //                MaterialDialog(this).show {
-//                    title(R.string.schedule_job)
+//                    titleTv(R.string.schedule_job)
 //                    message(R.string.edit_scheduled_command)
 //                    input(prefill = schedule.command, inputType = TYPE_TEXT_FLAG_NO_SUGGESTIONS, allowEmpty = false) { _, charSequence ->
 //                        schedule.command =  charSequence.toString()
@@ -333,7 +333,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //                            dataBundle.putBoolean("executeOnce", executeOnceCheckBox.isChecked)
 //
 //                            intent.putExtra("data", dataBundle)
-//                            intent.putExtra("title", this@MainActivity.getString(R.string.schedule_creator))
+//                            intent.putExtra("titleTv", this@MainActivity.getString(R.string.schedule_creator))
 //                            startActivityForResult(intent, ACC_PROFILE_SCHEDULER_REQUEST)
 //                        }
 //                    } else {
