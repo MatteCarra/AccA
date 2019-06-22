@@ -30,13 +30,20 @@
                       android:orientation="vertical"
                       android:padding="@dimen/card_content_padding">
 
-            <TextView
-                    android:id="@+id/item_profile_title_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:ellipsize="end"
-                    tools:text="@tools:sample/full_names"/>
+            <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView
+                        android:id="@+id/item_profile_title_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/TextAppearance.MaterialComponents.Headline6"
+                        android:ellipsize="end"
+                        tools:text="@tools:sample/full_names"/>
+
+                <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_outline_settings_24px" android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true" android:padding="5" android:background="?selectableItemBackground"/>
+            </RelativeLayout>
+
 
             <RelativeLayout
                     android:layout_width="match_parent"
@@ -56,7 +63,8 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/item_profile_capacityLabel_textView"
                         android:layout_toRightOf="@id/item_profile_capacityLabel_textView"
-                        tools:text="@tools:sample/date/mmddyy"/>
+                        tools:text="@tools:sample/date/mmddyy" android:layout_marginTop="0dp"
+                        android:layout_alignParentTop="true"/>
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
