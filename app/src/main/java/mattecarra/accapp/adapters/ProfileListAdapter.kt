@@ -63,7 +63,8 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
 
         val profileSelectedView: View = itemView.findViewById(R.id.item_profile_selectedIndicator_view)
         val profileTitleItemView: TextView = itemView.findViewById(R.id.item_profile_title_textView)
-        val profileCapacityTextView: TextView = itemView.findViewById(R.id.item_profile_capacityControlValue_textView)
+        val profileCapacityTv: TextView = itemView.findViewById(R.id.item_profile_capacity_tv)
+        val profileTemperatureTv: TextView = itemView.findViewById(R.id.item_profile_temperature_tv)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
@@ -76,7 +77,8 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
 
         val profile = mProfilesList[position]
         holder.profileTitleItemView.text = profile.profileName
-        holder.profileCapacityTextView.text = profile.accConfig.configCapacity.pause.toString()
+        holder.profileCapacityTv.text = profile.accConfig.configCapacity.toString()
+        holder.profileTemperatureTv.text = profile.accConfig.configTemperature.toString()
     }
 
     internal fun setProfiles(profiles: List<AccaProfile>) {
