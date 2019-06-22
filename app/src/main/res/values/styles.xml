@@ -11,17 +11,5 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat" />
 
-    <style name="ActionIcon">
-        <item name="android:layout_width">36dp</item>
-        <item name="android:layout_height">36dp</item>
-        <item name="android:padding">6dp</item>
-        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
-    </style>
 
-    <style name="IndexIcon">
-        <item name="android:layout_width">18dp</item>
-        <item name="android:layout_height">18dp</item>
-        <item name="android:layout_marginEnd">5dp</item>
-        <item name="android:layout_marginRight">5dp</item>
-    </style>
 </resources>
