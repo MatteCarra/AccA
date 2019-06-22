@@ -2,8 +2,6 @@ package mattecarra.accapp.adapters
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.Color
-import android.opengl.Visibility
 import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
@@ -33,10 +31,10 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
 
                     uiThread {
                         if (mProfilesList[adapterPosition].uid == profileId) {
-                            profileSelectedView.visibility = View.VISIBLE
+                            selectedView.visibility = View.VISIBLE
                         } else {
-                            // Hide the profileSelectedView
-                            profileSelectedView.visibility = View.GONE
+                            // Hide the selectedView
+                            selectedView.visibility = View.GONE
                         }
                     }
                 }
@@ -61,10 +59,11 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
             onSharedPreferenceChanged(prefs, Constants.PROFILE_KEY)
         }
 
-        val profileSelectedView: View = itemView.findViewById(R.id.item_profile_selectedIndicator_view)
-        val profileTitleItemView: TextView = itemView.findViewById(R.id.item_profile_title_textView)
-        val profileCapacityTv: TextView = itemView.findViewById(R.id.item_profile_capacity_tv)
-        val profileTemperatureTv: TextView = itemView.findViewById(R.id.item_profile_temperature_tv)
+        private val selectedView: View = itemView.findViewById(R.id.item_profile_selectedIndicator_view)
+        val titleTv: TextView = itemView.findViewById(R.id.item_profile_title_textView)
+        val capacityTv: TextView = itemView.findViewById(R.id.item_profile_capacity_tv)
+        val temperatureTv: TextView = itemView.findViewById(R.id.item_profile_temperature_tv)
+        val onPlugTv: TextView = itemView.findViewById(R.id.item_profile_onplug_tv)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
@@ -76,9 +75,10 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
     override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
 
         val profile = mProfilesList[position]
-        holder.profileTitleItemView.text = profile.profileName
-        holder.profileCapacityTv.text = profile.accConfig.configCapacity.toString()
-        holder.profileTemperatureTv.text = profile.accConfig.configTemperature.toString()
+        holder.titleTv.text = profile.profileName
+        holder.capacityTv.text = profile.accConfig.configCapacity.toString()
+        holder.temperatureTv.text = profile.accConfig.configTemperature.toString()
+        holder.onPlugTv.text = profile.accConfig.getOnPlug()
     }
 
     internal fun setProfiles(profiles: List<AccaProfile>) {
