@@ -157,8 +157,8 @@
         to disable.
     </string>
 
-    <string name="template_capacity_profile">Shutdown: %1$d - Resume: %2$d - Stop: %3$d</string>
-    <string name="template_temperature_profile">Cool Down: %1$d - Max: %2$d - Pause: %3$ds</string>
+    <string name="template_capacity_profile">Shutdown: %1$d%% - Resume: %2$d%% - Stop: %3$d%%</string>
+    <string name="template_temperature_profile">Cool Down: %1$d&#176;C - Max: %2$d&#176;C - Pause: %3$ds</string>
 
     <string name="on_plugged_info">You can set \"On Plug\" setting to update files every time you connect to a power source. This is particularly useful to set max voltage/current for wireless chargers: \"./wireless/voltage_max:V_MAX\" and \"./usb/current_max:CURR_MAX\"</string>
 
