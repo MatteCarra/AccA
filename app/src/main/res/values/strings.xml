@@ -66,7 +66,7 @@
     <string name="wait">Please wait, this may take a few seconds...</string>
 
     <!-- Exit On Boot Card Strings -->
-    <string name="title_exit_on_boot">Stop daemon after applying setings</string>
+    <string name="title_exit_on_boot">Stop daemon after applying settings</string>
     <string name="description_exit_on_boot">When enabled, the daemon will stop after the \'On Boot\' command is executed.</string>
     <string name="label_on_boot">On Boot: </string>
 
