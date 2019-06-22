@@ -5,7 +5,8 @@ import android.os.Parcelable
 import com.google.gson.Gson
 import kotlinx.android.parcel.Parceler
 import kotlinx.android.parcel.Parcelize
-import kotlinx.android.parcel.RawValue
+import mattecarra.accapp.MainApplication
+import mattecarra.accapp.R
 
 /**
  * Data class for AccConfig.
@@ -40,7 +41,14 @@ data class AccConfig(var configCapacity: ConfigCapacity,
      * @param resume percentage when charging should resume.
      * @param pause percentage when charging should be paused.
      */
-    data class ConfigCapacity (var shutdown: Int, var resume: Int, var pause: Int)
+//    data class ConfigCapacity (var shutdown: Int, var resume: Int, var pause: Int)
+
+    class ConfigCapacity(var shutdown: Int, var resume: Int, var pause: Int) {
+
+        override fun toString(): String {
+            return String.format(MainApplication.context.getString(R.string.template_capacity_profile), shutdown, resume, pause)
+        }
+    }
 
     /**
      * Voltage Configuration
@@ -55,7 +63,12 @@ data class AccConfig(var configCapacity: ConfigCapacity,
      * @param maxTemperature maximum temperature of the battery while charging. When met, charging will pause for <pause> seconds.
      * @param pause time in seconds to wait for the temperature to drop below <max>, to resume charging.
      */
-    data class ConfigTemperature (var coolDownTemperature: Int, var maxTemperature: Int, var pause: Int)
+    class ConfigTemperature (var coolDownTemperature: Int, var maxTemperature: Int, var pause: Int) {
+
+        override fun toString(): String {
+            return String.format(MainApplication.context.getString(R.string.template_temperature_profile, coolDownTemperature, maxTemperature, pause))
+        }
+    }
 
 
     /**
