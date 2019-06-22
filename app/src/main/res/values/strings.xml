@@ -122,7 +122,7 @@
     <string name="no_option_selected">No option selected; please select one!</string>
     <string name="charging_switch_works">Selected charging switch works!</string>
     <string name="charging_switch_does_not_work">Selected charging switch does not work!</string>
-    <string name="plug_battery_to_test">Battery must be charging before testing. Plug the chager and try again!
+    <string name="plug_battery_to_test">Battery must be charging before testing. Plug the charger and try again!
     </string>
     <string name="automatic">Automatic</string>
     <string name="error_occurred">An error has occurred</string>
@@ -144,7 +144,7 @@
 
     <string name="temperature_control_info">It allows you to stop charging when battery gets too hot.\nYou can set a temperature when acc should start cooling down (alternating charge and discharge for a fixed amount of seconds) or the max temperature - when charging should paused for the specified seconds.</string>
 
-    <string name="cooldown_info">Charge/pause ratio in seconds (e.g., coolDownRatio=50/10) - reduces battery stress induced by prolonged high temperature and high charging voltage by periodically pausing charging.\nIf charging is too slow, turn this off (null value) or change the ratio.\nWhen set to null, <coolDown capacity> and <coolDown temperature> values are nullified.\nGenerally, you don't need this if you're limiting the maximum charging voltage.</string>
+    <string name="cooldown_info">Charge/pause ratio in seconds (e.g., coolDownRatio=50/10) - reduces battery stress induced by prolonged high temperature and high charging voltage by periodically pausing charging.\nIf charging is too slow, turn this off (null value) or change the ratio.\nWhen set to null, coolDown capacity and coolDown temperature values are nullified.\nGenerally, you don\'t need this if you\'re limiting the maximum charging voltage.</string>
 
     <string name="acc_config_editor">Acc config editor</string>
     <string name="profile_creator">Profile creator</string>
@@ -156,6 +156,9 @@
     <string name="edit_on_plugged_dialog_message">These settings are applied when you connect to a charger. Leave blank
         to disable.
     </string>
+
+    <string name="template_capacity_profile">Shutdown: %1$d - Resume: %2$d - Stop: %3$d</string>
+    <string name="template_temperature_profile">Cool Down: %1$d - Max: %2$d - Pause: %3$ds</string>
 
     <string name="on_plugged_info">You can set \"On Plug\" setting to update files every time you connect to a power source. This is particularly useful to set max voltage/current for wireless chargers: \"./wireless/voltage_max:V_MAX\" and \"./usb/current_max:CURR_MAX\"</string>
 
