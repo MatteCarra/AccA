@@ -20,8 +20,10 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private var mProfilesList = emptyList<AccaProfile>()
     private lateinit var mListener: OnProfileClickListener
+    private val mContext = context
 
-    inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnLongClickListener, SharedPreferences.OnSharedPreferenceChangeListener{
+    inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnLongClickListener,
+        SharedPreferences.OnSharedPreferenceChangeListener  {
 
         override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
             if (key.equals(Constants.PROFILE_KEY)) {
@@ -30,11 +32,13 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
                     val profileId = sharedPreferences!!.getInt(key, -1)
 
                     uiThread {
-                        if (mProfilesList[adapterPosition].uid == profileId) {
-                            selectedView.visibility = View.VISIBLE
-                        } else {
-                            // Hide the selectedView
-                            selectedView.visibility = View.GONE
+                        if (adapterPosition != -1) {
+                            if (mProfilesList[adapterPosition].uid == profileId) {
+                                selectedView.visibility = View.VISIBLE
+                            } else {
+                                // Hide the selectedView
+                                selectedView.visibility = View.GONE
+                            }
                         }
                     }
                 }
@@ -59,7 +63,7 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
             onSharedPreferenceChanged(prefs, Constants.PROFILE_KEY)
         }
 
-        private val selectedView: View = itemView.findViewById(R.id.item_profile_selectedIndicator_view)
+        val selectedView: View = itemView.findViewById(R.id.item_profile_selectedIndicator_view)
         val titleTv: TextView = itemView.findViewById(R.id.item_profile_title_textView)
         val capacityTv: TextView = itemView.findViewById(R.id.item_profile_capacity_tv)
         val temperatureTv: TextView = itemView.findViewById(R.id.item_profile_temperature_tv)
@@ -79,6 +83,14 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
         holder.capacityTv.text = profile.accConfig.configCapacity.toString()
         holder.temperatureTv.text = profile.accConfig.configTemperature.toString()
         holder.onPlugTv.text = profile.accConfig.getOnPlug()
+
+        val profileId = PreferenceManager.getDefaultSharedPreferences(mContext).getInt(Constants.PROFILE_KEY, -1)
+        if (profile.uid == profileId) {
+            // Make visible
+            holder.selectedView.visibility = View.VISIBLE
+        } else {
+            holder.selectedView.visibility = View.INVISIBLE
+        }
     }
 
     internal fun setProfiles(profiles: List<AccaProfile>) {
