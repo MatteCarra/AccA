@@ -104,6 +104,10 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
         return mProfilesList.size
     }
 
+    fun getProfileAt(pos: Int): AccaProfile {
+        return mProfilesList[pos]
+    }
+
     /**
      * Set the OnProfileClickListener, the parent must implement the interface.
      */
