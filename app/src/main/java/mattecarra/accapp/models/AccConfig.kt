@@ -1,5 +1,6 @@
 package mattecarra.accapp.models
 
+import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.Gson
@@ -35,9 +36,9 @@ data class AccConfig(var configCapacity: ConfigCapacity,
         }
     }
 
-    fun getOnPlug(): String {
+    fun getOnPlug(context: Context): String {
         return if (configOnPlug.isNullOrBlank()) {
-            MainApplication.context.getString(R.string.not_set)
+            context.getString(R.string.not_set)
         } else {
             configOnPlug as String
         }
@@ -52,9 +53,8 @@ data class AccConfig(var configCapacity: ConfigCapacity,
 //    data class ConfigCapacity (var shutdown: Int, var resume: Int, var pause: Int)
 
     class ConfigCapacity(var shutdown: Int, var resume: Int, var pause: Int) {
-
-        override fun toString(): String {
-            return String.format(MainApplication.context.getString(R.string.template_capacity_profile), shutdown, resume, pause)
+        fun toString(context: Context): String {
+            return String.format(context.getString(R.string.template_capacity_profile), shutdown, resume, pause)
         }
     }
 
@@ -73,8 +73,8 @@ data class AccConfig(var configCapacity: ConfigCapacity,
      */
     class ConfigTemperature (var coolDownTemperature: Int, var maxTemperature: Int, var pause: Int) {
 
-        override fun toString(): String {
-            return String.format(MainApplication.context.getString(R.string.template_temperature_profile, coolDownTemperature, maxTemperature, pause))
+        fun toString(context: Context): String {
+            return String.format(context.getString(R.string.template_temperature_profile, coolDownTemperature, maxTemperature, pause))
         }
     }
 

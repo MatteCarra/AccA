@@ -80,9 +80,9 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
 
         val profile = mProfilesList[position]
         holder.titleTv.text = profile.profileName
-        holder.capacityTv.text = profile.accConfig.configCapacity.toString()
-        holder.temperatureTv.text = profile.accConfig.configTemperature.toString()
-        holder.onPlugTv.text = profile.accConfig.getOnPlug()
+        holder.capacityTv.text = profile.accConfig.configCapacity.toString(mContext)
+        holder.temperatureTv.text = profile.accConfig.configTemperature.toString(mContext)
+        holder.onPlugTv.text = profile.accConfig.getOnPlug(mContext)
 
         val profileId = PreferenceManager.getDefaultSharedPreferences(mContext).getInt(Constants.PROFILE_KEY, -1)
         if (profile.uid == profileId) {

@@ -60,6 +60,13 @@ object Acc {
 
     private const val latestVersion = 201905111
 
+    private fun getVersionPackageName(v: Int): Int {
+        return when {
+            //v >= 201906230 -> 201906230
+            else           -> 201905111
+        }
+    }
+
     val instance: AccInterface by lazy {
         val constructor = try {
             val configFile =
@@ -72,7 +79,7 @@ object Acc {
 
             val version = VERSION_REGEXP.find(config)?.destructured?.component1()?.toIntOrNull() ?: latestVersion
 
-            val aClass = Class.forName("mattecarra.accapp.acc.v$version.AccHandler")
+            val aClass = Class.forName("mattecarra.accapp.acc.v${getVersionPackageName(version)}.AccHandler")
             aClass.getDeclaredConstructor()
         } catch (ex: Exception) {
             val aClass = Class.forName("mattecarra.accapp.acc.v$latestVersion.AccHandler")
