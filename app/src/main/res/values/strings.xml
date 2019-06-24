@@ -61,7 +61,7 @@
     <string name="shutdown_capacity">Shutdown (if not charging) at:</string>
     <string name="no_root_message">This app requires ROOT.</string>
     <string name="config_error_title">Config read error</string>
-    <string name="config_error_dialog">I wasn\'t able to parse/find the ACC config file. Please check if your config contains errors. You will still be able to edit the settings, but the result can\'t be guaranteed. To restore the default config, delete /sdcard/acc/config.txt and restart the daemon.
+    <string name="config_error_dialog">I wasn\'t able to parse/find the ACC config file. Please check if your config contains errors. You will still be able to edit the settings, but the result can\'t be guaranteed. To restore the default config, delete /sdcard/acc/acc.conf and restart the daemon.
     </string>
     <string name="wait">Please wait, this may take a few seconds...</string>
 

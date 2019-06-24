@@ -69,7 +69,12 @@ class AccHandler(): AccInterface {
 
     @Throws(IOException::class)
     private fun readConfigToString(): String {
-        val config = File(Environment.getExternalStorageDirectory(), "acc/config.txt")
+        val config =
+            if(File(Environment.getExternalStorageDirectory(), "acc/acc.conf").exists())
+                File(Environment.getExternalStorageDirectory(), "acc/acc.conf")
+            else
+                File(Environment.getExternalStorageDirectory(), "acc/config.txt")
+
         return if (config.exists())
             config.readText(charset = Charsets.UTF_8)
         else

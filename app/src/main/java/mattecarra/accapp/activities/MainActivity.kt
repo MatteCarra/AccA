@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -419,6 +420,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         if(checkPermissions())
                             initUi()
                     }
+                }
+
+                res?.let {
+                    Log.d(LOG_TAG, it.out.joinToString("\n"))
                 }
             }
             return false

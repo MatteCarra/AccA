@@ -62,7 +62,13 @@ object Acc {
 
     val instance: AccInterface by lazy {
         val constructor = try {
-            val config = File(Environment.getExternalStorageDirectory(), "acc/config.txt").readText()
+            val configFile =
+                if(File(Environment.getExternalStorageDirectory(), "acc/acc.conf").exists())
+                    File(Environment.getExternalStorageDirectory(), "acc/acc.conf")
+                else
+                    File(Environment.getExternalStorageDirectory(), "acc/config.txt")
+
+            val config = configFile.readText()
 
             val version = VERSION_REGEXP.find(config)?.destructured?.component1()?.toIntOrNull() ?: latestVersion
 
