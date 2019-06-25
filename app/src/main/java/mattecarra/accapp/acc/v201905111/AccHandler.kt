@@ -26,10 +26,10 @@ open class AccHandler: AccInterface {
     val COOLDOWN_CONFIG_REGEXP = """^\s*coolDownRatio=(\d*)/(\d*)""".toRegex(RegexOption.MULTILINE)
     val TEMP_CONFIG_REGEXP = """^\s*temperature=(\d*)-(\d*)_(\d*)""".toRegex(RegexOption.MULTILINE)
     val RESET_UNPLUGGED_CONFIG_REGEXP = """^\s*resetBsOnUnplug=(true|false)""".toRegex(RegexOption.MULTILINE)
-    val ON_BOOT = """^\s*applyOnBoot=([^#]+)""".toRegex(RegexOption.MULTILINE)
-    val ON_PLUGGED = """^\s*applyOnPlug=([^#]+)""".toRegex(RegexOption.MULTILINE)
-    val VOLT_FILE = """^\s*chargingVoltageLimit=([^:#\s]+):(\d+)""".toRegex(RegexOption.MULTILINE)
-    val SWITCH = """^\s*switch=([^#]+)""".toRegex(RegexOption.MULTILINE)
+    val ON_BOOT = """^\s*applyOnBoot=((?:(?!#).)*)""".toRegex(RegexOption.MULTILINE)
+    val ON_PLUGGED = """^\s*applyOnPlug=((?:(?!#).)*)""".toRegex(RegexOption.MULTILINE)
+    val VOLT_FILE = """^\s*chargingVoltageLimit=((?:(?!:).)*):(\d+)""".toRegex(RegexOption.MULTILINE)
+    val SWITCH = """^\s*switch=((?:(?!#).)*)""".toRegex(RegexOption.MULTILINE)
 
     override val defaultConfig: AccConfig = AccConfig(
         AccConfig.ConfigCapacity(5, 70, 80),
@@ -63,12 +63,12 @@ open class AccHandler: AccInterface {
                 AccConfig.ConfigCoolDown(capacityCoolDown.toInt(), coolDownChargeSeconds.toInt(), coolDownPauseSeconds.toInt())
             },
             getResetUnplugged(config),
-            getCurrentChargingSwitch()
+            getCurrentChargingSwitch(config)
         )
     }
 
     @Throws(IOException::class)
-    private fun readConfigToString(): String {
+    fun readConfigToString(): String {
         val config =
             if(File(Environment.getExternalStorageDirectory(), "acc/acc.conf").exists())
                 File(Environment.getExternalStorageDirectory(), "acc/acc.conf")
@@ -280,8 +280,8 @@ open class AccHandler: AccInterface {
         return Shell.su("acc -t${chargingSwitch?.let{" $it"} ?: ""}").exec().code
     }
 
-    override fun getCurrentChargingSwitch(): String? {
-        val switch = SWITCH.find(readConfigToString())?.destructured?.component1()?.trim()
+    override fun getCurrentChargingSwitch(config: String): String? {
+        val switch = SWITCH.find(config)?.destructured?.component1()?.trim()
         return if(switch?.isNotEmpty() == true) switch else null
     }
 
@@ -323,54 +323,26 @@ open class AccHandler: AccInterface {
         )
     }
 
-    //reset unplugged command
-    private fun updateResetUnplugged(resetUnplugged: Boolean): Boolean {
+    override fun updateResetUnplugged(resetUnplugged: Boolean): Boolean {
         return Shell.su("acc -s resetBsOnUnplug $resetUnplugged").exec().isSuccess
     }
 
-    /**
-     * Updates the cool down charge and pause durations.
-     * @param charge seconds to charge for during the cool down phase.
-     * @param pause seconds to pause for during the cool down phase.
-     * @return boolean if the command was successful.
-     */
-    private fun updateAccCoolDown(charge: Int?, pause: Int?) : Boolean {
+    override fun updateAccCoolDown(charge: Int?, pause: Int?) : Boolean {
         return if(charge != null && pause != null)
             Shell.su("acc -s coolDownRatio $charge/$pause").exec().isSuccess
         else
             Shell.su("acc -s coolDownRatio").exec().isSuccess
     }
 
-    /**
-     * Updates the capacity related settings of ACC.
-     * @param shutdown shutdown the device at the specified percentage.
-     * @param coolDown starts the cool down phase at the specified percentage.
-     * @param resume allows charging starting from the specified capacity.
-     * @param pause pauses charging at the specified capacity.
-     * @return boolean if the command was successful.
-     */
-    private fun updateAccCapacity(shutdown: Int, coolDown: Int, resume: Int, pause: Int) : Boolean {
+    override fun updateAccCapacity(shutdown: Int, coolDown: Int, resume: Int, pause: Int) : Boolean {
         return Shell.su("acc -s capacity $shutdown,$coolDown,$resume-$pause").exec().isSuccess
     }
 
-    /**
-     * Updates the temperature related configuration in ACC.
-     * @param coolDownTemperature starts cool down phase at the specified temperature.
-     * @param pauseTemperature pauses charging at the specified temperature.
-     * @param wait seconds to wait until charging is resumed.
-     * @return the boolean result of the command's execution.
-     */
-    private fun updateAccTemperature(coolDownTemperature: Int, temperatureMax: Int, wait: Int) : Boolean {
+    override fun updateAccTemperature(coolDownTemperature: Int, temperatureMax: Int, wait: Int) : Boolean {
         return Shell.su("acc -s temperature ${coolDownTemperature}-${temperatureMax}_$wait").exec().isSuccess
     }
 
-    /**
-     * Updates the voltage related configuration in ACC.
-     * @param voltFile path to the voltage file on the device.
-     * @param voltMax maximum voltage the phone should charge at.
-     * @return the boolean result of the command's execution.
-     */
-    private fun updateAccVoltControl(voltFile: String?, voltMax: Int?) : Boolean {
+    override fun updateAccVoltControl(voltFile: String?, voltMax: Int?) : Boolean {
         return Shell.su(
             if(voltFile != null && voltMax != null)
                 "acc --set chargingVoltageLimit $voltFile:$voltMax"
@@ -381,34 +353,19 @@ open class AccHandler: AccInterface {
         ).exec().isSuccess
     }
 
-    /**
-     * Updates the on boot exit (boolean) configuration in ACC.
-     * @param enabled boolean: if OnBootExit should be enabled.
-     * @return the boolean result of the command's execution.
-     */
-    private fun updateAccOnBootExit(enabled: Boolean) : Boolean {
+    override fun updateAccOnBootExit(enabled: Boolean) : Boolean {
         return Shell.su("acc -s onBootExit $enabled").exec().isSuccess
     }
 
-    /**
-     * Updates the OnBoot command configuration in ACC.
-     * @param command the command to be run after the device starts (daemon starts).
-     * @return the boolean result of the command's execution.
-     */
-    private fun updateAccOnBoot(command: String?) : Boolean {
+    override fun updateAccOnBoot(command: String?) : Boolean {
         return Shell.su("acc -s applyOnBoot${command?.let{ " $it" } ?: ""}").exec().isSuccess
     }
 
-    /**
-     * Updates the OnPlugged configuration in ACC.
-     * @param command the command to be run when the device is plugged in.
-     * @return the boolean result of the command's execution.
-     */
-    private fun updateAccOnPlugged(command: String?) : Boolean {
+    override fun updateAccOnPlugged(command: String?) : Boolean {
         return Shell.su("acc -s applyOnPlug${command?.let{ " $it" } ?: ""}").exec().isSuccess
     }
 
-    private fun updateAccChargingSwitch(switch: String?) : Boolean {
+    override fun updateAccChargingSwitch(switch: String?) : Boolean {
         if (switch.isNullOrBlank()) {
             return Shell.su("acc -s s-").exec().isSuccess
         }
