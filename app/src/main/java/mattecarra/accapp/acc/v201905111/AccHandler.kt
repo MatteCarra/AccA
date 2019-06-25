@@ -286,7 +286,7 @@ class AccHandler(): AccInterface {
     }
 
     override fun setChargingLimitForOneCharge(limit: Int): Boolean {
-        return Shell.su("acc -f $limit").exec().isSuccess
+        return Shell.su("(acc -f $limit &) &").exec().isSuccess
     }
 
     //Update config part:
