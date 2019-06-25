@@ -16,6 +16,7 @@ import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.utils.Constants
 import mattecarra.accapp.utils.DataRepository
+import mattecarra.accapp.utils.ProfileUtils
 import kotlin.coroutines.CoroutineContext
 
 class SharedViewModel(application: Application) : AndroidViewModel(application) {
@@ -91,7 +92,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
             if(!res.isSuccessful()) {
                 res.debug()
-                //TODO
+                //TODO show a toast that tells users there was an error
                 /*if (!result.voltControlUpdateSuccessful) {
                     Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
                 }*/
@@ -112,7 +113,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
      * Clears the currently selected profile ID from Shared Preferences.
      */
     fun clearCurrentSelectedProfile() {
-        mSharedPrefs.edit().putInt(Constants.PROFILE_KEY, -1).apply()
+        ProfileUtils.clearCurrentSelectedProfile(mSharedPrefs)
     }
 
     /**
@@ -120,6 +121,6 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
      * @param profileId ID of the profile selected.
      */
     fun setCurrentSelectedProfile(profileId: Int) {
-        mSharedPrefs.edit().putInt(Constants.PROFILE_KEY, profileId).apply()
+        ProfileUtils.saveCurrentProfile(profileId, mSharedPrefs)
     }
 }

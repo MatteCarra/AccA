@@ -1,14 +1,20 @@
 package mattecarra.accapp.services
 
+import android.Manifest
 import android.annotation.TargetApi
+import android.content.pm.PackageManager
 import android.graphics.drawable.Icon
 import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import android.util.Log
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.topjohnwu.superuser.Shell
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 @TargetApi(Build.VERSION_CODES.N)
 class AccdTileService: TileService(){
@@ -25,17 +31,23 @@ class AccdTileService: TileService(){
         //otherwise this enable/disable cycle will take forever
         //I've considered to disable the tile while it's updating but it doesn't look great and google is not doing either with wifi.
         synchronized(this) {
-                if (accdRunning) {
-                    val tile = qsTile
-                    tile.label = getString(R.string.wait) //stop deamon a bit, so I moved _updateTile before that
-                    tile.updateTile()
+            if (accdRunning) {
+                val tile = qsTile
+                tile.label = getString(R.string.wait) //stop deamon a bit, so I moved _updateTile before that
+                tile.updateTile()
 
+                doAsync {
                     Acc.instance.abcStopDaemon()
-
-                    tile.label = getString(R.string.tile_acc_disabled)
-                    tile.updateTile()
-                } else
+                    uiThread {
+                        tile.label = getString(R.string.tile_acc_disabled)
+                        tile.updateTile()
+                    }
+                }
+            } else {
+                doAsync {
                     Acc.instance.abcStartDaemon()
+                }
+            }
         }
     }
 
@@ -54,7 +66,12 @@ class AccdTileService: TileService(){
 
     override fun onStartListening() {
         super.onStartListening()
-        updateTile()
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            //TODO create a notification and ask for read external storage permission
+        }else {
+            updateTile()
+        }
     }
 
     private fun updateTile() {

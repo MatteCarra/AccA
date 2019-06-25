@@ -29,7 +29,6 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun getProfiles() : LiveData<List<AccaProfile>> {
-
         return mProfilesListLiveData
     }
 

@@ -12,6 +12,7 @@ import mattecarra.accapp.R
 import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.utils.Constants
+import mattecarra.accapp.utils.ProfileUtils
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
@@ -29,7 +30,7 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
             if (key.equals(Constants.PROFILE_KEY)) {
 
                 doAsync {
-                    val profileId = sharedPreferences!!.getInt(key, -1)
+                    val profileId = ProfileUtils.getCurrentProfile(sharedPreferences!!)
 
                     uiThread {
                         if (adapterPosition != -1) {
@@ -77,14 +78,13 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
-
         val profile = mProfilesList[position]
         holder.titleTv.text = profile.profileName
         holder.capacityTv.text = profile.accConfig.configCapacity.toString(mContext)
         holder.temperatureTv.text = profile.accConfig.configTemperature.toString(mContext)
         holder.onPlugTv.text = profile.accConfig.getOnPlug(mContext)
 
-        val profileId = PreferenceManager.getDefaultSharedPreferences(mContext).getInt(Constants.PROFILE_KEY, -1)
+        val profileId = ProfileUtils.getCurrentProfile(PreferenceManager.getDefaultSharedPreferences(mContext))
         if (profile.uid == profileId) {
             // Make visible
             holder.selectedView.visibility = View.VISIBLE
