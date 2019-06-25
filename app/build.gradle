@@ -16,8 +16,8 @@ android {
         applicationId "mattecarra.accapp"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 14
-        versionName "1.0.9"
+        versionCode 15
+        versionName "1.0.10"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
