@@ -62,7 +62,7 @@ object Acc {
 
     private fun getVersionPackageName(v: Int): Int {
         return when {
-            //v >= 201906230 -> 201906230
+            v >= 201903071 -> 201903071
             else           -> 201905111
         }
     }

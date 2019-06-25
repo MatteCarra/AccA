@@ -15,7 +15,7 @@ import java.lang.Exception
 import java.net.URL
 
 
-class AccHandler(): AccInterface {
+open class AccHandler: AccInterface {
     // String resources
     private val STRING_UNKNOWN = "Unknown"
     private val STRING_DISCHARGING = "Discharging"
