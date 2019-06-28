@@ -27,6 +27,10 @@ class DashboardViewModel : ViewModel() {
         }
     }
 
+    fun stopRunnableHandler() {
+        handler.removeCallbacks(updateBatteryInfoRunnable)
+    }
+
     fun getBatteryInfo(): LiveData<BatteryInfo> {
         return batteryInfo
     }
