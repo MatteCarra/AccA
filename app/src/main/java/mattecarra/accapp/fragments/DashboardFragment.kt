@@ -1,5 +1,6 @@
 package mattecarra.accapp.fragments
 
+import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -112,6 +113,16 @@ class DashboardFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         viewModel.stopRunnableHandler()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        viewModel.stopRunnableHandler()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.postRunnableHandler()
     }
 
     /**
