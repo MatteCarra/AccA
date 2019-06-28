@@ -27,6 +27,10 @@ class DashboardViewModel : ViewModel() {
         }
     }
 
+    fun postRunnableHandler() {
+        handler.post(updateBatteryInfoRunnable)
+    }
+
     fun stopRunnableHandler() {
         handler.removeCallbacks(updateBatteryInfoRunnable)
     }
