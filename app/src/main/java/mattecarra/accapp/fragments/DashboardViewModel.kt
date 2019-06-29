@@ -13,6 +13,8 @@ class DashboardViewModel : ViewModel() {
     private val batteryInfo: MutableLiveData<BatteryInfo> = MutableLiveData()
     private val isDaemonRunning: MutableLiveData<Boolean> = MutableLiveData()
 
+    @Volatile private var run = false
+
     //Used to update battery info every second
     private val handler = Handler()
     private val updateBatteryInfoRunnable = object : Runnable {
@@ -22,16 +24,18 @@ class DashboardViewModel : ViewModel() {
                 batteryInfo.postValue(Acc.instance.getBatteryInfo())
                 isDaemonRunning.postValue(Acc.instance.isAccdRunning())
 
-                handler.postDelayed(r, 1000)// Repeat the same runnable code block again after 1 seconds
+                if(run) handler.postDelayed(r, 1000)// Repeat the same runnable code block again after 1 seconds
             }
         }
     }
 
     fun postRunnableHandler() {
+        run = true
         handler.post(updateBatteryInfoRunnable)
     }
 
     fun stopRunnableHandler() {
+        run = false
         handler.removeCallbacks(updateBatteryInfoRunnable)
     }
 
