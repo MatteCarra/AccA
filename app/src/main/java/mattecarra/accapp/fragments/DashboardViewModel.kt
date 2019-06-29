@@ -19,13 +19,10 @@ class DashboardViewModel : ViewModel() {
     private val handler = Handler()
     private val updateBatteryInfoRunnable = object : Runnable {
         override fun run() {
-            val r = this //need this to make it recursive
-            doAsync {
-                batteryInfo.postValue(Acc.instance.getBatteryInfo())
-                isDaemonRunning.postValue(Acc.instance.isAccdRunning())
+            batteryInfo.postValue(Acc.instance.getBatteryInfo())
+            isDaemonRunning.postValue(Acc.instance.isAccdRunning())
 
-                if(run) handler.postDelayed(r, 1000)// Repeat the same runnable code block again after 1 seconds
-            }
+            if(run) handler.postDelayed(this, 1000)// Repeat the same runnable code block again after 1 seconds
         }
     }
 
