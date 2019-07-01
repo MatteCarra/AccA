@@ -1,6 +1,7 @@
 package mattecarra.accapp.fragments
 
 import android.os.Handler
+import android.os.HandlerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel;
@@ -16,7 +17,15 @@ class DashboardViewModel : ViewModel() {
     @Volatile private var run = false
 
     //Used to update battery info every second
-    private val handler = Handler()
+    private val handlerThread: HandlerThread
+    private val handler: Handler
+
+    init {
+        handlerThread = HandlerThread("UpdateBatteryInfo")
+        handlerThread.start()
+        handler = Handler(handlerThread.looper)
+    }
+
     private val updateBatteryInfoRunnable = object : Runnable {
         override fun run() {
             batteryInfo.postValue(Acc.instance.getBatteryInfo())
@@ -51,5 +60,6 @@ class DashboardViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         handler.removeCallbacks(updateBatteryInfoRunnable)
+        handlerThread.quit()
     }
 }
