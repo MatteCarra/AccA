@@ -182,7 +182,7 @@ battery/batt_tune_float_voltage (max: 4350)
 ---
 ## ACC LINKS
 
-- [Git repository](https://github.com/vr25/Acc/)
+- [Git repository](https://github.com/vr-25/Acc/)
 - [Battery University](http://batteryuniversity.com/learn/article/how_to_prolong_lithium_based_batteries/)
 - [Facebook page](https://facebook.com/VR25-at-xda-developers-258150974794782/)
 - [Telegram channel](https://t.me/vr25_xda/)
