@@ -55,5 +55,15 @@
         </service>
 
         <receiver android:name="com.github.javiersantos.appupdater.NotificationReceiver"/>
+
+        <receiver android:name=".acc.service.AccBootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".acc.service.AccBootService"
+                android:permission="android.permission.BIND_JOB_SERVICE"/>
+
     </application>
 </manifest>

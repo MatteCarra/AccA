@@ -2,8 +2,8 @@ package mattecarra.accapp.acc
 
 import android.content.Context
 import android.os.Environment
-import android.os.Handler
 import com.topjohnwu.superuser.Shell
+import mattecarra.accapp.R
 import mattecarra.accapp.adapters.Schedule
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.BatteryInfo
@@ -149,8 +149,26 @@ object Acc {
         constructor.newInstance() as AccInterface
     }
 
+    fun isBundledAccInstalled(context: Context): Boolean {
+        return File(context.filesDir, "acc/acc").exists()
+    }
+
     fun isAccInstalled(): Boolean {
         return Shell.su("which acc > /dev/null").exec().isSuccess
+    }
+
+    fun installBundledAccModule(context: Context): Shell.Result? {
+        return try {
+            context.resources.openRawResource(R.raw.acc_bundle).use { out ->
+                val filesDirPath = context.filesDir.absolutePath
+                val bundle = File(context.filesDir, "acc_bundle.tar.gz")
+                out.copyTo(FileOutputStream(bundle))
+                Shell.su("set -e", "tar -xf ${bundle.absolutePath} -C $filesDirPath && sh $filesDirPath/*/install-current.sh && rm -rf $filesDirPath/acc*/").exec()
+            }
+        } catch (ex: java.lang.Exception) {
+            ex.printStackTrace()
+            null
+        }
     }
 
     fun installAccModule(context: Context): Shell.Result? {

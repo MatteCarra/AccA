@@ -377,7 +377,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun checkAccInstalled(): Boolean {
-        if(!Acc.isAccInstalled()) {
+        if(!Acc.isBundledAccInstalled(this)) { //TODO let the user decide between bundle and stable
             val dialog = MaterialDialog(this).show {
                 title(R.string.installing_acc)
                 progress(R.string.wait)
@@ -389,7 +389,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             doAsync {
-                val res = Acc.installAccModule(this@MainActivity)
+                val res = Acc.installBundledAccModule(this@MainActivity)
                 uiThread {
                     dialog.cancel()
 
