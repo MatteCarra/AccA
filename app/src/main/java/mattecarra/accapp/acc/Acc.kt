@@ -150,7 +150,7 @@ object Acc {
     }
 
     fun isBundledAccInstalled(context: Context): Boolean {
-        return File(context.filesDir, "acc/acc").exists()
+        return File(context.filesDir, "acc/acc-init.sh").exists()
     }
 
     fun isAccInstalled(): Boolean {
