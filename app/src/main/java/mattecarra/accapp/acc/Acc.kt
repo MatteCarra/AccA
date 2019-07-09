@@ -159,12 +159,21 @@ object Acc {
 
     fun installBundledAccModule(context: Context): Shell.Result? {
         return try {
+            val bundleFile = File(context.filesDir, "acc_bundle.tar.gz")
+            val installShFile = File(context.filesDir, "install-tarball.sh")
+
             context.resources.openRawResource(R.raw.acc_bundle).use { out ->
-                val filesDirPath = context.filesDir.absolutePath
-                val bundle = File(context.filesDir, "acc_bundle.tar.gz")
-                out.copyTo(FileOutputStream(bundle))
-                Shell.su("set -e", "tar -xf ${bundle.absolutePath} -C $filesDirPath && sh $filesDirPath/*/install-current.sh && rm -rf $filesDirPath/acc*/").exec()
+                FileOutputStream(bundleFile).use {
+                    out.copyTo(it)
+                }
             }
+            context.resources.openRawResource(R.raw.install).use { installer ->
+                FileOutputStream(installShFile).use {
+                    installer.copyTo(it)
+                }
+            }
+
+            Shell.su("sh -x ${installShFile.absolutePath} > /data/local/tmp/acc-install.log 2>&1").exec()
         } catch (ex: java.lang.Exception) {
             ex.printStackTrace()
             null
