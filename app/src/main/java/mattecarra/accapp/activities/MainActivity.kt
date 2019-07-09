@@ -482,7 +482,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == ACC_CONFIG_EDITOR_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                if (data?.getBooleanExtra(Constants.ACC_HAS_CHANGES, false) == true) {
+                if (data?.getBooleanExtra(Constants.ACC_HAS_CHANGES, false)) {
                     doAsync {
                         val result = mViewModel.updateAccConfig(data.getParcelableExtra(Constants.ACC_CONFIG_KEY))
 
