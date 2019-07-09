@@ -69,16 +69,7 @@ open class AccHandler: AccInterface {
 
     @Throws(IOException::class)
     fun readConfigToString(): String {
-        val config =
-            if(File(Environment.getExternalStorageDirectory(), "acc/acc.conf").exists())
-                File(Environment.getExternalStorageDirectory(), "acc/acc.conf")
-            else
-                File(Environment.getExternalStorageDirectory(), "acc/config.txt")
-
-        return if (config.exists())
-            config.readText(charset = Charsets.UTF_8)
-        else
-            ""
+        return Shell.su("acc --config cat").exec().out.joinToString(separator = "\n")
     }
 
     // Returns OnBoot value
