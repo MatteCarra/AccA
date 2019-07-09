@@ -44,7 +44,7 @@
                         style="@style/OneLinerText.Title"
                         tools:text="@tools:sample/full_names"/>
 
-                <ImageButton android:id="@+id/item_profile_optionsIb"
+                <ImageButton android:id="@+id/item_profile_options_ib"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                              app:srcCompat="@drawable/ic_outline_more_vert_24px" android:layout_alignParentEnd="true"
                              android:layout_alignParentRight="true" style="@style/ActionIcon"/>
