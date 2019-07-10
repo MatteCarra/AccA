@@ -417,7 +417,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                                 title(R.string.installation_failed_title)
                                 message(R.string.installation_failed)
                                 positiveButton(R.string.retry) {
-                                    if (checkAccInstalled() && checkPermissions())
+                                    if (checkAccInstalled())
                                         initUi()
                                 }
                                 negativeButton {
