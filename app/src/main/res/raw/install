@@ -24,5 +24,4 @@ rm -rf ${id}-*/
 tar -xf ${id}*gz
 export installDir0="$1"
 sh ${id}-*/install-current.sh
-rm -rf ${id}-*/
 exit 0

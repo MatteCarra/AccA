@@ -354,7 +354,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun checkAccInstalled(): Boolean {
-        if(!Acc.isBundledAccInstalled(this)) { //TODO let the user decide between bundle and stable
+        if(!Acc.isBundledAccInstalled(filesDir)) { //TODO let the user decide between bundle and stable
             val dialog = MaterialDialog(this).show {
                 title(R.string.installing_acc)
                 progress(R.string.wait)

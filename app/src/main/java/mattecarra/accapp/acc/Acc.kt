@@ -1,7 +1,6 @@
 package mattecarra.accapp.acc
 
 import android.content.Context
-import android.os.Environment
 import com.topjohnwu.superuser.Shell
 import mattecarra.accapp.R
 import mattecarra.accapp.adapters.Schedule
@@ -116,8 +115,12 @@ interface AccInterface {
 }
 
 object Acc {
-    private const val latestVersion = 201905111
+    const val bundledVersion = 201907101
+    private const val defaultVersion = 201905111 /* NOTE: default version has to match a package in acc (ex mattecarra.accapp.acc.v*) */
 
+    /*
+    *
+    * */
     private fun getVersionPackageName(v: Int): Int {
         return when {
             v >= 201903071 -> 201903071
@@ -127,19 +130,31 @@ object Acc {
 
     val instance: AccInterface by lazy {
         val constructor = try {
-            val version = Shell.su("""acc --config sed -n 's/^versionCode=//p'""").exec().out.joinToString(separator = "\n").trim().toIntOrNull() ?: latestVersion
+            val version = Shell.su("""acc --config sed -n 's/^versionCode=//p'""").exec().out.joinToString(separator = "\n").trim().toIntOrNull() ?: defaultVersion
             val aClass = Class.forName("mattecarra.accapp.acc.v${getVersionPackageName(version)}.AccHandler")
             aClass.getDeclaredConstructor()
         } catch (ex: Exception) {
-            val aClass = Class.forName("mattecarra.accapp.acc.v$latestVersion.AccHandler")
+            val aClass = Class.forName("mattecarra.accapp.acc.v$defaultVersion.AccHandler")
             aClass.getDeclaredConstructor()
         }
 
         constructor.newInstance() as AccInterface
     }
 
-    fun isBundledAccInstalled(context: Context): Boolean {
-        return Shell.su("test -f ${File(context.filesDir, "acc/acc-init.sh").absolutePath}").exec().isSuccess
+    fun isBundledAccInstalled(installationDir: File): Boolean {
+        return Shell.su("test -f ${File(installationDir, "acc/acc-init.sh").absolutePath}").exec().isSuccess && getAccVersion() == bundledVersion
+    }
+
+    //TODO run this every time an acc instance is created to ensure that acc is available.
+    fun initBundledAcc(installationDir: File): Boolean {
+        return if(isBundledAccInstalled(installationDir))
+            Shell.su("sh ${File(installationDir, "acc/acc-init.sh").absolutePath}").exec().isSuccess
+        else
+            false
+    }
+
+    private fun getAccVersion(): Int? {
+        return Shell.su("acc --version").exec().out.joinToString(separator = "\n").trim().toIntOrNull() ?: defaultVersion
     }
 
     fun isAccInstalled(): Boolean {
