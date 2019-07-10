@@ -50,7 +50,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     OnProfileClickListener {
 
     private val LOG_TAG = "MainActivity"
-    private val PERMISSION_REQUEST = 0
     private val ACC_CONFIG_EDITOR_REQUEST = 1
     private val ACC_PROFILE_CREATOR_REQUEST = 2
     private val ACC_PROFILE_EDITOR_REQUEST = 3
@@ -115,28 +114,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             title(R.string.config_error_title)
             message(R.string.config_error_dialog)
             positiveButton(android.R.string.ok)
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        when (requestCode) {
-            PERMISSION_REQUEST -> {
-                // If request is cancelled, the result arrays are empty.
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    initUi()
-                } else {
-                    finish()
-                }
-                return
-            }
-
-            else -> {
-                // Ignore all other requests.
-            }
         }
     }
 
@@ -416,28 +393,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //        }
     }
 
-    private fun checkPermissions(): Boolean {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ),
-                PERMISSION_REQUEST
-            )
-            return false
-        }
-        return true
-    }
-
     private fun checkAccInstalled(): Boolean {
         if (!Acc.isBundledAccInstalled(this)) { //TODO let the user decide between bundle and stable
             val dialog = MaterialDialog(this).show {
@@ -479,9 +434,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                             } else true
                         }
                     } else {
-                    
-                        if (checkPermissions())
-                            initUi()
+                        initUi()
                     }
                 }
 
@@ -529,7 +482,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             return
         }
 
-        if (checkAccInstalled() && checkPermissions()) {
+        if (checkAccInstalled()) {
             initUi()
         }
     }
