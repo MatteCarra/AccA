@@ -150,7 +150,7 @@ object Acc {
     }
 
     fun isBundledAccInstalled(context: Context): Boolean {
-        return File(context.filesDir, "acc/acc-init.sh").exists()
+        return Shell.su("test -f ${File(context.filesDir, "acc/acc-init.sh").absolutePath}").exec().isSuccess
     }
 
     fun isAccInstalled(): Boolean {
@@ -167,6 +167,7 @@ object Acc {
                     out.copyTo(it)
                 }
             }
+
             context.resources.openRawResource(R.raw.install).use { installer ->
                 FileOutputStream(installShFile).use {
                     installer.copyTo(it)
@@ -178,6 +179,7 @@ object Acc {
             ex.printStackTrace()
             null
         }
+        return null
     }
 
     fun installAccModule(context: Context): Shell.Result? {
