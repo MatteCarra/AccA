@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import mattecarra.accapp.R
 import mattecarra.accapp._interface.OnProfileClickListener
@@ -16,7 +17,8 @@ import mattecarra.accapp.utils.ProfileUtils
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class ProfileListAdapter internal constructor(context: Context) : RecyclerView.Adapter<ProfileListAdapter.ProfileViewHolder>() {
+class ProfileListAdapter internal constructor(context: Context) :
+    RecyclerView.Adapter<ProfileListAdapter.ProfileViewHolder>() {
 
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private var mProfilesList = emptyList<AccaProfile>()
@@ -68,7 +70,8 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
         val titleTv: TextView = itemView.findViewById(R.id.item_profile_title_textView)
         val capacityTv: TextView = itemView.findViewById(R.id.item_profile_capacity_tv)
         val temperatureTv: TextView = itemView.findViewById(R.id.item_profile_temperature_tv)
-        val onPlugTv: TextView = itemView.findViewById(R.id.item_profile_onplug_tv)
+        val onPlugTv: TextView = itemView.findViewById(R.id.item_profile_on_plug_tv)
+        val optionsIb: ImageButton = itemView.findViewById(R.id.item_profile_options_ib)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
@@ -83,6 +86,10 @@ class ProfileListAdapter internal constructor(context: Context) : RecyclerView.A
         holder.capacityTv.text = profile.accConfig.configCapacity.toString(mContext)
         holder.temperatureTv.text = profile.accConfig.configTemperature.toString(mContext)
         holder.onPlugTv.text = profile.accConfig.getOnPlug(mContext)
+
+        holder.optionsIb.setOnClickListener {
+            mListener.onProfileOptionsClick(mProfilesList[position])
+        }
 
         val profileId = ProfileUtils.getCurrentProfile(PreferenceManager.getDefaultSharedPreferences(mContext))
         if (profile.uid == profileId) {

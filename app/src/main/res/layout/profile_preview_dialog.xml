@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/card_content_padding">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/preview_profile_title_tv"
+        style="@style/OneLinerText.Title"
+        tools:text="@tools:sample/lorem/random"
+        android:ellipsize="end"
+        android:layout_marginBottom="@dimen/card_content_padding"/>
+
+    <!--        Capacity Control -->
+    <LinearLayout
+        style="@style/CardDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/IndexIcon"
+            app:srcCompat="@drawable/ic_outline_battery_50_24px" />
+
+        <TextView
+            android:id="@+id/preview_profile_capacity_tv"
+            style="@style/OneLinerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@tools:sample/lorem/random" />
+    </LinearLayout>
+
+    <!--        Charging Voltage Control -->
+    <LinearLayout
+        style="@style/CardDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/IndexIcon"
+            app:srcCompat="@drawable/ic_outline_flash_on_24px" />
+
+        <TextView
+            android:id="@+id/preview_profile_charging_voltage_tv"
+            style="@style/OneLinerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@tools:sample/lorem/random" />
+    </LinearLayout>
+
+    <!--        Temperature Control -->
+    <LinearLayout
+        style="@style/CardDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/IndexIcon"
+            app:srcCompat="@drawable/ic_thermometer" />
+
+        <TextView
+            android:id="@+id/preview_profile_temperature_tv"
+            style="@style/OneLinerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@tools:sample/lorem/random" />
+
+    </LinearLayout>
+
+    <!--        On Boot -->
+    <LinearLayout
+        style="@style/CardDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/IndexIcon"
+            app:srcCompat="@drawable/ic_outline_power_settings_new_24px" />
+
+        <TextView
+            android:id="@+id/preview_profile_on_boot_tv"
+            style="@style/OneLinerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@tools:sample/lorem/random" />
+
+    </LinearLayout>
+
+    <!--        On Plug -->
+    <LinearLayout
+        style="@style/CardDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/IndexIcon"
+            app:srcCompat="@drawable/ic_outline_usb_24px" />
+
+        <TextView
+            android:id="@+id/preview_profile_on_plug_tv"
+            style="@style/OneLinerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@tools:sample/lorem/random" />
+
+    </LinearLayout>
+
+    <!--        Cool Down -->
+    <LinearLayout
+        style="@style/CardDetailEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/IndexIcon"
+            app:srcCompat="@drawable/ic_outline_ac_unit_24px" />
+
+        <TextView
+            android:id="@+id/preview_profile_cool_down_tv"
+            style="@style/OneLinerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@tools:sample/lorem/random" />
+
+    </LinearLayout>
+</LinearLayout>

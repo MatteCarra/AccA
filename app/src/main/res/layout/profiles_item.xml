@@ -36,15 +36,15 @@
                         android:id="@+id/item_profile_title_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toStartOf="@+id/item_profile_optionsIb"
-                        android:layout_toLeftOf="@+id/item_profile_optionsIb"
+                        android:layout_toStartOf="@+id/item_profile_options_ib"
+                        android:layout_toLeftOf="@+id/item_profile_options_ib"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         style="@style/OneLinerText.Title"
                         tools:text="@tools:sample/full_names"/>
 
-                <ImageButton android:id="@+id/item_profile_optionsIb"
+                <ImageButton android:id="@+id/item_profile_options_ib"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                              app:srcCompat="@drawable/ic_outline_more_vert_24px" android:layout_alignParentEnd="true"
                              android:layout_alignParentRight="true" style="@style/ActionIcon"/>
@@ -61,7 +61,7 @@
                 </LinearLayout>
 
                 <LinearLayout style="@style/CardDetail">
-                    <ImageView style="@style/IndexIcon" app:srcCompat="@drawable/ic_outline_ac_unit_24px"/>
+                    <ImageView style="@style/IndexIcon" app:srcCompat="@drawable/ic_thermometer"/>
                     <TextView android:id="@+id/item_profile_temperature_tv" style="@style/OneLinerText"
                               android:layout_height="wrap_content" android:layout_width="wrap_content"
                               tools:text="@tools:sample/full_names" android:ellipsize="end"/>
@@ -69,7 +69,7 @@
 
                 <LinearLayout style="@style/CardDetailEnd">
                     <ImageView style="@style/IndexIcon" app:srcCompat="@drawable/ic_outline_usb_24px"/>
-                    <TextView android:id="@+id/item_profile_onplug_tv" style="@style/OneLinerText"
+                    <TextView android:id="@+id/item_profile_on_plug_tv" style="@style/OneLinerText"
                               android:layout_height="wrap_content" android:layout_width="wrap_content"
                               tools:text="@tools:sample/full_names"/>
                 </LinearLayout>

@@ -36,7 +36,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             this.config.value = Acc.instance.readConfig()
         } catch (ex: Exception) {
             ex.printStackTrace()
-            //TODO showConfigReadError()
+            //TODO: showConfigReadError()
             this.config.value = Acc.instance.defaultConfig //if mAccConfig is null I use default mAccConfig values.
         }
     }

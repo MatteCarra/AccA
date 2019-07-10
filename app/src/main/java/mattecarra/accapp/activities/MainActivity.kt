@@ -222,6 +222,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onProfileLongClick(accaProfile: AccaProfile) {
+        // TODO: Implement quick profile view
+    }
+
+    override fun onProfileOptionsClick(accaProfile: AccaProfile) {
         MaterialDialog(this@MainActivity).show {
             listItems(R.array.profile_long_press_options) { _, index, _ ->
                 when(index) {
@@ -241,23 +245,23 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     1 -> {
                         // Rename the selected profile (2nd option).
                         MaterialDialog(this@MainActivity)
-                            .show {
-                                title(R.string.profile_name)
-                                message(R.string.dialog_profile_name_message)
-                                input(prefill = accaProfile.profileName) { _, charSequence ->
-                                    //TODO: Check if the profile name is valid
+                                .show {
+                                    title(R.string.profile_name)
+                                    message(R.string.dialog_profile_name_message)
+                                    input(prefill = accaProfile.profileName) { _, charSequence ->
+                                        //TODO: Check if the profile name is valid
 //                                    val profileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
 //                                    val isValid = !profileNameRegex.matches(charSequence)
 
-                                    // Set profile name
-                                    accaProfile.profileName = charSequence.toString()
+                                        // Set profile name
+                                        accaProfile.profileName = charSequence.toString()
 
-                                    // Update the profile in the DB
-                                    mMainActivityViewModel.updateProfile(accaProfile)
+                                        // Update the profile in the DB
+                                        mMainActivityViewModel.updateProfile(accaProfile)
+                                    }
+                                    positiveButton(R.string.save)
+                                    negativeButton(android.R.string.cancel)
                                 }
-                                positiveButton(R.string.save)
-                                negativeButton(android.R.string.cancel)
-                            }
                     }
                     2 -> {
                         // Delete the selected profile (3rd option).
