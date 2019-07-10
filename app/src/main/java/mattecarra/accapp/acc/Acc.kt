@@ -179,7 +179,6 @@ object Acc {
             ex.printStackTrace()
             null
         }
-        return null
     }
 
     fun installAccModule(context: Context): Shell.Result? {
