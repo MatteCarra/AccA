@@ -116,8 +116,6 @@ interface AccInterface {
 }
 
 object Acc {
-    private val VERSION_REGEXP = """^\s*versionCode=([\d*]+)""".toRegex(RegexOption.MULTILINE)
-
     private const val latestVersion = 201905111
 
     private fun getVersionPackageName(v: Int): Int {
@@ -129,16 +127,7 @@ object Acc {
 
     val instance: AccInterface by lazy {
         val constructor = try {
-            val configFile =
-                if(File(Environment.getExternalStorageDirectory(), "acc/acc.conf").exists())
-                    File(Environment.getExternalStorageDirectory(), "acc/acc.conf")
-                else
-                    File(Environment.getExternalStorageDirectory(), "acc/config.txt")
-
-            val config = configFile.readText()
-
-            val version = VERSION_REGEXP.find(config)?.destructured?.component1()?.toIntOrNull() ?: latestVersion
-
+            val version = Shell.su("""acc --config sed -n 's/^versionCode=//p'""").exec().out.joinToString(separator = "\n").trim().toIntOrNull() ?: latestVersion
             val aClass = Class.forName("mattecarra.accapp.acc.v${getVersionPackageName(version)}.AccHandler")
             aClass.getDeclaredConstructor()
         } catch (ex: Exception) {
