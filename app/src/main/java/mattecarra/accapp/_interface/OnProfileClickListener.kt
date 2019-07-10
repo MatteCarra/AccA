@@ -7,7 +7,7 @@ import mattecarra.accapp.models.AccaProfile
  */
 interface OnProfileClickListener {
 
-    fun onProfileClick(accaProfile: AccaProfile)
-    fun onProfileLongClick(accaProfile: AccaProfile)
-    fun onProfileOptionsClick(accaProfile: AccaProfile)
+    fun onProfileClick(profile: AccaProfile)
+    fun onProfileLongClick(profile: AccaProfile)
+    fun onProfileOptionsClick(profile: AccaProfile)
 }

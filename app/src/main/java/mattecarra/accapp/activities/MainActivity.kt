@@ -10,6 +10,7 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -20,6 +21,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItems
@@ -43,7 +46,8 @@ import mattecarra.accapp.utils.progress
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, OnProfileClickListener {
+class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
+    OnProfileClickListener {
 
     private val LOG_TAG = "MainActivity"
     private val ACC_CONFIG_EDITOR_REQUEST = 1
@@ -158,7 +162,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
 
         doAsync {
-            if(Acc.instance.isAccdRunning())
+            if (Acc.instance.isAccdRunning())
                 Acc.instance.abcStopDaemon()
             else
                 Acc.instance.abcStartDaemon()
@@ -189,64 +193,100 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     /**
      * Override function for handling ProfileOnClicks
      */
-    override fun onProfileClick(accaProfile: AccaProfile) {
+    override fun onProfileClick(profile: AccaProfile) {
         // Applies the selected profile
 
         doAsync {
-            mViewModel.updateAccConfig(accaProfile.accConfig)
-            mViewModel.setCurrentSelectedProfile(accaProfile.uid)
+            mViewModel.updateAccConfig(profile.accConfig)
+            mViewModel.setCurrentSelectedProfile(profile.uid)
         }
 
         // Display Toast for the user.
-        Toast.makeText(this, getString(R.string.profile_selected_toast, accaProfile.profileName), Toast.LENGTH_LONG).show()
+        Toast.makeText(
+            this,
+            getString(R.string.profile_selected_toast, profile.profileName),
+            Toast.LENGTH_LONG
+        ).show()
 
     }
 
-    override fun onProfileLongClick(accaProfile: AccaProfile) {
-        // TODO: Implement quick profile view
+    override fun onProfileLongClick(profile: AccaProfile) {
+
+        val dialog = MaterialDialog(this@MainActivity).customView(
+            R.layout.profile_preview_dialog,
+            scrollable = true
+        )
+
+        val preView = dialog.getCustomView()
+        // Set view items and assign values
+        val titleTv = preView.findViewById<TextView>(R.id.preview_profile_title_tv)
+        val capacityTv = preView.findViewById<TextView>(R.id.preview_profile_capacity_tv)
+        val chargingVoltTv =
+            preView.findViewById<TextView>(R.id.preview_profile_charging_voltage_tv)
+        val temperatureTv = preView.findViewById<TextView>(R.id.preview_profile_temperature_tv)
+        val onBootTv = preView.findViewById<TextView>(R.id.preview_profile_on_boot_tv)
+        val onPlugTv = preView.findViewById<TextView>(R.id.preview_profile_on_plug_tv)
+        val coolDownTv = preView.findViewById<TextView>(R.id.preview_profile_cool_down_tv)
+
+        // Assign the appropriate text values from the profile
+        titleTv.text = profile.profileName
+        capacityTv.text = profile.accConfig.configCapacity.toString(this)
+        chargingVoltTv.text = profile.accConfig.configVoltage.toString()
+        temperatureTv.text = profile.accConfig.configTemperature.toString(this)
+        onBootTv.text = profile.accConfig.configOnBoot
+        onPlugTv.text = profile.accConfig.getOnPlug(this)
+        coolDownTv.text = profile.accConfig.configCoolDown?.toString(this) ?: "Cool Down Not Set"
+
+        dialog.show()
     }
 
-    override fun onProfileOptionsClick(accaProfile: AccaProfile) {
+    override fun onProfileOptionsClick(profile: AccaProfile) {
         MaterialDialog(this@MainActivity).show {
             listItems(R.array.profile_long_press_options) { _, index, _ ->
-                when(index) {
+                when (index) {
                     0 -> {
                         // Edit the configuration of the selected profile.
-                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+                        Intent(
+                            this@MainActivity,
+                            AccConfigEditorActivity::class.java
+                        ).also { intent ->
                             val dataBundle = Bundle()
-                            dataBundle.putInt(Constants.PROFILE_ID_KEY, accaProfile.uid)
-                            dataBundle.putParcelable(Constants.ACC_CONFIG_KEY, accaProfile.accConfig)
+                            dataBundle.putInt(Constants.PROFILE_ID_KEY, profile.uid)
+                            dataBundle.putParcelable(Constants.ACC_CONFIG_KEY, profile.accConfig)
 
                             // Insert the databundle into the intent.
                             intent.putExtra(Constants.DATA_KEY, dataBundle)
-                            intent.putExtra(Constants.TITLE_KEY, this@MainActivity.getString(R.string.profile_creator))
+                            intent.putExtra(
+                                Constants.TITLE_KEY,
+                                this@MainActivity.getString(R.string.profile_creator)
+                            )
                             startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
                         }
                     }
                     1 -> {
                         // Rename the selected profile (2nd option).
                         MaterialDialog(this@MainActivity)
-                                .show {
-                                    title(R.string.profile_name)
-                                    message(R.string.dialog_profile_name_message)
-                                    input(prefill = accaProfile.profileName) { _, charSequence ->
-                                        //TODO: Check if the profile name is valid
+                            .show {
+                                title(R.string.profile_name)
+                                message(R.string.dialog_profile_name_message)
+                                input(prefill = profile.profileName) { _, charSequence ->
+                                    //TODO: Check if the profile name is valid
 //                                    val profileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
 //                                    val isValid = !profileNameRegex.matches(charSequence)
 
-                                        // Set profile name
-                                        accaProfile.profileName = charSequence.toString()
+                                    // Set profile name
+                                    profile.profileName = charSequence.toString()
 
-                                        // Update the profile in the DB
-                                        mMainActivityViewModel.updateProfile(accaProfile)
-                                    }
-                                    positiveButton(R.string.save)
-                                    negativeButton(android.R.string.cancel)
+                                    // Update the profile in the DB
+                                    mMainActivityViewModel.updateProfile(profile)
                                 }
+                                positiveButton(R.string.save)
+                                negativeButton(android.R.string.cancel)
+                            }
                     }
                     2 -> {
                         // Delete the selected profile (3rd option).
-                        mMainActivityViewModel.deleteProfile(accaProfile)
+                        mMainActivityViewModel.deleteProfile(profile)
                     }
                 }
             }
@@ -370,14 +410,14 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 uiThread {
                     dialog.cancel()
 
-                    if(res?.isSuccess != true) {
+                    if (res?.isSuccess != true) {
                         //TODO add an option to share logs
                         val failureDialog = MaterialDialog(this@MainActivity)
                             .show {
                                 title(R.string.installation_failed_title)
                                 message(R.string.installation_failed)
                                 positiveButton(R.string.retry) {
-                                    if(checkAccInstalled())
+                                    if (checkAccInstalled() && checkPermissions())
                                         initUi()
                                 }
                                 negativeButton {
@@ -387,7 +427,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                             }
 
                         failureDialog.setOnKeyListener { _, keyCode, _ ->
-                            if(keyCode == KeyEvent.KEYCODE_BACK) {
+                            if (keyCode == KeyEvent.KEYCODE_BACK) {
                                 dialog.dismiss()
                                 finish()
                                 false
@@ -422,7 +462,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             .setIcon(R.drawable.ic_notification)
         appUpdater.start()
 
-        if(!Shell.rootAccess()) {
+        if (!Shell.rootAccess()) {
             val dialog = MaterialDialog(this).show {
                 title(R.string.tile_acc_no_root)
                 message(R.string.no_root_message)
@@ -433,7 +473,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             dialog.setOnKeyListener { _, keyCode, _ ->
-                if(keyCode == KeyEvent.KEYCODE_BACK) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
                     dialog.dismiss()
                     finish()
                     false
@@ -442,13 +482,13 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             return
         }
 
-        if(checkAccInstalled()) {
+        if (checkAccInstalled()) {
             initUi()
         }
     }
 
     override fun onBackPressed() {
-        if(botNav_main.selectedItemId == R.id.botNav_home) {
+        if (botNav_main.selectedItemId == R.id.botNav_home) {
             super.onBackPressed()
         } else {
             botNav_main.selectedItemId = R.id.botNav_home
@@ -460,7 +500,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             if (resultCode == Activity.RESULT_OK) {
                 if (data?.getBooleanExtra(Constants.ACC_HAS_CHANGES, false) == true) {
                     doAsync {
-                        val result = mViewModel.updateAccConfig(data.getParcelableExtra(Constants.ACC_CONFIG_KEY))
+                        val result =
+                            mViewModel.updateAccConfig(data.getParcelableExtra(Constants.ACC_CONFIG_KEY))
 
                         // Remove the current selected profile
                         mViewModel.clearCurrentSelectedProfile()
@@ -480,7 +521,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                                 val inputField = dialog.getInputField()
                                 val isValid = profileNameRegex.matches(charSequence)
 
-                                inputField.error = if (isValid) null else getString(R.string.invalid_chars)
+                                inputField.error =
+                                    if (isValid) null else getString(R.string.invalid_chars)
                                 dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
                             }
                             positiveButton(R.string.save) { dialog ->
@@ -499,15 +541,20 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         }
                 }
             }
-        } else if(requestCode == ACC_PROFILE_EDITOR_REQUEST) {
+        } else if (requestCode == ACC_PROFILE_EDITOR_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                if(data?.getBooleanExtra(Constants.ACC_HAS_CHANGES, false) == true && data.hasExtra(Constants.DATA_KEY)) {
+                if (data?.getBooleanExtra(
+                        Constants.ACC_HAS_CHANGES,
+                        false
+                    ) == true && data.hasExtra(Constants.DATA_KEY)
+                ) {
                     val accConfig: AccConfig = data.getParcelableExtra(Constants.ACC_CONFIG_KEY)
                     // Extract the data
                     val editorData = data.getBundleExtra(Constants.DATA_KEY)
                     val profileId = editorData.getInt(Constants.PROFILE_ID_KEY)
                     doAsync {
-                        val selectedProfile: AccaProfile = mMainActivityViewModel.getProfileById(profileId)
+                        val selectedProfile: AccaProfile =
+                            mMainActivityViewModel.getProfileById(profileId)
 
                         runOnUiThread {
                             // Update the selected Profile

@@ -85,6 +85,12 @@ data class AccConfig(var configCapacity: ConfigCapacity,
      * @param charge charge time in seconds.
      * @param pause pause time in seconds.
      */
-    data class ConfigCoolDown (var atPercent: Int, var charge: Int, var pause: Int)
+    class ConfigCoolDown (var atPercent: Int, var charge: Int, var pause: Int) {
+
+        fun toString(context: Context): String {
+            return String.format(context.getString(R.string.template_cool_down_profile,
+                atPercent, charge, pause))
+        }
+    }
 
 }
