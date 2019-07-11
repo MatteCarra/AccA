@@ -115,7 +115,7 @@ interface AccInterface {
 }
 
 object Acc {
-    const val bundledVersion = 201907101
+    const val bundledVersion = 201907110
     private const val defaultVersion = 201905111 /* NOTE: default version has to match a package in acc (ex mattecarra.accapp.acc.v*) */
 
     /*
