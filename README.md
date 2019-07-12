@@ -45,16 +45,23 @@ By choosing to use/misuse ACC, you agree to do so at your own risk!
 
 ACC is primarily intended for [extending battery service life](https://batteryuniversity.com/learn/article/how_to_prolong_lithium_based_batteries). On the flip side, the name says it all.
 
-AccA is an official ACC configuration/management app. Its main target are those unfamiliar with terminal.
+AccA is an official ACC front-end app. It targets mainly those who feel uncomfortable with terminal.
 
 
 
 ---
 ## PREREQUISITES
 
-AccA won't run without ACC. the latter has prerequisites of its own. Refer to its [documentation](https://github.com/VR-25/acc/blob/master/README.md) for details.
 
-When first launched, AccA attempts to install ACC automatically. Less than 100kb of data are downloaded. Future versions of the app will ship with ACC built-in.
+- Any root solution
+- Busybox (only if not rooted with Magisk)
+
+
+Notes
+
+- ACC comes bundled into AccA. Any existing version is automatically uninstalled.
+- Uninstalling AccA also removes ACC. The daemon must be stopped beforehand. Otherwise, reboot after the removal or run `acc --daemon stop`.
+- You'll be given options to upgrade/downgrade ACC, and even schedule automatic upgrades.
 
 
 
@@ -63,7 +70,8 @@ When first launched, AccA attempts to install ACC automatically. Less than 100kb
 
 ACC is designed to run out of the box, without user intervention. You can simply install it and forget. However, as it's been observed, most people will want to tweak settings - and obviously everyone will want to know whether the thing is actually working.
 
-AccA's user interface is intuitive and displays configuration information/tips so that users don't have to read documentation to find their way. However, it's still highly recommended to read [ACC's documentation](https://github.com/VR-25/acc/blob/master/README.md) in order to have a broader understanding of how AccA works with it.
+AccA's user interface is intuitive and displays configuration information/tips so that users don't have to read documentation to find their way.
+However, it's still highly recommended to read [ACC's documentation](https://github.com/VR-25/acc/blob/master/README.md) in order to have a broader understanding of how ACC and AccA work together.
 
 
 
@@ -75,33 +83,35 @@ AccA's user interface is intuitive and displays configuration information/tips s
 
 - AccA must run as root.
 - Make sure you have the latest versions.
-- Ensure ACC language is set to English (`language=en`). The app doesn't "understand" other languages.
+- Ensure ACC language is set to English (`language=en`). The app doesn't "understand" other ACC languages.
 
 
 ### Charging Switch
 
-By default, ACC cycles through all available [charging control files](https://github.com/VR-25/acc/blob/master/acc/switches.txt) until it finds one that works.
+By default, ACC uses whatever [charging switch](https://github.com/VR-25/acc/blob/master/acc/switches.txt) works.
 
-Charging switches that support battery idle mode take precedence - allowing the device to draw power directly from the external power supply when charging is paused.
+If `prioritizeBattIdleMode` is set to `true`, charging switches that support battery idle mode take precedence - allowing the device to draw power directly from the external power supply when charging is paused.
 
 However, things don't always go well.
-Some switches may be unreliable under certain conditions (e.g., screen off).
-Others may hold a [wakelock](https://duckduckgo.com/?q=wakelock) - causing faster battery drain - while in plugged in, not charging state.
 
-Run `acc --set chargingSwitch` (or `acc -s s` for short) to enforce a particular switch.
+- Some switches are unreliable under certain conditions (e.g., screen off).
+- Others hold a [wakelock](https://duckduckgo.com/?q=wakelock) - causing faster battery drain.
+- High CPU load and inability to re-enable charging may also be experienced.
 
-Test default/set switch(es) with `acc --test`.
+In such situations, you have to find and enforce a switch that works as expected. Here's how to do it:
 
-Evaluate custom switches with `acc --test <file onValue offValue>`.
+1. Run `acc -test --` (or acc -t --) to see which switches work.
+2. Run `acc --set chargingSwitch` (or acc -s s) to enforce a working switch.
+3. Test the reliability of the set switch. If it doesn't work properly, try another one.
 
 
-### Charging Voltage Limit
+### Charging Voltage And Current Limits
 
-Unfortunately, not all devices/kernels support custom charging voltage limit.
+Unfortunately, not all devices/kernels support these features.
 Those that do are rare.
 Most OEMs don't care about that.
 
-The existence of a potential voltage control file doesn't necessarily mean it works.
+The existence of potential voltage/current control file doesn't necessarily mean these features are supported.
 
 
 ### Restore Default Config
@@ -113,7 +123,7 @@ The existence of a potential voltage control file doesn't necessarily mean it wo
 
 Check whether charging current in being limited by `applyOnPlug` or `applyOnBoot`.
 
-Nullify coolDownRatio (`acc --set coolDownRatio`) or change its value. By default, coolDownRatio is null.
+Set `coolDownCapacity` to `101`, nullify coolDownRatio (`acc --set coolDownRatio`), or change its value. By default, coolDownRatio is null.
 
 
 ### Logs
@@ -139,19 +149,24 @@ Privacy Notes
 
 Example
 - Name: `user .`
-- Email: `myemail@iscool.com`
+- Email: `myEmail@isCool.com`
 
 
 See current submissions [here](https://www.dropbox.com/sh/rolzxvqxtdkfvfa/AABceZM3BBUHUykBqOW-0DYIa?dl=0).
 
 
 
+---
 ## TIPS
 
 
 ### Generic
 
+Control the max USB input current: `applyOnPlug=usb/current_max:MICRO_AMPS` (e.g., 1000000, that's 1A)
+
 Force fast charge: `applyOnBoot=/sys/kernel/fast_charge/force_fast_charge:1`
+
+Use voltage control file as charging switch file: `chagingSwitch=FILE DEFAULT_VOLTAGE STOP_VOLTAGE`
 
 
 ### Google Pixel Family
@@ -180,9 +195,34 @@ battery/batt_tune_float_voltage (max: 4350)
 
 
 ---
+## FREQUENTLY ASKED QUESTIONS (FAQ)
+
+
+- How do I report issues?
+
+A: Open issues on GitHub or contact the developers on Telegram/XDA (linked below). Always provide as much information as possible, and attach `/sdcard/acc-logs-*tar.bz2`. This file is generated automatically. When this doesn't happen, run `acc --log --export` shortly after the problem occurs.
+
+
+- What's "battery idle" mode?
+
+A: That's a device's ability to draw power directly from an external power supply when charging is disabled or the battery is pulled out. The Motorola Moto G4 Play and many other smartphones can do that. Run `acc -t --` to test yours.
+
+
+- What's "cool down" capacity for?
+
+A: It's meant for reducing stress induced by prolonged high charging voltage (e.g., 4.20 Volts). It's a fair alternative to the charging voltage limit feature.
+
+
+- Why won't you support my device? I've been waiting for ages!
+
+A: First, never lose hope! Second, several systems don't have intuitive charging control files; I have to dig deeper and improvise; this takes extra time and effort. Lastly, some systems don't support custom charging control at all;  in such cases, you have to keep trying different kernels and uploading the respective [power supply logs](https://github.com/VR-25/acc#power-supply-log).
+
+
+
+---
 ## ACC LINKS
 
-- [Git repository](https://github.com/vr-25/Acc/)
+- [Git repository](https://github.com/vr-25/acc/)
 - [Battery University](http://batteryuniversity.com/learn/article/how_to_prolong_lithium_based_batteries/)
 - [Facebook page](https://facebook.com/VR25-at-xda-developers-258150974794782/)
 - [Telegram channel](https://t.me/vr25_xda/)
