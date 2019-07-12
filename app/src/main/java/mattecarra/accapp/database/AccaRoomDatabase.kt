@@ -1,17 +1,14 @@
 package mattecarra.accapp.database
 
-import android.content.ContentValues
 import android.content.Context
-import android.database.sqlite.SQLiteDatabase
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
-import androidx.room.migration.Migration
-import com.google.gson.Gson
 
 
 @Database(entities = [AccaProfile::class], version = 2)
