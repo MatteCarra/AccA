@@ -142,7 +142,11 @@ object Acc {
     }
 
     fun isBundledAccInstalled(installationDir: File): Boolean {
-        return Shell.su("test -f ${File(installationDir, "acc/acc-init.sh").absolutePath}").exec().isSuccess && getAccVersion() == bundledVersion
+        return Shell.su("test -f ${File(installationDir, "acc/acc-init.sh").absolutePath}").exec().isSuccess
+    }
+
+    fun isBundledAccUpdated(): Boolean {
+        return getAccVersion() == bundledVersion
     }
 
     //TODO run this every time an acc instance is created to ensure that acc is available.
