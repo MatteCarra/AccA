@@ -44,22 +44,18 @@
     <string name="enable_temp_check">启用温控 (°C)</string>
     <string name="cooldown_temp">开始冷却温度:</string>
     <string name="max_temp">最高温度:</string>
-    <string name="pause_seconds">暂停秒数:</string>
     <string name="charge_seconds">充电秒数:</string>
     <string name="no_root_message">此应用程序需要 ROOT 权限</string>
     <string name="config_error_title">配置读取错误</string>
     <!-- Exit On Boot Card Strings -->
-    <string name="description_exit_on_boot">启用后，在执行 \'启动时(On Boot)\' 命令后，守护进程将会停止。</string>
-    <string name="label_on_boot">启动时(On Boot): </string>
+    <!-- ################################################### -->
     <!-- Acc installation -->
     <string name="installing_acc">正在初始化所需文件</string>
     <string name="reboot">重启</string>
     <string name="installation_failed_title">安装失败</string>
-    <string name="not_set">未设置</string>
-    <string name="edit_on_boot">编辑 启动时(On Boot) 值</string>
+    <!-- ################################################### -->
     <string name="edit_on_boot_dialog_hint">留空以禁用</string>
     <string name="save">保存</string>
-    <string name="edit_on_boot_dialog_message">这些设置在 启动时(On Boot) 应用。留空以禁用。</string>
     <string name="logs">日志</string>
     <string name="text_copied_to_clipboard">文本复制到剪贴板!</string>
     <string name="log_file_not_found_title">未找到日志文件</string>
@@ -86,19 +82,13 @@
     <string name="schedule_row_text">%1$s 任务将在 %2$d:%3$d 执行</string>
     <string name="delete">删除</string>
     <string name="no_schedules">无任务计划</string>
-    <string name="wrong_volt_file">你正在使用不支持控制电压最大值的控制文件，或者您的内核不支持此功能。</string>
     <string name="edit_charging_switch">编辑充电开关</string>
     <string name="automatic">自动</string>
     <string name="error_occurred">发生了一个错误</string>
     <string name="retry">重试</string>
-    <string name="edit_charging_limit_once">编辑一次性的充电限制</string>
     <string name="apply">应用</string>
     <string name="done">完成</string>
     <string name="info">信息</string>
-    <string name="title_cooldown_control">冷却控制</string>
-    <string name="title_on_boot">启动时(On boot) 选项</string>
-    <string name="title_temperature_control">温度控制</string>
-    <string name="title_capacity_control">电量控制</string>
     <string name="acc_config_editor">ACC 配置编辑</string>
     <string name="profile_creator">创建配置</string>
     <string name="schedule_creator">创建任务</string>
