@@ -52,26 +52,26 @@ abstract class AccaRoomDatabase : RoomDatabase() {
 
         private fun prepopulateDb(db: AccaRoomDatabase) {
             db.profileDao().insert(
-                AccaProfile(0, "Charge to 90%",
+                AccaProfile(0, "Default",
                     AccConfig(
-                        AccConfig.ConfigCapacity(5, 85, 90),
+                        AccConfig.ConfigCapacity(5, 70, 80),
                         AccConfig.ConfigVoltage(null, null),
                         AccConfig.ConfigTemperature(40, 45, 90),
                         null,
-                        "usb/current_max:500000",
+                        null,
                         null,
                         false,
                         null)
                 )
             )
             db.profileDao().insert(
-                AccaProfile(0, "Limit charging to 500mAh",
+                AccaProfile(0, "Charge to 90%",
                     AccConfig(
-                        AccConfig.ConfigCapacity(5, 70, 80),
+                        AccConfig.ConfigCapacity(5, 85, 90),
                         AccConfig.ConfigVoltage(null, null),
                         AccConfig.ConfigTemperature(40, 45, 90),
                         null,
-                        " usb/current_max:500000",
+                        null,
                         null,
                         false,
                         null)
