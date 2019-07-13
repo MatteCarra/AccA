@@ -186,6 +186,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     fun accProfilesFabOnClick(view: View) {
         Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
             intent.putExtra("titleTv", this@MainActivity.getString(R.string.profile_creator))
+            intent.putExtra(Constants.ACC_CONFIG_KEY, Acc.instance.defaultConfig)
             startActivityForResult(intent, ACC_PROFILE_CREATOR_REQUEST)
         }
     }
@@ -252,10 +253,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         ).also { intent ->
                             val dataBundle = Bundle()
                             dataBundle.putInt(Constants.PROFILE_ID_KEY, profile.uid)
-                            dataBundle.putParcelable(Constants.ACC_CONFIG_KEY, profile.accConfig)
 
                             // Insert the databundle into the intent.
                             intent.putExtra(Constants.DATA_KEY, dataBundle)
+                            intent.putExtra(Constants.ACC_CONFIG_KEY, profile.accConfig)
                             intent.putExtra(
                                 Constants.TITLE_KEY,
                                 this@MainActivity.getString(R.string.profile_creator)

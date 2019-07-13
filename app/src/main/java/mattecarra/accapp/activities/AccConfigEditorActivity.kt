@@ -64,9 +64,8 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
 
         if(savedInstanceState?.containsKey("mAccConfig") == true) {
             this.mAccConfig = savedInstanceState.getParcelable("mAccConfig")!!
-        } else if(intent.hasExtra(Constants.DATA_KEY)) {
-            val bundle: Bundle = intent.getBundleExtra(Constants.DATA_KEY)
-            mAccConfig = bundle.getParcelable(Constants.ACC_CONFIG_KEY)!!
+        } else if(intent.hasExtra(Constants.ACC_CONFIG_KEY)) {
+            mAccConfig = intent.getParcelableExtra(Constants.ACC_CONFIG_KEY)!!
         } else {
             try {
                 this.mAccConfig = Acc.instance.readConfig()
