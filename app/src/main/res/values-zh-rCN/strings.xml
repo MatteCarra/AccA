@@ -50,7 +50,6 @@
     <!-- Exit On Boot Card Strings -->
     <!-- ################################################### -->
     <!-- Acc installation -->
-    <string name="installing_acc">正在初始化所需文件</string>
     <string name="reboot">重启</string>
     <string name="installation_failed_title">安装失败</string>
     <!-- ################################################### -->
