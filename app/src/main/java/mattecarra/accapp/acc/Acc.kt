@@ -115,7 +115,7 @@ interface AccInterface {
 }
 
 object Acc {
-    const val bundledVersion = 201907170
+    const val bundledVersion = 201907180
     private const val defaultVersion = 201905111 /* NOTE: default version has to match a package in acc (ex mattecarra.accapp.acc.v*) */
 
     /*
@@ -145,8 +145,8 @@ object Acc {
         return Shell.su("test -f ${File(installationDir, "acc/acc-init.sh").absolutePath}").exec().isSuccess
     }
 
-    fun isBundledAccUpdated(): Boolean {
-        return getAccVersion() == bundledVersion
+    fun isInstalledAccOutdated(): Boolean {
+        return getAccVersion() ?: 0 < bundledVersion ?: 0
     }
 
     //TODO run this every time an acc instance is created to ensure that acc is available.
