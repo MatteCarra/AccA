@@ -57,7 +57,6 @@
     <string name="title_exit_on_boot">Daemon nach der Anwendung der Einstellungen beenden</string>
     <!-- ################################################### -->
     <!-- Acc installation -->
-    <string name="installing_acc">Erforderliche Dateien werden initialisiert</string>
     <string name="reboot">Neustart</string>
     <string name="installation_failed">Beim Installieren von acc ist etwas schief gelaufen. Bitte stelle sicher, dass eine funktionierende Internetverbindung vorhanden ist. Wenn diese Nachricht weiterhin erscheint, versuche die Installation von \'acc\' mit Magisk Manager - und melde bitte das Problem.</string>
     <string name="installation_failed_title">Installation fehlgeschlagen</string>
