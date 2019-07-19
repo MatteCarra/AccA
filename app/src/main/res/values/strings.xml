@@ -84,7 +84,7 @@
     <string name="edit_on_boot_dialog_hint">Leave blank to disable</string>
     <string name="save">Save</string>
 
-    <string name="edit_on_boot_dialog_message">(Example: battery/voltage_max:4100000 /sys/kernel/fast_charge/force_fast_charge:1 --exit).\n\"--exit\" is optional; it tells the daemon to stop.</string>
+    <string name="edit_on_boot_dialog_message">Example: battery/voltage_max:4100000 /sys/kernel/fast_charge/force_fast_charge:1 --exit.\n\"--exit\" is optional; it tells the daemon to stop after applying settings.</string>
 
     <string name="logs">Logs</string>
     <string name="text_copied_to_clipboard">Text copied to clipboard!</string>
@@ -159,7 +159,7 @@
     <string name="template_temperature_profile">Cool Down: %1$d&#176;C - Max: %2$d&#176;C - Pause: %3$ds</string>
     <string name="template_cool_down_profile">Start at: %1$d%% - Charge for %2$ds - Pause for %3$ds</string>
 
-    <string name="on_plugged_info">This is used for updating files whose contents change on certain power events (e.g., plugged/unplugged). It is particularly useful for enforcing specific max voltage/current for usb/wireless charging.</string>
+    <string name="on_plugged_info">This is used for updating files whose contents change on certain power events (e.g., plugged/unplugged). It is particularly useful for enforcing custom max voltage/current for usb/wireless charging.</string>
 
     <string-array name="profile_long_press_options">
         <item>Edit</item>
