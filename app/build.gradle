@@ -11,6 +11,21 @@ androidExtensions {
 }
 
 android {
+    signingConfigs {
+        release {
+            try {
+                def keystoreProperties = new Properties()
+                keystoreProperties.load(new FileInputStream(rootProject.file("keystore.properties")))
+
+                keyAlias 'acca'
+                keyPassword keystoreProperties["KEYSTORE_PASSWORD"]
+                storeFile file(keystoreProperties["KEYSTORE_LOCATION"])
+                storePassword keystoreProperties["KEY_PASSWORD"]
+            } catch (ignored) {
+                println "You should define KEYSTORE_LOCATION, KEYSTORE_PASSWORD and KEY_PASSWORD in keystore.properties."
+            }
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "mattecarra.accapp"
@@ -20,6 +35,7 @@ android {
         versionName "1.0.14"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        signingConfig signingConfigs.release
     }
     buildTypes {
         release {
