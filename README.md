@@ -226,6 +226,27 @@ First, never lose hope! Second, several systems don't have intuitive charging co
 - [Battery University](http://batteryuniversity.com/learn/article/how_to_prolong_lithium_based_batteries/)
 - [Facebook page](https://facebook.com/VR25-at-xda-developers-258150974794782/)
 - [Telegram channel](https://t.me/vr25_xda/)
-- [Telegram group](https://t.me/acc_magisk/)
+- [Telegram group](https://t.me/acc/)
 - [Telegram profile](https://t.me/vr25xda/)
 - [XDA thread](https://forum.xda-developers.com/apps/magisk/module-magic-charging-switch-cs-v2017-9-t3668427/)
+
+
+
+---
+## LATEST CHANGES
+
+**v1.0.14 (19)**
+> ACC (201907211)
+- Fixed `install-latest.sh` inconsistencies
+- Fixed voltage limit typo (3920-4349, 3500-4350)
+> AccA
+- Fixed incorrect voltage limit range (3920-4350, 3500-4350)
+
+**v1.0.13 (18)**
+> ACC
+- Enhanced busybox detection and handling (solves installation and a bunch of other issues)
+- Fixed `acc -x` "file not found" error
+- Start accd immediately after installation (no more ~30 seconds delay)
+- Show more descriptive installation info (including which logs to share on failure, and where to send them to)
+> AccA
+- Updated documentation
