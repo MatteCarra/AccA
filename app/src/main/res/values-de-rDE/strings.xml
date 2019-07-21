@@ -58,8 +58,6 @@
     <!-- ################################################### -->
     <!-- Acc installation -->
     <string name="reboot">Neustart</string>
-    <string name="installation_failed">Beim Installieren von acc ist etwas schief gelaufen. Bitte stelle sicher, dass eine funktionierende Internetverbindung vorhanden ist. Wenn diese Nachricht weiterhin erscheint, versuche die Installation von \'acc\' mit Magisk Manager - und melde bitte das Problem.</string>
-    <string name="installation_failed_title">Installation fehlgeschlagen</string>
     <!-- ################################################### -->
     <string name="edit_on_boot_dialog_hint">Leer lassen, um zu deaktivieren</string>
     <string name="save">Speichern</string>
