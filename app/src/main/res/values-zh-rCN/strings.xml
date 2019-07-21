@@ -51,7 +51,6 @@
     <!-- ################################################### -->
     <!-- Acc installation -->
     <string name="reboot">重启</string>
-    <string name="installation_failed_title">安装失败</string>
     <!-- ################################################### -->
     <string name="edit_on_boot_dialog_hint">留空以禁用</string>
     <string name="save">保存</string>
