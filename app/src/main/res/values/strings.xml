@@ -63,7 +63,6 @@
     <string name="config_error_title">Config read error</string>
     <string name="config_error_dialog">Failed to parse acc config! Please check whether \"su -c acc --config cat\" works.</string>
     <string name="wait">Please wait, this may take a few seconds...</string>
-    <string name="install_note">Note: the daemon starts ~30 seconds after installation.</string>
 
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Stop daemon after applying settings</string>
@@ -74,8 +73,8 @@
     <!-- Acc installation -->
     <string name="installing_acc">Installing ACC</string>
     <string name="reboot">Reboot</string>
-    <string name="installation_failed">Something went wrong while installing acc. Please ensure that you have a working internet connection. If you continue to see this message, try installing \'acc\' from Magisk Manager - and please, report the issue.</string>
-    <string name="installation_failed_title">Installation failed</string>
+    <string name="installation_failed">Please send logcat and /data/local/tmp/acc-install.log to the developers at t.me/acc/ or github.com/MatteCarra/AccA/issues/.</string>
+    <string name="installation_failed_title">ACC Installation Failed!</string>
     <!-- ################################################### -->
 
     <string name="not_set">not set</string>

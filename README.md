@@ -60,8 +60,8 @@ AccA is an official ACC front-end app. It targets mainly those who feel uncomfor
 Notes
 
 - ACC comes bundled into AccA. Any existing version is automatically uninstalled.
-- Uninstalling AccA also removes ACC. The daemon must be stopped beforehand. Otherwise, reboot after the removal or run `acc --daemon stop`.
-- You'll be given options to upgrade/downgrade ACC, and even schedule automatic upgrades.
+- Uninstalling AccA also removes ACC.
+- The GUIs for ACC upgrade/downgrade are work in progress. Meanwhile, use `acc --upgrade`command; for details, run `acc --help`.
 
 
 
@@ -101,7 +101,7 @@ However, things don't always go well.
 In such situations, you have to find and enforce a switch that works as expected. Here's how to do it:
 
 1. Run `acc -test --` (or acc -t --) to see which switches work.
-2. Run `acc --set chargingSwitch` (or acc -s s) to enforce a working switch.
+2. Run `acc --set chargingSwitch` (or acc -s s) to enforce a working switch. Alternatively, this can be done from the app.
 3. Test the reliability of the set switch. If it doesn't work properly, try another one.
 
 
@@ -200,22 +200,22 @@ battery/batt_tune_float_voltage (max: 4350)
 
 - How do I report issues?
 
-A: Open issues on GitHub or contact the developers on Telegram/XDA (linked below). Always provide as much information as possible, and attach `/sdcard/acc-logs-*tar.bz2`. This file is generated automatically. When this doesn't happen, run `acc --log --export` shortly after the problem occurs.
+Open issues on GitHub or contact the developers on Telegram/XDA (linked below). Always provide as much information as possible, and attach `/sdcard/acc-logs-*tar.bz2`. This file is generated automatically. When this doesn't happen, run `acc --log --export` shortly after the problem occurs.
 
 
 - What's "battery idle" mode?
 
-A: That's a device's ability to draw power directly from an external power supply when charging is disabled or the battery is pulled out. The Motorola Moto G4 Play and many other smartphones can do that. Run `acc -t --` to test yours.
+That's a device's ability to draw power directly from an external power supply when charging is disabled or the battery is pulled out. The Motorola Moto G4 Play and many other smartphones can do that. Run `acc -t --` to test yours.
 
 
 - What's "cool down" capacity for?
 
-A: It's meant for reducing stress induced by prolonged high charging voltage (e.g., 4.20 Volts). It's a fair alternative to the charging voltage limit feature.
+It's meant for reducing stress induced by prolonged high charging voltage (e.g., 4.20 Volts). It's a fair alternative to the charging voltage limit feature.
 
 
 - Why won't you support my device? I've been waiting for ages!
 
-A: First, never lose hope! Second, several systems don't have intuitive charging control files; I have to dig deeper and improvise; this takes extra time and effort. Lastly, some systems don't support custom charging control at all;  in such cases, you have to keep trying different kernels and uploading the respective [power supply logs](https://github.com/VR-25/acc#power-supply-log).
+First, never lose hope! Second, several systems don't have intuitive charging control files; I have to dig deeper and improvise; this takes extra time and effort. Lastly, some systems don't support custom charging control at all;  in such cases, you have to keep trying different kernels and uploading the respective [power supply logs](https://github.com/VR-25/acc#power-supply-log).
 
 
 
