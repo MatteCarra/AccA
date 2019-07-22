@@ -17,10 +17,10 @@ android {
                 def keystoreProperties = new Properties()
                 keystoreProperties.load(new FileInputStream(rootProject.file("keystore.properties")))
 
-                keyAlias 'acca'
-                keyPassword keystoreProperties["KEYSTORE_PASSWORD"]
                 storeFile file(keystoreProperties["KEYSTORE_LOCATION"])
-                storePassword keystoreProperties["KEY_PASSWORD"]
+                storePassword keystoreProperties["KEYSTORE_PASSWORD"]
+                keyAlias 'acca'
+                keyPassword keystoreProperties["KEY_PASSWORD"]
             } catch (ignored) {
                 println "You should define KEYSTORE_LOCATION, KEYSTORE_PASSWORD and KEY_PASSWORD in keystore.properties."
             }
