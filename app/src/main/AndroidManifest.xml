@@ -12,8 +12,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".activities.AccConfigEditorActivity">
-        </activity>
+
+        <activity android:name=".activities.AccConfigEditorActivity"/>
         <activity
                 android:name=".activities.MainActivity"
                 android:launchMode="singleTop">
@@ -24,6 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity
                 android:name=".activities.LogViewerActivity"
                 android:label="@string/title_activity_log_view"
@@ -52,6 +53,16 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE"/>
             </intent-filter>
         </service>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="mattecarra.accapp.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
 
         <receiver android:name="com.github.javiersantos.appupdater.NotificationReceiver"/>
 

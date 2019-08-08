@@ -74,7 +74,7 @@
     <!-- Acc installation -->
     <string name="installing_acc">Installing ACC</string>
     <string name="reboot">Reboot</string>
-    <string name="installation_failed">Please send logcat and /data/local/tmp/acc-install.log to the developers at t.me/acc/ or github.com/MatteCarra/AccA/issues/.</string>
+    <string name="installation_failed">Please send logcat and /data/data/mattecarra.accapp/files/logs/acc-install.log to the developers at t.me/acc/ or github.com/MatteCarra/AccA/issues/.</string>
     <string name="installation_failed_title">ACC Installation Failed!</string>
     <!-- ################################################### -->
 
@@ -169,4 +169,6 @@
     <string name="profile_selected_toast">%1$s profile selected.</string>
     <string name="installation_failed_busybox_title">Busybox is not installed</string>
     <string name="installation_failed_busybox">Install busybox binary first</string>
+    <string name="share">Share</string>
+    <string name="logs_not_found">Log file was not found.</string>
 </resources>

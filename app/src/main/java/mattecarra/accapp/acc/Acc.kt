@@ -182,7 +182,10 @@ object Acc {
                 }
             }
 
-            Shell.su("sh -x ${installShFile.absolutePath} > /data/local/tmp/acc-install.log 2>&1").exec()
+            val logDir = File(context.filesDir, "logs")
+            if(!logDir.exists())
+                logDir.mkdir()
+            Shell.su("sh -x ${installShFile.absolutePath} > ${File(logDir, "acc-install.log").absolutePath} 2>&1").exec()
         } catch (ex: java.lang.Exception) {
             ex.printStackTrace()
             null

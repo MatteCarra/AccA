@@ -2,8 +2,10 @@ package mattecarra.accapp.activities
 
 import android.Manifest
 import android.app.Activity
+import android.content.ClipData
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -16,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.MaterialDialog
@@ -47,6 +50,7 @@ import mattecarra.accapp.utils.ScopedAppActivity
 import mattecarra.accapp.utils.progress
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import java.io.File
 
 class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
     OnProfileClickListener {
@@ -429,7 +433,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                     cancelOnTouchOutside(false)
                                 }
                         } else {
-                            //TODO add an option to share logs
                             MaterialDialog(this@MainActivity)
                                 .show {
                                     title(R.string.installation_failed_title)
@@ -441,10 +444,24 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                     negativeButton {
                                         finish()
                                     }
+                                    neutralButton(R.string.share) {
+                                        val file = File(filesDir, "logs/acc-install.log")
+                                        if(file.exists()) {
+                                            val intentShareFile = Intent(Intent.ACTION_SEND)
+                                                .setType("text/plain")
+                                                .putExtra(
+                                                    Intent.EXTRA_STREAM,
+                                                    FileProvider.getUriForFile(applicationContext, "mattecarra.accapp.fileprovider", file)
+                                                )
+
+                                            startActivity(Intent.createChooser(intentShareFile, "Share log file"))
+                                        } else {
+                                            Toast.makeText(this@MainActivity, R.string.logs_not_found, Toast.LENGTH_LONG).show()
+                                        }
+                                    }
                                     cancelOnTouchOutside(false)
                                 }
                         }
-
 
                         failureDialog.setOnKeyListener { _, keyCode, _ ->
                             if (keyCode == KeyEvent.KEYCODE_BACK) {
