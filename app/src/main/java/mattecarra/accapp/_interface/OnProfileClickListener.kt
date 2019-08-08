@@ -9,7 +9,6 @@ interface OnProfileClickListener {
 
     fun onProfileClick(profile: AccaProfile)
     fun onProfileLongClick(profile: AccaProfile)
-    fun onProfileOptionsClick(profile: AccaProfile)
     fun editProfile(profile: AccaProfile)
     fun renameProfile(profile: AccaProfile)
     fun deleteProfile(profile: AccaProfile)
