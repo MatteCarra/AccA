@@ -7,6 +7,9 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
 
@@ -42,7 +45,7 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                         .addCallback(object : Callback() {
                             override fun onCreate(db: SupportSQLiteDatabase) {
                                 super.onCreate(db)
-                                Thread(Runnable { prepopulateDb(getDatabase(context)) }).start()
+                                prepopulateDb(getDatabase(context))
                             }
                         }).build()
 
@@ -50,7 +53,7 @@ abstract class AccaRoomDatabase : RoomDatabase() {
             }
         }
 
-        private fun prepopulateDb(db: AccaRoomDatabase) {
+        private fun prepopulateDb(db: AccaRoomDatabase) = CoroutineScope(Dispatchers.Default).launch {
             db.profileDao().insert(
                 AccaProfile(0, "Default",
                     AccConfig(

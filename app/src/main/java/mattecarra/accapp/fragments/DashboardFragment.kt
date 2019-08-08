@@ -100,31 +100,6 @@ class DashboardFragment : Fragment() {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        viewModel.stopRunnableHandler()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        viewModel.stopRunnableHandler()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.stopRunnableHandler()
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        viewModel.stopRunnableHandler()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.postRunnableHandler()
-    }
-
     /**
      *  Update's UI components for the ACCD Status Card
      */

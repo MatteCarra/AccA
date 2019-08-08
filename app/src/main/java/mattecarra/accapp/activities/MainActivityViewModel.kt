@@ -3,10 +3,7 @@ package mattecarra.accapp.activities
 import android.app.Application
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
+import androidx.lifecycle.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -22,30 +19,13 @@ import kotlin.coroutines.CoroutineContext
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
     var selectedNavBarItem: Int = R.id.botNav_home
 
-    private val mDataRepository: DataRepository
-    private var mParentJob = Job()
-    private val mCoroutineContext: CoroutineContext
-        get() = mParentJob + Dispatchers.IO
+    private val mDataRepository: DataRepository = DataRepository(application, viewModelScope)
 
-    private val mScope = CoroutineScope(mCoroutineContext)
+    fun insertProfile(profile: AccaProfile) = mDataRepository.insertProfile(profile)
 
-    init {
-        mDataRepository = DataRepository(application, mScope)
-    }
+    fun deleteProfile(profile: AccaProfile) = mDataRepository.deleteProfile(profile)
 
-    fun insertProfile(profile: AccaProfile) = mScope.launch(Dispatchers.IO) {
-        mDataRepository.insertProfile(profile)
-    }
+    fun updateProfile(profile: AccaProfile) = mDataRepository.updateProfile(profile)
 
-    fun deleteProfile(profile: AccaProfile) = mScope.launch(Dispatchers.IO) {
-        mDataRepository.deleteProfile(profile)
-    }
-
-    fun updateProfile(profile: AccaProfile) = mScope.launch(Dispatchers.IO) {
-        mDataRepository.updateProfile(profile)
-    }
-
-    fun getProfileById(id: Int) : AccaProfile {
-        return mDataRepository.getProfileById(id)
-    }
+    suspend fun getProfileById(id: Int) : AccaProfile = mDataRepository.getProfileById(id)
 }

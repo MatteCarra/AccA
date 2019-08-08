@@ -81,10 +81,12 @@ dependencies {
 
     // Room components
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
+    implementation "androidx.room:room-ktx:$rootProject.roomVersion"
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
 
     // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycle"
     kapt "androidx.lifecycle:lifecycle-compiler:$rootProject.lifecycle"
 
     // Coroutines

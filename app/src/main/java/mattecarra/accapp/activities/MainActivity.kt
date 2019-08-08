@@ -32,6 +32,7 @@ import com.github.javiersantos.appupdater.enums.UpdateFrom
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.topjohnwu.superuser.Shell
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.launch
 import mattecarra.accapp.R
 import mattecarra.accapp.SharedViewModel
 import mattecarra.accapp._interface.OnProfileClickListener
@@ -42,11 +43,12 @@ import mattecarra.accapp.fragments.SchedulesFragment
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.utils.Constants
+import mattecarra.accapp.utils.ScopedAppActivity
 import mattecarra.accapp.utils.progress
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
+class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
     OnProfileClickListener {
 
     private val LOG_TAG = "MainActivity"
@@ -553,17 +555,14 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     // Extract the data
                     val editorData = data.getBundleExtra(Constants.DATA_KEY)
                     val profileId = editorData.getInt(Constants.PROFILE_ID_KEY)
-                    doAsync {
-                        val selectedProfile: AccaProfile =
-                            mMainActivityViewModel.getProfileById(profileId)
+                    launch {
+                        val selectedProfile: AccaProfile = mMainActivityViewModel.getProfileById(profileId)
 
-                        runOnUiThread {
-                            // Update the selected Profile
-                            selectedProfile.accConfig = accConfig
+                        // Update the selected Profile
+                        selectedProfile.accConfig = accConfig
 
-                            // Update the profile
-                            mMainActivityViewModel.updateProfile(selectedProfile)
-                        }
+                        // Update the profile
+                        mMainActivityViewModel.updateProfile(selectedProfile)
                     }
                 }
             }
