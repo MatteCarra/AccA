@@ -78,7 +78,7 @@
     <string name="installation_failed_title">ACC Installation Failed!</string>
     <!-- ################################################### -->
 
-    <string name="not_set">not set</string>
+    <string name="not_set">Not set.</string>
 
     <string name="edit_on_boot">Edit applyOnboot settings</string>
     <string name="edit_on_boot_dialog_hint">Leave blank to disable</string>
@@ -166,6 +166,12 @@
         <item>Rename</item>
         <item>Delete</item>
     </string-array>
+
+    <!--Profiles Options-->
+    <string name="profile_option_edit">Edit</string>
+    <string name="profile_option_rename">Rename</string>
+    <string name="profile_option_delete">Delete</string>
+
     <string name="profile_selected_toast">%1$s profile selected.</string>
     <string name="installation_failed_busybox_title">Busybox is not installed</string>
     <string name="installation_failed_busybox">Install busybox binary first</string>

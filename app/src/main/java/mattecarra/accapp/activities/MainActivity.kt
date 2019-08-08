@@ -15,6 +15,7 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -247,59 +248,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         dialog.show()
     }
 
-    override fun onProfileOptionsClick(profile: AccaProfile) {
-        MaterialDialog(this@MainActivity).show {
-            listItems(R.array.profile_long_press_options) { _, index, _ ->
-                when (index) {
-                    0 -> {
-                        // Edit the configuration of the selected profile.
-                        Intent(
-                            this@MainActivity,
-                            AccConfigEditorActivity::class.java
-                        ).also { intent ->
-                            val dataBundle = Bundle()
-                            dataBundle.putInt(Constants.PROFILE_ID_KEY, profile.uid)
-
-                            // Insert the databundle into the intent.
-                            intent.putExtra(Constants.DATA_KEY, dataBundle)
-                            intent.putExtra(Constants.ACC_CONFIG_KEY, profile.accConfig)
-                            intent.putExtra(
-                                Constants.TITLE_KEY,
-                                this@MainActivity.getString(R.string.profile_creator)
-                            )
-                            startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
-                        }
-                    }
-                    1 -> {
-                        // Rename the selected profile (2nd option).
-                        MaterialDialog(this@MainActivity)
-                            .show {
-                                title(R.string.profile_name)
-                                message(R.string.dialog_profile_name_message)
-                                input(prefill = profile.profileName) { _, charSequence ->
-                                    //TODO: Check if the profile name is valid
-//                                    val profileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
-//                                    val isValid = !profileNameRegex.matches(charSequence)
-
-                                    // Set profile name
-                                    profile.profileName = charSequence.toString()
-
-                                    // Update the profile in the DB
-                                    mMainActivityViewModel.updateProfile(profile)
-                                }
-                                positiveButton(R.string.save)
-                                negativeButton(android.R.string.cancel)
-                            }
-                    }
-                    2 -> {
-                        // Delete the selected profile (3rd option).
-                        mMainActivityViewModel.deleteProfile(profile)
-                    }
-                }
-            }
-        }
-    }
-
     private fun initUi() {
         // Assign ViewModel
         mViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
@@ -401,7 +349,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun checkAccInstalled(): Boolean {
-        if(!Acc.isBundledAccInstalled(filesDir) || Acc.isInstalledAccOutdated()) { //TODO let the user decide between bundle and stable
+        if (!Acc.isBundledAccInstalled(filesDir) || Acc.isInstalledAccOutdated()) { //TODO let the user decide between bundle and stable
             val dialog = MaterialDialog(this).show {
                 title(R.string.installing_acc)
                 progress(R.string.wait)
@@ -640,6 +588,53 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun editProfile(profile: AccaProfile) {
+        // Edit the configuration of the selected profile.
+        Intent(
+            this@MainActivity,
+            AccConfigEditorActivity::class.java
+        ).also { intent ->
+            val dataBundle = Bundle()
+            dataBundle.putInt(Constants.PROFILE_ID_KEY, profile.uid)
+
+            // Insert the databundle into the intent.
+            intent.putExtra(Constants.DATA_KEY, dataBundle)
+            intent.putExtra(Constants.ACC_CONFIG_KEY, profile.accConfig)
+            intent.putExtra(
+                Constants.TITLE_KEY,
+                this@MainActivity.getString(R.string.profile_creator)
+            )
+            startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
+        }
+    }
+
+    override fun renameProfile(profile: AccaProfile) {
+        // Rename the selected profile (2nd option).
+        MaterialDialog(this@MainActivity)
+            .show {
+                title(R.string.profile_name)
+                message(R.string.dialog_profile_name_message)
+                input(prefill = profile.profileName) { _, charSequence ->
+                    //TODO: Check if the profile name is valid
+//                                    val profileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
+//                                    val isValid = !profileNameRegex.matches(charSequence)
+
+                    // Set profile name
+                    profile.profileName = charSequence.toString()
+
+                    // Update the profile in the DB
+                    mMainActivityViewModel.updateProfile(profile)
+                }
+                positiveButton(R.string.save)
+                negativeButton(android.R.string.cancel)
+            }
+    }
+
+    override fun deleteProfile(profile: AccaProfile) {
+        // Delete the selected profile (3rd option).
+        mMainActivityViewModel.deleteProfile(profile)
     }
 
 //    override fun onResume() {

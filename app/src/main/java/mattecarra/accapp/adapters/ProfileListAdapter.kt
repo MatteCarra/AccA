@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.ImageButton
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import mattecarra.accapp.R
 import mattecarra.accapp._interface.OnProfileClickListener
@@ -88,7 +89,27 @@ class ProfileListAdapter internal constructor(context: Context) :
         holder.onPlugTv.text = profile.accConfig.getOnPlug(mContext)
 
         holder.optionsIb.setOnClickListener {
-            mListener.onProfileOptionsClick(mProfilesList[position])
+
+            with(PopupMenu(mContext, holder.optionsIb)) {
+                menuInflater.inflate(R.menu.profiles_options_menu, this.menu)
+
+                setOnMenuItemClickListener {
+                        when (it.itemId) {
+                            R.id.profile_option_menu_edit -> {
+                                mListener.editProfile(mProfilesList[position])
+                            }
+                            R.id.profile_option_menu_rename -> {
+                                mListener.renameProfile(mProfilesList[position])
+                            }
+                            R.id.profile_option_menu_delete -> {
+                                mListener.deleteProfile(mProfilesList[position])
+                            }
+                        }
+                        true
+                    }
+
+                show()
+            }
         }
 
         val profileId = ProfileUtils.getCurrentProfile(PreferenceManager.getDefaultSharedPreferences(mContext))
@@ -96,7 +117,7 @@ class ProfileListAdapter internal constructor(context: Context) :
             // Make visible
             holder.selectedView.visibility = View.VISIBLE
         } else {
-            holder.selectedView.visibility = View.INVISIBLE
+            holder.selectedView.visibility = View.GONE
         }
     }
 
