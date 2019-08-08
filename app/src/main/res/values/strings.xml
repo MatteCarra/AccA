@@ -78,7 +78,7 @@
     <string name="installation_failed_title">ACC Installation Failed!</string>
     <!-- ################################################### -->
 
-    <string name="not_set">not set</string>
+    <string name="not_set">Not set.</string>
 
     <string name="edit_on_boot">Edit applyOnboot settings</string>
     <string name="edit_on_boot_dialog_hint">Leave blank to disable</string>
