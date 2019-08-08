@@ -111,5 +111,6 @@
         <item>Umbenennen</item>
         <item>Löschen</item>
     </string-array>
+    <!--Profiles Options-->
     <string name="profile_selected_toast">%1$s Profil ausgewählt.</string>
 </resources>
