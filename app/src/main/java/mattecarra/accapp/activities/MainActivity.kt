@@ -401,6 +401,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                                     Intent.EXTRA_STREAM,
                                                     FileProvider.getUriForFile(applicationContext, "mattecarra.accapp.fileprovider", file)
                                                 )
+                                                .putExtra(Intent.EXTRA_TEXT, "AccA installation failed log")
 
                                             startActivity(Intent.createChooser(intentShareFile, "Share log file"))
                                         } else {
