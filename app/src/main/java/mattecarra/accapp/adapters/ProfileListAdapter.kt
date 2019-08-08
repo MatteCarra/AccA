@@ -88,31 +88,28 @@ class ProfileListAdapter internal constructor(context: Context) :
         holder.temperatureTv.text = profile.accConfig.configTemperature.toString(mContext)
         holder.onPlugTv.text = profile.accConfig.getOnPlug(mContext)
 
-//        Old code for menu item
-//        holder.optionsIb.setOnClickListener {
-//            mListener.onProfileOptionsClick(mProfilesList[position])
-//        }
-
         holder.optionsIb.setOnClickListener {
-            var popup = PopupMenu(mContext, holder.optionsIb)
-            popup.menuInflater.inflate(R.menu.profiles_options_menu, popup.menu)
 
-            popup.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.profile_option_menu_edit -> {
-                        mListener.editProfile(mProfilesList[position])
+            with(PopupMenu(mContext, holder.optionsIb)) {
+                menuInflater.inflate(R.menu.profiles_options_menu, this.menu)
+
+                setOnMenuItemClickListener {
+                        when (it.itemId) {
+                            R.id.profile_option_menu_edit -> {
+                                mListener.editProfile(mProfilesList[position])
+                            }
+                            R.id.profile_option_menu_rename -> {
+                                mListener.renameProfile(mProfilesList[position])
+                            }
+                            R.id.profile_option_menu_delete -> {
+                                mListener.deleteProfile(mProfilesList[position])
+                            }
+                        }
+                        true
                     }
-                    R.id.profile_option_menu_rename -> {
-                        mListener.renameProfile(mProfilesList[position])
-                    }
-                    R.id.profile_option_menu_delete -> {
-                        mListener.deleteProfile(mProfilesList[position])
-                    }
-                }
-                true
+
+                show()
             }
-
-            popup.show()
         }
 
         val profileId = ProfileUtils.getCurrentProfile(PreferenceManager.getDefaultSharedPreferences(mContext))
@@ -120,7 +117,7 @@ class ProfileListAdapter internal constructor(context: Context) :
             // Make visible
             holder.selectedView.visibility = View.VISIBLE
         } else {
-            holder.selectedView.visibility = View.INVISIBLE
+            holder.selectedView.visibility = View.GONE
         }
     }
 
