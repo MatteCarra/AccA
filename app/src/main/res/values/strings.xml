@@ -167,4 +167,6 @@
         <item>Delete</item>
     </string-array>
     <string name="profile_selected_toast">%1$s profile selected.</string>
+    <string name="installation_failed_busybox_title">Busybox is not installed</string>
+    <string name="installation_failed_busybox">Install busybox binary first</string>
 </resources>

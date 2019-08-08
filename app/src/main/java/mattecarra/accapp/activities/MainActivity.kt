@@ -414,20 +414,37 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                     dialog.cancel()
 
                     if (res?.isSuccess != true) {
-                        //TODO add an option to share logs
-                        val failureDialog = MaterialDialog(this@MainActivity)
-                            .show {
-                                title(R.string.installation_failed_title)
-                                message(R.string.installation_failed)
-                                positiveButton(R.string.retry) {
-                                    if (checkAccInstalled())
-                                        initUi()
+                        val failureDialog = if(res?.code == 3) { //Buysbox is not installed
+                            MaterialDialog(this@MainActivity)
+                                .show {
+                                    title(R.string.installation_failed_busybox_title)
+                                    message(R.string.installation_failed_busybox)
+                                    positiveButton(R.string.retry) {
+                                        if (checkAccInstalled())
+                                            initUi()
+                                    }
+                                    negativeButton {
+                                        finish()
+                                    }
+                                    cancelOnTouchOutside(false)
                                 }
-                                negativeButton {
-                                    finish()
+                        } else {
+                            //TODO add an option to share logs
+                            MaterialDialog(this@MainActivity)
+                                .show {
+                                    title(R.string.installation_failed_title)
+                                    message(R.string.installation_failed)
+                                    positiveButton(R.string.retry) {
+                                        if (checkAccInstalled())
+                                            initUi()
+                                    }
+                                    negativeButton {
+                                        finish()
+                                    }
+                                    cancelOnTouchOutside(false)
                                 }
-                                cancelOnTouchOutside(false)
-                            }
+                        }
+
 
                         failureDialog.setOnKeyListener { _, keyCode, _ ->
                             if (keyCode == KeyEvent.KEYCODE_BACK) {
