@@ -162,32 +162,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     /**
-     * Function for starting and stopping the ACCD
-     */
-    fun accdStartStopOnClick(view: View) {
-
-        Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
-
-        doAsync {
-            if (Acc.instance.isAccdRunning())
-                Acc.instance.abcStopDaemon()
-            else
-                Acc.instance.abcStartDaemon()
-        }
-    }
-
-    /**
-     * Function for restarting the ACCD
-     */
-    fun accdRestartDaemonOnClick(view: View) {
-        Toast.makeText(this, R.string.wait, Toast.LENGTH_LONG).show()
-
-        doAsync {
-            Acc.instance.abcRestartDaemon()
-        }
-    }
-
-    /**
      * Function for launching the profile creation Activity
      */
     fun accProfilesFabOnClick(view: View) {

@@ -1,10 +1,8 @@
 package mattecarra.accapp.fragments
 
-import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,13 +15,19 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import kotlinx.android.synthetic.main.dashboard_fragment.*
 import kotlinx.android.synthetic.main.dashboard_fragment.view.*
 import kotlinx.android.synthetic.main.edit_charging_limit_once_dialog.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.SharedViewModel
 import mattecarra.accapp.models.BatteryInfo
+import mattecarra.accapp.utils.ScopedFragment
+import java.util.concurrent.atomic.AtomicBoolean
 
-class DashboardFragment : Fragment() {
+class DashboardFragment : ScopedFragment() {
 
     private val LOG_TAG = "DashboardFragment"
 
@@ -97,6 +101,68 @@ class DashboardFragment : Fragment() {
             }
 
             view.status_card_view.setOnClickListener(::accdOnClick)
+        }
+
+        dash_daemonToggle_button.setOnClickListener {
+            Toast.makeText(context, R.string.wait, Toast.LENGTH_LONG).show()
+
+            launch {
+                val finished = AtomicBoolean(false)
+                val stopDaemon = Acc.instance.isAccdRunning()
+
+                dash_daemonToggle_button.isEnabled = false
+                dash_daemonRestart_button.isEnabled = false
+
+                val observer = Observer<Boolean> { accdRunning ->
+                    if(accdRunning == !stopDaemon && !finished.getAndSet(true)) { //if accDeamon status is the opposite of the status it had before the action -> change had effect
+                        finished.set(true)
+
+                        dash_daemonToggle_button.isEnabled = true
+                        dash_daemonRestart_button.isEnabled = true
+                    }
+                }
+
+                viewModel.getIsDaemonRunning().observe(this@DashboardFragment, observer)
+
+                withContext(Dispatchers.IO) {
+                    if (stopDaemon)
+                        Acc.instance.abcStopDaemon()
+                    else
+                        Acc.instance.abcStartDaemon()
+                }
+
+                delay(5000)
+
+                viewModel.getIsDaemonRunning().removeObserver(observer)
+
+                if(!finished.getAndSet(true)) {
+                    dash_daemonToggle_button.isEnabled = true
+                    dash_daemonRestart_button.isEnabled = true
+                }
+            }
+        }
+
+        dash_daemonRestart_button.setOnClickListener {
+            Toast.makeText(context, R.string.wait, Toast.LENGTH_LONG).show()
+
+            dash_daemonToggle_button.isEnabled = false
+            dash_daemonRestart_button.isEnabled = false
+
+
+
+            launch {
+                dash_daemonToggle_button.isEnabled = false
+                dash_daemonRestart_button.isEnabled = false
+
+                withContext(Dispatchers.IO) {
+                    Acc.instance.abcRestartDaemon()
+                }
+
+                delay(3000)
+
+                dash_daemonToggle_button.isEnabled = true
+                dash_daemonRestart_button.isEnabled = true
+            }
         }
     }
 
