@@ -22,6 +22,7 @@ class BottomNavSheetFragment: BottomSheetDialogFragment() {
         appbar_nav.setNavigationItemSelectedListener {
             // Send to main activity to load in new fragment
             mListener.handleClick(it)
+            this.dismiss()
             true
         }
     }
