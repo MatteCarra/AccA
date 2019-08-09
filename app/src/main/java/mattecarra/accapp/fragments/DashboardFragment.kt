@@ -19,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import mattecarra.accapp.Preferences
 
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
@@ -43,6 +44,7 @@ class DashboardFragment : ScopedFragment() {
 
     private lateinit var viewModel: DashboardViewModel
     private lateinit var configViewModel: SharedViewModel
+    private lateinit var preferences: Preferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,7 +54,11 @@ class DashboardFragment : ScopedFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         activity?.let { it ->
+            preferences = Preferences(it)
+
             configViewModel = ViewModelProviders.of(it).get(SharedViewModel::class.java)
 
             viewModel = ViewModelProviders.of(it).get(DashboardViewModel::class.java)
@@ -214,7 +220,7 @@ class DashboardFragment : ScopedFragment() {
         // Battery Speed (500mA at 4.11V)
         val charging = batteryInfo.isCharging()
         dash_batteryChargingSpeed_textView.text = if(charging) getString(R.string.info_charging_speed) else getString(R.string.info_discharging_speed)
-        dash_chargingSpeed_textView.text = getString(if(charging) R.string.info_charging_speed_extended else R.string.info_discharging_speed_extended, batteryInfo.getSimpleCurrentNow() * (if(charging) 1 else -1), batteryInfo.getVoltageNow())
+        dash_chargingSpeed_textView.text = getString(if(charging) R.string.info_charging_speed_extended else R.string.info_discharging_speed_extended, batteryInfo.getCurrentNow(preferences.uAhCurrent) * (if(charging) 1 else -1), batteryInfo.getVoltageNow(preferences.uVMeasureUnit))
         // Battery Temperature
         dash_batteryTemperature_textView.text = batteryInfo.temperature.toString().plus(Typography.degree)
         // Battery Health

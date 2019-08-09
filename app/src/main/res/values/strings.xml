@@ -177,4 +177,20 @@
     <string name="installation_failed_busybox">Install busybox binary first</string>
     <string name="share">Share</string>
     <string name="logs_not_found">Log file was not found.</string>
+    <string name="acc_telegram">For additional support join Acc Telegram group!</string>
+    <string name="current_measure_unit_preference_title">Current unit of measure</string>
+    <string name="current_measure_unit_preference_description">Acc reads linux control filesystem in order to retrieve charging information. Some systems express current in µA, some others in mA. You can change it if AccA wrongly detected it</string>
+    <string name="voltage_measure_unit_preference_title">Voltage unit of measure</string>
+    <string name="voltage_measure_unit_preference_title_description">Acc reads linux control filesystem in order to retrieve charging information. Some systems express voltage in µV, some others in mV. You can change it if AccA wrongly detected it</string>
+    <string name="units_of_measure">Units of measure</string>
+
+    <string-array name="current_measure_units_options">
+        <item>mAmpere (1E-03)</item>
+        <item>μAmpere (1E-06)</item>
+    </string-array>
+
+    <string-array name="voltage_measure_units_options">
+        <item>mV (1E-03)</item>
+        <item>μV (1E-06)</item>
+    </string-array>
 </resources>

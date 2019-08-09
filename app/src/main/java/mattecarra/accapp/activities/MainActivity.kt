@@ -36,7 +36,11 @@ import com.github.javiersantos.appupdater.enums.UpdateFrom
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.topjohnwu.superuser.Shell
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
 import mattecarra.accapp.SharedViewModel
 import mattecarra.accapp._interface.OnProfileClickListener
@@ -44,6 +48,7 @@ import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.fragments.DashboardFragment
 import mattecarra.accapp.fragments.ProfilesFragment
 import mattecarra.accapp.fragments.SchedulesFragment
+import mattecarra.accapp.fragments.SettingsFragment
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.utils.Constants
@@ -52,6 +57,7 @@ import mattecarra.accapp.utils.progress
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.io.File
+import kotlin.math.abs
 
 class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
     OnProfileClickListener {
@@ -62,12 +68,14 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     private val ACC_PROFILE_EDITOR_REQUEST = 3
     private val ACC_PROFILE_SCHEDULER_REQUEST = 4
 
+    private lateinit var preferences: Preferences
     private lateinit var mViewModel: SharedViewModel
     private lateinit var mMainActivityViewModel: MainActivityViewModel
 
     val mMainFragment = DashboardFragment.newInstance()
     val mProfilesFragment = ProfilesFragment.newInstance()
     val mSchedulesFragment = SchedulesFragment.newInstance()
+    val mSettingsFragment = SettingsFragment.newInstance()
 
 //    private var profilesAdapter: ProfilesViewAdapter? = null
 //
@@ -138,7 +146,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             }
             // TODO: Chancge id of schedules menu item
             R.id.botNav_settings -> {
-                loadFragment(mSchedulesFragment)
+                loadFragment(mSettingsFragment)
                 return true
             }
         }
@@ -334,74 +342,97 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 keyCode == KeyEvent.KEYCODE_BACK
             }
 
-            doAsync {
-                val res = Acc.installBundledAccModule(this@MainActivity)
-                uiThread {
-                    dialog.cancel()
+            launch {
+                val res = withContext(Dispatchers.IO) {
+                    Acc.installBundledAccModule(this@MainActivity)
+                }
 
-                    if (res?.isSuccess != true) {
-                        val failureDialog = if(res?.code == 3) { //Buysbox is not installed
-                            MaterialDialog(this@MainActivity)
-                                .show {
-                                    title(R.string.installation_failed_busybox_title)
-                                    message(R.string.installation_failed_busybox)
-                                    positiveButton(R.string.retry) {
-                                        if (checkAccInstalled())
-                                            initUi()
-                                    }
-                                    negativeButton {
-                                        finish()
-                                    }
-                                    cancelOnTouchOutside(false)
-                                }
-                        } else {
-                            MaterialDialog(this@MainActivity)
-                                .show {
-                                    title(R.string.installation_failed_title)
-                                    message(R.string.installation_failed)
-                                    positiveButton(R.string.retry) {
-                                        if (checkAccInstalled())
-                                            initUi()
-                                    }
-                                    negativeButton {
-                                        finish()
-                                    }
-                                    neutralButton(R.string.share) {
-                                        val file = File(filesDir, "logs/acc-install.log")
-                                        if(file.exists()) {
-                                            val intentShareFile = Intent(Intent.ACTION_SEND)
-                                                .setType("text/plain")
-                                                .putExtra(
-                                                    Intent.EXTRA_STREAM,
-                                                    FileProvider.getUriForFile(applicationContext, "mattecarra.accapp.fileprovider", file)
-                                                )
-                                                .putExtra(Intent.EXTRA_TEXT, "AccA installation failed log")
+                if(res?.isSuccess == true) { //calibration: gets 11 voltage/ampere measurements and guesses if it's measured in uV or mV/uA or mA
+                    withContext(Dispatchers.IO) {
+                        var microVolts = 0
+                        var microAmpere = 0
 
-                                            startActivity(Intent.createChooser(intentShareFile, "Share log file"))
-                                        } else {
-                                            Toast.makeText(this@MainActivity, R.string.logs_not_found, Toast.LENGTH_LONG).show()
-                                        }
-                                    }
-                                    cancelOnTouchOutside(false)
-                                }
+                        for (i in 0..10) {
+                            val batteryInfo = Acc.instance.getBatteryInfo()
+                            if(batteryInfo.getRawVoltageNow() > 1000000)
+                                microVolts++
+                            if(abs(batteryInfo.getRawCurrentNow()) > 10000)
+                                microAmpere++
+
+                            delay(250)
                         }
 
-                        failureDialog.setOnKeyListener { _, keyCode, _ ->
-                            if (keyCode == KeyEvent.KEYCODE_BACK) {
-                                dialog.dismiss()
-                                finish()
-                                false
-                            } else true
-                        }
-                    } else {
-                        initUi()
+                        preferences.uAhCurrent = microAmpere >= 6
+                        preferences.uVMeasureUnit = microVolts >= 6
                     }
+                }
+
+                dialog.cancel()
+
+                if (res?.isSuccess != true) {
+                    val failureDialog = if(res?.code == 3) { //Buysbox is not installed
+                        MaterialDialog(this@MainActivity)
+                            .show {
+                                title(R.string.installation_failed_busybox_title)
+                                message(R.string.installation_failed_busybox)
+                                positiveButton(R.string.retry) {
+                                    if (checkAccInstalled()) {
+                                        initUi()
+                                    }
+                                }
+                                negativeButton {
+                                    finish()
+                                }
+                                cancelOnTouchOutside(false)
+                            }
+                    } else {
+                        MaterialDialog(this@MainActivity)
+                            .show {
+                                title(R.string.installation_failed_title)
+                                message(R.string.installation_failed)
+                                positiveButton(R.string.retry) {
+                                    if (checkAccInstalled())
+                                        initUi()
+                                }
+                                negativeButton {
+                                    finish()
+                                }
+                                neutralButton(R.string.share) {
+                                    val file = File(filesDir, "logs/acc-install.log")
+                                    if(file.exists()) {
+                                        val intentShareFile = Intent(Intent.ACTION_SEND)
+                                            .setType("text/plain")
+                                            .putExtra(
+                                                Intent.EXTRA_STREAM,
+                                                FileProvider.getUriForFile(applicationContext, "mattecarra.accapp.fileprovider", file)
+                                            )
+                                            .putExtra(Intent.EXTRA_TEXT, "AccA installation failed log")
+
+                                        startActivity(Intent.createChooser(intentShareFile, "Share log file"))
+                                    } else {
+                                        Toast.makeText(this@MainActivity, R.string.logs_not_found, Toast.LENGTH_LONG).show()
+                                    }
+                                }
+                                cancelOnTouchOutside(false)
+                            }
+                    }
+
+                    failureDialog.setOnKeyListener { _, keyCode, _ ->
+                        if (keyCode == KeyEvent.KEYCODE_BACK) {
+                            dialog.dismiss()
+                            finish()
+                            false
+                        } else true
+                    }
+                } else {
+                    initUi()
                 }
 
                 res?.let {
                     Log.d(LOG_TAG, it.out.joinToString("\n"))
                 }
             }
+
             return false
         }
 
@@ -421,6 +452,8 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             .setGitHubUserAndRepo("MatteCarra", "AccA")
             .setIcon(R.drawable.ic_notification)
         appUpdater.start()
+
+        preferences = Preferences(this)
 
         if (!Shell.rootAccess()) {
             val dialog = MaterialDialog(this).show {
@@ -456,6 +489,8 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
         if (requestCode == ACC_CONFIG_EDITOR_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data?.getBooleanExtra(Constants.ACC_HAS_CHANGES, false) == true) {

@@ -43,9 +43,9 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         finish()
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
-        outState?.putParcelable("mAccConfig", mAccConfig)
-        outState?.putBoolean("unsavedChanges", unsavedChanges)
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putParcelable("mAccConfig", mAccConfig)
+        outState.putBoolean("unsavedChanges", unsavedChanges)
 
         super.onSaveInstanceState(outState)
     }

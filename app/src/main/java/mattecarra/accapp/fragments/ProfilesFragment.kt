@@ -198,13 +198,13 @@ class ProfilesFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(profilesRecycler)
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
 
         if (context is OnProfileClickListener) {
             mListener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnProfileClickListener")
+            throw RuntimeException("$context must implement OnProfileClickListener")
         }
     }
 }

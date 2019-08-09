@@ -73,15 +73,23 @@ class BatteryInfo(val name: String,
                   val inputCurrentMax: Int,
                   val cycleCount: Int): Parcelable {
 
+    fun getRawVoltageNow(): Int {
+        return voltageNow
+    }
+
+    fun getRawCurrentNow(): Int {
+        return currentNow
+    }
+
     /**
      * Returns voltage now as float.
      * @return current battery operating voltage.
      */
-    fun getVoltageNow(): Float {
-        if (voltageNow > 1000000) {
-            return voltageNow / 1000000f
+    fun getVoltageNow(uV: Boolean? = null): Float {
+        return if (uV ?: (voltageNow > 1000000)) {
+            voltageNow / 1000000f
         } else {
-            return voltageNow / 1000f
+            voltageNow / 1000f
         }
     }
 
@@ -89,11 +97,11 @@ class BatteryInfo(val name: String,
      * Returns inverted, friendly value for CURRENT_NOW expressed in mAh
      * @return current mAh draw.
      */
-    fun getSimpleCurrentNow(): Int {
-        if (currentNow > 10000 || currentNow < -10000) { //if abs(currentNow) is > 10000 it's probably expressed in uAh
-            return (currentNow / 1000)
+    fun getCurrentNow(uAh: Boolean? = null): Int {
+        return if (uAh ?: (currentNow > 10000 || currentNow < -10000)) { //if abs(currentNow) is > 10000 it's probably expressed in uAh
+            (currentNow / 1000)
         } else { //else it's probably expressed in mAh
-            return currentNow
+            currentNow
         }
     }
 
