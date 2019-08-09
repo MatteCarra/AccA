@@ -38,13 +38,16 @@ import com.topjohnwu.superuser.Shell
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.android.synthetic.main.bottomnavsheet_fragment.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
 import mattecarra.accapp.SharedViewModel
+import mattecarra.accapp._interface.OnNavigationItemClicked
 import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.acc.Acc
+import mattecarra.accapp.fragments.BottomNavSheetFragment
 import mattecarra.accapp.fragments.DashboardFragment
 import mattecarra.accapp.fragments.ProfilesFragment
 import mattecarra.accapp.fragments.SchedulesFragment
@@ -60,7 +63,7 @@ import java.io.File
 import kotlin.math.abs
 
 class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
-    OnProfileClickListener {
+    OnProfileClickListener, OnNavigationItemClicked {
 
     private val LOG_TAG = "MainActivity"
     private val ACC_CONFIG_EDITOR_REQUEST = 1
@@ -81,6 +84,106 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 //
 //    private var batteryInfo: BatteryInfo? = null
 //    private var isDaemonRunning = false
+
+    private fun initUi() {
+        // Assign ViewModel
+        mViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
+        mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+
+        // Set Bottom Navigation Bar Item Selected Listener
+//        botNav_main.setOnNavigationItemSelectedListener(this)
+
+        // Load in dashboard fragment
+//        botNav_main.selectedItemId = mMainActivityViewModel.selectedNavBarItem
+
+        //Rest of the UI
+
+        // TODO: Integrate schedules into another fragment
+//        val schedules = ArrayList(AccUtils.listAllSchedules())
+//        if(schedules.isEmpty()) {
+//            no_schedules_jobs_textview.visibility = View.VISIBLE
+//            scheduled_jobs_recyclerview.visibility = View.GONE
+//        }
+
+        // TODO: Move the recyclerview stuff into the respective ViewModels
+//        scheduleAdapter = ScheduleRecyclerViewAdapter(schedules) { schedule, delete ->
+//            if(delete) {
+//                deleteSchedule(schedule)
+//            } else {
+//                MaterialDialog(this).show {
+//                    titleTv(R.string.schedule_job)
+//                    message(R.string.edit_scheduled_command)
+//                    input(prefill = schedule.command, inputType = TYPE_TEXT_FLAG_NO_SUGGESTIONS, allowEmpty = false) { _, charSequence ->
+//                        schedule.command =  charSequence.toString()
+//                        AccUtils.schedule(schedule.executeOnce, schedule.hour, schedule.minute, charSequence.toString())
+//                    }
+//                    positiveButton(R.string.save)
+//                    negativeButton(android.R.string.cancel)
+//                    neutralButton(R.string.delete) {
+//                        deleteSchedule(schedule)
+//                    }
+//                }
+//            }
+//        }
+
+
+//        val layoutManager = LinearLayoutManager(this)
+//        scheduled_jobs_recyclerview.layoutManager = layoutManager
+//        scheduled_jobs_recyclerview.adapter = scheduleAdapter
+
+        // TODO: Move schedule onClicks to the new Schedule fragment
+//        create_schedule.setOnClickListener {
+//            val dialog = MaterialDialog(this@MainActivity).show {
+//                customView(R.layout.schedule_dialog)
+//                positiveButton(R.string.save) { dialog ->
+//                    val view = dialog.getCustomView()
+//                    val spinner = view.findViewById<Spinner>(R.id.profile_selector)
+//                    val executeOnceCheckBox = view.findViewById<CheckBox>(R.id.schedule_recurrency)
+//                    val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
+//                    val hour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.hour else timePicker.currentHour
+//                    val minute = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.minute else timePicker.currentMinute
+//
+//                    if(spinner.selectedItemId == 0.toLong()) {
+//                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+//                            val dataBundle = Bundle()
+//                            dataBundle.putInt("hour", hour)
+//                            dataBundle.putInt("minute", minute)
+//                            dataBundle.putBoolean("executeOnce", executeOnceCheckBox.isChecked)
+//
+//                            intent.putExtra("data", dataBundle)
+//                            intent.putExtra("titleTv", this@MainActivity.getString(R.string.schedule_creator))
+//                            startActivityForResult(intent, ACC_PROFILE_SCHEDULER_REQUEST)
+//                        }
+//                    } else {
+//                        val profile = spinner.selectedItem as String
+//                        val configProfile = ProfileUtils.readProfile(profile, this@MainActivity, gson)
+//
+//                        addSchedule(Schedule("$hour$minute", executeOnceCheckBox.isChecked, hour, minute, configProfile.getCommands().joinToString(separator = "; ")))
+//
+//                        AccUtils.schedule(
+//                            executeOnceCheckBox.isChecked,
+//                            hour,
+//                            minute,
+//                            configProfile.getCommands()
+//                        )
+//                    }
+//                }
+//                negativeButton(android.R.string.cancel)
+//            }
+
+//            val profiles = ArrayList<String>()
+//            profiles.add(getString(R.string.new_config))
+//            profiles.addAll(ProfileUtils.listProfiles(this, gson))
+//            val view = dialog.getCustomView()
+//            val spinner = view.findViewById<Spinner>(R.id.profile_selector)
+//            val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, profiles)
+//
+//            view.findViewById<TimePicker>(R.id.time_picker).setIs24HourView(true)
+//
+//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//            spinner.adapter = adapter;
+//        }
+    }
 
     // TODO: Move schedules to the Schedules Fragment
 //    private lateinit var scheduleAdapter: ScheduleRecyclerViewAdapter
@@ -132,6 +235,9 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
+    /**
+     * Function for handing navigation bar clicks
+     */
     override fun onNavigationItemSelected(m: MenuItem): Boolean {
         mMainActivityViewModel.selectedNavBarItem = m.itemId
 
@@ -230,104 +336,19 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         dialog.show()
     }
 
-    private fun initUi() {
-        // Assign ViewModel
-        mViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
-        mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+    override fun handleClick(menuItem: MenuItem) {
 
-        // Set Bottom Navigation Bar Item Selected Listener
-        botNav_main.setOnNavigationItemSelectedListener(this)
-
-        // Load in dashboard fragment
-        botNav_main.selectedItemId = mMainActivityViewModel.selectedNavBarItem
-
-        //Rest of the UI
-
-        // TODO: Integrate schedules into another fragment
-//        val schedules = ArrayList(AccUtils.listAllSchedules())
-//        if(schedules.isEmpty()) {
-//            no_schedules_jobs_textview.visibility = View.VISIBLE
-//            scheduled_jobs_recyclerview.visibility = View.GONE
-//        }
-
-        // TODO: Move the recyclerview stuff into the respective ViewModels
-//        scheduleAdapter = ScheduleRecyclerViewAdapter(schedules) { schedule, delete ->
-//            if(delete) {
-//                deleteSchedule(schedule)
-//            } else {
-//                MaterialDialog(this).show {
-//                    titleTv(R.string.schedule_job)
-//                    message(R.string.edit_scheduled_command)
-//                    input(prefill = schedule.command, inputType = TYPE_TEXT_FLAG_NO_SUGGESTIONS, allowEmpty = false) { _, charSequence ->
-//                        schedule.command =  charSequence.toString()
-//                        AccUtils.schedule(schedule.executeOnce, schedule.hour, schedule.minute, charSequence.toString())
-//                    }
-//                    positiveButton(R.string.save)
-//                    negativeButton(android.R.string.cancel)
-//                    neutralButton(R.string.delete) {
-//                        deleteSchedule(schedule)
-//                    }
-//                }
-//            }
-//        }
-
-
-//        val layoutManager = LinearLayoutManager(this)
-//        scheduled_jobs_recyclerview.layoutManager = layoutManager
-//        scheduled_jobs_recyclerview.adapter = scheduleAdapter
-
-        // TODO: Move schedule onClicks to the new Schedule fragment
-//        create_schedule.setOnClickListener {
-//            val dialog = MaterialDialog(this@MainActivity).show {
-//                customView(R.layout.schedule_dialog)
-//                positiveButton(R.string.save) { dialog ->
-//                    val view = dialog.getCustomView()
-//                    val spinner = view.findViewById<Spinner>(R.id.profile_selector)
-//                    val executeOnceCheckBox = view.findViewById<CheckBox>(R.id.schedule_recurrency)
-//                    val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
-//                    val hour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.hour else timePicker.currentHour
-//                    val minute = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.minute else timePicker.currentMinute
-//
-//                    if(spinner.selectedItemId == 0.toLong()) {
-//                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-//                            val dataBundle = Bundle()
-//                            dataBundle.putInt("hour", hour)
-//                            dataBundle.putInt("minute", minute)
-//                            dataBundle.putBoolean("executeOnce", executeOnceCheckBox.isChecked)
-//
-//                            intent.putExtra("data", dataBundle)
-//                            intent.putExtra("titleTv", this@MainActivity.getString(R.string.schedule_creator))
-//                            startActivityForResult(intent, ACC_PROFILE_SCHEDULER_REQUEST)
-//                        }
-//                    } else {
-//                        val profile = spinner.selectedItem as String
-//                        val configProfile = ProfileUtils.readProfile(profile, this@MainActivity, gson)
-//
-//                        addSchedule(Schedule("$hour$minute", executeOnceCheckBox.isChecked, hour, minute, configProfile.getCommands().joinToString(separator = "; ")))
-//
-//                        AccUtils.schedule(
-//                            executeOnceCheckBox.isChecked,
-//                            hour,
-//                            minute,
-//                            configProfile.getCommands()
-//                        )
-//                    }
-//                }
-//                negativeButton(android.R.string.cancel)
-//            }
-
-//            val profiles = ArrayList<String>()
-//            profiles.add(getString(R.string.new_config))
-//            profiles.addAll(ProfileUtils.listProfiles(this, gson))
-//            val view = dialog.getCustomView()
-//            val spinner = view.findViewById<Spinner>(R.id.profile_selector)
-//            val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, profiles)
-//
-//            view.findViewById<TimePicker>(R.id.time_picker).setIs24HourView(true)
-//
-//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//            spinner.adapter = adapter;
-//        }
+        when (menuItem.itemId) {
+            R.id.botNav_home -> {
+                loadFragment(mMainFragment)
+            }
+            R.id.botNav_profiles -> {
+                loadFragment(mProfilesFragment)
+            }
+            R.id.botNav_schedules -> {
+                loadFragment(mSchedulesFragment)
+            }
+        }
     }
 
     private fun checkAccInstalled(): Boolean {
@@ -443,8 +464,8 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        val appbar = findViewById<Toolbar>(R.id.bot_appBar)
+        setSupportActionBar(appbar)
 
         val appUpdater = AppUpdater(this)
             .setDisplay(Display.NOTIFICATION)
@@ -480,13 +501,32 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
-    override fun onBackPressed() {
-        if (botNav_main.selectedItemId == R.id.botNav_home) {
-            super.onBackPressed()
-        } else {
-            botNav_main.selectedItemId = R.id.botNav_home
-        }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the main_activity_menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.bottom_appbar_menu, menu)
+        return true
     }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        when (item!!.itemId) {
+            R.id.app_bar_logs -> startActivity(Intent(this, LogViewerActivity::class.java))
+            android.R.id.home -> BottomNavSheetFragment().show(supportFragmentManager, BottomNavSheetFragment().tag)
+        }
+
+        return true
+    }
+
+    // TODO: Get this sorted out once the new nav bar is in
+//    override fun onBackPressed() {
+//        if (botNav_main.selectedItemId == R.id.botNav_home) {
+//            super.onBackPressed()
+//        } else {
+//            botNav_main.selectedItemId = R.id.botNav_home
+//        }
+//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -579,25 +619,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 //                )
 //            }
 //        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the main_activity_menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main_activity_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        when (item.itemId) {
-            R.id.actions_logs -> {
-                startActivity(Intent(this, LogViewerActivity::class.java))
-            }
-        }
-
-        return super.onOptionsItemSelected(item)
     }
 
     override fun editProfile(profile: AccaProfile) {
