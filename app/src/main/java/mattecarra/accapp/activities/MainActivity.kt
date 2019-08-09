@@ -1,11 +1,7 @@
 package mattecarra.accapp.activities
 
-import android.Manifest
 import android.app.Activity
-import android.content.ClipData
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -14,11 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -29,16 +21,13 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
-import com.afollestad.materialdialogs.list.listItems
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.Display
 import com.github.javiersantos.appupdater.enums.UpdateFrom
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.topjohnwu.superuser.Shell
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.android.synthetic.main.bottomnavsheet_fragment.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.Preferences
@@ -58,7 +47,6 @@ import mattecarra.accapp.utils.Constants
 import mattecarra.accapp.utils.ScopedAppActivity
 import mattecarra.accapp.utils.progress
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 import java.io.File
 import kotlin.math.abs
 
@@ -383,7 +371,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                             delay(250)
                         }
 
-                        preferences.uAhCurrent = microAmpere >= 6
+                        preferences.uACurrent = microAmpere >= 6
                         preferences.uVMeasureUnit = microVolts >= 6
                     }
                 }

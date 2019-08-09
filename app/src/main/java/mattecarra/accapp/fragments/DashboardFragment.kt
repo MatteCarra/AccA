@@ -220,7 +220,7 @@ class DashboardFragment : ScopedFragment() {
         // Battery Speed (500mA at 4.11V)
         val charging = batteryInfo.isCharging()
         dash_batteryChargingSpeed_textView.text = if(charging) getString(R.string.info_charging_speed) else getString(R.string.info_discharging_speed)
-        dash_chargingSpeed_textView.text = getString(if(charging) R.string.info_charging_speed_extended else R.string.info_discharging_speed_extended, batteryInfo.getCurrentNow(preferences.uAhCurrent) * (if(charging) 1 else -1), batteryInfo.getVoltageNow(preferences.uVMeasureUnit))
+        dash_chargingSpeed_textView.text = getString(if(charging) R.string.info_charging_speed_extended else R.string.info_discharging_speed_extended, batteryInfo.getCurrentNow(preferences.uACurrent) * (if(charging) 1 else -1), batteryInfo.getVoltageNow(preferences.uVMeasureUnit))
         // Battery Temperature
         dash_batteryTemperature_textView.text = batteryInfo.temperature.toString().plus(Typography.degree)
         // Battery Health

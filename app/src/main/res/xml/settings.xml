@@ -3,6 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
+        android:title="Acc"
+        app:iconSpaceReserved="false">
+        <ListPreference
+            android:title="@string/acc_version_preference_title"
+            android:key="current_measure_unit"
+            android:summary="@string/acc_version_preference_description"
+            android:dialogTitle="@string/acc_version_preference_title"
+            android:entries="@array/acc_version_units_options"
+            android:entryValues="@array/acc_version_option_values"
+            app:iconSpaceReserved="false">
+        </ListPreference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/units_of_measure"
         app:iconSpaceReserved="false">
 

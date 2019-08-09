@@ -11,6 +11,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     companion object {
         val CURRENT_UNIT_OF_MEASURE = "current_measure_unit"
         val VOLTAGE_UNIT_OF_MEASURE = "voltage_measure_unit"
+        val ACC_VERSION = "acc_version"
 
         fun newInstance() = SettingsFragment()
     }

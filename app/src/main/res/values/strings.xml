@@ -183,6 +183,8 @@
     <string name="voltage_measure_unit_preference_title">Voltage unit of measure</string>
     <string name="voltage_measure_unit_preference_title_description">Acc reads linux control filesystem in order to retrieve charging information. Some systems express voltage in µV, some others in mV. You can change it if AccA wrongly detected it</string>
     <string name="units_of_measure">Units of measure</string>
+    <string name="acc_version_preference_title">Acc version</string>
+    <string name="acc_version_preference_description">You can choose which version of acc you want to use between bundled, master and developer. Bundled version is guaranteed to be working and it\'s the recommended option</string>
 
     <string-array name="current_measure_units_options">
         <item>mAmpere (1E-03)</item>
@@ -192,5 +194,11 @@
     <string-array name="voltage_measure_units_options">
         <item>mV (1E-03)</item>
         <item>μV (1E-06)</item>
+    </string-array>
+
+    <string-array name="acc_version_units_options">
+        <item>Bundled (recommended)</item>
+        <item>Master</item>
+        <item>Develop</item>
     </string-array>
 </resources>
