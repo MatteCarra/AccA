@@ -164,7 +164,7 @@ object Acc {
             false
     }
 
-    fun getAccVersion(): Int? {
+    fun getAccVersion(): Int {
         return Shell.su("acc --version").exec().out.joinToString(separator = "\n").trim().toIntOrNull() ?: defaultVersion
     }
 
