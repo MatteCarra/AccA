@@ -138,13 +138,12 @@
     <string name="title_capacity_control">Capacity Control</string>
     <string name="about">About</string>
 
-    <string name="capacity_control_info">- SHUTDOWN: automatically shutdown the system at or below this battery level when battery is not charging.\n- STOP: and RESUME capacities dictate when charging should stop and resume, respectively.\n- CHARGING SWITCH is the control file, plus ON and OFF values for switching charging on/off. By default, acc uses whatever works.</string>
+    <string name="capacity_control_info">- SHUTDOWN: automatically shutdown the system at or below this battery level when battery is not charging.&lt;br /&gt;- STOP: and RESUME capacities dictate when charging should stop and resume, respectively.&lt;br /&gt;- CHARGING SWITCH is the control file, plus ON and OFF values for switching charging on/off. By default, acc uses whatever works.</string>
+    <string name="voltage_control_info">- Every reduction in peak charge voltage of 0.10V/cell is said to double the cycle life.&lt;br /&gt;- Unfortunately, not all devices/kernels support this feature.</string>
+    <string name="temperature_control_info">- This disables charging for set seconds to cool the battery&lt;br /&gt;- COOL DOWN TEMP depends on COOL DOWN RATIO.&lt;br /&gt;- MAX TEMP works with PAUSE SECONDS.</string>
+    <string name="cooldown_info">- Charging ON/OFF ratio in seconds (e.g., coolDownRatio=50/10) - reduces battery stress induced by prolonged high temperature and high charging voltage by periodically pausing charging.&lt;br /&gt;- If charging is too slow, turn this off or change the ratio.&lt;br /&gt;- When disabled, COOL DOWN CAPACITY and COOL DOWN TEMP values are nullified.&lt;br /&gt;- This settings is a fair alternative to the charging voltage limit feature.</string>
+    <string name="on_plugged_info">This is used for updating files whose contents change on certain power events (e.g., plugged/unplugged). It is particularly useful for enforcing custom max voltage/current for usb/wireless charging.</string>
 
-    <string name="voltage_control_info">- Every reduction in peak charge voltage of 0.10V/cell is said to double the cycle life.\n- Unfortunately, not all devices/kernels support this feature.</string>
-
-    <string name="temperature_control_info">- This disables charging for set seconds to cool the battery\n- COOL DOWN TEMP depends on COOL DOWN RATIO.\n- MAX TEMP works with PAUSE SECONDS.</string>
-
-    <string name="cooldown_info">- Charging ON/OFF ratio in seconds (e.g., coolDownRatio=50/10) - reduces battery stress induced by prolonged high temperature and high charging voltage by periodically pausing charging.\n- If charging is too slow, turn this off or change the ratio.\n- When disabled, COOL DOWN CAPACITY and COOL DOWN TEMP values are nullified.\n- This settings is a fair alternative to the charging voltage limit feature.</string>
 
     <string name="acc_config_editor">Acc config editor</string>
     <string name="profile_creator">Profile creator</string>
@@ -157,10 +156,8 @@
     <string name="edit_on_plugged_dialog_message">Example: wireless/voltage_max:9000000 usb/current_max:2000000\nTip: applyOnPlug=wireless/voltage_max:9000000 forces fast wireless charging on Pixel devices.</string>
 
     <string name="template_capacity_profile">Shutdown: %1$d%% - Resume: %2$d%% - Stop: %3$d%%</string>
-    <string name="template_temperature_profile">Cool Down: %1$d&#176;C - Max: %2$d&#176;C - Pause: %3$ds</string>
+    <string name="template_temperature_profile">Temperature: %1$d&#176;C - Max: %2$d&#176;C - Pause: %3$ds</string>
     <string name="template_cool_down_profile">Start at: %1$d%% - Charge for %2$ds - Pause for %3$ds</string>
-
-    <string name="on_plugged_info">This is used for updating files whose contents change on certain power events (e.g., plugged/unplugged). It is particularly useful for enforcing custom max voltage/current for usb/wireless charging.</string>
 
     <!--Profiles Options-->
     <string name="profile_option_edit">Edit</string>
