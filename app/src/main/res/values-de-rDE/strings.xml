@@ -105,7 +105,6 @@
     <string name="schedule_creator">Planersteller</string>
     <string name="charging_switch_label">Ladeschalter:</string>
     <string name="template_capacity_profile">Herunterfahren: %1$d%% - Fortsetzen: %2$d%% - Anhalten: %3$d%%</string>
-    <string name="template_temperature_profile">Abkühlen: %1$d&#176;C - Max: %2$d&#176;C - Pausieren: %3$ds</string>
     <!--Profiles Options-->
     <string name="profile_selected_toast">%1$s Profil ausgewählt.</string>
 </resources>
