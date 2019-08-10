@@ -4,11 +4,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import mattecarra.accapp.fragments.SettingsFragment.Companion.ACC_VERSION
-import mattecarra.accapp.fragments.SettingsFragment.Companion.CURRENT_UNIT_OF_MEASURE
-import mattecarra.accapp.fragments.SettingsFragment.Companion.VOLTAGE_UNIT_OF_MEASURE
+import mattecarra.accapp.utils.Constants.CURRENT_UNIT_OF_MEASURE
+import mattecarra.accapp.utils.Constants.THEME
+import mattecarra.accapp.utils.Constants.VOLTAGE_UNIT_OF_MEASURE
 
 class Preferences(context: Context) {
-    val sharedPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    private val sharedPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     var uACurrent: Boolean?
         get() = sharedPrefs.getString(CURRENT_UNIT_OF_MEASURE, null)?.let { it == "uA" }
@@ -33,4 +34,13 @@ class Preferences(context: Context) {
             editor.putString(ACC_VERSION, value)
             editor.apply()
         }
+
+    var appTheme: String?
+        get() = sharedPrefs.getString(THEME, "2")
+        set(value) {
+            val editor = sharedPrefs.edit()
+            editor.putString(THEME, value ?: "2")
+            editor.apply()
+        }
+
 }
