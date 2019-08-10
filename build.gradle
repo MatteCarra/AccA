@@ -8,7 +8,7 @@ buildscript {
         ]
 
         roomVersion = '2.1.0'
-        lifecycle = '2.1.0-rc01'
+        lifecycle = '2.2.0-alpha02'
         coroutines = '1.2.2'
     }
     repositories {
