@@ -11,6 +11,8 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -31,15 +33,14 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonParser
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
 import mattecarra.accapp.SharedViewModel
-import mattecarra.accapp._interface.OnNavigationItemClicked
 import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.acc.Acc
-import mattecarra.accapp.fragments.BottomNavSheetFragment
 import mattecarra.accapp.fragments.DashboardFragment
 import mattecarra.accapp.fragments.ProfilesFragment
 import mattecarra.accapp.fragments.SchedulesFragment
@@ -56,7 +57,7 @@ import java.lang.Exception
 import java.net.URL
 
 class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
-    OnProfileClickListener, OnNavigationItemClicked {
+    OnProfileClickListener {
 
     private val LOG_TAG = "MainActivity"
     private val ACC_CONFIG_EDITOR_REQUEST = 1
@@ -64,7 +65,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     private val ACC_PROFILE_EDITOR_REQUEST = 3
     private val ACC_PROFILE_SCHEDULER_REQUEST = 4
 
-    private lateinit var preferences: Preferences
+    private lateinit var mPreferences: Preferences
     private lateinit var mViewModel: SharedViewModel
     private lateinit var mMainActivityViewModel: MainActivityViewModel
 
@@ -84,10 +85,11 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
 
         // Set Bottom Navigation Bar Item Selected Listener
-//        botNav_main.setOnNavigationItemSelectedListener(this)
+        botNav_main.setOnNavigationItemSelectedListener(this)
+        setSupportActionBar(toolbar)
 
         // Load in dashboard fragment
-//        botNav_main.selectedItemId = mMainActivityViewModel.selectedNavBarItem
+        botNav_main.selectedItemId = mMainActivityViewModel.selectedNavBarItem
 
         //Rest of the UI
 
@@ -232,6 +234,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
      * Function for handing navigation bar clicks
      */
     override fun onNavigationItemSelected(m: MenuItem): Boolean {
+        // Record currently selected navigation item
         mMainActivityViewModel.selectedNavBarItem = m.itemId
 
         when (m.itemId) {
@@ -243,14 +246,26 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 loadFragment(mProfilesFragment)
                 return true
             }
-            // TODO: Chancge id of schedules menu item
-            R.id.botNav_settings -> {
-                loadFragment(mSettingsFragment)
-                return true
+
+            R.id.botNav_schedules -> {
+                // TODO: Implement schedules
+                return false
             }
         }
 
         return false
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?) = when (item!!.itemId) {
+        R.id.menu_appbar_logs -> {
+            startActivity(Intent(this, LogViewerActivity::class.java))
+            true
+        }
+        R.id.menu_appbar_settings -> {
+            loadFragment(mSettingsFragment)
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     private fun loadFragment(fragment: Fragment) {
@@ -329,21 +344,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         dialog.show()
     }
 
-    override fun handleClick(menuItem: MenuItem) {
-
-        when (menuItem.itemId) {
-            R.id.botNav_home -> {
-                loadFragment(mMainFragment)
-            }
-            R.id.botNav_profiles -> {
-                loadFragment(mProfilesFragment)
-            }
-            R.id.botNav_schedules -> {
-                loadFragment(mSchedulesFragment)
-            }
-        }
-    }
-
     private fun checkAccInstalled(): Boolean {
         val version = preferences.accVersion
         if (!Acc.isBundledAccInstalled(filesDir) || (version == "bundled" && Acc.isInstalledAccOutdated())) {
@@ -364,6 +364,24 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                             Acc.installBundledAccModule(this@MainActivity)
                         else ->
                             Acc.installAccModuleVersion(this@MainActivity, version)
+
+                if (res?.isSuccess == true) { //calibration: gets 11 voltage/ampere measurements and guesses if it's measured in uV or mV/uA or mA
+                    withContext(Dispatchers.IO) {
+                        var microVolts = 0
+                        var microAmpere = 0
+
+                        for (i in 0..10) {
+                            val batteryInfo = Acc.instance.getBatteryInfo()
+                            if (batteryInfo.getRawVoltageNow() > 1000000)
+                                microVolts++
+                            if (abs(batteryInfo.getRawCurrentNow()) > 10000)
+                                microAmpere++
+
+                            delay(250)
+                        }
+
+                        mPreferences.uAhCurrent = microAmpere >= 6
+                        mPreferences.uVMeasureUnit = microVolts >= 6
                     }
 
                 dialog.cancel()
@@ -490,8 +508,8 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val appbar = findViewById<Toolbar>(R.id.bot_appBar)
-        setSupportActionBar(appbar)
+        setSupportActionBar(toolbar)
+
 
         val appUpdater = AppUpdater(this)
             .setDisplay(Display.NOTIFICATION)
@@ -500,7 +518,11 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             .setIcon(R.drawable.ic_notification)
         appUpdater.start()
 
-        preferences = Preferences(this)
+        // Load preferences
+        mPreferences = Preferences(this)
+
+        // Set theme
+        setTheme()
 
         if (!Shell.rootAccess()) {
             val dialog = MaterialDialog(this).show {
@@ -540,30 +562,17 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the main_activity_menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.bottom_appbar_menu, menu)
+        menuInflater.inflate(R.menu.main_appbar_menu, menu)
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        when (item!!.itemId) {
-            R.id.app_bar_logs -> startActivity(Intent(this, LogViewerActivity::class.java))
-            android.R.id.home -> BottomNavSheetFragment().show(supportFragmentManager, BottomNavSheetFragment().tag)
+    override fun onBackPressed() {
+        if (botNav_main.selectedItemId == R.id.botNav_home) {
+            super.onBackPressed()
+        } else {
+            botNav_main.selectedItemId = R.id.botNav_home
         }
-
-        return true
     }
-
-    // TODO: Get this sorted out once the new nav bar is in
-//    override fun onBackPressed() {
-//        if (botNav_main.selectedItemId == R.id.botNav_home) {
-//            super.onBackPressed()
-//        } else {
-//            botNav_main.selectedItemId = R.id.botNav_home
-//        }
-//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
