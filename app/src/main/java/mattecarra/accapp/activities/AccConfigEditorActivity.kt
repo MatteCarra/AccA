@@ -15,6 +15,7 @@ import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.*
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.WhichButton
@@ -24,6 +25,7 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import it.sephiroth.android.library.xtooltip.ClosePolicy
 import it.sephiroth.android.library.xtooltip.Tooltip
+import mattecarra.accapp.Preferences
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.utils.Constants
@@ -34,6 +36,7 @@ import org.jetbrains.anko.uiThread
 class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener {
     private lateinit var viewModel: AccConfigEditorViewModel
     private lateinit var mUndoMenuItem: MenuItem
+    private lateinit var mPreferences: Preferences
 
     private fun returnResults() {
         val returnIntent = Intent()
@@ -47,6 +50,11 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_acc_config_editor)
+
+        // Load preferences
+        mPreferences = Preferences(this)
+
+        setTheme()
 
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
@@ -72,6 +80,17 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         viewModel = ViewModelProviders.of(this, AccConfigEditorViewModelFactory(application, config)).get(AccConfigEditorViewModel::class.java)
 
         initUi()
+    }
+
+    /**
+     * Function for setting the app's theme depending on saved preference.
+     */
+    private fun setTheme() {
+        when (mPreferences.appTheme) {
+            "0" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            "1" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            "2" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        }
     }
 
     private fun showConfigReadError() {

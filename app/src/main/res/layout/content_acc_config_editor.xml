@@ -24,7 +24,8 @@
             android:foreground="?selectableItemBackground"
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="3dp"
-            app:contentPadding="@dimen/card_content_padding">
+            app:contentPadding="@dimen/card_content_padding"
+            style="@style/Widget.MaterialComponents.CardView">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -87,7 +88,7 @@
                         android:textSize="16sp"
                         android:layout_marginEnd="6dp"
                         android:layout_marginRight="6dp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:text="@string/shutdown_capacity"/>
 
                     <TextView
@@ -99,7 +100,7 @@
                         android:textSize="16sp"
                         android:layout_marginEnd="6dp"
                         android:layout_marginRight="6dp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:text="@string/resume_charge"/>
 
                     <TextView
@@ -111,7 +112,7 @@
                         android:textSize="16sp"
                         android:layout_marginStart="6dp"
                         android:layout_marginLeft="6dp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:text="@string/stop_charge"/>
 
                 </LinearLayout>
@@ -160,7 +161,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:textSize="16sp"
-                            android:textColor="@color/black"
+                            android:textColor="?android:attr/textColorPrimary"
                             android:text="@string/charging_switch_label"
                             android:layout_marginRight="8dp"
                             android:layout_marginEnd="8dp"
@@ -196,7 +197,8 @@
             android:foreground="?selectableItemBackground"
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="3dp"
-            app:contentPadding="@dimen/card_content_padding">
+            app:contentPadding="@dimen/card_content_padding"
+            style="@style/Widget.MaterialComponents.CardView">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -254,7 +256,7 @@
                         android:textSize="16sp"
                         android:layout_marginRight="5dp"
                         android:layout_marginEnd="5dp"
-                        android:textColor="@color/black"/>
+                        android:textColor="?android:attr/textColorPrimary"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -276,7 +278,7 @@
                         android:textSize="16sp"
                         android:layout_marginRight="5dp"
                         android:layout_marginEnd="5dp"
-                        android:textColor="@color/black"/>
+                        android:textColor="?android:attr/textColorPrimary"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -307,7 +309,8 @@
             android:foreground="?selectableItemBackground"
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="3dp"
-            app:contentPadding="@dimen/card_content_padding">
+            app:contentPadding="@dimen/card_content_padding"
+            style="@style/Widget.MaterialComponents.CardView">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -379,7 +382,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="14sp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:text="@string/cooldown_temp"/>
 
                     <TextView
@@ -389,7 +392,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="14sp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:text="@string/max_temp"/>
 
                     <TextView
@@ -399,7 +402,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="14sp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:text="@string/pause_seconds"/>
 
                 </LinearLayout>
@@ -450,7 +453,8 @@
             android:foreground="?selectableItemBackground"
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="3dp"
-            app:contentPadding="@dimen/card_content_padding">
+            app:contentPadding="@dimen/card_content_padding"
+            style="@style/Widget.MaterialComponents.CardView">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -503,7 +507,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:textSize="16sp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:text="@string/label_on_boot"
                         android:layout_marginRight="8dp"
                         android:layout_marginEnd="8dp"
@@ -539,7 +543,8 @@
                 android:foreground="?selectableItemBackground"
                 app:cardCornerRadius="@dimen/card_corner_radius"
                 app:cardElevation="3dp"
-                app:contentPadding="@dimen/card_content_padding">
+                app:contentPadding="@dimen/card_content_padding"
+                style="@style/Widget.MaterialComponents.CardView">
 
             <LinearLayout
                     android:layout_width="match_parent"
@@ -558,7 +563,6 @@
                             android:layout_weight="1"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                             android:text="@string/title_on_plugged" />
-
                     <ImageView
                         android:id="@+id/on_plugged_restore"
                         android:layout_width="wrap_content"
@@ -592,7 +596,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:textSize="16sp"
-                            android:textColor="@color/black"
+                            android:textColor="?android:attr/textColorPrimary"
                             android:text="@string/label_on_plugged"
                             android:layout_marginRight="8dp"
                             android:layout_marginEnd="8dp"
@@ -629,7 +633,8 @@
             android:foreground="?selectableItemBackground"
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="3dp"
-            app:contentPadding="@dimen/card_content_padding">
+            app:contentPadding="@dimen/card_content_padding"
+            style="@style/Widget.MaterialComponents.CardView">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -701,7 +706,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="14sp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:text="@string/cooldown_capacity"/>
 
                     <TextView
@@ -711,7 +716,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="14sp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:text="@string/charge_seconds"/>
 
                     <TextView
@@ -721,7 +726,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="14sp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:text="@string/pause_seconds"/>
 
                 </LinearLayout>
