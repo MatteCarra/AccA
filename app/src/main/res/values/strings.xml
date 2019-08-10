@@ -203,4 +203,6 @@
         <item>Master</item>
         <item>Develop</item>
     </string-array>
+
+    <string name="ui_options">User Interface</string>
 </resources>
