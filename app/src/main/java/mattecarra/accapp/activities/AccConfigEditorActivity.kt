@@ -509,6 +509,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                 .showDuration(-1)
                 .overlay(false)
                 .maxWidth((resources.displayMetrics.widthPixels / 1.3).toInt())
+                .styleId(R.style.ToolTipAltStyle)
                 .create()
                 .show(v, Tooltip.Gravity.LEFT, true)
         }
