@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.MenuItem
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.afollestad.materialdialogs.MaterialDialog
@@ -23,11 +24,9 @@ import kotlin.coroutines.CoroutineContext
 
 class SettingsFragment : PreferenceFragmentCompat(), CoroutineScope {
     companion object {
-        val CURRENT_UNIT_OF_MEASURE = "current_measure_unit"
-        val VOLTAGE_UNIT_OF_MEASURE = "voltage_measure_unit"
+    
         val ACC_VERSION = "acc_version"
-
-        fun newInstance() = SettingsFragment()
+	    fun newInstance() = SettingsFragment()
     }
 
     protected lateinit var job: Job
@@ -45,7 +44,7 @@ class SettingsFragment : PreferenceFragmentCompat(), CoroutineScope {
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        addPreferencesFromResource(R.xml.settings)
+        setPreferencesFromResource(R.xml.settings, rootKey)
 
         val telegram = findPreference<Preference>("acc_telegram")
         telegram?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
