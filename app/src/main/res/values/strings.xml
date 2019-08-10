@@ -200,4 +200,11 @@
     </string-array>
 
     <string name="ui_options">User Interface</string>
+    <string name="theme_option_setting">Theme</string>
+    <string name="theme_option_summary">Set the theme of the app.</string>
+    <string-array name="theme_option_options">
+        <item>Light</item>
+        <item>Dark</item>
+        <item>System default</item>
+    </string-array>
 </resources>
