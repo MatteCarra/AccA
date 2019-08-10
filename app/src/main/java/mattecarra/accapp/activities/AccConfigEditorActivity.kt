@@ -54,8 +54,6 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         // Load preferences
         mPreferences = Preferences(this)
 
-        setTheme()
-
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.title = intent?.getStringExtra("titleTv") ?: getString(R.string.acc_config_editor)
@@ -80,17 +78,6 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         viewModel = ViewModelProviders.of(this, AccConfigEditorViewModelFactory(application, config)).get(AccConfigEditorViewModel::class.java)
 
         initUi()
-    }
-
-    /**
-     * Function for setting the app's theme depending on saved preference.
-     */
-    private fun setTheme() {
-        when (mPreferences.appTheme) {
-            "0" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            "1" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            "2" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        }
     }
 
     private fun showConfigReadError() {
