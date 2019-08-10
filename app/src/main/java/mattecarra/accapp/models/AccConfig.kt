@@ -52,7 +52,7 @@ data class AccConfig(var configCapacity: ConfigCapacity,
      */
 //    data class ConfigCapacity (var shutdown: Int, var resume: Int, var pause: Int)
 
-    class ConfigCapacity(var shutdown: Int, var resume: Int, var pause: Int) {
+    data class ConfigCapacity(var shutdown: Int, var resume: Int, var pause: Int) {
         fun toString(context: Context): String {
             return String.format(context.getString(R.string.template_capacity_profile), shutdown, resume, pause)
         }
@@ -71,7 +71,7 @@ data class AccConfig(var configCapacity: ConfigCapacity,
      * @param maxTemperature maximum temperature of the battery while charging. When met, charging will pause for <pause> seconds.
      * @param pause time in seconds to wait for the temperature to drop below <max>, to resume charging.
      */
-    class ConfigTemperature (var coolDownTemperature: Int, var maxTemperature: Int, var pause: Int) {
+    data class ConfigTemperature (var coolDownTemperature: Int, var maxTemperature: Int, var pause: Int) {
 
         fun toString(context: Context): String {
             return String.format(context.getString(R.string.template_temperature_profile, coolDownTemperature, maxTemperature, pause))
@@ -85,8 +85,7 @@ data class AccConfig(var configCapacity: ConfigCapacity,
      * @param charge charge time in seconds.
      * @param pause pause time in seconds.
      */
-    class ConfigCoolDown (var atPercent: Int, var charge: Int, var pause: Int) {
-
+    data class ConfigCoolDown (var atPercent: Int, var charge: Int, var pause: Int) {
         fun toString(context: Context): String {
             return String.format(context.getString(R.string.template_cool_down_profile,
                 atPercent, charge, pause))

@@ -45,6 +45,18 @@
                         android:text="@string/title_capacity_control" />
 
                     <ImageView
+                        android:id="@+id/capacity_restore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_restore_24px"
+                        android:onClick="onCapacityRestore"
+                        android:contentDescription="@string/restore" />
+
+                    <ImageView
                         android:id="@+id/capacity_control_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -205,6 +217,18 @@
                         android:text="@string/title_voltage_control" />
 
                     <ImageView
+                        android:id="@+id/voltage_control_restore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_restore_24px"
+                        android:onClick="onVoltageControlRestore"
+                        android:contentDescription="@string/restore" />
+
+                    <ImageView
                         android:id="@+id/voltage_control_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -267,7 +291,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/edit_voltage_limit"
                     android:id="@+id/edit_voltage_limit"
-                    android:layout_gravity="center_horizontal"/>
+                    android:layout_gravity="center_horizontal"
+                    android:onClick="editVoltageOnClick"/>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -301,6 +326,18 @@
                         android:layout_weight="1"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                         android:text="@string/title_temperature_control" />
+
+                    <ImageView
+                        android:id="@+id/temperature_control_restore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_restore_24px"
+                        android:onClick="onTemperatureControlRestore"
+                        android:contentDescription="@string/restore" />
 
                     <ImageView
                         android:id="@+id/temperature_control_info"
@@ -434,6 +471,18 @@
                         android:text="@string/title_on_boot" />
 
                     <ImageView
+                        android:id="@+id/apply_on_boot_restore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_restore_24px"
+                        android:onClick="onBootRestoreClick"
+                        android:contentDescription="@string/restore" />
+
+                    <ImageView
                         android:id="@+id/exit_on_boot_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -509,6 +558,18 @@
                             android:layout_weight="1"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                             android:text="@string/title_on_plugged" />
+
+                    <ImageView
+                        android:id="@+id/on_plugged_restore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_restore_24px"
+                        android:onClick="onPluggedRestore"
+                        android:contentDescription="@string/restore" />
 
                     <ImageView
                             android:id="@+id/on_plugged_info"
@@ -587,6 +648,18 @@
                         android:layout_weight="1"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                         android:text="@string/title_cooldown_control" />
+
+                    <ImageView
+                        android:id="@+id/cooldown_restore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_restore_24px"
+                        android:onClick="onCooldownRestore"
+                        android:contentDescription="@string/restore" />
 
                     <ImageView
                         android:id="@+id/cooldown_info"

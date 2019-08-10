@@ -101,6 +101,16 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             R.id.action_save -> {
                 returnResults()
             }
+            R.id.action_restore -> {
+                mAccConfig = Acc.instance.defaultConfig
+                updateOnPluggedCard()
+                updateOnBootCard()
+                updateCapacityCard()
+                updateTemperatureCard()
+                updateCoolDownCard()
+                updateVoltageControlCard()
+                unsavedChanges = true
+            }
         }
 
         return super.onOptionsItemSelected(item)
@@ -123,6 +133,205 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         } else {
             super.onBackPressed()
         }
+    }
+
+    private fun updateCapacityCard() {
+        shutdown_capacity_picker.minValue = 0
+        shutdown_capacity_picker.maxValue = 20
+        shutdown_capacity_picker.value = mAccConfig.configCapacity.shutdown
+
+        resume_capacity_picker.minValue = mAccConfig.configCapacity.shutdown
+        resume_capacity_picker.maxValue = if(mAccConfig.configCapacity.pause == 101) 101 else mAccConfig.configCapacity.pause - 1
+        resume_capacity_picker.value = mAccConfig.configCapacity.resume
+
+        pause_capacity_picker.minValue = if(mAccConfig.configCapacity.resume == 101) 101 else mAccConfig.configCapacity.resume + 1
+        pause_capacity_picker.maxValue = 101
+        pause_capacity_picker.value = mAccConfig.configCapacity.pause
+
+        charging_switch_textview.text = mAccConfig.configChargeSwitch ?: getString(R.string.automatic)
+    }
+
+    private fun updateTemperatureCard() {
+        if(mAccConfig.configTemperature.coolDownTemperature >= 90 && mAccConfig.configTemperature.maxTemperature >= 95) {
+            temp_switch.isChecked = false
+            temperature_cooldown_picker.isEnabled = false
+            temperature_max_picker.isEnabled = false
+            temperature_max_pause_seconds_picker.isEnabled = false
+        }
+
+        temperature_cooldown_picker.minValue = 20
+        temperature_cooldown_picker.maxValue = 90
+        temperature_cooldown_picker.value = mAccConfig.configTemperature.coolDownTemperature
+
+
+        temperature_max_picker.minValue = 20
+        temperature_max_picker.maxValue = 95
+        temperature_max_picker.value = mAccConfig.configTemperature.maxTemperature
+
+
+        temperature_max_pause_seconds_picker.minValue = 10
+        temperature_max_pause_seconds_picker.maxValue = 120
+        temperature_max_pause_seconds_picker.value = mAccConfig.configTemperature.pause
+    }
+
+    private fun updateCoolDownCard() {
+        if(mAccConfig.configCoolDown == null || mAccConfig.configCoolDown?.atPercent?.let { it > 100 } == true) {
+            mAccConfig.configCoolDown = null
+            cooldown_switch.isChecked = false
+            cooldown_percentage_picker.isEnabled = false
+            charge_ratio_picker.isEnabled = false
+            pause_ratio_picker.isEnabled = false
+        }
+
+        cooldown_percentage_picker.minValue = mAccConfig.configCapacity.shutdown
+        cooldown_percentage_picker.maxValue = 100 //if someone wants to disable it should use the switch but I'm gonna leave it there
+        cooldown_percentage_picker.value = mAccConfig.configCoolDown?.atPercent ?: 60
+
+        charge_ratio_picker.minValue = 1
+        charge_ratio_picker.maxValue = 120 //no reason behind this value
+        charge_ratio_picker.value = mAccConfig.configCoolDown?.charge ?: 50
+
+        pause_ratio_picker.minValue = 1
+        pause_ratio_picker.maxValue = 120 //no reason behind this value
+        pause_ratio_picker.value = mAccConfig.configCoolDown?.pause ?: 10
+    }
+
+    private fun updateVoltageControlCard() {
+        voltage_control_file.text = mAccConfig.configVoltage.controlFile ?: "Not supported"
+        voltage_max.text = mAccConfig.configVoltage.max?.let { "$it mV" } ?: getString(R.string.disabled)
+    }
+
+    private fun updateOnPluggedCard() {
+        config_on_plugged_textview.text = mAccConfig.configOnPlug?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
+    }
+
+    private fun updateOnBootCard() {
+        tv_config_on_boot.text = mAccConfig.configOnBoot?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
+    }
+
+    private fun initUi() {
+        updateOnPluggedCard()
+
+        updateOnBootCard()
+
+        //capacity card
+        updateCapacityCard()
+        shutdown_capacity_picker.setOnValueChangedListener(this)
+        resume_capacity_picker.setOnValueChangedListener(this)
+        pause_capacity_picker.setOnValueChangedListener(this)
+
+        //temps
+        updateTemperatureCard()
+        temp_switch.setOnCheckedChangeListener(this)
+        temperature_cooldown_picker.setOnValueChangedListener(this)
+        temperature_max_picker.setOnValueChangedListener(this)
+        temperature_max_pause_seconds_picker.setOnValueChangedListener(this)
+
+        //coolDown
+        updateCoolDownCard()
+        cooldown_switch.setOnCheckedChangeListener(this)
+        cooldown_percentage_picker.setOnValueChangedListener(this)
+        charge_ratio_picker.setOnValueChangedListener(this)
+        pause_ratio_picker.setOnValueChangedListener(this)
+
+        //voltage control
+        updateVoltageControlCard()
+    }
+
+    //Listener to enable/disable temp control and cool down
+    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+        if(buttonView == null) return
+        when(buttonView.id) {
+            R.id.temp_switch -> {
+                temperature_cooldown_picker.isEnabled = isChecked
+                temperature_max_picker.isEnabled = isChecked
+                temperature_max_pause_seconds_picker.isEnabled = isChecked
+
+                if(isChecked) {
+                    temperature_cooldown_picker.value = 40
+                    temperature_max_picker.value = 45
+
+                    mAccConfig.configTemperature.coolDownTemperature = 40
+                    mAccConfig.configTemperature.maxTemperature = 45
+                    unsavedChanges = true
+                } else {
+                    mAccConfig.configTemperature.coolDownTemperature= 90
+                    mAccConfig.configTemperature.maxTemperature = 95
+                    unsavedChanges = true
+                }
+            }
+
+            R.id.cooldown_switch -> {
+                cooldown_percentage_picker.isEnabled = isChecked
+                charge_ratio_picker.isEnabled = isChecked
+                pause_ratio_picker.isEnabled = isChecked
+
+                if(isChecked) {
+                    cooldown_percentage_picker.value = 60
+                    mAccConfig.configCoolDown = AccConfig.ConfigCoolDown(60, 50, 10)
+                    unsavedChanges = true
+                } else {
+                    mAccConfig.configCoolDown = null
+                    unsavedChanges = true
+                }
+            }
+
+            else -> {}
+        }
+    }
+
+    override fun onValueChange(picker: NumberPicker?, oldVal: Int, newVal: Int) {
+        if(picker == null) return
+
+        when(picker.id) {
+            //capacity
+            R.id.shutdown_capacity_picker -> {
+                mAccConfig.configCapacity.shutdown = newVal
+
+                resume_capacity_picker.minValue = mAccConfig.configCapacity.shutdown
+                cooldown_percentage_picker.minValue = mAccConfig.configCapacity.shutdown
+            }
+
+            R.id.resume_capacity_picker -> {
+                mAccConfig.configCapacity.resume = newVal
+
+                pause_capacity_picker.minValue = if(newVal == 101) 101 else newVal + 1
+            }
+
+            R.id.pause_capacity_picker -> {
+                mAccConfig.configCapacity.pause = newVal
+
+                resume_capacity_picker.maxValue = if(newVal == 101) 101 else newVal - 1
+            }
+
+            //temp
+            R.id.temperature_cooldown_picker ->
+                mAccConfig.configTemperature.coolDownTemperature = newVal
+
+            R.id.temperature_max_picker ->
+                mAccConfig.configTemperature.maxTemperature = newVal
+
+            R.id.temperature_max_pause_seconds_picker ->
+                mAccConfig.configTemperature.pause = newVal
+
+            //coolDown
+            R.id.cooldown_percentage_picker ->
+                mAccConfig.configCoolDown?.atPercent = newVal
+
+            R.id.charge_ratio_picker -> {
+                mAccConfig.configCoolDown?.charge = newVal
+            }
+
+            R.id.pause_ratio_picker -> {
+                mAccConfig.configCoolDown?.pause = newVal
+            }
+
+            else -> {
+                return //This allows to skip unsavedChanges = true
+            }
+        }
+
+        unsavedChanges = true
     }
 
     /**
@@ -222,6 +431,96 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         }
     }
 
+    fun editVoltageOnClick(v: View) {
+        val dialog = MaterialDialog(this@AccConfigEditorActivity).show {
+            customView(R.layout.voltage_control_editor_dialog)
+            positiveButton(android.R.string.ok) { dialog ->
+                val view = dialog.getCustomView()
+                val voltageControl = view.findViewById<Spinner>(R.id.voltage_control_file)
+                val voltageMax = view.findViewById<EditText>(R.id.voltage_max)
+                val checkBox = dialog.findViewById<CheckBox>(R.id.enable_voltage_max)
+
+                val voltageMaxInt = voltageMax.text.toString().toIntOrNull()
+                if(checkBox.isChecked && voltageMaxInt != null) {
+                    this@AccConfigEditorActivity.mAccConfig.configVoltage.max = voltageMaxInt
+                    this@AccConfigEditorActivity.mAccConfig.configVoltage.controlFile = voltageControl.selectedItem as String
+
+                    this@AccConfigEditorActivity.voltage_control_file.text = voltageControl.selectedItem as String
+                    this@AccConfigEditorActivity.voltage_max.text = "$voltageMaxInt mV"
+                } else {
+                    this@AccConfigEditorActivity.mAccConfig.configVoltage.max = null
+
+                    this@AccConfigEditorActivity.voltage_max.text = getString(R.string.disabled)
+                }
+
+                unsavedChanges = true
+            }
+            negativeButton(android.R.string.cancel)
+        }
+
+        //initialize dialog custom view:
+        val view = dialog.getCustomView()
+        val voltageMax = view.findViewById<EditText>(R.id.voltage_max)
+        val checkBox = dialog.findViewById<CheckBox>(R.id.enable_voltage_max)
+        val voltageControl = view.findViewById<Spinner>(R.id.voltage_control_file)
+
+        voltageMax.setText(mAccConfig.configVoltage.max?.toString() ?: "", TextView.BufferType.EDITABLE)
+        checkBox.setOnCheckedChangeListener { _, isChecked ->
+            voltageMax.isEnabled = isChecked
+
+            val voltageMaxVal = voltageMax.text?.toString()?.toIntOrNull()
+            val isValid = voltageMaxVal != null && voltageMaxVal >= 3500 && voltageMaxVal <= 4350
+            voltageMax.error = if (isValid) null else getString(R.string.invalid_voltage_max)
+            dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid  && voltageControl.selectedItemPosition != -1)
+        }
+        checkBox.isChecked = mAccConfig.configVoltage.max != null
+        voltageMax.isEnabled = checkBox.isChecked
+        voltageMax.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val voltageMaxVal = s?.toString()?.toIntOrNull()
+                val isValid = voltageMaxVal != null && voltageMaxVal >= 3500 && voltageMaxVal <= 4350
+                voltageMax.error = if(isValid) null else getString(R.string.invalid_voltage_max)
+                dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid  && voltageControl.selectedItemPosition != -1)
+            }
+        })
+
+        val supportedVoltageControlFiles = ArrayList(Acc.instance.listVoltageSupportedControlFiles())
+        val currentVoltageFile = mAccConfig.configVoltage.controlFile?.let { currentVoltFile ->
+            val currentVoltFileRegex = currentVoltFile.replace("/", """\/""").replace(".", """\.""").replace("?", ".").toRegex()
+            val match = supportedVoltageControlFiles.find { currentVoltFileRegex.matches(it) }
+            if(match == null) {
+                supportedVoltageControlFiles.add(currentVoltFile)
+                currentVoltFile
+            } else {
+                match
+            }
+        }
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, supportedVoltageControlFiles)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        voltageControl.adapter = adapter
+        currentVoltageFile?.let {
+            voltageControl.setSelection(supportedVoltageControlFiles.indexOf(currentVoltageFile))
+        }
+        if(voltageControl.selectedItemPosition == -1) {
+            dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
+        }
+        voltageControl.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val voltageMaxVal = voltageMax.text?.toString()?.toIntOrNull()
+                val isValid = voltageMaxVal != null && voltageMaxVal >= 3500 && voltageMaxVal <= 4350
+                dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid && position != -1)
+            }
+        }
+    }
+
     fun onInfoClick(v: View) {
         when(v.id) {
             R.id.capacity_control_info -> R.string.capacity_control_info
@@ -243,269 +542,41 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                 .create()
                 .show(v, Tooltip.Gravity.LEFT, true)
         }
-
     }
 
-    private fun initUi() {
-        tv_config_on_boot.text = mAccConfig.configOnBoot?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
-
-        config_on_plugged_textview.text = mAccConfig.configOnPlug?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
-
-        charging_switch_textview.text = mAccConfig.configChargeSwitch ?: getString(R.string.automatic)
-
-        shutdown_capacity_picker.minValue = 0
-        shutdown_capacity_picker.maxValue = 20
-        shutdown_capacity_picker.value = mAccConfig.configCapacity.shutdown
-        shutdown_capacity_picker.setOnValueChangedListener(this)
-
-        resume_capacity_picker.minValue = mAccConfig.configCapacity.shutdown
-        resume_capacity_picker.maxValue = if(mAccConfig.configCapacity.pause == 101) 101 else mAccConfig.configCapacity.pause - 1
-        resume_capacity_picker.value = mAccConfig.configCapacity.resume
-        resume_capacity_picker.setOnValueChangedListener(this)
-
-        pause_capacity_picker.minValue = if(mAccConfig.configCapacity.resume == 101) 101 else mAccConfig.configCapacity.resume + 1
-        pause_capacity_picker.maxValue = 101
-        pause_capacity_picker.value = mAccConfig.configCapacity.pause
-        pause_capacity_picker.setOnValueChangedListener(this)
-
-        //temps
-        if(mAccConfig.configTemperature.coolDownTemperature >= 90 && mAccConfig.configTemperature.maxTemperature >= 95) {
-            temp_switch.isChecked = false
-            temperature_cooldown_picker.isEnabled = false
-            temperature_max_picker.isEnabled = false
-            temperature_max_pause_seconds_picker.isEnabled = false
-        }
-        temp_switch.setOnCheckedChangeListener(this)
-
-        temperature_cooldown_picker.minValue = 20
-        temperature_cooldown_picker.maxValue = 90
-        temperature_cooldown_picker.value = mAccConfig.configTemperature.coolDownTemperature
-        temperature_cooldown_picker.setOnValueChangedListener(this)
-
-        temperature_max_picker.minValue = 20
-        temperature_max_picker.maxValue = 95
-        temperature_max_picker.value = mAccConfig.configTemperature.maxTemperature
-        temperature_max_picker.setOnValueChangedListener(this)
-
-        temperature_max_pause_seconds_picker.minValue = 10
-        temperature_max_pause_seconds_picker.maxValue = 120
-        temperature_max_pause_seconds_picker.value = mAccConfig.configTemperature.pause
-        temperature_max_pause_seconds_picker.setOnValueChangedListener(this)
-
-        //coolDown
-        if(mAccConfig.configCoolDown == null || mAccConfig.configCoolDown?.atPercent?.let { it > 100 } == true) {
-            mAccConfig.configCoolDown = null
-            cooldown_switch.isChecked = false
-            cooldown_percentage_picker.isEnabled = false
-            charge_ratio_picker.isEnabled = false
-            pause_ratio_picker.isEnabled = false
-        }
-        cooldown_switch.setOnCheckedChangeListener(this)
-
-        cooldown_percentage_picker.minValue = mAccConfig.configCapacity.shutdown
-        cooldown_percentage_picker.maxValue = 100 //if someone wants to disable it should use the switch but I'm gonna leave it there
-        cooldown_percentage_picker.value = mAccConfig.configCoolDown?.atPercent ?: 60
-        cooldown_percentage_picker.setOnValueChangedListener(this)
-
-        charge_ratio_picker.minValue = 1
-        charge_ratio_picker.maxValue = 120 //no reason behind this value
-        charge_ratio_picker.value = mAccConfig.configCoolDown?.charge ?: 50
-        charge_ratio_picker.setOnValueChangedListener(this)
-
-        pause_ratio_picker.minValue = 1
-        pause_ratio_picker.maxValue = 120 //no reason behind this value
-        pause_ratio_picker.value = mAccConfig.configCoolDown?.pause ?: 10
-        pause_ratio_picker.setOnValueChangedListener(this)
-
-        //voltage control
-        voltage_control_file.text = mAccConfig.configVoltage.controlFile ?: "Not supported"
-        voltage_max.text = mAccConfig.configVoltage.max?.let { "$it mV" } ?: getString(R.string.disabled)
-
-        //Edit voltage dialog
-        edit_voltage_limit.setOnClickListener {
-            val dialog = MaterialDialog(this@AccConfigEditorActivity).show {
-                customView(R.layout.voltage_control_editor_dialog)
-                positiveButton(android.R.string.ok) { dialog ->
-                    val view = dialog.getCustomView()
-                    val voltageControl = view.findViewById<Spinner>(R.id.voltage_control_file)
-                    val voltageMax = view.findViewById<EditText>(R.id.voltage_max)
-                    val checkBox = dialog.findViewById<CheckBox>(R.id.enable_voltage_max)
-
-                    val voltageMaxInt = voltageMax.text.toString().toIntOrNull()
-                    if(checkBox.isChecked && voltageMaxInt != null) {
-                        this@AccConfigEditorActivity.mAccConfig.configVoltage.max = voltageMaxInt
-                        this@AccConfigEditorActivity.mAccConfig.configVoltage.controlFile = voltageControl.selectedItem as String
-
-                        this@AccConfigEditorActivity.voltage_control_file.text = voltageControl.selectedItem as String
-                        this@AccConfigEditorActivity.voltage_max.text = "$voltageMaxInt mV"
-                    } else {
-                        this@AccConfigEditorActivity.mAccConfig.configVoltage.max = null
-
-                        this@AccConfigEditorActivity.voltage_max.text = getString(R.string.disabled)
-                    }
-
-                    unsavedChanges = true
-                }
-                negativeButton(android.R.string.cancel)
-            }
-
-            //initialize dialog custom view:
-            val view = dialog.getCustomView()
-            val voltageMax = view.findViewById<EditText>(R.id.voltage_max)
-            val checkBox = dialog.findViewById<CheckBox>(R.id.enable_voltage_max)
-            val voltageControl = view.findViewById<Spinner>(R.id.voltage_control_file)
-
-            voltageMax.setText(mAccConfig.configVoltage.max?.toString() ?: "", TextView.BufferType.EDITABLE)
-            checkBox.setOnCheckedChangeListener { _, isChecked ->
-                voltageMax.isEnabled = isChecked
-
-                val voltageMaxVal = voltageMax.text?.toString()?.toIntOrNull()
-                val isValid = voltageMaxVal != null && voltageMaxVal >= 3500 && voltageMaxVal <= 4350
-                voltageMax.error = if (isValid) null else getString(R.string.invalid_voltage_max)
-                dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid  && voltageControl.selectedItemPosition != -1)
-            }
-            checkBox.isChecked = mAccConfig.configVoltage.max != null
-            voltageMax.isEnabled = checkBox.isChecked
-            voltageMax.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {}
-
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    val voltageMaxVal = s?.toString()?.toIntOrNull()
-                    val isValid = voltageMaxVal != null && voltageMaxVal >= 3500 && voltageMaxVal <= 4350
-                    voltageMax.error = if(isValid) null else getString(R.string.invalid_voltage_max)
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid  && voltageControl.selectedItemPosition != -1)
-                }
-            })
-
-            val supportedVoltageControlFiles = ArrayList(Acc.instance.listVoltageSupportedControlFiles())
-            val currentVoltageFile = mAccConfig.configVoltage.controlFile?.let { currentVoltFile ->
-                val currentVoltFileRegex = currentVoltFile.replace("/", """\/""").replace(".", """\.""").replace("?", ".").toRegex()
-                val match = supportedVoltageControlFiles.find { currentVoltFileRegex.matches(it) }
-                if(match == null) {
-                    supportedVoltageControlFiles.add(currentVoltFile)
-                    currentVoltFile
-                } else {
-                    match
-                }
-            }
-            val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, supportedVoltageControlFiles)
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            voltageControl.adapter = adapter
-            currentVoltageFile?.let {
-                voltageControl.setSelection(supportedVoltageControlFiles.indexOf(currentVoltageFile))
-            }
-            if(voltageControl.selectedItemPosition == -1) {
-                dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
-            }
-            voltageControl.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
-                }
-
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    val voltageMaxVal = voltageMax.text?.toString()?.toIntOrNull()
-                    val isValid = voltageMaxVal != null && voltageMaxVal >= 3500 && voltageMaxVal <= 4350
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid && position != -1)
-                }
-            }
-        }
-    }
-
-    //Listener to enable/disable temp control and cool down
-    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        if(buttonView == null) return
-        when(buttonView.id) {
-            R.id.temp_switch -> {
-                temperature_cooldown_picker.isEnabled = isChecked
-                temperature_max_picker.isEnabled = isChecked
-                temperature_max_pause_seconds_picker.isEnabled = isChecked
-
-                if(isChecked) {
-                    temperature_cooldown_picker.value = 40
-                    temperature_max_picker.value = 45
-
-                    mAccConfig.configTemperature.coolDownTemperature = 40
-                    mAccConfig.configTemperature.maxTemperature = 45
-                    unsavedChanges = true
-                } else {
-                    mAccConfig.configTemperature.coolDownTemperature= 90
-                    mAccConfig.configTemperature.maxTemperature = 95
-                    unsavedChanges = true
-                }
-            }
-
-            R.id.cooldown_switch -> {
-                cooldown_percentage_picker.isEnabled = isChecked
-                charge_ratio_picker.isEnabled = isChecked
-                pause_ratio_picker.isEnabled = isChecked
-
-                if(isChecked) {
-                    cooldown_percentage_picker.value = 60
-                    mAccConfig.configCoolDown = AccConfig.ConfigCoolDown(60, 50, 10)
-                    unsavedChanges = true
-                } else {
-                    mAccConfig.configCoolDown = null
-                    unsavedChanges = true
-                }
-            }
-
-            else -> {}
-        }
-    }
-
-    override fun onValueChange(picker: NumberPicker?, oldVal: Int, newVal: Int) {
-        if(picker == null) return
-
-        when(picker.id) {
-            //capacity
-            R.id.shutdown_capacity_picker -> {
-                mAccConfig.configCapacity.shutdown = newVal
-
-                resume_capacity_picker.minValue = mAccConfig.configCapacity.shutdown
-                cooldown_percentage_picker.minValue = mAccConfig.configCapacity.shutdown
-            }
-
-            R.id.resume_capacity_picker -> {
-                mAccConfig.configCapacity.resume = newVal
-
-                pause_capacity_picker.minValue = if(newVal == 101) 101 else newVal + 1
-            }
-
-            R.id.pause_capacity_picker -> {
-                mAccConfig.configCapacity.pause = newVal
-
-                resume_capacity_picker.maxValue = if(newVal == 101) 101 else newVal - 1
-            }
-
-            //temp
-            R.id.temperature_cooldown_picker ->
-                mAccConfig.configTemperature.coolDownTemperature = newVal
-
-            R.id.temperature_max_picker ->
-                mAccConfig.configTemperature.maxTemperature = newVal
-
-            R.id.temperature_max_pause_seconds_picker ->
-                mAccConfig.configTemperature.pause = newVal
-
-            //coolDown
-            R.id.cooldown_percentage_picker ->
-                mAccConfig.configCoolDown?.atPercent = newVal
-
-            R.id.charge_ratio_picker -> {
-                mAccConfig.configCoolDown?.charge = newVal
-            }
-
-            R.id.pause_ratio_picker -> {
-                mAccConfig.configCoolDown?.pause = newVal
-            }
-
-            else -> {
-                return //This allows to skip unsavedChanges = true
-            }
-        }
-
+    fun onPluggedRestore(view: View) {
+        mAccConfig.configOnPlug = Acc.instance.defaultConfig.configOnPlug
+        updateOnPluggedCard()
         unsavedChanges = true
+    }
+
+    fun onCooldownRestore(view: View) {
+        mAccConfig.configCoolDown = Acc.instance.defaultConfig.configCoolDown
+        updateCoolDownCard()
+        unsavedChanges = true
+    }
+
+    fun onCapacityRestore(view: View) {
+        mAccConfig.configCapacity = Acc.instance.defaultConfig.configCapacity
+        mAccConfig.configChargeSwitch = Acc.instance.defaultConfig.configChargeSwitch
+        updateCapacityCard()
+        unsavedChanges = true
+    }
+
+    fun onVoltageControlRestore(view: View) {
+        mAccConfig.configVoltage = Acc.instance.defaultConfig.configVoltage
+        updateVoltageControlCard()
+        unsavedChanges = true
+    }
+
+    fun onTemperatureControlRestore(view: View) {
+        mAccConfig.configTemperature = Acc.instance.defaultConfig.configTemperature
+        updateTemperatureCard()
+        unsavedChanges = true
+    }
+
+    fun onBootRestoreClick(view: View) {
+        mAccConfig.configOnPlug = Acc.instance.defaultConfig.configOnPlug
+        updateOnBootCard()
     }
 }

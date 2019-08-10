@@ -31,15 +31,18 @@ open class AccHandler: AccInterface {
     val VOLT_FILE = """^\s*chargingVoltageLimit=((?:(?!:).)*):(\d+)""".toRegex(RegexOption.MULTILINE)
     val SWITCH = """^\s*switch=((?:(?!#).)*)""".toRegex(RegexOption.MULTILINE)
 
-    override val defaultConfig: AccConfig = AccConfig(
-        AccConfig.ConfigCapacity(5, 70, 80),
-        AccConfig.ConfigVoltage(null, null),
-        AccConfig.ConfigTemperature(40, 45, 90),
-        null,
-        null,
-        null,
-        false,
-        null)
+    override val defaultConfig: AccConfig
+        get() =
+            AccConfig(
+                AccConfig.ConfigCapacity(5, 70, 80),
+                AccConfig.ConfigVoltage(null, null),
+                AccConfig.ConfigTemperature(40, 45, 90),
+                null,
+                null,
+                null,
+                false,
+                null
+            )
 
     override fun readConfig(): AccConfig {
         val config = readConfigToString()
