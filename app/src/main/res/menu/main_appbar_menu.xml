@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-            android:id="@+id/app_bar_logs"
+            android:id="@+id/menu_appbar_logs"
             android:icon="@drawable/ic_round_receipt_24px"
             android:title="@string/logs"
             app:showAsAction="ifRoom"/>
 
     <item
-            android:id="@+id/app_bar_settings"
+            android:id="@+id/menu_appbar_settings"
             android:icon="@drawable/ic_outline_settings_24px"
             android:title="@string/title_settings"
             app:showAsAction="never"/>
 
     <item
-            android:id="@+id/app_bar_about"
-            android:title="About"
+            android:id="@+id/menu_appbar_about"
+            android:title="@string/about"
             app:showAsAction="never"/>
 </menu>
