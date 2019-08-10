@@ -162,12 +162,6 @@
 
     <string name="on_plugged_info">This is used for updating files whose contents change on certain power events (e.g., plugged/unplugged). It is particularly useful for enforcing custom max voltage/current for usb/wireless charging.</string>
 
-    <string-array name="profile_long_press_options">
-        <item>Edit</item>
-        <item>Rename</item>
-        <item>Delete</item>
-    </string-array>
-
     <!--Profiles Options-->
     <string name="profile_option_edit">Edit</string>
     <string name="profile_option_rename">Rename</string>
