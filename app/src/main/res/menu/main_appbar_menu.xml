@@ -7,13 +7,13 @@
             app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/app_bar_settings"
-        android:icon="@drawable/ic_outline_settings_24px"
-        android:title="@string/title_settings"
-        app:showAsAction="never"/>
+            android:id="@+id/app_bar_settings"
+            android:icon="@drawable/ic_outline_settings_24px"
+            android:title="@string/title_settings"
+            app:showAsAction="never"/>
 
     <item
-        android:id="@+id/app_bar_about"
-        android:title="About"
-        app:showAsAction="never"/>
+            android:id="@+id/app_bar_about"
+            android:title="About"
+            app:showAsAction="never"/>
 </menu>
