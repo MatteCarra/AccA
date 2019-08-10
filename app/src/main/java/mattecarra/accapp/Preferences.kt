@@ -3,7 +3,7 @@ package mattecarra.accapp
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import mattecarra.accapp.fragments.SettingsFragment.Companion.ACC_VERSION
+import mattecarra.accapp.utils.Constants.ACC_VERSION
 import mattecarra.accapp.utils.Constants.CURRENT_UNIT_OF_MEASURE
 import mattecarra.accapp.utils.Constants.THEME
 import mattecarra.accapp.utils.Constants.VOLTAGE_UNIT_OF_MEASURE

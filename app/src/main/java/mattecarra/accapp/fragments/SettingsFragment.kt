@@ -1,31 +1,24 @@
 package mattecarra.accapp.fragments
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.MenuItem
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.SingleChoiceListener
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
-import com.google.gson.JsonArray
-import com.google.gson.JsonParser
 import kotlinx.coroutines.*
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
+import mattecarra.accapp.utils.Constants.ACC_VERSION
 import mattecarra.accapp.utils.progress
-import org.jetbrains.anko.custom.async
-import java.net.URL
 import kotlin.coroutines.CoroutineContext
 
 class SettingsFragment : PreferenceFragmentCompat(), CoroutineScope {
     companion object {
-    
-        val ACC_VERSION = "acc_version"
 	    fun newInstance() = SettingsFragment()
     }
 
