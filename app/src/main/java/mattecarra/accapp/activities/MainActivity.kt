@@ -10,8 +10,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
@@ -29,14 +27,9 @@ import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.Display
 import com.github.javiersantos.appupdater.enums.UpdateFrom
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.gson.JsonArray
-import com.google.gson.JsonParser
 import com.topjohnwu.superuser.Shell
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
 import mattecarra.accapp.SharedViewModel
@@ -52,11 +45,7 @@ import mattecarra.accapp.utils.Constants
 import mattecarra.accapp.utils.ScopedAppActivity
 import mattecarra.accapp.utils.progress
 import org.jetbrains.anko.doAsync
-import org.json.JSONArray
 import java.io.File
-import java.lang.Exception
-import java.net.URL
-import kotlin.math.abs
 
 class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
     OnProfileClickListener {
@@ -67,7 +56,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     private val ACC_PROFILE_EDITOR_REQUEST = 3
     private val ACC_PROFILE_SCHEDULER_REQUEST = 4
 
-    private lateinit var preferences: Preferences
+    private lateinit var mPreferences: Preferences
     private lateinit var mViewModel: SharedViewModel
     private lateinit var mMainActivityViewModel: MainActivityViewModel
 
@@ -347,7 +336,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun checkAccInstalled(): Boolean {
-        val version = preferences.accVersion
+        val version = mPreferences.accVersion
         if (!Acc.isBundledAccInstalled(filesDir) || (version == "bundled" && Acc.isInstalledAccOutdated())) {
             val dialog = MaterialDialog(this).show {
                 title(R.string.installing_acc)
@@ -379,14 +368,14 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                         title(R.string.installation_failed_title)
                                         message(R.string.installation_failed_busybox)
                                         positiveButton(R.string.install_bundled_version) {
-                                            preferences.accVersion = "bundled"
+                                            mPreferences.accVersion = "bundled"
                                             if (checkAccInstalled()) {
                                                 initUi()
                                             }
                                         }
                                         negativeButton {
                                             val onSelection: SingleChoiceListener =  { _, _, text ->
-                                                preferences.accVersion = text
+                                                mPreferences.accVersion = text
                                                 if (checkAccInstalled()) {
                                                     initUi()
                                                 }
