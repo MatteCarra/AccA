@@ -136,6 +136,7 @@
     <string name="title_on_boot">Apply on Boot</string>
     <string name="title_temperature_control">Temperature Control</string>
     <string name="title_capacity_control">Capacity Control</string>
+    <string name="about">About</string>
 
     <string name="capacity_control_info">- SHUTDOWN: automatically shutdown the system at or below this battery level when battery is not charging.\n- STOP: and RESUME capacities dictate when charging should stop and resume, respectively.\n- CHARGING SWITCH is the control file, plus ON and OFF values for switching charging on/off. By default, acc uses whatever works.</string>
 
