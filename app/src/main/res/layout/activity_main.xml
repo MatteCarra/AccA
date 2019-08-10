@@ -8,15 +8,13 @@
 
     <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"
-                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+                style="?toolbarStyle"/>
     </com.google.android.material.appbar.AppBarLayout>
 
 
@@ -27,22 +25,12 @@
             android:layout_marginBottom="?attr/actionBarSize"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bot_appBar"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/botNav_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:navigationIcon="@drawable/ic_round_menu_24px"
-            style="@style/Widget.MaterialComponents.BottomAppBar"
-            android:elevation="@dimen/bot_app_bar"
-            app:fabAlignmentMode="end"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:visibility="gone"
-            app:elevation="@dimen/bot_fab"
-            android:id="@+id/bot_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_anchor="@id/bot_appBar"/>
+            app:menu="@menu/bottom_nav_menu"
+            app:labelVisibilityMode="selected"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
