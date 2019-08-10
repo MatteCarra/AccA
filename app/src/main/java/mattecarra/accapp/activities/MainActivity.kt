@@ -527,6 +527,17 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
+    /**
+     * Function for setting the app's theme depending on saved preference.
+     */
+    private fun setTheme() {
+        when (mPreferences.appTheme) {
+            "0" -> setDefaultNightMode(MODE_NIGHT_NO)
+            "1" -> setDefaultNightMode(MODE_NIGHT_YES)
+            "2" -> setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the main_activity_menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.bottom_appbar_menu, menu)
