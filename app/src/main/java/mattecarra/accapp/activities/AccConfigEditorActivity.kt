@@ -15,6 +15,8 @@ import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.*
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.customview.customView
@@ -29,25 +31,17 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 
-class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener, CompoundButton.OnCheckedChangeListener {
-
-    private var unsavedChanges = false
-    private lateinit var mAccConfig: AccConfig
+class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener {
+    private lateinit var viewModel: AccConfigEditorViewModel
+    private lateinit var mUndoMenuItem: MenuItem
 
     private fun returnResults() {
         val returnIntent = Intent()
         returnIntent.putExtra(Constants.DATA_KEY, intent.getBundleExtra("data"))
-        returnIntent.putExtra(Constants.ACC_HAS_CHANGES, unsavedChanges)
-        returnIntent.putExtra(Constants.ACC_CONFIG_KEY, mAccConfig)
+        returnIntent.putExtra(Constants.ACC_HAS_CHANGES, viewModel.unsavedChanges)
+        returnIntent.putExtra(Constants.ACC_CONFIG_KEY, viewModel.accConfig)
         setResult(Activity.RESULT_OK, returnIntent)
         finish()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putParcelable("mAccConfig", mAccConfig)
-        outState.putBoolean("unsavedChanges", unsavedChanges)
-
-        super.onSaveInstanceState(outState)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,21 +54,22 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        unsavedChanges = savedInstanceState?.getBoolean("hasChanges", false) ?: false
-
-        if(savedInstanceState?.containsKey("mAccConfig") == true) {
-            this.mAccConfig = savedInstanceState.getParcelable("mAccConfig")!!
-        } else if(intent.hasExtra(Constants.ACC_CONFIG_KEY)) {
-            mAccConfig = intent.getParcelableExtra(Constants.ACC_CONFIG_KEY)!!
-        } else {
-            try {
-                this.mAccConfig = Acc.instance.readConfig()
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-                showConfigReadError()
-                this.mAccConfig = Acc.instance.defaultConfig //if mAccConfig is null I use default mAccConfig values.
+        val config =
+            if(savedInstanceState?.containsKey("mAccConfig") == true) {
+                savedInstanceState.getParcelable("mAccConfig")!!
+            } else if(intent.hasExtra(Constants.ACC_CONFIG_KEY)) {
+                intent.getParcelableExtra(Constants.ACC_CONFIG_KEY)!!
+            } else {
+                try {
+                    Acc.instance.readConfig()
+                } catch (ex: Exception) {
+                    ex.printStackTrace()
+                    showConfigReadError()
+                    Acc.instance.defaultConfig //if mAccConfig is null I use default mAccConfig values.
+                }
             }
-        }
+
+        viewModel = ViewModelProviders.of(this, AccConfigEditorViewModelFactory(application, config)).get(AccConfigEditorViewModel::class.java)
 
         initUi()
     }
@@ -89,6 +84,13 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.acc_config_editor_menu, menu)
+
+        mUndoMenuItem = menu.findItem(R.id.action_undo)
+
+        viewModel.undoOperationAvailableLiveData.observe(this, Observer {
+            mUndoMenuItem.isEnabled = it
+        })
+
         return true
     }
 
@@ -102,14 +104,10 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                 returnResults()
             }
             R.id.action_restore -> {
-                mAccConfig = Acc.instance.defaultConfig
-                updateOnPluggedCard()
-                updateOnBootCard()
-                updateCapacityCard()
-                updateTemperatureCard()
-                updateCoolDownCard()
-                updateVoltageControlCard()
-                unsavedChanges = true
+                viewModel.accConfig = Acc.instance.defaultConfig
+            }
+            R.id.action_undo -> {
+                viewModel.undoLastConfigOperation()
             }
         }
 
@@ -117,7 +115,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
     }
 
     override fun onBackPressed() {
-        if(unsavedChanges) {
+        if(viewModel.unsavedChanges) {
             MaterialDialog(this)
                 .show {
                     title(R.string.unsaved_changes)
@@ -135,149 +133,141 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         }
     }
 
-    private fun updateCapacityCard() {
+    private fun updateCapacityCard(configCapacity: AccConfig.ConfigCapacity) {
         shutdown_capacity_picker.minValue = 0
         shutdown_capacity_picker.maxValue = 20
-        shutdown_capacity_picker.value = mAccConfig.configCapacity.shutdown
+        shutdown_capacity_picker.value = configCapacity.shutdown
 
-        resume_capacity_picker.minValue = mAccConfig.configCapacity.shutdown
-        resume_capacity_picker.maxValue = if(mAccConfig.configCapacity.pause == 101) 101 else mAccConfig.configCapacity.pause - 1
-        resume_capacity_picker.value = mAccConfig.configCapacity.resume
+        resume_capacity_picker.minValue = configCapacity.shutdown
+        resume_capacity_picker.maxValue = if(configCapacity.pause == 101) 101 else configCapacity.pause - 1
+        resume_capacity_picker.value = configCapacity.resume
 
-        pause_capacity_picker.minValue = if(mAccConfig.configCapacity.resume == 101) 101 else mAccConfig.configCapacity.resume + 1
+        pause_capacity_picker.minValue = if(configCapacity.resume == 101) 101 else configCapacity.resume + 1
         pause_capacity_picker.maxValue = 101
-        pause_capacity_picker.value = mAccConfig.configCapacity.pause
-
-        charging_switch_textview.text = mAccConfig.configChargeSwitch ?: getString(R.string.automatic)
+        pause_capacity_picker.value = configCapacity.pause
     }
 
-    private fun updateTemperatureCard() {
-        if(mAccConfig.configTemperature.coolDownTemperature >= 90 && mAccConfig.configTemperature.maxTemperature >= 95) {
+    private fun updateChargeSwitch(configChargeSwitch: String?) {
+        charging_switch_textview.text = configChargeSwitch ?: getString(R.string.automatic)
+    }
+
+    private fun updateTemperatureCard(configTemperature: AccConfig.ConfigTemperature) {
+        if(configTemperature.coolDownTemperature >= 90 && configTemperature.maxTemperature >= 95) {
             temp_switch.isChecked = false
             temperature_cooldown_picker.isEnabled = false
             temperature_max_picker.isEnabled = false
             temperature_max_pause_seconds_picker.isEnabled = false
+        } else {
+            temp_switch.isChecked = true
+            temperature_cooldown_picker.isEnabled = true
+            temperature_max_picker.isEnabled = true
+            temperature_max_pause_seconds_picker.isEnabled = true
         }
 
         temperature_cooldown_picker.minValue = 20
         temperature_cooldown_picker.maxValue = 90
-        temperature_cooldown_picker.value = mAccConfig.configTemperature.coolDownTemperature
+        temperature_cooldown_picker.value = configTemperature.coolDownTemperature
 
 
         temperature_max_picker.minValue = 20
         temperature_max_picker.maxValue = 95
-        temperature_max_picker.value = mAccConfig.configTemperature.maxTemperature
+        temperature_max_picker.value = configTemperature.maxTemperature
 
 
         temperature_max_pause_seconds_picker.minValue = 10
         temperature_max_pause_seconds_picker.maxValue = 120
-        temperature_max_pause_seconds_picker.value = mAccConfig.configTemperature.pause
+        temperature_max_pause_seconds_picker.value = configTemperature.pause
     }
 
-    private fun updateCoolDownCard() {
-        if(mAccConfig.configCoolDown == null || mAccConfig.configCoolDown?.atPercent?.let { it > 100 } == true) {
-            mAccConfig.configCoolDown = null
+    private fun updateCoolDownCard(configCoolDown: AccConfig.ConfigCoolDown?) {
+        if(configCoolDown == null || configCoolDown.atPercent > 100) {
             cooldown_switch.isChecked = false
             cooldown_percentage_picker.isEnabled = false
             charge_ratio_picker.isEnabled = false
             pause_ratio_picker.isEnabled = false
+        } else {
+            cooldown_switch.isChecked = true
+            cooldown_percentage_picker.isEnabled = true
+            charge_ratio_picker.isEnabled = true
+            pause_ratio_picker.isEnabled = true
         }
 
-        cooldown_percentage_picker.minValue = mAccConfig.configCapacity.shutdown
+        cooldown_percentage_picker.minValue = 0
         cooldown_percentage_picker.maxValue = 100 //if someone wants to disable it should use the switch but I'm gonna leave it there
-        cooldown_percentage_picker.value = mAccConfig.configCoolDown?.atPercent ?: 60
+        cooldown_percentage_picker.value = configCoolDown?.atPercent ?: 60
 
         charge_ratio_picker.minValue = 1
         charge_ratio_picker.maxValue = 120 //no reason behind this value
-        charge_ratio_picker.value = mAccConfig.configCoolDown?.charge ?: 50
+        charge_ratio_picker.value = configCoolDown?.charge ?: 50
 
         pause_ratio_picker.minValue = 1
         pause_ratio_picker.maxValue = 120 //no reason behind this value
-        pause_ratio_picker.value = mAccConfig.configCoolDown?.pause ?: 10
+        pause_ratio_picker.value = configCoolDown?.pause ?: 10
     }
 
-    private fun updateVoltageControlCard() {
-        voltage_control_file.text = mAccConfig.configVoltage.controlFile ?: "Not supported"
-        voltage_max.text = mAccConfig.configVoltage.max?.let { "$it mV" } ?: getString(R.string.disabled)
+    private fun updateVoltageControlCard(configVoltage: AccConfig.ConfigVoltage) {
+        voltage_control_file.text = configVoltage.controlFile ?: "Not supported"
+        voltage_max.text = configVoltage.max?.let { "$it mV" } ?: getString(R.string.disabled)
     }
 
-    private fun updateOnPluggedCard() {
-        config_on_plugged_textview.text = mAccConfig.configOnPlug?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
-    }
-
-    private fun updateOnBootCard() {
-        tv_config_on_boot.text = mAccConfig.configOnBoot?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
-    }
 
     private fun initUi() {
-        updateOnPluggedCard()
+        viewModel.observeCapacity(this, Observer {
+            updateCapacityCard(it)
+        })
 
-        updateOnBootCard()
+        viewModel.observeChargeSwitch(this, Observer {
+            updateChargeSwitch(it)
+        })
+
+        viewModel.observeTemperature(this, Observer {
+            updateTemperatureCard(it)
+        })
+
+        viewModel.observeCoolDown(this, Observer {
+            updateCoolDownCard(it)
+        })
+
+        viewModel.observeVoltageLimit(this, Observer {
+            updateVoltageControlCard(it)
+        })
+
+        viewModel.observeOnPlug(this, Observer { configOnPlug ->
+            config_on_plugged_textview.text = configOnPlug?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
+        })
+
+        viewModel.observeOnBoot(this, Observer { configOnBoot ->
+            tv_config_on_boot.text = configOnBoot?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
+        })
 
         //capacity card
-        updateCapacityCard()
         shutdown_capacity_picker.setOnValueChangedListener(this)
         resume_capacity_picker.setOnValueChangedListener(this)
         pause_capacity_picker.setOnValueChangedListener(this)
 
         //temps
-        updateTemperatureCard()
-        temp_switch.setOnCheckedChangeListener(this)
+        temp_switch.setOnClickListener {
+            if(temp_switch.isChecked) {
+                viewModel.temperature = viewModel.temperature.copy(coolDownTemperature = 40, maxTemperature = 45)
+            } else {
+                viewModel.temperature = viewModel.temperature.copy(coolDownTemperature = 90, maxTemperature = 95)
+            }
+        }
         temperature_cooldown_picker.setOnValueChangedListener(this)
         temperature_max_picker.setOnValueChangedListener(this)
         temperature_max_pause_seconds_picker.setOnValueChangedListener(this)
 
         //coolDown
-        updateCoolDownCard()
-        cooldown_switch.setOnCheckedChangeListener(this)
+        cooldown_switch.setOnClickListener {
+            if(cooldown_switch.isChecked) {
+                viewModel.coolDown = AccConfig.ConfigCoolDown(60, 50, 10)
+            } else {
+                viewModel.coolDown = null
+            }
+        }
         cooldown_percentage_picker.setOnValueChangedListener(this)
         charge_ratio_picker.setOnValueChangedListener(this)
         pause_ratio_picker.setOnValueChangedListener(this)
-
-        //voltage control
-        updateVoltageControlCard()
-    }
-
-    //Listener to enable/disable temp control and cool down
-    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        if(buttonView == null) return
-        when(buttonView.id) {
-            R.id.temp_switch -> {
-                temperature_cooldown_picker.isEnabled = isChecked
-                temperature_max_picker.isEnabled = isChecked
-                temperature_max_pause_seconds_picker.isEnabled = isChecked
-
-                if(isChecked) {
-                    temperature_cooldown_picker.value = 40
-                    temperature_max_picker.value = 45
-
-                    mAccConfig.configTemperature.coolDownTemperature = 40
-                    mAccConfig.configTemperature.maxTemperature = 45
-                    unsavedChanges = true
-                } else {
-                    mAccConfig.configTemperature.coolDownTemperature= 90
-                    mAccConfig.configTemperature.maxTemperature = 95
-                    unsavedChanges = true
-                }
-            }
-
-            R.id.cooldown_switch -> {
-                cooldown_percentage_picker.isEnabled = isChecked
-                charge_ratio_picker.isEnabled = isChecked
-                pause_ratio_picker.isEnabled = isChecked
-
-                if(isChecked) {
-                    cooldown_percentage_picker.value = 60
-                    mAccConfig.configCoolDown = AccConfig.ConfigCoolDown(60, 50, 10)
-                    unsavedChanges = true
-                } else {
-                    mAccConfig.configCoolDown = null
-                    unsavedChanges = true
-                }
-            }
-
-            else -> {}
-        }
     }
 
     override fun onValueChange(picker: NumberPicker?, oldVal: Int, newVal: Int) {
@@ -285,53 +275,41 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
 
         when(picker.id) {
             //capacity
-            R.id.shutdown_capacity_picker -> {
-                mAccConfig.configCapacity.shutdown = newVal
+            R.id.shutdown_capacity_picker ->
+                viewModel.capacity = viewModel.capacity.copy(shutdown = newVal)
 
-                resume_capacity_picker.minValue = mAccConfig.configCapacity.shutdown
-                cooldown_percentage_picker.minValue = mAccConfig.configCapacity.shutdown
-            }
+            R.id.resume_capacity_picker ->
+                viewModel.capacity = viewModel.capacity.copy(resume = newVal)
 
-            R.id.resume_capacity_picker -> {
-                mAccConfig.configCapacity.resume = newVal
-
-                pause_capacity_picker.minValue = if(newVal == 101) 101 else newVal + 1
-            }
-
-            R.id.pause_capacity_picker -> {
-                mAccConfig.configCapacity.pause = newVal
-
-                resume_capacity_picker.maxValue = if(newVal == 101) 101 else newVal - 1
-            }
+            R.id.pause_capacity_picker ->
+                viewModel.capacity = viewModel.capacity.copy(pause = newVal)
 
             //temp
             R.id.temperature_cooldown_picker ->
-                mAccConfig.configTemperature.coolDownTemperature = newVal
+                viewModel.temperature = viewModel.temperature.copy(coolDownTemperature = newVal)
 
             R.id.temperature_max_picker ->
-                mAccConfig.configTemperature.maxTemperature = newVal
+                viewModel.temperature = viewModel.temperature.copy(maxTemperature = newVal)
 
             R.id.temperature_max_pause_seconds_picker ->
-                mAccConfig.configTemperature.pause = newVal
+                viewModel.temperature = viewModel.temperature.copy(pause = newVal)
 
             //coolDown
             R.id.cooldown_percentage_picker ->
-                mAccConfig.configCoolDown?.atPercent = newVal
+                viewModel.coolDown = viewModel.coolDown?.copy(atPercent = newVal)
 
             R.id.charge_ratio_picker -> {
-                mAccConfig.configCoolDown?.charge = newVal
+                viewModel.coolDown = viewModel.coolDown?.copy(charge = newVal)
             }
 
             R.id.pause_ratio_picker -> {
-                mAccConfig.configCoolDown?.pause = newVal
+                viewModel.coolDown = viewModel.coolDown?.copy(pause = newVal)
             }
 
             else -> {
                 return //This allows to skip unsavedChanges = true
             }
         }
-
-        unsavedChanges = true
     }
 
     /**
@@ -342,11 +320,8 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         MaterialDialog(this@AccConfigEditorActivity).show {
             title(R.string.edit_on_boot)
             message(R.string.edit_on_boot_dialog_message)
-            input(prefill = this@AccConfigEditorActivity.mAccConfig.configOnBoot ?: "", allowEmpty = true, hintRes = R.string.edit_on_boot_dialog_hint) { _, text ->
-                this@AccConfigEditorActivity.mAccConfig.configOnBoot = text.toString()
-                this@AccConfigEditorActivity.tv_config_on_boot.text = if(text.isBlank()) getString(R.string.not_set) else text
-
-                unsavedChanges = true
+            input(prefill = viewModel.onBoot ?: "", allowEmpty = true, hintRes = R.string.edit_on_boot_dialog_hint) { _, text ->
+                viewModel.onBoot = text.toString()
             }
             positiveButton(R.string.save)
             negativeButton(android.R.string.cancel)
@@ -357,11 +332,8 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         MaterialDialog(this@AccConfigEditorActivity).show {
             title(R.string.edit_on_plugged)
             message(R.string.edit_on_plugged_dialog_message)
-            input(prefill = this@AccConfigEditorActivity.mAccConfig.configOnPlug ?: "", allowEmpty = true, hintRes = R.string.edit_on_boot_dialog_hint) { _, text ->
-                this@AccConfigEditorActivity.mAccConfig.configOnPlug = text.toString()
-                this@AccConfigEditorActivity.config_on_plugged_textview.text = if(text.isBlank()) getString(R.string.not_set) else text
-
-                unsavedChanges = true
+            input(prefill = viewModel.onPlug ?: "", allowEmpty = true, hintRes = R.string.edit_on_boot_dialog_hint) { _, text ->
+                viewModel.onPlug = text.toString()
             }
             positiveButton(R.string.save)
             negativeButton(android.R.string.cancel)
@@ -371,7 +343,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
     fun editChargingSwitchOnClick(v: View) {
         val automaticString = getString(R.string.automatic)
         val chargingSwitches = listOf(automaticString, *Acc.instance.listChargingSwitches().toTypedArray())
-        val initialSwitch = mAccConfig.configChargeSwitch
+        val initialSwitch = viewModel.chargeSwitch
         var currentIndex = chargingSwitches.indexOf(initialSwitch ?: automaticString)
 
         MaterialDialog(this).show {
@@ -392,12 +364,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
                 val index = currentIndex
                 val switch = chargingSwitches[index]
 
-                doAsync {
-                    this@AccConfigEditorActivity.mAccConfig.configChargeSwitch = if(index == 0) null else switch
-                    this@AccConfigEditorActivity.charging_switch_textview.text = this@AccConfigEditorActivity.mAccConfig.configChargeSwitch ?: getString(R.string.automatic)
-                }
-
-                this@AccConfigEditorActivity.unsavedChanges = true
+                viewModel.chargeSwitch = if(index == 0) null else switch
 
                 dismiss()
             }
@@ -442,18 +409,13 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
 
                 val voltageMaxInt = voltageMax.text.toString().toIntOrNull()
                 if(checkBox.isChecked && voltageMaxInt != null) {
-                    this@AccConfigEditorActivity.mAccConfig.configVoltage.max = voltageMaxInt
-                    this@AccConfigEditorActivity.mAccConfig.configVoltage.controlFile = voltageControl.selectedItem as String
-
-                    this@AccConfigEditorActivity.voltage_control_file.text = voltageControl.selectedItem as String
-                    this@AccConfigEditorActivity.voltage_max.text = "$voltageMaxInt mV"
+                    viewModel.voltageLimit = AccConfig.ConfigVoltage(
+                        voltageControl.selectedItem as String,
+                        voltageMaxInt
+                    )
                 } else {
-                    this@AccConfigEditorActivity.mAccConfig.configVoltage.max = null
-
-                    this@AccConfigEditorActivity.voltage_max.text = getString(R.string.disabled)
+                    viewModel.voltageLimit = viewModel.voltageLimit.copy(max = null)
                 }
-
-                unsavedChanges = true
             }
             negativeButton(android.R.string.cancel)
         }
@@ -464,7 +426,9 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         val checkBox = dialog.findViewById<CheckBox>(R.id.enable_voltage_max)
         val voltageControl = view.findViewById<Spinner>(R.id.voltage_control_file)
 
-        voltageMax.setText(mAccConfig.configVoltage.max?.toString() ?: "", TextView.BufferType.EDITABLE)
+        val configVoltage = viewModel.voltageLimit
+
+        voltageMax.setText(configVoltage.max?.toString() ?: "", TextView.BufferType.EDITABLE)
         checkBox.setOnCheckedChangeListener { _, isChecked ->
             voltageMax.isEnabled = isChecked
 
@@ -473,7 +437,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             voltageMax.error = if (isValid) null else getString(R.string.invalid_voltage_max)
             dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid  && voltageControl.selectedItemPosition != -1)
         }
-        checkBox.isChecked = mAccConfig.configVoltage.max != null
+        checkBox.isChecked = configVoltage.max != null
         voltageMax.isEnabled = checkBox.isChecked
         voltageMax.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
@@ -489,7 +453,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         })
 
         val supportedVoltageControlFiles = ArrayList(Acc.instance.listVoltageSupportedControlFiles())
-        val currentVoltageFile = mAccConfig.configVoltage.controlFile?.let { currentVoltFile ->
+        val currentVoltageFile = configVoltage.controlFile?.let { currentVoltFile ->
             val currentVoltFileRegex = currentVoltFile.replace("/", """\/""").replace(".", """\.""").replace("?", ".").toRegex()
             val match = supportedVoltageControlFiles.find { currentVoltFileRegex.matches(it) }
             if(match == null) {
@@ -545,38 +509,26 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
     }
 
     fun onPluggedRestore(view: View) {
-        mAccConfig.configOnPlug = Acc.instance.defaultConfig.configOnPlug
-        updateOnPluggedCard()
-        unsavedChanges = true
+        viewModel.onPlug = Acc.instance.defaultConfig.configOnPlug
     }
 
     fun onCooldownRestore(view: View) {
-        mAccConfig.configCoolDown = Acc.instance.defaultConfig.configCoolDown
-        updateCoolDownCard()
-        unsavedChanges = true
+        viewModel.coolDown = Acc.instance.defaultConfig.configCoolDown
     }
 
     fun onCapacityRestore(view: View) {
-        mAccConfig.configCapacity = Acc.instance.defaultConfig.configCapacity
-        mAccConfig.configChargeSwitch = Acc.instance.defaultConfig.configChargeSwitch
-        updateCapacityCard()
-        unsavedChanges = true
+        viewModel.accConfig = viewModel.accConfig.copy(configCapacity = Acc.instance.defaultConfig.configCapacity, configChargeSwitch = Acc.instance.defaultConfig.configChargeSwitch)
     }
 
     fun onVoltageControlRestore(view: View) {
-        mAccConfig.configVoltage = Acc.instance.defaultConfig.configVoltage
-        updateVoltageControlCard()
-        unsavedChanges = true
+        viewModel.voltageLimit = Acc.instance.defaultConfig.configVoltage
     }
 
     fun onTemperatureControlRestore(view: View) {
-        mAccConfig.configTemperature = Acc.instance.defaultConfig.configTemperature
-        updateTemperatureCard()
-        unsavedChanges = true
+        viewModel.temperature = Acc.instance.defaultConfig.configTemperature
     }
 
     fun onBootRestoreClick(view: View) {
-        mAccConfig.configOnPlug = Acc.instance.defaultConfig.configOnPlug
-        updateOnBootCard()
+        viewModel.onBoot = Acc.instance.defaultConfig.configOnBoot
     }
 }

@@ -76,6 +76,8 @@ dependencies {
 
     implementation 'com.github.sephiroth74:android-target-tooltip:2.0.4'
 
+    implementation 'org.apache.commons:commons-collections4:4.4'
+
     // Room components
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"

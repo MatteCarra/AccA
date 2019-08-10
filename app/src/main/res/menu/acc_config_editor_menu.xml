@@ -7,6 +7,13 @@
         android:icon="@drawable/ic_baseline_restore_24px"
         android:title="@string/restore"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_undo"
+        android:icon="@drawable/ic_baseline_undo_24px"
+        android:title="@string/undo"
+        app:showAsAction="ifRoom" />
+
     <item
             android:id="@+id/action_save"
             android:icon="@drawable/ic_save"
