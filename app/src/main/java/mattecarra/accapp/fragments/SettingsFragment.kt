@@ -57,30 +57,49 @@ class SettingsFragment : PreferenceFragmentCompat(), CoroutineScope {
 
         val accVersion = findPreference<Preference>(ACC_VERSION)
         accVersion?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            context?.let {
-                val preferences = Preferences(it)
+            context?.let { context ->
+                val preferences = Preferences(context)
 
                 val onSelection: SingleChoiceListener =  { _, _, text ->
-                    launch {
-                        val dialog = MaterialDialog(it).show {
-                            title(R.string.installing_acc)
-                            progress(R.string.wait)
-                            cancelOnTouchOutside(false)
+                    val installVersion: () -> Unit = {
+                        launch {
+                            val dialog = MaterialDialog(context).show {
+                                title(R.string.installing_acc)
+                                progress(R.string.wait)
+                                cancelOnTouchOutside(false)
+                            }
+
+                            dialog.setOnKeyListener { _, keyCode, _ ->
+                                keyCode == KeyEvent.KEYCODE_BACK
+                            }
+
+                            if (text == "bundled")
+                                Acc.installBundledAccModule(context)
+                            else
+                                Acc.installAccModuleVersion(context, text)
+
+                            preferences.accVersion = text
+                            dialog.dismiss()
                         }
+                    }
 
-                        dialog.setOnKeyListener { _, keyCode, _ ->
-                            keyCode == KeyEvent.KEYCODE_BACK
-                        }
-
-                        Acc.installAccModuleVersion(it, text)
-
-                        preferences.accVersion = text
-                        dialog.dismiss()
+                    if (text == "bundled") {
+                        installVersion()
+                    } else {
+                        MaterialDialog(context)
+                            .show {
+                                title(R.string.acc_version_compatibility_warning_title)
+                                message(R.string.acc_version_compatibility_warning_description)
+                                positiveButton(android.R.string.yes) {
+                                    installVersion()
+                                }
+                                negativeButton(android.R.string.cancel)
+                            }
                     }
                 }
 
-                val options = it.resources.getStringArray(R.array.acc_version_options).toMutableList()
-                val versionDialog = MaterialDialog(it)
+                val options = context.resources.getStringArray(R.array.acc_version_options).toMutableList()
+                val versionDialog = MaterialDialog(context)
                     .show {
                         title(R.string.acc_version_preference_title)
                         message(R.string.acc_version_picker_message)
@@ -90,7 +109,7 @@ class SettingsFragment : PreferenceFragmentCompat(), CoroutineScope {
 
                 launch {
                     options.addAll(
-                        Acc.listAccVersions(it)
+                        Acc.listAccVersions(context)
                     )
                     versionDialog.listItemsSingleChoice(items = options, initialSelection = options.indexOf(preferences.accVersion), selection = onSelection)
                 }

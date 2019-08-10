@@ -202,6 +202,8 @@
     <string name="ui_options">User Interface</string>
     <string name="theme_option_setting">Theme</string>
     <string name="theme_option_summary">Set the theme of the app.</string>
+    <string name="acc_version_compatibility_warning_title">Acc version compatibility</string>
+    <string name="acc_version_compatibility_warning_description">You have selected a different version of Acc that is not guaranteed to be compatible with the app. Most of the times you should not run into compatibility problems. Do you want to continue?</string>
     <string-array name="theme_option_options">
         <item>Light</item>
         <item>Dark</item>
