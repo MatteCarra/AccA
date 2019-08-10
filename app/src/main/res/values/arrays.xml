@@ -13,4 +13,9 @@
         <item>master</item>
         <item>develop</item>
     </string-array>
+    <string-array name="theme_option_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 </resources>
