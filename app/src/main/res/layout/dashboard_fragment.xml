@@ -79,7 +79,7 @@
                         android:id="@+id/dash_accdStatus_imageView"
                         android:layout_width="84dp"
                         android:layout_height="84dp"
-                        android:tint="@color/colorImageTint"
+                        android:tint="@color/white"
                         android:layout_gravity="center"/>
 
                 </FrameLayout>
@@ -108,7 +108,7 @@
                         android:text="@string/stop"
                         android:drawableLeft="@drawable/ic_outline_stop_24px"
                         android:drawableStart="@drawable/ic_outline_stop_24px"
-                        android:drawableTint="@color/colorImageTint"
+                        android:drawableTint="@color/white"
                         app:layout_constraintEnd_toStartOf="@+id/dash_daemonRestart_button"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -121,7 +121,7 @@
                         android:text="@string/restart"
                         android:drawableLeft="@drawable/ic_sync_black_24dp"
                         android:drawableStart="@drawable/ic_sync_black_24dp"
-                        android:drawableTint="@color/colorImageTint"
+                        android:drawableTint="@color/white"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -258,7 +258,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_outline_edit_24px"
                         android:drawableStart="@drawable/ic_outline_edit_24px"
-                        android:drawableTint="@color/colorImageTint"
+                        android:drawableTint="@color/white"
                         android:text="@string/edit_charging_limit_once"/>
                 </LinearLayout>
 
