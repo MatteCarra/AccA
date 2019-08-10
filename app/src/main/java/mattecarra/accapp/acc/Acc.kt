@@ -1,7 +1,13 @@
 package mattecarra.accapp.acc
 
 import android.content.Context
+import com.google.gson.JsonArray
+import com.google.gson.JsonParser
 import com.topjohnwu.superuser.Shell
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
+import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
 import mattecarra.accapp.adapters.Schedule
 import mattecarra.accapp.models.AccConfig
@@ -10,6 +16,7 @@ import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
+import kotlin.math.abs
 
 
 interface AccInterface {
@@ -146,7 +153,7 @@ object Acc {
     }
 
     fun isInstalledAccOutdated(): Boolean {
-        return getAccVersion() ?: 0 < bundledVersion ?: 0
+        return getAccVersion() ?: 0 < bundledVersion
     }
 
     //TODO run this every time an acc instance is created to ensure that acc is available.
@@ -161,14 +168,9 @@ object Acc {
         return Shell.su("acc --version").exec().out.joinToString(separator = "\n").trim().toIntOrNull() ?: defaultVersion
     }
 
-    fun isAccInstalled(): Boolean {
-        return Shell.su("which acc > /dev/null").exec().isSuccess
-    }
-
-    fun installBundledAccModule(context: Context): Shell.Result? {
-        return try {
+    suspend fun installBundledAccModule(context: Context): Shell.Result?  = withContext(Dispatchers.IO) {
+        try {
             val bundleFile = File(context.filesDir, "acc_bundle.tar.gz")
-            val installShFile = File(context.filesDir, "install-tarball.sh")
 
             context.resources.openRawResource(R.raw.acc_bundle).use { out ->
                 FileOutputStream(bundleFile).use {
@@ -176,30 +178,20 @@ object Acc {
                 }
             }
 
-            context.resources.openRawResource(R.raw.install).use { installer ->
-                FileOutputStream(installShFile).use {
-                    installer.copyTo(it)
-                }
-            }
-
-            val logDir = File(context.filesDir, "logs")
-            if(!logDir.exists())
-                logDir.mkdir()
-            Shell.su("sh -x ${installShFile.absolutePath} > ${File(logDir, "acc-install.log").absolutePath} 2>&1").exec()
+            installLocalAccModule(context)
         } catch (ex: java.lang.Exception) {
             ex.printStackTrace()
             null
         }
     }
 
-    fun installAccModule(context: Context): Shell.Result? {
+    suspend fun installAccModuleVersion(context: Context, version: String): Shell.Result?  = withContext(Dispatchers.IO) {
         try {
-            val scriptFile = File(context.filesDir, "install-latest.sh")
-            val path = scriptFile.absolutePath
+            val bundleFile = File(context.filesDir, "acc_bundle.tar.gz")
 
-            BufferedInputStream(URL("https://raw.githubusercontent.com/VR-25/acc/master/install-latest.sh").openStream())
+            BufferedInputStream(URL("https://github.com/VR-25/acc/archive/$version.tar.gz").openStream())
                 .use { inStream ->
-                    FileOutputStream(scriptFile)
+                    FileOutputStream(bundleFile)
                         .use {
                             val buf = ByteArray(1024)
                             var bytesRead = inStream.read(buf, 0, 1024)
@@ -211,10 +203,67 @@ object Acc {
                         }
                 }
 
-            return Shell.su("sh $path").exec()
+            installLocalAccModule(context)
         } catch (ex: java.lang.Exception) {
             ex.printStackTrace()
-            return null
+            null
+        }
+    }
+
+    /*
+    * This function assumes that acc tar gz is already in place
+    */
+    private suspend fun installLocalAccModule(context: Context): Shell.Result? = withContext(Dispatchers.IO){
+        try {
+            val installShFile = File(context.filesDir, "install-tarball.sh")
+
+            context.resources.openRawResource(R.raw.install).use { installer ->
+                FileOutputStream(installShFile).use {
+                    installer.copyTo(it)
+                }
+            }
+
+            val logDir = File(context.filesDir, "logs")
+            if(!logDir.exists())
+                logDir.mkdir()
+
+            val res = Shell.su("sh -x ${installShFile.absolutePath} > ${File(logDir, "acc-install.log").absolutePath} 2>&1").exec()
+            calibrateMeasurements(context)
+            res
+        } catch (ex: java.lang.Exception) {
+            ex.printStackTrace()
+            null
+        }
+    }
+
+    private suspend fun calibrateMeasurements(context: Context) = withContext(Dispatchers.IO) {
+        var microVolts = 0
+        var microAmpere = 0
+
+        for (i in 0..10) {
+            val batteryInfo = Acc.instance.getBatteryInfo()
+            if(batteryInfo.getRawVoltageNow() > 1000000)
+                microVolts++
+            if(abs(batteryInfo.getRawCurrentNow()) > 10000)
+                microAmpere++
+
+            delay(250)
+        }
+
+        val preferences = Preferences(context)
+        preferences.uACurrent = microAmpere >= 6
+        preferences.uVMeasureUnit = microVolts >= 6
+    }
+
+    suspend fun listAccVersions(context: Context): List<String> = withContext(Dispatchers.IO) {
+        (try {
+            JsonParser()
+                .parse(URL("https://api.github.com/repos/VR-25/acc/tags").readText())
+                .asJsonArray
+        } catch (ignored: java.lang.Exception) {
+            JsonArray()
+        }).map {
+            it.asJsonObject["name"].asString
         }
     }
 }

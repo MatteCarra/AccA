@@ -185,6 +185,8 @@
     <string name="units_of_measure">Units of measure</string>
     <string name="acc_version_preference_title">Acc version</string>
     <string name="acc_version_preference_description">You can choose which version of acc you want to use between bundled, master and developer. Bundled version is guaranteed to be working and it\'s the recommended option</string>
+    <string name="install_bundled_version">Install bundled version</string>
+    <string name="acc_version_picker_message">Select the acc version you want to use</string>
 
     <string-array name="current_measure_units_options">
         <item>mAmpere (1E-03)</item>
@@ -196,7 +198,7 @@
         <item>μV (1E-06)</item>
     </string-array>
 
-    <string-array name="acc_version_units_options">
+    <string-array name="acc_version_options">
         <item>Bundled (recommended)</item>
         <item>Master</item>
         <item>Develop</item>

@@ -21,13 +21,16 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
+import com.afollestad.materialdialogs.list.SingleChoiceListener
+import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.Display
 import com.github.javiersantos.appupdater.enums.UpdateFrom
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.gson.JsonArray
+import com.google.gson.JsonParser
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.Preferences
@@ -47,8 +50,10 @@ import mattecarra.accapp.utils.Constants
 import mattecarra.accapp.utils.ScopedAppActivity
 import mattecarra.accapp.utils.progress
 import org.jetbrains.anko.doAsync
+import org.json.JSONArray
 import java.io.File
-import kotlin.math.abs
+import java.lang.Exception
+import java.net.URL
 
 class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
     OnProfileClickListener, OnNavigationItemClicked {
@@ -340,7 +345,8 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun checkAccInstalled(): Boolean {
-        if (!Acc.isBundledAccInstalled(filesDir) || Acc.isInstalledAccOutdated()) { //TODO let the user decide between bundle and stable
+        val version = preferences.accVersion
+        if (!Acc.isBundledAccInstalled(filesDir) || (version == "bundled" && Acc.isInstalledAccOutdated())) {
             val dialog = MaterialDialog(this).show {
                 title(R.string.installing_acc)
                 progress(R.string.wait)
@@ -352,79 +358,111 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             launch {
-                val res = withContext(Dispatchers.IO) {
-                    Acc.installBundledAccModule(this@MainActivity)
-                }
-
-                if(res?.isSuccess == true) { //calibration: gets 11 voltage/ampere measurements and guesses if it's measured in uV or mV/uA or mA
-                    withContext(Dispatchers.IO) {
-                        var microVolts = 0
-                        var microAmpere = 0
-
-                        for (i in 0..10) {
-                            val batteryInfo = Acc.instance.getBatteryInfo()
-                            if(batteryInfo.getRawVoltageNow() > 1000000)
-                                microVolts++
-                            if(abs(batteryInfo.getRawCurrentNow()) > 10000)
-                                microAmpere++
-
-                            delay(250)
-                        }
-
-                        preferences.uACurrent = microAmpere >= 6
-                        preferences.uVMeasureUnit = microVolts >= 6
+                val res =
+                    when (version) {
+                        "bundled" ->
+                            Acc.installBundledAccModule(this@MainActivity)
+                        else ->
+                            Acc.installAccModuleVersion(this@MainActivity, version)
                     }
-                }
 
                 dialog.cancel()
 
                 if (res?.isSuccess != true) {
-                    val failureDialog = if(res?.code == 3) { //Buysbox is not installed
-                        MaterialDialog(this@MainActivity)
-                            .show {
-                                title(R.string.installation_failed_busybox_title)
-                                message(R.string.installation_failed_busybox)
-                                positiveButton(R.string.retry) {
-                                    if (checkAccInstalled()) {
-                                        initUi()
-                                    }
-                                }
-                                negativeButton {
-                                    finish()
-                                }
-                                cancelOnTouchOutside(false)
-                            }
-                    } else {
-                        MaterialDialog(this@MainActivity)
-                            .show {
-                                title(R.string.installation_failed_title)
-                                message(R.string.installation_failed)
-                                positiveButton(R.string.retry) {
-                                    if (checkAccInstalled())
-                                        initUi()
-                                }
-                                negativeButton {
-                                    finish()
-                                }
-                                neutralButton(R.string.share) {
-                                    val file = File(filesDir, "logs/acc-install.log")
-                                    if(file.exists()) {
-                                        val intentShareFile = Intent(Intent.ACTION_SEND)
-                                            .setType("text/plain")
-                                            .putExtra(
-                                                Intent.EXTRA_STREAM,
-                                                FileProvider.getUriForFile(applicationContext, "mattecarra.accapp.fileprovider", file)
-                                            )
-                                            .putExtra(Intent.EXTRA_TEXT, "AccA installation failed log")
+                    val failureDialog =
+                        when {
+                            version != "bundled" -> //custom version installation had an error -> ask the user to select a different version
+                                MaterialDialog(this@MainActivity)
+                                    .show {
+                                        title(R.string.installation_failed_title)
+                                        message(R.string.installation_failed_busybox)
+                                        positiveButton(R.string.install_bundled_version) {
+                                            preferences.accVersion = "bundled"
+                                            if (checkAccInstalled()) {
+                                                initUi()
+                                            }
+                                        }
+                                        negativeButton {
+                                            val onSelection: SingleChoiceListener =  { _, _, text ->
+                                                preferences.accVersion = text
+                                                if (checkAccInstalled()) {
+                                                    initUi()
+                                                }
+                                            }
 
-                                        startActivity(Intent.createChooser(intentShareFile, "Share log file"))
-                                    } else {
-                                        Toast.makeText(this@MainActivity, R.string.logs_not_found, Toast.LENGTH_LONG).show()
+                                            val options = resources.getStringArray(R.array.acc_version_options).toMutableList()
+
+                                            val versionDialog = MaterialDialog(this@MainActivity)
+                                                .show {
+                                                    title(R.string.acc_version_preference_title)
+                                                    message(R.string.acc_version_picker_message)
+                                                    cancelOnTouchOutside(false)
+                                                }
+
+                                            versionDialog.setOnKeyListener { _, keyCode, _ ->
+                                                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                                                    dialog.dismiss()
+                                                    finish()
+                                                    false
+                                                } else true
+                                            }
+
+                                            launch {
+                                                options.addAll(
+                                                    Acc.listAccVersions(this@MainActivity)
+                                                )
+                                                versionDialog.listItemsSingleChoice(items = options, initialSelection = options.indexOf(version), selection = onSelection)
+                                            }
+                                        }
+                                        cancelOnTouchOutside(false)
                                     }
+
+                            res?.code == 3 -> //Buysbox is not installed
+                                MaterialDialog(this@MainActivity)
+                                    .show {
+                                        title(R.string.installation_failed_busybox_title)
+                                        message(R.string.installation_failed_busybox)
+                                        positiveButton(R.string.retry) {
+                                            if (checkAccInstalled()) {
+                                                initUi()
+                                            }
+                                        }
+                                        negativeButton {
+                                            finish()
+                                        }
+                                        cancelOnTouchOutside(false)
+                                    }
+
+                            else -> MaterialDialog(this@MainActivity) //Other installation errors can not be handled automatically -> show a dialog with the logs
+                                .show {
+                                    title(R.string.installation_failed_title)
+                                    message(R.string.installation_failed)
+                                    positiveButton(R.string.retry) {
+                                        if (checkAccInstalled())
+                                            initUi()
+                                    }
+                                    negativeButton {
+                                        finish()
+                                    }
+                                    neutralButton(R.string.share) {
+                                        val file = File(filesDir, "logs/acc-install.log")
+                                        if(file.exists()) {
+                                            val intentShareFile = Intent(Intent.ACTION_SEND)
+                                                .setType("text/plain")
+                                                .putExtra(
+                                                    Intent.EXTRA_STREAM,
+                                                    FileProvider.getUriForFile(applicationContext, "mattecarra.accapp.fileprovider", file)
+                                                )
+                                                .putExtra(Intent.EXTRA_TEXT, "AccA installation failed log")
+
+                                            startActivity(Intent.createChooser(intentShareFile, "Share log file"))
+                                        } else {
+                                            Toast.makeText(this@MainActivity, R.string.logs_not_found, Toast.LENGTH_LONG).show()
+                                        }
+                                    }
+                                    cancelOnTouchOutside(false)
                                 }
-                                cancelOnTouchOutside(false)
-                            }
-                    }
+                        }
 
                     failureDialog.setOnKeyListener { _, keyCode, _ ->
                         if (keyCode == KeyEvent.KEYCODE_BACK) {
