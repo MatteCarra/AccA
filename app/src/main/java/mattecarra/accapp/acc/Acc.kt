@@ -149,11 +149,11 @@ object Acc {
 
             synchronized(this) {
                 // Create acc instance here
-                return initInstance()
+                return createAccInstance()
             }
         }
 
-    private fun initInstance(): AccInterface {
+    private fun createAccInstance(): AccInterface {
         val constructor = try {
             val version = getAccVersion()
             val aClass = Class.forName("mattecarra.accapp.acc.${getVersionPackageName(version)}.AccHandler")
@@ -247,8 +247,8 @@ object Acc {
             if(!logDir.exists())
                 logDir.mkdir()
 
-            val res = Shell.su("sh -x ${installShFile.absolutePath} > ${File(logDir, "acc-install.log").absolutePath} 2>&1").exec()
-            initInstance()
+            val res = Shell.su("sh -x ${installShFile.absolutePath} acc > ${File(logDir, "acc-install.log").absolutePath} 2>&1").exec()
+            createAccInstance()
             calibrateMeasurements(context)
             res
         } catch (ex: java.lang.Exception) {

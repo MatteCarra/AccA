@@ -35,6 +35,7 @@ import mattecarra.accapp.R
 import mattecarra.accapp.SharedViewModel
 import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.acc.Acc
+import mattecarra.accapp.djs.Djs
 import mattecarra.accapp.fragments.DashboardFragment
 import mattecarra.accapp.fragments.ProfilesFragment
 import mattecarra.accapp.fragments.SchedulesFragment
@@ -239,12 +240,92 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             R.id.botNav_schedules -> {
-                // TODO: Implement schedules
-                return false
+                if (!Djs.isBundledDjsInstalled(filesDir) || !Djs.initBundledDjs(filesDir) || Djs.isInstalledDjsOutdated()) {
+                    installDjs()
+                    return false
+                } else {
+                    loadFragment(mSchedulesFragment)
+                    return false
+                }
             }
         }
 
         return false
+    }
+
+    fun installDjs() {
+        MaterialDialog(this).show {
+            title(R.string.install_djs_title)
+            message(R.string.install_djs_description)
+            positiveButton(android.R.string.yes) {
+                val dialog = MaterialDialog(this@MainActivity).show {
+                    title(R.string.installing_djs)
+                    progress(R.string.wait)
+                    cancelOnTouchOutside(false)
+                }
+
+                dialog.setOnKeyListener { _, keyCode, _ ->
+                    keyCode == KeyEvent.KEYCODE_BACK
+                }
+
+                launch {
+                    val res = Djs.installBundledAccModule(this@MainActivity)
+                    dialog.cancel()
+
+                    if(res?.isSuccess != true) {
+                        when {
+                            res?.code == 3 -> //Buysbox is not installed
+                                MaterialDialog(this@MainActivity)
+                                    .show {
+                                        title(R.string.installation_failed_busybox_title)
+                                        message(R.string.installation_failed_busybox)
+                                        positiveButton(R.string.retry) {
+                                            installDjs()
+                                        }
+                                        negativeButton {
+                                            botNav_main.selectedItemId = R.id.botNav_schedules
+                                        }
+                                        cancelOnTouchOutside(false)
+                                    }
+
+                            else -> MaterialDialog(this@MainActivity) //Other installation errors can not be handled automatically -> show a dialog with the logs
+                                .show {
+                                    title(R.string.djs_installation_failed_title)
+                                    message(R.string.djs_installation_failed)
+                                    positiveButton(R.string.retry) {
+                                        installDjs()
+                                    }
+                                    negativeButton {
+                                        botNav_main.selectedItemId = R.id.botNav_schedules
+                                    }
+
+                                    neutralButton(R.string.share) {
+                                        val file = File(filesDir, "logs/djs-install.log")
+                                        if(file.exists()) {
+                                            val intentShareFile = Intent(Intent.ACTION_SEND)
+                                                .setType("text/plain")
+                                                .putExtra(
+                                                    Intent.EXTRA_STREAM,
+                                                    FileProvider.getUriForFile(applicationContext, "mattecarra.accapp.fileprovider", file)
+                                                )
+                                                .putExtra(Intent.EXTRA_TEXT, "AccA installation failed log")
+
+                                            startActivity(Intent.createChooser(intentShareFile, "Share log file"))
+                                        } else {
+                                            Toast.makeText(this@MainActivity, R.string.logs_not_found, Toast.LENGTH_LONG).show()
+                                        }
+                                    }
+                                    cancelOnTouchOutside(false)
+                                }
+                        }
+                    } else {
+                        initUi()
+                    }
+                }
+
+            }
+            negativeButton(android.R.string.no)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?) = when (item!!.itemId) {
@@ -365,7 +446,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                             version != "bundled" -> //custom version installation had an error -> ask the user to select a different version
                                 MaterialDialog(this@MainActivity)
                                     .show {
-                                        title(R.string.installation_failed_title)
+                                        title(R.string.acc_installation_failed_title)
                                         message(R.string.installation_failed_busybox)
                                         positiveButton(R.string.install_bundled_version) {
                                             mPreferences.accVersion = "bundled"
@@ -426,8 +507,8 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 
                             else -> MaterialDialog(this@MainActivity) //Other installation errors can not be handled automatically -> show a dialog with the logs
                                 .show {
-                                    title(R.string.installation_failed_title)
-                                    message(R.string.installation_failed)
+                                    title(R.string.acc_installation_failed_title)
+                                    message(R.string.djs_installation_failed)
                                     positiveButton(R.string.retry) {
                                         if (checkAccInstalled())
                                             initUi()

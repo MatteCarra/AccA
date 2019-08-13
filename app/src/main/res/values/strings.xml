@@ -74,8 +74,16 @@
     <!-- Acc installation -->
     <string name="installing_acc">Installing ACC</string>
     <string name="reboot">Reboot</string>
-    <string name="installation_failed">Please send logcat and /data/data/mattecarra.accapp/files/logs/acc-install.log to the developers at t.me/acc/ or github.com/MatteCarra/AccA/issues/.</string>
-    <string name="installation_failed_title">ACC Installation Failed!</string>
+    <string name="acc_installation_failed">Please send logcat and /data/data/mattecarra.accapp/files/logs/acc-install.log to the developers at t.me/acc/ or github.com/MatteCarra/AccA/issues/.</string>
+    <string name="acc_installation_failed_title">ACC Installation Failed!</string>
+    <!-- ################################################### -->
+
+    <!-- Djs installation -->
+    <string name="install_djs_title">Djs is required</string>
+    <string name="install_djs_description">In order to enable this feature the app has to enable djs.\nDjs is a lightweight extension to acc that allows to schedule acc tasks.\nA daemon will be started on boot alongside acc.\nDo you want to continue?</string>
+    <string name="installing_djs">Installing DJS</string>
+    <string name="djs_installation_failed">Please send logcat and /data/data/mattecarra.accapp/files/logs/djs-install.log to the developers at t.me/acc/ or github.com/MatteCarra/AccA/issues/.</string>
+    <string name="djs_installation_failed_title">DJS Installation Failed!</string>
     <!-- ################################################### -->
 
     <string name="not_set">Not set.</string>

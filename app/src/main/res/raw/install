@@ -20,13 +20,13 @@ if [ $(id -u) -ne 0 ]; then
   exit 4
 fi
 
-id=acc
+id=$1
 set -e
 [ -f $PWD/${0##*/} ] || cd ${0%/*}
 [ -d $id/${id}-init.sh ] && exit 0
 rm -rf ${id}-*/
 tar -xf ${id}*gz
-export installDir0="$1"
+export installDir0="$2"
 sh ${id}-*/install-current.sh
 rm -rf ${id}-*/
 exit 0

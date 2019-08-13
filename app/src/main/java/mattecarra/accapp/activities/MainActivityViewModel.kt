@@ -17,7 +17,7 @@ import mattecarra.accapp.utils.DataRepository
 import kotlin.coroutines.CoroutineContext
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
-    var selectedNavBarItem: Int = R.id.botNav_home
+    var selectedNavBarItem = R.id.botNav_home
 
     private val mDataRepository: DataRepository = DataRepository(application, viewModelScope)
 

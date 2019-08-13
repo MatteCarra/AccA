@@ -54,7 +54,7 @@
     <!-- Acc installation -->
     <string name="installing_acc">正在初始化所需文件</string>
     <string name="reboot">重启</string>
-    <string name="installation_failed_title">安装失败</string>
+    <string name="acc_installation_failed_title">安装失败</string>
     <string name="not_set">未设置</string>
     <string name="edit_on_boot">编辑 启动时(On Boot) 值</string>
     <string name="edit_on_boot_dialog_hint">留空以禁用</string>
