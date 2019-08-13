@@ -59,6 +59,8 @@
     <!-- Acc installation -->
     <string name="reboot">Neustart</string>
     <!-- ################################################### -->
+    <!-- Djs installation -->
+    <!-- ################################################### -->
     <string name="edit_on_boot_dialog_hint">Leer lassen, um zu deaktivieren</string>
     <string name="save">Speichern</string>
     <string name="logs">Logs</string>
