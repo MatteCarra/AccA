@@ -95,7 +95,7 @@
     <string name="edit_voltage_limit">Spannungslimit bearbeiten</string>
     <string name="voltage_max">Spannungs-max (mV):</string>
     <string name="disabled">Deaktiviert</string>
-    <string name="schedule_row_text">%1$sJob geplant um %2$d:%3$d</string>
+    <string name="schedule_row_text">Recurrent Job geplant um %2$d:%3$d</string>
     <string name="delete">Löschen</string>
     <string name="no_schedules">Keine Zeitpläne gesetzt</string>
     <string name="edit_scheduled_command">Der geplante Befehl kann bearbeitet werden. Wenn du die schöne UI nutzen möchtest, solltest du diesen löschen und neu erstellen.

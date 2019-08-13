@@ -119,7 +119,7 @@
     <string name="edit_voltage_limit">Edit voltage limit</string>
     <string name="voltage_max">Voltage max (mV):</string>
     <string name="disabled">Disabled</string>
-    <string name="schedule_row_text">%1$sJob scheduled at %2$d:%3$d</string>
+    <string name="schedule_row_text">Recurrent Job scheduled at %2$d:%3$d</string>
     <string name="delete">Delete</string>
     <string name="no_schedules">No schedules set</string>
     <string name="edit_scheduled_command">You can edit the scheduled command. If you want the nice UI, you should delete and recreate it.</string>

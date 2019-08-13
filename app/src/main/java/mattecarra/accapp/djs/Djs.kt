@@ -5,15 +5,24 @@ import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.R
+import mattecarra.accapp.models.Schedule
 import java.io.File
 import java.io.FileOutputStream
 
 interface DjsInterface {
-    fun list(pattern: String = "."): List<String>
+    suspend fun list(pattern: String = "."): List<Schedule>
 
-    fun append(line: String): Boolean
+    suspend fun append(line: String): Boolean
 
-    fun delete(pattern: String): Boolean
+    suspend fun append(schedule: Schedule): Boolean {
+        return append("${schedule.hour}${schedule.minute} ${schedule.command}")
+    }
+
+    suspend fun delete(pattern: String): Boolean
+
+    suspend fun delete(schedule: Schedule): Boolean {
+        return delete("${schedule.hour}${schedule.minute} ${schedule.command}")
+    }
 }
 
 object Djs {

@@ -1,30 +1,18 @@
 package mattecarra.accapp.fragments
 
-import android.content.Intent
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.FileProvider
-import com.afollestad.materialdialogs.MaterialDialog
-import kotlinx.coroutines.launch
-
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import mattecarra.accapp.R
-import mattecarra.accapp.djs.Djs
+import mattecarra.accapp.adapters.ScheduleRecyclerViewAdapter
 import mattecarra.accapp.utils.ScopedFragment
-import mattecarra.accapp.utils.progress
-import java.io.File
 
 class SchedulesFragment : ScopedFragment() {
-
-    companion object {
-        fun newInstance() = SchedulesFragment()
-    }
-
     private lateinit var viewModel: SchedulesViewModel
+    private lateinit var adapter: ScheduleRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +24,13 @@ class SchedulesFragment : ScopedFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(SchedulesViewModel::class.java)
+        adapter = ScheduleRecyclerViewAdapter { schedule, repeat ->
+            viewModel.addSchedule(schedule)
+        }
+
+        viewModel.schedules.observe(this, Observer {
+            adapter.setList(it)
+        })
     }
 
     private fun checkDjsInstalled(): Boolean {

@@ -1,18 +1,27 @@
 package mattecarra.accapp.djs.legacy
 
 import com.topjohnwu.superuser.Shell
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import mattecarra.accapp.djs.DjsInterface
+import mattecarra.accapp.models.Schedule
 
 class DjsHandler: DjsInterface {
-    override fun list(pattern: String): List<String> {
-        return Shell.su("djsc -l $pattern").exec().out
+    val SCHEDULE = """^\s*([0-9]{2})([0-9]{2}) (.*)$""".toRegex(RegexOption.MULTILINE)
+
+    override suspend fun list(pattern: String): List<Schedule> = withContext(Dispatchers.IO) {
+        Shell.su("djsc --list $pattern").exec().out.map { line ->
+            SCHEDULE.find(line)?.destructured?.let {(hour: String, minute: String, command: String) ->
+                Schedule(hour.toInt(), minute.toInt(), command)
+            }
+        }.filterNotNull()
     }
 
-    override fun append(line: String): Boolean {
-        return Shell.su("djsc -a $line").exec().isSuccess
+    override suspend fun append(line: String): Boolean = withContext(Dispatchers.IO) {
+        Shell.su("djsc --append $line").exec().isSuccess
     }
 
-    override fun delete(pattern: String): Boolean {
-        return Shell.su("djsc --delete $pattern").exec().isSuccess
+    override suspend fun delete(pattern: String): Boolean = withContext(Dispatchers.IO) {
+        Shell.su("djsc --delete $pattern").exec().isSuccess
     }
 }
