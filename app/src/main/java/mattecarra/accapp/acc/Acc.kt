@@ -137,7 +137,23 @@ object Acc {
         }
     }
 
-    val instance: AccInterface by lazy {
+    @Volatile
+    private var INSTANCE: AccInterface? = null
+
+    val instance: AccInterface
+        get() {
+            val tempInstance = INSTANCE
+            if (tempInstance != null) {
+                return tempInstance
+            }
+
+            synchronized(this) {
+                // Create acc instance here
+                return initInstance()
+            }
+        }
+
+    private fun initInstance(): AccInterface {
         val constructor = try {
             val version = getAccVersion()
             val aClass = Class.forName("mattecarra.accapp.acc.${getVersionPackageName(version)}.AccHandler")
@@ -147,7 +163,9 @@ object Acc {
             aClass.getDeclaredConstructor()
         }
 
-        constructor.newInstance() as AccInterface
+        INSTANCE = constructor.newInstance() as AccInterface
+
+        return INSTANCE as AccInterface
     }
 
     fun isBundledAccInstalled(installationDir: File): Boolean {
@@ -230,6 +248,7 @@ object Acc {
                 logDir.mkdir()
 
             val res = Shell.su("sh -x ${installShFile.absolutePath} > ${File(logDir, "acc-install.log").absolutePath} 2>&1").exec()
+            initInstance()
             calibrateMeasurements(context)
             res
         } catch (ex: java.lang.Exception) {
