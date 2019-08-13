@@ -29,5 +29,4 @@ class SchedulesFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(SchedulesViewModel::class.java)
         // TODO: Use the ViewModel
     }
-
 }

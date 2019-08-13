@@ -1,18 +1,11 @@
-package mattecarra.accapp.acc.v201905111
+package mattecarra.accapp.acc.legacy
 
-import android.content.Context
-import android.os.Environment
 import com.topjohnwu.superuser.Shell
 import mattecarra.accapp.acc.AccInterface
 import mattecarra.accapp.acc.ConfigUpdateResult
 import mattecarra.accapp.adapters.Schedule
 import mattecarra.accapp.models.*
-import java.io.BufferedInputStream
-import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
-import java.lang.Exception
-import java.net.URL
 
 
 open class AccHandler: AccInterface {

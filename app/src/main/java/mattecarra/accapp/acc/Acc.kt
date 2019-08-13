@@ -123,25 +123,27 @@ interface AccInterface {
 
 object Acc {
     const val bundledVersion = 201907211
-    private const val defaultVersion = 201905111 /* NOTE: default version has to match a package in acc (ex mattecarra.accapp.acc.v*) */
+    private const val defaultVersionPackage = "v201905111" /* NOTE: default version has to match a package in acc (ex mattecarra.accapp.acc.*) */
 
     /*
-    *
+    * This method returns the name of the package with a compatible AccInterface
+    * Note: there won't be a package per version. There will be a package for every uncompatible version
+    * Ex: if releases from 201903071->201907211 are all compatible there will only be a package, but if a new release is incompatible a new package is created
     * */
-    private fun getVersionPackageName(v: Int): Int {
+    private fun getVersionPackageName(v: Int): String {
         return when {
-            v >= 201903071 -> 201903071
-            else           -> 201905111
+            v >= 201903071 -> "v201903071"
+            else           -> "legacy" /* This is used for all the versions before v20190371*/
         }
     }
 
     val instance: AccInterface by lazy {
         val constructor = try {
-            val version = Shell.su("""acc --config sed -n 's/^versionCode=//p'""").exec().out.joinToString(separator = "\n").trim().toIntOrNull() ?: defaultVersion
-            val aClass = Class.forName("mattecarra.accapp.acc.v${getVersionPackageName(version)}.AccHandler")
+            val version = getAccVersion()
+            val aClass = Class.forName("mattecarra.accapp.acc.${getVersionPackageName(version)}.AccHandler")
             aClass.getDeclaredConstructor()
         } catch (ex: Exception) {
-            val aClass = Class.forName("mattecarra.accapp.acc.v$defaultVersion.AccHandler")
+            val aClass = Class.forName("mattecarra.accapp.acc.$defaultVersionPackage.AccHandler")
             aClass.getDeclaredConstructor()
         }
 
@@ -153,7 +155,7 @@ object Acc {
     }
 
     fun isInstalledAccOutdated(): Boolean {
-        return getAccVersion() ?: 0 < bundledVersion
+        return getAccVersion() < bundledVersion
     }
 
     //TODO run this every time an acc instance is created to ensure that acc is available.
@@ -165,7 +167,7 @@ object Acc {
     }
 
     fun getAccVersion(): Int {
-        return Shell.su("acc --version").exec().out.joinToString(separator = "\n").trim().toIntOrNull() ?: defaultVersion
+        return Shell.su("acc --version").exec().out.joinToString(separator = "\n").trim().toIntOrNull() ?: bundledVersion
     }
 
     suspend fun installBundledAccModule(context: Context): Shell.Result?  = withContext(Dispatchers.IO) {

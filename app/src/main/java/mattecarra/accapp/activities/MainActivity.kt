@@ -337,7 +337,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun checkAccInstalled(): Boolean {
         val version = mPreferences.accVersion
-        if (!Acc.isBundledAccInstalled(filesDir) || (version == "bundled" && Acc.isInstalledAccOutdated())) {
+        if (!Acc.isBundledAccInstalled(filesDir) || !Acc.initBundledAcc(filesDir) || (version == "bundled" && Acc.isInstalledAccOutdated())) {
             val dialog = MaterialDialog(this).show {
                 title(R.string.installing_acc)
                 progress(R.string.wait)
