@@ -9,7 +9,7 @@ import java.io.File
 import java.io.FileOutputStream
 
 interface DjsInterface {
-    fun list(): List<String>
+    fun list(pattern: String = "."): List<String>
 
     fun append(line: String): Boolean
 
