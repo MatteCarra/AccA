@@ -52,6 +52,8 @@
     <!-- Acc installation -->
     <string name="reboot">重启</string>
     <!-- ################################################### -->
+    <!-- Djs installation -->
+    <!-- ################################################### -->
     <string name="edit_on_boot_dialog_hint">留空以禁用</string>
     <string name="save">保存</string>
     <string name="logs">日志</string>
