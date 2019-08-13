@@ -37,6 +37,17 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="Djs"
+        app:iconSpaceReserved="false">
+        <Preference
+            android:title="@string/acc_version_preference_title"
+            android:key="acc_version"
+            android:summary="@string/acc_version_preference_description"
+            app:iconSpaceReserved="false">
+        </Preference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
             android:title="@string/ui_options"
             app:iconSpaceReserved="false">
 

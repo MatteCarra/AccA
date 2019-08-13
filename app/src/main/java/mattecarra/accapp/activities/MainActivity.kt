@@ -64,7 +64,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     val mMainFragment = DashboardFragment.newInstance()
     val mProfilesFragment = ProfilesFragment.newInstance()
     val mSchedulesFragment = SchedulesFragment.newInstance()
-    val mSettingsFragment = SettingsFragment.newInstance()
 
 //    private var profilesAdapter: ProfilesViewAdapter? = null
 //
@@ -334,7 +333,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             true
         }
         R.id.menu_appbar_settings -> {
-            loadFragment(mSettingsFragment)
+            SettingsActivity.launch(this)
             true
         }
         else -> super.onOptionsItemSelected(item)

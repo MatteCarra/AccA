@@ -4,6 +4,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.KeyEvent
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.afollestad.materialdialogs.MaterialDialog
@@ -51,6 +53,16 @@ class SettingsFragment : PreferenceFragmentCompat(), CoroutineScope {
                         e.printStackTrace()
                     }
                 }
+            }
+            true
+        }
+
+        val theme = findPreference<ListPreference>("theme")
+        theme?.setOnPreferenceChangeListener { _, newValue ->
+            when (newValue as String) {
+                "0" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                "1" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                "2" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             }
             true
         }
