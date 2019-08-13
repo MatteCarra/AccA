@@ -400,7 +400,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 
                                             launch {
                                                 options.addAll(
-                                                    Acc.listAccVersions(this@MainActivity)
+                                                    Acc.listAccVersions()
                                                 )
                                                 versionDialog.listItemsSingleChoice(items = options, initialSelection = options.indexOf(version), selection = onSelection)
                                             }

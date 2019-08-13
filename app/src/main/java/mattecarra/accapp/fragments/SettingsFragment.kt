@@ -109,7 +109,7 @@ class SettingsFragment : PreferenceFragmentCompat(), CoroutineScope {
 
                 launch {
                     options.addAll(
-                        Acc.listAccVersions(context)
+                        Acc.listAccVersions()
                     )
                     versionDialog.listItemsSingleChoice(items = options, initialSelection = options.indexOf(preferences.accVersion), selection = onSelection)
                 }

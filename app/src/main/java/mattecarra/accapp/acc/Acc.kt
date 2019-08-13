@@ -276,7 +276,7 @@ object Acc {
         preferences.uVMeasureUnit = microVolts >= 6
     }
 
-    suspend fun listAccVersions(context: Context): List<String> = withContext(Dispatchers.IO) {
+    suspend fun listAccVersions(): List<String> = withContext(Dispatchers.IO) {
         (try {
             JsonParser()
                 .parse(URL("https://api.github.com/repos/VR-25/acc/tags").readText())
