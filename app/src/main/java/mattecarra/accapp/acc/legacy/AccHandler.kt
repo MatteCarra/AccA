@@ -1,9 +1,11 @@
 package mattecarra.accapp.acc.legacy
 
 import com.topjohnwu.superuser.Shell
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.acc.AccInterface
 import mattecarra.accapp.acc.ConfigUpdateResult
-import mattecarra.accapp.adapters.Schedule
 import mattecarra.accapp.models.*
 import java.io.IOException
 
@@ -225,38 +227,6 @@ open class AccHandler: AccInterface {
         return Shell.su("acc -D stop").exec().isSuccess
     }
 
-    override fun deleteSchedule(once: Boolean, name: String): Boolean {
-        return Shell.su("djs cancel ${if(once) "once" else "daily" } $name").exec().isSuccess
-    }
-
-    override fun schedule(once: Boolean, hour: Int, minute: Int, commands: List<String>): Boolean {
-        return schedule(
-            once,
-            hour,
-            minute,
-            commands.joinToString(separator = "; ")
-        )
-    }
-
-    override fun schedule(once: Boolean, hour: Int, minute: Int, commands: String): Boolean {
-        return Shell.su("djs ${if(once) 'o' else 'd' } ${String.format("%02d", hour)} ${String.format("%02d", minute)} \"${commands}\"").exec().isSuccess
-    }
-
-    private val SCHEDULE_REGEXP = """^\s*([0-9]{2})([0-9]{2}): (.*)$""".toRegex()
-
-    override fun listSchedules(once: Boolean): List<Schedule> {
-        return Shell.su("djs i ${if(once) 'o' else 'd'}").exec().out.filter { it.matches(SCHEDULE_REGEXP) }.map {
-            val (hour, minute, command) = SCHEDULE_REGEXP.find(it)!!.destructured
-            Schedule("$hour$minute", once, hour.toInt(), minute.toInt(), command)
-        }
-    }
-
-    override fun listAllSchedules(): List<Schedule> {
-        val res = ArrayList<Schedule>(listSchedules(true))
-        res.addAll(listSchedules(false))
-        return res
-    }
-
     //Charging switches
     override fun listChargingSwitches(): List<String> {
         val res = Shell.su("acc --set switch:").exec()
@@ -358,5 +328,11 @@ open class AccHandler: AccInterface {
         }
 
         return Shell.su("acc --set switch $switch").exec().isSuccess
+    }
+
+    override suspend fun upgrade(version: String): Shell.Result? = withContext(Dispatchers.IO){
+        val res = Shell.su("acc --upgrade $version").exec()
+        Acc.createAccInstance()
+        res
     }
 }

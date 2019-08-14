@@ -39,12 +39,12 @@
     <PreferenceCategory
         android:title="Djs"
         app:iconSpaceReserved="false">
-        <Preference
-            android:title="@string/acc_version_preference_title"
-            android:key="acc_version"
-            android:summary="@string/acc_version_preference_description"
+        <CheckBoxPreference
+            android:title="Djs"
+            android:key="djs_enabled"
+            android:summary="@string/install_djs_description"
             app:iconSpaceReserved="false">
-        </Preference>
+        </CheckBoxPreference>
     </PreferenceCategory>
 
     <PreferenceCategory

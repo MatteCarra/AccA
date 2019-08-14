@@ -80,7 +80,7 @@
 
     <!-- Djs installation -->
     <string name="install_djs_title">Djs is required</string>
-    <string name="install_djs_description">In order to enable this feature the app has to enable djs.\nDjs is a lightweight extension to acc that allows to schedule acc tasks.\nA daemon will be started on boot alongside acc.\nDo you want to continue?</string>
+    <string name="install_djs_description">In order to enable this feature the app has to enable djs.\nDjs is a lightweight extension to acc that allows to schedule acc tasks.\nA daemon will be started on boot alongside acc.</string>
     <string name="installing_djs">Installing DJS</string>
     <string name="djs_installation_failed">Please send logcat and /data/data/mattecarra.accapp/files/logs/djs-install.log to the developers at t.me/acc/ or github.com/MatteCarra/AccA/issues/.</string>
     <string name="djs_installation_failed_title">DJS Installation Failed!</string>
@@ -211,6 +211,10 @@
     <string name="acc_version_compatibility_warning_description">You have selected a different version of Acc that is not guaranteed to be compatible with the app. Most of the times you should not run into compatibility problems. Do you want to continue?</string>
     <string name="restore">Restore to default</string>
     <string name="undo">Undo</string>
+    <string name="checking_updates">Checking for updates</string>
+    <string name="no_update_available">No update available</string>
+    <string name="update_completed">Update completed!</string>
+    <string name="install">Install</string>
     <string-array name="theme_option_options">
         <item>Light</item>
         <item>Dark</item>

@@ -14,6 +14,10 @@ class SchedulesFragment : ScopedFragment() {
     private lateinit var viewModel: SchedulesViewModel
     private lateinit var adapter: ScheduleRecyclerViewAdapter
 
+    companion object {
+        fun newInstance() = SchedulesFragment()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

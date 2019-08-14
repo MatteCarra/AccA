@@ -7,12 +7,11 @@ import android.widget.Toast
 import com.topjohnwu.superuser.Shell
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
-import java.io.File
 
 class AccBootReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (Intent.ACTION_BOOT_COMPLETED == intent.action) { //TODO check if app is set in bundle/master/dev mode. Only execute this if acc is bundled.
-            if(Shell.rootAccess() && Acc.initBundledAcc(context.filesDir)) {
+            if(Shell.rootAccess() && Acc.initAcc(context.filesDir)) {
                 Toast.makeText(context, R.string.acc_daemon_status_running, Toast.LENGTH_SHORT).show() //TODO add an option to disable this (I think it should disabled by default)
             }
         }

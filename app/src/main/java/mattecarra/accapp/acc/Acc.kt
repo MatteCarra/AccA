@@ -9,7 +9,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
-import mattecarra.accapp.adapters.Schedule
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.BatteryInfo
 import java.io.BufferedInputStream
@@ -39,16 +38,6 @@ interface AccInterface {
     fun abcRestartDaemon(): Boolean
 
     fun abcStopDaemon(): Boolean
-
-    fun deleteSchedule(once: Boolean, name: String): Boolean
-
-    fun schedule(once: Boolean, hour: Int, minute: Int, commands: List<String>): Boolean
-
-    fun schedule(once: Boolean, hour: Int, minute: Int, commands: String): Boolean
-
-    fun listSchedules(once: Boolean): List<Schedule>
-
-    fun listAllSchedules(): List<Schedule>
 
     fun listChargingSwitches(): List<String>
 
@@ -119,6 +108,8 @@ interface AccInterface {
      */
     fun updateAccOnPlugged(command: String?) : Boolean
     fun updateAccChargingSwitch(switch: String?) : Boolean
+
+    suspend fun upgrade(version: String): Shell.Result?
 }
 
 object Acc {
@@ -153,7 +144,7 @@ object Acc {
             }
         }
 
-    private fun createAccInstance(): AccInterface {
+    internal fun createAccInstance(): AccInterface {
         val constructor = try {
             val version = getAccVersion()
             val aClass = Class.forName("mattecarra.accapp.acc.${getVersionPackageName(version)}.AccHandler")
@@ -168,7 +159,7 @@ object Acc {
         return INSTANCE as AccInterface
     }
 
-    fun isBundledAccInstalled(installationDir: File): Boolean {
+    fun isAccInstalled(installationDir: File): Boolean {
         return Shell.su("test -f ${File(installationDir, "acc/acc-init.sh").absolutePath}").exec().isSuccess
     }
 
@@ -177,15 +168,11 @@ object Acc {
     }
 
     //TODO run this every time an acc instance is created to ensure that acc is available.
-    fun initBundledAcc(installationDir: File): Boolean {
-        return if(isBundledAccInstalled(installationDir))
+    fun initAcc(installationDir: File): Boolean {
+        return if(isAccInstalled(installationDir))
             Shell.su("sh ${File(installationDir, "acc/acc-init.sh").absolutePath}").exec().isSuccess
         else
             false
-    }
-
-    fun getAccVersion(): Int {
-        return Shell.su("acc --version").exec().out.joinToString(separator = "\n").trim().toIntOrNull() ?: bundledVersion
     }
 
     suspend fun installBundledAccModule(context: Context): Shell.Result?  = withContext(Dispatchers.IO) {
@@ -286,5 +273,9 @@ object Acc {
         }).map {
             it.asJsonObject["name"].asString
         }
+    }
+
+    fun getAccVersion(): Int {
+        return Shell.su("acc --version").exec().out.joinToString(separator = "\n").trim().toIntOrNull() ?: bundledVersion
     }
 }

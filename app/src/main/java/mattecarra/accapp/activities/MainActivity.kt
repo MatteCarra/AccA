@@ -39,7 +39,6 @@ import mattecarra.accapp.djs.Djs
 import mattecarra.accapp.fragments.DashboardFragment
 import mattecarra.accapp.fragments.ProfilesFragment
 import mattecarra.accapp.fragments.SchedulesFragment
-import mattecarra.accapp.fragments.SettingsFragment
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.utils.Constants
@@ -256,7 +255,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         MaterialDialog(this).show {
             title(R.string.install_djs_title)
             message(R.string.install_djs_description)
-            positiveButton(android.R.string.yes) {
+            positiveButton(R.string.install) {
                 val dialog = MaterialDialog(this@MainActivity).show {
                     title(R.string.installing_djs)
                     progress(R.string.wait)
@@ -386,7 +385,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onProfileLongClick(profile: AccaProfile) {
-
         val dialog = MaterialDialog(this@MainActivity).customView(
             R.layout.profile_preview_dialog,
             scrollable = true
@@ -417,7 +415,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun checkAccInstalled(): Boolean {
         val version = mPreferences.accVersion
-        if (!Acc.isBundledAccInstalled(filesDir) || !Acc.initBundledAcc(filesDir) || (version == "bundled" && Acc.isInstalledAccOutdated())) {
+        if (!Acc.isAccInstalled(filesDir) || !Acc.initAcc(filesDir) || (version == "bundled" && Acc.isInstalledAccOutdated())) {
             val dialog = MaterialDialog(this).show {
                 title(R.string.installing_acc)
                 progress(R.string.wait)
@@ -507,7 +505,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                             else -> MaterialDialog(this@MainActivity) //Other installation errors can not be handled automatically -> show a dialog with the logs
                                 .show {
                                     title(R.string.acc_installation_failed_title)
-                                    message(R.string.djs_installation_failed)
+                                    message(R.string.acc_installation_failed)
                                     positiveButton(R.string.retry) {
                                         if (checkAccInstalled())
                                             initUi()
@@ -549,6 +547,61 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 res?.let {
                     Log.d(LOG_TAG, it.out.joinToString("\n"))
                 }
+            }
+
+            return false
+        }
+
+        val time = System.currentTimeMillis() / 1000
+        if((version == "master" || version == "dev") && time- mPreferences.lastUpdateCheck > 259200) {
+            mPreferences.lastUpdateCheck = time
+
+            val dialog = MaterialDialog(this).show {
+                title(R.string.checking_updates)
+                progress(R.string.wait)
+                cancelOnTouchOutside(false)
+            }
+
+            launch {
+                val res = Acc.instance.upgrade(version)
+                dialog.cancel()
+
+                when(res?.code) {
+                    6 ->
+                        Toast.makeText(this@MainActivity, R.string.no_update_available, Toast.LENGTH_LONG).show()
+                    0 ->
+                        Toast.makeText(this@MainActivity, R.string.update_completed, Toast.LENGTH_LONG).show()
+                    else -> {
+                        MaterialDialog(this@MainActivity) //Other installation errors can not be handled automatically -> show a dialog with the logs
+                            .show {
+                                title(R.string.acc_installation_failed_title)
+                                message(R.string.acc_installation_failed)
+                                positiveButton(android.R.string.ok) {
+                                    initUi()
+                                }
+                                neutralButton(R.string.share) {
+                                    //TODO add logs
+/*                              val file = File(filesDir, "logs/acc-install.log")
+                                if(file.exists()) {
+                                    val intentShareFile = Intent(Intent.ACTION_SEND)
+                                        .setType("text/plain")
+                                        .putExtra(
+                                            Intent.EXTRA_STREAM,
+                                            FileProvider.getUriForFile(applicationContext, "mattecarra.accapp.fileprovider", file)
+                                        )
+                                        .putExtra(Intent.EXTRA_TEXT, "AccA installation failed log")
+
+                                    startActivity(Intent.createChooser(intentShareFile, "Share log file"))
+                                } else {
+                                    Toast.makeText(this@MainActivity, R.string.logs_not_found, Toast.LENGTH_LONG).show()
+                                }*/
+                                }
+                                cancelOnTouchOutside(false)
+                            }
+                    }
+                }
+
+                initUi()
             }
 
             return false
