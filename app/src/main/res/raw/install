@@ -25,7 +25,7 @@ set -e
 [ -f $PWD/${0##*/} ] || cd ${0%/*}
 [ -d $id/${id}-init.sh ] && exit 0
 rm -rf ${id}-*/
-tar -xf ${id}*gz
+tar -xf ${id}_bundle.tar.gz
 export installDir0="$2"
 sh ${id}-*/install-current.sh
 rm -rf ${id}-*/
