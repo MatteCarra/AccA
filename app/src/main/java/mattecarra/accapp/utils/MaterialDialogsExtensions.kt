@@ -63,7 +63,7 @@ suspend fun MaterialDialog.accVersionSingleChoice(
 ): MaterialDialog {
     val options = context.resources.getStringArray(R.array.acc_version_options).toMutableList()
     options.addAll(Acc.listAccVersions())
-    return listItemsSingleChoice(items = options, initialSelection = options.indexOf(accVersion)) { _, _, text ->
+    return listItemsSingleChoice(items = options, initialSelection = options.map { it.toLowerCase() }.indexOf(accVersion)) { _, _, text ->
         callback(text.toLowerCase())
     }
 }

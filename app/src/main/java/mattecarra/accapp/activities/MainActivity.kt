@@ -288,8 +288,8 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                     negativeButton {
                                         botNav_main.selectedItemId = R.id.botNav_schedules
                                     }
-                                    shareLogsNeutralButton(File(filesDir, "logs/djs-install.log"), R.string.djs_installation_failed_log)
-                                    cancelOnTouchOutside(false)
+                                    if(res != null)
+                                        shareLogsNeutralButton(File(filesDir, "logs/djs-install.log"), R.string.djs_installation_failed_log)
                                 }
                         }
                     } else {
@@ -445,7 +445,8 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                                 }
                                             }
                                     }
-                                    shareLogsNeutralButton(File(filesDir, "logs/acc-install.log"), R.string.acc_installation_failed_log)
+                                    if(res != null)
+                                        shareLogsNeutralButton(File(filesDir, "logs/acc-install.log"), R.string.acc_installation_failed_log)
                                     cancelOnTouchOutside(false)
                                 }
 
@@ -477,7 +478,8 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                     negativeButton {
                                         finish()
                                     }
-                                    shareLogsNeutralButton(File(filesDir, "logs/acc-install.log"), R.string.acc_installation_failed_log)
+                                    if(res != null)
+                                        shareLogsNeutralButton(File(filesDir, "logs/acc-install.log"), R.string.acc_installation_failed_log)
                                     cancelOnTouchOutside(false)
                                 }
                     }.onKeyCodeBackPressed {

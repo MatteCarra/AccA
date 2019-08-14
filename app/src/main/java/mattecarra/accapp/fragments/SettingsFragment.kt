@@ -20,6 +20,8 @@ import mattecarra.accapp.utils.Constants.ACC_VERSION
 import mattecarra.accapp.utils.accVersionSingleChoice
 import mattecarra.accapp.utils.onKeyCodeBackPressed
 import mattecarra.accapp.utils.progress
+import mattecarra.accapp.utils.shareLogsNeutralButton
+import java.io.File
 import kotlin.coroutines.CoroutineContext
 
 class SettingsFragment : PreferenceFragmentCompat(), CoroutineScope {
@@ -92,18 +94,31 @@ class SettingsFragment : PreferenceFragmentCompat(), CoroutineScope {
                                             onKeyCodeBackPressed { false }
                                         }
 
-                                        //TODO handle exit codes
-                                        if (version == "bundled") {
+                                        val res = if (version == "bundled") {
                                             Acc.installBundledAccModule(context)
                                         } else {
                                             Acc.installAccModuleVersion(context, version)
-
-                                            if(version == "master" || version == "dev")
-                                                preferences.lastUpdateCheck = System.currentTimeMillis() / 1000
                                         }
 
-                                        preferences.accVersion = version
                                         dialog.dismiss()
+
+                                        when(res?.code) {
+                                            0 -> {
+                                                if(version == "master" || version == "dev")
+                                                    preferences.lastUpdateCheck = System.currentTimeMillis() / 1000
+                                                preferences.accVersion = version
+                                            }
+                                            else -> {
+                                                MaterialDialog(context) //Dialog to tell the user that installation failed
+                                                    .show {
+                                                        title(R.string.acc_installation_failed_title)
+                                                        message(R.string.installation_failed_non_bundled)
+                                                        positiveButton(android.R.string.ok)
+                                                        if(res != null)
+                                                            shareLogsNeutralButton(File(context.filesDir, "logs/acc-install.log"), R.string.acc_installation_failed_log)
+                                                    }
+                                            }
+                                        }
                                     }
                                 }
 
