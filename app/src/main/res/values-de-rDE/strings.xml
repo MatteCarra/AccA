@@ -45,7 +45,6 @@
     <string name="cooldown_capacity">Ab ...% Abkühlung starten:</string>
     <string name="resume_charge">Ladevorgang fortsetzen bei:</string>
     <string name="stop_charge">Ladevorgang stoppen bei:</string>
-    <string name="enable_temp_check">Temperatur-Prüfung (°C)</string>
     <string name="cooldown_temp">Abkühltemperatur:</string>
     <string name="max_temp">Max Temperatur:</string>
     <string name="charge_seconds">Ladezeit in Sekunden:</string>
