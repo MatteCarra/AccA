@@ -25,6 +25,7 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import it.sephiroth.android.library.xtooltip.ClosePolicy
 import it.sephiroth.android.library.xtooltip.Tooltip
+import kotlinx.coroutines.runBlocking
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.models.AccConfig
@@ -61,18 +62,21 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val config =
-            if(savedInstanceState?.containsKey("mAccConfig") == true) {
-                savedInstanceState.getParcelable("mAccConfig")!!
-            } else if(intent.hasExtra(Constants.ACC_CONFIG_KEY)) {
-                intent.getParcelableExtra(Constants.ACC_CONFIG_KEY)!!
-            } else {
-                try {
-                    Acc.instance.readConfig()
-                } catch (ex: Exception) {
-                    ex.printStackTrace()
-                    showConfigReadError()
-                    Acc.instance.defaultConfig //if mAccConfig is null I use default mAccConfig values.
-                }
+            when {
+                savedInstanceState?.containsKey("mAccConfig") == true ->
+                    savedInstanceState.getParcelable("mAccConfig")!!
+
+                intent.hasExtra(Constants.ACC_CONFIG_KEY) ->
+                    intent.getParcelableExtra(Constants.ACC_CONFIG_KEY)!!
+
+                else ->
+                    try {
+                        runBlocking { Acc.instance.readConfig() }
+                    } catch (ex: Exception) {
+                        ex.printStackTrace()
+                        showConfigReadError()
+                        Acc.instance.defaultConfig //if mAccConfig is null I use default mAccConfig values.
+                    }
             }
 
         viewModel = ViewModelProviders.of(this, AccConfigEditorViewModelFactory(application, config)).get(AccConfigEditorViewModel::class.java)

@@ -6,6 +6,7 @@ import kotlinx.coroutines.withContext
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.acc.AccInterface
 import mattecarra.accapp.acc.ConfigUpdateResult
+import mattecarra.accapp.acc.ConfigUpdater
 import mattecarra.accapp.models.*
 import java.io.IOException
 
@@ -39,7 +40,7 @@ open class AccHandler: AccInterface {
                 null
             )
 
-    override fun readConfig(): AccConfig {
+    override suspend fun readConfig(): AccConfig = withContext(Dispatchers.IO) {
         val config = readConfigToString()
 
         val (capacityShutdown, capacityCoolDown, capacityResume, capacityPause) = CAPACITY_CONFIG_REGEXP.find(config)!!.destructured
@@ -49,7 +50,7 @@ open class AccHandler: AccInterface {
 
         val cVolt = VOLT_FILE.find(config)?.destructured
 
-        return AccConfig(
+        AccConfig(
             AccConfig.ConfigCapacity(capacityShutdown.toIntOrNull() ?: 0, capacityResume.toInt(), capacityPause.toInt()),
             AccConfig.ConfigVoltage(cVolt?.component1(), cVolt?.component2()?.toIntOrNull()),
             AccConfig.ConfigTemperature(temperatureCooldown.toIntOrNull() ?: 90,
@@ -253,86 +254,44 @@ open class AccHandler: AccInterface {
      * @param accConfig Configuration file to apply.
      * @return ConfigUpdateResult data class.
      */
-    override fun updateAccConfig(accConfig: AccConfig): ConfigUpdateResult {
-        // Initalise new ConfigUpdateResult data class to return
-        return ConfigUpdateResult(
-            updateAccCapacity(
-                accConfig.configCapacity.shutdown, accConfig.configCoolDown?.atPercent ?: 101,
-                accConfig.configCapacity.resume, accConfig.configCapacity.pause
-            ),
-            updateAccVoltControl(
-                accConfig.configVoltage.controlFile,
-                accConfig.configVoltage.max
-            ),
-            updateAccTemperature(
-                accConfig.configTemperature.coolDownTemperature,
-                accConfig.configTemperature.maxTemperature,
-                accConfig.configTemperature.pause
-            ),
-            updateAccCoolDown(
-                accConfig.configCoolDown?.charge,
-                accConfig.configCoolDown?.pause
-            ),
-            updateResetUnplugged(accConfig.configResetUnplugged),
-            updateAccOnBoot(accConfig.configOnBoot),
-            updateAccOnPlugged(accConfig.configOnPlug),
-            updateAccChargingSwitch(accConfig.configChargeSwitch)
-        )
+    override suspend fun updateAccConfig(accConfig: AccConfig): ConfigUpdateResult {
+        return ConfigUpdater(accConfig)
+            .execute(this)
     }
 
-    override fun updateResetUnplugged(resetUnplugged: Boolean): Boolean {
-        return Shell.su("acc -s resetBsOnUnplug $resetUnplugged").exec().isSuccess
-    }
+    override fun getUpdateResetUnpluggedCommand(resetUnplugged: Boolean) = "acc -s resetBsOnUnplug $resetUnplugged"
 
-    override fun updateAccCoolDown(charge: Int?, pause: Int?) : Boolean {
+    override fun getUpdateAccCoolDownCommand(charge: Int?, pause: Int?): String {
         return if(charge != null && pause != null)
-            Shell.su("acc -s coolDownRatio $charge/$pause").exec().isSuccess
+           "acc -s coolDownRatio $charge/$pause"
         else
-            Shell.su("acc -s coolDownRatio").exec().isSuccess
+           "acc -s coolDownRatio"
     }
 
-    override fun updateAccCapacity(shutdown: Int, coolDown: Int, resume: Int, pause: Int) : Boolean {
-        return Shell.su("acc -s capacity $shutdown,$coolDown,$resume-$pause").exec().isSuccess
-    }
+    override fun getUpdateAccCapacityCommand(shutdown: Int, coolDown: Int, resume: Int, pause: Int): String = "acc -s capacity $shutdown,$coolDown,$resume-$pause"
 
-    override fun updateAccTemperature(coolDownTemperature: Int, temperatureMax: Int, wait: Int) : Boolean {
-        return Shell.su("acc -s temperature ${coolDownTemperature}-${temperatureMax}_$wait").exec().isSuccess
-    }
+    override fun getUpdateAccTemperatureCommand(coolDownTemperature: Int, temperatureMax: Int, wait: Int): String = "acc -s temperature ${coolDownTemperature}-${temperatureMax}_$wait"
 
-    override fun updateAccVoltControl(voltFile: String?, voltMax: Int?) : Boolean {
-        return Shell.su(
-            if(voltFile != null && voltMax != null)
-                "acc --set chargingVoltageLimit $voltFile:$voltMax"
-            else if(voltMax != null)
-                "acc --set chargingVoltageLimit $voltMax"
-            else
-                "acc --set chargingVoltageLimit"
-        ).exec().isSuccess
-    }
+    override fun getUpdateAccVoltControlCommand(voltFile: String?, voltMax: Int?): String =
+        if(voltFile != null && voltMax != null)
+            "acc --set chargingVoltageLimit $voltFile:$voltMax"
+        else if(voltMax != null)
+            "acc --set chargingVoltageLimit $voltMax"
+        else
+            "acc --set chargingVoltageLimit"
 
-    override fun updateAccOnBootExit(enabled: Boolean) : Boolean {
-        return Shell.su("acc -s onBootExit $enabled").exec().isSuccess
-    }
+    override fun getUpdateAccOnBootExitCommand(enabled: Boolean): String = "acc -s onBootExit $enabled"
 
-    override fun updateAccOnBoot(command: String?) : Boolean {
-        return Shell.su("acc -s applyOnBoot${command?.let{ " $it" } ?: ""}").exec().isSuccess
-    }
+    override fun getUpdateAccOnBootCommand(command: String?): String = "acc -s applyOnBoot${command?.let{ " $it" } ?: ""}"
 
-    override fun updateAccOnPlugged(command: String?) : Boolean {
-        return Shell.su("acc -s applyOnPlug${command?.let{ " $it" } ?: ""}").exec().isSuccess
-    }
 
-    override fun updateAccChargingSwitch(switch: String?) : Boolean {
-        if (switch.isNullOrBlank()) {
-            return Shell.su("acc -s s-").exec().isSuccess
-        }
+    override fun getUpdateAccOnPluggedCommand(command: String?) : String = "acc -s applyOnPlug${command?.let{ " $it" } ?: ""}"
 
-        return Shell.su("acc --set switch $switch").exec().isSuccess
-    }
+    override fun getUpdateAccChargingSwitchCommand(switch: String?): String =
+        if (switch.isNullOrBlank())
+            "acc -s s-"
+        else
+            "acc --set switch $switch"
 
-    override suspend fun upgrade(version: String): Shell.Result? = withContext(Dispatchers.IO){
-        val res = Shell.su("acc --upgrade $version").exec()
-        Acc.createAccInstance()
-        res
-    }
+    override fun getUpgradeCommand(version: String) = "acc --upgrade $version"
 }

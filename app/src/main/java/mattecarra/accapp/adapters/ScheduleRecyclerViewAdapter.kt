@@ -10,7 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import mattecarra.accapp.R
 import mattecarra.accapp.models.Schedule
 
-class ScheduleRecyclerViewAdapter(private val listener: (Schedule, Boolean) -> Unit) : RecyclerView.Adapter<ScheduleRecyclerViewAdapter.ScheduleViewHolder>() {
+interface ScheduleActionListener {
+    fun onScheduleClick(schedule: Schedule)
+
+    fun onScheduleDelete(schedule: Schedule)
+}
+
+class ScheduleRecyclerViewAdapter(private val listener: ScheduleActionListener) : RecyclerView.Adapter<ScheduleRecyclerViewAdapter.ScheduleViewHolder>() {
     private var mSchedules = emptyList<Schedule>()
 
     fun getItem(index: Int): Schedule {
@@ -60,9 +66,9 @@ class ScheduleRecyclerViewAdapter(private val listener: (Schedule, Boolean) -> U
         fun bind(schedule: Schedule) = with(itemView) {
             view.findViewById<TextView>(R.id.title).text = resources.getString(R.string.schedule_row_text, "Recurrent ", schedule.hour, schedule.minute)
             view.findViewById<ImageButton>(R.id.img_delete).setOnClickListener {
-                listener(schedule, true)
+                listener.onScheduleDelete(schedule)
             }
-            setOnClickListener { listener(schedule, false) }
+            setOnClickListener { listener.onScheduleClick(schedule) }
         }
     }
 }

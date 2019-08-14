@@ -27,8 +27,8 @@ class SchedulesViewModel : ViewModel() {
         schedules.value = Djs.instance.list()
     }
 
-    fun removeSchedule(pattern: String) = viewModelScope.launch {
-        Djs.instance.delete(pattern)
+    fun removeSchedule(schedule: Schedule) = viewModelScope.launch {
+        Djs.instance.delete(schedule)
         schedules.value = Djs.instance.list()
     }
 }

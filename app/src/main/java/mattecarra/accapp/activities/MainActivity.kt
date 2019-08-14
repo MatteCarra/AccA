@@ -110,59 +110,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 //        val layoutManager = LinearLayoutManager(this)
 //        scheduled_jobs_recyclerview.layoutManager = layoutManager
 //        scheduled_jobs_recyclerview.adapter = scheduleAdapter
-
-        // TODO: Move schedule onClicks to the new Schedule fragment
-//        create_schedule.setOnClickListener {
-//            val dialog = MaterialDialog(this@MainActivity).show {
-//                customView(R.layout.schedule_dialog)
-//                positiveButton(R.string.save) { dialog ->
-//                    val view = dialog.getCustomView()
-//                    val spinner = view.findViewById<Spinner>(R.id.profile_selector)
-//                    val executeOnceCheckBox = view.findViewById<CheckBox>(R.id.schedule_recurrency)
-//                    val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
-//                    val hour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.hour else timePicker.currentHour
-//                    val minute = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.minute else timePicker.currentMinute
-//
-//                    if(spinner.selectedItemId == 0.toLong()) {
-//                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-//                            val dataBundle = Bundle()
-//                            dataBundle.putInt("hour", hour)
-//                            dataBundle.putInt("minute", minute)
-//                            dataBundle.putBoolean("executeOnce", executeOnceCheckBox.isChecked)
-//
-//                            intent.putExtra("data", dataBundle)
-//                            intent.putExtra("titleTv", this@MainActivity.getString(R.string.schedule_creator))
-//                            startActivityForResult(intent, ACC_PROFILE_SCHEDULER_REQUEST)
-//                        }
-//                    } else {
-//                        val profile = spinner.selectedItem as String
-//                        val configProfile = ProfileUtils.readProfile(profile, this@MainActivity, gson)
-//
-//                        addSchedule(Schedule("$hour$minute", executeOnceCheckBox.isChecked, hour, minute, configProfile.getCommands().joinToString(separator = "; ")))
-//
-//                        AccUtils.schedule(
-//                            executeOnceCheckBox.isChecked,
-//                            hour,
-//                            minute,
-//                            configProfile.getCommands()
-//                        )
-//                    }
-//                }
-//                negativeButton(android.R.string.cancel)
-//            }
-
-//            val profiles = ArrayList<String>()
-//            profiles.add(getString(R.string.new_config))
-//            profiles.addAll(ProfileUtils.listProfiles(this, gson))
-//            val view = dialog.getCustomView()
-//            val spinner = view.findViewById<Spinner>(R.id.profile_selector)
-//            val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, profiles)
-//
-//            view.findViewById<TimePicker>(R.id.time_picker).setIs24HourView(true)
-//
-//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//            spinner.adapter = adapter;
-//        }
     }
 
     // TODO: Move schedules to the Schedules Fragment
@@ -183,26 +130,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 //        if(scheduleAdapter.itemCount == 0) {
 //            no_schedules_jobs_textview.visibility = View.VISIBLE
 //            scheduled_jobs_recyclerview.visibility = View.GONE
-//        }
-//    }
-
-//    //Used to update battery info every second
-//    private val handler = Handler()
-//    private val updateUIRunnable = object : Runnable {
-//        override fun run() {
-//            val r = this //need this to make it recursive
-//            doAsync {
-//                val batteryInfo = AccUtils.getBatteryInfo()
-//                isDaemonRunning = AccUtils.isAccdRunning()
-//                uiThread {
-//                    // Run accd UI check
-//                    updateAccdStatus(isDaemonRunning)
-//
-//                    setBatteryInfo(batteryInfo)
-//
-//                    handler.postDelayed(r, 1000)// Repeat the same runnable code block again after 1 seconds
-//                }
-//            }
 //        }
 //    }
 
@@ -703,6 +630,57 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 //            }
 //        }
     }
+
+/*    fun accScheduleFabOnClick(view: View) {
+        val dialog = MaterialDialog(this).show {
+            customView(R.layout.schedule_dialog)
+            positiveButton(R.string.save) { dialog ->
+                val view = dialog.getCustomView()
+                val spinner = view.findViewById<Spinner>(R.id.profile_selector)
+                val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
+                val hour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.hour else timePicker.currentHour
+                val minute = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.minute else timePicker.currentMinute
+
+                if(spinner.selectedItemId == 0.toLong()) {
+                    Intent(this, AccConfigEditorActivity::class.java).also { intent ->
+                        val dataBundle = Bundle()
+                        dataBundle.putInt("hour", hour)
+                        dataBundle.putInt("minute", minute)
+                        dataBundle.putBoolean("executeOnce", executeOnceCheckBox.isChecked)
+
+                        intent.putExtra("data", dataBundle)
+                        intent.putExtra("titleTv", getString(R.string.schedule_creator))
+                        startActivityForResult(intent, ACC_PROFILE_SCHEDULER_REQUEST)
+                    }
+                } else {
+                    val profile = spinner.selectedItem as String
+                    val configProfile = ProfileUtils.readProfile(profile, this@MainActivity, gson)
+
+                    addSchedule(Schedule("$hour$minute", executeOnceCheckBox.isChecked, hour, minute, configProfile.getCommands().joinToString(separator = "; ")))
+
+                    AccUtils.schedule(
+                        executeOnceCheckBox.isChecked,
+                        hour,
+                        minute,
+                        configProfile.getCommands()
+                    )
+                }
+            }
+            negativeButton(android.R.string.cancel)
+        }
+
+        val profiles = ArrayList<String>()
+        profiles.add(getString(R.string.new_config))
+        profiles.addAll(ProfileUtils.listProfiles(this, gson))
+        val view = dialog.getCustomView()
+        val spinner = view.findViewById<Spinner>(R.id.profile_selector)
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, profiles)
+
+        view.findViewById<TimePicker>(R.id.time_picker).setIs24HourView(true)
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.adapter = adapter;
+    }*/
 
     override fun editProfile(profile: AccaProfile) {
         // Edit the configuration of the selected profile.

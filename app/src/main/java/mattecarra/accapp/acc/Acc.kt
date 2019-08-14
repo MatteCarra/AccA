@@ -21,7 +21,7 @@ import kotlin.math.abs
 interface AccInterface {
     val defaultConfig: AccConfig
 
-    fun readConfig(): AccConfig
+    suspend fun readConfig(): AccConfig
 
     fun listVoltageSupportedControlFiles(): List<String>
 
@@ -47,18 +47,50 @@ interface AccInterface {
 
     fun setChargingLimitForOneCharge(limit: Int): Boolean
 
-    fun updateAccConfig(accConfig: AccConfig): ConfigUpdateResult
-
-    //reset unplugged command
-    fun updateResetUnplugged(resetUnplugged: Boolean): Boolean
+    suspend fun updateAccConfig(accConfig: AccConfig): ConfigUpdateResult
 
     /**
-     * Updates the cool down charge and pause durations.
-     * @param charge seconds to charge for during the cool down phase.
-     * @param pause seconds to pause for during the cool down phase.
-     * @return boolean if the command was successful.
+     * Updates the OnBoot command configuration in ACC.
+     * @param command the command to be run after the device starts (daemon starts).
+     * @return the boolean result of the command's execution.
      */
-    fun updateAccCoolDown(charge: Int?, pause: Int?) : Boolean
+    fun getUpdateAccOnBootCommand(command: String?): String
+    suspend fun updateAccOnBoot(command: String?) : Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateAccOnBootCommand(command)).exec().isSuccess
+    }
+
+    /**
+     * Updates the on boot exit (boolean) configuration in ACC.
+     * @param enabled boolean: if OnBootExit should be enabled.
+     * @return the boolean result of the command's execution.
+     */
+    fun getUpdateAccOnBootExitCommand(enabled: Boolean): String
+    suspend fun updateAccOnBootExit(enabled: Boolean) : Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateAccOnBootExitCommand(enabled)).exec().isSuccess
+    }
+
+    /**
+     * Updates the voltage related configuration in ACC.
+     * @param voltFile path to the voltage file on the device.
+     * @param voltMax maximum voltage the phone should charge at.
+     * @return the boolean result of the command's execution.
+     */
+    fun getUpdateAccVoltControlCommand(voltFile: String?, voltMax: Int?): String
+    suspend fun updateAccVoltControl(voltFile: String?, voltMax: Int?) : Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateAccVoltControlCommand(voltFile, voltMax)).exec().isSuccess
+    }
+
+    /**
+     * Updates the temperature related configuration in ACC.
+     * @param coolDownTemperature starts cool down phase at the specified temperature.
+     * @param pauseTemperature pauses charging at the specified temperature.
+     * @param wait seconds to wait until charging is resumed.
+     * @return the boolean result of the command's execution.
+     */
+    fun getUpdateAccTemperatureCommand(coolDownTemperature: Int, temperatureMax: Int, wait: Int): String
+    suspend fun updateAccTemperature(coolDownTemperature: Int, temperatureMax: Int, wait: Int) : Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateAccTemperatureCommand(coolDownTemperature, temperatureMax, wait)).exec().isSuccess
+    }
 
     /**
      * Updates the capacity related settings of ACC.
@@ -68,48 +100,49 @@ interface AccInterface {
      * @param pause pauses charging at the specified capacity.
      * @return boolean if the command was successful.
      */
-    fun updateAccCapacity(shutdown: Int, coolDown: Int, resume: Int, pause: Int) : Boolean
+    fun getUpdateAccCapacityCommand(shutdown: Int, coolDown: Int, resume: Int, pause: Int): String
+    suspend fun updateAccCapacity(shutdown: Int, coolDown: Int, resume: Int, pause: Int) : Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateAccCapacityCommand(shutdown, coolDown, resume, pause)).exec().isSuccess
+    }
 
     /**
-     * Updates the temperature related configuration in ACC.
-     * @param coolDownTemperature starts cool down phase at the specified temperature.
-     * @param pauseTemperature pauses charging at the specified temperature.
-     * @param wait seconds to wait until charging is resumed.
-     * @return the boolean result of the command's execution.
+     * Updates the cool down charge and pause durations.
+     * @param charge seconds to charge for during the cool down phase.
+     * @param pause seconds to pause for during the cool down phase.
+     * @return boolean if the command was successful.
      */
-    fun updateAccTemperature(coolDownTemperature: Int, temperatureMax: Int, wait: Int) : Boolean
+    fun getUpdateAccCoolDownCommand(charge: Int?, pause: Int?): String
+    suspend fun updateAccCoolDown(charge: Int?, pause: Int?) : Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateAccCoolDownCommand(charge, pause)).exec().isSuccess
+    }
 
-    /**
-     * Updates the voltage related configuration in ACC.
-     * @param voltFile path to the voltage file on the device.
-     * @param voltMax maximum voltage the phone should charge at.
-     * @return the boolean result of the command's execution.
-     */
-    fun updateAccVoltControl(voltFile: String?, voltMax: Int?) : Boolean
+    fun getUpdateResetUnpluggedCommand(resetUnplugged: Boolean): String
+    suspend fun updateResetUnplugged(resetUnplugged: Boolean): Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateResetUnpluggedCommand(resetUnplugged)).exec().isSuccess
+    }
 
-    /**
-     * Updates the on boot exit (boolean) configuration in ACC.
-     * @param enabled boolean: if OnBootExit should be enabled.
-     * @return the boolean result of the command's execution.
-     */
-    fun updateAccOnBootExit(enabled: Boolean) : Boolean
 
-    /**
-     * Updates the OnBoot command configuration in ACC.
-     * @param command the command to be run after the device starts (daemon starts).
-     * @return the boolean result of the command's execution.
-     */
-    fun updateAccOnBoot(command: String?) : Boolean
+    fun getUpdateAccChargingSwitchCommand(switch: String?): String
+    suspend fun updateAccChargingSwitch(switch: String?) : Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateAccChargingSwitchCommand(switch)).exec().isSuccess
+    }
 
     /**
      * Updates the OnPlugged configuration in ACC.
      * @param command the command to be run when the device is plugged in.
      * @return the boolean result of the command's execution.
      */
-    fun updateAccOnPlugged(command: String?) : Boolean
-    fun updateAccChargingSwitch(switch: String?) : Boolean
+    fun getUpdateAccOnPluggedCommand(command: String?): String
+    suspend fun updateAccOnPlugged(command: String?) : Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateAccOnPluggedCommand(command)).exec().isSuccess
+    }
 
-    suspend fun upgrade(version: String): Shell.Result?
+    fun getUpgradeCommand(version: String): String
+    suspend fun upgrade(version: String): Shell.Result? = withContext(Dispatchers.IO){
+        val res = Shell.su(getUpgradeCommand(version)).exec()
+        Acc.createAccInstance()
+        res
+    }
 }
 
 object Acc {

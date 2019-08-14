@@ -13,11 +13,9 @@ class AccHandler: mattecarra.accapp.acc.legacy.AccHandler() {
         return if(switch?.isNotEmpty() == true) switch else null
     }
 
-    override fun updateAccChargingSwitch(switch: String?) : Boolean {
-        if (switch.isNullOrBlank()) {
-            return Shell.su("acc -s s-").exec().isSuccess
-        }
-
-        return Shell.su("acc -s s $switch").exec().isSuccess
-    }
+    override fun getUpdateAccChargingSwitchCommand(switch: String?) : String =
+        if (switch.isNullOrBlank())
+            "acc -s s-"
+        else
+            "acc -s s $switch"
 }
