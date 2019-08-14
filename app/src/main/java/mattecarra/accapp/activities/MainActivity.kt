@@ -44,6 +44,7 @@ import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.utils.Constants
 import mattecarra.accapp.utils.ScopedAppActivity
 import mattecarra.accapp.utils.progress
+import mattecarra.accapp.utils.shareLogsNeutralButton
 import org.jetbrains.anko.doAsync
 import java.io.File
 
@@ -296,23 +297,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                     negativeButton {
                                         botNav_main.selectedItemId = R.id.botNav_schedules
                                     }
-
-                                    neutralButton(R.string.share) {
-                                        val file = File(filesDir, "logs/djs-install.log")
-                                        if(file.exists()) {
-                                            val intentShareFile = Intent(Intent.ACTION_SEND)
-                                                .setType("text/plain")
-                                                .putExtra(
-                                                    Intent.EXTRA_STREAM,
-                                                    FileProvider.getUriForFile(applicationContext, "mattecarra.accapp.fileprovider", file)
-                                                )
-                                                .putExtra(Intent.EXTRA_TEXT, "AccA installation failed log")
-
-                                            startActivity(Intent.createChooser(intentShareFile, "Share log file"))
-                                        } else {
-                                            Toast.makeText(this@MainActivity, R.string.logs_not_found, Toast.LENGTH_LONG).show()
-                                        }
-                                    }
+                                    shareLogsNeutralButton(File(filesDir, "logs/djs-install.log"), R.string.djs_installation_failed_log)
                                     cancelOnTouchOutside(false)
                                 }
                         }
@@ -513,22 +498,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                     negativeButton {
                                         finish()
                                     }
-                                    neutralButton(R.string.share) {
-                                        val file = File(filesDir, "logs/acc-install.log")
-                                        if(file.exists()) {
-                                            val intentShareFile = Intent(Intent.ACTION_SEND)
-                                                .setType("text/plain")
-                                                .putExtra(
-                                                    Intent.EXTRA_STREAM,
-                                                    FileProvider.getUriForFile(applicationContext, "mattecarra.accapp.fileprovider", file)
-                                                )
-                                                .putExtra(Intent.EXTRA_TEXT, "AccA installation failed log")
-
-                                            startActivity(Intent.createChooser(intentShareFile, "Share log file"))
-                                        } else {
-                                            Toast.makeText(this@MainActivity, R.string.logs_not_found, Toast.LENGTH_LONG).show()
-                                        }
-                                    }
+                                    shareLogsNeutralButton(File(filesDir, "logs/acc-install.log"), R.string.acc_installation_failed_log)
                                     cancelOnTouchOutside(false)
                                 }
                         }
@@ -553,7 +523,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         }
 
         val time = System.currentTimeMillis() / 1000
-        if((version == "master" || version == "dev") && time- mPreferences.lastUpdateCheck > 259200) {
+        if((version == "master" || version == "dev") && time - mPreferences.lastUpdateCheck > 259200) {
             mPreferences.lastUpdateCheck = time
 
             val dialog = MaterialDialog(this).show {
@@ -579,23 +549,10 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                 positiveButton(android.R.string.ok) {
                                     initUi()
                                 }
-                                neutralButton(R.string.share) {
-                                    //TODO add logs
-/*                              val file = File(filesDir, "logs/acc-install.log")
-                                if(file.exists()) {
-                                    val intentShareFile = Intent(Intent.ACTION_SEND)
-                                        .setType("text/plain")
-                                        .putExtra(
-                                            Intent.EXTRA_STREAM,
-                                            FileProvider.getUriForFile(applicationContext, "mattecarra.accapp.fileprovider", file)
-                                        )
-                                        .putExtra(Intent.EXTRA_TEXT, "AccA installation failed log")
 
-                                    startActivity(Intent.createChooser(intentShareFile, "Share log file"))
-                                } else {
-                                    Toast.makeText(this@MainActivity, R.string.logs_not_found, Toast.LENGTH_LONG).show()
-                                }*/
-                                }
+                                //TODO add logs
+                                //shareLogsNeutralButton(File(filesDir, "logs/acc-install.log"), R.string.acc_installation_failed_log)
+
                                 cancelOnTouchOutside(false)
                             }
                     }

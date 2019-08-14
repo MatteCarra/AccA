@@ -215,6 +215,9 @@
     <string name="no_update_available">No update available</string>
     <string name="update_completed">Update completed!</string>
     <string name="install">Install</string>
+    <string name="share_log">Share log file</string>
+    <string name="acc_installation_failed_log">AccA installation failed log</string>
+    <string name="djs_installation_failed_log">Djs installation failed log</string>
     <string-array name="theme_option_options">
         <item>Light</item>
         <item>Dark</item>
