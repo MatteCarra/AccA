@@ -45,7 +45,11 @@ interface AccInterface {
 
     fun getCurrentChargingSwitch(config: String): String?
 
+    fun isPrioritizeBatteryIdleMode(config: String): Boolean
+
     fun setChargingLimitForOneCharge(limit: Int): Boolean
+
+    suspend fun isBatteryIdleSupported(): Boolean
 
     suspend fun updateAccConfig(accConfig: AccConfig): ConfigUpdateResult
 
@@ -142,6 +146,11 @@ interface AccInterface {
         val res = Shell.su(getUpgradeCommand(version)).exec()
         Acc.createAccInstance()
         res
+    }
+
+    fun getUpdatePrioritizeBatteryIdleModeCommand(enabled: Boolean): String
+    suspend fun updatePrioritizeBatteryIdleMode(enabled: Boolean): Boolean = withContext(Dispatchers.IO){
+        Shell.su(getUpdatePrioritizeBatteryIdleModeCommand(enabled)).exec().isSuccess
     }
 }
 

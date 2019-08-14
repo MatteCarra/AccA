@@ -22,7 +22,8 @@ data class AccConfig(var configCapacity: ConfigCapacity,
                      var configOnPlug: String?,
                      var configCoolDown: ConfigCoolDown?,
                      var configResetUnplugged: Boolean,
-                     var configChargeSwitch: String?) : Parcelable {
+                     var configChargeSwitch: String?,
+                     var prioritizeBatteryIdleMode: Boolean) : Parcelable {
 
     private companion object : Parceler<AccConfig> {
 

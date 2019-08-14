@@ -91,8 +91,17 @@ class AccConfigEditorViewModel(application: Application, private val mAccConfig:
             unsavedChanges = true
         }
 
+    private val prioritizeBatteryIdleModeLiveData = MutableLiveData(mAccConfig.prioritizeBatteryIdleMode)
+    var prioritizeBatteryIdleMode: Boolean
+        get() = prioritizeBatteryIdleModeLiveData.value!!
+        set(value) {
+            prioritizeBatteryIdleModeLiveData.value = value
+            addConfigToHistory(mAccConfig)
+            unsavedChanges = true
+        }
+
     var accConfig: AccConfig
-        get() = AccConfig(capacity, voltageLimit, temperature, onBoot, onPlug, coolDown, mAccConfig.configResetUnplugged /* resetUnplugged */, chargeSwitch)
+        get() = AccConfig(capacity, voltageLimit, temperature, onBoot, onPlug, coolDown, mAccConfig.configResetUnplugged /* resetUnplugged */, chargeSwitch, prioritizeBatteryIdleMode)
         set(value) {
             addConfigToHistory(value)
             updateAccConfigLiveData(value)
@@ -153,5 +162,9 @@ class AccConfigEditorViewModel(application: Application, private val mAccConfig:
 
     fun observeChargeSwitch(owner: LifecycleOwner, observer: Observer<String?>) {
         configChargeSwitchLiveData.observe(owner, observer)
+    }
+
+    fun observePrioritizeBatteryIdleMode(owner: LifecycleOwner, observer: Observer<Boolean>) {
+        prioritizeBatteryIdleModeLiveData.observe(owner, observer)
     }
 }

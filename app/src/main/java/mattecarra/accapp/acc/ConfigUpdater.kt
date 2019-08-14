@@ -27,7 +27,8 @@ data class ConfigUpdater(val accConfig: AccConfig) {
             acc.updateResetUnplugged(accConfig.configResetUnplugged),
             acc.updateAccOnBoot(accConfig.configOnBoot),
             acc.updateAccOnPlugged(accConfig.configOnPlug),
-            acc.updateAccChargingSwitch(accConfig.configChargeSwitch)
+            acc.updateAccChargingSwitch(accConfig.configChargeSwitch),
+            acc.updatePrioritizeBatteryIdleMode(accConfig.prioritizeBatteryIdleMode)
         )
     }
 
@@ -53,7 +54,8 @@ data class ConfigUpdater(val accConfig: AccConfig) {
             acc.getUpdateResetUnpluggedCommand(accConfig.configResetUnplugged),
             acc.getUpdateAccOnBootCommand(accConfig.configOnBoot),
             acc.getUpdateAccOnPluggedCommand(accConfig.configOnPlug),
-            acc.getUpdateAccChargingSwitchCommand(accConfig.configChargeSwitch)
+            acc.getUpdateAccChargingSwitchCommand(accConfig.configChargeSwitch),
+            acc.getUpdatePrioritizeBatteryIdleModeCommand(accConfig.prioritizeBatteryIdleMode)
         ).joinToString("; ")
     }
 }
@@ -69,7 +71,8 @@ data class ConfigUpdateResult(
     val resetUnpluggedUpdateSuccessful: Boolean,
     val onBootUpdateSuccessful: Boolean,
     val onPluggedUpdateSuccessful: Boolean,
-    val chargingSwitchUpdateSuccessful: Boolean
+    val chargingSwitchUpdateSuccessful: Boolean,
+    val prioritizeBatteryIdleModeSuccessful: Boolean
 ) {
     fun debug() {
         if(!capacityUpdateSuccessful) println("Update capacity update failed")
@@ -87,6 +90,8 @@ data class ConfigUpdateResult(
         if(!onPluggedUpdateSuccessful) println("onPlugged update failed")
 
         if(!chargingSwitchUpdateSuccessful) println("Charging switch update failed")
+
+        if(!prioritizeBatteryIdleModeSuccessful) println("Battery idle mode update failed")
     }
 
     fun isSuccessful(): Boolean {

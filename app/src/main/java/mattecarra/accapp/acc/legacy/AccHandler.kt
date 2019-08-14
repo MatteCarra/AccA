@@ -26,6 +26,7 @@ open class AccHandler: AccInterface {
     val ON_PLUGGED = """^\s*applyOnPlug=((?:(?!#).)*)""".toRegex(RegexOption.MULTILINE)
     val VOLT_FILE = """^\s*chargingVoltageLimit=((?:(?!:).)*):(\d+)""".toRegex(RegexOption.MULTILINE)
     val SWITCH = """^\s*switch=((?:(?!#).)*)""".toRegex(RegexOption.MULTILINE)
+    val PRIORITIZE_BATTERY_IDLE = """^\s*prioritizeBattIdleMode=(true|false)""".toRegex(RegexOption.MULTILINE)
 
     override val defaultConfig: AccConfig
         get() =
@@ -37,7 +38,8 @@ open class AccHandler: AccInterface {
                 null,
                 null,
                 false,
-                null
+                null,
+                false
             )
 
     override suspend fun readConfig(): AccConfig = withContext(Dispatchers.IO) {
@@ -62,7 +64,8 @@ open class AccHandler: AccInterface {
                 AccConfig.ConfigCoolDown(capacityCoolDown.toInt(), coolDownChargeSeconds.toInt(), coolDownPauseSeconds.toInt())
             },
             getResetUnplugged(config),
-            getCurrentChargingSwitch(config)
+            getCurrentChargingSwitch(config),
+            isPrioritizeBatteryIdleMode(config)
         )
     }
 
@@ -243,8 +246,19 @@ open class AccHandler: AccInterface {
         return if(switch?.isNotEmpty() == true) switch else null
     }
 
+    override fun isPrioritizeBatteryIdleMode(config: String): Boolean {
+        return PRIORITIZE_BATTERY_IDLE.find(config)?.destructured?.component1()?.toBoolean() ?: false
+    }
+
     override fun setChargingLimitForOneCharge(limit: Int): Boolean {
         return Shell.su("(acc -f $limit &) &").exec().isSuccess
+    }
+
+    val BATTERY_IDLE_SUPPORTED = """^\s*- battIdleMode=true""".toRegex(RegexOption.MULTILINE)
+    override suspend fun isBatteryIdleSupported(): Boolean = withContext(Dispatchers.IO) {
+        BATTERY_IDLE_SUPPORTED.matches(
+            Shell.su("acc -t --").exec().out.joinToString("\n")
+        )
     }
 
     //Update config part:
@@ -294,4 +308,6 @@ open class AccHandler: AccInterface {
             "acc --set switch $switch"
 
     override fun getUpgradeCommand(version: String) = "acc --upgrade $version"
+
+    override fun getUpdatePrioritizeBatteryIdleModeCommand(enabled: Boolean): String = "acc --set prioritizeBattIdleMode $enabled"
 }

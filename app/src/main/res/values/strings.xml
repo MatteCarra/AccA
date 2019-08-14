@@ -54,7 +54,7 @@
     <string name="cooldown_capacity">Start cooling down at %:</string>
     <string name="resume_charge">Resume charging at:</string>
     <string name="stop_charge">Stop charging at:</string>
-    <string name="enable_temp_check">Temperature check (°C)</string>
+    <string name="enable_temp_check">Enable temperature check (°C)</string>
     <string name="cooldown_temp">Cool down temp:</string>
     <string name="max_temp">Max temp:</string>
     <string name="pause_seconds">Pause seconds:</string>
@@ -151,7 +151,7 @@
     <string name="temperature_control_info">- This disables charging for set seconds to cool the battery&lt;br /&gt;- COOL DOWN TEMP depends on COOL DOWN RATIO.&lt;br /&gt;- MAX TEMP works with PAUSE SECONDS.</string>
     <string name="cooldown_info">- Charging ON/OFF ratio in seconds (e.g., coolDownRatio=50/10) - reduces battery stress induced by prolonged high temperature and high charging voltage by periodically pausing charging.&lt;br /&gt;- If charging is too slow, turn this off or change the ratio.&lt;br /&gt;- When disabled, COOL DOWN CAPACITY and COOL DOWN TEMP values are nullified.&lt;br /&gt;- This settings is a fair alternative to the charging voltage limit feature.</string>
     <string name="on_plugged_info">This is used for updating files whose contents change on certain power events (e.g., plugged/unplugged). It is particularly useful for enforcing custom max voltage/current for usb/wireless charging.</string>
-
+    <string name="battery_idle_info_label">If the switch is selected charging switches that support battery idle mode take precedence - allowing the device to draw power directly from the external power supply when charging is paused.&lt;br /&gt;If your switch is disabled it means that your kernel does not support this feature.</string>
 
     <string name="acc_config_editor">Acc config editor</string>
     <string name="profile_creator">Profile creator</string>
@@ -220,6 +220,7 @@
     <string name="djs_installation_failed_log">Djs installation failed log</string>
     <string name="select_different_version">Change acc version</string>
     <string name="installation_failed_non_bundled">The installation of an unsupported acc version has failed.\nPlease consider sharing the logs to the devs.</string>
+    <string name="prioritize_battery_idle">Prioritize battery idle</string>
     <string-array name="theme_option_options">
         <item>Light</item>
         <item>Dark</item>

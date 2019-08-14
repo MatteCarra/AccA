@@ -299,6 +299,79 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Battery idle control Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:foreground="?selectableItemBackground"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="3dp"
+            app:contentPadding="@dimen/card_content_padding"
+            style="@style/Widget.MaterialComponents.CardView">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/card_content_padding">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:text="@string/prioritize_battery_idle" />
+
+                    <ImageView
+                        android:id="@+id/battery_idle_control_restore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_restore_24px"
+                        android:onClick="onBatteryIdleRestore"
+                        android:contentDescription="@string/restore" />
+
+                    <ImageView
+                        android:id="@+id/battery_idle_control_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_info"
+                        android:onClick="onInfoClick"
+                        android:contentDescription="@string/info" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+                    <Switch
+                        android:id="@+id/battery_idle_switch"
+                        android:checked="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/prioritize_battery_idle"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="16dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <!-- Temperature Card -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"

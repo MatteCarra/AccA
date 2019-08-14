@@ -25,16 +25,18 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import it.sephiroth.android.library.xtooltip.ClosePolicy
 import it.sephiroth.android.library.xtooltip.Tooltip
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.utils.Constants
+import mattecarra.accapp.utils.ScopedAppActivity
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 
-class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeListener {
+class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeListener {
     private lateinit var viewModel: AccConfigEditorViewModel
     private lateinit var mUndoMenuItem: MenuItem
     private lateinit var mPreferences: Preferences
@@ -220,6 +222,9 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         voltage_max.text = configVoltage.max?.let { "$it mV" } ?: getString(R.string.disabled)
     }
 
+    private fun updateBatteryIdlePreference(enabled: Boolean) {
+        battery_idle_switch.isChecked = enabled
+    }
 
     private fun initUi() {
         viewModel.observeCapacity(this, Observer {
@@ -250,6 +255,10 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             tv_config_on_boot.text = configOnBoot?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
         })
 
+        viewModel.observePrioritizeBatteryIdleMode(this, Observer { checked ->
+            updateBatteryIdlePreference(checked)
+        })
+
         //capacity card
         shutdown_capacity_picker.setOnValueChangedListener(this)
         resume_capacity_picker.setOnValueChangedListener(this)
@@ -278,6 +287,15 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
         cooldown_percentage_picker.setOnValueChangedListener(this)
         charge_ratio_picker.setOnValueChangedListener(this)
         pause_ratio_picker.setOnValueChangedListener(this)
+
+        //battery idle
+        launch {
+            battery_idle_switch.isEnabled = Acc.instance.isBatteryIdleSupported()
+        }
+
+        battery_idle_switch.setOnClickListener {
+            viewModel.prioritizeBatteryIdleMode = battery_idle_switch.isChecked
+        }
     }
 
     override fun onValueChange(picker: NumberPicker?, oldVal: Int, newVal: Int) {
@@ -503,6 +521,7 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
             R.id.exit_on_boot_info -> R.string.description_exit_on_boot
             R.id.cooldown_info -> R.string.cooldown_info
             R.id.on_plugged_info -> R.string.on_plugged_info
+            R.id.battery_idle_control_info -> R.string.battery_idle_info_label
             else -> null
         }?.let {
             Tooltip.Builder(this)
@@ -541,5 +560,9 @@ class AccConfigEditorActivity : AppCompatActivity(), NumberPicker.OnValueChangeL
 
     fun onBootRestoreClick(view: View) {
         viewModel.onBoot = Acc.instance.defaultConfig.configOnBoot
+    }
+
+    fun onBatteryIdleRestore(v: View) {
+        viewModel.prioritizeBatteryIdleMode = Acc.instance.defaultConfig.prioritizeBatteryIdleMode
     }
 }
