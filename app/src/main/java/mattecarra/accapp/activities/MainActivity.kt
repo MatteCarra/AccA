@@ -429,7 +429,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                                 title(R.string.acc_version_preference_title)
                                                 message(R.string.acc_version_picker_message)
                                                 cancelOnTouchOutside(false)
-                                                launch {
+                                                this@MainActivity.launch {
                                                     accVersionSingleChoice(mPreferences.accVersion) { version ->
                                                         mPreferences.accVersion = version
 
