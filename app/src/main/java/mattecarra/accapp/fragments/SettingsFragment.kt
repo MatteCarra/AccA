@@ -17,6 +17,8 @@ import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.utils.Constants.ACC_VERSION
+import mattecarra.accapp.utils.accVersionSingleChoice
+import mattecarra.accapp.utils.onKeyCodeBackPressed
 import mattecarra.accapp.utils.progress
 import kotlin.coroutines.CoroutineContext
 
@@ -74,63 +76,53 @@ class SettingsFragment : PreferenceFragmentCompat(), CoroutineScope {
             context?.let { context ->
                 val preferences = Preferences(context)
 
-                val options = context.resources.getStringArray(R.array.acc_version_options).toMutableList()
-                val versionDialog = MaterialDialog(context)
+                MaterialDialog(context)
                     .show {
                         title(R.string.acc_version_preference_title)
                         message(R.string.acc_version_picker_message)
                         cancelOnTouchOutside(false)
-                    }
+                        launch {
+                            accVersionSingleChoice(preferences.accVersion) { version ->
+                                val installVersion: () -> Job = {
+                                    this@SettingsFragment.launch {
+                                        val dialog = MaterialDialog(context).show {
+                                            title(R.string.installing_acc)
+                                            progress(R.string.wait)
+                                            cancelOnTouchOutside(false)
+                                            onKeyCodeBackPressed { false }
+                                        }
 
+                                        //TODO handle exit codes
+                                        if (version == "bundled") {
+                                            Acc.installBundledAccModule(context)
+                                        } else {
+                                            Acc.installAccModuleVersion(context, version)
 
-                launch {
-                    options.addAll(Acc.listAccVersions())
-                    versionDialog
-                        .listItemsSingleChoice(items = options, initialSelection = options.indexOf(preferences.accVersion)) { _, _, text ->
-                            val version = text.toLowerCase()
+                                            if(version == "master" || version == "dev")
+                                                preferences.lastUpdateCheck = System.currentTimeMillis() / 1000
+                                        }
 
-                            val installVersion: () -> Job = {
-                                this@SettingsFragment.launch {
-                                    val dialog = MaterialDialog(context).show {
-                                        title(R.string.installing_acc)
-                                        progress(R.string.wait)
-                                        cancelOnTouchOutside(false)
+                                        preferences.accVersion = version
+                                        dialog.dismiss()
                                     }
+                                }
 
-                                    dialog.setOnKeyListener { _, keyCode, _ ->
-                                        keyCode == KeyEvent.KEYCODE_BACK
-                                    }
-
-                                    //TODO handle exit codes
-                                    if (version == "bundled") {
-                                        Acc.installBundledAccModule(context)
-                                    } else {
-                                        Acc.installAccModuleVersion(context, version)
-
-                                        if(version == "master" || version == "dev")
-                                            preferences.lastUpdateCheck = System.currentTimeMillis() / 1000
-                                    }
-
-                                    preferences.accVersion = version
-                                    dialog.dismiss()
+                                if (version == "bundled") {
+                                    installVersion()
+                                } else {
+                                    MaterialDialog(context)
+                                        .show {
+                                            title(R.string.acc_version_compatibility_warning_title)
+                                            message(R.string.acc_version_compatibility_warning_description)
+                                            positiveButton(android.R.string.yes) {
+                                                installVersion()
+                                            }
+                                            negativeButton(android.R.string.cancel)
+                                        }
                                 }
                             }
-
-                            if (version == "bundled") {
-                                installVersion()
-                            } else {
-                                MaterialDialog(context)
-                                    .show {
-                                        title(R.string.acc_version_compatibility_warning_title)
-                                        message(R.string.acc_version_compatibility_warning_description)
-                                        positiveButton(android.R.string.yes) {
-                                            installVersion()
-                                        }
-                                        negativeButton(android.R.string.cancel)
-                                    }
-                            }
                         }
-                }
+                    }
             }
 
             true

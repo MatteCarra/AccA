@@ -218,6 +218,8 @@
     <string name="share_log">Share log file</string>
     <string name="acc_installation_failed_log">AccA installation failed log</string>
     <string name="djs_installation_failed_log">Djs installation failed log</string>
+    <string name="select_different_version">Change acc version</string>
+    <string name="installation_failed_non_bundled">The installation of an unsupported acc version has failed. Please consider sharing the logs to the devs.</string>
     <string-array name="theme_option_options">
         <item>Light</item>
         <item>Dark</item>

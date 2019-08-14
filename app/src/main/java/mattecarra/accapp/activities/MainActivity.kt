@@ -11,7 +11,6 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate.*
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.MaterialDialog
@@ -21,8 +20,6 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
-import com.afollestad.materialdialogs.list.SingleChoiceListener
-import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.Display
 import com.github.javiersantos.appupdater.enums.UpdateFrom
@@ -41,10 +38,7 @@ import mattecarra.accapp.fragments.ProfilesFragment
 import mattecarra.accapp.fragments.SchedulesFragment
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
-import mattecarra.accapp.utils.Constants
-import mattecarra.accapp.utils.ScopedAppActivity
-import mattecarra.accapp.utils.progress
-import mattecarra.accapp.utils.shareLogsNeutralButton
+import mattecarra.accapp.utils.*
 import org.jetbrains.anko.doAsync
 import java.io.File
 
@@ -261,10 +255,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                     title(R.string.installing_djs)
                     progress(R.string.wait)
                     cancelOnTouchOutside(false)
-                }
-
-                dialog.setOnKeyListener { _, keyCode, _ ->
-                    keyCode == KeyEvent.KEYCODE_BACK
+                    onKeyCodeBackPressed { false }
                 }
 
                 launch {
@@ -405,10 +396,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 title(R.string.installing_acc)
                 progress(R.string.wait)
                 cancelOnTouchOutside(false)
-            }
-
-            dialog.setOnKeyListener { _, keyCode, _ ->
-                keyCode == KeyEvent.KEYCODE_BACK
+                onKeyCodeBackPressed { false }
             }
 
             launch {
@@ -423,71 +411,62 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 dialog.cancel()
 
                 if (res?.isSuccess != true) {
-                    val failureDialog =
-                        when {
-                            version != "bundled" -> //custom version installation had an error -> ask the user to select a different version
-                                MaterialDialog(this@MainActivity)
-                                    .show {
-                                        title(R.string.acc_installation_failed_title)
-                                        message(R.string.installation_failed_busybox)
-                                        positiveButton(R.string.install_bundled_version) {
-                                            mPreferences.accVersion = "bundled"
-                                            if (checkAccInstalled()) {
-                                                initUi()
-                                            }
+                    when {
+                        version != "bundled" -> //custom version installation had an error -> ask the user to select a different version
+                            MaterialDialog(this@MainActivity) //Dialog to tell the user that installation failed
+                                .show {
+                                    title(R.string.acc_installation_failed_title)
+                                    message(R.string.installation_failed_non_bundled)
+                                    positiveButton(R.string.install_bundled_version) {
+                                        mPreferences.accVersion = "bundled"
+                                        if (checkAccInstalled()) {
+                                            initUi()
                                         }
-                                        negativeButton {
-                                            val onSelection: SingleChoiceListener =  { _, _, text ->
-                                                mPreferences.accVersion = text
-                                                if (checkAccInstalled()) {
-                                                    initUi()
+                                    }
+                                    negativeButton(R.string.select_different_version) {
+                                        MaterialDialog(this@MainActivity) //select a different acc version dailog
+                                            .show {
+                                                title(R.string.acc_version_preference_title)
+                                                message(R.string.acc_version_picker_message)
+                                                cancelOnTouchOutside(false)
+                                                launch {
+                                                    accVersionSingleChoice(mPreferences.accVersion) { version ->
+                                                        mPreferences.accVersion = version
+
+                                                        if (checkAccInstalled()) {
+                                                            initUi()
+                                                        }
+                                                    }
                                                 }
-                                            }
-
-                                            val options = resources.getStringArray(R.array.acc_version_options).toMutableList()
-
-                                            val versionDialog = MaterialDialog(this@MainActivity)
-                                                .show {
-                                                    title(R.string.acc_version_preference_title)
-                                                    message(R.string.acc_version_picker_message)
-                                                    cancelOnTouchOutside(false)
-                                                }
-
-                                            versionDialog.setOnKeyListener { _, keyCode, _ ->
-                                                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                                                    dialog.dismiss()
+                                                onKeyCodeBackPressed {
+                                                    dismiss()
                                                     finish()
                                                     false
-                                                } else true
+                                                }
                                             }
-
-                                            launch {
-                                                options.addAll(
-                                                    Acc.listAccVersions()
-                                                )
-                                                versionDialog.listItemsSingleChoice(items = options, initialSelection = options.indexOf(version), selection = onSelection)
-                                            }
-                                        }
-                                        cancelOnTouchOutside(false)
                                     }
+                                    shareLogsNeutralButton(File(filesDir, "logs/acc-install.log"), R.string.acc_installation_failed_log)
+                                    cancelOnTouchOutside(false)
+                                }
 
-                            res?.code == 3 -> //Buysbox is not installed
-                                MaterialDialog(this@MainActivity)
-                                    .show {
-                                        title(R.string.installation_failed_busybox_title)
-                                        message(R.string.installation_failed_busybox)
-                                        positiveButton(R.string.retry) {
-                                            if (checkAccInstalled()) {
-                                                initUi()
-                                            }
+                        res?.code == 3 -> //Buysbox is not installed
+                            MaterialDialog(this@MainActivity)
+                                .show {
+                                    title(R.string.installation_failed_busybox_title)
+                                    message(R.string.installation_failed_busybox)
+                                    positiveButton(R.string.retry) {
+                                        if (checkAccInstalled()) {
+                                            initUi()
                                         }
-                                        negativeButton {
-                                            finish()
-                                        }
-                                        cancelOnTouchOutside(false)
                                     }
+                                    negativeButton {
+                                        finish()
+                                    }
+                                    cancelOnTouchOutside(false)
+                                }
 
-                            else -> MaterialDialog(this@MainActivity) //Other installation errors can not be handled automatically -> show a dialog with the logs
+                        else -> //Other installation errors can not be handled automatically -> show a dialog with the logs
+                            MaterialDialog(this@MainActivity)
                                 .show {
                                     title(R.string.acc_installation_failed_title)
                                     message(R.string.acc_installation_failed)
@@ -501,14 +480,10 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                     shareLogsNeutralButton(File(filesDir, "logs/acc-install.log"), R.string.acc_installation_failed_log)
                                     cancelOnTouchOutside(false)
                                 }
-                        }
-
-                    failureDialog.setOnKeyListener { _, keyCode, _ ->
-                        if (keyCode == KeyEvent.KEYCODE_BACK) {
-                            dialog.dismiss()
-                            finish()
-                            false
-                        } else true
+                    }.onKeyCodeBackPressed {
+                        dialog.dismiss()
+                        finish()
+                        false
                     }
                 } else {
                     initUi()
@@ -595,14 +570,11 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                     finish()
                 }
                 cancelOnTouchOutside(false)
-            }
-
-            dialog.setOnKeyListener { _, keyCode, _ ->
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    dialog.dismiss()
+                onKeyCodeBackPressed {
+                    dismiss()
                     finish()
                     false
-                } else true
+                }
             }
             return
         }
