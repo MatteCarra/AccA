@@ -261,7 +261,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/voltage_control_file"
+                        android:id="@+id/voltage_control_file_spinner"
                         android:textSize="16sp"/>
 
                 </LinearLayout>
@@ -283,7 +283,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/voltage_max"
+                        android:id="@+id/voltage_max_edit_text"
                         android:textSize="16sp"/>
 
                 </LinearLayout>
@@ -360,15 +360,25 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginBottom="10dp">
-                    <Switch
-                        android:id="@+id/battery_idle_switch"
-                        android:checked="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/prioritize_battery_idle"
-                        android:textSize="16sp"
-                        android:layout_marginBottom="16dp" />
+
                 </LinearLayout>
+
+                <Switch
+                    android:id="@+id/battery_idle_switch"
+                    android:checked="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prioritize_battery_idle"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="16dp" />
+
+                <Button style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/test_battery_idle"
+                    android:id="@+id/battery_idle_test_button"
+                    android:layout_gravity="center_horizontal"
+                    android:onClick="onBatteryIdleTestButtonClick"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

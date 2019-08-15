@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -32,6 +31,10 @@ import mattecarra.accapp.R
 import mattecarra.accapp.SharedViewModel
 import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.acc.Acc
+import mattecarra.accapp.dialogs.accVersionSingleChoice
+import mattecarra.accapp.dialogs.onKeyCodeBackPressed
+import mattecarra.accapp.dialogs.progress
+import mattecarra.accapp.dialogs.shareLogsNeutralButton
 import mattecarra.accapp.djs.Djs
 import mattecarra.accapp.fragments.DashboardFragment
 import mattecarra.accapp.fragments.ProfilesFragment

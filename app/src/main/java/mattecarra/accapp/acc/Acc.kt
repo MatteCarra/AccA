@@ -1,6 +1,7 @@
 package mattecarra.accapp.acc
 
 import android.content.Context
+import androidx.annotation.WorkerThread
 import com.google.gson.JsonArray
 import com.google.gson.JsonParser
 import com.topjohnwu.superuser.Shell
@@ -23,31 +24,33 @@ interface AccInterface {
 
     suspend fun readConfig(): AccConfig
 
-    fun listVoltageSupportedControlFiles(): List<String>
+    suspend fun listVoltageSupportedControlFiles(): List<String>
 
-    fun resetBatteryStats(): Boolean
+    suspend fun resetBatteryStats(): Boolean
 
-    fun getBatteryInfo(): BatteryInfo
+    suspend fun getBatteryInfo(): BatteryInfo
 
-    fun isBatteryCharging(): Boolean
+    suspend fun isBatteryCharging(): Boolean
 
-    fun isAccdRunning(): Boolean
+    suspend fun isAccdRunning(): Boolean
 
-    fun abcStartDaemon(): Boolean
+    suspend fun abcStartDaemon(): Boolean
 
-    fun abcRestartDaemon(): Boolean
+    suspend fun abcRestartDaemon(): Boolean
 
-    fun abcStopDaemon(): Boolean
+    suspend fun abcStopDaemon(): Boolean
 
-    fun listChargingSwitches(): List<String>
+    suspend fun listChargingSwitches(): List<String>
 
-    fun testChargingSwitch(chargingSwitch: String? = null): Int
+    suspend fun testChargingSwitch(chargingSwitch: String? = null): Int
 
+    @WorkerThread
     fun getCurrentChargingSwitch(config: String): String?
 
+    @WorkerThread
     fun isPrioritizeBatteryIdleMode(config: String): Boolean
 
-    fun setChargingLimitForOneCharge(limit: Int): Boolean
+    suspend fun setChargingLimitForOneCharge(limit: Int): Boolean
 
     suspend fun isBatteryIdleSupported(): Boolean
 

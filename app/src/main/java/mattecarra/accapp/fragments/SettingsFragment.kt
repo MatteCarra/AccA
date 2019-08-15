@@ -4,23 +4,20 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.list.SingleChoiceListener
-import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import kotlinx.coroutines.*
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.utils.Constants.ACC_VERSION
-import mattecarra.accapp.utils.accVersionSingleChoice
-import mattecarra.accapp.utils.onKeyCodeBackPressed
-import mattecarra.accapp.utils.progress
-import mattecarra.accapp.utils.shareLogsNeutralButton
+import mattecarra.accapp.dialogs.accVersionSingleChoice
+import mattecarra.accapp.dialogs.onKeyCodeBackPressed
+import mattecarra.accapp.dialogs.progress
+import mattecarra.accapp.dialogs.shareLogsNeutralButton
 import java.io.File
 import kotlin.coroutines.CoroutineContext
 

@@ -21,15 +21,11 @@ class DashboardViewModel : ViewModel() {
         viewModelScope.launch {
             while (true) {
                 if (batteryInfo.hasActiveObservers()) {
-                    batteryInfo.value = withContext(Dispatchers.IO) {
-                        Acc.instance.getBatteryInfo()
-                    }
+                    batteryInfo.value = Acc.instance.getBatteryInfo()
                 }
 
                 if(isDaemonRunning.hasActiveObservers()) {
-                    isDaemonRunning.value = withContext(Dispatchers.IO) {
-                        Acc.instance.isAccdRunning()
-                    }
+                    isDaemonRunning.value = Acc.instance.isAccdRunning()
                 }
 
                 delay(1000)

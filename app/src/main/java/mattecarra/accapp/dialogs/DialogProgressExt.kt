@@ -1,4 +1,4 @@
-package mattecarra.accapp.utils
+package mattecarra.accapp.dialogs
 
 import android.widget.LinearLayout
 import android.widget.TextView

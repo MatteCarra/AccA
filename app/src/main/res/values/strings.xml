@@ -221,6 +221,7 @@
     <string name="select_different_version">Change acc version</string>
     <string name="installation_failed_non_bundled">The installation of an unsupported acc version has failed.\nPlease consider sharing the logs to the devs.</string>
     <string name="prioritize_battery_idle">Prioritize battery idle</string>
+    <string name="test_battery_idle">Test battery idle</string>
     <string-array name="theme_option_options">
         <item>Light</item>
         <item>Dark</item>

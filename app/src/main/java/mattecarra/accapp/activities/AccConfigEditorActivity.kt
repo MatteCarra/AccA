@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
@@ -12,16 +11,11 @@ import kotlinx.android.synthetic.main.content_acc_config_editor.*
 import mattecarra.accapp.R
 import android.app.Activity
 import android.content.Intent
-import android.text.Editable
-import android.text.TextWatcher
 import android.widget.*
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
-import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import it.sephiroth.android.library.xtooltip.ClosePolicy
 import it.sephiroth.android.library.xtooltip.Tooltip
@@ -29,12 +23,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.acc.Acc
+import mattecarra.accapp.dialogs.voltageLimitDialog
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.utils.Constants
 import mattecarra.accapp.utils.ScopedAppActivity
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
-
 
 class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeListener {
     private lateinit var viewModel: AccConfigEditorViewModel
@@ -218,8 +210,8 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
     }
 
     private fun updateVoltageControlCard(configVoltage: AccConfig.ConfigVoltage) {
-        voltage_control_file.text = configVoltage.controlFile ?: "Not supported"
-        voltage_max.text = configVoltage.max?.let { "$it mV" } ?: getString(R.string.disabled)
+        voltage_control_file_spinner.text = configVoltage.controlFile ?: "Not supported"
+        voltage_max_edit_text.text = configVoltage.max?.let { "$it mV" } ?: getString(R.string.disabled)
     }
 
     private fun updateBatteryIdlePreference(enabled: Boolean) {
@@ -289,12 +281,16 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         pause_ratio_picker.setOnValueChangedListener(this)
 
         //battery idle
-        launch {
-            battery_idle_switch.isEnabled = Acc.instance.isBatteryIdleSupported()
-        }
-
         battery_idle_switch.setOnClickListener {
             viewModel.prioritizeBatteryIdleMode = battery_idle_switch.isChecked
+        }
+    }
+
+    fun onBatteryIdleTestButtonClick(v: View) {
+        launch {
+            if(Acc.instance.isBatteryCharging()) {
+                battery_idle_switch.isEnabled = Acc.instance.isBatteryIdleSupported()
+            }
         }
     }
 
@@ -370,47 +366,48 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
 
     fun editChargingSwitchOnClick(v: View) {
         val automaticString = getString(R.string.automatic)
-        val chargingSwitches = listOf(automaticString, *Acc.instance.listChargingSwitches().toTypedArray())
         val initialSwitch = viewModel.chargeSwitch
-        var currentIndex = chargingSwitches.indexOf(initialSwitch ?: automaticString)
 
         MaterialDialog(this).show {
             title(R.string.edit_charging_switch)
             noAutoDismiss()
 
-            setActionButtonEnabled(WhichButton.POSITIVE, currentIndex != -1)
-            setActionButtonEnabled(WhichButton.NEUTRAL, currentIndex != -1)
+            launch {
+                val chargingSwitches = listOf(automaticString, *Acc.instance.listChargingSwitches().toTypedArray())
+                var currentIndex = chargingSwitches.indexOf(initialSwitch ?: automaticString)
 
-            listItemsSingleChoice(items = chargingSwitches, initialSelection = currentIndex, waitForPositiveButton = false)  { _, index, text ->
-                currentIndex = index
+                setActionButtonEnabled(WhichButton.POSITIVE, currentIndex != -1)
+                setActionButtonEnabled(WhichButton.NEUTRAL, currentIndex != -1)
 
-                setActionButtonEnabled(WhichButton.POSITIVE, index != -1)
-                setActionButtonEnabled(WhichButton.NEUTRAL, index != -1)
-            }
+                listItemsSingleChoice(items = chargingSwitches, initialSelection = currentIndex, waitForPositiveButton = false)  { _, index, text ->
+                    currentIndex = index
 
-            positiveButton(R.string.save) {
-                val index = currentIndex
-                val switch = chargingSwitches[index]
+                    setActionButtonEnabled(WhichButton.POSITIVE, index != -1)
+                    setActionButtonEnabled(WhichButton.NEUTRAL, index != -1)
+                }
 
-                viewModel.chargeSwitch = if(index == 0) null else switch
+                positiveButton(R.string.save) {
+                    val index = currentIndex
+                    val switch = chargingSwitches[index]
 
-                dismiss()
-            }
+                    viewModel.chargeSwitch = if(index == 0) null else switch
 
-            neutralButton(R.string.test_switch) {
-                val switch = if(currentIndex == 0) null else chargingSwitches[currentIndex]
+                    dismiss()
+                }
 
-                Toast.makeText(this@AccConfigEditorActivity, R.string.wait, Toast.LENGTH_LONG).show()
-                doAsync {
-                    val description =
-                        when(Acc.instance.testChargingSwitch(switch)) {
-                            0 -> R.string.charging_switch_works
-                            1 -> R.string.charging_switch_does_not_work
-                            2 -> R.string.plug_battery_to_test
-                            else -> R.string.error_occurred
-                        }
+                neutralButton(R.string.test_switch) {
+                    val switch = if(currentIndex == 0) null else chargingSwitches[currentIndex]
 
-                    uiThread {
+                    Toast.makeText(this@AccConfigEditorActivity, R.string.wait, Toast.LENGTH_LONG).show()
+                    this@AccConfigEditorActivity.launch {
+                        val description =
+                            when(Acc.instance.testChargingSwitch(switch)) {
+                                0 -> R.string.charging_switch_works
+                                1 -> R.string.charging_switch_does_not_work
+                                2 -> R.string.plug_battery_to_test
+                                else -> R.string.error_occurred
+                            }
+
                         MaterialDialog(this@AccConfigEditorActivity).show {
                             title(R.string.test_switch)
                             message(description)
@@ -419,7 +416,6 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
                     }
                 }
             }
-
             negativeButton(android.R.string.cancel) {
                 dismiss()
             }
@@ -427,89 +423,18 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
     }
 
     fun editVoltageOnClick(v: View) {
-        val dialog = MaterialDialog(this@AccConfigEditorActivity).show {
-            customView(R.layout.voltage_control_editor_dialog)
-            positiveButton(android.R.string.ok) { dialog ->
-                val view = dialog.getCustomView()
-                val voltageControl = view.findViewById<Spinner>(R.id.voltage_control_file)
-                val voltageMax = view.findViewById<EditText>(R.id.voltage_max)
-                val checkBox = dialog.findViewById<CheckBox>(R.id.enable_voltage_max)
-
-                val voltageMaxInt = voltageMax.text.toString().toIntOrNull()
-                if(checkBox.isChecked && voltageMaxInt != null) {
+        MaterialDialog(this@AccConfigEditorActivity).show {
+            voltageLimitDialog(viewModel.voltageLimit, this@AccConfigEditorActivity) { isEnabled, voltageMax, controlFile ->
+                if(isEnabled && voltageMax != null) {
                     viewModel.voltageLimit = AccConfig.ConfigVoltage(
-                        voltageControl.selectedItem as String,
-                        voltageMaxInt
+                        controlFile,
+                        voltageMax
                     )
                 } else {
                     viewModel.voltageLimit = viewModel.voltageLimit.copy(max = null)
                 }
             }
             negativeButton(android.R.string.cancel)
-        }
-
-        //initialize dialog custom view:
-        val view = dialog.getCustomView()
-        val voltageMax = view.findViewById<EditText>(R.id.voltage_max)
-        val checkBox = dialog.findViewById<CheckBox>(R.id.enable_voltage_max)
-        val voltageControl = view.findViewById<Spinner>(R.id.voltage_control_file)
-
-        val configVoltage = viewModel.voltageLimit
-
-        voltageMax.setText(configVoltage.max?.toString() ?: "", TextView.BufferType.EDITABLE)
-        checkBox.setOnCheckedChangeListener { _, isChecked ->
-            voltageMax.isEnabled = isChecked
-
-            val voltageMaxVal = voltageMax.text?.toString()?.toIntOrNull()
-            val isValid = voltageMaxVal != null && voltageMaxVal >= 3500 && voltageMaxVal <= 4350
-            voltageMax.error = if (isValid) null else getString(R.string.invalid_voltage_max)
-            dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid  && voltageControl.selectedItemPosition != -1)
-        }
-        checkBox.isChecked = configVoltage.max != null
-        voltageMax.isEnabled = checkBox.isChecked
-        voltageMax.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val voltageMaxVal = s?.toString()?.toIntOrNull()
-                val isValid = voltageMaxVal != null && voltageMaxVal >= 3500 && voltageMaxVal <= 4350
-                voltageMax.error = if(isValid) null else getString(R.string.invalid_voltage_max)
-                dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid  && voltageControl.selectedItemPosition != -1)
-            }
-        })
-
-        val supportedVoltageControlFiles = ArrayList(Acc.instance.listVoltageSupportedControlFiles())
-        val currentVoltageFile = configVoltage.controlFile?.let { currentVoltFile ->
-            val currentVoltFileRegex = currentVoltFile.replace("/", """\/""").replace(".", """\.""").replace("?", ".").toRegex()
-            val match = supportedVoltageControlFiles.find { currentVoltFileRegex.matches(it) }
-            if(match == null) {
-                supportedVoltageControlFiles.add(currentVoltFile)
-                currentVoltFile
-            } else {
-                match
-            }
-        }
-        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, supportedVoltageControlFiles)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        voltageControl.adapter = adapter
-        currentVoltageFile?.let {
-            voltageControl.setSelection(supportedVoltageControlFiles.indexOf(currentVoltageFile))
-        }
-        if(voltageControl.selectedItemPosition == -1) {
-            dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
-        }
-        voltageControl.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val voltageMaxVal = voltageMax.text?.toString()?.toIntOrNull()
-                val isValid = voltageMaxVal != null && voltageMaxVal >= 3500 && voltageMaxVal <= 4350
-                dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid && position != -1)
-            }
         }
     }
 

@@ -1,4 +1,4 @@
-package mattecarra.accapp.utils
+package mattecarra.accapp.dialogs
 
 import android.content.Intent
 import android.view.KeyEvent
