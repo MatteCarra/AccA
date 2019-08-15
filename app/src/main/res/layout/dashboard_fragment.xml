@@ -105,16 +105,17 @@
                     <com.google.android.material.button.MaterialButton
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                         android:id="@+id/dash_daemonToggle_button"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/stop"
                         app:icon="@drawable/ic_outline_stop_24px"
                         app:iconTint="?colorPrimary"
+                        android:layout_weight="1"
                         android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"/>
 
                     <com.google.android.material.button.MaterialButton
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:id="@+id/dash_daemonRestart_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
