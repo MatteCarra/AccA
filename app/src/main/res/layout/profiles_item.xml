@@ -9,7 +9,6 @@
     android:layout_marginTop="@dimen/card_margin"
     android:layout_marginLeft="@dimen/card_margin"
     android:layout_marginRight="@dimen/card_margin"
-    android:foreground="?selectableItemBackground"
     app:cardCornerRadius="@dimen/card_corner_radius"
     app:cardElevation="3dp">
 
