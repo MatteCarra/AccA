@@ -3,7 +3,7 @@
           package="mattecarra.accapp">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
             android:name=".MainApplication"
@@ -12,13 +12,10 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AccaTheme.DayNight">
-
-        <activity
-            android:name=".activities.AccConfigEditorActivity"/>
-
-        <activity
-            android:name=".activities.SettingsActivity"/>
-
+        <activity android:name=".activities.AboutActivity">
+        </activity>
+        <activity android:name=".activities.AccConfigEditorActivity"/>
+        <activity android:name=".activities.SettingsActivity"/>
         <activity
                 android:name=".activities.MainActivity"
                 android:launchMode="singleTop">
@@ -29,7 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity
                 android:name=".activities.LogViewerActivity"
                 android:label="@string/title_activity_log_view"
@@ -48,7 +44,6 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE"/>
             </intent-filter>
         </service>
-
         <service
                 android:name=".services.AccdTileService"
                 android:icon="@drawable/ic_battery_charging_80"
@@ -60,21 +55,21 @@
         </service>
 
         <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="mattecarra.accapp.fileprovider"
-            android:grantUriPermissions="true"
-            android:exported="false">
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="mattecarra.accapp.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
             <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/filepaths" />
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/filepaths"/>
         </provider>
 
         <receiver android:name="com.github.javiersantos.appupdater.NotificationReceiver"/>
-
         <receiver android:name=".receivers.AccBootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
     </application>
+
 </manifest>
