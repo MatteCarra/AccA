@@ -21,7 +21,7 @@ interface DjsInterface {
     suspend fun delete(pattern: String): Boolean
 
     suspend fun delete(schedule: Schedule): Boolean {
-        return delete("${schedule.hour}${schedule.minute} ${schedule.command}")
+        return delete("${schedule.hour}${schedule.minute}")
     }
 }
 

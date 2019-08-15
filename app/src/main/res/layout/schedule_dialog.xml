@@ -11,7 +11,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/profile_name"
-            android:textColor="#80000000"/>
+            android:textColor="?android:attr/textColorPrimary"/>
 
     <Spinner
             android:id="@+id/profile_selector"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:text="@string/execution_time"
-            android:textColor="#80000000"/>
+            android:textColor="?android:attr/textColorPrimary"/>
 
     <TimePicker
             android:id="@+id/time_picker"

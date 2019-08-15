@@ -21,6 +21,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     private val mDataRepository: DataRepository = DataRepository(application, viewModelScope)
 
+    val profiles = mDataRepository.getAllProfiles()
+
     fun insertProfile(profile: AccaProfile) = mDataRepository.insertProfile(profile)
 
     fun deleteProfile(profile: AccaProfile) = mDataRepository.deleteProfile(profile)
