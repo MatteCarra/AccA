@@ -23,6 +23,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.acc.Acc
+import mattecarra.accapp.dialogs.onKeyCodeBackPressed
+import mattecarra.accapp.dialogs.progress
 import mattecarra.accapp.dialogs.voltageLimitDialog
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.utils.Constants
@@ -289,7 +291,38 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
     fun onBatteryIdleTestButtonClick(v: View) {
         launch {
             if(Acc.instance.isBatteryCharging()) {
-                battery_idle_switch.isEnabled = Acc.instance.isBatteryIdleSupported()
+                val dialog = MaterialDialog(this@AccConfigEditorActivity).show {
+                    title(R.string.test_battery_idle)
+                    progress(R.string.wait)
+                }
+
+                val supported = Acc.instance.isBatteryIdleSupported()
+                if(dialog.isShowing) {
+                    dialog.cancel()
+                    this@AccConfigEditorActivity.battery_idle_switch.isEnabled = supported
+
+                    MaterialDialog(this@AccConfigEditorActivity).show {
+                        title(R.string.test_battery_idle)
+
+                        if(!supported) {
+                            this@AccConfigEditorActivity.battery_idle_switch.isChecked = false
+                            message(R.string.test_battery_idle_unsupported_result)
+                        } else {
+                            message(R.string.test_battery_idle_supported_result)
+                        }
+
+                        positiveButton(android.R.string.ok)
+                    }
+                }
+            } else {
+                MaterialDialog(this@AccConfigEditorActivity).show {
+                    title(R.string.test_battery_idle)
+                    message(R.string.plug_battery_to_test)
+                    positiveButton(R.string.retry) {
+                        onBatteryIdleTestButtonClick(v)
+                    }
+                    negativeButton(android.R.string.cancel)
+                }
             }
         }
     }
