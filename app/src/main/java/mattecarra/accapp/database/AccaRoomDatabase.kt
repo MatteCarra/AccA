@@ -14,7 +14,7 @@ import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
 
 
-@Database(entities = [AccaProfile::class], version = 2)
+@Database(entities = [AccaProfile::class], version = 3)
 @TypeConverters(ConfigConverter::class)
 abstract class AccaRoomDatabase : RoomDatabase() {
 
@@ -31,6 +31,12 @@ abstract class AccaRoomDatabase : RoomDatabase() {
             override fun migrate(database: SupportSQLiteDatabase) {}
         }
 
+        private val MIGRATION_2_3: Migration = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE profiles_table ADD COLUMN prioritizeBatteryIdleMode INTEGER NOT NULL DEFAULT 0");
+            }
+        }
+
         fun getDatabase(context: Context): AccaRoomDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
@@ -41,7 +47,7 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                 // Create database instance here
                 INSTANCE =
                     Room.databaseBuilder(context.applicationContext, AccaRoomDatabase::class.java, DATABASE_NAME)
-                        .addMigrations(MIGRATION_1_2)
+                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                         .addCallback(object : Callback() {
                             override fun onCreate(db: SupportSQLiteDatabase) {
                                 super.onCreate(db)
