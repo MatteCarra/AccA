@@ -2,7 +2,7 @@ package mattecarra.accapp.acc.v201903071
 
 import com.topjohnwu.superuser.Shell
 
-class AccHandler: mattecarra.accapp.acc.v201905111.AccHandler() {
+class AccHandler: mattecarra.accapp.acc.legacy.AccHandler() {
     override fun listChargingSwitches(): List<String> {
         val res = Shell.su("acc -s s:").exec()
         return if(res.isSuccess) res.out.map { it.trim() }.filter { it.isNotEmpty() } else emptyList()
@@ -13,11 +13,9 @@ class AccHandler: mattecarra.accapp.acc.v201905111.AccHandler() {
         return if(switch?.isNotEmpty() == true) switch else null
     }
 
-    override fun updateAccChargingSwitch(switch: String?) : Boolean {
-        if (switch.isNullOrBlank()) {
-            return Shell.su("acc -s s-").exec().isSuccess
-        }
-
-        return Shell.su("acc -s s $switch").exec().isSuccess
-    }
+    override fun getUpdateAccChargingSwitchCommand(switch: String?) : String =
+        if (switch.isNullOrBlank())
+            "acc -s s-"
+        else
+            "acc -s s $switch"
 }

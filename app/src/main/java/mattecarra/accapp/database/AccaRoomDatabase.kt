@@ -64,7 +64,8 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                         null,
                         null,
                         false,
-                        null)
+                        null,
+                        false)
                 )
             )
             db.profileDao().insert(
@@ -77,7 +78,8 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                         null,
                         null,
                         false,
-                        null)
+                        null,
+                        false)
                 )
             )
             db.profileDao().insert(
@@ -90,7 +92,8 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                         null,
                         AccConfig.ConfigCoolDown(60, 50, 10),
                         false,
-                        null)
+                        null,
+                        false)
                 )
             )
         }

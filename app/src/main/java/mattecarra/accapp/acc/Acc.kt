@@ -9,7 +9,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
-import mattecarra.accapp.adapters.Schedule
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.BatteryInfo
 import java.io.BufferedInputStream
@@ -22,7 +21,7 @@ import kotlin.math.abs
 interface AccInterface {
     val defaultConfig: AccConfig
 
-    fun readConfig(): AccConfig
+    suspend fun readConfig(): AccConfig
 
     fun listVoltageSupportedControlFiles(): List<String>
 
@@ -40,36 +39,62 @@ interface AccInterface {
 
     fun abcStopDaemon(): Boolean
 
-    fun deleteSchedule(once: Boolean, name: String): Boolean
-
-    fun schedule(once: Boolean, hour: Int, minute: Int, commands: List<String>): Boolean
-
-    fun schedule(once: Boolean, hour: Int, minute: Int, commands: String): Boolean
-
-    fun listSchedules(once: Boolean): List<Schedule>
-
-    fun listAllSchedules(): List<Schedule>
-
     fun listChargingSwitches(): List<String>
 
     fun testChargingSwitch(chargingSwitch: String? = null): Int
 
     fun getCurrentChargingSwitch(config: String): String?
 
+    fun isPrioritizeBatteryIdleMode(config: String): Boolean
+
     fun setChargingLimitForOneCharge(limit: Int): Boolean
 
-    fun updateAccConfig(accConfig: AccConfig): ConfigUpdateResult
+    suspend fun isBatteryIdleSupported(): Boolean
 
-    //reset unplugged command
-    fun updateResetUnplugged(resetUnplugged: Boolean): Boolean
+    suspend fun updateAccConfig(accConfig: AccConfig): ConfigUpdateResult
 
     /**
-     * Updates the cool down charge and pause durations.
-     * @param charge seconds to charge for during the cool down phase.
-     * @param pause seconds to pause for during the cool down phase.
-     * @return boolean if the command was successful.
+     * Updates the OnBoot command configuration in ACC.
+     * @param command the command to be run after the device starts (daemon starts).
+     * @return the boolean result of the command's execution.
      */
-    fun updateAccCoolDown(charge: Int?, pause: Int?) : Boolean
+    fun getUpdateAccOnBootCommand(command: String?): String
+    suspend fun updateAccOnBoot(command: String?) : Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateAccOnBootCommand(command)).exec().isSuccess
+    }
+
+    /**
+     * Updates the on boot exit (boolean) configuration in ACC.
+     * @param enabled boolean: if OnBootExit should be enabled.
+     * @return the boolean result of the command's execution.
+     */
+    fun getUpdateAccOnBootExitCommand(enabled: Boolean): String
+    suspend fun updateAccOnBootExit(enabled: Boolean) : Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateAccOnBootExitCommand(enabled)).exec().isSuccess
+    }
+
+    /**
+     * Updates the voltage related configuration in ACC.
+     * @param voltFile path to the voltage file on the device.
+     * @param voltMax maximum voltage the phone should charge at.
+     * @return the boolean result of the command's execution.
+     */
+    fun getUpdateAccVoltControlCommand(voltFile: String?, voltMax: Int?): String
+    suspend fun updateAccVoltControl(voltFile: String?, voltMax: Int?) : Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateAccVoltControlCommand(voltFile, voltMax)).exec().isSuccess
+    }
+
+    /**
+     * Updates the temperature related configuration in ACC.
+     * @param coolDownTemperature starts cool down phase at the specified temperature.
+     * @param pauseTemperature pauses charging at the specified temperature.
+     * @param wait seconds to wait until charging is resumed.
+     * @return the boolean result of the command's execution.
+     */
+    fun getUpdateAccTemperatureCommand(coolDownTemperature: Int, temperatureMax: Int, wait: Int): String
+    suspend fun updateAccTemperature(coolDownTemperature: Int, temperatureMax: Int, wait: Int) : Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateAccTemperatureCommand(coolDownTemperature, temperatureMax, wait)).exec().isSuccess
+    }
 
     /**
      * Updates the capacity related settings of ACC.
@@ -79,93 +104,117 @@ interface AccInterface {
      * @param pause pauses charging at the specified capacity.
      * @return boolean if the command was successful.
      */
-    fun updateAccCapacity(shutdown: Int, coolDown: Int, resume: Int, pause: Int) : Boolean
+    fun getUpdateAccCapacityCommand(shutdown: Int, coolDown: Int, resume: Int, pause: Int): String
+    suspend fun updateAccCapacity(shutdown: Int, coolDown: Int, resume: Int, pause: Int) : Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateAccCapacityCommand(shutdown, coolDown, resume, pause)).exec().isSuccess
+    }
 
     /**
-     * Updates the temperature related configuration in ACC.
-     * @param coolDownTemperature starts cool down phase at the specified temperature.
-     * @param pauseTemperature pauses charging at the specified temperature.
-     * @param wait seconds to wait until charging is resumed.
-     * @return the boolean result of the command's execution.
+     * Updates the cool down charge and pause durations.
+     * @param charge seconds to charge for during the cool down phase.
+     * @param pause seconds to pause for during the cool down phase.
+     * @return boolean if the command was successful.
      */
-    fun updateAccTemperature(coolDownTemperature: Int, temperatureMax: Int, wait: Int) : Boolean
+    fun getUpdateAccCoolDownCommand(charge: Int?, pause: Int?): String
+    suspend fun updateAccCoolDown(charge: Int?, pause: Int?) : Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateAccCoolDownCommand(charge, pause)).exec().isSuccess
+    }
 
-    /**
-     * Updates the voltage related configuration in ACC.
-     * @param voltFile path to the voltage file on the device.
-     * @param voltMax maximum voltage the phone should charge at.
-     * @return the boolean result of the command's execution.
-     */
-    fun updateAccVoltControl(voltFile: String?, voltMax: Int?) : Boolean
+    fun getUpdateResetUnpluggedCommand(resetUnplugged: Boolean): String
+    suspend fun updateResetUnplugged(resetUnplugged: Boolean): Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateResetUnpluggedCommand(resetUnplugged)).exec().isSuccess
+    }
 
-    /**
-     * Updates the on boot exit (boolean) configuration in ACC.
-     * @param enabled boolean: if OnBootExit should be enabled.
-     * @return the boolean result of the command's execution.
-     */
-    fun updateAccOnBootExit(enabled: Boolean) : Boolean
 
-    /**
-     * Updates the OnBoot command configuration in ACC.
-     * @param command the command to be run after the device starts (daemon starts).
-     * @return the boolean result of the command's execution.
-     */
-    fun updateAccOnBoot(command: String?) : Boolean
+    fun getUpdateAccChargingSwitchCommand(switch: String?): String
+    suspend fun updateAccChargingSwitch(switch: String?) : Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateAccChargingSwitchCommand(switch)).exec().isSuccess
+    }
 
     /**
      * Updates the OnPlugged configuration in ACC.
      * @param command the command to be run when the device is plugged in.
      * @return the boolean result of the command's execution.
      */
-    fun updateAccOnPlugged(command: String?) : Boolean
-    fun updateAccChargingSwitch(switch: String?) : Boolean
+    fun getUpdateAccOnPluggedCommand(command: String?): String
+    suspend fun updateAccOnPlugged(command: String?) : Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateAccOnPluggedCommand(command)).exec().isSuccess
+    }
+
+    fun getUpgradeCommand(version: String): String
+    suspend fun upgrade(version: String): Shell.Result? = withContext(Dispatchers.IO){
+        val res = Shell.su(getUpgradeCommand(version)).exec()
+        Acc.createAccInstance()
+        res
+    }
+
+    fun getUpdatePrioritizeBatteryIdleModeCommand(enabled: Boolean): String
+    suspend fun updatePrioritizeBatteryIdleMode(enabled: Boolean): Boolean = withContext(Dispatchers.IO){
+        Shell.su(getUpdatePrioritizeBatteryIdleModeCommand(enabled)).exec().isSuccess
+    }
 }
 
 object Acc {
     const val bundledVersion = 201907211
-    private const val defaultVersion = 201905111 /* NOTE: default version has to match a package in acc (ex mattecarra.accapp.acc.v*) */
+    private const val defaultVersionPackage = "v201905111" /* NOTE: default version has to match a package in acc (ex mattecarra.accapp.acc.*) */
 
     /*
-    *
+    * This method returns the name of the package with a compatible AccInterface
+    * Note: there won't be a package per version. There will be a package for every uncompatible version
+    * Ex: if releases from 201903071->201907211 are all compatible there will only be a package, but if a new release is incompatible a new package is created
     * */
-    private fun getVersionPackageName(v: Int): Int {
+    private fun getVersionPackageName(v: Int): String {
         return when {
-            v >= 201903071 -> 201903071
-            else           -> 201905111
+            v >= 201903071 -> "v201903071"
+            else           -> "legacy" /* This is used for all the versions before v20190371*/
         }
     }
 
-    val instance: AccInterface by lazy {
+    @Volatile
+    private var INSTANCE: AccInterface? = null
+
+    val instance: AccInterface
+        get() {
+            val tempInstance = INSTANCE
+            if (tempInstance != null) {
+                return tempInstance
+            }
+
+            synchronized(this) {
+                // Create acc instance here
+                return createAccInstance()
+            }
+        }
+
+    internal fun createAccInstance(): AccInterface {
         val constructor = try {
-            val version = Shell.su("""acc --config sed -n 's/^versionCode=//p'""").exec().out.joinToString(separator = "\n").trim().toIntOrNull() ?: defaultVersion
-            val aClass = Class.forName("mattecarra.accapp.acc.v${getVersionPackageName(version)}.AccHandler")
+            val version = getAccVersion()
+            val aClass = Class.forName("mattecarra.accapp.acc.${getVersionPackageName(version)}.AccHandler")
             aClass.getDeclaredConstructor()
         } catch (ex: Exception) {
-            val aClass = Class.forName("mattecarra.accapp.acc.v$defaultVersion.AccHandler")
+            val aClass = Class.forName("mattecarra.accapp.acc.$defaultVersionPackage.AccHandler")
             aClass.getDeclaredConstructor()
         }
 
-        constructor.newInstance() as AccInterface
+        INSTANCE = constructor.newInstance() as AccInterface
+
+        return INSTANCE as AccInterface
     }
 
-    fun isBundledAccInstalled(installationDir: File): Boolean {
+    fun isAccInstalled(installationDir: File): Boolean {
         return Shell.su("test -f ${File(installationDir, "acc/acc-init.sh").absolutePath}").exec().isSuccess
     }
 
     fun isInstalledAccOutdated(): Boolean {
-        return getAccVersion() ?: 0 < bundledVersion
+        return getAccVersion() < bundledVersion
     }
 
     //TODO run this every time an acc instance is created to ensure that acc is available.
-    fun initBundledAcc(installationDir: File): Boolean {
-        return if(isBundledAccInstalled(installationDir))
+    fun initAcc(installationDir: File): Boolean {
+        return if(isAccInstalled(installationDir))
             Shell.su("sh ${File(installationDir, "acc/acc-init.sh").absolutePath}").exec().isSuccess
         else
             false
-    }
-
-    fun getAccVersion(): Int {
-        return Shell.su("acc --version").exec().out.joinToString(separator = "\n").trim().toIntOrNull() ?: defaultVersion
     }
 
     suspend fun installBundledAccModule(context: Context): Shell.Result?  = withContext(Dispatchers.IO) {
@@ -227,7 +276,8 @@ object Acc {
             if(!logDir.exists())
                 logDir.mkdir()
 
-            val res = Shell.su("sh -x ${installShFile.absolutePath} > ${File(logDir, "acc-install.log").absolutePath} 2>&1").exec()
+            val res = Shell.su("sh -x ${installShFile.absolutePath} acc > ${File(logDir, "acc-install.log").absolutePath} 2>&1").exec()
+            createAccInstance()
             calibrateMeasurements(context)
             res
         } catch (ex: java.lang.Exception) {
@@ -255,7 +305,7 @@ object Acc {
         preferences.uVMeasureUnit = microVolts >= 6
     }
 
-    suspend fun listAccVersions(context: Context): List<String> = withContext(Dispatchers.IO) {
+    suspend fun listAccVersions(): List<String> = withContext(Dispatchers.IO) {
         (try {
             JsonParser()
                 .parse(URL("https://api.github.com/repos/VR-25/acc/tags").readText())
@@ -265,5 +315,9 @@ object Acc {
         }).map {
             it.asJsonObject["name"].asString
         }
+    }
+
+    fun getAccVersion(): Int {
+        return Shell.su("acc --version").exec().out.joinToString(separator = "\n").trim().toIntOrNull() ?: bundledVersion
     }
 }

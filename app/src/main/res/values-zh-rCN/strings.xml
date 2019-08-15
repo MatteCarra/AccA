@@ -54,7 +54,7 @@
     <!-- Acc installation -->
     <string name="installing_acc">正在初始化所需文件</string>
     <string name="reboot">重启</string>
-    <string name="installation_failed_title">安装失败</string>
+    <string name="acc_installation_failed_title">安装失败</string>
     <string name="not_set">未设置</string>
     <string name="edit_on_boot">编辑 启动时(On Boot) 值</string>
     <string name="edit_on_boot_dialog_hint">留空以禁用</string>
@@ -83,7 +83,6 @@
     <string name="edit_voltage_limit">编辑电压限制</string>
     <string name="voltage_max">最大电压 (mV):</string>
     <string name="disabled">禁用</string>
-    <string name="schedule_row_text">%1$s 任务将在 %2$d:%3$d 执行</string>
     <string name="delete">删除</string>
     <string name="no_schedules">无任务计划</string>
     <string name="wrong_volt_file">你正在使用不支持控制电压最大值的控制文件，或者您的内核不支持此功能。</string>

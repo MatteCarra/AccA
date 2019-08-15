@@ -28,7 +28,7 @@ class Preferences(context: Context) {
         }
 
     var accVersion: String
-        get() = sharedPrefs.getString(ACC_VERSION, "bundled") ?: "bundled"
+        get() = (sharedPrefs.getString(ACC_VERSION, "bundled") ?: "bundled").toLowerCase()
         set(value) {
             val editor = sharedPrefs.edit()
             editor.putString(ACC_VERSION, value)
@@ -43,4 +43,11 @@ class Preferences(context: Context) {
             editor.apply()
         }
 
+    var lastUpdateCheck: Long
+        get() = sharedPrefs.getLong("LAST_UPDATE_CHECK", -1)
+        set(value) {
+            val editor = sharedPrefs.edit()
+            editor.putLong("LAST_UPDATE_CHECK", value)
+            editor.apply()
+        }
 }

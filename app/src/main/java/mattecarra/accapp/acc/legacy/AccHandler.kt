@@ -1,18 +1,14 @@
-package mattecarra.accapp.acc.v201905111
+package mattecarra.accapp.acc.legacy
 
-import android.content.Context
-import android.os.Environment
 import com.topjohnwu.superuser.Shell
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.acc.AccInterface
 import mattecarra.accapp.acc.ConfigUpdateResult
-import mattecarra.accapp.adapters.Schedule
+import mattecarra.accapp.acc.ConfigUpdater
 import mattecarra.accapp.models.*
-import java.io.BufferedInputStream
-import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
-import java.lang.Exception
-import java.net.URL
 
 
 open class AccHandler: AccInterface {
@@ -30,6 +26,7 @@ open class AccHandler: AccInterface {
     val ON_PLUGGED = """^\s*applyOnPlug=((?:(?!#).)*)""".toRegex(RegexOption.MULTILINE)
     val VOLT_FILE = """^\s*chargingVoltageLimit=((?:(?!:).)*):(\d+)""".toRegex(RegexOption.MULTILINE)
     val SWITCH = """^\s*switch=((?:(?!#).)*)""".toRegex(RegexOption.MULTILINE)
+    val PRIORITIZE_BATTERY_IDLE = """^\s*prioritizeBattIdleMode=(true|false)""".toRegex(RegexOption.MULTILINE)
 
     override val defaultConfig: AccConfig
         get() =
@@ -41,10 +38,11 @@ open class AccHandler: AccInterface {
                 null,
                 null,
                 false,
-                null
+                null,
+                false
             )
 
-    override fun readConfig(): AccConfig {
+    override suspend fun readConfig(): AccConfig = withContext(Dispatchers.IO) {
         val config = readConfigToString()
 
         val (capacityShutdown, capacityCoolDown, capacityResume, capacityPause) = CAPACITY_CONFIG_REGEXP.find(config)!!.destructured
@@ -54,7 +52,7 @@ open class AccHandler: AccInterface {
 
         val cVolt = VOLT_FILE.find(config)?.destructured
 
-        return AccConfig(
+        AccConfig(
             AccConfig.ConfigCapacity(capacityShutdown.toIntOrNull() ?: 0, capacityResume.toInt(), capacityPause.toInt()),
             AccConfig.ConfigVoltage(cVolt?.component1(), cVolt?.component2()?.toIntOrNull()),
             AccConfig.ConfigTemperature(temperatureCooldown.toIntOrNull() ?: 90,
@@ -66,7 +64,8 @@ open class AccHandler: AccInterface {
                 AccConfig.ConfigCoolDown(capacityCoolDown.toInt(), coolDownChargeSeconds.toInt(), coolDownPauseSeconds.toInt())
             },
             getResetUnplugged(config),
-            getCurrentChargingSwitch(config)
+            getCurrentChargingSwitch(config),
+            isPrioritizeBatteryIdleMode(config)
         )
     }
 
@@ -232,38 +231,6 @@ open class AccHandler: AccInterface {
         return Shell.su("acc -D stop").exec().isSuccess
     }
 
-    override fun deleteSchedule(once: Boolean, name: String): Boolean {
-        return Shell.su("djs cancel ${if(once) "once" else "daily" } $name").exec().isSuccess
-    }
-
-    override fun schedule(once: Boolean, hour: Int, minute: Int, commands: List<String>): Boolean {
-        return schedule(
-            once,
-            hour,
-            minute,
-            commands.joinToString(separator = "; ")
-        )
-    }
-
-    override fun schedule(once: Boolean, hour: Int, minute: Int, commands: String): Boolean {
-        return Shell.su("djs ${if(once) 'o' else 'd' } ${String.format("%02d", hour)} ${String.format("%02d", minute)} \"${commands}\"").exec().isSuccess
-    }
-
-    private val SCHEDULE_REGEXP = """^\s*([0-9]{2})([0-9]{2}): (.*)$""".toRegex()
-
-    override fun listSchedules(once: Boolean): List<Schedule> {
-        return Shell.su("djs i ${if(once) 'o' else 'd'}").exec().out.filter { it.matches(SCHEDULE_REGEXP) }.map {
-            val (hour, minute, command) = SCHEDULE_REGEXP.find(it)!!.destructured
-            Schedule("$hour$minute", once, hour.toInt(), minute.toInt(), command)
-        }
-    }
-
-    override fun listAllSchedules(): List<Schedule> {
-        val res = ArrayList<Schedule>(listSchedules(true))
-        res.addAll(listSchedules(false))
-        return res
-    }
-
     //Charging switches
     override fun listChargingSwitches(): List<String> {
         val res = Shell.su("acc --set switch:").exec()
@@ -279,8 +246,19 @@ open class AccHandler: AccInterface {
         return if(switch?.isNotEmpty() == true) switch else null
     }
 
+    override fun isPrioritizeBatteryIdleMode(config: String): Boolean {
+        return PRIORITIZE_BATTERY_IDLE.find(config)?.destructured?.component1()?.toBoolean() ?: false
+    }
+
     override fun setChargingLimitForOneCharge(limit: Int): Boolean {
         return Shell.su("(acc -f $limit &) &").exec().isSuccess
+    }
+
+    val BATTERY_IDLE_SUPPORTED = """^\s*- battIdleMode=true""".toRegex(RegexOption.MULTILINE)
+    override suspend fun isBatteryIdleSupported(): Boolean = withContext(Dispatchers.IO) {
+        BATTERY_IDLE_SUPPORTED.matches(
+            Shell.su("acc -t --").exec().out.joinToString("\n")
+        )
     }
 
     //Update config part:
@@ -290,80 +268,46 @@ open class AccHandler: AccInterface {
      * @param accConfig Configuration file to apply.
      * @return ConfigUpdateResult data class.
      */
-    override fun updateAccConfig(accConfig: AccConfig): ConfigUpdateResult {
-        // Initalise new ConfigUpdateResult data class to return
-        return ConfigUpdateResult(
-            updateAccCapacity(
-                accConfig.configCapacity.shutdown, accConfig.configCoolDown?.atPercent ?: 101,
-                accConfig.configCapacity.resume, accConfig.configCapacity.pause
-            ),
-            updateAccVoltControl(
-                accConfig.configVoltage.controlFile,
-                accConfig.configVoltage.max
-            ),
-            updateAccTemperature(
-                accConfig.configTemperature.coolDownTemperature,
-                accConfig.configTemperature.maxTemperature,
-                accConfig.configTemperature.pause
-            ),
-            updateAccCoolDown(
-                accConfig.configCoolDown?.charge,
-                accConfig.configCoolDown?.pause
-            ),
-            updateResetUnplugged(accConfig.configResetUnplugged),
-            updateAccOnBoot(accConfig.configOnBoot),
-            updateAccOnPlugged(accConfig.configOnPlug),
-            updateAccChargingSwitch(accConfig.configChargeSwitch)
-        )
+    override suspend fun updateAccConfig(accConfig: AccConfig): ConfigUpdateResult {
+        return ConfigUpdater(accConfig)
+            .execute(this)
     }
 
-    override fun updateResetUnplugged(resetUnplugged: Boolean): Boolean {
-        return Shell.su("acc -s resetBsOnUnplug $resetUnplugged").exec().isSuccess
-    }
+    override fun getUpdateResetUnpluggedCommand(resetUnplugged: Boolean) = "acc -s resetBsOnUnplug $resetUnplugged"
 
-    override fun updateAccCoolDown(charge: Int?, pause: Int?) : Boolean {
+    override fun getUpdateAccCoolDownCommand(charge: Int?, pause: Int?): String {
         return if(charge != null && pause != null)
-            Shell.su("acc -s coolDownRatio $charge/$pause").exec().isSuccess
+           "acc -s coolDownRatio $charge/$pause"
         else
-            Shell.su("acc -s coolDownRatio").exec().isSuccess
+           "acc -s coolDownRatio"
     }
 
-    override fun updateAccCapacity(shutdown: Int, coolDown: Int, resume: Int, pause: Int) : Boolean {
-        return Shell.su("acc -s capacity $shutdown,$coolDown,$resume-$pause").exec().isSuccess
-    }
+    override fun getUpdateAccCapacityCommand(shutdown: Int, coolDown: Int, resume: Int, pause: Int): String = "acc -s capacity $shutdown,$coolDown,$resume-$pause"
 
-    override fun updateAccTemperature(coolDownTemperature: Int, temperatureMax: Int, wait: Int) : Boolean {
-        return Shell.su("acc -s temperature ${coolDownTemperature}-${temperatureMax}_$wait").exec().isSuccess
-    }
+    override fun getUpdateAccTemperatureCommand(coolDownTemperature: Int, temperatureMax: Int, wait: Int): String = "acc -s temperature ${coolDownTemperature}-${temperatureMax}_$wait"
 
-    override fun updateAccVoltControl(voltFile: String?, voltMax: Int?) : Boolean {
-        return Shell.su(
-            if(voltFile != null && voltMax != null)
-                "acc --set chargingVoltageLimit $voltFile:$voltMax"
-            else if(voltMax != null)
-                "acc --set chargingVoltageLimit $voltMax"
-            else
-                "acc --set chargingVoltageLimit"
-        ).exec().isSuccess
-    }
+    override fun getUpdateAccVoltControlCommand(voltFile: String?, voltMax: Int?): String =
+        if(voltFile != null && voltMax != null)
+            "acc --set chargingVoltageLimit $voltFile:$voltMax"
+        else if(voltMax != null)
+            "acc --set chargingVoltageLimit $voltMax"
+        else
+            "acc --set chargingVoltageLimit"
 
-    override fun updateAccOnBootExit(enabled: Boolean) : Boolean {
-        return Shell.su("acc -s onBootExit $enabled").exec().isSuccess
-    }
+    override fun getUpdateAccOnBootExitCommand(enabled: Boolean): String = "acc -s onBootExit $enabled"
 
-    override fun updateAccOnBoot(command: String?) : Boolean {
-        return Shell.su("acc -s applyOnBoot${command?.let{ " $it" } ?: ""}").exec().isSuccess
-    }
+    override fun getUpdateAccOnBootCommand(command: String?): String = "acc -s applyOnBoot${command?.let{ " $it" } ?: ""}"
 
-    override fun updateAccOnPlugged(command: String?) : Boolean {
-        return Shell.su("acc -s applyOnPlug${command?.let{ " $it" } ?: ""}").exec().isSuccess
-    }
 
-    override fun updateAccChargingSwitch(switch: String?) : Boolean {
-        if (switch.isNullOrBlank()) {
-            return Shell.su("acc -s s-").exec().isSuccess
-        }
+    override fun getUpdateAccOnPluggedCommand(command: String?) : String = "acc -s applyOnPlug${command?.let{ " $it" } ?: ""}"
 
-        return Shell.su("acc --set switch $switch").exec().isSuccess
-    }
+    override fun getUpdateAccChargingSwitchCommand(switch: String?): String =
+        if (switch.isNullOrBlank())
+            "acc -s s-"
+        else
+            "acc --set switch $switch"
+
+    override fun getUpgradeCommand(version: String) = "acc --upgrade $version"
+
+    override fun getUpdatePrioritizeBatteryIdleModeCommand(enabled: Boolean): String = "acc --set prioritizeBattIdleMode $enabled"
 }

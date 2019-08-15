@@ -1,7 +1,5 @@
 package mattecarra.accapp.fragments
 
-import android.os.Handler
-import android.os.HandlerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel;
@@ -12,8 +10,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.models.BatteryInfo
-import mattecarra.accapp.acc.v201905111.AccHandler
-import org.jetbrains.anko.doAsync
 
 class DashboardViewModel : ViewModel() {
     private val batteryInfo: MutableLiveData<BatteryInfo> = MutableLiveData()

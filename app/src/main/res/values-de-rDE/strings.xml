@@ -63,8 +63,8 @@
     <!-- Acc installation -->
     <string name="installing_acc">Erforderliche Dateien werden initialisiert</string>
     <string name="reboot">Neustart</string>
-    <string name="installation_failed">Beim Installieren von acc ist etwas schief gelaufen. Bitte stelle sicher, dass eine funktionierende Internetverbindung vorhanden ist. Wenn diese Nachricht weiterhin erscheint, versuche die Installation von \'acc\' mit Magisk Manager - und melde bitte das Problem.</string>
-    <string name="installation_failed_title">Installation fehlgeschlagen</string>
+    <string name="djs_installation_failed">Beim Installieren von acc ist etwas schief gelaufen. Bitte stelle sicher, dass eine funktionierende Internetverbindung vorhanden ist. Wenn diese Nachricht weiterhin erscheint, versuche die Installation von \'acc\' mit Magisk Manager - und melde bitte das Problem.</string>
+    <string name="acc_installation_failed_title">Installation fehlgeschlagen</string>
     <string name="not_set">Nicht gesetzt.</string>
     <string name="edit_on_boot">Bearbeite Befehl für Systemstart (\'On Boot\')</string>
     <string name="edit_on_boot_dialog_hint">Leer lassen, um zu deaktivieren</string>
@@ -95,7 +95,7 @@
     <string name="edit_voltage_limit">Spannungslimit bearbeiten</string>
     <string name="voltage_max">Spannungs-max (mV):</string>
     <string name="disabled">Deaktiviert</string>
-    <string name="schedule_row_text">%1$sJob geplant um %2$d:%3$d</string>
+    <string name="schedule_row_text">Recurrent Job geplant um %2$d:%3$d</string>
     <string name="delete">Löschen</string>
     <string name="no_schedules">Keine Zeitpläne gesetzt</string>
     <string name="edit_scheduled_command">Der geplante Befehl kann bearbeitet werden. Wenn du die schöne UI nutzen möchtest, solltest du diesen löschen und neu erstellen.

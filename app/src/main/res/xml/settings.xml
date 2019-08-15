@@ -37,6 +37,17 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="Djs"
+        app:iconSpaceReserved="false">
+        <CheckBoxPreference
+            android:title="Djs"
+            android:key="djs_enabled"
+            android:summary="@string/install_djs_description"
+            app:iconSpaceReserved="false">
+        </CheckBoxPreference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
             android:title="@string/ui_options"
             app:iconSpaceReserved="false">
 

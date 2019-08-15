@@ -13,7 +13,12 @@
             android:supportsRtl="true"
             android:theme="@style/AccaTheme.DayNight">
 
-        <activity android:name=".activities.AccConfigEditorActivity"/>
+        <activity
+            android:name=".activities.AccConfigEditorActivity"/>
+
+        <activity
+            android:name=".activities.SettingsActivity"/>
+
         <activity
                 android:name=".activities.MainActivity"
                 android:launchMode="singleTop">

@@ -73,7 +73,7 @@ dependencies {
 
     // CircleProgressBar - https://github.com/dinuscxj/CircleProgressBar
     implementation 'com.dinuscxj:circleprogressbar:1.3.0'
-
+    // Tooltip library: https://github.com/sephiroth74/android-target-tooltip
     implementation 'com.github.sephiroth74:android-target-tooltip:2.0.4'
 
     implementation 'org.apache.commons:commons-collections4:4.4'

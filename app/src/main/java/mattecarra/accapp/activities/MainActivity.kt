@@ -11,7 +11,6 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate.*
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.MaterialDialog
@@ -21,8 +20,6 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
-import com.afollestad.materialdialogs.list.SingleChoiceListener
-import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.Display
 import com.github.javiersantos.appupdater.enums.UpdateFrom
@@ -35,15 +32,13 @@ import mattecarra.accapp.R
 import mattecarra.accapp.SharedViewModel
 import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.acc.Acc
+import mattecarra.accapp.djs.Djs
 import mattecarra.accapp.fragments.DashboardFragment
 import mattecarra.accapp.fragments.ProfilesFragment
 import mattecarra.accapp.fragments.SchedulesFragment
-import mattecarra.accapp.fragments.SettingsFragment
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
-import mattecarra.accapp.utils.Constants
-import mattecarra.accapp.utils.ScopedAppActivity
-import mattecarra.accapp.utils.progress
+import mattecarra.accapp.utils.*
 import org.jetbrains.anko.doAsync
 import java.io.File
 
@@ -63,7 +58,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     val mMainFragment = DashboardFragment.newInstance()
     val mProfilesFragment = ProfilesFragment.newInstance()
     val mSchedulesFragment = SchedulesFragment.newInstance()
-    val mSettingsFragment = SettingsFragment.newInstance()
 
 //    private var profilesAdapter: ProfilesViewAdapter? = null
 //
@@ -116,59 +110,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 //        val layoutManager = LinearLayoutManager(this)
 //        scheduled_jobs_recyclerview.layoutManager = layoutManager
 //        scheduled_jobs_recyclerview.adapter = scheduleAdapter
-
-        // TODO: Move schedule onClicks to the new Schedule fragment
-//        create_schedule.setOnClickListener {
-//            val dialog = MaterialDialog(this@MainActivity).show {
-//                customView(R.layout.schedule_dialog)
-//                positiveButton(R.string.save) { dialog ->
-//                    val view = dialog.getCustomView()
-//                    val spinner = view.findViewById<Spinner>(R.id.profile_selector)
-//                    val executeOnceCheckBox = view.findViewById<CheckBox>(R.id.schedule_recurrency)
-//                    val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
-//                    val hour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.hour else timePicker.currentHour
-//                    val minute = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.minute else timePicker.currentMinute
-//
-//                    if(spinner.selectedItemId == 0.toLong()) {
-//                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-//                            val dataBundle = Bundle()
-//                            dataBundle.putInt("hour", hour)
-//                            dataBundle.putInt("minute", minute)
-//                            dataBundle.putBoolean("executeOnce", executeOnceCheckBox.isChecked)
-//
-//                            intent.putExtra("data", dataBundle)
-//                            intent.putExtra("titleTv", this@MainActivity.getString(R.string.schedule_creator))
-//                            startActivityForResult(intent, ACC_PROFILE_SCHEDULER_REQUEST)
-//                        }
-//                    } else {
-//                        val profile = spinner.selectedItem as String
-//                        val configProfile = ProfileUtils.readProfile(profile, this@MainActivity, gson)
-//
-//                        addSchedule(Schedule("$hour$minute", executeOnceCheckBox.isChecked, hour, minute, configProfile.getCommands().joinToString(separator = "; ")))
-//
-//                        AccUtils.schedule(
-//                            executeOnceCheckBox.isChecked,
-//                            hour,
-//                            minute,
-//                            configProfile.getCommands()
-//                        )
-//                    }
-//                }
-//                negativeButton(android.R.string.cancel)
-//            }
-
-//            val profiles = ArrayList<String>()
-//            profiles.add(getString(R.string.new_config))
-//            profiles.addAll(ProfileUtils.listProfiles(this, gson))
-//            val view = dialog.getCustomView()
-//            val spinner = view.findViewById<Spinner>(R.id.profile_selector)
-//            val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, profiles)
-//
-//            view.findViewById<TimePicker>(R.id.time_picker).setIs24HourView(true)
-//
-//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//            spinner.adapter = adapter;
-//        }
     }
 
     // TODO: Move schedules to the Schedules Fragment
@@ -189,26 +130,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 //        if(scheduleAdapter.itemCount == 0) {
 //            no_schedules_jobs_textview.visibility = View.VISIBLE
 //            scheduled_jobs_recyclerview.visibility = View.GONE
-//        }
-//    }
-
-//    //Used to update battery info every second
-//    private val handler = Handler()
-//    private val updateUIRunnable = object : Runnable {
-//        override fun run() {
-//            val r = this //need this to make it recursive
-//            doAsync {
-//                val batteryInfo = AccUtils.getBatteryInfo()
-//                isDaemonRunning = AccUtils.isAccdRunning()
-//                uiThread {
-//                    // Run accd UI check
-//                    updateAccdStatus(isDaemonRunning)
-//
-//                    setBatteryInfo(batteryInfo)
-//
-//                    handler.postDelayed(r, 1000)// Repeat the same runnable code block again after 1 seconds
-//                }
-//            }
 //        }
 //    }
 
@@ -239,12 +160,73 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             R.id.botNav_schedules -> {
-                // TODO: Implement schedules
-                return false
+                if (!Djs.isBundledDjsInstalled(filesDir) || !Djs.initBundledDjs(filesDir) || Djs.isInstalledDjsOutdated()) {
+                    installDjs()
+                    return false
+                } else {
+                    loadFragment(mSchedulesFragment)
+                    return false
+                }
             }
         }
 
         return false
+    }
+
+    fun installDjs() {
+        MaterialDialog(this).show {
+            title(R.string.install_djs_title)
+            message(R.string.install_djs_description)
+            positiveButton(R.string.install) {
+                val dialog = MaterialDialog(this@MainActivity).show {
+                    title(R.string.installing_djs)
+                    progress(R.string.wait)
+                    cancelOnTouchOutside(false)
+                    onKeyCodeBackPressed { false }
+                }
+
+                launch {
+                    val res = Djs.installBundledAccModule(this@MainActivity)
+                    dialog.cancel()
+
+                    if(res?.isSuccess != true) {
+                        when {
+                            res?.code == 3 -> //Buysbox is not installed
+                                MaterialDialog(this@MainActivity)
+                                    .show {
+                                        title(R.string.installation_failed_busybox_title)
+                                        message(R.string.installation_failed_busybox)
+                                        positiveButton(R.string.retry) {
+                                            installDjs()
+                                        }
+                                        negativeButton {
+                                            botNav_main.selectedItemId = R.id.botNav_schedules
+                                        }
+                                        cancelOnTouchOutside(false)
+                                    }
+
+                            else -> MaterialDialog(this@MainActivity) //Other installation errors can not be handled automatically -> show a dialog with the logs
+                                .show {
+                                    title(R.string.djs_installation_failed_title)
+                                    message(R.string.djs_installation_failed)
+                                    positiveButton(R.string.retry) {
+                                        installDjs()
+                                    }
+                                    negativeButton {
+                                        botNav_main.selectedItemId = R.id.botNav_schedules
+                                    }
+                                    if(res != null)
+                                        shareLogsNeutralButton(File(filesDir, "logs/djs-install.log"), R.string.djs_installation_failed_log)
+                                }
+                        }
+                    } else {
+                        initUi()
+                    }
+                }
+
+            }
+            negativeButton(android.R.string.no)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?) = when (item!!.itemId) {
@@ -253,7 +235,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             true
         }
         R.id.menu_appbar_settings -> {
-            loadFragment(mSettingsFragment)
+            SettingsActivity.launch(this)
             true
         }
         else -> super.onOptionsItemSelected(item)
@@ -306,7 +288,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onProfileLongClick(profile: AccaProfile) {
-
         val dialog = MaterialDialog(this@MainActivity).customView(
             R.layout.profile_preview_dialog,
             scrollable = true
@@ -337,15 +318,12 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun checkAccInstalled(): Boolean {
         val version = mPreferences.accVersion
-        if (!Acc.isBundledAccInstalled(filesDir) || (version == "bundled" && Acc.isInstalledAccOutdated())) {
+        if (!Acc.isAccInstalled(filesDir) || !Acc.initAcc(filesDir) || (version == "bundled" && Acc.isInstalledAccOutdated())) {
             val dialog = MaterialDialog(this).show {
                 title(R.string.installing_acc)
                 progress(R.string.wait)
                 cancelOnTouchOutside(false)
-            }
-
-            dialog.setOnKeyListener { _, keyCode, _ ->
-                keyCode == KeyEvent.KEYCODE_BACK
+                onKeyCodeBackPressed { false }
             }
 
             launch {
@@ -360,74 +338,66 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 dialog.cancel()
 
                 if (res?.isSuccess != true) {
-                    val failureDialog =
-                        when {
-                            version != "bundled" -> //custom version installation had an error -> ask the user to select a different version
-                                MaterialDialog(this@MainActivity)
-                                    .show {
-                                        title(R.string.installation_failed_title)
-                                        message(R.string.installation_failed_busybox)
-                                        positiveButton(R.string.install_bundled_version) {
-                                            mPreferences.accVersion = "bundled"
-                                            if (checkAccInstalled()) {
-                                                initUi()
-                                            }
+                    when {
+                        version != "bundled" -> //custom version installation had an error -> ask the user to select a different version
+                            MaterialDialog(this@MainActivity) //Dialog to tell the user that installation failed
+                                .show {
+                                    title(R.string.acc_installation_failed_title)
+                                    message(R.string.installation_failed_non_bundled)
+                                    positiveButton(R.string.install_bundled_version) {
+                                        mPreferences.accVersion = "bundled"
+                                        if (checkAccInstalled()) {
+                                            initUi()
                                         }
-                                        negativeButton {
-                                            val onSelection: SingleChoiceListener =  { _, _, text ->
-                                                mPreferences.accVersion = text
-                                                if (checkAccInstalled()) {
-                                                    initUi()
+                                    }
+                                    negativeButton(R.string.select_different_version) {
+                                        MaterialDialog(this@MainActivity) //select a different acc version dailog
+                                            .show {
+                                                title(R.string.acc_version_preference_title)
+                                                message(R.string.acc_version_picker_message)
+                                                cancelOnTouchOutside(false)
+                                                this@MainActivity.launch {
+                                                    accVersionSingleChoice(mPreferences.accVersion) { version ->
+                                                        mPreferences.accVersion = version
+
+                                                        if (checkAccInstalled()) {
+                                                            initUi()
+                                                        }
+                                                    }
                                                 }
-                                            }
-
-                                            val options = resources.getStringArray(R.array.acc_version_options).toMutableList()
-
-                                            val versionDialog = MaterialDialog(this@MainActivity)
-                                                .show {
-                                                    title(R.string.acc_version_preference_title)
-                                                    message(R.string.acc_version_picker_message)
-                                                    cancelOnTouchOutside(false)
-                                                }
-
-                                            versionDialog.setOnKeyListener { _, keyCode, _ ->
-                                                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                                                    dialog.dismiss()
+                                                onKeyCodeBackPressed {
+                                                    dismiss()
                                                     finish()
                                                     false
-                                                } else true
+                                                }
                                             }
-
-                                            launch {
-                                                options.addAll(
-                                                    Acc.listAccVersions(this@MainActivity)
-                                                )
-                                                versionDialog.listItemsSingleChoice(items = options, initialSelection = options.indexOf(version), selection = onSelection)
-                                            }
-                                        }
-                                        cancelOnTouchOutside(false)
                                     }
+                                    if(res != null)
+                                        shareLogsNeutralButton(File(filesDir, "logs/acc-install.log"), R.string.acc_installation_failed_log)
+                                    cancelOnTouchOutside(false)
+                                }
 
-                            res?.code == 3 -> //Buysbox is not installed
-                                MaterialDialog(this@MainActivity)
-                                    .show {
-                                        title(R.string.installation_failed_busybox_title)
-                                        message(R.string.installation_failed_busybox)
-                                        positiveButton(R.string.retry) {
-                                            if (checkAccInstalled()) {
-                                                initUi()
-                                            }
-                                        }
-                                        negativeButton {
-                                            finish()
-                                        }
-                                        cancelOnTouchOutside(false)
-                                    }
-
-                            else -> MaterialDialog(this@MainActivity) //Other installation errors can not be handled automatically -> show a dialog with the logs
+                        res?.code == 3 -> //Buysbox is not installed
+                            MaterialDialog(this@MainActivity)
                                 .show {
-                                    title(R.string.installation_failed_title)
-                                    message(R.string.installation_failed)
+                                    title(R.string.installation_failed_busybox_title)
+                                    message(R.string.installation_failed_busybox)
+                                    positiveButton(R.string.retry) {
+                                        if (checkAccInstalled()) {
+                                            initUi()
+                                        }
+                                    }
+                                    negativeButton {
+                                        finish()
+                                    }
+                                    cancelOnTouchOutside(false)
+                                }
+
+                        else -> //Other installation errors can not be handled automatically -> show a dialog with the logs
+                            MaterialDialog(this@MainActivity)
+                                .show {
+                                    title(R.string.acc_installation_failed_title)
+                                    message(R.string.acc_installation_failed)
                                     positiveButton(R.string.retry) {
                                         if (checkAccInstalled())
                                             initUi()
@@ -435,32 +405,14 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                     negativeButton {
                                         finish()
                                     }
-                                    neutralButton(R.string.share) {
-                                        val file = File(filesDir, "logs/acc-install.log")
-                                        if(file.exists()) {
-                                            val intentShareFile = Intent(Intent.ACTION_SEND)
-                                                .setType("text/plain")
-                                                .putExtra(
-                                                    Intent.EXTRA_STREAM,
-                                                    FileProvider.getUriForFile(applicationContext, "mattecarra.accapp.fileprovider", file)
-                                                )
-                                                .putExtra(Intent.EXTRA_TEXT, "AccA installation failed log")
-
-                                            startActivity(Intent.createChooser(intentShareFile, "Share log file"))
-                                        } else {
-                                            Toast.makeText(this@MainActivity, R.string.logs_not_found, Toast.LENGTH_LONG).show()
-                                        }
-                                    }
+                                    if(res != null)
+                                        shareLogsNeutralButton(File(filesDir, "logs/acc-install.log"), R.string.acc_installation_failed_log)
                                     cancelOnTouchOutside(false)
                                 }
-                        }
-
-                    failureDialog.setOnKeyListener { _, keyCode, _ ->
-                        if (keyCode == KeyEvent.KEYCODE_BACK) {
-                            dialog.dismiss()
-                            finish()
-                            false
-                        } else true
+                    }.onKeyCodeBackPressed {
+                        dialog.dismiss()
+                        finish()
+                        false
                     }
                 } else {
                     initUi()
@@ -469,6 +421,48 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 res?.let {
                     Log.d(LOG_TAG, it.out.joinToString("\n"))
                 }
+            }
+
+            return false
+        }
+
+        val time = System.currentTimeMillis() / 1000
+        if((version == "master" || version == "dev") && time - mPreferences.lastUpdateCheck > 259200) {
+            mPreferences.lastUpdateCheck = time
+
+            val dialog = MaterialDialog(this).show {
+                title(R.string.checking_updates)
+                progress(R.string.wait)
+                cancelOnTouchOutside(false)
+            }
+
+            launch {
+                val res = Acc.instance.upgrade(version)
+                dialog.cancel()
+
+                when(res?.code) {
+                    6 ->
+                        Toast.makeText(this@MainActivity, R.string.no_update_available, Toast.LENGTH_LONG).show()
+                    0 ->
+                        Toast.makeText(this@MainActivity, R.string.update_completed, Toast.LENGTH_LONG).show()
+                    else -> {
+                        MaterialDialog(this@MainActivity) //Other installation errors can not be handled automatically -> show a dialog with the logs
+                            .show {
+                                title(R.string.acc_installation_failed_title)
+                                message(R.string.acc_installation_failed)
+                                positiveButton(android.R.string.ok) {
+                                    initUi()
+                                }
+
+                                //TODO add logs
+                                //shareLogsNeutralButton(File(filesDir, "logs/acc-install.log"), R.string.acc_installation_failed_log)
+
+                                cancelOnTouchOutside(false)
+                            }
+                    }
+                }
+
+                initUi()
             }
 
             return false
@@ -505,14 +499,11 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                     finish()
                 }
                 cancelOnTouchOutside(false)
-            }
-
-            dialog.setOnKeyListener { _, keyCode, _ ->
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    dialog.dismiss()
+                onKeyCodeBackPressed {
+                    dismiss()
                     finish()
                     false
-                } else true
+                }
             }
             return
         }
@@ -639,6 +630,57 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 //            }
 //        }
     }
+
+/*    fun accScheduleFabOnClick(view: View) {
+        val dialog = MaterialDialog(this).show {
+            customView(R.layout.schedule_dialog)
+            positiveButton(R.string.save) { dialog ->
+                val view = dialog.getCustomView()
+                val spinner = view.findViewById<Spinner>(R.id.profile_selector)
+                val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
+                val hour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.hour else timePicker.currentHour
+                val minute = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.minute else timePicker.currentMinute
+
+                if(spinner.selectedItemId == 0.toLong()) {
+                    Intent(this, AccConfigEditorActivity::class.java).also { intent ->
+                        val dataBundle = Bundle()
+                        dataBundle.putInt("hour", hour)
+                        dataBundle.putInt("minute", minute)
+                        dataBundle.putBoolean("executeOnce", executeOnceCheckBox.isChecked)
+
+                        intent.putExtra("data", dataBundle)
+                        intent.putExtra("titleTv", getString(R.string.schedule_creator))
+                        startActivityForResult(intent, ACC_PROFILE_SCHEDULER_REQUEST)
+                    }
+                } else {
+                    val profile = spinner.selectedItem as String
+                    val configProfile = ProfileUtils.readProfile(profile, this@MainActivity, gson)
+
+                    addSchedule(Schedule("$hour$minute", executeOnceCheckBox.isChecked, hour, minute, configProfile.getCommands().joinToString(separator = "; ")))
+
+                    AccUtils.schedule(
+                        executeOnceCheckBox.isChecked,
+                        hour,
+                        minute,
+                        configProfile.getCommands()
+                    )
+                }
+            }
+            negativeButton(android.R.string.cancel)
+        }
+
+        val profiles = ArrayList<String>()
+        profiles.add(getString(R.string.new_config))
+        profiles.addAll(ProfileUtils.listProfiles(this, gson))
+        val view = dialog.getCustomView()
+        val spinner = view.findViewById<Spinner>(R.id.profile_selector)
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, profiles)
+
+        view.findViewById<TimePicker>(R.id.time_picker).setIs24HourView(true)
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.adapter = adapter;
+    }*/
 
     override fun editProfile(profile: AccaProfile) {
         // Edit the configuration of the selected profile.
