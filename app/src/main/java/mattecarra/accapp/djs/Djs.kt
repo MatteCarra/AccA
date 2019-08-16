@@ -10,17 +10,21 @@ import java.io.File
 import java.io.FileOutputStream
 
 interface DjsInterface {
-    suspend fun list(pattern: String = "."): List<Schedule>
+    suspend fun list(pattern: String = "."): List<DjsSchedule>
 
     suspend fun append(line: String): Boolean
 
-    suspend fun append(schedule: Schedule): Boolean {
+    suspend fun append(schedule: DjsSchedule): Boolean {
         return append("${String.format("%02d", schedule.hour)}${String.format("%02d", schedule.minute)} ${schedule.command}")
     }
 
     suspend fun delete(pattern: String): Boolean
 
-    suspend fun delete(schedule: Schedule): Boolean {
+    suspend fun deleteById(id: Int): Boolean {
+        return delete("accaScheduleId=$id")
+    }
+
+    suspend fun delete(schedule: DjsSchedule): Boolean {
         return delete("${String.format("%02d", schedule.hour)}${String.format("%02d", schedule.minute)} ${schedule.command}")
     }
 

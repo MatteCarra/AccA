@@ -89,3 +89,51 @@ fun MaterialDialog.addScheduleDialog(
 
     return dialog
 }
+
+typealias EditScheduleListener =
+        ((profileId: Long, hour: Int, minute: Int) -> Unit)
+
+
+fun MaterialDialog.editScheduleDialog(
+    hour: Int,
+    minute: Int,
+    profilesLiveData: LiveData<List<AccaProfile>>,
+    listener: EditScheduleListener
+): MaterialDialog {
+    val KEEP_CURRENT = AccaProfile(-1, context.getString(R.string.schedule_profile_keep_current), Acc.instance.defaultConfig)
+    val EDIT_CURRENT = AccaProfile(-2, context.getString(R.string.schedule_profile_edit_current), Acc.instance.defaultConfig)
+    val ADD_NEW = AccaProfile(-3, context.getString(R.string.new_config), Acc.instance.defaultConfig)
+
+    val adapter = ProfileSpinnerAdapter()
+    val observer = Observer<List<AccaProfile>> {
+        val list = mutableListOf(KEEP_CURRENT, EDIT_CURRENT, ADD_NEW)
+        list.addAll(it)
+        adapter.setItems(list)
+    }
+
+    val dialog = customView(R.layout.schedule_dialog)
+        .positiveButton(R.string.save) { dialog ->
+            val view = dialog.getCustomView()
+            val spinner = view.findViewById<Spinner>(R.id.profile_selector)
+            val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
+
+            listener(spinner.selectedItemId, timePicker.currentHour, timePicker.currentMinute)
+        }
+        .onDismiss {
+            profilesLiveData.removeObserver(observer)
+        }
+
+
+    val view = dialog.getCustomView()
+    val spinner = view.findViewById<Spinner>(R.id.profile_selector)
+
+    profilesLiveData.observeForever(observer)
+    spinner.adapter = adapter
+
+    val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
+    timePicker.setIs24HourView(true)
+    timePicker.currentHour = hour
+    timePicker.currentMinute = minute
+
+    return dialog
+}

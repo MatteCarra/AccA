@@ -31,9 +31,7 @@ import mattecarra.accapp.R
 import mattecarra.accapp.SharedViewModel
 import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.acc.Acc
-import mattecarra.accapp.acc.ConfigUpdater
 import mattecarra.accapp.dialogs.*
-import mattecarra.accapp.djs.Djs
 import mattecarra.accapp.fragments.DashboardFragment
 import mattecarra.accapp.fragments.ProfilesFragment
 import mattecarra.accapp.fragments.SchedulesFragment
@@ -52,7 +50,8 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     private val ACC_CONFIG_EDITOR_REQUEST = 1
     private val ACC_PROFILE_CREATOR_REQUEST = 2
     private val ACC_PROFILE_EDITOR_REQUEST = 3
-    private val ACC_PROFILE_SCHEDULER_REQUEST = 4
+    private val ACC_ADD_PROFILE_SCHEDULER_REQUEST = 4
+    private val ACC_EDIT_PROFILE_SCHEDULER_REQUEST = 5
 
     private lateinit var mPreferences: Preferences
     private lateinit var mViewModel: SharedViewModel
@@ -547,24 +546,30 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                     }
                 }
             }
-        } else if(requestCode == ACC_PROFILE_SCHEDULER_REQUEST && resultCode == Activity.RESULT_OK) {
+        } else if(requestCode == ACC_ADD_PROFILE_SCHEDULER_REQUEST && resultCode == Activity.RESULT_OK) {
             if(data?.hasExtra("data") == true) {
                 val dataBundle = data.getBundleExtra("data")
                 val hour = dataBundle.getInt("hour")
                 val minute = dataBundle.getInt("minute")
 
-                val commands = ConfigUpdater(data.getParcelableExtra(Constants.ACC_CONFIG_KEY)).concatenateCommands(Acc.instance)
+                mSchedulesViewModel
+                    .addSchedule(hour, minute, data.getParcelableExtra(Constants.ACC_CONFIG_KEY))
+            }
+        } else if(requestCode == ACC_EDIT_PROFILE_SCHEDULER_REQUEST && resultCode == Activity.RESULT_OK) {
+            if(data?.hasExtra("data") == true) {
+                val dataBundle = data.getBundleExtra("data")
+                val id = dataBundle.getInt("scheduleProfileId")
+                val hour = dataBundle.getInt("hour")
+                val minute = dataBundle.getInt("minute")
 
                 mSchedulesViewModel
-                    .addSchedule(
-                        Schedule(hour, minute, commands)
-                    )
+                    .editSchedule(id, hour, minute, data.getParcelableExtra(Constants.ACC_CONFIG_KEY))
             }
         }
     }
 
     fun accScheduleFabOnClick(view: View) {
-        val dialog = MaterialDialog(this).show {
+        MaterialDialog(this).show {
             addScheduleDialog(mMainActivityViewModel.profiles) { profileId, hour, minute ->
                 if(profileId == -1L) {
                     Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
@@ -574,23 +579,61 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 
                         intent.putExtra("data", dataBundle)
                         intent.putExtra("titleTv", getString(R.string.schedule_creator))
-                        startActivityForResult(intent, ACC_PROFILE_SCHEDULER_REQUEST)
+                        startActivityForResult(intent, ACC_ADD_PROFILE_SCHEDULER_REQUEST)
                     }
                 } else {
                     launch {
                         val configProfile = mMainActivityViewModel.getProfileById(profileId.toInt())
 
                         mSchedulesViewModel
-                            .addSchedule(
-                                Schedule(hour, minute, ConfigUpdater(configProfile.accConfig).concatenateCommands(Acc.instance))
-                            )
+                            .addSchedule(hour, minute, configProfile.accConfig)
                     }
                 }
             }
             negativeButton(android.R.string.cancel)
         }
+    }
 
+    fun editSchedule(schedule: Schedule) {
+        MaterialDialog(this).show {
+            editScheduleDialog(schedule.hour, schedule.minute, mMainActivityViewModel.profiles) { profileId, hour, minute ->
+                when (profileId) {
+                    -1L ->
+                        mSchedulesViewModel
+                            .editSchedule(schedule.profile.uid, hour, minute, schedule.profile.accConfig)
+                    -2L ->
+                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+                            val dataBundle = Bundle()
+                            dataBundle.putInt("hour", hour)
+                            dataBundle.putInt("minute", minute)
+                            dataBundle.putInt("scheduleProfileId", schedule.profile.uid)
 
+                            intent.putExtra("data", dataBundle)
+                            intent.putExtra("titleTv", getString(R.string.schedule_creator))
+                            intent.putExtra(Constants.ACC_CONFIG_KEY, schedule.profile.accConfig)
+                            startActivityForResult(intent, ACC_EDIT_PROFILE_SCHEDULER_REQUEST)
+                        }
+                    -3L ->
+                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+                            val dataBundle = Bundle()
+                            dataBundle.putInt("hour", hour)
+                            dataBundle.putInt("minute", minute)
+                            dataBundle.putInt("scheduleProfileId", schedule.profile.uid)
+
+                            intent.putExtra("data", dataBundle)
+                            intent.putExtra("titleTv", getString(R.string.schedule_creator))
+                            startActivityForResult(intent, ACC_EDIT_PROFILE_SCHEDULER_REQUEST)
+                        }
+                    else -> launch {
+                        val configProfile = mMainActivityViewModel.getProfileById(profileId.toInt())
+
+                        mSchedulesViewModel
+                            .editSchedule(schedule.profile.uid, hour, minute, configProfile.accConfig)
+                    }
+                }
+            }
+            negativeButton(android.R.string.cancel)
+        }
     }
 
     override fun editProfile(profile: AccaProfile) {
@@ -620,10 +663,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 title(R.string.profile_name)
                 message(R.string.dialog_profile_name_message)
                 input(prefill = profile.profileName) { _, charSequence ->
-                    //TODO: Check if the profile name is valid
-//                                    val profileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
-//                                    val isValid = !profileNameRegex.matches(charSequence)
-
                     // Set profile name
                     profile.profileName = charSequence.toString()
 
@@ -639,16 +678,4 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         // Delete the selected profile (3rd option).
         mMainActivityViewModel.deleteProfile(profile)
     }
-
-//    override fun onResume() {
-//        handler.post(updateUIRunnable) // Start the initial runnable task by posting through the handler
-//
-//        super.onResume()
-//    }
-//
-//    override fun onPause() {
-//        handler.removeCallbacks(updateUIRunnable)
-//
-//        super.onPause()
-//    }
 }

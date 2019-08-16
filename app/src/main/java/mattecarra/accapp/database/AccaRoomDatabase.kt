@@ -12,14 +12,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
+import mattecarra.accapp.models.ScheduleProfile
 
 
-@Database(entities = [AccaProfile::class], version = 3)
+@Database(entities = [AccaProfile::class, ScheduleProfile::class], version = 4)
 @TypeConverters(ConfigConverter::class)
 abstract class AccaRoomDatabase : RoomDatabase() {
 
     abstract fun profileDao(): ProfileDao
-    // abstract fun scheduleDao(): ScheduleDao
+    abstract fun scheduleDao(): ScheduleDao
 
     companion object {
         @Volatile
@@ -37,6 +38,12 @@ abstract class AccaRoomDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_3_4: Migration = object : Migration(3, 4) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE TABLE IF NOT EXISTS schedules_table (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `configCapacity` TEXT NOT NULL, `configVoltage` TEXT NOT NULL, `configTemperature` TEXT NOT NULL, `configOnBoot` TEXT, `configOnPlug` TEXT, `configCoolDown` TEXT, `configResetUnplugged` INTEGER NOT NULL, `configChargeSwitch` TEXT, `prioritizeBatteryIdleMode` INTEGER NOT NULL)");
+            }
+        }
+
         fun getDatabase(context: Context): AccaRoomDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
@@ -47,7 +54,7 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                 // Create database instance here
                 INSTANCE =
                     Room.databaseBuilder(context.applicationContext, AccaRoomDatabase::class.java, DATABASE_NAME)
-                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
                         .addCallback(object : Callback() {
                             override fun onCreate(db: SupportSQLiteDatabase) {
                                 super.onCreate(db)
@@ -108,5 +115,4 @@ abstract class AccaRoomDatabase : RoomDatabase() {
             INSTANCE = null
         }
     }
-
 }
