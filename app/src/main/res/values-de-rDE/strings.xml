@@ -77,7 +77,6 @@
     <string name="profile_tile_label">Profil: %1$s</string>
     <string name="profiles_text_view">Profile (lange drücken zum Bearbeiten/Löschen):</string>
     <string name="restart">Neustart</string>
-    <string name="schedule_job">Job planen</string>
     <string name="invalid_chars">Der Profilname enthält ungültige Zeichen</string>
     <string name="recurrent_schedule">Nur einmal ausführen</string>
     <string name="execution_time">Ausführungszeit</string>
