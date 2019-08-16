@@ -69,7 +69,6 @@
     <string name="profile_tile_label">配置: %1$s</string>
     <string name="profiles_text_view">配置列表 (长按可编辑/删除):</string>
     <string name="restart">重新启动</string>
-    <string name="schedule_job">任务计划</string>
     <string name="invalid_chars">配置名称包含无效字符</string>
     <string name="recurrent_schedule">仅运行一次</string>
     <string name="execution_time">执行时间</string>
