@@ -3,12 +3,14 @@ package mattecarra.accapp
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import mattecarra.accapp.djs.Djs
 import mattecarra.accapp.utils.Constants.ACC_VERSION
 import mattecarra.accapp.utils.Constants.CURRENT_UNIT_OF_MEASURE
+import mattecarra.accapp.utils.Constants.DJS_ENABLED
 import mattecarra.accapp.utils.Constants.THEME
 import mattecarra.accapp.utils.Constants.VOLTAGE_UNIT_OF_MEASURE
 
-class Preferences(context: Context) {
+class Preferences(private val context: Context) {
     private val sharedPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     var uACurrent: Boolean?
@@ -48,6 +50,14 @@ class Preferences(context: Context) {
         set(value) {
             val editor = sharedPrefs.edit()
             editor.putLong("LAST_UPDATE_CHECK", value)
+            editor.apply()
+        }
+
+    var djsEnabled: Boolean
+        get() = sharedPrefs.getBoolean(DJS_ENABLED, false) && Djs.isDjsInstalled(context.filesDir)
+        set(value) {
+            val editor = sharedPrefs.edit()
+            editor.putBoolean(DJS_ENABLED, value)
             editor.apply()
         }
 }

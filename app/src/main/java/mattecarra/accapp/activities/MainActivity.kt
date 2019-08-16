@@ -105,7 +105,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 
             R.id.botNav_schedules -> {
                 //TODO uncomment this line when djs bundled is available
-                if (/*!Djs.isBundledDjsInstalled(filesDir) || !Djs.initBundledDjs(filesDir) || Djs.isInstalledDjsOutdated()*/ false) {
+                if (/*!Djs.isDjsInstalled(filesDir) || !Djs.initDjs(filesDir) || Djs.isInstalledDjsOutdated()*/ false) {
                     installDjs()
                     return false
                 } else {
@@ -123,52 +123,46 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             title(R.string.install_djs_title)
             message(R.string.install_djs_description)
             positiveButton(R.string.install) {
-                val dialog = MaterialDialog(this@MainActivity).show {
+                MaterialDialog(this@MainActivity).show {
                     title(R.string.installing_djs)
-                    progress(R.string.wait)
                     cancelOnTouchOutside(false)
                     onKeyCodeBackPressed { false }
-                }
-
-                launch {
-                    val res = Djs.installBundledAccModule(this@MainActivity)
-                    dialog.cancel()
-
-                    if(res?.isSuccess != true) {
-                        when {
-                            res?.code == 3 -> //Buysbox is not installed
-                                MaterialDialog(this@MainActivity)
-                                    .show {
-                                        title(R.string.installation_failed_busybox_title)
-                                        message(R.string.installation_failed_busybox)
-                                        positiveButton(R.string.retry) {
-                                            installDjs()
-                                        }
-                                        negativeButton {
-                                            botNav_main.selectedItemId = R.id.botNav_schedules
-                                        }
-                                        cancelOnTouchOutside(false)
-                                    }
-
-                            else -> MaterialDialog(this@MainActivity) //Other installation errors can not be handled automatically -> show a dialog with the logs
+                    djsInstallation(this@MainActivity, object: DjsInstallationListener {
+                        override fun onInstallationFailed(result: Shell.Result?) {
+                            MaterialDialog(this@MainActivity)
                                 .show {
                                     title(R.string.djs_installation_failed_title)
                                     message(R.string.djs_installation_failed)
                                     positiveButton(R.string.retry) {
                                         installDjs()
                                     }
-                                    negativeButton {
+                                    negativeButton(android.R.string.cancel) {
                                         botNav_main.selectedItemId = R.id.botNav_schedules
                                     }
-                                    if(res != null)
+                                    if(result != null)
                                         shareLogsNeutralButton(File(filesDir, "logs/djs-install.log"), R.string.djs_installation_failed_log)
                                 }
                         }
-                    } else {
-                        initUi()
-                    }
-                }
 
+                        override fun onBusyboxMissing() {
+                            MaterialDialog(this@MainActivity)
+                                .show {
+                                    busyBoxError()
+                                    positiveButton(R.string.retry) {
+                                        installDjs()
+                                    }
+                                    negativeButton(android.R.string.cancel)  {
+                                        botNav_main.selectedItemId = R.id.botNav_schedules
+                                    }
+                                    cancelOnTouchOutside(false)
+                                }
+                        }
+
+                        override fun onSuccess() {
+                            initUi()
+                        }
+                    })
+                }
             }
             negativeButton(android.R.string.no)
         }

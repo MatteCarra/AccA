@@ -48,16 +48,18 @@ class SchedulesFragment : ScopedFragment(), ScheduleActionListener {
         schedule_recyclerView.adapter = adapter
         schedule_recyclerView.layoutManager = LinearLayoutManager(context)
 
-        viewModel.schedules.observe(this, Observer {
-            if(it.isEmpty()) {
-                schedules_empty_textview.visibility = View.VISIBLE
-                schedule_recyclerView.visibility = View.GONE
-            } else {
-                schedules_empty_textview.visibility = View.GONE
-                schedule_recyclerView.visibility = View.VISIBLE
-            }
-            adapter.setList(it)
-        })
+        activity?.let { activity ->
+            viewModel.schedules.observe(activity, Observer { schedules ->
+                if(schedules.isEmpty()) {
+                    schedules_empty_textview.visibility = View.VISIBLE
+                    schedule_recyclerView.visibility = View.GONE
+                } else {
+                    schedules_empty_textview.visibility = View.GONE
+                    schedule_recyclerView.visibility = View.VISIBLE
+                }
+                adapter.setList(schedules)
+            })
+        }
     }
 
     override fun onScheduleClick(schedule: Schedule) {

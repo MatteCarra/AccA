@@ -24,4 +24,8 @@ class DjsHandler: DjsInterface {
     override suspend fun delete(pattern: String): Boolean = withContext(Dispatchers.IO) {
         Shell.su("djsc --delete \"$pattern\"").exec().isSuccess
     }
+
+    override suspend fun stop(): Boolean = withContext(Dispatchers.IO) {
+        Shell.su("djsd-stop").exec().isSuccess
+    }
 }
