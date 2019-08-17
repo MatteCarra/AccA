@@ -18,7 +18,7 @@ interface ScheduleDao {
     suspend fun deleteById(id: Int)
 
     @Query("SELECT * FROM schedules_table WHERE uid == :id")
-    suspend fun getScheduleById(id: Int): ScheduleProfile
+    suspend fun getScheduleById(id: Int): ScheduleProfile?
 
     @Query("DELETE FROM schedules_table")
     suspend fun deleteAll()

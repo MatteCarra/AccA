@@ -123,11 +123,7 @@ object Djs {
                 }
             }
 
-            val logDir = File(context.filesDir, "logs")
-            if(!logDir.exists())
-                logDir.mkdir()
-
-            val res = Shell.su("sh ${installShFile.absolutePath} djs ${File(logDir, "djs-install.log").absolutePath}").exec()
+            val res = Shell.su("sh ${installShFile.absolutePath} djs").exec()
             createDjsInstance()
             res
         } catch (ex: java.lang.Exception) {

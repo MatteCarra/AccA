@@ -42,11 +42,13 @@ set -e
 rm -rf ${1:-$id}-*/
 tar -xf ${1:-$id}*gz
 
-export installDir0="$3"
+export installDir0="$2"
 sh ${1:-$id}-*/install-current.sh
 
 #copy log to acca log dir
-cp /data/adb/${1:-$id}-data/install.log $2
+mkdir logs
+cp /data/adb/${1:-$id}-data/logs/install.log logs/${1:-$id}-install.log
+chmod 0666 logs/${1:-$id}-install.log
 
 rm -rf ${1:-$id}-*/
 exit 0

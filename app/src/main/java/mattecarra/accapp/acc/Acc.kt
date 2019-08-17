@@ -275,11 +275,7 @@ object Acc {
                 }
             }
 
-            val logDir = File(context.filesDir, "logs")
-            if(!logDir.exists())
-                logDir.mkdir()
-
-            val res = Shell.su("sh ${installShFile.absolutePath} acc ${File(logDir, "acc-install.log").absolutePath}").exec()
+            val res = Shell.su("sh ${installShFile.absolutePath} acc").exec()
             createAccInstance()
             calibrateMeasurements(context)
             res
