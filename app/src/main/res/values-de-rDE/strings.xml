@@ -85,7 +85,6 @@
     <string name="profile_tile_label">Profil: %1$s</string>
     <string name="profiles_text_view">Profile (lange drücken zum Bearbeiten/Löschen):</string>
     <string name="restart">Neustart</string>
-    <string name="schedule_job">Job planen</string>
     <string name="invalid_chars">Der Profilname enthält ungültige Zeichen</string>
     <string name="recurrent_schedule">Nur einmal ausführen</string>
     <string name="execution_time">Ausführungszeit</string>
@@ -95,7 +94,7 @@
     <string name="edit_voltage_limit">Spannungslimit bearbeiten</string>
     <string name="voltage_max">Spannungs-max (mV):</string>
     <string name="disabled">Deaktiviert</string>
-    <string name="schedule_row_text">Recurrent Job geplant um %2$d:%3$d</string>
+    <string name="schedule_row_text">Recurrent Job geplant um %1$d:%2$d</string>
     <string name="delete">Löschen</string>
     <string name="no_schedules">Keine Zeitpläne gesetzt</string>
     <string name="edit_scheduled_command">Der geplante Befehl kann bearbeitet werden. Wenn du die schöne UI nutzen möchtest, solltest du diesen löschen und neu erstellen.

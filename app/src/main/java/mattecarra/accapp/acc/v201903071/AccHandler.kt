@@ -1,11 +1,17 @@
 package mattecarra.accapp.acc.v201903071
 
 import com.topjohnwu.superuser.Shell
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class AccHandler: mattecarra.accapp.acc.legacy.AccHandler() {
-    override fun listChargingSwitches(): List<String> {
+    override suspend fun listChargingSwitches(): List<String> = withContext(Dispatchers.IO) {
         val res = Shell.su("acc -s s:").exec()
-        return if(res.isSuccess) res.out.map { it.trim() }.filter { it.isNotEmpty() } else emptyList()
+
+        if(res.isSuccess)
+            res.out.map { it.trim() }.filter { it.isNotEmpty() }
+        else
+            emptyList()
     }
 
     override fun getCurrentChargingSwitch(config: String): String? {

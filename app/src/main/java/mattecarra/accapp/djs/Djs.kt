@@ -10,19 +10,25 @@ import java.io.File
 import java.io.FileOutputStream
 
 interface DjsInterface {
-    suspend fun list(pattern: String = "."): List<Schedule>
+    suspend fun list(pattern: String = "."): List<DjsSchedule>
 
     suspend fun append(line: String): Boolean
 
-    suspend fun append(schedule: Schedule): Boolean {
-        return append("${schedule.hour}${schedule.minute} ${schedule.command}")
+    suspend fun append(schedule: DjsSchedule): Boolean {
+        return append("${String.format("%02d", schedule.hour)}${String.format("%02d", schedule.minute)} ${schedule.command}")
     }
 
     suspend fun delete(pattern: String): Boolean
 
-    suspend fun delete(schedule: Schedule): Boolean {
-        return delete("${schedule.hour}${schedule.minute} ${schedule.command}")
+    suspend fun deleteById(id: Int): Boolean {
+        return delete("accaScheduleId=$id")
     }
+
+    suspend fun delete(schedule: DjsSchedule): Boolean {
+        return delete("${String.format("%02d", schedule.hour)}${String.format("%02d", schedule.minute)} ${schedule.command}")
+    }
+
+    suspend fun stop(): Boolean
 }
 
 object Djs {
@@ -71,12 +77,12 @@ object Djs {
         return INSTANCE as DjsInterface
     }
 
-    fun isBundledDjsInstalled(installationDir: File): Boolean {
+    fun isDjsInstalled(installationDir: File): Boolean {
         return Shell.su("test -f ${File(installationDir, "djs/djs-init.sh").absolutePath}").exec().isSuccess
     }
 
-    fun initBundledDjs(installationDir: File): Boolean {
-        return if(isBundledDjsInstalled(installationDir))
+    fun initDjs(installationDir: File): Boolean {
+        return if(isDjsInstalled(installationDir))
             Shell.su("sh ${File(installationDir, "djs/djs-init.sh").absolutePath}").exec().isSuccess
         else
             false
@@ -121,7 +127,7 @@ object Djs {
             if(!logDir.exists())
                 logDir.mkdir()
 
-            val res = Shell.su("sh -x ${installShFile.absolutePath} djs > ${File(logDir, "djs-install.log").absolutePath} 2>&1").exec()
+            val res = Shell.su("sh ${installShFile.absolutePath} djs ${File(logDir, "djs-install.log").absolutePath}").exec()
             createDjsInstance()
             res
         } catch (ex: java.lang.Exception) {

@@ -1,31 +1,24 @@
 package mattecarra.accapp.fragments
 
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.Spinner
-import android.widget.TimePicker
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.customview.getCustomView
-import com.afollestad.materialdialogs.input.input
+import kotlinx.android.synthetic.main.schedules_fragment.*
 import mattecarra.accapp.R
-import mattecarra.accapp.activities.AccConfigEditorActivity
-import mattecarra.accapp.adapters.ScheduleActionListener
-import mattecarra.accapp.adapters.ScheduleRecyclerViewAdapter
+import mattecarra.accapp.activities.MainActivity
+import mattecarra.accapp.adapters.OnScheduleClickListener
+import mattecarra.accapp.adapters.ScheduleProfileListAdapter
 import mattecarra.accapp.models.Schedule
 import mattecarra.accapp.utils.ScopedFragment
 
-class SchedulesFragment : ScopedFragment(), ScheduleActionListener {
+class SchedulesFragment : ScopedFragment(), OnScheduleClickListener {
     private lateinit var viewModel: SchedulesViewModel
-    private lateinit var adapter: ScheduleRecyclerViewAdapter
+    private lateinit var adapter: ScheduleProfileListAdapter
 
     companion object {
         fun newInstance() = SchedulesFragment()
@@ -40,32 +33,35 @@ class SchedulesFragment : ScopedFragment(), ScheduleActionListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(SchedulesViewModel::class.java)
-        adapter = ScheduleRecyclerViewAdapter(this)
 
-        viewModel.schedules.observe(this, Observer {
-            adapter.setList(it)
-        })
-    }
 
-    override fun onScheduleClick(schedule: Schedule) {
-        context?.let {
-            MaterialDialog(it).show {
-                title(R.string.schedule_job)
-                message(R.string.edit_scheduled_command)
-                input(prefill = schedule.command, inputType = TYPE_TEXT_FLAG_NO_SUGGESTIONS, allowEmpty = false) { _, charSequence ->
+        activity?.let { activity ->
+            viewModel = ViewModelProviders.of(activity).get(SchedulesViewModel::class.java)
 
+            adapter = ScheduleProfileListAdapter(activity)
+            adapter.setOnClickListener(this)
+            schedule_recyclerView.adapter = adapter
+            schedule_recyclerView.layoutManager = LinearLayoutManager(context)
+
+            viewModel.schedules.observe(this, Observer { schedules ->
+                if(schedules.isEmpty()) {
+                    schedules_empty_textview.visibility = View.VISIBLE
+                    schedule_recyclerView.visibility = View.GONE
+                } else {
+                    schedules_empty_textview.visibility = View.GONE
+                    schedule_recyclerView.visibility = View.VISIBLE
                 }
-                positiveButton(R.string.save)
-                negativeButton(android.R.string.cancel)
-                neutralButton(R.string.delete) {
-                    viewModel.removeSchedule((schedule))
-                }
-            }
+
+                adapter.setList(schedules)
+            })
         }
     }
 
-    override fun onScheduleDelete(schedule: Schedule) {
+    override fun onScheduleProfileClick(schedule: Schedule) {
+        (activity as MainActivity?)?.editSchedule(schedule)
+    }
+
+    override fun onScheduleDeleteClick(schedule: Schedule) {
         viewModel.removeSchedule(schedule)
     }
 }

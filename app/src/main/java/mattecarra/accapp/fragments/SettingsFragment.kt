@@ -4,23 +4,21 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.list.SingleChoiceListener
-import com.afollestad.materialdialogs.list.listItemsSingleChoice
+import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.*
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
+import mattecarra.accapp.dialogs.*
 import mattecarra.accapp.utils.Constants.ACC_VERSION
-import mattecarra.accapp.utils.accVersionSingleChoice
-import mattecarra.accapp.utils.onKeyCodeBackPressed
-import mattecarra.accapp.utils.progress
-import mattecarra.accapp.utils.shareLogsNeutralButton
+import mattecarra.accapp.djs.Djs
+import mattecarra.accapp.utils.Constants.DJS_ENABLED
 import java.io.File
 import kotlin.coroutines.CoroutineContext
 
@@ -141,6 +139,63 @@ class SettingsFragment : PreferenceFragmentCompat(), CoroutineScope {
             }
 
             true
+        }
+
+        val djsEnable = findPreference<CheckBoxPreference>(DJS_ENABLED)
+        djsEnable?.setOnPreferenceChangeListener { _, newValue ->
+            context?.let { context ->
+                when {
+                    newValue as Boolean && Djs.isDjsInstalled(context.filesDir) -> {
+                        Djs.initDjs(context.filesDir)
+                        true
+                    }
+
+                    newValue -> {
+                        MaterialDialog(context).show {
+                            title(R.string.installing_djs)
+                            cancelOnTouchOutside(false)
+                            onKeyCodeBackPressed { false }
+                            djsInstallation(this@SettingsFragment, object: DjsInstallationListener {
+                                override fun onInstallationFailed(result: Shell.Result?) {
+                                    MaterialDialog(context) //Other installation errors can not be handled automatically -> show a dialog with the logs
+                                        .show {
+                                            title(R.string.djs_installation_failed_title)
+                                            message(R.string.djs_installation_failed)
+                                            positiveButton(android.R.string.ok)
+                                            if(result != null)
+                                                shareLogsNeutralButton(File(context.filesDir, "logs/djs-install.log"), R.string.djs_installation_failed_log)
+                                        }
+                                }
+
+                                override fun onBusyboxMissing() {
+                                    MaterialDialog(context)
+                                        .show {
+                                            title(R.string.installation_failed_busybox_title)
+                                            message(R.string.installation_failed_busybox)
+                                            positiveButton(android.R.string.ok)
+                                            cancelOnTouchOutside(false)
+                                        }
+                                }
+
+                                override fun onSuccess() {
+                                    djsEnable.isChecked = true
+                                }
+
+                            })
+                        }
+
+                        false
+                    }
+
+                    else -> {
+                        launch {
+                            Djs.instance.stop()
+                        }
+
+                        true
+                    }
+                }
+            } ?: false
         }
     }
 }

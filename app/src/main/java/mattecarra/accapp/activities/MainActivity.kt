@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -32,12 +31,14 @@ import mattecarra.accapp.R
 import mattecarra.accapp.SharedViewModel
 import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.acc.Acc
-import mattecarra.accapp.djs.Djs
+import mattecarra.accapp.dialogs.*
 import mattecarra.accapp.fragments.DashboardFragment
 import mattecarra.accapp.fragments.ProfilesFragment
 import mattecarra.accapp.fragments.SchedulesFragment
+import mattecarra.accapp.fragments.SchedulesViewModel
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
+import mattecarra.accapp.models.Schedule
 import mattecarra.accapp.utils.*
 import org.jetbrains.anko.doAsync
 import java.io.File
@@ -49,25 +50,23 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     private val ACC_CONFIG_EDITOR_REQUEST = 1
     private val ACC_PROFILE_CREATOR_REQUEST = 2
     private val ACC_PROFILE_EDITOR_REQUEST = 3
-    private val ACC_PROFILE_SCHEDULER_REQUEST = 4
+    private val ACC_ADD_PROFILE_SCHEDULER_REQUEST = 4
+    private val ACC_EDIT_PROFILE_SCHEDULER_REQUEST = 5
 
     private lateinit var mPreferences: Preferences
     private lateinit var mViewModel: SharedViewModel
     private lateinit var mMainActivityViewModel: MainActivityViewModel
+    private lateinit var mSchedulesViewModel: SchedulesViewModel
 
     val mMainFragment = DashboardFragment.newInstance()
     val mProfilesFragment = ProfilesFragment.newInstance()
     val mSchedulesFragment = SchedulesFragment.newInstance()
 
-//    private var profilesAdapter: ProfilesViewAdapter? = null
-//
-//    private var batteryInfo: BatteryInfo? = null
-//    private var isDaemonRunning = false
-
     private fun initUi() {
         // Assign ViewModel
         mViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
         mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+        mSchedulesViewModel = ViewModelProviders.of(this).get(SchedulesViewModel::class.java)
 
         // Set Bottom Navigation Bar Item Selected Listener
         botNav_main.setOnNavigationItemSelectedListener(this)
@@ -75,63 +74,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 
         // Load in dashboard fragment
         botNav_main.selectedItemId = mMainActivityViewModel.selectedNavBarItem
-
-        //Rest of the UI
-
-        // TODO: Integrate schedules into another fragment
-//        val schedules = ArrayList(AccUtils.listAllSchedules())
-//        if(schedules.isEmpty()) {
-//            no_schedules_jobs_textview.visibility = View.VISIBLE
-//            scheduled_jobs_recyclerview.visibility = View.GONE
-//        }
-
-        // TODO: Move the recyclerview stuff into the respective ViewModels
-//        scheduleAdapter = ScheduleRecyclerViewAdapter(schedules) { schedule, delete ->
-//            if(delete) {
-//                deleteSchedule(schedule)
-//            } else {
-//                MaterialDialog(this).show {
-//                    titleTv(R.string.schedule_job)
-//                    message(R.string.edit_scheduled_command)
-//                    input(prefill = schedule.command, inputType = TYPE_TEXT_FLAG_NO_SUGGESTIONS, allowEmpty = false) { _, charSequence ->
-//                        schedule.command =  charSequence.toString()
-//                        AccUtils.schedule(schedule.executeOnce, schedule.hour, schedule.minute, charSequence.toString())
-//                    }
-//                    positiveButton(R.string.save)
-//                    negativeButton(android.R.string.cancel)
-//                    neutralButton(R.string.delete) {
-//                        deleteSchedule(schedule)
-//                    }
-//                }
-//            }
-//        }
-
-
-//        val layoutManager = LinearLayoutManager(this)
-//        scheduled_jobs_recyclerview.layoutManager = layoutManager
-//        scheduled_jobs_recyclerview.adapter = scheduleAdapter
     }
-
-    // TODO: Move schedules to the Schedules Fragment
-//    private lateinit var scheduleAdapter: ScheduleRecyclerViewAdapter
-//
-//    val addSchedule: (Schedule) -> Unit = { schedule ->
-//        if(scheduleAdapter.itemCount == 0) {
-//            no_schedules_jobs_textview.visibility = View.GONE
-//            scheduled_jobs_recyclerview.visibility = View.VISIBLE
-//        }
-//        scheduleAdapter.add(schedule)
-//    }
-//
-//    val deleteSchedule: (Schedule) -> Unit = { schedule ->
-//        AccUtils.deleteSchedule(schedule.executeOnce, schedule.name)
-//        scheduleAdapter.remove(schedule)
-//
-//        if(scheduleAdapter.itemCount == 0) {
-//            no_schedules_jobs_textview.visibility = View.VISIBLE
-//            scheduled_jobs_recyclerview.visibility = View.GONE
-//        }
-//    }
 
 
     private fun showConfigReadError() {
@@ -160,12 +103,13 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             R.id.botNav_schedules -> {
-                if (!Djs.isBundledDjsInstalled(filesDir) || !Djs.initBundledDjs(filesDir) || Djs.isInstalledDjsOutdated()) {
+                //TODO uncomment this line when djs bundled is available
+                if (/*!Djs.isDjsInstalled(filesDir) || !Djs.initDjs(filesDir) || Djs.isInstalledDjsOutdated()*/ false) {
                     installDjs()
                     return false
                 } else {
                     loadFragment(mSchedulesFragment)
-                    return false
+                    return true
                 }
             }
         }
@@ -178,52 +122,46 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             title(R.string.install_djs_title)
             message(R.string.install_djs_description)
             positiveButton(R.string.install) {
-                val dialog = MaterialDialog(this@MainActivity).show {
+                MaterialDialog(this@MainActivity).show {
                     title(R.string.installing_djs)
-                    progress(R.string.wait)
                     cancelOnTouchOutside(false)
                     onKeyCodeBackPressed { false }
-                }
-
-                launch {
-                    val res = Djs.installBundledAccModule(this@MainActivity)
-                    dialog.cancel()
-
-                    if(res?.isSuccess != true) {
-                        when {
-                            res?.code == 3 -> //Buysbox is not installed
-                                MaterialDialog(this@MainActivity)
-                                    .show {
-                                        title(R.string.installation_failed_busybox_title)
-                                        message(R.string.installation_failed_busybox)
-                                        positiveButton(R.string.retry) {
-                                            installDjs()
-                                        }
-                                        negativeButton {
-                                            botNav_main.selectedItemId = R.id.botNav_schedules
-                                        }
-                                        cancelOnTouchOutside(false)
-                                    }
-
-                            else -> MaterialDialog(this@MainActivity) //Other installation errors can not be handled automatically -> show a dialog with the logs
+                    djsInstallation(this@MainActivity, object: DjsInstallationListener {
+                        override fun onInstallationFailed(result: Shell.Result?) {
+                            MaterialDialog(this@MainActivity)
                                 .show {
                                     title(R.string.djs_installation_failed_title)
                                     message(R.string.djs_installation_failed)
                                     positiveButton(R.string.retry) {
                                         installDjs()
                                     }
-                                    negativeButton {
+                                    negativeButton(android.R.string.cancel) {
                                         botNav_main.selectedItemId = R.id.botNav_schedules
                                     }
-                                    if(res != null)
+                                    if(result != null)
                                         shareLogsNeutralButton(File(filesDir, "logs/djs-install.log"), R.string.djs_installation_failed_log)
                                 }
                         }
-                    } else {
-                        initUi()
-                    }
-                }
 
+                        override fun onBusyboxMissing() {
+                            MaterialDialog(this@MainActivity)
+                                .show {
+                                    busyBoxError()
+                                    positiveButton(R.string.retry) {
+                                        installDjs()
+                                    }
+                                    negativeButton(android.R.string.cancel)  {
+                                        botNav_main.selectedItemId = R.id.botNav_schedules
+                                    }
+                                    cancelOnTouchOutside(false)
+                                }
+                        }
+
+                        override fun onSuccess() {
+                            initUi()
+                        }
+                    })
+                }
             }
             negativeButton(android.R.string.no)
         }
@@ -608,79 +546,95 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                     }
                 }
             }
+        } else if(requestCode == ACC_ADD_PROFILE_SCHEDULER_REQUEST && resultCode == Activity.RESULT_OK) {
+            if(data?.hasExtra("data") == true) {
+                val dataBundle = data.getBundleExtra("data")
+                val hour = dataBundle.getInt("hour")
+                val minute = dataBundle.getInt("minute")
+
+                mSchedulesViewModel
+                    .addSchedule(hour, minute, data.getParcelableExtra(Constants.ACC_CONFIG_KEY))
+            }
+        } else if(requestCode == ACC_EDIT_PROFILE_SCHEDULER_REQUEST && resultCode == Activity.RESULT_OK) {
+            if(data?.hasExtra("data") == true) {
+                val dataBundle = data.getBundleExtra("data")
+                val id = dataBundle.getInt("scheduleProfileId")
+                val hour = dataBundle.getInt("hour")
+                val minute = dataBundle.getInt("minute")
+
+                mSchedulesViewModel
+                    .editSchedule(id, hour, minute, data.getParcelableExtra(Constants.ACC_CONFIG_KEY))
+            }
         }
-//        }
-//        } else if(requestCode == ACC_PROFILE_SCHEDULER_REQUEST && resultCode == Activity.RESULT_OK) {
-//            if(data?.hasExtra("data") == true) {
-//                val dataBundle = data.getBundleExtra("data")
-//
-//                val hour = dataBundle.getInt("hour")
-//                val minute = dataBundle.getInt("minute")
-//                val executeOnce = dataBundle.getBoolean("executeOnce")
-//                val commands = data.getParcelableExtra<AccConfig>("mAccConfig").getCommands()
-//
-//                addSchedule(Schedule("${String.format("%02d", hour)}${String.format("%02d", minute)}", executeOnce, hour, minute, commands.joinToString(separator = "; ")))
-//
-//                AccUtils.schedule(
-//                    executeOnce,
-//                    hour,
-//                    minute,
-//                    commands
-//                )
-//            }
-//        }
     }
 
-/*    fun accScheduleFabOnClick(view: View) {
-        val dialog = MaterialDialog(this).show {
-            customView(R.layout.schedule_dialog)
-            positiveButton(R.string.save) { dialog ->
-                val view = dialog.getCustomView()
-                val spinner = view.findViewById<Spinner>(R.id.profile_selector)
-                val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
-                val hour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.hour else timePicker.currentHour
-                val minute = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.minute else timePicker.currentMinute
-
-                if(spinner.selectedItemId == 0.toLong()) {
-                    Intent(this, AccConfigEditorActivity::class.java).also { intent ->
+    fun accScheduleFabOnClick(view: View) {
+        MaterialDialog(this).show {
+            addScheduleDialog(mMainActivityViewModel.profiles) { profileId, hour, minute ->
+                if(profileId == -1L) {
+                    Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
                         val dataBundle = Bundle()
                         dataBundle.putInt("hour", hour)
                         dataBundle.putInt("minute", minute)
-                        dataBundle.putBoolean("executeOnce", executeOnceCheckBox.isChecked)
 
                         intent.putExtra("data", dataBundle)
                         intent.putExtra("titleTv", getString(R.string.schedule_creator))
-                        startActivityForResult(intent, ACC_PROFILE_SCHEDULER_REQUEST)
+                        startActivityForResult(intent, ACC_ADD_PROFILE_SCHEDULER_REQUEST)
                     }
                 } else {
-                    val profile = spinner.selectedItem as String
-                    val configProfile = ProfileUtils.readProfile(profile, this@MainActivity, gson)
+                    launch {
+                        val configProfile = mMainActivityViewModel.getProfileById(profileId.toInt())
 
-                    addSchedule(Schedule("$hour$minute", executeOnceCheckBox.isChecked, hour, minute, configProfile.getCommands().joinToString(separator = "; ")))
-
-                    AccUtils.schedule(
-                        executeOnceCheckBox.isChecked,
-                        hour,
-                        minute,
-                        configProfile.getCommands()
-                    )
+                        mSchedulesViewModel
+                            .addSchedule(hour, minute, configProfile.accConfig)
+                    }
                 }
             }
             negativeButton(android.R.string.cancel)
         }
+    }
 
-        val profiles = ArrayList<String>()
-        profiles.add(getString(R.string.new_config))
-        profiles.addAll(ProfileUtils.listProfiles(this, gson))
-        val view = dialog.getCustomView()
-        val spinner = view.findViewById<Spinner>(R.id.profile_selector)
-        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, profiles)
+    fun editSchedule(schedule: Schedule) {
+        MaterialDialog(this).show {
+            editScheduleDialog(schedule.hour, schedule.minute, mMainActivityViewModel.profiles) { profileId, hour, minute ->
+                when (profileId) {
+                    -1L ->
+                        mSchedulesViewModel
+                            .editSchedule(schedule.profile.uid, hour, minute, schedule.profile.accConfig)
+                    -2L ->
+                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+                            val dataBundle = Bundle()
+                            dataBundle.putInt("hour", hour)
+                            dataBundle.putInt("minute", minute)
+                            dataBundle.putInt("scheduleProfileId", schedule.profile.uid)
 
-        view.findViewById<TimePicker>(R.id.time_picker).setIs24HourView(true)
+                            intent.putExtra("data", dataBundle)
+                            intent.putExtra("titleTv", getString(R.string.schedule_creator))
+                            intent.putExtra(Constants.ACC_CONFIG_KEY, schedule.profile.accConfig)
+                            startActivityForResult(intent, ACC_EDIT_PROFILE_SCHEDULER_REQUEST)
+                        }
+                    -3L ->
+                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+                            val dataBundle = Bundle()
+                            dataBundle.putInt("hour", hour)
+                            dataBundle.putInt("minute", minute)
+                            dataBundle.putInt("scheduleProfileId", schedule.profile.uid)
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.adapter = adapter;
-    }*/
+                            intent.putExtra("data", dataBundle)
+                            intent.putExtra("titleTv", getString(R.string.schedule_creator))
+                            startActivityForResult(intent, ACC_EDIT_PROFILE_SCHEDULER_REQUEST)
+                        }
+                    else -> launch {
+                        val configProfile = mMainActivityViewModel.getProfileById(profileId.toInt())
+
+                        mSchedulesViewModel
+                            .editSchedule(schedule.profile.uid, hour, minute, configProfile.accConfig)
+                    }
+                }
+            }
+            negativeButton(android.R.string.cancel)
+        }
+    }
 
     override fun editProfile(profile: AccaProfile) {
         // Edit the configuration of the selected profile.
@@ -709,10 +663,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 title(R.string.profile_name)
                 message(R.string.dialog_profile_name_message)
                 input(prefill = profile.profileName) { _, charSequence ->
-                    //TODO: Check if the profile name is valid
-//                                    val profileNameRegex = """^[^\\/:*?"<>|]+${'$'}""".toRegex()
-//                                    val isValid = !profileNameRegex.matches(charSequence)
-
                     // Set profile name
                     profile.profileName = charSequence.toString()
 
@@ -728,16 +678,4 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         // Delete the selected profile (3rd option).
         mMainActivityViewModel.deleteProfile(profile)
     }
-
-//    override fun onResume() {
-//        handler.post(updateUIRunnable) // Start the initial runnable task by posting through the handler
-//
-//        super.onResume()
-//    }
-//
-//    override fun onPause() {
-//        handler.removeCallbacks(updateUIRunnable)
-//
-//        super.onPause()
-//    }
 }

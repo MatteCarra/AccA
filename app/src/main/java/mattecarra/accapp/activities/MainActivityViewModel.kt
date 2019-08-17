@@ -1,31 +1,40 @@
 package mattecarra.accapp.activities
 
 import android.app.Application
-import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import androidx.lifecycle.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import mattecarra.accapp.R
-import mattecarra.accapp.acc.Acc
-import mattecarra.accapp.models.AccConfig
+import mattecarra.accapp.database.AccaRoomDatabase
+import mattecarra.accapp.database.ProfileDao
+import mattecarra.accapp.database.ScheduleDao
 import mattecarra.accapp.models.AccaProfile
-import mattecarra.accapp.utils.Constants
-import mattecarra.accapp.utils.DataRepository
-import kotlin.coroutines.CoroutineContext
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
     var selectedNavBarItem = R.id.botNav_home
 
-    private val mDataRepository: DataRepository = DataRepository(application, viewModelScope)
+    val profiles: LiveData<List<AccaProfile>>
 
-    fun insertProfile(profile: AccaProfile) = mDataRepository.insertProfile(profile)
+    private val mProfileDao: ProfileDao
+    init {
+        val accaDatabase = AccaRoomDatabase.getDatabase(application)
+        mProfileDao = accaDatabase.profileDao()
 
-    fun deleteProfile(profile: AccaProfile) = mDataRepository.deleteProfile(profile)
+        profiles = mProfileDao.getAllProfiles()
+    }
 
-    fun updateProfile(profile: AccaProfile) = mDataRepository.updateProfile(profile)
+    fun insertProfile(profile: AccaProfile) = viewModelScope.launch {
+        mProfileDao.insert(profile)
+    }
 
-    suspend fun getProfileById(id: Int) : AccaProfile = mDataRepository.getProfileById(id)
+    fun deleteProfile(profile: AccaProfile) = viewModelScope.launch {
+        mProfileDao.delete(profile)
+    }
+
+    fun updateProfile(profile: AccaProfile) = viewModelScope.launch {
+        mProfileDao.update(profile)
+    }
+
+    suspend fun getProfileById(id: Int): AccaProfile {
+        return mProfileDao.getProfileById(id)
+    }
 }

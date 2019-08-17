@@ -76,7 +76,9 @@ class DashboardFragment : ScopedFragment() {
             })
 
             view.dash_resetBatteryStats_button.setOnClickListener {
-                Acc.instance.resetBatteryStats()
+                launch {
+                    Acc.instance.resetBatteryStats()
+                }
             }
 
             view.dash_editCargingLimitOnce_button.setOnClickListener {
@@ -85,8 +87,10 @@ class DashboardFragment : ScopedFragment() {
                     message(R.string.edit_charging_limit_once_dialog_msg)
                     customView(R.layout.edit_charging_limit_once_dialog)
                     positiveButton(R.string.apply) {
-                        Acc.instance.setChargingLimitForOneCharge(getCustomView().findViewById<NumberPicker>(R.id.charging_limit).value)
-                        Toast.makeText(context, R.string.done, Toast.LENGTH_LONG).show()
+                        launch {
+                            Acc.instance.setChargingLimitForOneCharge(getCustomView().findViewById<NumberPicker>(R.id.charging_limit).value)
+                            Toast.makeText(context, R.string.done, Toast.LENGTH_LONG).show()
+                        }
                     }
                     negativeButton(android.R.string.cancel)
                 }

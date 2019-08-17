@@ -4,17 +4,10 @@ import android.app.Application
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import androidx.lifecycle.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.models.AccConfig
-import mattecarra.accapp.models.AccaProfile
-import mattecarra.accapp.utils.Constants
-import mattecarra.accapp.utils.DataRepository
 import mattecarra.accapp.utils.ProfileUtils
-import kotlin.coroutines.CoroutineContext
 
 class SharedViewModel(application: Application) : AndroidViewModel(application) {
     private val mSharedPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)

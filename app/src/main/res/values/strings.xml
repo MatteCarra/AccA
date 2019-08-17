@@ -109,7 +109,6 @@
     <string name="profile_tile_label">Profile: %1$s</string>
     <string name="profiles_text_view">Profiles (long press to edit/delete):</string>
     <string name="restart">Restart</string>
-    <string name="schedule_job">Schedule job</string>
     <string name="invalid_chars">The profile name contains invalid characters</string>
     <string name="recurrent_schedule">Run only once</string>
     <string name="execution_time">Execution time</string>
@@ -119,7 +118,7 @@
     <string name="edit_voltage_limit">Edit voltage limit</string>
     <string name="voltage_max">Voltage max (mV):</string>
     <string name="disabled">Disabled</string>
-    <string name="schedule_row_text">Recurrent Job scheduled at %2$d:%3$d</string>
+    <string name="schedule_row_text">Recurrent Job scheduled at %1$02d:%2$02d</string>
     <string name="delete">Delete</string>
     <string name="no_schedules">No schedules set</string>
     <string name="edit_scheduled_command">You can edit the scheduled command. If you want the nice UI, you should delete and recreate it.</string>
@@ -221,6 +220,11 @@
     <string name="select_different_version">Change acc version</string>
     <string name="installation_failed_non_bundled">The installation of an unsupported acc version has failed.\nPlease consider sharing the logs to the devs.</string>
     <string name="prioritize_battery_idle">Prioritize battery idle</string>
+    <string name="test_battery_idle">Test battery idle</string>
+    <string name="test_battery_idle_supported_result">Battery idle mode is supported on your device! You can go ahead and enable the option!</string>
+    <string name="test_battery_idle_unsupported_result">Battery idle mode is not supported on your device. This does not depend on acc, so it can\'t be fixed by any future update.</string>
+    <string name="schedule_profile_edit_current">Edit current config</string>
+    <string name="schedule_profile_keep_current">Keep current config</string>
     <string-array name="theme_option_options">
         <item>Light</item>
         <item>Dark</item>

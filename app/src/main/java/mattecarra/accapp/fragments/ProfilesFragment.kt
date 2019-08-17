@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.profiles_fragment.*
+import kotlinx.android.synthetic.main.schedules_fragment.*
 
 import mattecarra.accapp.R
 import mattecarra.accapp._interface.OnProfileClickListener
@@ -57,6 +59,13 @@ class ProfilesFragment : Fragment() {
 
             // Observe data
             mViewModel.getProfiles().observe(this, Observer { profiles ->
+                if(profiles.isEmpty()) {
+                    profiles_empty_textview.visibility = View.VISIBLE
+                    profilesRecycler.visibility = View.GONE
+                } else {
+                    profiles_empty_textview.visibility = View.GONE
+                    profilesRecycler.visibility = View.VISIBLE
+                }
                 mProfilesAdapter.setProfiles(profiles)
             })
         }

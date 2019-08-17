@@ -11,18 +11,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/voltage_control_file"
-            android:textColor="#000000"
+            android:textColor="?android:attr/textColorPrimary"
             android:textAppearance="?android:textAppearanceMedium"
     />
 
     <Spinner
-            android:id="@+id/voltage_control_file"
+            android:id="@+id/voltage_control_file_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"/>
 
     <CheckBox
-            android:id="@+id/enable_voltage_max"
+            android:id="@+id/enable_voltage_max_check_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -35,14 +35,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:text="@string/voltage_max"
-            android:textColor="#000000"
+            android:textColor="?android:attr/textColorPrimary"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:textAppearance="?android:textAppearanceMedium"
     />
 
     <EditText
-            android:id="@+id/voltage_max"
+            android:id="@+id/voltage_max_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
