@@ -4,7 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.acc.ConfigUpdater
 import mattecarra.accapp.database.AccaRoomDatabase
@@ -28,9 +31,27 @@ class SchedulesViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     private suspend fun refreshSchedules() {
-        val newSchedules = Djs.instance.list().map { djsSchedule ->
-            Schedule(djsSchedule.hour, djsSchedule.minute, getScheduleProfileById(djsSchedule.scheduleProfileId))
-        }
+        val newSchedules =
+            Djs
+                .instance
+                .list()
+                .map { djsSchedule ->
+                    withContext(Dispatchers.IO) {
+                        async {
+                            val scheduleProfile =
+                                getScheduleProfileById(djsSchedule.scheduleProfileId)
+                            if (scheduleProfile != null)
+                                Schedule(djsSchedule.hour, djsSchedule.minute, scheduleProfile)
+                            else {
+                                //TODO handle schedules created by an uninstalled version of the app
+                                null
+                            }
+                        }
+                    }
+                }.mapNotNull {
+                    it.await()
+                }
+
         schedules.value = newSchedules
     }
 
@@ -73,7 +94,7 @@ class SchedulesViewModel(application: Application) : AndroidViewModel(applicatio
         mSchedulesDao.update(schedule)
     }
 
-    suspend fun getScheduleProfileById(id: Int): ScheduleProfile {
+    suspend fun getScheduleProfileById(id: Int): ScheduleProfile? {
         return mSchedulesDao.getScheduleById(id)
     }
 }
