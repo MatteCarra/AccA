@@ -68,7 +68,7 @@
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Stop daemon after applying settings</string>
     <string name="description_exit_on_boot">This is used for updating files on boot.</string>
-    <string name="label_on_boot">applyOnBoot: </string>
+    <string name="label_on_boot">applyOnBoot:</string>
 
     <!-- ################################################### -->
     <!-- Acc installation -->
