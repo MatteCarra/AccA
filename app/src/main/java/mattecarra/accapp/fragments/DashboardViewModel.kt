@@ -24,26 +24,24 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
 
     val chargeSpeed: LiveData<String> = _chargeSpeed
 
-    @Volatile private var run = false
-
     init {
         viewModelScope.launch {
-
             while (true) {
                 if (battery.hasActiveObservers()) {
                     val batteryInfo = Acc.instance.getBatteryInfo()
-                    _battery.value = withContext(Dispatchers.IO) {
-                        batteryInfo
-                    }
-
-                    _chargeSpeed.value = application.getString(if(batteryInfo.isCharging()) R.string.info_charging_speed_extended else R.string.info_discharging_speed_extended, batteryInfo.getCurrentNow(mPreferences.uACurrent) * (if(batteryInfo.isCharging()) 1 else -1), batteryInfo.getVoltageNow(mPreferences.uVMeasureUnit))
+                    _battery.value = batteryInfo
+                    _chargeSpeed.value =
+                        application.getString(
+                            if(batteryInfo.isCharging())
+                                R.string.info_charging_speed_extended
+                            else
+                                R.string.info_discharging_speed_extended, batteryInfo.getCurrentNow(mPreferences.uACurrent) * (if(batteryInfo.isCharging()) 1 else -1), batteryInfo.getVoltageNow(mPreferences.uVMeasureUnit)
+                        )
 
                 }
 
                 if(daemon.hasActiveObservers()) {
-                    _daemon.value = withContext(Dispatchers.IO) {
-                        Acc.instance.isAccdRunning()
-                    }
+                    _daemon.value = Acc.instance.isAccdRunning()
                 }
 
                 delay(1000)

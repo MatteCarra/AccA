@@ -62,7 +62,7 @@ class DashboardFragment : ScopedFragment() {
 
         val view = binding.root
 
-        mViewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
+        mViewModel = activity?.let { ViewModelProviders.of(it).get(DashboardViewModel::class.java) } ?: ViewModelProviders.of(this).get(DashboardViewModel::class.java)
         binding.viewModel = mViewModel
         binding.lifecycleOwner = this
 
