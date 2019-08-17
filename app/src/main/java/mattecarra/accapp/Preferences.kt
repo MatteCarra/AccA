@@ -30,7 +30,7 @@ class Preferences(private val context: Context) {
         }
 
     var accVersion: String
-        get() = (sharedPrefs.getString(ACC_VERSION, "bundled") ?: "bundled").toLowerCase()
+        get() = sharedPrefs.getString(ACC_VERSION, "bundled") ?: "bundled"
         set(value) {
             val editor = sharedPrefs.edit()
             editor.putString(ACC_VERSION, value)
