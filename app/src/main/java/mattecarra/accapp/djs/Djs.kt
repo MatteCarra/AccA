@@ -32,8 +32,8 @@ interface DjsInterface {
 }
 
 object Djs {
-    const val bundledVersion = 201907010
-    private const val defaultVersionPackage = "v201907010" /* NOTE: default version has to match a package in acc (ex mattecarra.accapp.djs.*) */
+    const val bundledVersion = 201908180
+    private const val defaultVersionPackage = "legacy" /* NOTE: default version has to match a package in acc (ex mattecarra.accapp.djs.*) */
 
     /*
     * This method returns the name of the package with a compatible AccInterface
@@ -133,6 +133,6 @@ object Djs {
     }
 
     private fun getDjsVersion(): Int {
-        return bundledVersion //There's no way to get djs version yet
+        return Shell.su("djs-version").exec().out.joinToString(separator = "\n").trim().toIntOrNull() ?: bundledVersion
     }
 }

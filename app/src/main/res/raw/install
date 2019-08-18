@@ -45,10 +45,17 @@ tar -xf ${1:-$id}*gz
 export installDir0="$2"
 sh ${1:-$id}-*/install-current.sh
 
-#copy log to acca log dir
-mkdir logs
-cp /data/adb/${1:-$id}-data/logs/install.log logs/${1:-$id}-install.log
-chmod 0666 logs/${1:-$id}-install.log
-
 rm -rf ${1:-$id}-*/
+
+umask 077
+mkdir -p logs
+
+cp -af /data/adb/${1:-$id}-data/logs/install.log logs/${1:-$id}-install.log
+
+pkg=$(cd ..; pwd)
+pkg=${pkg##/data*/}
+
+owner=$(grep $pkg /data/system/packages.list | awk '{print $2}')
+chown -R $owner:$owner logs
+
 exit 0

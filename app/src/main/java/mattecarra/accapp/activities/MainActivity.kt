@@ -32,6 +32,7 @@ import mattecarra.accapp.SharedViewModel
 import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.dialogs.*
+import mattecarra.accapp.djs.Djs
 import mattecarra.accapp.fragments.DashboardFragment
 import mattecarra.accapp.fragments.ProfilesFragment
 import mattecarra.accapp.fragments.SchedulesFragment
@@ -103,13 +104,12 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             R.id.botNav_schedules -> {
-                //TODO uncomment this line when djs bundled is available
-                if (/*!Djs.isDjsInstalled(filesDir) || !Djs.initDjs(filesDir) || Djs.isInstalledDjsOutdated()*/ false) {
+                return if (!Djs.isDjsInstalled(filesDir) || !Djs.initDjs(filesDir) || Djs.isInstalledDjsOutdated()) {
                     installDjs()
-                    return false
+                    false
                 } else {
                     loadFragment(mSchedulesFragment)
-                    return true
+                    true
                 }
             }
         }
@@ -158,6 +158,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                         }
 
                         override fun onSuccess() {
+                            mPreferences.djsEnabled = true
                             initUi()
                         }
                     })
