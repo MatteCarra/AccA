@@ -16,13 +16,14 @@ interface OnScheduleClickListener {
     fun onScheduleDeleteClick(schedule: Schedule)
 }
 
-class ScheduleProfileListAdapter internal constructor(context: Context) : RecyclerView.Adapter<ScheduleProfileListAdapter.ProfileViewHolder>() {
+class ScheduleProfileListAdapter internal constructor(context: Context) :
+    RecyclerView.Adapter<ScheduleProfileListAdapter.ProfileViewHolder>() {
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private var mScheduleList = emptyList<Schedule>()
     private lateinit var mListener: OnScheduleClickListener
     private val mContext = context
 
-    inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
+    inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         override fun onClick(v: View?) {
             mListener.onScheduleProfileClick(mScheduleList[adapterPosition])
@@ -32,10 +33,8 @@ class ScheduleProfileListAdapter internal constructor(context: Context) : Recycl
             itemView.setOnClickListener(this)
         }
 
-        val titleTv: TextView = itemView.findViewById(R.id.item_schedule_title_textView)
-        val capacityTv: TextView = itemView.findViewById(R.id.item_schedule_capacity_tv)
-        val temperatureTv: TextView = itemView.findViewById(R.id.item_schedule_temperature_tv)
-        val onPlugTv: TextView = itemView.findViewById(R.id.item_schedule_on_plug_tv)
+        val titleTv: TextView = itemView.findViewById(R.id.item_schedule_title_tv)
+        val profileTv: TextView = itemView.findViewById(R.id.item_schedule_profile_tv)
         val optionsIb: ImageButton = itemView.findViewById(R.id.item_schedule_options_ib)
     }
 
@@ -47,9 +46,8 @@ class ScheduleProfileListAdapter internal constructor(context: Context) : Recycl
     override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
         val schedule = mScheduleList[position]
         holder.titleTv.text = mContext.getString(R.string.schedule_row_text, schedule.hour, schedule.minute)
-        holder.capacityTv.text = schedule.profile.accConfig.configCapacity.toString(mContext)
-        holder.temperatureTv.text = schedule.profile.accConfig.configTemperature.toString(mContext)
-        holder.onPlugTv.text = schedule.profile.accConfig.getOnPlug(mContext)
+        //TODO: Get profile name somehow from the schedule object.
+        holder.profileTv.text = schedule.profile.toString()
 
         holder.optionsIb.setOnClickListener {
 
