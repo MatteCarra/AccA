@@ -121,6 +121,7 @@
     <string name="schedule_recurrent_row_text">Recurrent Job scheduled at %1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_text">Job scheduled at %1$02d:%2$02d</string>
     <string name="schedule_boot_row_text">Boot Job scheduled</string>
+    <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Delete</string>
     <string name="no_schedules">No schedules set</string>
     <string name="edit_scheduled_command">You can edit the scheduled command. If you want the nice UI, you should delete and recreate it.</string>
