@@ -27,11 +27,14 @@ class DjsHandler: DjsInterface {
         Shell.su("djsc --append '$line'").exec().isSuccess
     }
 
-    override fun getDeleteCommand(pattern: String): String = "djsc --delete '$pattern'"
+    override suspend fun edit(pattern: String, newLine: String): Boolean = withContext(Dispatchers.IO) {
+        Shell.su("sed -i 's#.*$pattern.*#$newLine#' \$(djs-config --edit echo)").exec().isSuccess
+    }
 
+    override fun getDeleteCommand(pattern: String): String = "djsc --delete $pattern"
 
     override suspend fun delete(pattern: String): Boolean = withContext(Dispatchers.IO) {
-        Shell.su(getDeleteCommand(pattern)).exec().isSuccess
+        Shell.su("djsc --delete '$pattern'").exec().isSuccess
     }
 
     override suspend fun stop(): Boolean = withContext(Dispatchers.IO) {

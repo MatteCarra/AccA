@@ -70,8 +70,7 @@ class SchedulesViewModel(application: Application) : AndroidViewModel(applicatio
 
         updateScheduleProfile(scheduleProfile)
 
-        Djs.instance.deleteById(id)
-        Djs.instance.append(
+        Djs.instance.edit(
             Schedule(time, executeOnce, scheduleProfile)
                 .toDjsSchedule()
         )

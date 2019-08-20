@@ -18,6 +18,12 @@ interface DjsInterface {
         return append("${schedule.time} ${schedule.command}")
     }
 
+    suspend fun edit(pattern: String, newLine: String): Boolean
+
+    suspend fun edit(schedule: DjsSchedule): Boolean {
+        return edit(": accaScheduleId${schedule.scheduleProfileId}", "${schedule.time} ${schedule.command}")
+    }
+
     suspend fun delete(pattern: String): Boolean
 
     suspend fun deleteById(id: Int): Boolean {
@@ -25,7 +31,7 @@ interface DjsInterface {
     }
 
     suspend fun delete(schedule: DjsSchedule): Boolean {
-        return delete("${schedule.time} ${schedule.command}")
+        return deleteById(schedule.scheduleProfileId)
     }
 
     suspend fun stop(): Boolean
