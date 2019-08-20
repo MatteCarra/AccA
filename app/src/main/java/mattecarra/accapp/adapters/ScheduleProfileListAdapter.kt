@@ -47,18 +47,23 @@ class ScheduleProfileListAdapter internal constructor(context: Context) :
     override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
         val schedule = mScheduleList[position]
         val time = schedule.getTime()
-        holder.whenTv.text = when {
-            time != null && schedule.executeOnce -> mContext.getString(R.string.schedule_execute_once_row_text, time.hour, time.minute)
-            time != null -> mContext.getString(R.string.schedule_recurrent_row_text, time.hour, time.minute)
-            else -> mContext.getString(R.string.schedule_boot_row_text)
+
+        when {
+            time != null && schedule.executeOnce -> {
+                holder.titleTv.text = "Exec. Once"
+                holder.whenTv.text = mContext.getString(R.string.schedule_execute_once_row_text, time.hour, time.minute)
+            }
+            time != null -> {
+                holder.titleTv.text = mContext.getString(R.string.schedule_time, time.hour, time.minute)
+                holder.whenTv.text = mContext.getString(R.string.schedule_recurrent_row_text, time.hour, time.minute)
+            }
+            else -> {
+                holder.titleTv.text = "On Boot"
+                holder.whenTv.text = mContext.getString(R.string.schedule_boot_row_text)
+            }
         }
 
-        holder.titleTv.text = when {
-            time != null -> mContext.getString(R.string.schedule_time, time.hour, time.minute)
-            else -> mContext.getString(R.string.title_on_boot)
-        }
-        //TODO: Get profile name somehow from the schedule object.
-//        holder.profileTv.text = schedule.profile.toString()
+        holder.profileTv.text = schedule.profile.scheduleName
 
         holder.optionsIb.setOnClickListener {
 
