@@ -8,16 +8,32 @@
         android:paddingRight="16dp">
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/profile_name"
-            android:textColor="?android:attr/textColorPrimary"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/schedule_name"
+        android:textColor="?android:attr/textColorPrimary"
+        />
+
+    <EditText
+        android:id="@+id/schedule_name_edit_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:hint="@string/schedule_name"
+        android:inputType="text"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/profile_name"
+        android:textColor="?android:attr/textColorPrimary"
+        android:layout_marginTop="18dp"/>
 
     <Spinner
-            android:id="@+id/profile_selector"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp" />
+        android:id="@+id/profile_selector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp" />
 
     <TextView
         android:layout_width="wrap_content"

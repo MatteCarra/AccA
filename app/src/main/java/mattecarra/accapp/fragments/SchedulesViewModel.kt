@@ -56,21 +56,23 @@ class SchedulesViewModel(application: Application) : AndroidViewModel(applicatio
         schedules.value = newSchedules
     }
 
-    fun addSchedule(time: String, executeOnce: Boolean, profile: AccConfig) = viewModelScope.launch {
-        val id = insertScheduleProfile(ScheduleProfile(0, profile))
+    fun addSchedule(scheduleName: String, time: String, executeOnce: Boolean, profile: AccConfig) = viewModelScope.launch {
+        val id = insertScheduleProfile(ScheduleProfile(0, scheduleName, profile))
         Djs.instance.append(
-            Schedule(time, executeOnce, ScheduleProfile(id, profile))
+            Schedule(time, executeOnce, ScheduleProfile(id, scheduleName, profile))
                 .toDjsSchedule()
         )
         refreshSchedules()
     }
 
-    fun editSchedule(id: Int, time: String, executeOnce: Boolean, profile: AccConfig) = viewModelScope.launch {
-        updateScheduleProfile(ScheduleProfile(id, profile))
+    fun editSchedule(id: Int, scheduleName: String, time: String, executeOnce: Boolean, profile: AccConfig) = viewModelScope.launch {
+        val scheduleProfile = ScheduleProfile(id, scheduleName, profile)
+
+        updateScheduleProfile(scheduleProfile)
 
         Djs.instance.deleteById(id)
         Djs.instance.append(
-            Schedule(time, executeOnce, ScheduleProfile(id, profile))
+            Schedule(time, executeOnce, scheduleProfile)
                 .toDjsSchedule()
         )
 

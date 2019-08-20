@@ -229,6 +229,7 @@
     <string name="schedule_profile_edit_current">Edit current config</string>
     <string name="schedule_profile_keep_current">Keep current config</string>
     <string name="schedule_type">Schedule type</string>
+    <string name="schedule_name">Schedule name</string>
     <string-array name="theme_option_options">
         <item>Light</item>
         <item>Dark</item>

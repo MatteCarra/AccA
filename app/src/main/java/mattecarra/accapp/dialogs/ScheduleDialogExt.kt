@@ -48,7 +48,7 @@ class ProfileSpinnerAdapter : BaseAdapter(), SpinnerAdapter {
 }
 
 typealias AddScheduleListener =
-        ((profileId: Long, time: String, executeOnce: Boolean) -> Unit)
+        ((profileId: Long, scheduleName: String, time: String, executeOnce: Boolean) -> Unit)
 
 
 fun MaterialDialog.addScheduleDialog(
@@ -69,6 +69,7 @@ fun MaterialDialog.addScheduleDialog(
             val spinner = view.findViewById<Spinner>(R.id.profile_selector)
             val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
             val scheduleType = view.findViewById<Spinner>(R.id.schedule_type_selector).selectedItemId
+            val scheduleName = view.findViewById<EditText>(R.id.schedule_name_edit_text)
 
             val time = if(scheduleType == 2L) {
                 "boot"
@@ -81,7 +82,7 @@ fun MaterialDialog.addScheduleDialog(
                 "${String.format("%02d", hour)}${String.format("%02d", minute)}"
             }
 
-            listener(spinner.selectedItemId, time, scheduleType == 1L)
+            listener(spinner.selectedItemId, scheduleName.text.toString(), time, scheduleType == 1L)
         }
         .onDismiss {
             profilesLiveData.removeObserver(observer)
@@ -92,6 +93,7 @@ fun MaterialDialog.addScheduleDialog(
     val spinner = customView.findViewById<Spinner>(R.id.profile_selector)
     val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
     val scheduleTypeSpinner = customView.findViewById<Spinner>(R.id.schedule_type_selector)
+    val scheduleName = view.findViewById<EditText>(R.id.schedule_name_edit_text)
 
     profilesLiveData.observeForever(observer)
     spinner.adapter = adapter
@@ -128,13 +130,15 @@ fun MaterialDialog.addScheduleDialog(
             timePicker.currentHour = hour
             timePicker.currentMinute = minute
         }
+
+        scheduleName.setText(schedule.profile.scheduleName)
     }
 
     return dialog
 }
 
 typealias EditScheduleListener =
-        ((profileId: Long, time: String, executeOnce: Boolean) -> Unit)
+        ((profileId: Long, profileName: String, time: String, executeOnce: Boolean) -> Unit)
 
 
 fun MaterialDialog.editScheduleDialog(
