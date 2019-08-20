@@ -9,4 +9,11 @@
         <item name="android:lines">1</item>
         <item name="android:ellipsize">end</item>
     </style>
+
+    <style name="ScheduleTitle">
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:lines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
 </resources>
