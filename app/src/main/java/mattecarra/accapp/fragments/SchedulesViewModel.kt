@@ -40,8 +40,9 @@ class SchedulesViewModel(application: Application) : AndroidViewModel(applicatio
                         async {
                             val scheduleProfile =
                                 getScheduleProfileById(djsSchedule.scheduleProfileId)
+
                             if (scheduleProfile != null)
-                                Schedule(djsSchedule.hour, djsSchedule.minute, scheduleProfile)
+                                Schedule(djsSchedule.time, djsSchedule.executeOnce, scheduleProfile)
                             else {
                                 //TODO handle schedules created by an uninstalled version of the app
                                 null
@@ -55,21 +56,21 @@ class SchedulesViewModel(application: Application) : AndroidViewModel(applicatio
         schedules.value = newSchedules
     }
 
-    fun addSchedule(hour: Int, minute: Int, profile: AccConfig) = viewModelScope.launch {
+    fun addSchedule(time: String, executeOnce: Boolean, profile: AccConfig) = viewModelScope.launch {
         val id = insertScheduleProfile(ScheduleProfile(0, profile))
         Djs.instance.append(
-            Schedule(hour, minute, ScheduleProfile(id, profile))
+            Schedule(time, executeOnce, ScheduleProfile(id, profile))
                 .toDjsSchedule()
         )
         refreshSchedules()
     }
 
-    fun editSchedule(id: Int, hour: Int, minute: Int, profile: AccConfig) = viewModelScope.launch {
+    fun editSchedule(id: Int, time: String, executeOnce: Boolean, profile: AccConfig) = viewModelScope.launch {
         updateScheduleProfile(ScheduleProfile(id, profile))
 
         Djs.instance.deleteById(id)
         Djs.instance.append(
-            Schedule(hour, minute, ScheduleProfile(id, profile))
+            Schedule(time, executeOnce, ScheduleProfile(id, profile))
                 .toDjsSchedule()
         )
 

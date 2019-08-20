@@ -15,20 +15,22 @@ interface DjsInterface {
     suspend fun append(line: String): Boolean
 
     suspend fun append(schedule: DjsSchedule): Boolean {
-        return append("${String.format("%02d", schedule.hour)}${String.format("%02d", schedule.minute)} ${schedule.command}")
+        return append("${schedule.time} ${schedule.command}")
     }
 
     suspend fun delete(pattern: String): Boolean
 
     suspend fun deleteById(id: Int): Boolean {
-        return delete("accaScheduleId=$id")
+        return delete(": accaScheduleId$id")
     }
 
     suspend fun delete(schedule: DjsSchedule): Boolean {
-        return delete("${String.format("%02d", schedule.hour)}${String.format("%02d", schedule.minute)} ${schedule.command}")
+        return delete("${schedule.time} ${schedule.command}")
     }
 
     suspend fun stop(): Boolean
+
+    fun getDeleteCommand(pattern: String): String
 }
 
 object Djs {
@@ -112,8 +114,7 @@ object Djs {
     /*
     * This function assumes that acc tar gz is already in place
     */
-    private suspend fun installLocalDjsModule(context: Context): Shell.Result? = withContext(
-        Dispatchers.IO){
+    private suspend fun installLocalDjsModule(context: Context): Shell.Result? = withContext(Dispatchers.IO){
         try {
             val installShFile = File(context.filesDir, "install-tarball.sh")
 
@@ -130,6 +131,10 @@ object Djs {
             ex.printStackTrace()
             null
         }
+    }
+
+    suspend fun uninstallDjs(installationDir: File): Shell.Result? = withContext(Dispatchers.IO) {
+        Shell.su("sh ${File(installationDir, "djs/uninstall.sh").absolutePath}").exec()
     }
 
     private fun getDjsVersion(): Int {

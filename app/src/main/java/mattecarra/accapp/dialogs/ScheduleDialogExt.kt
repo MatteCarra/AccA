@@ -13,8 +13,8 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
-import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
+import mattecarra.accapp.models.Schedule
 
 class ProfileSpinnerAdapter : BaseAdapter(), SpinnerAdapter {
     private var mList = emptyList<AccaProfile>()
@@ -48,20 +48,19 @@ class ProfileSpinnerAdapter : BaseAdapter(), SpinnerAdapter {
 }
 
 typealias AddScheduleListener =
-        ((profileId: Long, hour: Int, minute: Int) -> Unit)
+        ((profileId: Long, time: String, executeOnce: Boolean) -> Unit)
 
 
 fun MaterialDialog.addScheduleDialog(
     profilesLiveData: LiveData<List<AccaProfile>>,
+    profiles: MutableList<AccaProfile> = mutableListOf(AccaProfile(-1, context.getString(R.string.new_config), Acc.instance.defaultConfig)),
+    schedule: Schedule? = null,
     listener: AddScheduleListener
 ): MaterialDialog {
-    val ADD_NEW = AccaProfile(-1, context.getString(R.string.new_config), Acc.instance.defaultConfig)
-
     val adapter = ProfileSpinnerAdapter()
     val observer = Observer<List<AccaProfile>> {
-        val list = mutableListOf(ADD_NEW)
-        list.addAll(it)
-        adapter.setItems(list)
+        profiles.addAll(it)
+        adapter.setItems(profiles)
     }
 
     val dialog = customView(R.layout.schedule_dialog)
@@ -69,71 +68,84 @@ fun MaterialDialog.addScheduleDialog(
             val view = dialog.getCustomView()
             val spinner = view.findViewById<Spinner>(R.id.profile_selector)
             val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
-            val hour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.hour else timePicker.currentHour
-            val minute = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.minute else timePicker.currentMinute
+            val scheduleType = view.findViewById<Spinner>(R.id.schedule_type_selector).selectedItemId
 
-            listener(spinner.selectedItemId, hour, minute)
+            val time = if(scheduleType == 2L) {
+                "boot"
+            } else {
+                val hour =
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.hour else timePicker.currentHour
+                val minute =
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) timePicker.minute else timePicker.currentMinute
+
+                "${String.format("%02d", hour)}${String.format("%02d", minute)}"
+            }
+
+            listener(spinner.selectedItemId, time, scheduleType == 1L)
         }
         .onDismiss {
             profilesLiveData.removeObserver(observer)
         }
 
 
-    val view = dialog.getCustomView()
-    val spinner = view.findViewById<Spinner>(R.id.profile_selector)
+    val customView = dialog.getCustomView()
+    val spinner = customView.findViewById<Spinner>(R.id.profile_selector)
+    val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
+    val scheduleTypeSpinner = customView.findViewById<Spinner>(R.id.schedule_type_selector)
 
     profilesLiveData.observeForever(observer)
     spinner.adapter = adapter
 
-    view.findViewById<TimePicker>(R.id.time_picker).setIs24HourView(true)
+    scheduleTypeSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+        override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            when(id) {
+                 2L -> {
+                     customView.findViewById<LinearLayout>(R.id.time_picker_container).visibility = View.GONE
+                 }
+                else -> {
+                    customView.findViewById<LinearLayout>(R.id.time_picker_container).visibility = View.VISIBLE
+                }
+            }
+        }
+    }
+
+    timePicker.setIs24HourView(true)
+
+    schedule?.let { schedule ->
+        val (time: String, executeOnce: Boolean, _) = schedule
+
+        scheduleTypeSpinner.setSelection(
+            when {
+                time == "boot" -> 2
+                executeOnce -> 1
+                else -> 0
+            }
+        )
+
+        schedule.getTime()?.let { (hour, minute) ->
+            timePicker.currentHour = hour
+            timePicker.currentMinute = minute
+        }
+    }
 
     return dialog
 }
 
 typealias EditScheduleListener =
-        ((profileId: Long, hour: Int, minute: Int) -> Unit)
+        ((profileId: Long, time: String, executeOnce: Boolean) -> Unit)
 
 
 fun MaterialDialog.editScheduleDialog(
-    hour: Int,
-    minute: Int,
+    schedule: Schedule,
     profilesLiveData: LiveData<List<AccaProfile>>,
     listener: EditScheduleListener
 ): MaterialDialog {
-    val KEEP_CURRENT = AccaProfile(-1, context.getString(R.string.schedule_profile_keep_current), Acc.instance.defaultConfig)
-    val EDIT_CURRENT = AccaProfile(-2, context.getString(R.string.schedule_profile_edit_current), Acc.instance.defaultConfig)
-    val ADD_NEW = AccaProfile(-3, context.getString(R.string.new_config), Acc.instance.defaultConfig)
-
-    val adapter = ProfileSpinnerAdapter()
-    val observer = Observer<List<AccaProfile>> {
-        val list = mutableListOf(KEEP_CURRENT, EDIT_CURRENT, ADD_NEW)
-        list.addAll(it)
-        adapter.setItems(list)
-    }
-
-    val dialog = customView(R.layout.schedule_dialog)
-        .positiveButton(R.string.save) { dialog ->
-            val view = dialog.getCustomView()
-            val spinner = view.findViewById<Spinner>(R.id.profile_selector)
-            val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
-
-            listener(spinner.selectedItemId, timePicker.currentHour, timePicker.currentMinute)
-        }
-        .onDismiss {
-            profilesLiveData.removeObserver(observer)
-        }
-
-
-    val view = dialog.getCustomView()
-    val spinner = view.findViewById<Spinner>(R.id.profile_selector)
-
-    profilesLiveData.observeForever(observer)
-    spinner.adapter = adapter
-
-    val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
-    timePicker.setIs24HourView(true)
-    timePicker.currentHour = hour
-    timePicker.currentMinute = minute
-
-    return dialog
+    return addScheduleDialog(
+        profilesLiveData,
+        mutableListOf(AccaProfile(-1, context.getString(R.string.schedule_profile_keep_current), Acc.instance.defaultConfig), AccaProfile(-2, context.getString(R.string.schedule_profile_edit_current), Acc.instance.defaultConfig), AccaProfile(-3, context.getString(R.string.new_config), Acc.instance.defaultConfig)),
+        schedule,
+        listener
+    )
 }

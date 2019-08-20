@@ -17,20 +17,41 @@
             android:id="@+id/profile_selector"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-    />
+            android:layout_marginTop="4dp" />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/schedule_type"
+        android:textColor="?android:attr/textColorPrimary"
+        android:layout_marginTop="18dp" />
+
+    <Spinner
+        android:id="@+id/schedule_type_selector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:entries="@array/schedule_type_entries"
+        android:entryValues="@array/schedule_type_entries_values"/>
+
+    <LinearLayout
+        android:id="@+id/time_picker_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:text="@string/execution_time"
             android:textColor="?android:attr/textColorPrimary"/>
 
-    <TimePicker
+        <TimePicker
             android:id="@+id/time_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-    />
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+
 </LinearLayout>

@@ -142,15 +142,15 @@ class SettingsFragment : PreferenceFragmentCompat(), CoroutineScope {
         }
 
         val djsEnable = findPreference<CheckBoxPreference>(DJS_ENABLED)
-        djsEnable?.setOnPreferenceChangeListener { _, newValue ->
+        djsEnable?.setOnPreferenceChangeListener { _, isEnabled ->
             context?.let { context ->
                 when {
-                    newValue as Boolean && Djs.isDjsInstalled(context.filesDir) -> {
+                    isEnabled as Boolean && Djs.isDjsInstalled(context.filesDir) -> {
                         Djs.initDjs(context.filesDir)
                         true
                     }
 
-                    newValue -> {
+                    isEnabled -> {
                         MaterialDialog(context).show {
                             title(R.string.installing_djs)
                             cancelOnTouchOutside(false)
@@ -189,7 +189,7 @@ class SettingsFragment : PreferenceFragmentCompat(), CoroutineScope {
 
                     else -> {
                         launch {
-                            Djs.instance.stop()
+                            Djs.uninstallDjs(context.filesDir)
                         }
 
                         true

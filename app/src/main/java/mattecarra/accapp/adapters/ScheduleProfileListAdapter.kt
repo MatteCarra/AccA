@@ -46,7 +46,13 @@ class ScheduleProfileListAdapter internal constructor(context: Context) : Recycl
 
     override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
         val schedule = mScheduleList[position]
-        holder.titleTv.text = mContext.getString(R.string.schedule_row_text, schedule.hour, schedule.minute)
+
+        val time = schedule.getTime()
+        holder.titleTv.text = when {
+            time != null && schedule.executeOnce -> mContext.getString(R.string.schedule_execute_once_row_text, time.hour, time.minute)
+            time != null -> mContext.getString(R.string.schedule_recurrent_row_text, time.hour, time.minute)
+            else -> mContext.getString(R.string.schedule_boot_row_text)
+        }
         holder.capacityTv.text = schedule.profile.accConfig.configCapacity.toString(mContext)
         holder.temperatureTv.text = schedule.profile.accConfig.configTemperature.toString(mContext)
         holder.onPlugTv.text = schedule.profile.accConfig.getOnPlug(mContext)

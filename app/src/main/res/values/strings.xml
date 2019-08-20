@@ -118,7 +118,9 @@
     <string name="edit_voltage_limit">Edit voltage limit</string>
     <string name="voltage_max">Voltage max (mV):</string>
     <string name="disabled">Disabled</string>
-    <string name="schedule_row_text">Recurrent Job scheduled at %1$02d:%2$02d</string>
+    <string name="schedule_recurrent_row_text">Recurrent Job scheduled at %1$02d:%2$02d</string>
+    <string name="schedule_execute_once_row_text">Job scheduled at %1$02d:%2$02d</string>
+    <string name="schedule_boot_row_text">Boot Job scheduled</string>
     <string name="delete">Delete</string>
     <string name="no_schedules">No schedules set</string>
     <string name="edit_scheduled_command">You can edit the scheduled command. If you want the nice UI, you should delete and recreate it.</string>
@@ -225,9 +227,15 @@
     <string name="test_battery_idle_unsupported_result">Battery idle mode is not supported on your device. This does not depend on acc, so it can\'t be fixed by any future update.</string>
     <string name="schedule_profile_edit_current">Edit current config</string>
     <string name="schedule_profile_keep_current">Keep current config</string>
+    <string name="schedule_type">Schedule type</string>
     <string-array name="theme_option_options">
         <item>Light</item>
         <item>Dark</item>
         <item>System default</item>
+    </string-array>
+    <string-array name="schedule_type_entries">
+        <item>Recurrent</item>
+        <item>Run once</item>
+        <item>Run on boot</item>
     </string-array>
 </resources>
