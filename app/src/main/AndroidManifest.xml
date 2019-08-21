@@ -1,73 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="mattecarra.accapp">
+    package="mattecarra.accapp">
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-            android:name=".MainApplication"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:theme="@style/AccaTheme.DayNight">
-        <activity android:name=".activities.AboutActivity">
-        </activity>
-        <activity android:name=".activities.AccConfigEditorActivity"/>
-        <activity android:name=".activities.SettingsActivity"/>
+        android:name=".MainApplication"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AccaTheme.DayNight">
+        <activity android:name=".activities.ImportExportActivity"></activity>
+        <activity android:name=".activities.AboutActivity"></activity>
+        <activity android:name=".activities.AccConfigEditorActivity" />
+        <activity android:name=".activities.SettingsActivity" />
         <activity
-                android:name=".activities.MainActivity"
-                android:launchMode="singleTop">
+            android:name=".activities.MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-                android:name=".activities.LogViewerActivity"
-                android:label="@string/title_activity_log_view"
-                android:parentActivityName=".activities.MainActivity">
+            android:name=".activities.LogViewerActivity"
+            android:label="@string/title_activity_log_view"
+            android:parentActivityName=".activities.MainActivity">
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="mattecarra.accapp.activities.MainActivity"/>
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="mattecarra.accapp.activities.MainActivity" />
         </activity>
 
         <service
-                android:name=".services.AccProfileTileService"
-                android:icon="@drawable/ic_battery_charging_80"
-                android:label="Acc profile editor"
-                android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:name=".services.AccProfileTileService"
+            android:icon="@drawable/ic_battery_charging_80"
+            android:label="Acc profile editor"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE"/>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
         <service
-                android:name=".services.AccdTileService"
-                android:icon="@drawable/ic_battery_charging_80"
-                android:label="Accd manager"
-                android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:name=".services.AccdTileService"
+            android:icon="@drawable/ic_battery_charging_80"
+            android:label="Accd manager"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE"/>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
 
         <provider
-                android:name="androidx.core.content.FileProvider"
-                android:authorities="mattecarra.accapp.fileprovider"
-                android:exported="false"
-                android:grantUriPermissions="true">
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="mattecarra.accapp.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
-                    android:name="android.support.FILE_PROVIDER_PATHS"
-                    android:resource="@xml/filepaths"/>
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
         </provider>
 
-        <receiver android:name="com.github.javiersantos.appupdater.NotificationReceiver"/>
+        <receiver android:name="com.github.javiersantos.appupdater.NotificationReceiver" />
         <receiver android:name=".receivers.AccBootReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
     </application>
