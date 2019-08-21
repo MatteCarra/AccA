@@ -240,4 +240,5 @@
         <item>Run once</item>
         <item>Run on boot</item>
     </string-array>
+    <string name="menu_import_sexport">Import/Export</string>
 </resources>
