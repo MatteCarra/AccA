@@ -50,7 +50,7 @@ class ScheduleProfileListAdapter internal constructor(context: Context) :
 
         when {
             time != null && schedule.executeOnce -> {
-                holder.titleTv.text = "Exec. Once"
+                holder.titleTv.text = "Exec. Once - " + time.hour + ":" + time.minute
                 holder.whenTv.text = mContext.getString(R.string.schedule_execute_once_row_text, time.hour, time.minute)
             }
             time != null -> {
