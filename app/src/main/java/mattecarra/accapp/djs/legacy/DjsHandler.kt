@@ -37,7 +37,7 @@ class DjsHandler: DjsInterface {
     }
 
     override suspend fun edit(pattern: String, newLine: String): Boolean = withContext(Dispatchers.IO) {
-        Shell.su("sed -i 's#.*$pattern.*#${newLine.replace("#", "\\#")}#' \$(djs-config --edit echo)").exec().isSuccess
+        Shell.su("sed -i 's#.*$pattern.*#$newLine#' \$(djs-config --edit echo)").exec().isSuccess
     }
 
     override suspend fun delete(pattern: String): Boolean = withContext(Dispatchers.IO) {
