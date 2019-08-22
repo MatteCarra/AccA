@@ -553,9 +553,10 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 val scheduleName = dataBundle.getString("scheduleName")
                 val time = dataBundle.getString("time")
                 val executeOnce = dataBundle.getBoolean("executeOnce")
+                val executeOnBoot = dataBundle.getBoolean("executeOnBoot")
 
                 mSchedulesViewModel
-                    .addSchedule(scheduleName, time, executeOnce, data.getParcelableExtra(Constants.ACC_CONFIG_KEY))
+                    .addSchedule(scheduleName, time, executeOnce, executeOnBoot, data.getParcelableExtra(Constants.ACC_CONFIG_KEY))
             }
         } else if(requestCode == ACC_EDIT_PROFILE_SCHEDULER_REQUEST && resultCode == Activity.RESULT_OK) {
             if(data?.hasExtra("data") == true) {
@@ -564,22 +565,25 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 val scheduleName = dataBundle.getString("scheduleName")
                 val time = dataBundle.getString("time")
                 val executeOnce = dataBundle.getBoolean("executeOnce")
+                val executeOnBoot = dataBundle.getBoolean("executeOnBoot")
 
                 mSchedulesViewModel
-                    .editSchedule(id, scheduleName, time, executeOnce, data.getParcelableExtra(Constants.ACC_CONFIG_KEY))
+                    .editSchedule(id, scheduleName, time, executeOnce, executeOnBoot, data.getParcelableExtra(Constants.ACC_CONFIG_KEY))
             }
         }
     }
 
     fun accScheduleFabOnClick(view: View) {
         MaterialDialog(this).show {
-            addScheduleDialog(mMainActivityViewModel.profiles) { profileId, scheduleName, time, executeOnce ->
+            title(R.string.create_schedule)
+            addScheduleDialog(mMainActivityViewModel.profiles) { profileId, scheduleName, time, executeOnce, executeOnBoot ->
                 if(profileId == -1L) {
                     Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
                         val dataBundle = Bundle()
                         dataBundle.putString("scheduleName", scheduleName)
                         dataBundle.putString("time", time)
                         dataBundle.putBoolean("executeOnce", executeOnce)
+                        dataBundle.putBoolean("executeOnBoot", executeOnBoot)
 
                         intent.putExtra("data", dataBundle)
                         intent.putExtra("titleTv", getString(R.string.schedule_creator))
@@ -590,7 +594,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                         val configProfile = mMainActivityViewModel.getProfileById(profileId.toInt())
 
                         mSchedulesViewModel
-                            .addSchedule(scheduleName, time, executeOnce, configProfile.accConfig)
+                            .addSchedule(scheduleName, time, executeOnce, executeOnBoot, configProfile.accConfig)
                     }
                 }
             }
@@ -600,17 +604,19 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 
     fun editSchedule(schedule: Schedule) {
         MaterialDialog(this).show {
-            editScheduleDialog(schedule, mMainActivityViewModel.profiles) { profileId, scheduleName, time, executeOnce ->
+            title(R.string.edit_schedule)
+            editScheduleDialog(schedule, mMainActivityViewModel.profiles) { profileId, scheduleName, time, executeOnce, executeOnBoot ->
                 when (profileId) {
                     -1L ->
                         mSchedulesViewModel
-                            .editSchedule(schedule.profile.uid, scheduleName, time, executeOnce, schedule.profile.accConfig)
+                            .editSchedule(schedule.profile.uid, scheduleName, time, executeOnce, executeOnBoot, schedule.profile.accConfig)
                     -2L ->
                         Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
                             val dataBundle = Bundle()
                             dataBundle.putString("scheduleName", scheduleName)
                             dataBundle.putString("time", time)
                             dataBundle.putBoolean("executeOnce", executeOnce)
+                            dataBundle.putBoolean("executeOnBoot", executeOnBoot)
                             dataBundle.putInt("scheduleProfileId", schedule.profile.uid)
 
                             intent.putExtra("data", dataBundle)
@@ -624,6 +630,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                             dataBundle.putString("scheduleName", scheduleName)
                             dataBundle.putString("time", time)
                             dataBundle.putBoolean("executeOnce", executeOnce)
+                            dataBundle.putBoolean("executeOnBoot", executeOnBoot)
                             dataBundle.putInt("scheduleProfileId", schedule.profile.uid)
 
                             intent.putExtra("data", dataBundle)
@@ -634,7 +641,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                         val configProfile = mMainActivityViewModel.getProfileById(profileId.toInt())
 
                         mSchedulesViewModel
-                            .editSchedule(schedule.profile.uid, scheduleName, time, executeOnce, configProfile.accConfig)
+                            .editSchedule(schedule.profile.uid, scheduleName, time, executeOnce, executeOnBoot, configProfile.accConfig)
                     }
                 }
             }

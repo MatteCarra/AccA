@@ -94,13 +94,9 @@
     <string name="edit_voltage_limit">Spannungslimit bearbeiten</string>
     <string name="voltage_max">Spannungs-max (mV):</string>
     <string name="disabled">Deaktiviert</string>
-    <string name="schedule_row_text">Recurrent Job geplant um %1$d:%2$d</string>
     <string name="delete">Löschen</string>
     <string name="no_schedules">Keine Zeitpläne gesetzt</string>
-    <string name="edit_scheduled_command">Der geplante Befehl kann bearbeitet werden. Wenn du die schöne UI nutzen möchtest, solltest du diesen löschen und neu erstellen.
-    </string>
-    <string name="wrong_volt_file">Es liegt entweder eine nicht unterstützte Spannungs-max-Kontrolldatei vor, oder der Kernel unterstützt diese Funktion nicht.
-    </string>
+    <string name="wrong_volt_file">Es liegt entweder eine nicht unterstützte Spannungs-max-Kontrolldatei vor, oder der Kernel unterstützt diese Funktion nicht.</string>
     <string name="invalid_voltage_max">Der Wert sollte zwischen 3920 und 4349 (mV) liegen</string>
     <string name="edit_charging_switch">Ladeschalter bearbeiten</string>
     <string name="test_switch">Ladeschalter testen</string>

@@ -4,14 +4,23 @@ import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.acc.ConfigUpdater
 import mattecarra.accapp.djs.Djs
 import mattecarra.accapp.djs.DjsSchedule
+import java.lang.StringBuilder
 
 data class Time(val hour: Int, val minute: Int)
 
-data class Schedule(val time: String, val executeOnce: Boolean, val profile: ScheduleProfile) {
+data class Schedule(val time: String, val executeOnce: Boolean, val executeOnBoot: Boolean, val profile: ScheduleProfile) {
     private val timeRegex = """([0-9]{2})([0-9]{2})""".toRegex()
 
     fun getCommand(): String {
-        return ": accaScheduleId${profile.uid}; ${ConfigUpdater(profile.accConfig).concatenateCommands(Acc.instance)}; ${Djs.instance.getDeleteCommand(": accaScheduleId${profile.uid}")}"
+        val string = StringBuilder(": accaScheduleId${profile.uid}; ${ConfigUpdater(profile.accConfig).concatenateCommands(Acc.instance)}")
+
+        if(executeOnce)
+            string.append("; : --delete")
+
+        if(executeOnBoot)
+            string.append("; : --boot")
+
+        return string.toString()
     }
 
     fun getTime(): Time? {
@@ -28,6 +37,6 @@ data class Schedule(val time: String, val executeOnce: Boolean, val profile: Sch
     }
 
     fun toDjsSchedule(): DjsSchedule {
-        return DjsSchedule(profile.uid, time, executeOnce, getCommand())
+        return DjsSchedule(profile.uid, time, executeOnce, executeOnBoot, getCommand())
     }
 }

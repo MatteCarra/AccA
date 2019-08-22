@@ -42,7 +42,7 @@ class SchedulesViewModel(application: Application) : AndroidViewModel(applicatio
                                 getScheduleProfileById(djsSchedule.scheduleProfileId)
 
                             if (scheduleProfile != null)
-                                Schedule(djsSchedule.time, djsSchedule.executeOnce, scheduleProfile)
+                                Schedule(djsSchedule.time, djsSchedule.executeOnce, djsSchedule.executeOnBoot, scheduleProfile)
                             else {
                                 //TODO handle schedules created by an uninstalled version of the app
                                 null
@@ -56,22 +56,22 @@ class SchedulesViewModel(application: Application) : AndroidViewModel(applicatio
         schedules.value = newSchedules
     }
 
-    fun addSchedule(scheduleName: String, time: String, executeOnce: Boolean, profile: AccConfig) = viewModelScope.launch {
+    fun addSchedule(scheduleName: String, time: String, executeOnce: Boolean, executeOnBoot: Boolean, profile: AccConfig) = viewModelScope.launch {
         val id = insertScheduleProfile(ScheduleProfile(0, scheduleName, profile))
         Djs.instance.append(
-            Schedule(time, executeOnce, ScheduleProfile(id, scheduleName, profile))
+            Schedule(time, executeOnce, executeOnBoot, ScheduleProfile(id, scheduleName, profile))
                 .toDjsSchedule()
         )
         refreshSchedules()
     }
 
-    fun editSchedule(id: Int, scheduleName: String, time: String, executeOnce: Boolean, profile: AccConfig) = viewModelScope.launch {
+    fun editSchedule(id: Int, scheduleName: String, time: String, executeOnce: Boolean, executeOnBoot: Boolean, profile: AccConfig) = viewModelScope.launch {
         val scheduleProfile = ScheduleProfile(id, scheduleName, profile)
 
         updateScheduleProfile(scheduleProfile)
 
         Djs.instance.edit(
-            Schedule(time, executeOnce, scheduleProfile)
+            Schedule(time, executeOnce, executeOnBoot, scheduleProfile)
                 .toDjsSchedule()
         )
 

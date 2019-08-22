@@ -35,8 +35,6 @@ interface DjsInterface {
     }
 
     suspend fun stop(): Boolean
-
-    fun getDeleteCommand(pattern: String): String
 }
 
 object Djs {

@@ -48,7 +48,7 @@ class ProfileSpinnerAdapter : BaseAdapter(), SpinnerAdapter {
 }
 
 typealias AddScheduleListener =
-        ((profileId: Long, scheduleName: String, time: String, executeOnce: Boolean) -> Unit)
+        ((profileId: Long, scheduleName: String, time: String, executeOnce: Boolean, executeOnBoot: Boolean) -> Unit)
 
 
 fun MaterialDialog.addScheduleDialog(
@@ -70,6 +70,7 @@ fun MaterialDialog.addScheduleDialog(
             val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
             val scheduleType = view.findViewById<Spinner>(R.id.schedule_type_selector).selectedItemId
             val scheduleName = view.findViewById<EditText>(R.id.schedule_name_edit_text)
+            val executeOnBootCheckBox = view.findViewById<CheckBox>(R.id.execute_on_boot_checkbox)
 
             val time = if(scheduleType == 2L) {
                 "boot"
@@ -82,7 +83,7 @@ fun MaterialDialog.addScheduleDialog(
                 "${String.format("%02d", hour)}${String.format("%02d", minute)}"
             }
 
-            listener(spinner.selectedItemId, scheduleName.text.toString(), time, scheduleType == 1L)
+            listener(spinner.selectedItemId, scheduleName.text.toString(), time, scheduleType == 1L, executeOnBootCheckBox.isChecked && scheduleType != 2L)
         }
         .onDismiss {
             profilesLiveData.removeObserver(observer)
@@ -93,7 +94,8 @@ fun MaterialDialog.addScheduleDialog(
     val spinner = customView.findViewById<Spinner>(R.id.profile_selector)
     val timePicker = view.findViewById<TimePicker>(R.id.time_picker)
     val scheduleTypeSpinner = customView.findViewById<Spinner>(R.id.schedule_type_selector)
-    val scheduleName = view.findViewById<EditText>(R.id.schedule_name_edit_text)
+    val scheduleNameEditText = view.findViewById<EditText>(R.id.schedule_name_edit_text)
+    val executeOnBootCheckBox = view.findViewById<CheckBox>(R.id.execute_on_boot_checkbox)
 
     profilesLiveData.observeForever(observer)
     spinner.adapter = adapter
@@ -116,12 +118,10 @@ fun MaterialDialog.addScheduleDialog(
     timePicker.setIs24HourView(true)
 
     schedule?.let { schedule ->
-        val (time: String, executeOnce: Boolean, _) = schedule
-
         scheduleTypeSpinner.setSelection(
             when {
-                time == "boot" -> 2
-                executeOnce -> 1
+                schedule.isBootSchedule() -> 2
+                schedule.executeOnce -> 1
                 else -> 0
             }
         )
@@ -131,14 +131,16 @@ fun MaterialDialog.addScheduleDialog(
             timePicker.currentMinute = minute
         }
 
-        scheduleName.setText(schedule.profile.scheduleName)
+        scheduleNameEditText.setText(schedule.profile.scheduleName)
+
+        executeOnBootCheckBox.isChecked = schedule.executeOnBoot
     }
 
     return dialog
 }
 
 typealias EditScheduleListener =
-        ((profileId: Long, profileName: String, time: String, executeOnce: Boolean) -> Unit)
+        ((profileId: Long, profileName: String, time: String, executeOnce: Boolean, executeOnBoot: Boolean) -> Unit)
 
 
 fun MaterialDialog.editScheduleDialog(

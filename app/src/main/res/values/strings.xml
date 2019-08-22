@@ -124,7 +124,6 @@
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Delete</string>
     <string name="no_schedules">No schedules set</string>
-    <string name="edit_scheduled_command">You can edit the scheduled command. If you want the nice UI, you should delete and recreate it.</string>
     <string name="wrong_volt_file">Either the chosen file doesn\'t work, or your kernel doesn\'t support this feature.</string>
     <string name="invalid_voltage_max">The value should be a number between 3500 and 4350 (mV)</string>
     <string name="edit_charging_switch">Edit charging switch</string>
@@ -241,4 +240,7 @@
         <item>Run on boot</item>
     </string-array>
     <string name="menu_import_sexport">Import/Export</string>
+    <string name="execute_on_boot_schedule">Execute on boot</string>
+    <string name="edit_schedule">Edit schedule</string>
+    <string name="create_schedule">Create schedule</string>
 </resources>
