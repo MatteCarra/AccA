@@ -18,7 +18,8 @@ interface DjsInterface {
     suspend fun append(schedule: DjsSchedule): Boolean {
         val command = StringBuilder()
         if(!schedule.isEnabled)
-            command.append("#")
+            command.append("//")
+
         return append(command.append("${schedule.time} ${schedule.command}").toString())
     }
 
@@ -27,7 +28,7 @@ interface DjsInterface {
     suspend fun edit(schedule: DjsSchedule): Boolean {
         val command = StringBuilder()
         if(!schedule.isEnabled)
-            command.append("#")
+            command.append("//")
 
         return edit(
             ": accaScheduleId${schedule.scheduleProfileId}",
