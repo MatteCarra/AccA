@@ -118,7 +118,6 @@
                                 android:layout_height="wrap_content"
                                 android:text="@{viewModel.daemon ? @string/stop : @string/start}"
                                 app:icon="@{viewModel.daemon ? @drawable/ic_outline_stop_24px : @drawable/ic_outline_play_arrow_24px}"
-                                app:iconTint="?colorPrimary"
                                 android:layout_weight="1"
                                 android:layout_marginEnd="8dp"
                                 android:layout_marginStart="8dp"/>
@@ -129,8 +128,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/restart"
-                                app:icon="@drawable/ic_sync_black_24dp"
-                                app:iconTint="?colorPrimary"/>
+                                app:icon="@drawable/ic_sync_black_24dp"/>
 
                     </LinearLayout>
 
