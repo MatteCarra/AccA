@@ -85,6 +85,9 @@ dependencies {
     // Tooltip library: https://github.com/sephiroth74/android-target-tooltip
     implementation 'com.github.sephiroth74:android-target-tooltip:2.0.4'
 
+    // CircilarImageView - https://github.com/hdodenhof/CircleImageView
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+
     implementation 'org.apache.commons:commons-collections4:4.4'
 
     // Room components
