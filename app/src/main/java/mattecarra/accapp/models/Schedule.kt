@@ -8,7 +8,7 @@ import java.lang.StringBuilder
 
 data class Time(val hour: Int, val minute: Int)
 
-data class Schedule(val time: String, val executeOnce: Boolean, val executeOnBoot: Boolean, val profile: ScheduleProfile) {
+data class Schedule(val isEnabled: Boolean, val time: String, val executeOnce: Boolean, val executeOnBoot: Boolean, val profile: ScheduleProfile) {
     private val timeRegex = """([0-9]{2})([0-9]{2})""".toRegex()
 
     fun getCommand(): String {
@@ -37,6 +37,6 @@ data class Schedule(val time: String, val executeOnce: Boolean, val executeOnBoo
     }
 
     fun toDjsSchedule(): DjsSchedule {
-        return DjsSchedule(profile.uid, time, executeOnce, executeOnBoot, getCommand())
+        return DjsSchedule(profile.uid, isEnabled, time, executeOnce, executeOnBoot, getCommand())
     }
 }

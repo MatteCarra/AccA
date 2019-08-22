@@ -8,6 +8,7 @@ import mattecarra.accapp.R
 import mattecarra.accapp.models.Schedule
 import java.io.File
 import java.io.FileOutputStream
+import java.lang.StringBuilder
 
 interface DjsInterface {
     suspend fun list(pattern: String = "."): List<DjsSchedule>
@@ -15,13 +16,23 @@ interface DjsInterface {
     suspend fun append(line: String): Boolean
 
     suspend fun append(schedule: DjsSchedule): Boolean {
-        return append("${schedule.time} ${schedule.command}")
+        val command = StringBuilder()
+        if(!schedule.isEnabled)
+            command.append("#")
+        return append(command.append("${schedule.time} ${schedule.command}").toString())
     }
 
     suspend fun edit(pattern: String, newLine: String): Boolean
 
     suspend fun edit(schedule: DjsSchedule): Boolean {
-        return edit(": accaScheduleId${schedule.scheduleProfileId}", "${schedule.time} ${schedule.command}")
+        val command = StringBuilder()
+        if(!schedule.isEnabled)
+            command.append("#")
+
+        return edit(
+            ": accaScheduleId${schedule.scheduleProfileId}",
+            command.append("${schedule.time} ${schedule.command}").toString()
+        )
     }
 
     suspend fun delete(pattern: String): Boolean

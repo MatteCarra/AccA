@@ -8,7 +8,7 @@ import mattecarra.accapp.djs.DjsSchedule
 import mattecarra.accapp.models.Schedule
 
 class DjsHandler: DjsInterface {
-    val SCHEDULE = """^\s*([0-9]{4}|boot) (.*)""".toRegex(RegexOption.MULTILINE)
+    val SCHEDULE = """^\s*#?([0-9]{4}|boot) (.*)""".toRegex(RegexOption.MULTILINE)
     val ID_REGEX = """^: accaScheduleId(\d*)""".toRegex()
     val EXECUTE_ONCE_MATCH_REGEX = """: --delete""".toPattern()
     val EXECUTE_ON_BOOT_MATCH_REGEX = """: --delete""".toPattern()
@@ -19,7 +19,7 @@ class DjsHandler: DjsInterface {
                 ID_REGEX.find(command)?.destructured?.component1()?.toIntOrNull()?.let { id ->
                     val executeOnce = EXECUTE_ONCE_MATCH_REGEX.matcher(command).find()
                     val executeOnBoot = EXECUTE_ON_BOOT_MATCH_REGEX.matcher(command).find()
-                    DjsSchedule(id, time, executeOnce, executeOnBoot, command)
+                    DjsSchedule(id, !line.startsWith("#"), time, executeOnce, executeOnBoot, command)
                 }
             }
         }.filterNotNull()
@@ -30,7 +30,7 @@ class DjsHandler: DjsInterface {
     }
 
     override suspend fun edit(pattern: String, newLine: String): Boolean = withContext(Dispatchers.IO) {
-        Shell.su("sed -i 's#.*$pattern.*#$newLine#' \$(djs-config --edit echo)").exec().isSuccess
+        Shell.su("sed -i 's#.*$pattern.*#${newLine.replace("#", "\\#")}#' \$(djs-config --edit echo)").exec().isSuccess
     }
 
     override suspend fun delete(pattern: String): Boolean = withContext(Dispatchers.IO) {

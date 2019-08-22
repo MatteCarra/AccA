@@ -61,6 +61,10 @@ class SchedulesFragment : ScopedFragment(), OnScheduleClickListener {
         (activity as MainActivity?)?.editSchedule(schedule)
     }
 
+    override fun onScheduleToggle(schedule: Schedule, isEnabled: Boolean) {
+        viewModel.editSchedule(schedule.profile.uid, schedule.profile.scheduleName, isEnabled, schedule.time, schedule.executeOnce, schedule.executeOnBoot, schedule.profile.accConfig)
+    }
+
     override fun onScheduleDeleteClick(schedule: Schedule) {
         viewModel.removeSchedule(schedule)
     }

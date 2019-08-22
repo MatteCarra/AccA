@@ -4,16 +4,19 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.switchmaterial.SwitchMaterial
 import mattecarra.accapp.R
 import mattecarra.accapp.models.Schedule
 
 interface OnScheduleClickListener {
     fun onScheduleProfileClick(schedule: Schedule)
     fun onScheduleDeleteClick(schedule: Schedule)
+    fun onScheduleToggle(schedule: Schedule, isEnabled: Boolean)
 }
 
 class ScheduleProfileListAdapter internal constructor(context: Context) :
@@ -37,6 +40,7 @@ class ScheduleProfileListAdapter internal constructor(context: Context) :
         val profileTv: TextView = itemView.findViewById(R.id.item_schedule_profile_tv)
         val whenTv: TextView = itemView.findViewById(R.id.item_schedule_when_tv)
         val optionsIb: ImageButton = itemView.findViewById(R.id.item_schedule_options_ib)
+        val scheduleToogleSwitch: SwitchMaterial = itemView.findViewById(R.id.item_schedule_toggle_switch)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
@@ -63,10 +67,14 @@ class ScheduleProfileListAdapter internal constructor(context: Context) :
             }
         }
 
+        holder.scheduleToogleSwitch.isChecked = schedule.isEnabled
+        holder.scheduleToogleSwitch.setOnCheckedChangeListener { _, isChecked ->
+            mListener.onScheduleToggle(mScheduleList[position], isChecked)
+        }
+
         holder.profileTv.text = schedule.profile.scheduleName
 
         holder.optionsIb.setOnClickListener {
-
             with(PopupMenu(mContext, holder.optionsIb)) {
                 menuInflater.inflate(R.menu.schedules_options_menu, this.menu)
 

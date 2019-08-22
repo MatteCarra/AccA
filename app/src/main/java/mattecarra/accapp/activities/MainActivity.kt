@@ -570,9 +570,10 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 val time = dataBundle.getString("time")
                 val executeOnce = dataBundle.getBoolean("executeOnce")
                 val executeOnBoot = dataBundle.getBoolean("executeOnBoot")
+                val enabled = dataBundle.getBoolean("enabled")
 
                 mSchedulesViewModel
-                    .editSchedule(id, scheduleName, time, executeOnce, executeOnBoot, data.getParcelableExtra(Constants.ACC_CONFIG_KEY))
+                    .editSchedule(id, scheduleName, enabled, time, executeOnce, executeOnBoot, data.getParcelableExtra(Constants.ACC_CONFIG_KEY))
             }
         }
     }
@@ -613,7 +614,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 when (profileId) {
                     -1L ->
                         mSchedulesViewModel
-                            .editSchedule(schedule.profile.uid, scheduleName, time, executeOnce, executeOnBoot, schedule.profile.accConfig)
+                            .editSchedule(schedule.profile.uid, scheduleName, schedule.isEnabled, time, executeOnce, executeOnBoot, schedule.profile.accConfig)
                     -2L ->
                         Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
                             val dataBundle = Bundle()
@@ -622,6 +623,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                             dataBundle.putBoolean("executeOnce", executeOnce)
                             dataBundle.putBoolean("executeOnBoot", executeOnBoot)
                             dataBundle.putInt("scheduleProfileId", schedule.profile.uid)
+                            dataBundle.putBoolean("enabled", schedule.isEnabled)
 
                             intent.putExtra("data", dataBundle)
                             intent.putExtra("titleTv", getString(R.string.schedule_creator))
@@ -636,6 +638,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                             dataBundle.putBoolean("executeOnce", executeOnce)
                             dataBundle.putBoolean("executeOnBoot", executeOnBoot)
                             dataBundle.putInt("scheduleProfileId", schedule.profile.uid)
+                            dataBundle.putBoolean("enabled", schedule.isEnabled)
 
                             intent.putExtra("data", dataBundle)
                             intent.putExtra("titleTv", getString(R.string.schedule_creator))
@@ -645,7 +648,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                         val configProfile = mMainActivityViewModel.getProfileById(profileId.toInt())
 
                         mSchedulesViewModel
-                            .editSchedule(schedule.profile.uid, scheduleName, time, executeOnce, executeOnBoot, configProfile.accConfig)
+                            .editSchedule(schedule.profile.uid, scheduleName, schedule.isEnabled, time, executeOnce, executeOnBoot, configProfile.accConfig)
                     }
                 }
             }
