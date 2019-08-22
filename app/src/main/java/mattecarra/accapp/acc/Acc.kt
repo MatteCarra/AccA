@@ -90,7 +90,7 @@ interface AccInterface {
     /**
      * Updates the temperature related configuration in ACC.
      * @param coolDownTemperature starts cool down phase at the specified temperature.
-     * @param pauseTemperature pauses charging at the specified temperature.
+     * @param temperatureMax pauses charging at the specified temperature.
      * @param wait seconds to wait until charging is resumed.
      * @return the boolean result of the command's execution.
      */

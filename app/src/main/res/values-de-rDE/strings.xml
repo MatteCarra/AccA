@@ -42,7 +42,7 @@
     <string name="reset_unplugged">Akku-Statistiken beim Ausstecken zurücksetzen</string>
     <string name="reset_stats">Akku-Statistiken zurücksetzen</string>
     <string name="enable_cooldown">Abkühlung aktivieren:</string>
-    <string name="cooldown_capacity">Ab ...% Abkühlung starten:</string>
+    <string name="cooldown_capacity">Ab %% Abkühlung starten:</string>
     <string name="resume_charge">Ladevorgang fortsetzen bei:</string>
     <string name="stop_charge">Ladevorgang stoppen bei:</string>
     <string name="enable_temp_check">Temperatur-Prüfung (°C)</string>
@@ -133,10 +133,5 @@
     <string name="template_capacity_profile">Herunterfahren: %1$d%% - Fortsetzen: %2$d%% - Anhalten: %3$d%%</string>
     <string name="template_temperature_profile">Abkühlen: %1$d&#176;C - Max: %2$d&#176;C - Pausieren: %3$ds</string>
     <string name="on_plugged_info">Einsteck (\'On Plug\') Einstellung können eingestellt werden, um Einstellungen jedes Mal zu aktualisieren, wenn mit einer Stromquelle verbunden wird. Dies ist besonders nützlich, um max Spannung/Strom für drahtlose Ladegeräte zu setzen: \"./wireless/voltage_max:V_MAX\" und \"./usb/current_max:CURR_MAX\"</string>
-    <string-array name="profile_long_press_options">
-        <item>Bearbeiten</item>
-        <item>Umbenennen</item>
-        <item>Löschen</item>
-    </string-array>
     <string name="profile_selected_toast">%1$s Profil ausgewählt.</string>
 </resources>

@@ -110,7 +110,7 @@ open class AccHandler: AccInterface {
     // Regex for determining NAME of BATTERY
     private val NAME_REGEXP = """^\s*NAME=([a-zA-Z0-9]+)""".toRegex(RegexOption.MULTILINE)
     // Regex for INPUT_SUSPEND
-    private val INPUT_SUSPEND_REGEXP = """^\s*INPUT_SUSPEND=(0|1)""".toRegex(RegexOption.MULTILINE)
+    private val INPUT_SUSPEND_REGEXP = """^\s*INPUT_SUSPEND=([01])""".toRegex(RegexOption.MULTILINE)
     private val STATUS_REGEXP = """^\s*STATUS=(Charging|Discharging|Not charging)""".toRegex(RegexOption.MULTILINE)
     private val HEALTH_REGEXP = """^\s*HEALTH=([a-zA-Z]+)""".toRegex(RegexOption.MULTILINE)
     // Regex for PRESENT value
@@ -124,7 +124,7 @@ open class AccHandler: AccInterface {
     // Regex for CHARGER_TEMP_MAX
     private val CHARGER_TEMP_MAX_REGEXP = """^\s*CHARGER_TEMP_MAX=(\d+)""".toRegex(RegexOption.MULTILINE)
     // Regex for INPUT_CURRENT_LIMITED, 0 = false, 1 = true
-    private val INPUT_CURRENT_LIMITED_REGEXP = """^\s*INPUT_CURRENT_LIMITED=(0|1)""".toRegex(RegexOption.MULTILINE)
+    private val INPUT_CURRENT_LIMITED_REGEXP = """^\s*INPUT_CURRENT_LIMITED=([01])""".toRegex(RegexOption.MULTILINE)
     private val VOLTAGE_NOW_REGEXP = """^\s*VOLTAGE_NOW=(\d+)""".toRegex(RegexOption.MULTILINE)
     // Regex for VOLTAGE_MAX
     private val VOLTAGE_MAX_REGEXP = """^\s*VOLTAGE_MAX=(\d+)""".toRegex(RegexOption.MULTILINE)
@@ -138,17 +138,17 @@ open class AccHandler: AccInterface {
     private val TEMP_REGEXP = """^\s*TEMP=(\d+)""".toRegex(RegexOption.MULTILINE)
     // Regex for remaining 'acc -i' values
     private val TECHNOLOGY_REGEXP = """^\s*TECHNOLOGY=([a-zA-Z\-]+)""".toRegex(RegexOption.MULTILINE)
-    private val STEP_CHARGING_ENABLED_REGEXP = """^\s*STEP_CHARGING_ENABLED=(0|1)""".toRegex(RegexOption.MULTILINE)
-    private val SW_JEITA_ENABLED_REGEXP = """^\s*SW_JEITA_ENABLED=(0|1)""".toRegex(RegexOption.MULTILINE)
-    private val TAPER_CONTROL_ENABLED_REGEXP = """^\s*TAPER_CONTROL_ENABLED=(0|1)""".toRegex(RegexOption.MULTILINE)
+    private val STEP_CHARGING_ENABLED_REGEXP = """^\s*STEP_CHARGING_ENABLED=([01])""".toRegex(RegexOption.MULTILINE)
+    private val SW_JEITA_ENABLED_REGEXP = """^\s*SW_JEITA_ENABLED=([01])""".toRegex(RegexOption.MULTILINE)
+    private val TAPER_CONTROL_ENABLED_REGEXP = """^\s*TAPER_CONTROL_ENABLED=([01])""".toRegex(RegexOption.MULTILINE)
     // CHARGE_DISABLE is true when ACC disables charging due to conditions
-    private val CHARGE_DISABLE_REGEXP = """^\s*TAPER_CONTROL_ENABLED=(0|1)""".toRegex(RegexOption.MULTILINE)
+    private val CHARGE_DISABLE_REGEXP = """^\s*TAPER_CONTROL_ENABLED=([01])""".toRegex(RegexOption.MULTILINE)
     // CHARGE_DONE is true when the battery is done charging.
-    private val CHARGE_DONE_REGEXP = """^\s*CHARGE_DONE=(0|1)""".toRegex(RegexOption.MULTILINE)
-    private val PARALLEL_DISABLE_REGEXP = """^\s*PARALLEL_DISABLE=(0|1)""".toRegex(RegexOption.MULTILINE)
-    private val SET_SHIP_MODE_REGEXP = """^\s*SET_SHIP_MODE=(0|1)""".toRegex(RegexOption.MULTILINE)
+    private val CHARGE_DONE_REGEXP = """^\s*CHARGE_DONE=([01])""".toRegex(RegexOption.MULTILINE)
+    private val PARALLEL_DISABLE_REGEXP = """^\s*PARALLEL_DISABLE=([01])""".toRegex(RegexOption.MULTILINE)
+    private val SET_SHIP_MODE_REGEXP = """^\s*SET_SHIP_MODE=([01])""".toRegex(RegexOption.MULTILINE)
     private val DIE_HEALTH_REGEXP = """^\s*DIE_HEALTH=([a-zA-Z]+)""".toRegex(RegexOption.MULTILINE)
-    private val RERUN_AICL_REGEXP = """^\s*RERUN_AICL=(0|1)""".toRegex(RegexOption.MULTILINE)
+    private val RERUN_AICL_REGEXP = """^\s*RERUN_AICL=([01])""".toRegex(RegexOption.MULTILINE)
     private val DP_DM_REGEXP = """^\s*DP_DM=(\d+)""".toRegex(RegexOption.MULTILINE)
     private val CHARGE_CONTROL_LIMIT_MAX_REGEXP = """^\s*CHARGE_CONTROL_LIMIT_MAX=(\d+)""".toRegex(RegexOption.MULTILINE)
     private val CHARGE_CONTROL_LIMIT_REGEXP = """^\s*CHARGE_CONTROL_LIMIT=(\d+)""".toRegex(RegexOption.MULTILINE)

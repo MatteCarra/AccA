@@ -101,9 +101,4 @@
     <string name="profile_creator">创建配置</string>
     <string name="schedule_creator">创建任务</string>
     <string name="charging_switch_label">充电开关:</string>
-    <string-array name="profile_long_press_options">
-        <item>编辑</item>
-        <item>重命名</item>
-        <item>删除</item>
-    </string-array>
 </resources>
