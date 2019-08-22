@@ -38,7 +38,6 @@
     <string name="status_label">状态:</string>
     <string name="battery_info_label">信息:</string>
     <string name="enable_cooldown">启用冷却:</string>
-    <string name="cooldown_capacity">开始冷却阀值:</string>
     <string name="resume_charge">恢复充电阀值:</string>
     <string name="stop_charge">停止充电阀值:</string>
     <string name="cooldown_temp">开始冷却温度:</string>
