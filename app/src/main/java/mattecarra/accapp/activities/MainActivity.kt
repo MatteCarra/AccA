@@ -177,6 +177,10 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             SettingsActivity.launch(this)
             true
         }
+        R.id.menu_appbar_about -> {
+            AboutActivity.launch(this)
+            true
+        }
         else -> super.onOptionsItemSelected(item)
     }
 
