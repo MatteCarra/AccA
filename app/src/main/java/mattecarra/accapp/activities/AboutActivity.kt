@@ -48,21 +48,23 @@ class AboutActivity : AppCompatActivity() {
         openUrl("https://github.com/MatteCarra/AccA")
     }
 
-    //TODO: Enter in whatever links you wish. Change button text if necessary.
     fun vr25GitHubOnClick(view: View) {
         openUrl("https://github.com/VR-25")
     }
+    fun vr25WebsiteOnClick(view: View) {
+        openUrl("https://forum.xda-developers.com/member.php?u=5228676")
+    }
 
-    fun vr25WebsiteOnClick(view: View) {}
     fun matteGitHubOnClick(view: View) {
         openUrl("https://github.com/MatteCarra")
     }
+    fun matteWebsiteOnClick(view: View) {
+        openUrl("https://forum.xda-developers.com/member.php?u=9731715")
+    }
 
-    fun matteWebsiteOnClick(view: View) {}
     fun squabbiGitHubOnClick(view: View) {
         openUrl("https://github.com/squabbi")
     }
-
     fun squabbiWebsiteOnClick(view: View) {
         openUrl("https://squabbi.com/")
     }

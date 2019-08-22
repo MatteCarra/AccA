@@ -241,7 +241,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_toEndOf="@id/about_mattecarra_profile_iv"
                                 android:layout_toRightOf="@id/about_mattecarra_profile_iv"
-                                android:text="Matte Carra"
+                                android:text="Matteo Carrara"
                                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
                         <LinearLayout
