@@ -42,7 +42,6 @@
     <string name="reset_unplugged">Akku-Statistiken beim Ausstecken zurücksetzen</string>
     <string name="reset_stats">Akku-Statistiken zurücksetzen</string>
     <string name="enable_cooldown">Abkühlung aktivieren:</string>
-    <string name="cooldown_capacity">Ab ...% Abkühlung starten:</string>
     <string name="resume_charge">Ladevorgang fortsetzen bei:</string>
     <string name="stop_charge">Ladevorgang stoppen bei:</string>
     <string name="cooldown_temp">Abkühltemperatur:</string>
