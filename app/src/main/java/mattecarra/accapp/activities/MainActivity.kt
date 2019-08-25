@@ -580,6 +580,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                         dataBundle.putBoolean("executeOnBoot", executeOnBoot)
 
                         intent.putExtra("data", dataBundle)
+                        intent.putExtra(Constants.ACC_CONFIG_KEY, Acc.instance.defaultConfig)
                         intent.putExtra("titleTv", getString(R.string.schedule_creator))
                         startActivityForResult(intent, ACC_ADD_PROFILE_SCHEDULER_REQUEST)
                     }
@@ -601,10 +602,10 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             title(R.string.edit_schedule)
             editScheduleDialog(schedule, mMainActivityViewModel.profiles) { profileId, scheduleName, time, executeOnce, executeOnBoot ->
                 when (profileId) {
-                    -1L ->
+                    -1L -> //keep current config
                         mSchedulesViewModel
                             .editSchedule(schedule.profile.uid, scheduleName, schedule.isEnabled, time, executeOnce, executeOnBoot, schedule.profile.accConfig)
-                    -2L ->
+                    -2L -> //edit current config
                         Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
                             val dataBundle = Bundle()
                             dataBundle.putString("scheduleName", scheduleName)
@@ -619,7 +620,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                             intent.putExtra(Constants.ACC_CONFIG_KEY, schedule.profile.accConfig)
                             startActivityForResult(intent, ACC_EDIT_PROFILE_SCHEDULER_REQUEST)
                         }
-                    -3L ->
+                    -3L -> //new custom config
                         Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
                             val dataBundle = Bundle()
                             dataBundle.putString("scheduleName", scheduleName)
@@ -631,6 +632,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 
                             intent.putExtra("data", dataBundle)
                             intent.putExtra("titleTv", getString(R.string.schedule_creator))
+                            intent.putExtra(Constants.ACC_CONFIG_KEY, Acc.instance.defaultConfig)
                             startActivityForResult(intent, ACC_EDIT_PROFILE_SCHEDULER_REQUEST)
                         }
                     else -> launch {
