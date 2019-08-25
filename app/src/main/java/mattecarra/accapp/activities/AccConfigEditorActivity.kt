@@ -290,15 +290,28 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
 
     fun onBatteryIdleTestButtonClick(v: View) {
         launch {
-            if(Acc.instance.isBatteryCharging()) {
-                val dialog = MaterialDialog(this@AccConfigEditorActivity).show {
-                    title(R.string.test_battery_idle)
-                    progress(R.string.wait)
-                }
+            val dialog = MaterialDialog(this@AccConfigEditorActivity).show {
+                title(R.string.test_battery_idle)
+                progress(R.string.wait)
+            }
 
-                val supported = Acc.instance.isBatteryIdleSupported()
-                if(dialog.isShowing) {
-                    dialog.cancel()
+            val (exitCode, supported) = Acc.instance.isBatteryIdleSupported()
+            if(dialog.isShowing) {
+                dialog.cancel()
+
+                if(exitCode == 2) { //battery is not charging -> can not test
+                    MaterialDialog(this@AccConfigEditorActivity).show {
+                        title(R.string.test_battery_idle)
+                        message(R.string.plug_battery_to_test)
+                        positiveButton(R.string.retry) {
+                            onBatteryIdleTestButtonClick(v)
+                        }
+                        negativeButton(android.R.string.cancel)
+                    }
+                } else {
+                    if(!supported)
+                        viewModel.prioritizeBatteryIdleMode = false
+
                     this@AccConfigEditorActivity.battery_idle_switch.isEnabled = supported
 
                     MaterialDialog(this@AccConfigEditorActivity).show {
@@ -314,15 +327,7 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
                         positiveButton(android.R.string.ok)
                     }
                 }
-            } else {
-                MaterialDialog(this@AccConfigEditorActivity).show {
-                    title(R.string.test_battery_idle)
-                    message(R.string.plug_battery_to_test)
-                    positiveButton(R.string.retry) {
-                        onBatteryIdleTestButtonClick(v)
-                    }
-                    negativeButton(android.R.string.cancel)
-                }
+
             }
         }
     }
@@ -431,7 +436,11 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
                 neutralButton(R.string.test_switch) {
                     val switch = if(currentIndex == 0) null else chargingSwitches[currentIndex]
 
-                    Toast.makeText(this@AccConfigEditorActivity, R.string.wait, Toast.LENGTH_LONG).show()
+                    val dialog = MaterialDialog(this@AccConfigEditorActivity).show {
+                        title(R.string.test_switch)
+                        progress(R.string.wait)
+                    }
+
                     this@AccConfigEditorActivity.launch {
                         val description =
                             when(Acc.instance.testChargingSwitch(switch)) {
@@ -440,6 +449,8 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
                                 2 -> R.string.plug_battery_to_test
                                 else -> R.string.error_occurred
                             }
+
+                        dialog.cancel()
 
                         MaterialDialog(this@AccConfigEditorActivity).show {
                             title(R.string.test_switch)

@@ -265,9 +265,13 @@ open class AccHandler: AccInterface {
     }
 
     val BATTERY_IDLE_SUPPORTED = """^\s*- battIdleMode=true""".toRegex(RegexOption.MULTILINE)
-    override suspend fun isBatteryIdleSupported(): Boolean = withContext(Dispatchers.IO) {
-        BATTERY_IDLE_SUPPORTED.matches(
-            Shell.su("acc -t --").exec().out.joinToString("\n")
+    override suspend fun isBatteryIdleSupported(): Pair<Int, Boolean> = withContext(Dispatchers.IO) {
+        val res = Shell.su("acc -t --").exec()
+        Pair(
+            res.code,
+            BATTERY_IDLE_SUPPORTED.matches(
+                res.out.joinToString("\n")
+            )
         )
     }
 

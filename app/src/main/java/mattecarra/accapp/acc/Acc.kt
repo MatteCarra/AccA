@@ -52,7 +52,7 @@ interface AccInterface {
 
     suspend fun setChargingLimitForOneCharge(limit: Int): Boolean
 
-    suspend fun isBatteryIdleSupported(): Boolean
+    suspend fun isBatteryIdleSupported(): Pair<Int, Boolean>
 
     suspend fun updateAccConfig(accConfig: AccConfig): ConfigUpdateResult
 
