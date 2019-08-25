@@ -12,10 +12,10 @@
         android:title="@string/title_settings"
         app:showAsAction="never" />
 
-    <item
+<!--    <item
         android:id="@+id/menu_appbar_import_export"
         android:title="@string/menu_import_sexport"
-        app:showAsAction="never" />
+        app:showAsAction="never" />-->
 
     <item
         android:id="@+id/menu_appbar_about"
