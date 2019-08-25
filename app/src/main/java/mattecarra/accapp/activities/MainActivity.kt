@@ -19,9 +19,6 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
-import com.github.javiersantos.appupdater.AppUpdater
-import com.github.javiersantos.appupdater.enums.Display
-import com.github.javiersantos.appupdater.enums.UpdateFrom
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.topjohnwu.superuser.Shell
 import kotlinx.android.synthetic.main.activity_main.*
@@ -419,14 +416,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         setContentView(R.layout.activity_main)
 
         setSupportActionBar(toolbar)
-
-
-        val appUpdater = AppUpdater(this)
-            .setDisplay(Display.NOTIFICATION)
-            .setUpdateFrom(UpdateFrom.GITHUB)
-            .setGitHubUserAndRepo("MatteCarra", "AccA")
-            .setIcon(R.drawable.ic_notification)
-        appUpdater.start()
 
         // Load preferences
         mPreferences = Preferences(this)
