@@ -568,12 +568,12 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 }
             }
         } else if (requestCode == ACC_ADD_PROFILE_SCHEDULER_REQUEST && resultCode == Activity.RESULT_OK) {
-            if (data?.hasExtra("data") == true) {
-                val dataBundle = data.getBundleExtra("data")
-                val scheduleName = dataBundle.getString("scheduleName")
-                val time = dataBundle.getString("time")
-                val executeOnce = dataBundle.getBoolean("executeOnce")
-                val executeOnBoot = dataBundle.getBoolean("executeOnBoot")
+            if (data?.hasExtra(Constants.DATA_KEY) == true) {
+                val dataBundle = data.getBundleExtra(Constants.DATA_KEY)
+                val scheduleName = dataBundle.getString(Constants.SCHEDULE_NAME_KEY)
+                val time = dataBundle.getString(Constants.SCHEDULE_TIME_KEY)
+                val executeOnce = dataBundle.getBoolean(Constants.SCHEDULE_EXEC_ONCE_KEY)
+                val executeOnBoot = dataBundle.getBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY)
 
                 mSchedulesViewModel
                     .addSchedule(
@@ -615,7 +615,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 if (profileId == -1L) {
                     Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
                         val dataBundle = Bundle()
-                        dataBundle.putString(Constants.SCHEDULE_NAAME_KEY, scheduleName)
+                        dataBundle.putString(Constants.SCHEDULE_NAME_KEY, scheduleName)
                         dataBundle.putString(Constants.SCHEDULE_TIME_KEY, time)
                         dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONCE_KEY, executeOnce)
                         dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY, executeOnBoot)
@@ -669,7 +669,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                             AccConfigEditorActivity::class.java
                         ).also { intent ->
                             val dataBundle = Bundle()
-                            dataBundle.putString(Constants.SCHEDULE_NAAME_KEY, scheduleName)
+                            dataBundle.putString(Constants.SCHEDULE_NAME_KEY, scheduleName)
                             dataBundle.putString(Constants.SCHEDULE_TIME_KEY, time)
                             dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONCE_KEY, executeOnce)
                             dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY, executeOnBoot)
@@ -696,7 +696,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                             AccConfigEditorActivity::class.java
                         ).also { intent ->
                             val dataBundle = Bundle()
-                            dataBundle.putString(Constants.SCHEDULE_NAAME_KEY, scheduleName)
+                            dataBundle.putString(Constants.SCHEDULE_NAME_KEY, scheduleName)
                             dataBundle.putString(Constants.SCHEDULE_TIME_KEY, time)
                             dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONCE_KEY, executeOnce)
                             dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY, executeOnBoot)
