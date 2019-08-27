@@ -67,11 +67,11 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         mSchedulesViewModel = ViewModelProviders.of(this).get(SchedulesViewModel::class.java)
 
         // Set Bottom Navigation Bar Item Selected Listener
-        botNav_main.setOnNavigationItemSelectedListener(this)
-        setSupportActionBar(toolbar)
+        main_bottom_nav.setOnNavigationItemSelectedListener(this)
+        setSupportActionBar(main_toolbar)
 
         // Load in dashboard fragment
-        botNav_main.selectedItemId = mMainActivityViewModel.selectedNavBarItem
+        main_bottom_nav.selectedItemId = mMainActivityViewModel.selectedNavBarItem
     }
 
 
@@ -123,7 +123,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                     title(R.string.installing_djs)
                     cancelOnTouchOutside(false)
                     onKeyCodeBackPressed { false }
-                    djsInstallation(this@MainActivity, object: DjsInstallationListener {
+                    djsInstallation(this@MainActivity, object : DjsInstallationListener {
                         override fun onInstallationFailed(result: Shell.Result?) {
                             MaterialDialog(this@MainActivity)
                                 .show {
@@ -133,10 +133,15 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                         installDjs()
                                     }
                                     negativeButton(android.R.string.cancel) {
-                                        botNav_main.selectedItemId = R.id.botNav_schedules
+                                        main_bottom_nav.selectedItemId = R.id.botNav_schedules
                                     }
-                                    if(result != null)
-                                        shareLogsNeutralButton(File(filesDir, "logs/djs-install.log"), R.string.djs_installation_failed_log)
+                                    if (result != null)
+                                        shareLogsNeutralButton(
+                                            File(
+                                                filesDir,
+                                                "logs/djs-install.log"
+                                            ), R.string.djs_installation_failed_log
+                                        )
                                 }
                         }
 
@@ -147,8 +152,8 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                     positiveButton(R.string.retry) {
                                         installDjs()
                                     }
-                                    negativeButton(android.R.string.cancel)  {
-                                        botNav_main.selectedItemId = R.id.botNav_schedules
+                                    negativeButton(android.R.string.cancel) {
+                                        main_bottom_nav.selectedItemId = R.id.botNav_schedules
                                     }
                                     cancelOnTouchOutside(false)
                                 }
@@ -183,7 +188,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun loadFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment_container, fragment)
+        transaction.replace(R.id.main_framelayout, fragment)
         transaction.commit()
     }
 
@@ -201,7 +206,10 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
      */
     fun accProfilesFabOnClick(view: View) {
         Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-            intent.putExtra("titleTv", this@MainActivity.getString(R.string.profile_creator))
+            intent.putExtra(
+                Constants.TITLE_KEY,
+                this@MainActivity.getString(R.string.profile_creator)
+            )
             intent.putExtra(Constants.ACC_CONFIG_KEY, Acc.instance.defaultConfig)
             startActivityForResult(intent, ACC_PROFILE_CREATOR_REQUEST)
         }
@@ -312,8 +320,13 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                                 }
                                             }
                                     }
-                                    if(res != null)
-                                        shareLogsNeutralButton(File(filesDir, "logs/acc-install.log"), R.string.acc_installation_failed_log)
+                                    if (res != null)
+                                        shareLogsNeutralButton(
+                                            File(
+                                                filesDir,
+                                                "logs/acc-install.log"
+                                            ), R.string.acc_installation_failed_log
+                                        )
                                     cancelOnTouchOutside(false)
                                 }
 
@@ -345,8 +358,13 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                     negativeButton {
                                         finish()
                                     }
-                                    if(res != null)
-                                        shareLogsNeutralButton(File(filesDir, "logs/acc-install.log"), R.string.acc_installation_failed_log)
+                                    if (res != null)
+                                        shareLogsNeutralButton(
+                                            File(
+                                                filesDir,
+                                                "logs/acc-install.log"
+                                            ), R.string.acc_installation_failed_log
+                                        )
                                     cancelOnTouchOutside(false)
                                 }
                     }.onKeyCodeBackPressed {
@@ -367,7 +385,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         }
 
         val time = System.currentTimeMillis() / 1000
-        if((version == "master" || version == "dev") && time - mPreferences.lastUpdateCheck > 259200) {
+        if ((version == "master" || version == "dev") && time - mPreferences.lastUpdateCheck > 259200) {
             mPreferences.lastUpdateCheck = time
 
             val dialog = MaterialDialog(this).show {
@@ -380,11 +398,19 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 val res = Acc.instance.upgrade(version)
                 dialog.cancel()
 
-                when(res?.code) {
+                when (res?.code) {
                     6 ->
-                        Toast.makeText(this@MainActivity, R.string.no_update_available, Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            this@MainActivity,
+                            R.string.no_update_available,
+                            Toast.LENGTH_LONG
+                        ).show()
                     0 ->
-                        Toast.makeText(this@MainActivity, R.string.update_completed, Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            this@MainActivity,
+                            R.string.update_completed,
+                            Toast.LENGTH_LONG
+                        ).show()
                     else -> {
                         MaterialDialog(this@MainActivity) //Other installation errors can not be handled automatically -> show a dialog with the logs
                             .show {
@@ -415,7 +441,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(main_toolbar)
 
         // Load preferences
         mPreferences = Preferences(this)
@@ -463,10 +489,10 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onBackPressed() {
-        if (botNav_main.selectedItemId == R.id.botNav_home) {
+        if (main_bottom_nav.selectedItemId == R.id.botNav_home) {
             super.onBackPressed()
         } else {
-            botNav_main.selectedItemId = R.id.botNav_home
+            main_bottom_nav.selectedItemId = R.id.botNav_home
         }
     }
 
@@ -530,7 +556,8 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                     val editorData = data.getBundleExtra(Constants.DATA_KEY)
                     val profileId = editorData.getInt(Constants.PROFILE_ID_KEY)
                     launch {
-                        val selectedProfile: AccaProfile = mMainActivityViewModel.getProfileById(profileId)
+                        val selectedProfile: AccaProfile =
+                            mMainActivityViewModel.getProfileById(profileId)
 
                         // Update the selected Profile
                         selectedProfile.accConfig = accConfig
@@ -540,8 +567,8 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                     }
                 }
             }
-        } else if(requestCode == ACC_ADD_PROFILE_SCHEDULER_REQUEST && resultCode == Activity.RESULT_OK) {
-            if(data?.hasExtra("data") == true) {
+        } else if (requestCode == ACC_ADD_PROFILE_SCHEDULER_REQUEST && resultCode == Activity.RESULT_OK) {
+            if (data?.hasExtra("data") == true) {
                 val dataBundle = data.getBundleExtra("data")
                 val scheduleName = dataBundle.getString("scheduleName")
                 val time = dataBundle.getString("time")
@@ -549,20 +576,34 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 val executeOnBoot = dataBundle.getBoolean("executeOnBoot")
 
                 mSchedulesViewModel
-                    .addSchedule(scheduleName, time, executeOnce, executeOnBoot, data.getParcelableExtra(Constants.ACC_CONFIG_KEY))
+                    .addSchedule(
+                        scheduleName,
+                        time,
+                        executeOnce,
+                        executeOnBoot,
+                        data.getParcelableExtra(Constants.ACC_CONFIG_KEY)
+                    )
             }
-        } else if(requestCode == ACC_EDIT_PROFILE_SCHEDULER_REQUEST && resultCode == Activity.RESULT_OK) {
-            if(data?.hasExtra("data") == true) {
-                val dataBundle = data.getBundleExtra("data")
-                val id = dataBundle.getInt("scheduleProfileId")
-                val scheduleName = dataBundle.getString("scheduleName")
-                val time = dataBundle.getString("time")
-                val executeOnce = dataBundle.getBoolean("executeOnce")
-                val executeOnBoot = dataBundle.getBoolean("executeOnBoot")
-                val enabled = dataBundle.getBoolean("enabled")
+        } else if (requestCode == ACC_EDIT_PROFILE_SCHEDULER_REQUEST && resultCode == Activity.RESULT_OK) {
+            if (data?.hasExtra(Constants.DATA_KEY) == true) {
+                val dataBundle = data.getBundleExtra(Constants.DATA_KEY)
+                val id = dataBundle.getInt(Constants.SCHEDULE_ID_KEY)
+                val scheduleName = dataBundle.getString(Constants.SCHEDULE_ID_KEY)
+                val time = dataBundle.getString(Constants.SCHEDULE_TIME_KEY)
+                val executeOnce = dataBundle.getBoolean(Constants.SCHEDULE_EXEC_ONCE_KEY)
+                val executeOnBoot = dataBundle.getBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY)
+                val enabled = dataBundle.getBoolean(Constants.SCHEDULE_ENABLED_KEY)
 
                 mSchedulesViewModel
-                    .editSchedule(id, scheduleName, enabled, time, executeOnce, executeOnBoot, data.getParcelableExtra(Constants.ACC_CONFIG_KEY))
+                    .editSchedule(
+                        id,
+                        scheduleName,
+                        enabled,
+                        time,
+                        executeOnce,
+                        executeOnBoot,
+                        data.getParcelableExtra(Constants.ACC_CONFIG_KEY)
+                    )
             }
         }
     }
@@ -571,17 +612,17 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         MaterialDialog(this).show {
             title(R.string.create_schedule)
             addScheduleDialog(mMainActivityViewModel.profiles) { profileId, scheduleName, time, executeOnce, executeOnBoot ->
-                if(profileId == -1L) {
+                if (profileId == -1L) {
                     Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
                         val dataBundle = Bundle()
-                        dataBundle.putString("scheduleName", scheduleName)
-                        dataBundle.putString("time", time)
-                        dataBundle.putBoolean("executeOnce", executeOnce)
-                        dataBundle.putBoolean("executeOnBoot", executeOnBoot)
+                        dataBundle.putString(Constants.SCHEDULE_NAAME_KEY, scheduleName)
+                        dataBundle.putString(Constants.SCHEDULE_TIME_KEY, time)
+                        dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONCE_KEY, executeOnce)
+                        dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY, executeOnBoot)
 
-                        intent.putExtra("data", dataBundle)
+                        intent.putExtra(Constants.DATA_KEY, dataBundle)
                         intent.putExtra(Constants.ACC_CONFIG_KEY, Acc.instance.defaultConfig)
-                        intent.putExtra("titleTv", getString(R.string.schedule_creator))
+                        intent.putExtra(Constants.TITLE_KEY, getString(R.string.schedule_creator))
                         startActivityForResult(intent, ACC_ADD_PROFILE_SCHEDULER_REQUEST)
                     }
                 } else {
@@ -589,7 +630,13 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                         val configProfile = mMainActivityViewModel.getProfileById(profileId.toInt())
 
                         mSchedulesViewModel
-                            .addSchedule(scheduleName, time, executeOnce, executeOnBoot, configProfile.accConfig)
+                            .addSchedule(
+                                scheduleName,
+                                time,
+                                executeOnce,
+                                executeOnBoot,
+                                configProfile.accConfig
+                            )
                     }
                 }
             }
@@ -600,38 +647,73 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     fun editSchedule(schedule: Schedule) {
         MaterialDialog(this).show {
             title(R.string.edit_schedule)
-            editScheduleDialog(schedule, mMainActivityViewModel.profiles) { profileId, scheduleName, time, executeOnce, executeOnBoot ->
+            editScheduleDialog(
+                schedule,
+                mMainActivityViewModel.profiles
+            ) { profileId, scheduleName, time, executeOnce, executeOnBoot ->
                 when (profileId) {
                     -1L -> //keep current config
                         mSchedulesViewModel
-                            .editSchedule(schedule.profile.uid, scheduleName, schedule.isEnabled, time, executeOnce, executeOnBoot, schedule.profile.accConfig)
+                            .editSchedule(
+                                schedule.profile.uid,
+                                scheduleName,
+                                schedule.isEnabled,
+                                time,
+                                executeOnce,
+                                executeOnBoot,
+                                schedule.profile.accConfig
+                            )
                     -2L -> //edit current config
-                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+                        Intent(
+                            this@MainActivity,
+                            AccConfigEditorActivity::class.java
+                        ).also { intent ->
                             val dataBundle = Bundle()
-                            dataBundle.putString("scheduleName", scheduleName)
-                            dataBundle.putString("time", time)
-                            dataBundle.putBoolean("executeOnce", executeOnce)
-                            dataBundle.putBoolean("executeOnBoot", executeOnBoot)
-                            dataBundle.putInt("scheduleProfileId", schedule.profile.uid)
-                            dataBundle.putBoolean("enabled", schedule.isEnabled)
+                            dataBundle.putString(Constants.SCHEDULE_NAAME_KEY, scheduleName)
+                            dataBundle.putString(Constants.SCHEDULE_TIME_KEY, time)
+                            dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONCE_KEY, executeOnce)
+                            dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY, executeOnBoot)
+                            dataBundle.putInt(
+                                Constants.SCHEDULE_PROFILE_ID_KEY,
+                                schedule.profile.uid
+                            )
+                            dataBundle.putBoolean(
+                                Constants.SCHEDULE_ENABLED_KEY,
+                                schedule.isEnabled
+                            )
 
-                            intent.putExtra("data", dataBundle)
-                            intent.putExtra("titleTv", getString(R.string.schedule_creator))
+                            intent.putExtra(Constants.DATA_KEY, dataBundle)
+                            intent.putExtra(
+                                Constants.TITLE_KEY,
+                                getString(R.string.schedule_creator)
+                            )
                             intent.putExtra(Constants.ACC_CONFIG_KEY, schedule.profile.accConfig)
                             startActivityForResult(intent, ACC_EDIT_PROFILE_SCHEDULER_REQUEST)
                         }
                     -3L -> //new custom config
-                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+                        Intent(
+                            this@MainActivity,
+                            AccConfigEditorActivity::class.java
+                        ).also { intent ->
                             val dataBundle = Bundle()
-                            dataBundle.putString("scheduleName", scheduleName)
-                            dataBundle.putString("time", time)
-                            dataBundle.putBoolean("executeOnce", executeOnce)
-                            dataBundle.putBoolean("executeOnBoot", executeOnBoot)
-                            dataBundle.putInt("scheduleProfileId", schedule.profile.uid)
-                            dataBundle.putBoolean("enabled", schedule.isEnabled)
+                            dataBundle.putString(Constants.SCHEDULE_NAAME_KEY, scheduleName)
+                            dataBundle.putString(Constants.SCHEDULE_TIME_KEY, time)
+                            dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONCE_KEY, executeOnce)
+                            dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY, executeOnBoot)
+                            dataBundle.putInt(
+                                Constants.SCHEDULE_PROFILE_ID_KEY,
+                                schedule.profile.uid
+                            )
+                            dataBundle.putBoolean(
+                                Constants.SCHEDULE_ENABLED_KEY,
+                                schedule.isEnabled
+                            )
 
-                            intent.putExtra("data", dataBundle)
-                            intent.putExtra("titleTv", getString(R.string.schedule_creator))
+                            intent.putExtra(Constants.DATA_KEY, dataBundle)
+                            intent.putExtra(
+                                Constants.TITLE_KEY,
+                                getString(R.string.schedule_creator)
+                            )
                             intent.putExtra(Constants.ACC_CONFIG_KEY, Acc.instance.defaultConfig)
                             startActivityForResult(intent, ACC_EDIT_PROFILE_SCHEDULER_REQUEST)
                         }
@@ -639,7 +721,15 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                         val configProfile = mMainActivityViewModel.getProfileById(profileId.toInt())
 
                         mSchedulesViewModel
-                            .editSchedule(schedule.profile.uid, scheduleName, schedule.isEnabled, time, executeOnce, executeOnBoot, configProfile.accConfig)
+                            .editSchedule(
+                                schedule.profile.uid,
+                                scheduleName,
+                                schedule.isEnabled,
+                                time,
+                                executeOnce,
+                                executeOnBoot,
+                                configProfile.accConfig
+                            )
                     }
                 }
             }
