@@ -10,7 +10,7 @@ object Constants {
 
     // CONFIG KEYS
     val SCHEDULE_ID_KEY = "schedId"
-    val SCHEDULE_NAAME_KEY = "schedName"
+    val SCHEDULE_NAME_KEY = "schedName"
     val SCHEDULE_TIME_KEY = "schedTime"
     val SCHEDULE_EXEC_ONCE_KEY = "schedExecOnce"
     val SCHEDULE_EXEC_ONBOOT_KEY = "schedExecOnBoot"
