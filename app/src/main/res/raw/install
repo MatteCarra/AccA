@@ -58,4 +58,19 @@ pkg=${pkg##/data*/}
 owner=$(grep $pkg /data/system/packages.list | awk '{print $2}')
 chown -R $owner:$owner logs
 
+if [ -d /data/adb/service.d ]; then
+  cat << EoF > /data/adb/service.d/${1:-$id}-init.sh
+#!/system/bin/sh
+(until grep -q /storage/emulated /proc/mounts; do sleep 15; done
+if [ -f $PWD/${1:-$id}/${1:-$id}-init.sh ]; then
+  $PWD/${1:-$id}/${1:-$id}-init.sh
+else
+  rm \$0
+fi
+exit 0 &) &
+exit 0
+EoF
+  chmod 0700 /data/adb/service.d/${1:-$id}-init.sh
+fi
+
 exit 0
