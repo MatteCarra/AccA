@@ -37,7 +37,7 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
 
     private fun returnResults() {
         val returnIntent = Intent()
-        returnIntent.putExtra(Constants.DATA_KEY, intent.getBundleExtra("data"))
+        returnIntent.putExtra(Constants.DATA_KEY, intent.getBundleExtra(Constants.DATA_KEY))
         returnIntent.putExtra(Constants.ACC_HAS_CHANGES, viewModel.unsavedChanges)
         returnIntent.putExtra(Constants.ACC_CONFIG_KEY, viewModel.accConfig)
         setResult(Activity.RESULT_OK, returnIntent)
@@ -51,16 +51,16 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         // Load preferences
         mPreferences = Preferences(this)
 
-        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        val toolbar = findViewById<View>(R.id.acc_conf_editor_toolbar) as Toolbar
         setSupportActionBar(toolbar)
-        supportActionBar?.title = intent?.getStringExtra("titleTv") ?: getString(R.string.acc_config_editor)
+        supportActionBar?.title = intent?.getStringExtra(Constants.TITLE_KEY) ?: getString(R.string.acc_config_editor)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val config =
             when {
-                savedInstanceState?.containsKey("mAccConfig") == true ->
-                    savedInstanceState.getParcelable("mAccConfig")!!
+                savedInstanceState?.containsKey(Constants.ACC_CONFIG_KEY) == true ->
+                    savedInstanceState.getParcelable(Constants.ACC_CONFIG_KEY)!!
 
                 intent.hasExtra(Constants.ACC_CONFIG_KEY) ->
                     intent.getParcelableExtra(Constants.ACC_CONFIG_KEY)!!

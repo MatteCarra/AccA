@@ -9,14 +9,14 @@
             android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/settings_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 style="?toolbarStyle"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
-            android:id="@+id/settings"
+            android:id="@+id/settings_fl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 </LinearLayout>

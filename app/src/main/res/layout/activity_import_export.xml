@@ -6,12 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".activities.ImportExportActivity">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/import_export_toolbar"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="?toolbarStyle"/>
+        android:layout_height="wrap_content">
 
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/import_export_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            style="?toolbarStyle"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

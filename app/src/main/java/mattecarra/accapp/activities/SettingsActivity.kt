@@ -1,6 +1,5 @@
 package mattecarra.accapp.activities
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -20,14 +19,14 @@ class SettingsActivity: AppCompatActivity(), FragmentManager.OnBackStackChangedL
 
         if (savedInstanceState == null) {
             mSettingsFragment = SettingsFragment.newInstance()
-            supportFragmentManager.beginTransaction().add(R.id.settings, mSettingsFragment, "Settings").commit()
+            supportFragmentManager.beginTransaction().add(R.id.settings_fl, mSettingsFragment, "Settings").commit()
         } else {
             mSettingsFragment = supportFragmentManager.findFragmentByTag("Settings") as SettingsFragment
         }
 
         supportFragmentManager.addOnBackStackChangedListener(this)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        val toolbar = findViewById<Toolbar>(R.id.settings_toolbar)
         setSupportActionBar(toolbar)
         val ab = supportActionBar
         ab?.setDisplayHomeAsUpEnabled(true)
