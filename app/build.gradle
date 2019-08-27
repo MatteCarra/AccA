@@ -53,7 +53,7 @@ android {
     dataBinding {
         enabled true
     }
-    lintOptions{
+    lintOptions {
         disable 'MissingTranslation'
     }
 }
@@ -95,6 +95,8 @@ dependencies {
     // Room components
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
 
     // Lifecycle components
@@ -105,6 +107,11 @@ dependencies {
     // Coroutines
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutines"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutines"
+
+    // ViewPager
+    // https://developer.android.com/jetpack/androidx/releases/viewpager2
+    implementation 'androidx.viewpager2:viewpager2:1.0.0-beta03'
+
 
     // Google Material Components
     implementation 'com.google.android.material:material:1.1.0-alpha09'
