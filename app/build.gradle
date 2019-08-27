@@ -1,23 +1,44 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 androidExtensions {
     experimental = true
 }
 
 android {
+    signingConfigs {
+        release {
+            try {
+                def keystoreProperties = new Properties()
+                keystoreProperties.load(new FileInputStream(rootProject.file("keystore.properties")))
+
+                storeFile file(keystoreProperties["KEYSTORE_LOCATION"])
+                storePassword keystoreProperties["KEYSTORE_PASSWORD"]
+                keyAlias 'acca'
+                keyPassword keystoreProperties["KEY_PASSWORD"]
+            } catch (ignored) {
+                println "You should define KEYSTORE_LOCATION, KEYSTORE_PASSWORD and KEY_PASSWORD in keystore.properties."
+            }
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "mattecarra.accapp"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 8
-        versionName "1.0.4"
+        versionCode 20
+        versionName "1.0.15"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        signingConfig signingConfigs.release
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas".toString())
+            }
+        }
     }
     buildTypes {
         release {
@@ -29,6 +50,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    dataBinding {
+        enabled true
+    }
+    lintOptions{
+        disable 'MissingTranslation'
+    }
 }
 
 dependencies {
@@ -37,27 +64,51 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
     implementation "org.jetbrains.anko:anko-commons:0.10.8"
 
-    implementation "androidx.appcompat:appcompat:1.0.2"
-    implementation "androidx.core:core-ktx:1.0.1"
+    implementation "androidx.appcompat:appcompat:1.1.0-rc01"
+    implementation "androidx.core:core-ktx:1.0.2"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation "androidx.vectordrawable:vectordrawable:1.0.1"
-    implementation "androidx.preference:preference:1.0.0"
+    implementation "androidx.preference:preference:1.1.0-rc01"
     implementation "androidx.cardview:cardview:1.0.0"
 
     implementation "com.google.android.material:material:1.0.0"
 
-    implementation 'com.afollestad.material-dialogs:core:2.0.0'
-    implementation 'com.afollestad.material-dialogs:input:2.0.0'
+    implementation 'com.afollestad.material-dialogs:core:3.1.0'
+    implementation 'com.afollestad.material-dialogs:input:3.1.0'
+    implementation 'com.afollestad.material-dialogs:datetime:3.1.0'
 
     implementation 'com.google.code.gson:gson:2.8.5'
-
-    implementation project(':updater')
 
     implementation "com.github.topjohnwu.libsu:core:${versions.libsuVersion}"
 
     // CircleProgressBar - https://github.com/dinuscxj/CircleProgressBar
     implementation 'com.dinuscxj:circleprogressbar:1.3.0'
-
+    // Tooltip library: https://github.com/sephiroth74/android-target-tooltip
     implementation 'com.github.sephiroth74:android-target-tooltip:2.0.4'
+
+    // CircilarImageView - https://github.com/hdodenhof/CircleImageView
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+
+    implementation 'org.apache.commons:commons-collections4:4.4'
+
+    // Room components
+    implementation "androidx.room:room-runtime:$rootProject.roomVersion"
+    implementation "androidx.room:room-ktx:$rootProject.roomVersion"
+    kapt "androidx.room:room-compiler:$rootProject.roomVersion"
+
+    // Lifecycle components
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycle"
+    kapt "androidx.lifecycle:lifecycle-compiler:$rootProject.lifecycle"
+
+    // Coroutines
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutines"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutines"
+
+    // Google Material Components
+    implementation 'com.google.android.material:material:1.1.0-alpha09'
+
+    // For custom tabs
+    implementation 'androidx.browser:browser:1.0.0'
 }

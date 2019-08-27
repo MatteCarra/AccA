@@ -1,0 +1,61 @@
+#!/system/bin/sh
+# ${1:-$id}*gz installer
+# Copyright (c) 2019, VR25 (xda-developers.com)
+# License: GPLv3+
+
+id=acc
+umask 077
+
+# log 
+mkdir -p /data/adb/${1:-$id}-data/logs
+exec 2>/data/adb/${1:-$id}-data/logs/install-tarball.sh.log
+set -x 
+
+if [[ $PATH != *busybox:* ]]; then
+  if [ -d /sbin/.magisk/busybox ]; then
+    PATH=/sbin/.magisk/busybox:$PATH
+  elif [ -d /sbin/.core/busybox ]; then
+    PATH=/sbin/.core/busybox:$PATH
+  elif which busybox > /dev/null; then
+    mkdir -p /dev/.busybox
+    busybox --install -s /dev/.busybox
+    PATH=/dev/.busybox:$PATH
+  else
+    echo "(!) Install busybox binary first"
+    exit 3
+  fi
+fi
+
+if [ $(id -u) -ne 0 ]; then
+  echo "(!) $0 must run as root (su)"
+  exit 4
+fi
+
+rm -rf ${1:-$id}-*/ 2>/dev/null
+
+umask 0
+set -e
+
+[ -f $PWD/${0##*/} ] || cd ${0%/*}
+[ -d ${1:-$id}/${1:-$id}-init.sh ] && exit 0
+
+rm -rf ${1:-$id}-*/
+tar -xf ${1:-$id}*gz
+
+export installDir0="$2"
+sh ${1:-$id}-*/install-current.sh
+
+rm -rf ${1:-$id}-*/
+
+umask 077
+mkdir -p logs
+
+cp -af /data/adb/${1:-$id}-data/logs/install.log logs/${1:-$id}-install.log
+
+pkg=$(cd ..; pwd)
+pkg=${pkg##/data*/}
+
+owner=$(grep $pkg /data/system/packages.list | awk '{print $2}')
+chown -R $owner:$owner logs
+
+exit 0

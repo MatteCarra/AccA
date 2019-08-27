@@ -1,13 +1,10 @@
-<resources>
-
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="ToolTipAltStyle" parent="ToolTipLayoutDefaultStyle">
+        <item name="ttlm_backgroundColor">@color/color_primary_variant</item>
+        <item name="ttlm_textStyle">@style/ToolTipAltTextStyle</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat" />
+    <style name="ToolTipAltTextStyle" parent="ToolTipTextStyle">
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

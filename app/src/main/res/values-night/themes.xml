@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!--Top level DayNight theme to be used in AndroidManifest.xml-->
+    <style name="AccaTheme.DayNight" parent="Base.AccaTheme">
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
+    </style>
+
+</resources>

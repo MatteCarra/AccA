@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
+        <!-- Capacity Card -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/card_margin"
@@ -23,7 +24,8 @@
             android:foreground="?selectableItemBackground"
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="3dp"
-            app:contentPadding="@dimen/card_content_padding">
+            app:contentPadding="@dimen/card_content_padding"
+            style="@style/Widget.MaterialComponents.CardView">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -42,6 +44,18 @@
                         android:layout_weight="1"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                         android:text="@string/title_capacity_control" />
+
+                    <ImageView
+                        android:id="@+id/capacity_restore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_restore_24px"
+                        android:onClick="onCapacityRestore"
+                        android:contentDescription="@string/restore" />
 
                     <ImageView
                         android:id="@+id/capacity_control_info"
@@ -74,7 +88,7 @@
                         android:textSize="16sp"
                         android:layout_marginEnd="6dp"
                         android:layout_marginRight="6dp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:text="@string/shutdown_capacity"/>
 
                     <TextView
@@ -86,7 +100,7 @@
                         android:textSize="16sp"
                         android:layout_marginEnd="6dp"
                         android:layout_marginRight="6dp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:text="@string/resume_charge"/>
 
                     <TextView
@@ -98,7 +112,7 @@
                         android:textSize="16sp"
                         android:layout_marginStart="6dp"
                         android:layout_marginLeft="6dp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:text="@string/stop_charge"/>
 
                 </LinearLayout>
@@ -147,7 +161,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:textSize="16sp"
-                            android:textColor="@color/black"
+                            android:textColor="?android:attr/textColorPrimary"
                             android:text="@string/charging_switch_label"
                             android:layout_marginRight="8dp"
                             android:layout_marginEnd="8dp"
@@ -171,10 +185,10 @@
                 </LinearLayout>
 
             </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-
-        <androidx.cardview.widget.CardView
+        <!-- Voltage Control Card -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/card_margin"
@@ -183,7 +197,8 @@
             android:foreground="?selectableItemBackground"
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="3dp"
-            app:contentPadding="@dimen/card_content_padding">
+            app:contentPadding="@dimen/card_content_padding"
+            style="@style/Widget.MaterialComponents.CardView">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -202,6 +217,18 @@
                         android:layout_weight="1"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                         android:text="@string/title_voltage_control" />
+
+                    <ImageView
+                        android:id="@+id/voltage_control_restore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_restore_24px"
+                        android:onClick="onVoltageControlRestore"
+                        android:contentDescription="@string/restore" />
 
                     <ImageView
                         android:id="@+id/voltage_control_info"
@@ -229,12 +256,12 @@
                         android:textSize="16sp"
                         android:layout_marginRight="5dp"
                         android:layout_marginEnd="5dp"
-                        android:textColor="@color/black"/>
+                        android:textColor="?android:attr/textColorPrimary"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/voltage_control_file"
+                        android:id="@+id/voltage_control_file_spinner"
                         android:textSize="16sp"/>
 
                 </LinearLayout>
@@ -251,12 +278,12 @@
                         android:textSize="16sp"
                         android:layout_marginRight="5dp"
                         android:layout_marginEnd="5dp"
-                        android:textColor="@color/black"/>
+                        android:textColor="?android:attr/textColorPrimary"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/voltage_max"
+                        android:id="@+id/voltage_max_edit_text"
                         android:textSize="16sp"/>
 
                 </LinearLayout>
@@ -266,12 +293,14 @@
                     android:layout_height="wrap_content"
                     android:text="@string/edit_voltage_limit"
                     android:id="@+id/edit_voltage_limit"
-                    android:layout_gravity="center_horizontal"/>
+                    android:layout_gravity="center_horizontal"
+                    android:onClick="editVoltageOnClick"/>
 
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <!-- Battery idle control Card -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/card_margin"
@@ -280,7 +309,91 @@
             android:foreground="?selectableItemBackground"
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="3dp"
-            app:contentPadding="@dimen/card_content_padding">
+            app:contentPadding="@dimen/card_content_padding"
+            style="@style/Widget.MaterialComponents.CardView">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/card_content_padding">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:text="@string/prioritize_battery_idle" />
+
+                    <ImageView
+                        android:id="@+id/battery_idle_control_restore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_restore_24px"
+                        android:onClick="onBatteryIdleRestore"
+                        android:contentDescription="@string/restore" />
+
+                    <ImageView
+                        android:id="@+id/battery_idle_control_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_info"
+                        android:onClick="onInfoClick"
+                        android:contentDescription="@string/info" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
+                </LinearLayout>
+
+                <Switch
+                    android:id="@+id/battery_idle_switch"
+                    android:checked="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prioritize_battery_idle"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="16dp" />
+
+                <Button style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/test_battery_idle"
+                    android:id="@+id/battery_idle_test_button"
+                    android:layout_gravity="center_horizontal"
+                    android:onClick="onBatteryIdleTestButtonClick"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Temperature Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:foreground="?selectableItemBackground"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="3dp"
+            app:contentPadding="@dimen/card_content_padding"
+            style="@style/Widget.MaterialComponents.CardView">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -299,6 +412,18 @@
                         android:layout_weight="1"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                         android:text="@string/title_temperature_control" />
+
+                    <ImageView
+                        android:id="@+id/temperature_control_restore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_restore_24px"
+                        android:onClick="onTemperatureControlRestore"
+                        android:contentDescription="@string/restore" />
 
                     <ImageView
                         android:id="@+id/temperature_control_info"
@@ -340,7 +465,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="14sp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:text="@string/cooldown_temp"/>
 
                     <TextView
@@ -350,7 +475,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="14sp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:text="@string/max_temp"/>
 
                     <TextView
@@ -360,7 +485,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="14sp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:text="@string/pause_seconds"/>
 
                 </LinearLayout>
@@ -374,7 +499,7 @@
                     android:layout_below="@+id/temps_labels">
 
                     <NumberPicker
-                        android:id="@+id/cooldown_temp_picker"
+                        android:id="@+id/temperature_cooldown_picker"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -382,7 +507,7 @@
                         android:layout_marginRight="3dp"/>
 
                     <NumberPicker
-                        android:id="@+id/pause_temp_picker"
+                        android:id="@+id/temperature_max_picker"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -390,7 +515,7 @@
                         android:layout_marginLeft="3dp" />
 
                     <NumberPicker
-                        android:id="@+id/pause_seconds_picker"
+                        android:id="@+id/temperature_max_pause_seconds_picker"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -399,10 +524,10 @@
                 </LinearLayout>
 
             </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Exit On Boot Card -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/card_margin"
@@ -411,7 +536,8 @@
             android:foreground="?selectableItemBackground"
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="3dp"
-            app:contentPadding="@dimen/card_content_padding">
+            app:contentPadding="@dimen/card_content_padding"
+            style="@style/Widget.MaterialComponents.CardView">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -432,6 +558,18 @@
                         android:text="@string/title_on_boot" />
 
                     <ImageView
+                        android:id="@+id/apply_on_boot_restore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_restore_24px"
+                        android:onClick="onBootRestoreClick"
+                        android:contentDescription="@string/restore" />
+
+                    <ImageView
                         android:id="@+id/exit_on_boot_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -444,14 +582,6 @@
                         android:contentDescription="@string/info" />
                 </LinearLayout>
 
-                <Switch
-                    android:id="@+id/exit_on_boot_switch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_exit_on_boot"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="@dimen/card_bottom_margin" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -460,7 +590,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:textSize="16sp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:text="@string/label_on_boot"
                         android:layout_marginRight="8dp"
                         android:layout_marginEnd="8dp"
@@ -484,9 +614,10 @@
                 </LinearLayout>
 
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <!-- On Plugged Card -->
+        <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/card_margin"
@@ -495,7 +626,8 @@
                 android:foreground="?selectableItemBackground"
                 app:cardCornerRadius="@dimen/card_corner_radius"
                 app:cardElevation="3dp"
-                app:contentPadding="@dimen/card_content_padding">
+                app:contentPadding="@dimen/card_content_padding"
+                style="@style/Widget.MaterialComponents.CardView">
 
             <LinearLayout
                     android:layout_width="match_parent"
@@ -514,6 +646,17 @@
                             android:layout_weight="1"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                             android:text="@string/title_on_plugged" />
+                    <ImageView
+                        android:id="@+id/on_plugged_restore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_restore_24px"
+                        android:onClick="onPluggedRestore"
+                        android:contentDescription="@string/restore" />
 
                     <ImageView
                             android:id="@+id/on_plugged_info"
@@ -536,7 +679,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:textSize="16sp"
-                            android:textColor="@color/black"
+                            android:textColor="?android:attr/textColorPrimary"
                             android:text="@string/label_on_plugged"
                             android:layout_marginRight="8dp"
                             android:layout_marginEnd="8dp"
@@ -560,10 +703,10 @@
                 </LinearLayout>
 
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Enable Cool Down Card : Bottom most card - include android:layout_marginBottom for proper looks. -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/card_margin"
@@ -573,7 +716,8 @@
             android:foreground="?selectableItemBackground"
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="3dp"
-            app:contentPadding="@dimen/card_content_padding">
+            app:contentPadding="@dimen/card_content_padding"
+            style="@style/Widget.MaterialComponents.CardView">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -592,6 +736,18 @@
                         android:layout_weight="1"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                         android:text="@string/title_cooldown_control" />
+
+                    <ImageView
+                        android:id="@+id/cooldown_restore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_restore_24px"
+                        android:onClick="onCooldownRestore"
+                        android:contentDescription="@string/restore" />
 
                     <ImageView
                         android:id="@+id/cooldown_info"
@@ -633,7 +789,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="14sp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:text="@string/cooldown_capacity"/>
 
                     <TextView
@@ -643,7 +799,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="14sp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:text="@string/charge_seconds"/>
 
                     <TextView
@@ -653,7 +809,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="14sp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:text="@string/pause_seconds"/>
 
                 </LinearLayout>
@@ -692,7 +848,7 @@
                 </LinearLayout>
 
             </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 </ScrollView>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:title="Acc"
+        app:iconSpaceReserved="false">
+        <Preference
+            android:title="@string/acc_version_preference_title"
+            android:key="acc_version"
+            android:summary="@string/acc_version_preference_description"
+            app:iconSpaceReserved="false">
+        </Preference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/units_of_measure"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+                android:title="@string/current_measure_unit_preference_title"
+                android:key="current_measure_unit"
+                android:summary="@string/current_measure_unit_preference_description"
+                android:dialogTitle="@string/current_measure_unit_preference_title"
+                android:entries="@array/current_measure_units_options"
+                android:entryValues="@array/current_measure_units_option_values"
+                app:iconSpaceReserved="false"/>
+
+        <ListPreference
+                android:title="@string/voltage_measure_unit_preference_title"
+                android:key="voltage_measure_unit"
+                android:summary="@string/voltage_measure_unit_preference_title_description"
+                android:dialogTitle="@string/voltage_measure_unit_preference_title"
+                android:entries="@array/voltage_measure_units_options"
+                android:entryValues="@array/voltage_measure_units_option_values"
+                app:iconSpaceReserved="false"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Djs"
+        app:iconSpaceReserved="false">
+        <CheckBoxPreference
+            android:title="Djs"
+            android:key="djs_enabled"
+            android:summary="@string/install_djs_description"
+            app:iconSpaceReserved="false">
+        </CheckBoxPreference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="@string/ui_options"
+            app:iconSpaceReserved="false">
+
+        <ListPreference
+            android:title="@string/theme_option_setting"
+            android:key="theme"
+            android:summary="@string/theme_option_summary"
+            android:dialogTitle="@string/theme_option_setting"
+            android:entries="@array/theme_option_options"
+            android:entryValues="@array/theme_option_values"
+            android:icon="@drawable/ic_round_format_paint_24px"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="Telegram"
+            app:iconSpaceReserved="false">
+        <Preference
+                android:title="Telegram"
+                android:key="acc_telegram"
+                android:summary="@string/acc_telegram"
+                app:iconSpaceReserved="false"/>
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--Shape Appearance for small components like chips, buttons, text fields and FABs-->
+    <style name="ShapeAppearance.AccaTheme.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <!--Your custom shape here-->
+        <!--<item name="cornerFamilyTopLeft">rounded</item>-->
+        <!--<item name="cornerSizeTopLeft">12dp</item>-->
+        <!--<item name="cornerFamilyTopRight">cut</item>-->
+        <!--<item name="cornerSizeTopRight">9dp</item>-->
+        <!--<item name="cornerFamilyBottomLeft">rounded</item>-->
+        <!--<item name="cornerSizeBottomLeft">12dp</item>-->
+        <!--<item name="cornerFamilyBottomRight">rounded</item>-->
+        <!--<item name="cornerSizeBottomRight">12dp</item>-->
+    </style>
+
+    <!--Shape Appearance for medium components like cards, alert dialogs-->
+    <style name="ShapeAppearance.AccaTheme.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <!--&lt;!&ndash;Your custom shape here&ndash;&gt;-->
+        <!--<item name="cornerFamilyTopLeft">cut</item>-->
+        <!--<item name="cornerSizeTopLeft">0dp</item>-->
+        <!--<item name="cornerFamilyTopRight">cut</item>-->
+        <!--<item name="cornerSizeTopRight">12dp</item>-->
+        <!--<item name="cornerFamilyBottomLeft">cut</item>-->
+        <!--<item name="cornerSizeBottomLeft">0dp</item>-->
+        <!--<item name="cornerFamilyBottomRight">cut</item>-->
+        <!--<item name="cornerSizeBottomRight">0dp</item>-->
+    </style>
+
+    <!--Shape Appearance for large components like side and bottom navigation drawers-->
+    <style name="ShapeAppearance.AccaTheme.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <!--&lt;!&ndash;Your custom shape here&ndash;&gt;-->
+        <!--<item name="cornerFamilyTopLeft">cut</item>-->
+        <!--<item name="cornerSizeTopLeft">0dp</item>-->
+        <!--<item name="cornerFamilyTopRight">cut</item>-->
+        <!--<item name="cornerSizeTopRight">16dp</item>-->
+        <!--<item name="cornerFamilyBottomLeft">cut</item>-->
+        <!--<item name="cornerSizeBottomLeft">0dp</item>-->
+        <!--<item name="cornerFamilyBottomRight">cut</item>-->
+        <!--<item name="cornerSizeBottomRight">0dp</item>-->
+    </style>
+</resources>
