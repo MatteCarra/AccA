@@ -51,7 +51,7 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         // Load preferences
         mPreferences = Preferences(this)
 
-        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        val toolbar = findViewById<View>(R.id.acc_conf_editor_toolbar) as Toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.title = intent?.getStringExtra("titleTv") ?: getString(R.string.acc_config_editor)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
