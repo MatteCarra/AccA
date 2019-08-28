@@ -11,7 +11,7 @@ class DjsHandler: DjsInterface {
     val SCHEDULE = """^\s*(//)?([0-9]{4}|boot) (.*)""".toRegex(RegexOption.MULTILINE)
     val ID_REGEX = """^: accaScheduleId(\d*)""".toRegex()
     val EXECUTE_ONCE_MATCH_REGEX = """: --delete""".toPattern()
-    val EXECUTE_ON_BOOT_MATCH_REGEX = """: --delete""".toPattern()
+    val EXECUTE_ON_BOOT_MATCH_REGEX = """: --boot""".toPattern()
 
     override suspend fun list(pattern: String): List<DjsSchedule> = withContext(Dispatchers.IO) {
         Shell.su("djsc --list '$pattern'").exec().out.mapNotNull { line ->
