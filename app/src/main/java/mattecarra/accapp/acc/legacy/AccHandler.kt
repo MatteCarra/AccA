@@ -10,11 +10,13 @@ import mattecarra.accapp.acc.ConfigUpdateResult
 import mattecarra.accapp.acc.ConfigUpdater
 import mattecarra.accapp.models.*
 import java.io.IOException
+import java.util.regex.Pattern
 
 
 open class AccHandler: AccInterface {
     // String resources
     private val STRING_UNKNOWN = "Unknown"
+    private val STRING_NOT_CHARGING = "Not charging"
     private val STRING_DISCHARGING = "Discharging"
     private val STRING_CHARGING = "Charging"
 
@@ -111,7 +113,7 @@ open class AccHandler: AccInterface {
     private val NAME_REGEXP = """^\s*NAME=([a-zA-Z0-9]+)""".toRegex(RegexOption.MULTILINE)
     // Regex for INPUT_SUSPEND
     private val INPUT_SUSPEND_REGEXP = """^\s*INPUT_SUSPEND=([01])""".toRegex(RegexOption.MULTILINE)
-    private val STATUS_REGEXP = """^\s*STATUS=(Charging|Discharging|Not charging)""".toRegex(RegexOption.MULTILINE)
+    private val STATUS_REGEXP = """^\s*STATUS=(${STRING_CHARGING}|${STRING_DISCHARGING}|${STRING_NOT_CHARGING})""".toRegex(RegexOption.MULTILINE)
     private val HEALTH_REGEXP = """^\s*HEALTH=([a-zA-Z]+)""".toRegex(RegexOption.MULTILINE)
     // Regex for PRESENT value
     private val PRESENT_REGEXP = """^\s*PRESENT=(\d+)""".toRegex(RegexOption.MULTILINE)
@@ -218,7 +220,10 @@ open class AccHandler: AccInterface {
     }
 
     override suspend fun isBatteryCharging(): Boolean = withContext(Dispatchers.IO) {
-        Shell.su("acc -i").exec().out.find { it.matches(STATUS_REGEXP) } == "STATUS=Charging"
+        STATUS_REGEXP
+            .find(
+                Shell.su("acc -i").exec().out.joinToString("\n")
+            )?.destructured?.component1() == STRING_CHARGING
     }
 
     override suspend fun isAccdRunning(): Boolean = withContext(Dispatchers.IO) {
@@ -264,14 +269,12 @@ open class AccHandler: AccInterface {
         Shell.su("(acc -f $limit &) &").exec().isSuccess
     }
 
-    val BATTERY_IDLE_SUPPORTED = """^\s*- battIdleMode=true""".toRegex(RegexOption.MULTILINE)
+    val BATTERY_IDLE_SUPPORTED = """^\s*-\s*battIdleMode=true""".toPattern(Pattern.MULTILINE)
     override suspend fun isBatteryIdleSupported(): Pair<Int, Boolean> = withContext(Dispatchers.IO) {
         val res = Shell.su("acc -t --").exec()
         Pair(
             res.code,
-            BATTERY_IDLE_SUPPORTED.matches(
-                res.out.joinToString("\n")
-            )
+            BATTERY_IDLE_SUPPORTED.matcher(res.out.joinToString("\n")).find()
         )
     }
 
