@@ -44,7 +44,7 @@ class SchedulesViewModel(application: Application) : AndroidViewModel(applicatio
                             if (scheduleProfile != null)
                                 Schedule(djsSchedule.isEnabled, djsSchedule.time, djsSchedule.executeOnce, djsSchedule.executeOnBoot, scheduleProfile)
                             else {
-                                //TODO handle schedules created by an uninstalled version of the app
+                                Djs.instance.deleteById(djsSchedule.scheduleProfileId)
                                 null
                             }
                         }
