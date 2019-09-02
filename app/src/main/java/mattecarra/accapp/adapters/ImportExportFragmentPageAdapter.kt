@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import mattecarra.accapp.fragments.ExportFragment
 import mattecarra.accapp.fragments.ImportFragment
 
-class ImportExportFragmentPageAdapter internal constructor(fm: FragmentManager, behaviour: Int, fragments) :
+class ImportExportFragmentPageAdapter internal constructor(fm: FragmentManager, behaviour: Int) :
     FragmentPagerAdapter(fm, behaviour) {
 
     private val NUM_ITEMS = 2
