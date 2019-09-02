@@ -46,12 +46,9 @@
     <string name="no_root_message">此应用程序需要 ROOT 权限</string>
     <string name="config_error_title">配置读取错误</string>
     <!-- Exit On Boot Card Strings -->
-    <!-- ################################################### -->
-    <!-- Acc installation -->
+    <!-- ACC installation -->
     <string name="reboot">重启</string>
-    <!-- ################################################### -->
-    <!-- Djs installation -->
-    <!-- ################################################### -->
+    <!-- DJS installation -->
     <string name="edit_on_boot_dialog_hint">留空以禁用</string>
     <string name="save">保存</string>
     <string name="logs">日志</string>
@@ -74,7 +71,6 @@
     <string name="new_config">新建自定义配置</string>
     <string name="voltage_control_file">电压控制文件:</string>
     <string name="edit_voltage_limit">编辑电压限制</string>
-    <string name="voltage_max">最大电压 (mV):</string>
     <string name="disabled">禁用</string>
     <string name="delete">删除</string>
     <string name="no_schedules">无任务计划</string>
@@ -85,7 +81,6 @@
     <string name="apply">应用</string>
     <string name="done">完成</string>
     <string name="info">信息</string>
-    <string name="acc_config_editor">ACC 配置编辑</string>
     <string name="profile_creator">创建配置</string>
     <string name="schedule_creator">创建任务</string>
     <string name="charging_switch_label">充电开关:</string>
