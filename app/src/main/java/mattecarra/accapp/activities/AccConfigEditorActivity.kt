@@ -242,11 +242,11 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         })
 
         viewModel.observeOnPlug(this, Observer { configOnPlug ->
-            config_on_plugged_textview.text = configOnPlug?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
+            config_on_plugged_textview.text = configOnPlug?.let { if(it.isBlank()) getString(R.string.voltage_control_file_not_set) else it } ?: getString(R.string.voltage_control_file_not_set)
         })
 
         viewModel.observeOnBoot(this, Observer { configOnBoot ->
-            tv_config_on_boot.text = configOnBoot?.let { if(it.isBlank()) getString(R.string.not_set) else it } ?: getString(R.string.not_set)
+            tv_config_on_boot.text = configOnBoot?.let { if(it.isBlank()) getString(R.string.voltage_control_file_not_set) else it } ?: getString(R.string.voltage_control_file_not_set)
         })
 
         viewModel.observePrioritizeBatteryIdleMode(this, Observer { checked ->

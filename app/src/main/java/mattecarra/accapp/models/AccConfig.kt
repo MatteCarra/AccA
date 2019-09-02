@@ -39,7 +39,7 @@ data class AccConfig(var configCapacity: ConfigCapacity,
 
     fun getOnPlug(context: Context): String {
         return if (configOnPlug.isNullOrBlank()) {
-            context.getString(R.string.not_set)
+            context.getString(R.string.voltage_control_file_not_set)
         } else {
             configOnPlug as String
         }

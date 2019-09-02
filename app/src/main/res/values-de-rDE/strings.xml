@@ -65,7 +65,7 @@
     <string name="reboot">Neustart</string>
     <string name="djs_installation_failed">Beim Installieren von acc ist etwas schief gelaufen. Bitte stelle sicher, dass eine funktionierende Internetverbindung vorhanden ist. Wenn diese Nachricht weiterhin erscheint, versuche die Installation von \'acc\' mit Magisk Manager - und melde bitte das Problem.</string>
     <string name="acc_installation_failed_title">Installation fehlgeschlagen</string>
-    <string name="not_set">Nicht gesetzt.</string>
+    <string name="voltage_control_file_not_set">Nicht gesetzt.</string>
     <string name="edit_on_boot">Bearbeite Befehl für Systemstart (\'On Boot\')</string>
     <string name="edit_on_boot_dialog_hint">Leer lassen, um zu deaktivieren</string>
     <string name="save">Speichern</string>
