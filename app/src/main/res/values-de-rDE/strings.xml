@@ -50,15 +50,11 @@
     <string name="shutdown_capacity">Herunterfahren (wenn nicht geladen wird) bei:</string>
     <string name="no_root_message">Diese App benötigt ROOT.</string>
     <string name="config_error_title">Konfigurations-Lesefehler</string>
-    <string name="wait">Bitte warte, dies kann einige Sekunden dauern...</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Daemon nach der Anwendung der Einstellungen beenden</string>
-    <!-- ################################################### -->
-    <!-- Acc installation -->
+    <!-- ACC installation -->
     <string name="reboot">Neustart</string>
-    <!-- ################################################### -->
-    <!-- Djs installation -->
-    <!-- ################################################### -->
+    <!-- DJS installation -->
     <string name="edit_on_boot_dialog_hint">Leer lassen, um zu deaktivieren</string>
     <string name="save">Speichern</string>
     <string name="logs">Logs</string>
@@ -83,7 +79,6 @@
     <string name="enable_voltage_limit">Ladespannungslimit aktivieren</string>
     <string name="voltage_control_file">Spannungs-Kontrolldatei:</string>
     <string name="edit_voltage_limit">Spannungslimit bearbeiten</string>
-    <string name="voltage_max">Spannungs-max (mV):</string>
     <string name="disabled">Deaktiviert</string>
     <string name="delete">Löschen</string>
     <string name="no_schedules">Keine Zeitpläne gesetzt</string>
@@ -91,14 +86,12 @@
     <string name="test_switch">Ladeschalter testen</string>
     <string name="no_option_selected">Keine Option ausgewählt; bitte eine auswählen!</string>
     <string name="charging_switch_works">Ausgewählter Ladeschalter funktioniert!</string>
-    <string name="charging_switch_does_not_work">Ausgewählter Ladeschalter funktioniert nicht!</string>
     <string name="automatic">Automatisch</string>
     <string name="error_occurred">Ein Fehler ist aufgetreten</string>
     <string name="retry">Erneut versuchen</string>
     <string name="apply">Übernehmen</string>
     <string name="done">Fertig</string>
     <string name="info">Info</string>
-    <string name="acc_config_editor">Acc-Konfigurationseditor</string>
     <string name="profile_creator">Profilersteller</string>
     <string name="schedule_creator">Planersteller</string>
     <string name="charging_switch_label">Ladeschalter:</string>
