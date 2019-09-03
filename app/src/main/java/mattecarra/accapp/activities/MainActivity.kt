@@ -556,14 +556,13 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                     val editorData = data.getBundleExtra(Constants.DATA_KEY)
                     val profileId = editorData.getInt(Constants.PROFILE_ID_KEY)
                     launch {
-                        val selectedProfile: AccaProfile =
-                            mMainActivityViewModel.getProfileById(profileId)
+                        mMainActivityViewModel.getProfileById(profileId)?.let { selectedProfile ->
+                            // Update the selected Profile
+                            selectedProfile.accConfig = accConfig
 
-                        // Update the selected Profile
-                        selectedProfile.accConfig = accConfig
-
-                        // Update the profile
-                        mMainActivityViewModel.updateProfile(selectedProfile)
+                            // Update the profile
+                            mMainActivityViewModel.updateProfile(selectedProfile)
+                        }
                     }
                 }
             }
@@ -627,16 +626,16 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                     }
                 } else {
                     launch {
-                        val configProfile = mMainActivityViewModel.getProfileById(profileId.toInt())
-
-                        mSchedulesViewModel
-                            .addSchedule(
-                                scheduleName,
-                                time,
-                                executeOnce,
-                                executeOnBoot,
-                                configProfile.accConfig
-                            )
+                        mMainActivityViewModel.getProfileById(profileId.toInt())?.let { configProfile ->
+                            mSchedulesViewModel
+                                .addSchedule(
+                                    scheduleName,
+                                    time,
+                                    executeOnce,
+                                    executeOnBoot,
+                                    configProfile.accConfig
+                                )
+                        }
                     }
                 }
             }
@@ -701,18 +700,18 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                             startActivityForResult(intent, ACC_EDIT_PROFILE_SCHEDULER_REQUEST)
                         }
                     else -> launch {
-                        val configProfile = mMainActivityViewModel.getProfileById(profileId.toInt())
-
-                        mSchedulesViewModel
-                            .editSchedule(
-                                schedule.profile.uid,
-                                scheduleName,
-                                schedule.isEnabled,
-                                time,
-                                executeOnce,
-                                executeOnBoot,
-                                configProfile.accConfig
-                            )
+                        mMainActivityViewModel.getProfileById(profileId.toInt())?.let { configProfile ->
+                                mSchedulesViewModel
+                                    .editSchedule(
+                                        schedule.profile.uid,
+                                        scheduleName,
+                                        schedule.isEnabled,
+                                        time,
+                                        executeOnce,
+                                        executeOnBoot,
+                                        configProfile.accConfig
+                                    )
+                            }
                     }
                 }
             }

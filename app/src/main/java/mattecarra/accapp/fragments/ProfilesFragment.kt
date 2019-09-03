@@ -2,11 +2,13 @@ package mattecarra.accapp.fragments
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.preference.PreferenceManager
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -21,14 +23,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.profiles_fragment.*
 import kotlinx.android.synthetic.main.schedules_fragment.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 import mattecarra.accapp.R
 import mattecarra.accapp._interface.OnProfileClickListener
+import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.adapters.ProfileListAdapter
+import mattecarra.accapp.utils.Constants
+import mattecarra.accapp.utils.ProfileUtils
+import mattecarra.accapp.utils.ScopedFragment
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 // Fragments from: https://codeburst.io/android-swipe-menu-with-recyclerview-8f28a235ff28
 
-class ProfilesFragment : Fragment() {
+class ProfilesFragment : ScopedFragment() {
 
     companion object {
         fun newInstance() = ProfilesFragment()
@@ -48,13 +59,16 @@ class ProfilesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val profilesRecycler: RecyclerView = view.findViewById(R.id.profile_recyclerView)
-        mProfilesAdapter = ProfileListAdapter(context!!)
-        mProfilesAdapter.setOnClickListener(mListener)
-
-        profilesRecycler.adapter = mProfilesAdapter
-        profilesRecycler.layoutManager = LinearLayoutManager(context)
 
         activity?.let {
+            val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(it)
+
+            mProfilesAdapter = ProfileListAdapter(it, ProfileUtils.getCurrentProfile(prefs))
+            mProfilesAdapter.setOnClickListener(mListener)
+
+            profilesRecycler.adapter = mProfilesAdapter
+            profilesRecycler.layoutManager = LinearLayoutManager(context)
+
             mViewModel = ViewModelProviders.of(it).get(ProfilesViewModel::class.java)
 
             // Observe data
@@ -68,6 +82,20 @@ class ProfilesFragment : Fragment() {
                 }
                 mProfilesAdapter.setProfiles(profiles)
             })
+
+            prefs.registerOnSharedPreferenceChangeListener { sharedPreferences, key ->
+                if (key == Constants.PROFILE_KEY) {
+                    launch {
+                        val profileId = ProfileUtils.getCurrentProfile(sharedPreferences)
+
+                        if(profileId != -1 && mViewModel.getProfile(profileId)?.accConfig != Acc.instance.readConfig()) {
+                            ProfileUtils.saveCurrentProfile(-1, sharedPreferences)
+                        } else {
+                            mProfilesAdapter.setActiveProfile(profileId)
+                        }
+                    }
+                }
+            }
         }
 
         val itemTouchCallback = object: ItemTouchHelper.SimpleCallback(0,
