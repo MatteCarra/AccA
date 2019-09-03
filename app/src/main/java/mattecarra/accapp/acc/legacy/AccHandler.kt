@@ -57,7 +57,7 @@ open class AccHandler: AccInterface {
 
         AccConfig(
             AccConfig.ConfigCapacity(capacityShutdown.toIntOrNull() ?: 0, capacityResume.toInt(), capacityPause.toInt()),
-            AccConfig.ConfigVoltage(cVolt?.component1(), cVolt?.component2()?.toIntOrNull()),
+            AccConfig.ConfigVoltage(cVolt?.component1()?.ifBlank { null }, cVolt?.component2()?.toIntOrNull()),
             AccConfig.ConfigTemperature(temperatureCooldown.toIntOrNull() ?: 90,
                 temperatureMax.toIntOrNull() ?: 95,
                 waitSeconds.toIntOrNull() ?: 90),
@@ -80,12 +80,12 @@ open class AccHandler: AccInterface {
 
     // Returns OnBoot value
     private fun getOnBoot(config: CharSequence) : String? {
-        return ON_BOOT.find(config)?.destructured?.component1()?.trim()
+        return ON_BOOT.find(config)?.destructured?.component1()?.trim()?.ifBlank { null }
     }
 
     // Returns OnPlugged value
     private fun getOnPlugged(config: CharSequence) : String? {
-        return ON_PLUGGED.find(config)?.destructured?.component1()?.trim()
+        return ON_PLUGGED.find(config)?.destructured?.component1()?.trim()?.ifBlank { null }
     }
 
     // Returns ResetUnplugged value
@@ -257,8 +257,7 @@ open class AccHandler: AccInterface {
     }
 
     override fun getCurrentChargingSwitch(config: String): String? {
-        val switch = SWITCH.find(config)?.destructured?.component1()?.trim()
-        return if(switch?.isNotEmpty() == true) switch else null
+        return SWITCH.find(config)?.destructured?.component1()?.trim()?.ifBlank { null }
     }
 
     override fun isPrioritizeBatteryIdleMode(config: String): Boolean {

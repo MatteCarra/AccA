@@ -23,7 +23,7 @@ interface ProfileDao {
     fun getProfileByName(name: String): List<AccaProfile>
 
     @Query("SELECT * FROM profiles_table WHERE uid == :id")
-    suspend fun getProfileById(id: Int): AccaProfile
+    suspend fun getProfileById(id: Int): AccaProfile?
 
     @Query("DELETE FROM profiles_table")
     suspend fun deleteAll()

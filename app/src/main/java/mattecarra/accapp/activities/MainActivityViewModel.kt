@@ -34,7 +34,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         mProfileDao.update(profile)
     }
 
-    suspend fun getProfileById(id: Int): AccaProfile {
+    suspend fun getProfileById(id: Int): AccaProfile? {
         return mProfileDao.getProfileById(id)
     }
 }
