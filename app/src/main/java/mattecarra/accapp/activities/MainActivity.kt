@@ -99,14 +99,18 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 loadFragment(mProfilesFragment)
                 return true
             }
-
             R.id.botNav_schedules -> {
-                return if (!Djs.isDjsInstalled(filesDir) || !Djs.initDjs(filesDir) || Djs.isInstalledDjsOutdated()) {
-                    installDjs()
+                return if (!Djs.isDjsInstalled(filesDir)) {
+                    djsInstallationDialog()
                     false
                 } else {
-                    loadFragment(mSchedulesFragment)
-                    true
+                    if (!Djs.initDjs(filesDir) || Djs.isInstalledDjsOutdated()) {
+                        installDjs()
+                        false
+                    } else {
+                        loadFragment(mSchedulesFragment)
+                        true
+                    }
                 }
             }
         }
@@ -114,59 +118,63 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         return false
     }
 
-    fun installDjs() {
+    fun djsInstallationDialog() {
         MaterialDialog(this).show {
             title(R.string.install_djs_title)
             message(R.string.install_djs_description)
             positiveButton(R.string.install) {
-                MaterialDialog(this@MainActivity).show {
-                    title(R.string.installing_djs)
-                    cancelOnTouchOutside(false)
-                    onKeyCodeBackPressed { false }
-                    djsInstallation(this@MainActivity, object : DjsInstallationListener {
-                        override fun onInstallationFailed(result: Shell.Result?) {
-                            MaterialDialog(this@MainActivity)
-                                .show {
-                                    title(R.string.djs_installation_failed_title)
-                                    message(R.string.djs_installation_failed)
-                                    positiveButton(R.string.retry) {
-                                        installDjs()
-                                    }
-                                    negativeButton(android.R.string.cancel) {
-                                        main_bottom_nav.selectedItemId = R.id.botNav_schedules
-                                    }
-                                    if (result != null)
-                                        shareLogsNeutralButton(
-                                            File(
-                                                filesDir,
-                                                "logs/djs-install.log"
-                                            ), R.string.djs_installation_failed_log
-                                        )
-                                }
-                        }
-
-                        override fun onBusyboxMissing() {
-                            MaterialDialog(this@MainActivity)
-                                .show {
-                                    busyBoxError()
-                                    positiveButton(R.string.retry) {
-                                        installDjs()
-                                    }
-                                    negativeButton(android.R.string.cancel) {
-                                        main_bottom_nav.selectedItemId = R.id.botNav_schedules
-                                    }
-                                    cancelOnTouchOutside(false)
-                                }
-                        }
-
-                        override fun onSuccess() {
-                            mPreferences.djsEnabled = true
-                            initUi()
-                        }
-                    })
-                }
+                installDjs()
             }
             negativeButton(android.R.string.no)
+        }
+    }
+
+    fun installDjs() {
+        MaterialDialog(this@MainActivity).show {
+            title(R.string.installing_djs)
+            cancelOnTouchOutside(false)
+            onKeyCodeBackPressed { false }
+            djsInstallation(this@MainActivity, object : DjsInstallationListener {
+                override fun onInstallationFailed(result: Shell.Result?) {
+                    MaterialDialog(this@MainActivity)
+                        .show {
+                            title(R.string.djs_installation_failed_title)
+                            message(R.string.djs_installation_failed)
+                            positiveButton(R.string.retry) {
+                                installDjs()
+                            }
+                            negativeButton(android.R.string.cancel) {
+                                main_bottom_nav.selectedItemId = R.id.botNav_schedules
+                            }
+                            if (result != null)
+                                shareLogsNeutralButton(
+                                    File(
+                                        filesDir,
+                                        "logs/djs-install.log"
+                                    ), R.string.djs_installation_failed_log
+                                )
+                        }
+                }
+
+                override fun onBusyboxMissing() {
+                    MaterialDialog(this@MainActivity)
+                        .show {
+                            busyBoxError()
+                            positiveButton(R.string.retry) {
+                                installDjs()
+                            }
+                            negativeButton(android.R.string.cancel) {
+                                main_bottom_nav.selectedItemId = R.id.botNav_schedules
+                            }
+                            cancelOnTouchOutside(false)
+                        }
+                }
+
+                override fun onSuccess() {
+                    mPreferences.djsEnabled = true
+                    initUi()
+                }
+            })
         }
     }
 
