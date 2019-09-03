@@ -15,7 +15,6 @@ object Constants {
     val SCHEDULE_EXEC_ONCE_KEY = "schedExecOnce"
     val SCHEDULE_EXEC_ONBOOT_KEY = "schedExecOnBoot"
     val SCHEDULE_ENABLED_KEY = "schedEnabled"
-    val SCHEDULE_PROFILE_ID_KEY = "schedProfileId"
 
     // PREFERENCE KEYS
     val CURRENT_UNIT_OF_MEASURE = "current_measure_unit"

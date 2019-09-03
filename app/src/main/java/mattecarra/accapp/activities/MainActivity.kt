@@ -588,7 +588,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             if (data?.hasExtra(Constants.DATA_KEY) == true) {
                 val dataBundle = data.getBundleExtra(Constants.DATA_KEY)
                 val id = dataBundle.getInt(Constants.SCHEDULE_ID_KEY)
-                val scheduleName = dataBundle.getString(Constants.SCHEDULE_ID_KEY)
+                val scheduleName = dataBundle.getString(Constants.SCHEDULE_NAME_KEY)
                 val time = dataBundle.getString(Constants.SCHEDULE_TIME_KEY)
                 val executeOnce = dataBundle.getBoolean(Constants.SCHEDULE_EXEC_ONCE_KEY)
                 val executeOnBoot = dataBundle.getBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY)
@@ -669,25 +669,17 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                             AccConfigEditorActivity::class.java
                         ).also { intent ->
                             val dataBundle = Bundle()
+                            dataBundle.putInt(Constants.SCHEDULE_ID_KEY, schedule.profile.uid)
                             dataBundle.putString(Constants.SCHEDULE_NAME_KEY, scheduleName)
                             dataBundle.putString(Constants.SCHEDULE_TIME_KEY, time)
                             dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONCE_KEY, executeOnce)
                             dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY, executeOnBoot)
-                            dataBundle.putInt(
-                                Constants.SCHEDULE_PROFILE_ID_KEY,
-                                schedule.profile.uid
-                            )
-                            dataBundle.putBoolean(
-                                Constants.SCHEDULE_ENABLED_KEY,
-                                schedule.isEnabled
-                            )
+                            dataBundle.putBoolean(Constants.SCHEDULE_ENABLED_KEY, schedule.isEnabled)
 
                             intent.putExtra(Constants.DATA_KEY, dataBundle)
-                            intent.putExtra(
-                                Constants.TITLE_KEY,
-                                getString(R.string.schedule_creator)
-                            )
+                            intent.putExtra(Constants.TITLE_KEY, getString(R.string.schedule_creator))
                             intent.putExtra(Constants.ACC_CONFIG_KEY, schedule.profile.accConfig)
+
                             startActivityForResult(intent, ACC_EDIT_PROFILE_SCHEDULER_REQUEST)
                         }
                     -3L -> //new custom config
@@ -696,24 +688,15 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                             AccConfigEditorActivity::class.java
                         ).also { intent ->
                             val dataBundle = Bundle()
+                            dataBundle.putInt(Constants.SCHEDULE_ID_KEY, schedule.profile.uid)
                             dataBundle.putString(Constants.SCHEDULE_NAME_KEY, scheduleName)
                             dataBundle.putString(Constants.SCHEDULE_TIME_KEY, time)
                             dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONCE_KEY, executeOnce)
                             dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY, executeOnBoot)
-                            dataBundle.putInt(
-                                Constants.SCHEDULE_PROFILE_ID_KEY,
-                                schedule.profile.uid
-                            )
-                            dataBundle.putBoolean(
-                                Constants.SCHEDULE_ENABLED_KEY,
-                                schedule.isEnabled
-                            )
+                            dataBundle.putBoolean(Constants.SCHEDULE_ENABLED_KEY, schedule.isEnabled)
 
                             intent.putExtra(Constants.DATA_KEY, dataBundle)
-                            intent.putExtra(
-                                Constants.TITLE_KEY,
-                                getString(R.string.schedule_creator)
-                            )
+                            intent.putExtra(Constants.TITLE_KEY, getString(R.string.schedule_creator))
                             intent.putExtra(Constants.ACC_CONFIG_KEY, Acc.instance.defaultConfig)
                             startActivityForResult(intent, ACC_EDIT_PROFILE_SCHEDULER_REQUEST)
                         }
