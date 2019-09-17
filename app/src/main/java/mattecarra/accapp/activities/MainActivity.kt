@@ -191,6 +191,10 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             AboutActivity.launch(this)
             true
         }
+        R.id.menu_appbar_import_export -> {
+            ImportExportActivity.launch(this)
+            true
+        }
         else -> super.onOptionsItemSelected(item)
     }
 
