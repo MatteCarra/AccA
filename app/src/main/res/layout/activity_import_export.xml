@@ -14,15 +14,19 @@
             android:id="@+id/import_export_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            app:title="Import &amp; Export"
             style="?toolbarStyle"/>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/import_export_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <FrameLayout
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/import_export_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <include layout="@layout/content_import_export"/>
-    </FrameLayout>
-
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
