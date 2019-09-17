@@ -12,10 +12,10 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AccaTheme.DayNight">
-        <activity android:name=".activities.ImportExportActivity"></activity>
+        <activity android:name=".activities.ImportExportActivity" />
         <activity
-                android:name=".activities.AboutActivity"
-                android:parentActivityName=".activities.MainActivity"></activity>
+            android:name=".activities.AboutActivity"
+            android:parentActivityName=".activities.MainActivity" />
         <activity android:name=".activities.AccConfigEditorActivity" />
         <activity android:name=".activities.SettingsActivity" />
         <activity
