@@ -50,6 +50,7 @@
 
     <style name="Base.MaterialThemeBuilder" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
+<!--        Investigate M/N Light Theme issues -->
         <item name="android:statusBarColor" tools:targetApi="lollipop">?colorPrimarySurface</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:navigationBarColor" tools:targetApi="lollipop">?android:colorBackground</item>
