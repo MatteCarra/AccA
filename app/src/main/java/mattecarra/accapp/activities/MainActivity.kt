@@ -563,9 +563,10 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                         false
                     ) == true && data.hasExtra(Constants.DATA_KEY)
                 ) {
-                    val accConfig: AccConfig = data.getParcelableExtra(Constants.ACC_CONFIG_KEY)
+                    val accConfig: AccConfig = data.getParcelableExtra(Constants.ACC_CONFIG_KEY) ?: return
+
                     // Extract the data
-                    val editorData = data.getBundleExtra(Constants.DATA_KEY)
+                    val editorData = data.getBundleExtra(Constants.DATA_KEY) ?: return
                     val profileId = editorData.getInt(Constants.PROFILE_ID_KEY)
                     launch {
                         mMainActivityViewModel.getProfileById(profileId)?.let { selectedProfile ->
@@ -580,41 +581,43 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             }
         } else if (requestCode == ACC_ADD_PROFILE_SCHEDULER_REQUEST && resultCode == Activity.RESULT_OK) {
             if (data?.hasExtra(Constants.DATA_KEY) == true) {
-                val dataBundle = data.getBundleExtra(Constants.DATA_KEY)
-                val scheduleName = dataBundle.getString(Constants.SCHEDULE_NAME_KEY)
-                val time = dataBundle.getString(Constants.SCHEDULE_TIME_KEY)
-                val executeOnce = dataBundle.getBoolean(Constants.SCHEDULE_EXEC_ONCE_KEY)
-                val executeOnBoot = dataBundle.getBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY)
+                data.getBundleExtra(Constants.DATA_KEY)?.let { dataBundle ->
+                    val scheduleName = dataBundle.getString(Constants.SCHEDULE_NAME_KEY) ?: return
+                    val time = dataBundle.getString(Constants.SCHEDULE_TIME_KEY)  ?: return
+                    val executeOnce = dataBundle.getBoolean(Constants.SCHEDULE_EXEC_ONCE_KEY)
+                    val executeOnBoot = dataBundle.getBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY)
 
-                mSchedulesViewModel
-                    .addSchedule(
-                        scheduleName,
-                        time,
-                        executeOnce,
-                        executeOnBoot,
-                        data.getParcelableExtra(Constants.ACC_CONFIG_KEY)
-                    )
+                    mSchedulesViewModel
+                        .addSchedule(
+                            scheduleName,
+                            time,
+                            executeOnce,
+                            executeOnBoot,
+                            data.getParcelableExtra(Constants.ACC_CONFIG_KEY)  ?: return
+                        )
+                }
             }
         } else if (requestCode == ACC_EDIT_PROFILE_SCHEDULER_REQUEST && resultCode == Activity.RESULT_OK) {
             if (data?.hasExtra(Constants.DATA_KEY) == true) {
-                val dataBundle = data.getBundleExtra(Constants.DATA_KEY)
-                val id = dataBundle.getInt(Constants.SCHEDULE_ID_KEY)
-                val scheduleName = dataBundle.getString(Constants.SCHEDULE_NAME_KEY)
-                val time = dataBundle.getString(Constants.SCHEDULE_TIME_KEY)
-                val executeOnce = dataBundle.getBoolean(Constants.SCHEDULE_EXEC_ONCE_KEY)
-                val executeOnBoot = dataBundle.getBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY)
-                val enabled = dataBundle.getBoolean(Constants.SCHEDULE_ENABLED_KEY)
+                data.getBundleExtra(Constants.DATA_KEY)?.let { dataBundle ->
+                    val id = dataBundle.getInt(Constants.SCHEDULE_ID_KEY)
+                    val scheduleName = dataBundle.getString(Constants.SCHEDULE_NAME_KEY) ?: return
+                    val time = dataBundle.getString(Constants.SCHEDULE_TIME_KEY) ?: return
+                    val executeOnce = dataBundle.getBoolean(Constants.SCHEDULE_EXEC_ONCE_KEY)
+                    val executeOnBoot = dataBundle.getBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY)
+                    val enabled = dataBundle.getBoolean(Constants.SCHEDULE_ENABLED_KEY)
 
-                mSchedulesViewModel
-                    .editSchedule(
-                        id,
-                        scheduleName,
-                        enabled,
-                        time,
-                        executeOnce,
-                        executeOnBoot,
-                        data.getParcelableExtra(Constants.ACC_CONFIG_KEY)
-                    )
+                    mSchedulesViewModel
+                        .editSchedule(
+                            id,
+                            scheduleName,
+                            enabled,
+                            time,
+                            executeOnce,
+                            executeOnBoot,
+                            data.getParcelableExtra(Constants.ACC_CONFIG_KEY) ?: return
+                        )
+                }
             }
         }
     }
