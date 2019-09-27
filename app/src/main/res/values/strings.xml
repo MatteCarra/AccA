@@ -125,6 +125,7 @@
     <string name="voltage_max">Voltage max (millivolts):</string>
     <string name="disabled">Disabled</string>
     <string name="schedule_recurrent_row_text">Recurrent Job scheduled at %1$02d:%2$02d</string>
+    <string name="schedule_execute_once_row_title">Exec. Once - %1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_text">Job scheduled at %1$02d:%2$02d</string>
     <string name="schedule_boot_row_text">Boot job scheduled</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
@@ -294,4 +295,5 @@
     <string name="about_github">GitHub</string>
     <string name="about_website">Website</string>
     <string name="toast_no_browser_installed">Unable to Open Link!\nMake sure you have a web browser installed.</string>
+
 </resources>
