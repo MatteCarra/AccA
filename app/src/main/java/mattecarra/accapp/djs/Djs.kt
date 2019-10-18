@@ -50,7 +50,7 @@ interface DjsInterface {
 }
 
 object Djs {
-    const val bundledVersion = 201909010
+    const val bundledVersion = 201910180
     private const val defaultVersionPackage = "legacy" /* NOTE: default version has to match a package in acc (ex mattecarra.accapp.djs.*) */
 
     /*
