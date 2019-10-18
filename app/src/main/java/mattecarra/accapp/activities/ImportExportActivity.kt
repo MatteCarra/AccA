@@ -31,7 +31,7 @@ class ImportExportActivity : AppCompatActivity() {
         TabLayoutMediator(
             import_export_tabs,
             import_export_viewpager,
-            TabLayoutMediator.OnConfigureTabCallback { tab, position ->
+            TabLayoutMediator.TabConfigurationStrategy { tab, position ->
                 // Styling
 //                val tabLayout = import_export_tabs
 //
