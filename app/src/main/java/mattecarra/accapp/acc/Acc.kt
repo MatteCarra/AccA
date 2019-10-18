@@ -158,8 +158,8 @@ interface AccInterface {
 }
 
 object Acc {
-    const val bundledVersion = 201909010
-    private const val defaultVersionPackage = "v201905111" /* NOTE: default version has to match a package in acc (ex mattecarra.accapp.acc.*) */
+    const val bundledVersion = 201910132
+    private val defaultVersionPackage = mattecarra.accapp.acc.v201910132.AccHandler::class.java //Default AccHandler, used wen version is not recognized
 
     /*
     * This method returns the name of the package with a compatible AccInterface
@@ -168,7 +168,7 @@ object Acc {
     * */
     private fun getVersionPackageName(v: Int): String {
         return when {
-            v >= 201910132 -> "v201910132"
+            v >= 201910130 -> "v201910132"
             v >= 201903071 -> "v201903071"
             else           -> "legacy" /* This is used for all the versions before v20190371*/
         }
@@ -196,8 +196,7 @@ object Acc {
             val aClass = Class.forName("mattecarra.accapp.acc.${getVersionPackageName(version)}.AccHandler")
             aClass.getDeclaredConstructor()
         } catch (ex: Exception) {
-            val aClass = Class.forName("mattecarra.accapp.acc.$defaultVersionPackage.AccHandler")
-            aClass.getDeclaredConstructor()
+            defaultVersionPackage.getDeclaredConstructor()
         }
 
         INSTANCE = constructor.newInstance() as AccInterface

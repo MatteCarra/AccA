@@ -51,7 +51,7 @@ interface DjsInterface {
 
 object Djs {
     const val bundledVersion = 201910180
-    private const val defaultVersionPackage = "legacy" /* NOTE: default version has to match a package in acc (ex mattecarra.accapp.djs.*) */
+    private val defaultVersionPackage = mattecarra.accapp.djs.legacy.DjsHandler::class.java //Default DjsHandler, used when djs version is not recognized
 
     /*
     * This method returns the name of the package with a compatible AccInterface
@@ -86,8 +86,7 @@ object Djs {
             val aClass = Class.forName("mattecarra.accapp.djs.${getVersionPackageName(version)}.DjsHandler")
             aClass.getDeclaredConstructor()
         } catch (ex: Exception) {
-            val aClass = Class.forName("mattecarra.accapp.djs.$defaultVersionPackage.DjsHandler")
-            aClass.getDeclaredConstructor()
+            defaultVersionPackage.getDeclaredConstructor()
         }
 
         INSTANCE = constructor.newInstance() as DjsInterface
