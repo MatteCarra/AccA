@@ -58,6 +58,7 @@
             android:dialogTitle="@string/theme_option_setting"
             android:entries="@array/theme_option_options"
             android:entryValues="@array/theme_option_values"
+            android:defaultValue="2"
             android:icon="@drawable/ic_round_format_paint_24px"/>
 
     </PreferenceCategory>
