@@ -12,14 +12,16 @@ android {
         release {
             try {
                 def keystoreProperties = new Properties()
-                keystoreProperties.load(new FileInputStream(rootProject.file("keystore.properties")))
+                try {
+                    keystoreProperties.load(new FileInputStream(rootProject.file(System.getenv("ACCA_KEYSTORE_PROPERTIES_LOCATION") ?: "keystore.properties")))
+                } catch(ignored) {}
 
-                storeFile file(keystoreProperties["KEYSTORE_LOCATION"])
-                storePassword keystoreProperties["KEYSTORE_PASSWORD"]
-                keyAlias 'acca'
-                keyPassword keystoreProperties["KEY_PASSWORD"]
+                storeFile file(keystoreProperties["ACCA_KEYSTORE_LOCATION"] ?: System.getenv("ACCA_KEYSTORE_LOCATION"))
+                storePassword keystoreProperties["ACCA_KEYSTORE_PASSWORD"] ?: System.getenv("ACCA_KEYSTORE_PASSWORD")
+                keyAlias keystoreProperties["ACCA_KEY_ALIAS"] ?: System.getenv("ACCA_KEY_ALIAS")
+                keyPassword keystoreProperties["ACCA_KEY_PASSWORD"] ?: System.getenv("ACCA_KEY_PASSWORD")
             } catch (ignored) {
-                println "You should define KEYSTORE_LOCATION, KEYSTORE_PASSWORD and KEY_PASSWORD in keystore.properties."
+                println "You should define ACCA_KEYSTORE_LOCATION, ACCA_KEYSTORE_PASSWORD, ACCA_KEY_ALIAS and ACCA_KEY_PASSWORD in your env variables or in keystore.properties."
             }
         }
     }
