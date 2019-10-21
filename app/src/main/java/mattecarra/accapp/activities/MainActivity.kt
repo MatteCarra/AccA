@@ -312,7 +312,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                     negativeButton(R.string.select_different_version) {
                                         MaterialDialog(this@MainActivity) //select a different acc version dailog
                                             .show {
-                                                title(R.string.acc_version_preference_title)
+                                                title(R.string.acc_version_picker_title)
                                                 message(R.string.acc_version_picker_message)
                                                 cancelOnTouchOutside(false)
                                                 this@MainActivity.launch {

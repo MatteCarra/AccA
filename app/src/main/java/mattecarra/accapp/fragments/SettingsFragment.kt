@@ -78,7 +78,7 @@ class SettingsFragment : PreferenceFragmentCompat(), CoroutineScope {
 
                 MaterialDialog(context)
                     .show {
-                        title(R.string.acc_version_preference_title)
+                        title(R.string.acc_version_picker_title)
                         message(R.string.acc_version_picker_message)
                         cancelOnTouchOutside(false)
                         launch {

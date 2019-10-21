@@ -205,13 +205,15 @@
     <string name="units_of_measure">Units of measure</string>
     <string name="acc_version_preference_title">ACC version</string>
 
-    <string name="acc_version_preference_description">You can choose the ACC variant to use: bundled, master, or developer.
+    <string name="acc_version_preference_description">You can choose the ACC variant to use: bundled, master, develop or any of the released versions.
         Bundled version is guaranteed to always work with AccA - thus it\'s the recommended choice.
         While not guaranteed, other variants are generally safe.
     </string>
 
     <string name="install_bundled_version">Install bundled variant</string>
-    <string name="acc_version_picker_message">Select the desired ACC variant</string>
+
+    <string name="acc_version_picker_title">Select the desired ACC variant</string>
+    <string name="acc_version_picker_message">AccA will download the selected version from the ACC Github repository.\nIf you select master/develop, the ACC version installed will be kept updated to the latest commits.</string>
 
     <string-array name="current_measure_units_options">
         <item>mAmpere (1E-03)</item>
