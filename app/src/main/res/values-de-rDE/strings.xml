@@ -97,6 +97,5 @@
     <string name="charging_switch_label">Ladeschalter:</string>
     <string name="template_capacity_profile">Herunterfahren: %1$d%% - Fortsetzen: %2$d%% - Anhalten: %3$d%%</string>
     <!--Profiles Options-->
-    <string name="profile_selected_toast">%1$s Profil ausgewählt.</string>
     <!-- About Activity -->
 </resources>
