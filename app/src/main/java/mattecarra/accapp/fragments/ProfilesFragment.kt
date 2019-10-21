@@ -39,8 +39,7 @@ import org.jetbrains.anko.uiThread
 
 // Fragments from: https://codeburst.io/android-swipe-menu-with-recyclerview-8f28a235ff28
 
-class ProfilesFragment : ScopedFragment() {
-
+class ProfilesFragment : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
     companion object {
         fun newInstance() = ProfilesFragment()
     }
@@ -83,22 +82,7 @@ class ProfilesFragment : ScopedFragment() {
             mProfilesAdapter.setProfiles(profiles)
         })
 
-        prefs.registerOnSharedPreferenceChangeListener { sharedPreferences, key ->
-            if (key == Constants.PROFILE_KEY) {
-                launch {
-                    val profileId = ProfileUtils.getCurrentProfile(sharedPreferences)
-
-                    val currentConfig = Acc.instance.readConfig()
-                    val selectedProfileConfig = mViewModel.getProfile(profileId)?.accConfig
-
-                    if(profileId != -1 && currentConfig != selectedProfileConfig) {
-                        ProfileUtils.clearCurrentSelectedProfile(sharedPreferences) //if current profile and current config do not match -> the profile is no longer applied
-                    } else {
-                        mProfilesAdapter.setActiveProfile(profileId)
-                    }
-                }
-            }
-        }
+        prefs.registerOnSharedPreferenceChangeListener(this)
 
         val itemTouchCallback = object: ItemTouchHelper.SimpleCallback(0,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
@@ -235,6 +219,23 @@ class ProfilesFragment : ScopedFragment() {
 
         val itemTouchHelper = ItemTouchHelper(itemTouchCallback)
         itemTouchHelper.attachToRecyclerView(profilesRecycler)
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+        if (key == Constants.PROFILE_KEY) {
+            launch {
+                val profileId = ProfileUtils.getCurrentProfile(sharedPreferences)
+
+                val currentConfig = Acc.instance.readConfig()
+                val selectedProfileConfig = mViewModel.getProfile(profileId)?.accConfig
+
+                if(profileId != -1 && currentConfig != selectedProfileConfig) {
+                    ProfileUtils.clearCurrentSelectedProfile(sharedPreferences) //if current profile and current config do not match -> the profile is no longer applied
+                } else {
+                    mProfilesAdapter.setActiveProfile(profileId)
+                }
+            }
+        }
     }
 
     override fun onAttach(context: Context) {
