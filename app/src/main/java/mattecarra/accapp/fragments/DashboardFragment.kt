@@ -108,11 +108,13 @@ class DashboardFragment : ScopedFragment() {
             }
 
             view.dash_resetStatusUnplug_switch.setOnCheckedChangeListener { _, isChecked ->
-                configViewModel.updateAccConfigValue {
-                    it.configResetUnplugged = isChecked
+                launch {
+                    configViewModel.updateAccConfigValue {
+                        it.configResetUnplugged = isChecked
 
-                    //If I manually modify the mAccConfig I have to set current profile to null (custom profile)
-                    configViewModel.setCurrentSelectedProfile(-1)
+                        //If I manually modify the mAccConfig I have to set current profile to null (custom profile)
+                        configViewModel.clearCurrentSelectedProfile()
+                    }
                 }
             }
 

@@ -48,10 +48,10 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     *   config.oneParameter = 1
     * }
     * */
-    fun updateAccConfigValue(callback: (AccConfig) -> Unit) {
+    suspend fun updateAccConfigValue(operation: (AccConfig) -> Unit) {
         val value = config.value!!
 
-        callback(value)
+        operation(value)
 
         this.config.postValue(value)
         saveAccConfig(value)
@@ -60,20 +60,19 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     /*
     * Updates the AccConfig and write on file
     * */
-    fun updateAccConfig(value: AccConfig) {
+    suspend fun updateAccConfig(value: AccConfig) {
         config.postValue(value)
         saveAccConfig(value)
     }
 
     /*
     * Saves config on file. It's run in an async thread every time config is updated.
-    * TODO use some sort of mutex
-    * */
-    //private val saveConfigLock = Object()
-    private fun saveAccConfig(value: AccConfig) = viewModelScope.launch {
+    */
+    private suspend fun saveAccConfig(value: AccConfig) {
         val res = Acc.instance.updateAccConfig(value)
         if(!res.isSuccessful()) {
             res.debug()
+
             //TODO show a toast that tells users there was an error
             /*if (!result.voltControlUpdateSuccessful) {
                 Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()

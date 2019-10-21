@@ -133,5 +133,4 @@
     <string name="template_capacity_profile">Herunterfahren: %1$d%% - Fortsetzen: %2$d%% - Anhalten: %3$d%%</string>
     <string name="template_temperature_profile">Abkühlen: %1$d&#176;C - Max: %2$d&#176;C - Pausieren: %3$ds</string>
     <string name="on_plugged_info">Einsteck (\'On Plug\') Einstellung können eingestellt werden, um Einstellungen jedes Mal zu aktualisieren, wenn mit einer Stromquelle verbunden wird. Dies ist besonders nützlich, um max Spannung/Strom für drahtlose Ladegeräte zu setzen: \"./wireless/voltage_max:V_MAX\" und \"./usb/current_max:CURR_MAX\"</string>
-    <string name="profile_selected_toast">%1$s Profil ausgewählt.</string>
 </resources>

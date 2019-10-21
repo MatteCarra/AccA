@@ -56,43 +56,45 @@ class ProfilesFragment : ScopedFragment() {
         return inflater.inflate(R.layout.profiles_fragment, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val profilesRecycler: RecyclerView = view.findViewById(R.id.profile_recyclerView)
 
-        activity?.let {
-            val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(it)
+        val context = requireContext()
 
-            mProfilesAdapter = ProfileListAdapter(it, ProfileUtils.getCurrentProfile(prefs))
-            mProfilesAdapter.setOnClickListener(mListener)
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-            profilesRecycler.adapter = mProfilesAdapter
-            profilesRecycler.layoutManager = LinearLayoutManager(context)
+        mProfilesAdapter = ProfileListAdapter(context, ProfileUtils.getCurrentProfile(prefs))
+        mProfilesAdapter.setOnClickListener(mListener)
 
-            mViewModel = ViewModelProviders.of(it).get(ProfilesViewModel::class.java)
+        profilesRecycler.adapter = mProfilesAdapter
+        profilesRecycler.layoutManager = LinearLayoutManager(context)
 
-            // Observe data
-            mViewModel.getProfiles().observe(this, Observer { profiles ->
-                if(profiles.isEmpty()) {
-                    profiles_empty_textview.visibility = View.VISIBLE
-                    profilesRecycler.visibility = View.GONE
-                } else {
-                    profiles_empty_textview.visibility = View.GONE
-                    profilesRecycler.visibility = View.VISIBLE
-                }
-                mProfilesAdapter.setProfiles(profiles)
-            })
+        mViewModel = ViewModelProviders.of(this).get(ProfilesViewModel::class.java)
 
-            prefs.registerOnSharedPreferenceChangeListener { sharedPreferences, key ->
-                if (key == Constants.PROFILE_KEY) {
-                    launch {
-                        val profileId = ProfileUtils.getCurrentProfile(sharedPreferences)
+        // Observe data
+        mViewModel.getProfiles().observe(this, Observer { profiles ->
+            if(profiles.isEmpty()) {
+                profiles_empty_textview.visibility = View.VISIBLE
+                profilesRecycler.visibility = View.GONE
+            } else {
+                profiles_empty_textview.visibility = View.GONE
+                profilesRecycler.visibility = View.VISIBLE
+            }
+            mProfilesAdapter.setProfiles(profiles)
+        })
 
-                        if(profileId != -1 && mViewModel.getProfile(profileId)?.accConfig != Acc.instance.readConfig()) {
-                            ProfileUtils.saveCurrentProfile(-1, sharedPreferences)
-                        } else {
-                            mProfilesAdapter.setActiveProfile(profileId)
-                        }
+        prefs.registerOnSharedPreferenceChangeListener { sharedPreferences, key ->
+            if (key == Constants.PROFILE_KEY) {
+                launch {
+                    val profileId = ProfileUtils.getCurrentProfile(sharedPreferences)
+
+                    val currentConfig = Acc.instance.readConfig()
+                    val selectedProfileConfig = mViewModel.getProfile(profileId)?.accConfig
+
+                    if(profileId != -1 && currentConfig != selectedProfileConfig) {
+                        ProfileUtils.clearCurrentSelectedProfile(sharedPreferences) //if current profile and current config do not match -> the profile is no longer applied
+                    } else {
+                        mProfilesAdapter.setActiveProfile(profileId)
                     }
                 }
             }

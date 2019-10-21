@@ -38,7 +38,6 @@ import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.models.Schedule
 import mattecarra.accapp.utils.*
-import org.jetbrains.anko.doAsync
 import java.io.File
 
 class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
@@ -233,7 +232,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     override fun onProfileClick(profile: AccaProfile) {
         // Applies the selected profile
 
-        doAsync {
+        launch {
             mViewModel.updateAccConfig(profile.accConfig)
             mViewModel.setCurrentSelectedProfile(profile.uid)
         }
@@ -241,7 +240,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         // Display Toast for the user.
         Toast.makeText(
             this,
-            getString(R.string.profile_selected_toast, profile.profileName),
+            getString(R.string.selecting_profile_toast, profile.profileName),
             Toast.LENGTH_LONG
         ).show()
 
@@ -514,9 +513,8 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         if (requestCode == ACC_CONFIG_EDITOR_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data?.getBooleanExtra(Constants.ACC_HAS_CHANGES, false) == true) {
-                    doAsync {
-                        val result =
-                            mViewModel.updateAccConfig(data.getParcelableExtra(Constants.ACC_CONFIG_KEY))
+                    launch {
+                        mViewModel.updateAccConfig(data.getParcelableExtra(Constants.ACC_CONFIG_KEY))
 
                         // Remove the current selected profile
                         mViewModel.clearCurrentSelectedProfile()
