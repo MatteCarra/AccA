@@ -277,6 +277,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun checkAccInstalled(): Boolean {
         val version = mPreferences.accVersion
+
         if (!Acc.isAccInstalled(filesDir) || !Acc.initAcc(filesDir) || (version == "bundled" && Acc.isInstalledAccOutdated())) {
             val dialog = MaterialDialog(this).show {
                 title(R.string.installing_acc)
@@ -396,56 +397,76 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         }
 
         val time = System.currentTimeMillis() / 1000
-        if ((version == "master" || version == "dev") && time - mPreferences.lastUpdateCheck > 259200) {
+        if ((version == "master" || version == "dev") && time - mPreferences.lastUpdateCheck > 86400) {
             mPreferences.lastUpdateCheck = time
-
-            val dialog = MaterialDialog(this).show {
-                title(R.string.checking_updates)
-                progress(R.string.wait)
-                cancelOnTouchOutside(false)
-            }
-
-            launch {
-                val res = Acc.instance.upgrade(version)
-                dialog.cancel()
-
-                when (res?.code) {
-                    6 ->
-                        Toast.makeText(
-                            this@MainActivity,
-                            R.string.no_update_available,
-                            Toast.LENGTH_LONG
-                        ).show()
-                    0 ->
-                        Toast.makeText(
-                            this@MainActivity,
-                            R.string.update_completed,
-                            Toast.LENGTH_LONG
-                        ).show()
-                    else -> {
-                        MaterialDialog(this@MainActivity) //Other installation errors can not be handled automatically -> show a dialog with the logs
-                            .show {
-                                title(R.string.acc_installation_failed_title)
-                                message(R.string.acc_installation_failed)
-                                positiveButton(android.R.string.ok) {
-                                    initUi()
-                                }
-
-                                //TODO add logs
-                                //shareLogsNeutralButton(File(filesDir, "logs/acc-install.log"), R.string.acc_installation_failed_log)
-
-                                cancelOnTouchOutside(false)
-                            }
-                    }
-                }
-
-                initUi()
-            }
-
-            return false
+            checkUpdates(version)
         }
 
         return true
+    }
+
+    /*
+    * This method should only be called when version = master | dev
+    * It check if the installed version of acc is checked out to the latest commit and updates it if it's not.
+    * */
+    private fun checkUpdates(version: String) {
+        launch {
+            val lastCommit = GithubUtils.getLatestAccCommit(version)
+
+            if (lastCommit != mPreferences.lastCommit) {
+                mPreferences.lastCommit = lastCommit
+
+                MaterialDialog(this@MainActivity).show {
+                    title(R.string.install_update_dialog)
+                    message(text = getString(R.string.check_update_dialog_message, version))
+                    positiveButton(android.R.string.yes) {
+                        val dialog = MaterialDialog(this@MainActivity).show {
+                            title(R.string.checking_updates)
+                            progress(R.string.wait)
+                            cancelOnTouchOutside(false)
+                        }
+
+                        launch {
+                            val res = Acc.instance.upgrade(version)
+                            dialog.cancel()
+
+                            when (res?.code) {
+                                6 ->
+                                    Toast.makeText(
+                                        this@MainActivity,
+                                        R.string.no_update_available,
+                                        Toast.LENGTH_LONG
+                                    ).show()
+
+                                0 ->
+                                    Toast.makeText(
+                                        this@MainActivity,
+                                        R.string.update_completed,
+                                        Toast.LENGTH_LONG
+                                    ).show()
+
+                                else -> {
+                                    MaterialDialog(this@MainActivity) //Other installation errors can not be handled automatically -> show a dialog with the logs
+                                        .show {
+                                            title(R.string.acc_installation_failed_title)
+                                            message(R.string.acc_installation_failed)
+                                            positiveButton(android.R.string.ok) {
+                                                initUi()
+                                            }
+                                            //TODO add logs
+                                            //shareLogsNeutralButton(File(filesDir, "logs/acc-install.log"), R.string.acc_installation_failed_log)
+
+                                            cancelOnTouchOutside(false)
+                                        }
+                                }
+                            }
+                        }
+
+                    }
+                    negativeButton(android.R.string.no)
+                }
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

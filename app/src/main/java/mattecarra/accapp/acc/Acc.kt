@@ -304,18 +304,6 @@ object Acc {
         preferences.uVMeasureUnit = microVolts >= 6
     }
 
-    suspend fun listAccVersions(): List<String> = withContext(Dispatchers.IO) {
-        (try {
-            JsonParser()
-                .parse(URL("https://api.github.com/repos/VR-25/acc/tags").readText())
-                .asJsonArray
-        } catch (ignored: java.lang.Exception) {
-            JsonArray()
-        }).map {
-            it.asJsonObject["name"].asString
-        }
-    }
-
     fun getAccVersion(): Int {
         return Shell.su("acc --version").exec().out.joinToString(separator = "\n").trim().toIntOrNull() ?: bundledVersion
     }

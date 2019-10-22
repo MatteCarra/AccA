@@ -53,6 +53,14 @@ class Preferences(private val context: Context) {
             editor.apply()
         }
 
+    var lastCommit: String?
+        get() = sharedPrefs.getString("LAST_COMMIT", null)
+        set(value) {
+            val editor = sharedPrefs.edit()
+            editor.putString("LAST_COMMIT", value)
+            editor.apply()
+        }
+
     var djsEnabled: Boolean
         get() = sharedPrefs.getBoolean(DJS_ENABLED, false) && Djs.isDjsInstalled(context.filesDir)
         set(value) {

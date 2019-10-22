@@ -9,6 +9,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
+import mattecarra.accapp.utils.GithubUtils
 import java.io.File
 
 @CheckResult
@@ -62,8 +63,14 @@ suspend fun MaterialDialog.accVersionSingleChoice(
     callback: VersionChoiceListener
 ): MaterialDialog {
     val options = context.resources.getStringArray(R.array.acc_version_options).toMutableList()
-    options.addAll(Acc.listAccVersions())
-    return listItemsSingleChoice(items = options, initialSelection = options.map { it.toLowerCase() }.indexOf(accVersion)) { _, _, text ->
-        callback(text.toString().toLowerCase())
+    val optionValues = context.resources.getStringArray(R.array.acc_version_option_values).toMutableList()
+
+    options.addAll(GithubUtils.listAccVersions())
+    return listItemsSingleChoice(items = options, initialSelection = options.map { it.toLowerCase() }.indexOf(accVersion)) { _, index, text ->
+        if(index in optionValues.indices) {
+            callback(optionValues[index])
+        } else {
+            callback(text.toString().toLowerCase())
+        }
     }
 }

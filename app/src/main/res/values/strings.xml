@@ -297,5 +297,7 @@
     <string name="about_github">GitHub</string>
     <string name="about_website">Website</string>
     <string name="toast_no_browser_installed">Unable to Open Link!\nMake sure you have a web browser installed.</string>
+    <string name="install_update_dialog">Install acc update</string>
+    <string name="check_update_dialog_message">Do yo want to install the latest version of ACC for branch %1$s? ACCA will download the latest version of ACC from Github based on the latest commit of the selected branch. Do you want to continue?</string>
 
 </resources>

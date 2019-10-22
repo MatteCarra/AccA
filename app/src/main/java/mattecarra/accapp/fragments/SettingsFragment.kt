@@ -19,6 +19,7 @@ import mattecarra.accapp.dialogs.*
 import mattecarra.accapp.utils.Constants.ACC_VERSION
 import mattecarra.accapp.djs.Djs
 import mattecarra.accapp.utils.Constants.DJS_ENABLED
+import mattecarra.accapp.utils.GithubUtils
 import java.io.File
 import kotlin.coroutines.CoroutineContext
 
@@ -104,6 +105,7 @@ class SettingsFragment : PreferenceFragmentCompat(), CoroutineScope {
                                             0 -> {
                                                 if(version == "master" || version == "dev")
                                                     preferences.lastUpdateCheck = System.currentTimeMillis() / 1000
+                                                preferences.lastCommit = GithubUtils.getLatestAccCommit(version)
                                                 preferences.accVersion = version
                                             }
                                             else -> {
