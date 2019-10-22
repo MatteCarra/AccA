@@ -236,7 +236,7 @@
     <string name="theme_option_summary">Set the apps\'s theme.</string>
     <string name="acc_version_compatibility_warning_title">ACC version compatibility</string>
 
-    <string name="acc_version_compatibility_warning_description">You choose an ACC variant which is not guaranteed to be compatible with the app.
+    <string name="acc_version_compatibility_warning_description">You have chosen an ACC variant which is not guaranteed to be compatible with the app.
         \nAccA will download the selected version from the ACC Github repository.
         \nMost of the time, you won\'t face incompatibilities, though.
         \nDo you want to continue?
