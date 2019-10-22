@@ -212,8 +212,8 @@
 
     <string name="install_bundled_version">Install bundled variant</string>
 
-    <string name="acc_version_picker_title">Select the desired ACC variant</string>
-    <string name="acc_version_picker_message">AccA will download the selected version from the ACC Github repository.\nIf you select master/develop, the ACC version installed will be kept updated to the latest commits.</string>
+    <string name="acc_version_picker_title">ACC version</string>
+    <string name="acc_version_picker_message">Select the desired ACC variant</string>
 
     <string-array name="current_measure_units_options">
         <item>mAmpere (1E-03)</item>
@@ -237,6 +237,7 @@
     <string name="acc_version_compatibility_warning_title">ACC version compatibility</string>
 
     <string name="acc_version_compatibility_warning_description">You choose an ACC variant which is not guaranteed to be compatible with the app.
+        \nAccA will download the selected version from the ACC Github repository.
         \nMost of the time, you won\'t face incompatibilities, though.
         \nDo you want to continue?
     </string>
