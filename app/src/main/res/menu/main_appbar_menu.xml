@@ -14,9 +14,9 @@
 
     <item
         android:id="@+id/menu_appbar_import_export"
-        android:title="@string/menu_import_sexport"
+        android:title="@string/menu_import_export"
         app:showAsAction="never"
-        android:visible="false" />
+        android:visible="true" />
 
     <item
         android:id="@+id/menu_appbar_about"
