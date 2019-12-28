@@ -155,6 +155,12 @@ interface AccInterface {
     suspend fun updatePrioritizeBatteryIdleMode(enabled: Boolean): Boolean = withContext(Dispatchers.IO){
         Shell.su(getUpdatePrioritizeBatteryIdleModeCommand(enabled)).exec().isSuccess
     }
+
+
+    fun getAddChargingSwitchCommand(switch: String): String
+    suspend fun addChargingSwitch(switch: String): Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getAddChargingSwitchCommand(switch)).exec().isSuccess
+    }
 }
 
 object Acc {

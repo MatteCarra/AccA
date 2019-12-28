@@ -303,5 +303,8 @@
         Do yo want to install the latest version of ACC from branch \'%1$s\'?
         \nACCA will download the latest version of ACC from Github based on the latest commit of the selected branch.
         \nDo you want to continue?</string>
+    <string name="add_charging_switch">Add charging switch</string>
+    <string name="charging_switch_on_value_label">Charging switch ON VALUE</string>
+    <string name="charging_switch_off_value_label">Charging switch OFF VALUE</string>
 
 </resources>

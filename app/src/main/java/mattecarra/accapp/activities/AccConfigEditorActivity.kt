@@ -16,9 +16,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
+import com.afollestad.materialdialogs.callbacks.onDismiss
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
+import com.afollestad.materialdialogs.list.toggleItemChecked
+import com.afollestad.materialdialogs.list.uncheckItem
+import com.afollestad.materialdialogs.list.updateListItemsSingleChoice
 import it.sephiroth.android.library.xtooltip.ClosePolicy
 import it.sephiroth.android.library.xtooltip.Tooltip
+import kotlinx.android.synthetic.main.add_charging_switch_dialog.view.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import mattecarra.accapp.Preferences
@@ -404,6 +411,7 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
 
     fun editChargingSwitchOnClick(v: View) {
         val automaticString = getString(R.string.automatic)
+        val addNewChargingSwitchString = getString(R.string.add_charging_switch)
         val initialSwitch = viewModel.chargeSwitch
 
         MaterialDialog(this).show {
@@ -411,15 +419,64 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
             noAutoDismiss()
 
             launch {
-                val chargingSwitches = listOf(automaticString, *Acc.instance.listChargingSwitches().toTypedArray())
+                var chargingSwitches = listOf(automaticString, addNewChargingSwitchString, *Acc.instance.listChargingSwitches().toTypedArray())
                 var currentIndex = chargingSwitches.indexOf(initialSwitch ?: automaticString)
 
                 setActionButtonEnabled(WhichButton.POSITIVE, currentIndex != -1)
                 setActionButtonEnabled(WhichButton.NEUTRAL, currentIndex != -1)
 
                 listItemsSingleChoice(items = chargingSwitches, initialSelection = currentIndex, waitForPositiveButton = false)  { _, index, text ->
-                    currentIndex = index
+                    if(index == 1) { //Add new charging switch
+                        val previousDialog = this@show //I need to keep a reference of the listItems dialog, to update the list of items
+                        MaterialDialog(this@AccConfigEditorActivity).show {
+                            noAutoDismiss()
+                            title(text = addNewChargingSwitchString)
+                            customView(R.layout.add_charging_switch_dialog)
+                            positiveButton { dialog ->
+                                val progressDialog = MaterialDialog(this@AccConfigEditorActivity).show {
+                                    title(R.string.test_switch)
+                                    progress(R.string.wait)
+                                }
 
+                                val view = dialog.getCustomView()
+                                val switch = "${view.charging_switch_edit_text.text} ${view.charging_switch_on_value_edit_text.text} ${view.charging_switch_off_value_edit_text.text}"
+                                this@AccConfigEditorActivity.launch {
+                                    var success = true
+
+                                    if(Acc.instance.isBatteryCharging()) { //If battery is charging the switch is tested
+                                        if(Acc.instance.testChargingSwitch(switch) != 0) {
+                                            success = false
+                                            Toast.makeText(this@AccConfigEditorActivity, R.string.charging_switch_does_not_work, Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+
+                                    if(success) {
+                                        chargingSwitches = listOf(*chargingSwitches.toTypedArray(), switch) //update the list of switches with the new switch
+
+                                        if(Acc.instance.addChargingSwitch(switch)) {
+                                            previousDialog.updateListItemsSingleChoice(items = chargingSwitches)
+                                            currentIndex = chargingSwitches.size - 1
+                                        } else {
+                                            Toast.makeText(this@AccConfigEditorActivity, R.string.error_occurred, Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+
+                                    progressDialog.dismiss()
+                                    dismiss()
+                                }
+                            }
+                            negativeButton {
+                                dismiss()
+                            }
+                            onDismiss {
+                                previousDialog.toggleItemChecked(currentIndex) //Select the correct item when closing this dialog
+                            }
+                        }
+
+                        return@listItemsSingleChoice
+                    }
+
+                    currentIndex = index
                     setActionButtonEnabled(WhichButton.POSITIVE, index != -1)
                     setActionButtonEnabled(WhichButton.NEUTRAL, index != -1)
                 }

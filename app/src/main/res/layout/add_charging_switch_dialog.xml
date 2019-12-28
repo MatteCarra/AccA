@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/charging_switch_label"
+            android:textColor="?android:attr/textColorPrimary"
+            />
+
+        <EditText
+            android:id="@+id/charging_switch_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:hint="@string/charging_switch_label"
+            android:inputType="text" />
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/charging_switch_on_value_label"
+            android:textColor="?android:attr/textColorPrimary"
+            android:layout_marginTop="18dp"/>
+
+        <EditText
+            android:id="@+id/charging_switch_on_value_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:hint="@string/charging_switch_on_value_label"
+            android:inputType="number" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/charging_switch_off_value_label"
+            android:textColor="?android:attr/textColorPrimary"
+            android:layout_marginTop="18dp"/>
+
+        <EditText
+            android:id="@+id/charging_switch_off_value_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:hint="@string/charging_switch_off_value_label"
+            android:inputType="number" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

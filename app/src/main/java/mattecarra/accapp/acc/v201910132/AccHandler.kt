@@ -326,4 +326,6 @@ open class AccHandler: AccInterface {
     override fun getUpgradeCommand(version: String) = "acc-en --upgrade $version"
 
     override fun getUpdatePrioritizeBatteryIdleModeCommand(enabled: Boolean): String = "acc-en --set prioritizeBattIdleMode $enabled"
+
+    override fun getAddChargingSwitchCommand(switch: String): String = "acc --set chargingSwitch $switch"
 }
