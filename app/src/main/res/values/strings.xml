@@ -280,7 +280,7 @@
         <item>Run on boot</item>
     </string-array>
 
-    <string name="menu_import_sexport">Import/export</string>
+    <string name="menu_import_export">Import &amp; Export</string>
     <string name="execute_on_boot_schedule">Execute on boot</string>
     <string name="edit_schedule">Edit schedule</string>
     <string name="create_schedule">Create schedule</string>
