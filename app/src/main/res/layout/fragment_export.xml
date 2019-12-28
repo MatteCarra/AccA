@@ -5,32 +5,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_secondary"
     tools:context=".fragments.ExportFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/card_content_padding"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/export_frag_title_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select profiles to Export"/>
-
-        <ListView
-            android:id="@+id/export_frag_profile_lv"
+    <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/card_content_padding"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/export_frag_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/OneLinerText.Title"
+                    android:text="Select profiles to Export"/>
+
+            <ListView
+                    android:id="@+id/export_frag_profile_lv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        app:srcCompat="@drawable/ic_outline_save_alt_24px"/>
+            android:id="@+id/export_frag_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            app:srcCompat="@drawable/ic_outline_save_alt_24px"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

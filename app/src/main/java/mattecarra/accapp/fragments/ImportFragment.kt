@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.viewpager2.widget.ViewPager2
 import mattecarra.accapp.R
+import mattecarra.accapp.adapters.ImportExportFragmentPageAdapter
 import mattecarra.accapp.utils.ScopedFragment
 
 class ImportFragment: ScopedFragment() {
@@ -21,10 +23,6 @@ class ImportFragment: ScopedFragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_import, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
 }

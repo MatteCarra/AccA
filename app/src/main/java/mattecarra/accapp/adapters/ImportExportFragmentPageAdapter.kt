@@ -1,19 +1,14 @@
 package mattecarra.accapp.adapters
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Lifecycle
+import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import mattecarra.accapp.fragments.ExportFragment
 import mattecarra.accapp.fragments.ImportFragment
 
-class ImportExportFragmentPageAdapter internal constructor(
-    fm: FragmentManager,
-    lifeCycle: Lifecycle
-) :
-    FragmentStateAdapter(fm, lifeCycle) {
+private const val NUM_ITEMS = 2
 
-    private val NUM_ITEMS = 2
+class ImportExportFragmentPageAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int {
         return NUM_ITEMS
@@ -21,8 +16,8 @@ class ImportExportFragmentPageAdapter internal constructor(
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> ExportFragment.newInstance()
-            1 -> ImportFragment.newInstance()
+            0 -> ImportFragment.newInstance()
+            1 -> ExportFragment.newInstance()
             else -> ExportFragment.newInstance()
         }
     }
