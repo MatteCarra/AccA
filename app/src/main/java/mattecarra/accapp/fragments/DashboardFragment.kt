@@ -1,6 +1,5 @@
 package mattecarra.accapp.fragments
 
-import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -26,7 +25,6 @@ import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.SharedViewModel
 import mattecarra.accapp.databinding.DashboardFragmentBinding
-import mattecarra.accapp.models.BatteryInfo
 import mattecarra.accapp.utils.ScopedFragment
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -79,7 +77,7 @@ class DashboardFragment : ScopedFragment() {
 
             configViewModel.observeConfig(this, Observer { config ->
                 view.dash_resetStatusUnplug_switch.isChecked = config.configResetUnplugged
-                view.dash_resetBSOnPause_switch.isChecked = config.configResetOnPause
+                view.dash_resetBSOnPause_switch.isChecked = config.configResetBsOnPause
             })
 
             view.dash_resetBatteryStats_button.setOnClickListener {
@@ -122,7 +120,7 @@ class DashboardFragment : ScopedFragment() {
             view.dash_resetBSOnPause_switch.setOnCheckedChangeListener { _, isCheked ->
                 launch {
                     configViewModel.updateAccConfigValue {
-                        it.configResetOnPause = isCheked
+                        it.configResetBsOnPause = isCheked
 
                         //If I manually modify the mAccConfig I have to set current profile to null (custom profile)
                         configViewModel.clearCurrentSelectedProfile()

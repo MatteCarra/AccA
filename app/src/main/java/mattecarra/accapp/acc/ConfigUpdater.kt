@@ -25,7 +25,7 @@ data class ConfigUpdater(val accConfig: AccConfig) {
                 accConfig.configCoolDown?.pause
             ),
             acc.updateResetUnplugged(accConfig.configResetUnplugged),
-            acc.updateResetOnPause(accConfig.configResetOnPause),
+            acc.updateResetOnPause(accConfig.configResetBsOnPause),
             acc.updateAccOnBoot(accConfig.configOnBoot),
             acc.updateAccOnPlugged(accConfig.configOnPlug),
             acc.updateAccChargingSwitch(accConfig.configChargeSwitch),
@@ -53,7 +53,7 @@ data class ConfigUpdater(val accConfig: AccConfig) {
                 accConfig.configCoolDown?.pause
             ),
             acc.getUpdateResetUnpluggedCommand(accConfig.configResetUnplugged),
-            acc.getUpdateResetOnPauseCommand(accConfig.configResetOnPause),
+            acc.getUpdateResetOnPauseCommand(accConfig.configResetBsOnPause),
             acc.getUpdateAccOnBootCommand(accConfig.configOnBoot),
             acc.getUpdateAccOnPluggedCommand(accConfig.configOnPlug),
             acc.getUpdateAccChargingSwitchCommand(accConfig.configChargeSwitch),
