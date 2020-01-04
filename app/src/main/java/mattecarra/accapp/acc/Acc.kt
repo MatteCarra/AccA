@@ -128,6 +128,10 @@ interface AccInterface {
         Shell.su(getUpdateResetUnpluggedCommand(resetUnplugged)).exec().isSuccess
     }
 
+    fun getUpdateResetOnPauseCommand(resetOnPause: Boolean): String
+    suspend fun updateResetOnPause(resetOnPause: Boolean): Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateResetOnPauseCommand(resetOnPause)).exec().isSuccess
+    }
 
     fun getUpdateAccChargingSwitchCommand(switch: String?): String
     suspend fun updateAccChargingSwitch(switch: String?) : Boolean = withContext(Dispatchers.IO) {

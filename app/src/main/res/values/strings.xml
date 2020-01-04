@@ -306,5 +306,6 @@
     <string name="add_charging_switch">Add charging switch</string>
     <string name="charging_switch_on_value_label">Charging switch ON VALUE</string>
     <string name="charging_switch_off_value_label">Charging switch OFF VALUE</string>
+    <string name="reset_bs_on_pause">Reset battery stats on limit reached</string>
 
 </resources>

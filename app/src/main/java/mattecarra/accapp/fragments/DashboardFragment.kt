@@ -79,6 +79,7 @@ class DashboardFragment : ScopedFragment() {
 
             configViewModel.observeConfig(this, Observer { config ->
                 view.dash_resetStatusUnplug_switch.isChecked = config.configResetUnplugged
+                view.dash_resetBSOnPause_switch.isChecked = config.configResetOnPause
             })
 
             view.dash_resetBatteryStats_button.setOnClickListener {
@@ -111,6 +112,17 @@ class DashboardFragment : ScopedFragment() {
                 launch {
                     configViewModel.updateAccConfigValue {
                         it.configResetUnplugged = isChecked
+
+                        //If I manually modify the mAccConfig I have to set current profile to null (custom profile)
+                        configViewModel.clearCurrentSelectedProfile()
+                    }
+                }
+            }
+
+            view.dash_resetBSOnPause_switch.setOnCheckedChangeListener { _, isCheked ->
+                launch {
+                    configViewModel.updateAccConfigValue {
+                        it.configResetOnPause = isCheked
 
                         //If I manually modify the mAccConfig I have to set current profile to null (custom profile)
                         configViewModel.clearCurrentSelectedProfile()

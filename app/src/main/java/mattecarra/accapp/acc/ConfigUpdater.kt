@@ -25,6 +25,7 @@ data class ConfigUpdater(val accConfig: AccConfig) {
                 accConfig.configCoolDown?.pause
             ),
             acc.updateResetUnplugged(accConfig.configResetUnplugged),
+            acc.updateResetOnPause(accConfig.configResetOnPause),
             acc.updateAccOnBoot(accConfig.configOnBoot),
             acc.updateAccOnPlugged(accConfig.configOnPlug),
             acc.updateAccChargingSwitch(accConfig.configChargeSwitch),
@@ -52,6 +53,7 @@ data class ConfigUpdater(val accConfig: AccConfig) {
                 accConfig.configCoolDown?.pause
             ),
             acc.getUpdateResetUnpluggedCommand(accConfig.configResetUnplugged),
+            acc.getUpdateResetOnPauseCommand(accConfig.configResetOnPause),
             acc.getUpdateAccOnBootCommand(accConfig.configOnBoot),
             acc.getUpdateAccOnPluggedCommand(accConfig.configOnPlug),
             acc.getUpdateAccChargingSwitchCommand(accConfig.configChargeSwitch),
@@ -69,6 +71,7 @@ data class ConfigUpdateResult(
     val tempUpdateSuccessful: Boolean,
     val coolDownUpdateSuccessful: Boolean,
     val resetUnpluggedUpdateSuccessful: Boolean,
+    val resetBSOnPauseSuccessful: Boolean,
     val onBootUpdateSuccessful: Boolean,
     val onPluggedUpdateSuccessful: Boolean,
     val chargingSwitchUpdateSuccessful: Boolean,
@@ -84,6 +87,8 @@ data class ConfigUpdateResult(
         if(!coolDownUpdateSuccessful) println("Cooldown update update failed")
 
         if(!resetUnpluggedUpdateSuccessful) println("Reset unplugged update failed")
+
+        if(!resetBSOnPauseSuccessful) println("Reset battery stats on pause update failed")
 
         if(!onBootUpdateSuccessful) println("onBoot update failed")
 

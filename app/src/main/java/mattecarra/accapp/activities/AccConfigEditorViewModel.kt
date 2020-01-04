@@ -101,7 +101,7 @@ class AccConfigEditorViewModel(application: Application, private val mAccConfig:
         }
 
     var accConfig: AccConfig
-        get() = AccConfig(capacity, voltageLimit, temperature, onBoot, onPlug, coolDown, mAccConfig.configResetUnplugged /* resetUnplugged */, chargeSwitch, prioritizeBatteryIdleMode)
+        get() = AccConfig(capacity, voltageLimit, temperature, onBoot, onPlug, coolDown, mAccConfig.configResetUnplugged, mAccConfig.configResetOnPause, chargeSwitch, prioritizeBatteryIdleMode)
         set(value) {
             addConfigToHistory(value)
             updateAccConfigLiveData(value)

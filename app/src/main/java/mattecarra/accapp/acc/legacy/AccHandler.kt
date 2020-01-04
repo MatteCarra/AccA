@@ -25,6 +25,7 @@ open class AccHandler: AccInterface {
     val COOLDOWN_CONFIG_REGEXP = """^\s*coolDownRatio=(\d*)/(\d*)""".toRegex(RegexOption.MULTILINE)
     val TEMP_CONFIG_REGEXP = """^\s*temperature=(\d*)-(\d*)_(\d*)""".toRegex(RegexOption.MULTILINE)
     val RESET_UNPLUGGED_CONFIG_REGEXP = """^\s*resetBsOnUnplug=(true|false)""".toRegex(RegexOption.MULTILINE)
+    val RESET_ON_PAUSE_CONFIG_REGEXP = """^\s*resetBsOnPause=(true|false)""".toRegex(RegexOption.MULTILINE)
     val ON_BOOT = """^\s*applyOnBoot=((?:(?!#).)*)""".toRegex(RegexOption.MULTILINE)
     val ON_PLUGGED = """^\s*applyOnPlug=((?:(?!#).)*)""".toRegex(RegexOption.MULTILINE)
     val VOLT_FILE = """^\s*chargingVoltageLimit=((?:(?!:).)*):(\d+)""".toRegex(RegexOption.MULTILINE)
@@ -40,6 +41,7 @@ open class AccHandler: AccInterface {
                 null,
                 null,
                 null,
+                false,
                 false,
                 null,
                 false
@@ -67,6 +69,7 @@ open class AccHandler: AccInterface {
                 AccConfig.ConfigCoolDown(capacityCoolDown.toInt(), coolDownChargeSeconds.toInt(), coolDownPauseSeconds.toInt())
             },
             getResetUnplugged(config),
+            getResetOnPause(config),
             getCurrentChargingSwitch(config),
             isPrioritizeBatteryIdleMode(config)
         )
@@ -91,6 +94,11 @@ open class AccHandler: AccInterface {
     // Returns ResetUnplugged value
     private fun getResetUnplugged(config: CharSequence) : Boolean {
         return RESET_UNPLUGGED_CONFIG_REGEXP.find(config)?.destructured?.component1() == "true"
+    }
+
+    // Returns ResetOnPause value
+    private fun getResetOnPause(config: CharSequence) : Boolean {
+        return RESET_ON_PAUSE_CONFIG_REGEXP.find(config)?.destructured?.component1() == "true"
     }
 
     override suspend fun listVoltageSupportedControlFiles(): List<String> = withContext(Dispatchers.IO) {
@@ -290,6 +298,8 @@ open class AccHandler: AccInterface {
     }
 
     override fun getUpdateResetUnpluggedCommand(resetUnplugged: Boolean) = "acc -s resetBsOnUnplug $resetUnplugged"
+
+    override fun getUpdateResetOnPauseCommand(resetOnPause: Boolean) = "acc-en -s resetBsOnPause $resetOnPause"
 
     override fun getUpdateAccCoolDownCommand(charge: Int?, pause: Int?): String {
         return if(charge != null && pause != null)

@@ -15,7 +15,7 @@ import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.models.ScheduleProfile
 
 
-@Database(entities = [AccaProfile::class, ScheduleProfile::class], version = 5)
+@Database(entities = [AccaProfile::class, ScheduleProfile::class], version = 6)
 @TypeConverters(ConfigConverter::class)
 abstract class AccaRoomDatabase : RoomDatabase() {
 
@@ -50,6 +50,12 @@ abstract class AccaRoomDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_5_6: Migration = object : Migration(5, 6) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE profiles_table ADD COLUMN `configResetOnPause` INTEGER NOT NULL DEFAULT 0");
+            }
+        }
+
         fun getDatabase(context: Context): AccaRoomDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
@@ -60,7 +66,7 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                 // Create database instance here
                 INSTANCE =
                     Room.databaseBuilder(context.applicationContext, AccaRoomDatabase::class.java, DATABASE_NAME)
-                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
+                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
                         .addCallback(object : Callback() {
                             override fun onCreate(db: SupportSQLiteDatabase) {
                                 super.onCreate(db)
@@ -83,6 +89,7 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                         null,
                         null,
                         false,
+                        false,
                         null,
                         false)
                 )
@@ -97,6 +104,7 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                         null,
                         null,
                         false,
+                        false,
                         null,
                         false)
                 )
@@ -110,6 +118,7 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                         null,
                         null,
                         AccConfig.ConfigCoolDown(60, 50, 10),
+                        false,
                         false,
                         null,
                         false)

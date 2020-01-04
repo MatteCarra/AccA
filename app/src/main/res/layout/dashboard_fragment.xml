@@ -300,6 +300,14 @@
                             android:textSize="16sp"
                             android:layout_marginBottom="10dp"/>
 
+                    <Switch android:id="@+id/dash_resetBSOnPause_switch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/reset_bs_on_pause"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_below="@+id/dash_resetStatusUnplug_switch"/>
+
                     <com.google.android.material.button.MaterialButton
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                             android:id="@+id/dash_resetBatteryStats_button"
@@ -307,7 +315,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/reset_stats"
                             android:layout_centerHorizontal="true"
-                            android:layout_below="@+id/dash_resetStatusUnplug_switch"/>
+                            android:layout_below="@+id/dash_resetBSOnPause_switch"/>
 
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
