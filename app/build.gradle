@@ -61,6 +61,7 @@ android {
 }
 
 dependencies {
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
@@ -104,7 +105,8 @@ dependencies {
     // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
-    kapt "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
+    // alternately - if using Java8, use the following instead of lifecycle-compiler
+    implementation "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle"
 
     // Coroutines
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
@@ -112,12 +114,15 @@ dependencies {
 
     // ViewPager
     // https://developer.android.com/jetpack/androidx/releases/viewpager2
-    implementation 'androidx.viewpager2:viewpager2:1.0.0-beta05'
+    implementation "androidx.viewpager2:viewpager2:$versions.viewpager"
 
+    // Google Navigation Components
+//    implementation "androidx.navigation:navigation-fragment-ktx:$versions.nav"
+//    implementation "androidx.navigation:navigation-ui-ktx:$versions.nav"
 
     // Google Material Components
-    implementation 'com.google.android.material:material:1.1.0-beta01'
+    implementation "com.google.android.material:material:$versions.material"
 
     // For custom tabs
-    implementation 'androidx.browser:browser:1.0.0'
+    implementation "androidx.browser:browser:$versions.browser"
 }
