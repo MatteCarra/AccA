@@ -52,6 +52,15 @@ AccA is an official ACC front-end app. It targets mainly those who feel uncomfor
 
 
 ---
+## DOWNLOAD
+
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/mattecarra.accapp/)
+
+
+
+---
 ## PREREQUISITES
 
 
