@@ -4,11 +4,11 @@ import androidx.annotation.WorkerThread
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.acc.AccInterface
 import mattecarra.accapp.acc.ConfigUpdateResult
 import mattecarra.accapp.acc.ConfigUpdater
-import mattecarra.accapp.models.*
+import mattecarra.accapp.models.AccConfig
+import mattecarra.accapp.models.BatteryInfo
 import java.io.IOException
 import java.util.regex.Pattern
 
