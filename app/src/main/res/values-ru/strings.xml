@@ -273,7 +273,7 @@
         <item>Запустить при загрузке</item>
     </string-array>
 
-    <string name="menu_import_sexport">Импорт/Экспорт</string>
+    <string name="menu_import_export">Импорт/Экспорт</string>
     <string name="execute_on_boot_schedule">Выполнить при загрузке</string>
     <string name="edit_schedule">Редактировать расписание</string>
     <string name="create_schedule">Создать расписание</string>

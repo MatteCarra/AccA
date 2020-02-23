@@ -41,7 +41,7 @@ class ExportFragment : ScopedFragment(), CompoundButton.OnCheckedChangeListener 
         mViewModel = ViewModelProvider(this).get(ExportViewModel::class.java)
 
         // Load list of profiles
-        mViewModel.getProfiles().observe(this, Observer { profiles ->
+        mViewModel.getProfiles().observe(viewLifecycleOwner, Observer { profiles ->
             //TODO: Create a nice 'no profiles' view to show/hide
             if (profiles.isEmpty()) {
                 // Hide the view

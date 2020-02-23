@@ -71,7 +71,7 @@ class ProfilesFragment : ScopedFragment(), SharedPreferences.OnSharedPreferenceC
         mViewModel = ViewModelProviders.of(this).get(ProfilesViewModel::class.java)
 
         // Observe data
-        mViewModel.getProfiles().observe(this, Observer { profiles ->
+        mViewModel.getProfiles().observe(viewLifecycleOwner, Observer { profiles ->
             if(profiles.isEmpty()) {
                 profiles_empty_textview.visibility = View.VISIBLE
                 profilesRecycler.visibility = View.GONE

@@ -43,7 +43,7 @@ class SchedulesFragment : ScopedFragment(), OnScheduleClickListener {
             schedule_recyclerView.adapter = adapter
             schedule_recyclerView.layoutManager = LinearLayoutManager(context)
 
-            viewModel.schedules.observe(this, Observer { schedules ->
+            viewModel.schedules.observe(viewLifecycleOwner, Observer { schedules ->
                 if(schedules.isEmpty()) {
                     schedules_empty_textview.visibility = View.VISIBLE
                     schedule_recyclerView.visibility = View.GONE

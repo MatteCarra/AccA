@@ -150,7 +150,7 @@ class DashboardFragment : ScopedFragment() {
                     }
                 }
 
-                mViewModel.daemon.observe(this@DashboardFragment, observer)
+                mViewModel.daemon.observe(viewLifecycleOwner, observer)
 
                 withContext(Dispatchers.IO) {
                     if (stopDaemon)
