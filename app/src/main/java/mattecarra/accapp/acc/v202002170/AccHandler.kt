@@ -103,7 +103,7 @@ open class AccHandler: AccInterface {
     @Throws(IOException::class)
     @WorkerThread
     open fun readConfigToString(): String {
-        return Shell.su("acc-en --set --print").exec().out.joinToString(separator = "\n")
+        return Shell.su(".acc-en --set --print").exec().out.joinToString(separator = "\n")
     }
 
     // Returns OnBoot value
@@ -127,7 +127,7 @@ open class AccHandler: AccInterface {
     }
 
     override suspend fun listVoltageSupportedControlFiles(): List<String> = withContext(Dispatchers.IO) {
-        val res = Shell.su("acc-en -v :").exec()
+        val res = Shell.su(".acc-en -v :").exec()
 
         if(res.isSuccess)
             res.out.filter { it.isNotEmpty() }
@@ -136,7 +136,7 @@ open class AccHandler: AccInterface {
     }
 
     override suspend fun resetBatteryStats(): Boolean = withContext(Dispatchers.IO) {
-        Shell.su("acc-en -R").exec().isSuccess
+        Shell.su(".acc-en -R").exec().isSuccess
     }
 
     /**
@@ -192,7 +192,7 @@ open class AccHandler: AccInterface {
     private val CYCLE_COUNT_REGEXP = """^\s*CYCLE_COUNT=(\d+)""".toRegex(RegexOption.MULTILINE)
 
     override suspend fun getBatteryInfo(): BatteryInfo = withContext(Dispatchers.IO) {
-        val info =  Shell.su("acc-en -i").exec().out.joinToString(separator = "\n")
+        val info =  Shell.su(".acc-en -i").exec().out.joinToString(separator = "\n")
 
         BatteryInfo(
             NAME_REGEXP.find(info)?.destructured?.component1() ?: STRING_UNKNOWN,
@@ -255,29 +255,29 @@ open class AccHandler: AccInterface {
     override suspend fun isBatteryCharging(): Boolean = withContext(Dispatchers.IO) {
         STATUS_REGEXP
             .find(
-                Shell.su("acc-en -i").exec().out.joinToString("\n")
+                Shell.su(".acc-en -i").exec().out.joinToString("\n")
             )?.destructured?.component1() == STRING_CHARGING
     }
 
     override suspend fun isAccdRunning(): Boolean = withContext(Dispatchers.IO) {
-        Shell.su("acc-en -D").exec().out.find { it.contains("accd is running") } != null
+        Shell.su(".acc-en -D").exec().out.find { it.contains("accd is running") } != null
     }
 
     override suspend fun abcStartDaemon(): Boolean = withContext(Dispatchers.IO) {
-        Shell.su("acc-en -D start").exec().isSuccess
+        Shell.su(".acc-en -D start").exec().isSuccess
     }
 
     override suspend fun abcRestartDaemon(): Boolean = withContext(Dispatchers.IO) {
-        Shell.su("acc-en -D restart").exec().isSuccess
+        Shell.su(".acc-en -D restart").exec().isSuccess
     }
 
     override suspend fun abcStopDaemon(): Boolean = withContext(Dispatchers.IO) {
-        Shell.su("acc-en -D stop").exec().isSuccess
+        Shell.su(".acc-en -D stop").exec().isSuccess
     }
 
     //Charging switches
     override suspend fun listChargingSwitches(): List<String> = withContext(Dispatchers.IO) {
-        val res = Shell.su("acc-en -s s:").exec()
+        val res = Shell.su(".acc-en -s s:").exec()
 
         if(res.isSuccess)
             res.out.map { it.trim() }.filter { it.isNotEmpty() }
@@ -286,7 +286,7 @@ open class AccHandler: AccInterface {
     }
 
     override suspend fun testChargingSwitch(chargingSwitch: String?): Int = withContext(Dispatchers.IO) {
-        Shell.su("acc-en -t${chargingSwitch?.let{" $it"} ?: ""}").exec().code
+        Shell.su(".acc-en -t${chargingSwitch?.let{" $it"} ?: ""}").exec().code
     }
 
     override fun getCurrentChargingSwitch(config: String): String? {
@@ -303,7 +303,7 @@ open class AccHandler: AccInterface {
 
     val BATTERY_IDLE_SUPPORTED = """^\s*-\s*battIdleMode=true""".toPattern(Pattern.MULTILINE)
     override suspend fun isBatteryIdleSupported(): Pair<Int, Boolean> = withContext(Dispatchers.IO) {
-        val res = Shell.su("acc-en -t --").exec()
+        val res = Shell.su(".acc-en -t --").exec()
         Pair(
             res.code,
             BATTERY_IDLE_SUPPORTED.matcher(res.out.joinToString("\n")).find()
@@ -322,32 +322,32 @@ open class AccHandler: AccInterface {
             .execute(this)
     }
 
-    override fun getUpdateResetUnpluggedCommand(resetUnplugged: Boolean) = "acc-en -s reset_batt_stats_on_unplug=$resetUnplugged"
+    override fun getUpdateResetUnpluggedCommand(resetUnplugged: Boolean) = ".acc-en -s reset_batt_stats_on_unplug=$resetUnplugged"
 
-    override fun getUpdateResetOnPauseCommand(resetOnPause: Boolean) = "acc-en -s reset_batt_stats_on_pause=$resetOnPause"
+    override fun getUpdateResetOnPauseCommand(resetOnPause: Boolean) = ".acc-en -s reset_batt_stats_on_pause=$resetOnPause"
 
-    override fun getUpdateAccCoolDownCommand(charge: Int?, pause: Int?): String = "acc-en -s cooldown_charge=${charge?.toString().orEmpty()} cooldown_pause=${pause?.toString().orEmpty()}"
+    override fun getUpdateAccCoolDownCommand(charge: Int?, pause: Int?): String = ".acc-en -s cooldown_charge=${charge?.toString().orEmpty()} cooldown_pause=${pause?.toString().orEmpty()}"
 
-    override fun getUpdateAccCapacityCommand(shutdown: Int, coolDown: Int, resume: Int, pause: Int): String = "acc-en -s shutdown_capacity=$shutdown cooldown_capacity=$coolDown resume_capacity=$resume pause_capacity=$pause"
+    override fun getUpdateAccCapacityCommand(shutdown: Int, coolDown: Int, resume: Int, pause: Int): String = ".acc-en -s shutdown_capacity=$shutdown cooldown_capacity=$coolDown resume_capacity=$resume pause_capacity=$pause"
 
-    override fun getUpdateAccTemperatureCommand(coolDownTemperature: Int, temperatureMax: Int, wait: Int): String = "acc-en -s cooldown_temp=${coolDownTemperature} max_temp=${temperatureMax} max_temp_pause=$wait"
+    override fun getUpdateAccTemperatureCommand(coolDownTemperature: Int, temperatureMax: Int, wait: Int): String = ".acc-en -s cooldown_temp=${coolDownTemperature} max_temp=${temperatureMax} max_temp_pause=$wait"
 
-    override fun getUpdateAccVoltControlCommand(voltFile: String?, voltMax: Int?): String = "acc-en --set max_charging_voltage=${voltMax?.toString().orEmpty()}"
+    override fun getUpdateAccVoltControlCommand(voltFile: String?, voltMax: Int?): String = ".acc-en --set max_charging_voltage=${voltMax?.toString().orEmpty()}"
 
-    override fun getUpdateAccCurrentMaxCommand(currMax: Int?): String = "acc-en --set max_charging_current=${currMax?.toString().orEmpty()}"
+    override fun getUpdateAccCurrentMaxCommand(currMax: Int?): String = ".acc-en --set max_charging_current=${currMax?.toString().orEmpty()}"
 
     override fun getUpdateAccOnBootExitCommand(enabled: Boolean): String = "" //Not supported
 
-    override fun getUpdateAccOnBootCommand(command: String?): String = "acc-en -s \"apply_on_boot=${command.orEmpty()}\""
+    override fun getUpdateAccOnBootCommand(command: String?): String = ".acc-en -s \"apply_on_boot=${command.orEmpty()}\""
 
 
-    override fun getUpdateAccOnPluggedCommand(command: String?) : String = "acc-en -s \"apply_on_plug=${command.orEmpty()}\""
+    override fun getUpdateAccOnPluggedCommand(command: String?) : String = ".acc-en -s \"apply_on_plug=${command.orEmpty()}\""
 
-    override fun getUpdateAccChargingSwitchCommand(switch: String?) : String = "acc-en -s \"charging_switch=${switch.orEmpty()}\""
+    override fun getUpdateAccChargingSwitchCommand(switch: String?) : String = ".acc-en -s \"charging_switch=${switch.orEmpty()}\""
 
-    override fun getUpgradeCommand(version: String) = "acc-en --upgrade $version"
+    override fun getUpgradeCommand(version: String) = ".acc-en --upgrade $version"
 
-    override fun getUpdatePrioritizeBatteryIdleModeCommand(enabled: Boolean): String = "acc-en --set prioritize_batt_idle_mode=$enabled"
+    override fun getUpdatePrioritizeBatteryIdleModeCommand(enabled: Boolean): String = ".acc-en --set prioritize_batt_idle_mode=$enabled"
 
     override fun getAddChargingSwitchCommand(switch: String): String = getUpdateAccChargingSwitchCommand(switch)
 }
