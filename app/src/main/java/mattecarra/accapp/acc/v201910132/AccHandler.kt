@@ -37,6 +37,7 @@ open class AccHandler: AccInterface {
             AccConfig(
                 AccConfig.ConfigCapacity(5, 70, 80),
                 AccConfig.ConfigVoltage(null, null),
+                null,
                 AccConfig.ConfigTemperature(40, 45, 90),
                 null,
                 null,
@@ -60,6 +61,7 @@ open class AccHandler: AccInterface {
         AccConfig(
             AccConfig.ConfigCapacity(capacityShutdown.toIntOrNull() ?: 0, capacityResume.toInt(), capacityPause.toInt()),
             AccConfig.ConfigVoltage(cVolt?.component1()?.ifBlank { null }, cVolt?.component2()?.toIntOrNull()),
+            null,
             AccConfig.ConfigTemperature(temperatureCooldown.toIntOrNull() ?: 90,
                 temperatureMax.toIntOrNull() ?: 95,
                 waitSeconds.toIntOrNull() ?: 90),
@@ -319,6 +321,8 @@ open class AccHandler: AccInterface {
             "acc-en --set maxChargingVoltage $voltMax"
         else
             "acc-en --set maxChargingVoltage"
+
+    override fun getUpdateAccCurrentMaxCommand(currMax: Int?): String = "" //NOT SUPPORTED
 
     override fun getUpdateAccOnBootExitCommand(enabled: Boolean): String = "acc-en -s onBootExit $enabled"
 

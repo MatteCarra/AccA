@@ -37,6 +37,15 @@ class AccConfigEditorViewModel(application: Application, private val mAccConfig:
             unsavedChanges = true
         }
 
+    private val currentMaxLiveData = MutableLiveData(mAccConfig.configCurrMax)
+    var currentMaxLimit: Int?
+        get() = currentMaxLiveData.value
+        set(value) {
+            addConfigToHistory(accConfig)
+            currentMaxLiveData.value = value
+            unsavedChanges = true
+        }
+
     private val temperatureLiveData = MutableLiveData(mAccConfig.configTemperature)
     var temperature: AccConfig.ConfigTemperature
         get() = temperatureLiveData.value!!
@@ -101,7 +110,7 @@ class AccConfigEditorViewModel(application: Application, private val mAccConfig:
         }
 
     var accConfig: AccConfig
-        get() = AccConfig(capacity, voltageLimit, temperature, onBoot, onPlug, coolDown, mAccConfig.configResetUnplugged, mAccConfig.configResetBsOnPause, chargeSwitch, prioritizeBatteryIdleMode)
+        get() = AccConfig(capacity, voltageLimit, currentMaxLimit, temperature, onBoot, onPlug, coolDown, mAccConfig.configResetUnplugged, mAccConfig.configResetBsOnPause, chargeSwitch, prioritizeBatteryIdleMode)
         set(value) {
             addConfigToHistory(value)
             updateAccConfigLiveData(value)
@@ -138,6 +147,10 @@ class AccConfigEditorViewModel(application: Application, private val mAccConfig:
 
     fun observeVoltageLimit(owner: LifecycleOwner, observer: Observer<AccConfig.ConfigVoltage>) {
         voltageLiveData.observe(owner, observer)
+    }
+
+    fun observeCurrentMax(owner: LifecycleOwner, observer: Observer<Int?>) {
+        currentMaxLiveData.observe(owner, observer)
     }
 
     fun observeTemperature(owner: LifecycleOwner, observer: Observer<AccConfig.ConfigTemperature>) {

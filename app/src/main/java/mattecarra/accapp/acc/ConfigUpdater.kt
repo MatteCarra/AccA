@@ -15,6 +15,7 @@ data class ConfigUpdater(val accConfig: AccConfig) {
                 accConfig.configVoltage.controlFile,
                 accConfig.configVoltage.max
             ),
+            acc.updateAccCurrentMaxCommand(accConfig.configCurrMax),
             acc.updateAccTemperature(
                 accConfig.configTemperature.coolDownTemperature,
                 accConfig.configTemperature.maxTemperature,
@@ -68,6 +69,7 @@ data class ConfigUpdater(val accConfig: AccConfig) {
 data class ConfigUpdateResult(
     val capacityUpdateSuccessful: Boolean,
     val voltControlUpdateSuccessful: Boolean,
+    val currentMaxUpdateSuccessful: Boolean,
     val tempUpdateSuccessful: Boolean,
     val coolDownUpdateSuccessful: Boolean,
     val resetUnpluggedUpdateSuccessful: Boolean,
@@ -81,6 +83,8 @@ data class ConfigUpdateResult(
         if(!capacityUpdateSuccessful) println("Update capacity update failed")
 
         if(!voltControlUpdateSuccessful) println("Volt control update failed")
+
+        if(!currentMaxUpdateSuccessful) println("Current max update failed")
 
         if(!tempUpdateSuccessful) println("Temp update update failed")
 

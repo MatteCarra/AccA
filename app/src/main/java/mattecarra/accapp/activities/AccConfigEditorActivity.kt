@@ -21,7 +21,6 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.afollestad.materialdialogs.list.toggleItemChecked
-import com.afollestad.materialdialogs.list.uncheckItem
 import com.afollestad.materialdialogs.list.updateListItemsSingleChoice
 import it.sephiroth.android.library.xtooltip.ClosePolicy
 import it.sephiroth.android.library.xtooltip.Tooltip
@@ -30,9 +29,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.acc.Acc
-import mattecarra.accapp.dialogs.onKeyCodeBackPressed
 import mattecarra.accapp.dialogs.progress
-import mattecarra.accapp.dialogs.voltageLimitDialog
+import mattecarra.accapp.dialogs.powerLimitDialog
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.utils.Constants
 import mattecarra.accapp.utils.ScopedAppActivity
@@ -223,6 +221,10 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         voltage_max_edit_text.text = configVoltage.max?.let { "$it mV" } ?: getString(R.string.disabled)
     }
 
+    private fun updateCurrentMaxControlCard(currentMax: Int?) {
+        current_max_edit_text.text = currentMax?.let { "$it mA" } ?: getString(R.string.disabled)
+    }
+
     private fun updateBatteryIdlePreference(enabled: Boolean) {
         battery_idle_switch.isChecked = enabled
     }
@@ -246,6 +248,10 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
 
         viewModel.observeVoltageLimit(this, Observer {
             updateVoltageControlCard(it)
+        })
+
+        viewModel.observeCurrentMax(this, Observer {
+            updateCurrentMaxControlCard(it)
         })
 
         viewModel.observeOnPlug(this, Observer { configOnPlug ->
@@ -292,6 +298,13 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         //battery idle
         battery_idle_switch.setOnClickListener {
             viewModel.prioritizeBatteryIdleMode = battery_idle_switch.isChecked
+        }
+
+        //power card
+        if(Acc.getAccVersion() >= 202002170) {
+            voltage_control_file_ll.visibility = View.GONE
+        } else {
+            current_max_ll.visibility = View.GONE
         }
     }
 
@@ -523,10 +536,10 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         }
     }
 
-    fun editVoltageOnClick(v: View) {
+    fun editPowerOnClick(v: View) {
         MaterialDialog(this@AccConfigEditorActivity).show {
-            voltageLimitDialog(viewModel.voltageLimit, this@AccConfigEditorActivity) { isEnabled, voltageMax, controlFile ->
-                if(isEnabled && voltageMax != null) {
+            powerLimitDialog(viewModel.voltageLimit, viewModel.currentMaxLimit, this@AccConfigEditorActivity) { controlFile, voltageMaxEnabled, voltageMax, currentMaxEnabled, currentMax  ->
+                if(voltageMaxEnabled && voltageMax != null) {
                     viewModel.voltageLimit = AccConfig.ConfigVoltage(
                         controlFile,
                         voltageMax
@@ -534,6 +547,8 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
                 } else {
                     viewModel.voltageLimit = viewModel.voltageLimit.copy(max = null)
                 }
+
+                viewModel.currentMaxLimit = if(currentMaxEnabled) currentMax else null
             }
             negativeButton(android.R.string.cancel)
         }
@@ -542,7 +557,7 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
     fun onInfoClick(v: View) {
         when(v.id) {
             R.id.capacity_control_info -> R.string.capacity_control_info
-            R.id.voltage_control_info -> R.string.voltage_control_info
+            R.id.power_control_info -> R.string.power_control_info
             R.id.temperature_control_info -> R.string.temperature_control_info
             R.id.exit_on_boot_info -> R.string.description_exit_on_boot
             R.id.cooldown_info -> R.string.cooldown_info
@@ -576,8 +591,9 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         viewModel.accConfig = viewModel.accConfig.copy(configCapacity = Acc.instance.defaultConfig.configCapacity, configChargeSwitch = Acc.instance.defaultConfig.configChargeSwitch)
     }
 
-    fun onVoltageControlRestore(view: View) {
+    fun onPowerControlRestore(view: View) {
         viewModel.voltageLimit = Acc.instance.defaultConfig.configVoltage
+        viewModel.currentMaxLimit = Acc.instance.defaultConfig.configCurrMax
     }
 
     fun onTemperatureControlRestore(view: View) {

@@ -15,7 +15,7 @@ import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.models.ScheduleProfile
 
 
-@Database(entities = [AccaProfile::class, ScheduleProfile::class], version = 6)
+@Database(entities = [AccaProfile::class, ScheduleProfile::class], version = 7)
 @TypeConverters(ConfigConverter::class)
 abstract class AccaRoomDatabase : RoomDatabase() {
 
@@ -56,6 +56,13 @@ abstract class AccaRoomDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_6_7: Migration = object : Migration(6, 7) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE profiles_table ADD COLUMN `configCurrMax` INTEGER DEFAULT NULL");
+                database.execSQL("ALTER TABLE schedules_table ADD COLUMN `configCurrMax` INTEGER DEFAULT NULL");
+            }
+        }
+
         fun getDatabase(context: Context): AccaRoomDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
@@ -66,7 +73,7 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                 // Create database instance here
                 INSTANCE =
                     Room.databaseBuilder(context.applicationContext, AccaRoomDatabase::class.java, DATABASE_NAME)
-                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
+                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7)
                         .addCallback(object : Callback() {
                             override fun onCreate(db: SupportSQLiteDatabase) {
                                 super.onCreate(db)
@@ -84,6 +91,7 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                     AccConfig(
                         AccConfig.ConfigCapacity(5, 70, 80),
                         AccConfig.ConfigVoltage(null, null),
+                        null,
                         AccConfig.ConfigTemperature(40, 45, 90),
                         null,
                         null,
@@ -99,6 +107,7 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                     AccConfig(
                         AccConfig.ConfigCapacity(5, 85, 90),
                         AccConfig.ConfigVoltage(null, null),
+                        null,
                         AccConfig.ConfigTemperature(40, 45, 90),
                         null,
                         null,
@@ -114,6 +123,7 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                     AccConfig(
                         AccConfig.ConfigCapacity(5, 70, 80),
                         AccConfig.ConfigVoltage(null, null),
+                        null,
                         AccConfig.ConfigTemperature(40, 45, 90),
                         null,
                         null,

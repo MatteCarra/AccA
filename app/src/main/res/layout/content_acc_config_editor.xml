@@ -216,10 +216,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                        android:text="@string/title_voltage_control" />
+                        android:text="@string/title_power_control" />
 
                     <ImageView
-                        android:id="@+id/voltage_control_restore"
+                        android:id="@+id/power_control_restore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -227,11 +227,11 @@
                         android:foregroundGravity="center"
                         android:background="?selectableItemBackground"
                         app:srcCompat="@drawable/ic_baseline_restore_24px"
-                        android:onClick="onVoltageControlRestore"
+                        android:onClick="onPowerControlRestore"
                         android:contentDescription="@string/restore" />
 
                     <ImageView
-                        android:id="@+id/voltage_control_info"
+                        android:id="@+id/power_control_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -244,6 +244,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/voltage_control_file_ll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -266,7 +267,8 @@
 
                 </LinearLayout>
 
-                <LinearLayout android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginBottom="10dp">
@@ -288,13 +290,37 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/current_max_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/current_max_title"
+                        android:text="@string/current_max"
+                        android:textSize="16sp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:textColor="?android:attr/textColorPrimary"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/current_max_edit_text"
+                        android:textSize="16sp"/>
+
+                </LinearLayout>
+
                 <Button style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/edit_voltage_limit"
+                    android:text="@string/edit_power_limit"
                     android:id="@+id/edit_voltage_limit"
                     android:layout_gravity="center_horizontal"
-                    android:onClick="editVoltageOnClick"/>
+                    android:onClick="editPowerOnClick"/>
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

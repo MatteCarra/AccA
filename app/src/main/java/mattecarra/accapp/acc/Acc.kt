@@ -87,6 +87,11 @@ interface AccInterface {
         Shell.su(getUpdateAccVoltControlCommand(voltFile, voltMax)).exec().isSuccess
     }
 
+    fun getUpdateAccCurrentMaxCommand(currMax: Int?): String
+    suspend fun updateAccCurrentMaxCommand(currMax: Int?) : Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateAccCurrentMaxCommand(currMax)).exec().isSuccess
+    }
+
     /**
      * Updates the temperature related configuration in ACC.
      * @param coolDownTemperature starts cool down phase at the specified temperature.
@@ -316,6 +321,6 @@ object Acc {
     }
 
     fun getAccVersion(): Int {
-        return Shell.su("acc --version").exec().out.joinToString(separator = "\n").trim().toIntOrNull() ?: bundledVersion
+        return Shell.su("acc --version").exec().out.joinToString(separator = "\n").split("(").last().split(")").first().trim().toIntOrNull() ?: bundledVersion
     }
 }

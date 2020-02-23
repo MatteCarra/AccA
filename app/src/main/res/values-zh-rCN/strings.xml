@@ -79,7 +79,6 @@
     <string name="execution_time">执行时间</string>
     <string name="new_config">新建自定义配置</string>
     <string name="voltage_control_file">电压控制文件:</string>
-    <string name="edit_voltage_limit">编辑电压限制</string>
     <string name="voltage_max">最大电压 (mV):</string>
     <string name="disabled">禁用</string>
     <string name="delete">删除</string>

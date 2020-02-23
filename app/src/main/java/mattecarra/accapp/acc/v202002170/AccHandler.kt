@@ -41,7 +41,7 @@ open class AccHandler: AccInterface {
     val ON_PLUGGED = """^\s*apply_on_plug=((?:(?!#).)*)""".toRegex(RegexOption.MULTILINE)
 
     val MAX_CHARGING_VOLTAGE = """^\s*max_charging_voltage=(\d*)""".toRegex(RegexOption.MULTILINE)
-    //TODO max charging current
+    val MAX_CHARGING_CURRENT = """^\s*max_charging_current=(\d*)""".toRegex(RegexOption.MULTILINE)
 
     val SWITCH = """^\s*charging_switch=((?:(?!#).)*)""".toRegex(RegexOption.MULTILINE)
     val PRIORITIZE_BATTERY_IDLE = """^\s*prioritize_batt_idle_mode=(true|false)""".toRegex(RegexOption.MULTILINE)
@@ -51,6 +51,7 @@ open class AccHandler: AccInterface {
             AccConfig(
                 AccConfig.ConfigCapacity(5, 70, 80),
                 AccConfig.ConfigVoltage(null, null),
+                null,
                 AccConfig.ConfigTemperature(40, 45, 90),
                 null,
                 null,
@@ -78,11 +79,12 @@ open class AccHandler: AccInterface {
         val coolDownPauseSeconds = COOLDOWN_PAUSE_REGEXP.find(config)?.destructured?.component1()?.toIntOrNull()
 
         val maxChargingVoltage = MAX_CHARGING_VOLTAGE.find(config)?.destructured?.component1()
-        //TODO maxChargingCurrent
+        val maxChargingCurrent = MAX_CHARGING_CURRENT.find(config)?.destructured?.component1()
 
         AccConfig(
             AccConfig.ConfigCapacity(capacityShutdown.toIntOrNull() ?: 0, capacityResume.toInt(), capacityPause.toInt()),
             AccConfig.ConfigVoltage(null, maxChargingVoltage?.toIntOrNull()),
+            maxChargingCurrent?.toIntOrNull(),
             AccConfig.ConfigTemperature(temperatureCooldown.toIntOrNull() ?: 90,
                 temperatureMax.toIntOrNull() ?: 95,
                 waitSeconds.toIntOrNull() ?: 90),
@@ -332,7 +334,9 @@ open class AccHandler: AccInterface {
 
     override fun getUpdateAccVoltControlCommand(voltFile: String?, voltMax: Int?): String = "acc-en --set max_charging_voltage=${voltMax?.toString().orEmpty()}"
 
-    override fun getUpdateAccOnBootExitCommand(enabled: Boolean): String = "" //TODO remove
+    override fun getUpdateAccCurrentMaxCommand(currMax: Int?): String = "acc-en --set max_charging_current=${currMax?.toString().orEmpty()}"
+
+    override fun getUpdateAccOnBootExitCommand(enabled: Boolean): String = "" //Not supported
 
     override fun getUpdateAccOnBootCommand(command: String?): String = "acc-en -s \"apply_on_boot=${command.orEmpty()}\""
 

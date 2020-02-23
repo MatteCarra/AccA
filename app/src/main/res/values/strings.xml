@@ -121,7 +121,7 @@
     <string name="new_config">New custom config</string>
     <string name="enable_voltage_limit">Enable charging voltage limit</string>
     <string name="voltage_control_file">Voltage control file:</string>
-    <string name="edit_voltage_limit">Edit voltage limit</string>
+    <string name="edit_power_limit">Edit current and voltage limit</string>
     <string name="voltage_max">Voltage max (millivolts):</string>
     <string name="disabled">Disabled</string>
     <string name="schedule_recurrent_row_text">Recurrent Job scheduled at %1$02d:%2$02d</string>
@@ -146,7 +146,7 @@
     <string name="apply">Apply</string>
     <string name="done">Done</string>
     <string name="edit_charging_limit_once_dialog_msg">Your current settings are automatically restored once the chosen battery level is reached.</string>
-    <string name="title_voltage_control">Charging Voltage Control</string>
+    <string name="title_power_control">Charging power control</string>
     <string name="info">Info</string>
     <string name="title_cooldown_control">Cool Down</string>
     <string name="title_on_boot">Apply on Boot</string>
@@ -155,7 +155,7 @@
     <string name="about">About</string>
 
     <string name="capacity_control_info">- SHUTDOWN: automatically shutdown the system at or below this battery level when battery is not charging.&lt;br /&gt;- STOP: and RESUME capacities dictate when charging should stop and resume, respectively.&lt;br /&gt;- CHARGING SWITCH is the control file, plus ON and OFF values for switching charging on/off. By default, ACC uses whatever works.</string>
-    <string name="voltage_control_info">- Every reduction in peak charge voltage of 0.10V/cell is said to double the cycle life.&lt;br /&gt;- Unfortunately, not all devices/kernels support this feature.</string>
+    <string name="power_control_info">- Every reduction in peak charge voltage of 0.10V/cell is said to double the cycle life.&lt;br /&gt;- Unfortunately, not all devices/kernels support this feature.</string>
     <string name="temperature_control_info">- This disables charging for set seconds to cool the battery&lt;br /&gt;- COOL DOWN TEMP depends on COOL DOWN RATIO.&lt;br /&gt;- MAX TEMP works with PAUSE SECONDS.</string>
     <string name="cooldown_info">- Charging ON/OFF ratio in seconds (e.g., coolDownRatio=50/10) - reduces battery stress induced by prolonged high temperature and high charging voltage by periodically pausing charging.&lt;br /&gt;- If charging is too slow, turn this off or change the ratio.&lt;br /&gt;- When disabled, COOL DOWN CAPACITY and COOL DOWN TEMP values are nullified.&lt;br /&gt;- This settings is a fair alternative to the charging voltage limit feature.</string>
     <string name="on_plugged_info">This is used for updating files whose contents change on certain power events (e.g., plugged/unplugged). It is particularly useful for enforcing custom max voltage/current for usb/wireless charging.</string>
@@ -307,5 +307,6 @@
     <string name="charging_switch_on_value_label">Charging switch ON VALUE</string>
     <string name="charging_switch_off_value_label">Charging switch OFF VALUE</string>
     <string name="reset_bs_on_pause">Reset battery stats on limit reached</string>
-
+    <string name="current_max">Current max (mA):</string>
+    <string name="invalid_current_max">Invalid current max value</string>
 </resources>

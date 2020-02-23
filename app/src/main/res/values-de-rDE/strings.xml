@@ -91,7 +91,6 @@
     <string name="new_config">Neue benutzerdefinierte Konfiguration</string>
     <string name="enable_voltage_limit">Ladespannungslimit aktivieren</string>
     <string name="voltage_control_file">Spannungs-Kontrolldatei:</string>
-    <string name="edit_voltage_limit">Spannungslimit bearbeiten</string>
     <string name="voltage_max">Spannungs-max (mV):</string>
     <string name="disabled">Deaktiviert</string>
     <string name="delete">Löschen</string>
@@ -111,14 +110,13 @@
     <string name="apply">Übernehmen</string>
     <string name="done">Fertig</string>
     <string name="edit_charging_limit_once_dialog_msg">Wähle den Prozentpunkt, an dem das Laden angehalten werden soll. Dies wirkt sich nur auf einen Ladezyklus aus.</string>
-    <string name="title_voltage_control">Ladespannungssteuerung</string>
     <string name="info">Info</string>
     <string name="title_cooldown_control">Abkühlung</string>
     <string name="title_on_boot">Hochfahr (\'On boot\') Optionen</string>
     <string name="title_temperature_control">Temperaturregelung</string>
     <string name="title_capacity_control">Kapazitätskontrolle</string>
     <string name="capacity_control_info">Benutze \"Herunterfahren bei\" um das System automatisch herunterzuladen, wenn Akku nicht geladen wird und die Kapazität unter den Prozentpunkt sinkt.\nBenutze Ladevorgang stoppen und fortsetzen, um einzustellen, wann das Laden beendet und neu gestartet wird.\nLadeschalter ist die Datei, die verwendet wird, um dem Gerät mitzuteilen, den Ladevorgang zu stoppen. Standardmäßig testet acc alle verfügbaren Ladeschalter, bis einer gefunden wurde, welcher funktioniert.</string>
-    <string name="voltage_control_info">Diese Einstellung ermöglicht es, eine maximale Ladespannung einzustellen.\nNiedrigere Spannungen schonen den Akku und helfen dabei, ihn kühler zu halten.\nNicht alle Geräte/Kernels unterstützen diese Option.</string>
+    <string name="power_control_info">Diese Einstellung ermöglicht es, eine maximale Ladespannung einzustellen.\nNiedrigere Spannungen schonen den Akku und helfen dabei, ihn kühler zu halten.\nNicht alle Geräte/Kernels unterstützen diese Option.</string>
     <string name="temperature_control_info">Es erlaubt, das Laden zu stoppen, wenn der Akku zu heiß wird.\nEine Temperatur, wann acc die Abkühlzeit starten sollte (Wechsel zwischen laden und entladen, für eine feste Anzahl von Sekunden), oder die maximale Temperatur - wann der Ladevorgang für die angegebenen Sekunden pausiert werden soll, kann eingestellt werden.</string>
     <string name="cooldown_info">Lade/Pausenverhältnis in Sekunden (z.B. coolDownRatio=50/10) - reduziert die Belastung des Akkus, welche durch längere hohe Temperaturen und hohe Ladespannungen verursacht wird, durch periodisches Pausieren des Aufladens.\nWenn das Laden zu langsam ist, schalte dies aus (null value) oder ändere das Verhältnis.\nWenn die Einstellung auf null gesetzt ist, werden Kühlkapazität (\'coolDown capacity\') und Kühltemperatur (\'coolDown temperature\') Werte auch auf null gesetzt.\nNormalerweise wird dies nicht benötigt, wenn die maximale Ladespannung begrenzt wird.</string>
     <string name="acc_config_editor">Acc-Konfigurationseditor</string>

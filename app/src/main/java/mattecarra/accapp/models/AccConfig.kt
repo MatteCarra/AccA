@@ -17,6 +17,7 @@ import mattecarra.accapp.R
 @Parcelize
 data class AccConfig(var configCapacity: ConfigCapacity,
                      var configVoltage: ConfigVoltage,
+                     var configCurrMax: Int?,
                      var configTemperature: ConfigTemperature,
                      var configOnBoot: String?,
                      var configOnPlug: String?,
