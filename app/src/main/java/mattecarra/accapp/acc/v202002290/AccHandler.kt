@@ -260,7 +260,8 @@ open class AccHandler: AccInterface {
     }
 
     override suspend fun isAccdRunning(): Boolean = withContext(Dispatchers.IO) {
-        Shell.su("/sbin/acca -D").exec().isSuccess
+        val code = Shell.su("/sbin/acca -D").exec().code
+        code == 0 || code == 8
     }
 
     override suspend fun abcStartDaemon(): Boolean = withContext(Dispatchers.IO) {
