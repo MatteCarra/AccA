@@ -173,7 +173,7 @@ interface AccInterface {
 }
 
 object Acc {
-    const val bundledVersion = 202002231
+    const val bundledVersion = 202002290
     private val defaultVersionPackage = mattecarra.accapp.acc.v201910132.AccHandler::class.java //Default AccHandler, used wen version is not recognized
 
     /*
@@ -183,6 +183,7 @@ object Acc {
     * */
     private fun getVersionPackageName(v: Int): String {
         return when {
+            v >= 202002290 -> "v202002290"
             v >= 202002170 -> "v202002170"
             v >= 201910130 -> "v201910132"
             v >= 201903071 -> "v201903071"
