@@ -48,13 +48,13 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     *   config.oneParameter = 1
     * }
     * */
-    suspend fun updateAccConfigValue(operation: (AccConfig) -> Unit) {
+    suspend fun updateAccConfigValue(operation: (AccConfig) -> Boolean) {
         val value = config.value!!
 
-        operation(value)
-
-        this.config.postValue(value)
-        saveAccConfig(value)
+        if(operation(value)) {
+            this.config.postValue(value)
+            saveAccConfig(value)
+        }
     }
 
     /*

@@ -109,21 +109,33 @@ class DashboardFragment : ScopedFragment() {
             view.dash_resetStatusUnplug_switch.setOnCheckedChangeListener { _, isChecked ->
                 launch {
                     configViewModel.updateAccConfigValue {
-                        it.configResetUnplugged = isChecked
+                        if(it.configResetUnplugged != isChecked) {
+                            it.configResetUnplugged = isChecked
 
-                        //If I manually modify the mAccConfig I have to set current profile to null (custom profile)
-                        configViewModel.clearCurrentSelectedProfile()
+                            //If I manually modify the mAccConfig I have to set current profile to null (custom profile)
+                            configViewModel.clearCurrentSelectedProfile()
+
+                            true
+                        } else {
+                            false
+                        }
                     }
                 }
             }
 
-            view.dash_resetBSOnPause_switch.setOnCheckedChangeListener { _, isCheked ->
+            view.dash_resetBSOnPause_switch.setOnCheckedChangeListener { _, isChecked ->
                 launch {
                     configViewModel.updateAccConfigValue {
-                        it.configResetBsOnPause = isCheked
+                        if(it.configResetBsOnPause != isChecked) {
+                            it.configResetBsOnPause = isChecked
 
-                        //If I manually modify the mAccConfig I have to set current profile to null (custom profile)
-                        configViewModel.clearCurrentSelectedProfile()
+                            //If I manually modify the mAccConfig I have to set current profile to null (custom profile)
+                            configViewModel.clearCurrentSelectedProfile()
+
+                            true
+                        } else {
+                            false
+                        }
                     }
                 }
             }
