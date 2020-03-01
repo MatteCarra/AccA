@@ -2,14 +2,14 @@ package mattecarra.accapp.acc
 
 import android.content.Context
 import androidx.annotation.WorkerThread
-import com.google.gson.JsonArray
-import com.google.gson.JsonParser
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
+import mattecarra.accapp.CurrentUnit
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
+import mattecarra.accapp.VoltageUnit
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.BatteryInfo
 import java.io.BufferedInputStream
@@ -173,7 +173,7 @@ interface AccInterface {
 }
 
 object Acc {
-    const val bundledVersion = 202002291
+    const val bundledVersion = 202003013
     private val defaultVersionPackage = mattecarra.accapp.acc.v201910132.AccHandler::class.java //Default AccHandler, used wen version is not recognized
 
     /*
@@ -294,7 +294,15 @@ object Acc {
 
             val res = Shell.su("sh ${installShFile.absolutePath} acc").exec()
             createAccInstance()
-            calibrateMeasurements(context)
+
+            if(getAccVersion() > 202002292) {
+                val preferences = Preferences(context)
+                preferences.currentUnitOfMeasure = CurrentUnit.A
+                preferences.voltageUnitOfMeasure = VoltageUnit.V
+            } else {
+                calibrateMeasurements(context)
+            }
+
             res
         } catch (ex: java.lang.Exception) {
             ex.printStackTrace()
@@ -317,8 +325,8 @@ object Acc {
         }
 
         val preferences = Preferences(context)
-        preferences.uACurrent = microAmpere >= 6
-        preferences.uVMeasureUnit = microVolts >= 6
+        preferences.currentUnitOfMeasure = if(microAmpere >= 6) CurrentUnit.uA else CurrentUnit.mA
+        preferences.voltageUnitOfMeasure = if(microVolts >= 6)  VoltageUnit.uV else VoltageUnit.mV
     }
 
     fun getAccVersion(): Int {

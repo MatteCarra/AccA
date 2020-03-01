@@ -2,10 +2,8 @@ package mattecarra.accapp.fragments
 
 import android.app.Application
 import androidx.lifecycle.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.models.BatteryInfo
@@ -35,7 +33,7 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
                             if(batteryInfo.isCharging())
                                 R.string.info_charging_speed_extended
                             else
-                                R.string.info_discharging_speed_extended, batteryInfo.getCurrentNow(mPreferences.uACurrent) * (if(batteryInfo.isCharging()) 1 else -1), batteryInfo.getVoltageNow(mPreferences.uVMeasureUnit)
+                                R.string.info_discharging_speed_extended, batteryInfo.getCurrentNow(mPreferences.currentUnitOfMeasure) * (if(batteryInfo.isCharging()) 1 else -1), batteryInfo.getVoltageNow(mPreferences.voltageUnitOfMeasure)
                         )
 
                 }

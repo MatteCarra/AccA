@@ -199,5 +199,11 @@ class SettingsFragment : PreferenceFragmentCompat(), CoroutineScope {
                 }
             } ?: false
         }
+
+
+        if(Acc.getAccVersion() > 202002290) {
+            findPreference<Preference>("current_measure_unit")?.isEnabled = false
+            findPreference<Preference>("voltage_measure_unit")?.isEnabled = false
+        }
     }
 }

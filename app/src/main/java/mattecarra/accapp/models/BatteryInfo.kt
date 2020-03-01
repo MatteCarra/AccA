@@ -2,6 +2,8 @@ package mattecarra.accapp.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import mattecarra.accapp.CurrentUnit
+import mattecarra.accapp.VoltageUnit
 
 /**
  * A POJO for recording and reading data from 'acc -i'.
@@ -50,10 +52,10 @@ class BatteryInfo(val name: String,
                   val chargerTemp: Int,
                   val chargerTempMax: Int,
                   val isInputCurrentLimited: Boolean,
-                  val voltageNow: Int,
+                  val voltageNow: Float,
                   val voltageMax: Int,
                   val voltageQnovo: Int,
-                  val currentNow: Int,
+                  val currentNow: Float,
                   val currentQnovo: Int,
                   val constantChargeCurrentMax: Int,
                   val temperature: Int,
@@ -71,25 +73,28 @@ class BatteryInfo(val name: String,
                   val chargeControlLimitMax: Int,
                   val chargeControlLimit: Int,
                   val inputCurrentMax: Int,
-                  val cycleCount: Int): Parcelable {
+                  val cycleCount: Int,
+                  val powerNow: Float = 0.0f): Parcelable {
 
-    fun getRawVoltageNow(): Int {
+    fun getRawVoltageNow(): Float {
         return voltageNow
     }
 
-    fun getRawCurrentNow(): Int {
+    fun getRawCurrentNow(): Float {
         return currentNow
     }
 
     /**
      * Returns voltage now as float.
-     * @return current battery operating voltage.
+     * @return current battery operating voltage in V.
      */
-    fun getVoltageNow(uV: Boolean? = null): Float {
-        return if (uV ?: (voltageNow > 1000000)) {
+    fun getVoltageNow(unit: VoltageUnit): Float {
+        return if (unit == VoltageUnit.uV) {
             voltageNow / 1000000f
-        } else {
+        } else if (unit == VoltageUnit.mV) {
             voltageNow / 1000f
+        } else {
+            voltageNow
         }
     }
 
@@ -97,11 +102,13 @@ class BatteryInfo(val name: String,
      * Returns inverted, friendly value for CURRENT_NOW expressed in mAh
      * @return current mAh draw.
      */
-    fun getCurrentNow(uAh: Boolean? = null): Int {
-        return if (uAh ?: (currentNow > 10000 || currentNow < -10000)) { //if abs(currentNow) is > 10000 it's probably expressed in uAh
-            (currentNow / 1000)
-        } else { //else it's probably expressed in mAh
-            currentNow
+    fun getCurrentNow(unit: CurrentUnit): Int {
+        return if (unit == CurrentUnit.uA) {
+            (currentNow / 1000f).toInt()
+        } else if(unit == CurrentUnit.mA) {
+            currentNow.toInt()
+        } else {
+            (currentNow * 1000).toInt()
         }
     }
 

@@ -10,22 +10,47 @@ import mattecarra.accapp.utils.Constants.DJS_ENABLED
 import mattecarra.accapp.utils.Constants.THEME
 import mattecarra.accapp.utils.Constants.VOLTAGE_UNIT_OF_MEASURE
 
+
+enum class CurrentUnit { uA, mA, A }
+enum class VoltageUnit { uV, mV, V }
+
 class Preferences(private val context: Context) {
     private val sharedPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-    var uACurrent: Boolean?
-        get() = sharedPrefs.getString(CURRENT_UNIT_OF_MEASURE, null)?.let { it == "uA" }
+    var currentUnitOfMeasure: CurrentUnit
+        get() = sharedPrefs.getString(CURRENT_UNIT_OF_MEASURE, null)?.let {
+            when(it) {
+                "uA" -> CurrentUnit.uA
+                "mA" -> CurrentUnit.mA
+                else -> CurrentUnit.A
+            }
+        } ?: CurrentUnit.A
         set(value) {
             val editor = sharedPrefs.edit()
-            editor.putString(CURRENT_UNIT_OF_MEASURE, value?.let { if(it) "uA" else "mA" })
+            editor.putString(CURRENT_UNIT_OF_MEASURE, when(value) {
+                    CurrentUnit.uA -> "uA"
+                    CurrentUnit.mA -> "mA"
+                    CurrentUnit.A ->  "A"
+                }
+            )
             editor.apply()
         }
 
-    var uVMeasureUnit: Boolean?
-        get() = sharedPrefs.getString(VOLTAGE_UNIT_OF_MEASURE, null)?.let { it == "uV" }
+    var voltageUnitOfMeasure: VoltageUnit
+        get() = sharedPrefs.getString(VOLTAGE_UNIT_OF_MEASURE, null)?.let {
+            when(it) {
+                "uV" -> VoltageUnit.uV
+                "mV" -> VoltageUnit.mV
+                else -> VoltageUnit.V
+            }
+        } ?: VoltageUnit.V
         set(value) {
             val editor = sharedPrefs.edit()
-            editor.putString(VOLTAGE_UNIT_OF_MEASURE, value?.let { if(it) "uV" else "mV" })
+            editor.putString(VOLTAGE_UNIT_OF_MEASURE, when(value) {
+                VoltageUnit.uV -> "uV"
+                VoltageUnit.mV -> "mV"
+                VoltageUnit.V -> "V"
+            })
             editor.apply()
         }
 
