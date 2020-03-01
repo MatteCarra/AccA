@@ -17,8 +17,8 @@ object Constants {
     val SCHEDULE_ENABLED_KEY = "schedEnabled"
 
     // PREFERENCE KEYS
-    val CURRENT_UNIT_OF_MEASURE = "current_unit_measure_unit"
-    val VOLTAGE_UNIT_OF_MEASURE = "voltage_unit_measure_unit"
+    val CURRENT_UNIT_OF_MEASURE = "current_measure_unit"
+    val VOLTAGE_UNIT_OF_MEASURE = "voltage_measure_unit"
     val THEME = "theme"
     val ACC_VERSION = "acc_version"
     val DJS_ENABLED = "djs_enabled"
