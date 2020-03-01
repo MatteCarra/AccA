@@ -295,9 +295,13 @@ object Acc {
             val res = Shell.su("sh ${installShFile.absolutePath} acc").exec()
             createAccInstance()
 
-            if(getAccVersion() > 202002292) {
+            if(getAccVersion() >= 202002292) {
                 val preferences = Preferences(context)
                 preferences.currentUnitOfMeasure = CurrentUnit.A
+                preferences.voltageUnitOfMeasure = VoltageUnit.V
+            } else if(getAccVersion() >= 202002290) {
+                val preferences = Preferences(context)
+                preferences.currentUnitOfMeasure = CurrentUnit.mA
                 preferences.voltageUnitOfMeasure = VoltageUnit.V
             } else {
                 calibrateMeasurements(context)
