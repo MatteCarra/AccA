@@ -1,15 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">ACCA</string>
+    <string name="app_name_full">Advanced Charging Controller App</string>
+    <string name="title_activity_log_view">記錄檔</string>
+    <string name="title_activity_log_view_file_name">記錄檔</string>
     <!-- ACC Tile Strings -->
+    <string name="tile_acc_no_root">沒有 Root 權限</string>
+    <string name="tile_acc_enabled">ACC 已啟用</string>
+    <string name="tile_acc_disabled">ACC 已關閉</string>
     <!-- Navigation Strings -->
+    <string name="title_dashboard">資訊面板</string>
+    <string name="title_profiles">設定檔</string>
+    <string name="title_schedules">排程</string>
+    <string name="title_settings">設定</string>
     <!-- ACC Daemon Status -->
+    <string name="title_status">狀態</string>
+    <string name="title_acc_daemon">ACC 守護行程</string>
+    <string name="acc_daemon_status_running">ACC 守護行程執行中</string>
+    <string name="acc_daemon_status_not_running">ACC 守護行程未執行</string>
     <!-- ACC Daemon Toggle -->
+    <string name="menu_stop_accd">停用 ACC 守護行程</string>
+    <string name="menu_start_accd">啟用 ACC 守護行程</string>
+    <string name="start">啟用</string>
+    <string name="stop">停用</string>
     <!-- Battery Card Strings -->
+    <string name="title_battery">電池</string>
+    <string name="info_status">狀態</string>
+    <string name="info_charging_speed">充電速度</string>
+    <string name="info_capacity">容量</string>
+    <string name="info_temperature">溫度</string>
+    <string name="info_health">健康狀態</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
+    <string name="info_status_extended">%1$s (%2$s)</string>
+    <string name="info_charging_speed_extended">%1$dmA at %2$.2fV</string>
+    <string name="info_discharging_speed_extended">%1$dmA</string>
     <!-- Profiles Item Labels -->
+    <string name="item_profile_capacity_label">容量:</string>
+    <string name="item_profile_temperature_label">溫度:</string>
+    <string name="status_label">狀態:</string>
+    <string name="battery_info_label">資訊:</string>
+    <string name="reset_unplugged">拔出充電線時重設電池用量資料</string>
+    <string name="reset_stats">重設電池用量資料</string>
+    <string name="enable_cooldown">開啟 cool down:</string>
+    <string name="resume_charge">重新開始充電閥值:</string>
+    <string name="stop_charge">停止充電閥值:</string>
+    <string name="enable_temp_check">啟用溫度檢查 (°C)</string>
+    <string name="max_temp">最高溫度:</string>
+    <string name="pause_seconds">暫停秒數:</string>
+    <string name="charge_seconds">充電秒數:</string>
+    <string name="shutdown_capacity">關機閥值 (沒有充電情況下):</string>
+    <string name="no_root_message">需要 ROOT 才可以使用</string>
+    <string name="config_error_dialog">無法分析 ACC config 檔案!\n請嘗試執行 \"su -c acc --config cat\" 檢查是否有效。</string>
+    <string name="wait">請稍候...\n可能需要幾秒。</string>
     <!-- Exit On Boot Card Strings -->
+    <string name="label_on_boot">applyOnBoot:</string>
     <!-- ACC installation -->
+    <string name="installing_acc">正在安裝 ACC</string>
+    <string name="acc_installation_failed">請把 logcat 和 /data/adb/acc-data/logs/ 回報給開發人員
+        回報至: t.me/acc_group/ 或github.com/MatteCarra/AccA/issues/.
+    </string>
+    <string name="acc_installation_failed_title">ACC 安裝失敗！</string>
     <!-- DJS installation -->
+    <string name="install_djs_title">需要安裝 DJS</string>
+    <string name="installing_djs">正在安裝 DJS</string>
+    <string name="djs_installation_failed">請把 logcat 和 /data/adb/djs-data/logs/ 回報給開發人員
+        回報至: t.me/acc_group/ 或 github.com/MatteCarra/AccA/issues/.
+    </string>
+    <string name="djs_installation_failed_title">DJS 安裝失敗！</string>
+    <string name="voltage_control_file_not_set">未設定。</string>
+    <string name="edit_on_boot">編輯 applyOnboot 設定</string>
+    <string name="edit_on_boot_dialog_hint">留空以停用</string>
+    <string name="save">保存</string>
+    <string name="logs">記錄檔</string>
+    <string name="text_copied_to_clipboard">文字已複製到剪貼簿！</string>
+    <string name="log_file_not_found_title">找不到 Log 文件</string>
+    <string name="unsaved_changes">您尚未保存所作的更改</string>
+    <string name="close_without_saving">捨棄</string>
+    <string name="unsaved_changes_message">您有尚未儲存的更動，是否要保存？</string>
+    <string name="create_acc_profile">建立設定檔</string>
+    <string name="profile_name">設定檔名稱</string>
+    <string name="dialog_profile_name_message">請輸入設定檔名稱:</string>
+    <string name="no_profiles">沒有設定檔</string>
+    <string name="profile_tile_label">設定檔: %1$s</string>
+    <string name="profiles_text_view">設定檔 (長按編輯/刪除):</string>
+    <string name="restart">重新啟用</string>
+    <string name="invalid_chars">設定檔名稱中包含無效字符</string>
+    <string name="voltage_max">Voltage max (millivolts):</string>
+    <string name="disabled">停用</string>
+    <string name="schedule_time">%1$02d:%2$02d</string>
+    <string name="delete">刪除</string>
+    <string name="no_schedules">未安排排程</string>
+    <string name="invalid_voltage_max">此數值通常介於 3500 ~ 4350 (millivolts) 之間</string>
+    <string name="plug_battery_to_test">測試必須在電池充電時進行，請插上充電線再測試一次！</string>
+    <string name="automatic">自動</string>
+    <string name="error_occurred">發生了一個錯誤</string>
+    <string name="retry">重試</string>
+    <string name="edit_charging_limit_once">單次充電，並排除任何限制</string>
+    <string name="done">Done</string>
+    <string name="edit_charging_limit_once_dialog_msg">電量達到所選的數值後，將會自動恢復當前設定。</string>
+    <string name="title_temperature_control">控制溫度</string>
+    <string name="about">關於</string>
+    <string name="capacity_control_info">- 關機: 手機在沒有充電的情況下，如果電量低於您設定的數值，手機將會自動關機。&lt;br /&gt;- 停止充電:電量大於您設定的數值將停止充電。重新開始充電:電量小於您設定的數值將開始充電.&lt;br /&gt;- CHARGING SWITCH 是控制文件, 加上ON / OFF值，用於開啟/關閉充電. By default, ACC uses whatever works.</string>
+    <string name="cooldown_info">- Charging ON/OFF ratio in seconds (e.g., coolDownRatio=50/10) - 通過週期性暫停充電來減少由長時間高溫和快速充電的充電電壓引起的電池壓力。&lt;br /&gt;- 如果充電速度太慢，可以停用或是更改數值.&lt;br /&gt;- 停用時，COOL DOWN CAPACITY和COOL DOWN TEMP的數值均無效。&lt;br /&gt;- 此設定是限制充電電壓有效的替代方案。</string>
+    <string name="battery_idle_info_label">如果啟用，表示您的內核支援電池空閒模式（idle mode），允許手機在停止充電時直接從充電器獲取電源。- &lt;br /&gt;如果此選項被停用，表示您的內核可能不支援此功能。</string>
+    <string name="profile_creator">新增設定檔</string>
+    <string name="schedule_creator">新增排程</string>
+    <string name="title_on_plugged">Apply on Plug</string>
+    <string name="label_on_plugged">applyOnPlug:</string>
+    <string name="edit_on_plugged">編輯 applyOnPlug 設定:</string>
+    <string name="edit_on_plugged_dialog_message">範例: wireless/voltage_max:9000000 usb/current_max:2000000
+        \nTip: applyOnPlug=wireless/voltage_max:9000000  強制開啟 Pixle 手機無線快速充電。
+    
+    </string>
+    <string name="template_capacity_profile">關機: %1$d%% - 重新開始充電: %2$d%% - 停止充電: %3$d%%</string>
     <!--Profiles Options-->
+    <string name="profile_option_edit">編輯</string>
+    <string name="profile_option_rename">重新命名</string>
+    <string name="profile_option_delete">刪除</string>
+    <string name="installation_failed_busybox_title">未安裝 Busybox</string>
+    <string name="logs_not_found">找不到 Log 文件。</string>
+    <string name="acc_telegram">歡迎加入 ACC Telegram 群組 ，可以瞭解更多的使用方法, (t.me/acc_group)!</string>
+    <string name="acc_version_preference_title">ACC 版本</string>
+    <string-array name="current_measure_units_options">
+        <item>mAmpere (1E-03)</item>
+        <item>μAmpere (1E-06)</item>
+    </string-array>
+    <string-array name="voltage_measure_units_options">
+        <item>mV (1E-03)</item>
+        <item>μV (1E-06)</item>
+    </string-array>
+    <string-array name="acc_version_options">
+        <item>Bundled</item>
+        <item>Master</item>
+        <item>開發者</item>
+    </string-array>
+    <string name="theme_option_setting">主題</string>
+    <string name="theme_option_summary">設定主題</string>
+    <string name="restore">回復預設值</string>
+    <string name="undo">復原</string>
+    <string name="checking_updates">檢查更新</string>
+    <string name="no_update_available">沒有可用的更新</string>
+    <string name="update_completed">更新完成！</string>
+    <string name="install">安裝</string>
+    <string name="acc_installation_failed_log">ACC 安裝失敗記錄檔</string>
+    <string name="djs_installation_failed_log">DJS 安裝失敗記錄檔</string>
+    <string name="select_different_version">切換 ACC 版本</string>
+    <string name="prioritize_battery_idle">優先使用電池 idle mode</string>
+    <string name="test_battery_idle">測試電池 idle mode</string>
+    <string name="test_battery_idle_supported_result">手機內核支援電池 idle mode。</string>
+    <string name="test_battery_idle_unsupported_result">手機內核不支援電池 idle mode.</string>
+    <string name="schedule_profile_edit_current">編輯當前文件</string>
+    <string name="schedule_type">排程類型</string>
+    <string name="schedule_name">排程名稱</string>
+    <string-array name="theme_option_options">
+        <item>亮色</item>
+        <item>暗黑</item>
+        <item>系統預設</item>
+    </string-array>
+    <string-array name="schedule_type_entries">
+        <item>重複</item>
+        <item>Run once</item>
+        <item>Run on boot</item>
+    </string-array>
+    <string name="edit_schedule">編輯排程</string>
+    <string name="create_schedule">新增排程</string>
     <!-- About Activity -->
+    <string name="about_acca_version_label">ACCA 版本:</string>
+    <string name="about_acc_version_label">ACC 版本:</string>
+    <string name="about_project_github">在 GitHub 上的專案</string>
+    <string name="about_github">GitHub</string>
+    <string name="about_website">Website</string>
+    <string name="toast_no_browser_installed">無法開啟連結!\n請檢查您是否有安裝網頁瀏覽器。</string>
 </resources>

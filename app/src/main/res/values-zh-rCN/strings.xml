@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ACCA</string>
+    <string name="app_name_full">高级充电控制应用程序</string>
     <string name="title_activity_log_view">日志</string>
     <string name="title_activity_log_view_file_name">日志</string>
     <!-- ACC Tile Strings -->
@@ -10,11 +11,13 @@
     <!-- Navigation Strings -->
     <string name="title_dashboard">状态列表</string>
     <string name="title_profiles">配置列表</string>
+    <string name="title_schedules">计划任务</string>
     <string name="title_settings">设置</string>
     <!-- ACC Daemon Status -->
     <string name="title_status">状态</string>
     <string name="title_acc_daemon">ACC 守护进程</string>
     <string name="acc_daemon_status_running">ACC 守护进程 运行中</string>
+    <string name="acc_daemon_status_not_running">ACC 守护进程未运行</string>
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">停止 ACC 守护进程</string>
     <string name="menu_start_accd">启动 ACC 守护进程</string>
@@ -24,6 +27,7 @@
     <string name="title_battery">电池</string>
     <string name="info_status">状态</string>
     <string name="info_charging_speed">充电速度</string>
+    <string name="info_discharging_speed">当前</string>
     <string name="info_capacity">容量</string>
     <string name="info_temperature">温度</string>
     <string name="info_health">健康状况</string>
@@ -36,25 +40,53 @@
     <string name="item_profile_temperature_label">温度:</string>
     <string name="status_label">状态:</string>
     <string name="battery_info_label">信息:</string>
+    <string name="reset_unplugged">断开插头后重置电池状态</string>
+    <string name="reset_stats">重置电池状态</string>
     <string name="enable_cooldown">启用冷却:</string>
-    <string name="cooldown_capacity">开始冷却阈值:</string>
-    <string name="resume_charge">恢复充电阈值:</string>
-    <string name="stop_charge">停止充电阈值:</string>
-    <string name="enable_temp_check">启用温控 (°C)</string>
+    <string name="cooldown_capacity">开始冷却阀值 %% ：</string>
+    <string name="resume_charge">恢复充电阀值:</string>
+    <string name="stop_charge">停止充电阀值:</string>
+    <string name="enable_temp_check">启用温控（°C）</string>
     <string name="cooldown_temp">开始冷却温度:</string>
     <string name="max_temp">最高温度:</string>
+    <string name="pause_seconds">暂停秒数：</string>
     <string name="charge_seconds">充电秒数:</string>
+    <string name="shutdown_capacity">关机(未充电状态)阀值:</string>
     <string name="no_root_message">此应用程序需要 ROOT 权限</string>
     <string name="config_error_title">配置读取错误</string>
+    <string name="config_error_dialog">解析ACC配置失败！\n请检查“su -c acc --config cat”是否生效。</string>
+    <string name="wait">请稍候...\n这将需要几秒钟时间。</string>
     <!-- Exit On Boot Card Strings -->
+    <string name="title_exit_on_boot">应用设置后停止守护进程</string>
+    <string name="description_exit_on_boot">此应用于在启动时更新文件。</string>
+    <string name="label_on_boot">applyOnBoot:</string>
     <!-- ACC installation -->
+    <string name="installing_acc">正在安裝 ACC</string>
     <string name="reboot">重启</string>
+    <string name="acc_installation_failed">请把错误日志和 /data/adb/acc-data/logs/ 回报给开发者人员
+        回报于: t.me/acc_group/ 或是 
+ github.com/MatteCarra/AccA/issues/.
+    </string>
+    <string name="acc_installation_failed_title">ACC 安装失败！</string>
     <!-- DJS installation -->
-    <string name="acc_installation_failed_title">安装失败</string>
-    <string name="voltage_control_file_not_set">未设置</string>
-    <string name="edit_on_boot">编辑 启动时(On Boot) 值</string>
+    <string name="install_djs_title">需要 DJS</string>
+    <string name="install_djs_description">为了此功能的操作，我们必须启用 DJS。
+        \nDJS (Daily Job Scheduler) 是用于计划 ACC 设置的轻量级附件。
+        \nDJS 守护程序将在启动时与ACC守护程序一起启动。
+    </string>
+    <string name="installing_djs">正在安装 DJS</string>
+    <string name="djs_installation_failed">请把错误日志和 /data/adb/acc-data/logs/ 提交给开发者人员
+        提交于: t.me/acc_group/ 或是 
+ github.com/MatteCarra/AccA/issues/.
+    </string>
+    <string name="djs_installation_failed_title">DJS 安装失败！</string>
+    <string name="voltage_control_file_not_set">未设置。</string>
+    <string name="edit_on_boot">编辑 applyOnboot 设置</string>
     <string name="edit_on_boot_dialog_hint">留空以禁用</string>
     <string name="save">保存</string>
+    <string name="edit_on_boot_dialog_message">示例：battery/voltage_max:4100000 /sys/kernel/fast_charge/force_fast_charge:1
+        --exit.\n\"--exit\" 可选；应用设置后停止守护程序。
+    </string>
     <string name="logs">日志</string>
     <string name="text_copied_to_clipboard">文本复制到剪贴板!</string>
     <string name="log_file_not_found_title">未找到日志文件</string>
@@ -64,6 +96,7 @@
     <string name="unsaved_changes_message">你有未保存的更改。你想保存它们吗?</string>
     <string name="create_acc_profile">创建配置文件</string>
     <string name="profile_name">配置名称</string>
+    <string name="dialog_profile_name_message">输入要分配给此配置的名称：</string>
     <string name="no_profiles">配置未设置</string>
     <string name="profile_not_selected">自定义设置</string>
     <string name="profile_tile_label">配置: %1$s</string>
@@ -73,21 +106,128 @@
     <string name="recurrent_schedule">仅运行一次</string>
     <string name="execution_time">执行时间</string>
     <string name="new_config">新建自定义配置</string>
+    <string name="enable_voltage_limit">启用充电电电压限制</string>
     <string name="voltage_control_file">电压控制文件:</string>
-    <string name="voltage_max">最大电压 (mV):</string>
+    <string name="edit_power_limit">编辑电流和电压限制</string>
+    <string name="voltage_max">最大电压（毫伏）：</string>
     <string name="disabled">禁用</string>
+    <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">删除</string>
     <string name="no_schedules">无任务计划</string>
+    <string name="wrong_volt_file">所选文件无效，或内核不支持这功能。</string>
+    <string name="invalid_voltage_max">值应该在 3500 至 4350（毫伏）之间</string>
     <string name="edit_charging_switch">编辑充电开关</string>
+    <string name="test_switch">测试充电开关</string>
+    <string name="no_option_selected">未选择任何选项，请选择一个!</string>
+    <string name="charging_switch_works">所选充电开关可工作！</string>
+    <string name="charging_switch_does_not_work">所选充电开关不工作！</string>
+    <string name="plug_battery_to_test">测试前电池必须充电。插入充电器重试！</string>
     <string name="automatic">自动</string>
     <string name="error_occurred">发生了一个错误</string>
     <string name="retry">重试</string>
     <string name="apply">应用</string>
     <string name="done">完成</string>
     <string name="info">信息</string>
+    <string name="title_cooldown_control">冷却</string>
+    <string name="title_on_boot">系统启动时应用</string>
+    <string name="title_temperature_control">温度控制</string>
+    <string name="title_capacity_control">容量控制</string>
+    <string name="about">关于</string>
+    <string name="capacity_control_info">- 自动关机阈值: 手机在没有充电的情况下，如果电池电量低于所设置的值，手机将自动关机。&lt;br /&gt;- 停止充电阈值:与“恢复充电阈值”配合，指示手机自动停止充电和自动恢复充电的阈值。&lt;br /&gt;- CHARGING SWITCH is the control file, plus ON and OFF values for switching charging on/off. By default, ACC uses whatever works.</string>
+    <string name="acc_config_editor">ACC 配置编辑器</string>
     <string name="profile_creator">创建配置</string>
     <string name="schedule_creator">创建任务</string>
     <string name="charging_switch_label">充电开关:</string>
+    <string name="title_on_plugged">充电时应用</string>
+    <string name="label_on_plugged">applyOnPlug:</string>
+    <string name="edit_on_plugged">编辑 applyOnboot 设置:</string>
+    <string name="edit_on_plugged_dialog_message">示例：wireless/voltage_max:9000000 usb/current_max:2000000
+        提示：applyOnPlug=wireless/voltage_max:9000000 可以强制在一些谷歌Pixel设备上快速无线充电。
+    </string>
+    <string name="template_capacity_profile">关机: %1$d%% - 恢复充电: %2$d%% - 停止充电: %3$d%%</string>
     <!--Profiles Options-->
+    <string name="profile_option_edit">编辑</string>
+    <string name="profile_option_rename">重命名</string>
+    <string name="profile_option_delete">删除</string>
+    <string name="installation_failed_busybox_title">Busybox 未安装</string>
+    <string name="installation_failed_busybox">请先安装busybox库</string>
+    <string name="share">分享</string>
+    <string name="logs_not_found">找不到日志文件。</string>
+    <string name="acc_telegram">加入 ACC Telegram 群 (t.me/acc_group) 以获得更多额外支援。</string>
+    <string name="current_measure_unit_preference_title">当前计量单位</string>
+    <string name="current_measure_unit_preference_description">ACC 从系统接口获取充电信息。
+        有些系统以 µA(微安培) 表示电流，有些以 mA (毫安培).
+        如果检测单位不正确，您可以手动设置。
+    </string>
+    <string name="voltage_measure_unit_preference_title">电压计量单位</string>
+    <string name="voltage_measure_unit_preference_title_description">ACC 从系统接口获取充电信息。
+        有些系统以 µV(微伏特) 表示电压，有些以 mV (毫伏特).
+        如果检测单位不正确，您可以手动设置。
+    </string>
+    <string name="units_of_measure">计量单位</string>
+    <string name="acc_version_preference_title">ACC 版本</string>
+    <string name="install_bundled_version">安装 bundled 版本</string>
+    <string-array name="current_measure_units_options">
+        <item>毫安</item>
+        <item>微安</item>
+    </string-array>
+    <string-array name="voltage_measure_units_options">
+        <item>毫伏</item>
+        <item>微伏</item>
+    </string-array>
+    <string-array name="acc_version_options">
+        <item>Bundled</item>
+        <item>Master</item>
+        <item>开发</item>
+    </string-array>
+    <string name="ui_options">用户界面</string>
+    <string name="theme_option_setting">主题外观</string>
+    <string name="theme_option_summary">设置应用的主题。</string>
+    <string name="acc_version_compatibility_warning_title">ACC 版本兼容性</string>
+    <string name="restore">恢复为默认</string>
+    <string name="undo">撤销</string>
+    <string name="checking_updates">正在检查更新</string>
+    <string name="no_update_available">没有可用更新</string>
+    <string name="update_completed">更新完成！</string>
+    <string name="install">安装</string>
+    <string name="share_log">分享日志文件</string>
+    <string name="acc_installation_failed_log">ACC 安装失败日志</string>
+    <string name="djs_installation_failed_log">DJS 安装失败日志</string>
+    <string name="select_different_version">修改 ACC 版本</string>
+    <string name="installation_failed_non_bundled">安装其他版本 ACC 失败。
+        \n请考虑分享 /data/adb/acc-data/logs/ 给开发者。
+    </string>
+    <string name="prioritize_battery_idle">电池闲置模式优先</string>
+    <string name="test_battery_idle">测试电池闲置模式</string>
+    <string name="test_battery_idle_supported_result">您的内核支持电池闲置模式。</string>
+    <string name="test_battery_idle_unsupported_result">您的内核不支持电池闲置模式。</string>
+    <string name="schedule_profile_edit_current">编辑当前配置</string>
+    <string name="schedule_profile_keep_current">保持当前配置</string>
+    <string name="schedule_type">计划类型</string>
+    <string name="schedule_name">计划名称：</string>
+    <string-array name="theme_option_options">
+        <item>亮色</item>
+        <item>暗色</item>
+        <item>跟随系统</item>
+    </string-array>
+    <string-array name="schedule_type_entries">
+        <item>Recurrent</item>
+        <item>运行一次</item>
+        <item>启动时运行</item>
+    </string-array>
+    <string name="execute_on_boot_schedule">启动时执行</string>
+    <string name="edit_schedule">编辑计划</string>
+    <string name="create_schedule">创建计划</string>
     <!-- About Activity -->
+    <string name="about_team_blurb">感谢你使用 ACCA ！
+        \n我们花了很多时间，以给你最好的体验。
+        \n特别感谢那些通过以下方式支持我们的人：
+        捐赠、提出建议、opening pull requests、提交错误，等等。
+    </string>
+    <string name="about_acca_version_label">ACCA 版本：</string>
+    <string name="about_acc_version_label">ACC 版本：</string>
+    <string name="about_project_github">在 Github 上的项目</string>
+    <string name="about_github">GitHub</string>
+    <string name="about_website">网站</string>
+    <string name="toast_no_browser_installed">无法打开链接！\n请确保您已经安装了浏览器。</string>
 </resources>
