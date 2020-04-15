@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="title_activity_log_view">Логи</string>
     <string name="title_activity_log_view_file_name">Логи</string>
@@ -65,6 +66,10 @@
     <string name="wait">Пожалуйста, подождите...\nЭто займет несколько секунд.</string>
 
     <!-- Exit On Boot Card Strings -->
+    <!-- ACC installation -->
+    <!-- DJS installation -->
+    <!--Profiles Options-->
+    <!-- About Activity -->
     <string name="title_exit_on_boot">Остановить демона после применения настроек</string>
     <string name="description_exit_on_boot">Это используется для обновления файлов при загрузке.</string>
 
