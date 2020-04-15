@@ -1,15 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">ACCA</string>
+    <string name="app_name_full">Aplicativo de Controle Avançado de Carregamento</string>
+    <string name="title_activity_log_view">Registros</string>
+    <string name="title_activity_log_view_file_name">Registros</string>
     <!-- ACC Tile Strings -->
+    <string name="tile_acc_no_root">Sem root</string>
+    <string name="tile_acc_enabled">ACC Ativado</string>
+    <string name="tile_acc_disabled">ACC Desativado</string>
     <!-- Navigation Strings -->
+    <string name="title_dashboard">Painel de controle</string>
+    <string name="title_profiles">Perfis</string>
+    <string name="title_schedules">Agendamentos</string>
+    <string name="title_settings">Configurações</string>
     <!-- ACC Daemon Status -->
+    <string name="title_status">Estado</string>
+    <string name="title_acc_daemon">Serviço ACC</string>
+    <string name="acc_daemon_status_running">Serviço ACC está Ativado</string>
+    <string name="acc_daemon_status_not_running">Serviços ACC está Desativado</string>
     <!-- ACC Daemon Toggle -->
+    <string name="menu_stop_accd">Parar serviço ACC</string>
+    <string name="menu_start_accd">Iniciar serviço ACC</string>
+    <string name="start">Iniciar</string>
+    <string name="stop">Parar</string>
     <!-- Battery Card Strings -->
+    <string name="title_battery">Bateria</string>
+    <string name="info_status">Estado</string>
+    <string name="info_charging_speed">Velocidade de Carregamento</string>
+    <string name="info_discharging_speed">Amperagem Atual</string>
+    <string name="info_capacity">Capacidade</string>
+    <string name="info_temperature">Temperatura</string>
+    <string name="info_health">Saúde</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
+    <string name="info_status_extended">%1$s (%2$s)</string>
+    <string name="info_charging_speed_extended">%1$dmA em %2$.2fV</string>
+    <string name="info_discharging_speed_extended">%1$dmA</string>
     <!-- Profiles Item Labels -->
+    <string name="item_profile_capacity_label">Capacidade:</string>
+    <string name="item_profile_temperature_label">Temperatura:</string>
+    <string name="status_label">Estado:</string>
+    <string name="battery_info_label">Informação:</string>
+    <string name="reset_unplugged">Zerar estatísticas da bateria ao desconectar o carregador</string>
+    <string name="reset_stats">Zerar estatísticas da bateria</string>
+    <string name="enable_cooldown">Ativar resfriamento:</string>
+    <string name="cooldown_capacity">Iniciar resfriamento em %%:</string>
+    <string name="resume_charge">Continuar carregamento em:</string>
+    <string name="stop_charge">Parar carregamento em:</string>
+    <string name="enable_temp_check">Ativar verificação de temperatura (°C)</string>
+    <string name="cooldown_temp">Temperatura alvo de resfriamento:</string>
+    <string name="max_temp">Temperatura máxima:</string>
+    <string name="pause_seconds">Pausa em segundos:</string>
+    <string name="charge_seconds">Carregamento em segundos:</string>
+    <string name="shutdown_capacity">Desligar (quando não carregando) em:</string>
+    <string name="no_root_message">Este aplicativo requer ROOT</string>
+    <string name="config_error_title">Erro de leitura na configuração</string>
+    <string name="config_error_dialog">Falha ao analisar a configuração ACC!\nPor favor, verifique se \"su -c acc --config cat\" funciona.</string>
+    <string name="wait">Aguarde...\nIsto vai levar alguns segundos.</string>
     <!-- Exit On Boot Card Strings -->
+    <string name="title_exit_on_boot">Parar serviço após aplicar configurações</string>
+    <string name="description_exit_on_boot">Isto é utilizado para atualizar arquivos na inicialização.</string>
+    <string name="label_on_boot">Aplicar na inicialização:</string>
     <!-- ACC installation -->
+    <string name="installing_acc">Instalando ACC</string>
+    <string name="reboot">Reiniciar</string>
+    <string name="acc_installation_failed">Por favor, envie logcat e /data/adb/acc-data/logs/ para os desenvolvedores
+        em t.me/acc_group/ ou github.com/MatteCarra/AccA/issues/
+    </string>
+    <string name="acc_installation_failed_title">A instalação do ACC Falhou!</string>
     <!-- DJS installation -->
+    <string name="install_djs_title">DJS é necessário</string>
+    <string name="install_djs_description">Para que este recurso funcione, precisamos habilitar o DJS.
+        \nDJS (Agendamento diário de tarefas) é um complemento leve para agendar configurações ACC.
+        \nDJS daemon será iniciado na inicialização juntamente com o ACC daemon.
+    </string>
+    <string name="installing_djs">Instalando DJS</string>
+    <string name="djs_installation_failed">Por favor, envie logcat e /data/adb/djs-data/logs/ para os desenvolvedores
+        em t.me/acc_group/ ou github.com/MatteCarra/AccA/issues/
+    </string>
+    <string name="djs_installation_failed_title">A instalação do DJS falhou!</string>
+    <string name="voltage_control_file_not_set">Não definido</string>
+    <string name="edit_on_boot">Editar configurações que serão aplicadas na inicialização</string>
+    <string name="edit_on_boot_dialog_hint">Deixe em branco para desativar</string>
+    <string name="save">Salvar</string>
+    <string name="edit_on_boot_dialog_message">Exemplo: battery/voltage_max:4100000 /sys/kernel/fast_charge/force_fast_charge:1 --exit.\n\"--exit\" é opcional; ele diz ao daemon para parar após aplicar as configurações    </string>
+    <string name="logs">Registros</string>
+    <string name="text_copied_to_clipboard">Texto copiado para a área de transferência!</string>
+    <string name="log_file_not_found_title">Arquivo de registro não encontrado</string>
+    <string name="unsaved_changes">Você possui mudanças não salvas</string>
+    <string name="close_without_saving">Descartar</string>
+    <string name="edit_config">Editar configurações</string>
+    <string name="unsaved_changes_message">Você possui alterações não salvas. Deseja salvá-las?</string>
+    <string name="create_acc_profile">Criar perfil de configuração</string>
+    <string name="profile_name">Nome do perfil</string>
+    <string name="dialog_profile_name_message">Digite o nome que você deseja atribuir a este perfil:</string>
+    <string name="no_profiles">Perfis não definidos</string>
+    <string name="profile_not_selected">Configurações personalizadas</string>
+    <string name="profile_tile_label">Perfil: %1$s</string>
+    <string name="profiles_text_view">Perfis (toque longo para editar/excluir):</string>
+    <string name="restart">Reiniciar</string>
+    <string name="invalid_chars">O nome do perfil possui caracteres inválidos</string>
+    <string name="recurrent_schedule">Rodar somente uma vez</string>
+    <string name="execution_time">Tempo de execução</string>
+    <string name="new_config">Nova configuração personalizada</string>
+    <string name="enable_voltage_limit">Ativar limite de tensão de carregamento</string>
+    <string name="voltage_control_file">Arquivo de controle de tensão:</string>
+    <string name="edit_power_limit">Editar limite de corrente e tensão</string>
+    <string name="voltage_max">Voltagem Máxima (milivolts):</string>
+    <string name="disabled">Desabilitado</string>
+    <string name="schedule_recurrent_row_text">Trabalho recorrente agendado para %1$02d:%2$02d</string>
+    <string name="schedule_execute_once_row_text">Trabalho recorrente agendado para %1$02d:%2$02d</string>
+    <string name="schedule_time">%1$02d:%2$02d</string>
+    <string name="delete">Excluir</string>
+    <string name="no_schedules">Nenhum agendamento</string>
+    <string name="wrong_volt_file">Ou o arquivo escolhido não funciona, ou seu kernel não suporta este recurso.</string>
+    <string name="edit_charging_switch">Editar o interruptor de carregamento</string>
+    <string name="test_switch">Testar o interruptor de carregamento</string>
+    <string name="no_option_selected">Nenhuma opção selecionada; por favor selecione uma!</string>
+    <string name="charging_switch_works">O interruptor de carregamento selecionado funciona!</string>
+    <string name="plug_battery_to_test">A bateria deve estar carregando antes de testar. Conecte o carregador e tente novamente!</string>
+    <string name="automatic">Automático</string>
+    <string name="error_occurred">Ocorreu um erro</string>
+    <string name="retry">Tentar novamente</string>
+    <string name="apply">Aplicar</string>
+    <string name="done">Concluído</string>
+    <string name="edit_charging_limit_once_dialog_msg">Suas configurações atuais serão automaticamente restauradas quando o nível de bateria escolhido for atingido.</string>
+    <string name="info">Informação</string>
+    <string name="title_cooldown_control">Resfriar</string>
+    <string name="title_on_boot">Aplicar na inicialização</string>
+    <string name="title_temperature_control">Controle de temperatura</string>
+    <string name="title_capacity_control">Controle de Capacidade</string>
+    <string name="about">Sobre</string>
+    <string name="temperature_control_info">- Isso desabilita o carregamento por selecionados segundos para resfriar a bateria&lt;br /&gt;- A TEMPERATURA DE RESFRIAMENTO depende da RAZÃO DE RESFRIAMENTO.&lt;br /&gt;- TEMPERATURA MÁXIMA funciona com o PAUSA EM SEGUNDOS.</string>
     <!--Profiles Options-->
+    <string name="voltage_measure_unit_preference_title">Unidade de medida da tensão</string>
+    <string name="units_of_measure">Unidades de medida</string>
+    <string-array name="current_measure_units_options">
+        <item>mAmpere (1E-03)</item>
+        <item>mAmpere (1E-06)</item>
+    </string-array>
+    <string-array name="voltage_measure_units_options">
+        <item>mV (1E-03)</item>
+        <item>μV (1E-06)</item>
+    </string-array>
+    <string-array name="acc_version_options">
+        <item>Bundled</item>
+        <item>Master</item>
+        <item>Develop</item>
+    </string-array>
+    <string name="ui_options">Interface de usuário</string>
+    <string name="theme_option_setting">Tema</string>
+    <string name="restore">Restaurar para o padrão</string>
+    <string name="undo">Desfazer</string>
+    <string name="no_update_available">Nenhuma atualização disponível</string>
+    <string name="update_completed">Atualização concluída!</string>
+    <string name="install">Instalar</string>
+    <string name="share_log">Compartilhar arquivo de registro</string>
+    <string name="schedule_profile_edit_current">Editar configuração atual</string>
+    <string name="schedule_profile_keep_current">Manter configuração atual</string>
+    <string name="schedule_type">Tipo de agendamento</string>
+    <string name="schedule_name">Nome do agendamento</string>
+    <string-array name="theme_option_options">
+        <item>Claro</item>
+        <item>Escuro</item>
+        <item>Padrão do sistema</item>
+    </string-array>
+    <string-array name="schedule_type_entries">
+        <item>Recorrente</item>
+        <item>Executar uma vez</item>
+        <item>Definir na inicialização</item>
+    </string-array>
+    <string name="execute_on_boot_schedule">Executar na inicialização</string>
+    <string name="edit_schedule">Alterar agendamento</string>
+    <string name="create_schedule">Criar agendamento</string>
     <!-- About Activity -->
+    <string name="about_acca_version_label">Versão ACCA:</string>
+    <string name="about_acc_version_label">Versão ACC:</string>
+    <string name="about_github">GitHub</string>
+    <string name="about_website">Site</string>
 </resources>
