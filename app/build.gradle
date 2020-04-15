@@ -91,7 +91,7 @@ dependencies {
     implementation 'com.github.sephiroth74:android-target-tooltip:2.0.4'
 
     // CircilarImageView - https://github.com/hdodenhof/CircleImageView
-    implementation 'de.hdodenhof:circleimageview:3.0.0'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     implementation 'org.apache.commons:commons-collections4:4.4'
 
