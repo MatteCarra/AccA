@@ -249,4 +249,20 @@
         \nRemerciements spéciaux à ceux qui ont contribué d\'une manière ou d\'une autre :
         don, en proposant des suggestions, en ouvrant des demandes d’amélioration, en soumettant des bogues, etc..
     </string>
+    <string name="about_acca_version_label">Version ACCA :</string>
+    <string name="about_acc_version_label">Version ACC :</string>
+    <string name="about_project_github">GitHub du projet</string>
+    <string name="about_github">Github</string>
+    <string name="about_website">Site Internet</string>
+    <string name="toast_no_browser_installed">Impossible d\'ouvrir le lien !\nAssurez-vous d\'avoir un navigateur web installé.</string>
+    <string name="install_update_dialog">Installer la mise à jour ACC</string>
+    <string name="check_update_dialog_message">        Voulez-vous installer la dernière version de l\'ACC à partir de la branche \'%1$s\' ?
+        \nACCA téléchargera la dernière version d\'ACC à partir de Github sur la base du dernier soumission de la branche sélectionnée.
+        \nVoulez-vous continuer ?</string>
+    <string name="add_charging_switch">Ajouter un interrupteur de charge</string>
+    <string name="charging_switch_on_value_label">Interrupteur de charge ACTIVÉ</string>
+    <string name="charging_switch_off_value_label">Interrupteur de charge DÉSACTIVÉ</string>
+    <string name="reset_bs_on_pause">Réinitialiser les statistiques de la batterie lorsque la limite est atteinte</string>
+    <string name="current_max">Courant maximal (mA) :</string>
+    <string name="invalid_current_max">Valeur de courant maximal invalide</string>
 </resources>
