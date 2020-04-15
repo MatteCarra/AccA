@@ -37,8 +37,10 @@
     <string name="status_label">状态:</string>
     <string name="battery_info_label">信息:</string>
     <string name="enable_cooldown">启用冷却:</string>
-    <string name="resume_charge">恢复充电阀值:</string>
-    <string name="stop_charge">停止充电阀值:</string>
+    <string name="cooldown_capacity">开始冷却阈值:</string>
+    <string name="resume_charge">恢复充电阈值:</string>
+    <string name="stop_charge">停止充电阈值:</string>
+    <string name="enable_temp_check">启用温控 (°C)</string>
     <string name="cooldown_temp">开始冷却温度:</string>
     <string name="max_temp">最高温度:</string>
     <string name="charge_seconds">充电秒数:</string>
@@ -48,6 +50,9 @@
     <!-- ACC installation -->
     <string name="reboot">重启</string>
     <!-- DJS installation -->
+    <string name="acc_installation_failed_title">安装失败</string>
+    <string name="voltage_control_file_not_set">未设置</string>
+    <string name="edit_on_boot">编辑 启动时(On Boot) 值</string>
     <string name="edit_on_boot_dialog_hint">留空以禁用</string>
     <string name="save">保存</string>
     <string name="logs">日志</string>
@@ -69,6 +74,7 @@
     <string name="execution_time">执行时间</string>
     <string name="new_config">新建自定义配置</string>
     <string name="voltage_control_file">电压控制文件:</string>
+    <string name="voltage_max">最大电压 (mV):</string>
     <string name="disabled">禁用</string>
     <string name="delete">删除</string>
     <string name="no_schedules">无任务计划</string>

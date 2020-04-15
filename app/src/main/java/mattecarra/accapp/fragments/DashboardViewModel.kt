@@ -1,65 +1,49 @@
 package mattecarra.accapp.fragments
 
-import android.os.Handler
-import android.os.HandlerThread
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel;
+import android.app.Application
+import androidx.lifecycle.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import mattecarra.accapp.Preferences
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.models.BatteryInfo
-import mattecarra.accapp.acc.v201905111.AccHandler
-import org.jetbrains.anko.doAsync
+import mattecarra.accapp.R
 
-class DashboardViewModel : ViewModel() {
-    private val batteryInfo: MutableLiveData<BatteryInfo> = MutableLiveData()
-    private val isDaemonRunning: MutableLiveData<Boolean> = MutableLiveData()
+class DashboardViewModel(application: Application) : AndroidViewModel(application) {
 
-    @Volatile private var run = false
+    private val _battery: MutableLiveData<BatteryInfo> = MutableLiveData()
+    private val _daemon: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val _chargeSpeed: MutableLiveData<String> = MutableLiveData("N/A")
 
-    //Used to update battery info every second
-    private val handlerThread: HandlerThread
-    private val handler: Handler
+    val battery: LiveData<BatteryInfo> = _battery
+    val daemon: LiveData<Boolean> = _daemon
+
+    private val mPreferences: Preferences = Preferences(application)
+
+    val chargeSpeed: LiveData<String> = _chargeSpeed
 
     init {
-        handlerThread = HandlerThread("UpdateBatteryInfo")
-        handlerThread.start()
-        handler = Handler(handlerThread.looper)
-    }
+        viewModelScope.launch {
+            while (true) {
+                if (battery.hasActiveObservers()) {
+                    val batteryInfo = Acc.instance.getBatteryInfo()
+                    _battery.value = batteryInfo
+                    _chargeSpeed.value =
+                        application.getString(
+                            if(batteryInfo.isCharging())
+                                R.string.info_charging_speed_extended
+                            else
+                                R.string.info_discharging_speed_extended, batteryInfo.getCurrentNow(mPreferences.currentUnitOfMeasure) * (if(batteryInfo.isCharging()) 1 else -1), batteryInfo.getVoltageNow(mPreferences.voltageUnitOfMeasure)
+                        )
 
-    private val updateBatteryInfoRunnable = object : Runnable {
-        override fun run() {
-            batteryInfo.postValue(Acc.instance.getBatteryInfo())
-            isDaemonRunning.postValue(Acc.instance.isAccdRunning())
+                }
 
-            if(run) handler.postDelayed(this, 1000)// Repeat the same runnable code block again after 1 seconds
+                if(daemon.hasActiveObservers()) {
+                    _daemon.value = Acc.instance.isAccdRunning()
+                }
+
+                delay(1000)
+            }
         }
-    }
-
-    fun postRunnableHandler() {
-        run = true
-        handler.post(updateBatteryInfoRunnable)
-    }
-
-    fun stopRunnableHandler() {
-        run = false
-        handler.removeCallbacks(updateBatteryInfoRunnable)
-    }
-
-    fun getBatteryInfo(): LiveData<BatteryInfo> {
-        return batteryInfo
-    }
-
-    fun getIsDaemonRunning(): LiveData<Boolean> {
-        return isDaemonRunning
-    }
-
-    init {
-        handler.post(updateBatteryInfoRunnable)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        handler.removeCallbacks(updateBatteryInfoRunnable)
-        handlerThread.quit()
     }
 }

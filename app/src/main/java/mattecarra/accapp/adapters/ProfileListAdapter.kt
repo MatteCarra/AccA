@@ -1,23 +1,18 @@
 package mattecarra.accapp.adapters
 
 import android.content.Context
-import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.ImageButton
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import mattecarra.accapp.R
 import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.models.AccaProfile
-import mattecarra.accapp.utils.Constants
-import mattecarra.accapp.utils.ProfileUtils
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 
-class ProfileListAdapter internal constructor(context: Context) :
+class ProfileListAdapter internal constructor(context: Context, activeProfileId: Int) :
     RecyclerView.Adapter<ProfileListAdapter.ProfileViewHolder>() {
 
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
@@ -25,27 +20,19 @@ class ProfileListAdapter internal constructor(context: Context) :
     private lateinit var mListener: OnProfileClickListener
     private val mContext = context
 
-    inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnLongClickListener,
-        SharedPreferences.OnSharedPreferenceChangeListener  {
+    private var mActiveProfileId: Int = activeProfileId
 
-        override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-            if (key.equals(Constants.PROFILE_KEY)) {
+    inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnLongClickListener {
+        val selectedView: View = itemView.findViewById(R.id.item_profile_selectedIndicator_view)
+        val titleTv: TextView = itemView.findViewById(R.id.item_profile_title_textView)
+        val capacityTv: TextView = itemView.findViewById(R.id.item_profile_capacity_tv)
+        val temperatureTv: TextView = itemView.findViewById(R.id.item_profile_temperature_tv)
+        val onPlugTv: TextView = itemView.findViewById(R.id.item_profile_on_plug_tv)
+        val optionsIb: ImageButton = itemView.findViewById(R.id.item_profile_options_ib)
 
-                doAsync {
-                    val profileId = ProfileUtils.getCurrentProfile(sharedPreferences!!)
-
-                    uiThread {
-                        if (adapterPosition != -1) {
-                            if (mProfilesList[adapterPosition].uid == profileId) {
-                                selectedView.visibility = View.VISIBLE
-                            } else {
-                                // Hide the selectedView
-                                selectedView.visibility = View.GONE
-                            }
-                        }
-                    }
-                }
-            }
+        init {
+            itemView.setOnClickListener(this)
+            itemView.setOnLongClickListener(this)
         }
 
         override fun onClick(v: View?) {
@@ -56,26 +43,9 @@ class ProfileListAdapter internal constructor(context: Context) :
             mListener.onProfileLongClick(mProfilesList[adapterPosition])
             return true
         }
-
-        init {
-            itemView.setOnClickListener(this)
-            itemView.setOnLongClickListener(this)
-            val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(itemView.context)
-            prefs.registerOnSharedPreferenceChangeListener(this)
-
-            onSharedPreferenceChanged(prefs, Constants.PROFILE_KEY)
-        }
-
-        val selectedView: View = itemView.findViewById(R.id.item_profile_selectedIndicator_view)
-        val titleTv: TextView = itemView.findViewById(R.id.item_profile_title_textView)
-        val capacityTv: TextView = itemView.findViewById(R.id.item_profile_capacity_tv)
-        val temperatureTv: TextView = itemView.findViewById(R.id.item_profile_temperature_tv)
-        val onPlugTv: TextView = itemView.findViewById(R.id.item_profile_on_plug_tv)
-        val optionsIb: ImageButton = itemView.findViewById(R.id.item_profile_options_ib)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
-
         val itemView = mInflater.inflate(R.layout.profiles_item, parent, false)
         return ProfileViewHolder(itemView)
     }
@@ -88,26 +58,48 @@ class ProfileListAdapter internal constructor(context: Context) :
         holder.onPlugTv.text = profile.accConfig.getOnPlug(mContext)
 
         holder.optionsIb.setOnClickListener {
-            mListener.onProfileOptionsClick(mProfilesList[position])
+            with(PopupMenu(mContext, holder.optionsIb)) {
+                menuInflater.inflate(R.menu.profiles_options_menu, this.menu)
+
+                setOnMenuItemClickListener {
+                        when (it.itemId) {
+                            R.id.profile_option_menu_edit -> {
+                                mListener.editProfile(mProfilesList[position])
+                            }
+                            R.id.profile_option_menu_rename -> {
+                                mListener.renameProfile(mProfilesList[position])
+                            }
+                            R.id.profile_option_menu_delete -> {
+                                mListener.deleteProfile(mProfilesList[position])
+                            }
+                        }
+                        true
+                    }
+
+                show()
+            }
         }
 
-        val profileId = ProfileUtils.getCurrentProfile(PreferenceManager.getDefaultSharedPreferences(mContext))
-        if (profile.uid == profileId) {
+        if (profile.uid == mActiveProfileId) {
             // Make visible
             holder.selectedView.visibility = View.VISIBLE
         } else {
-            holder.selectedView.visibility = View.INVISIBLE
+            // Hide the selectedView
+            holder.selectedView.visibility = View.GONE
         }
     }
 
-    internal fun setProfiles(profiles: List<AccaProfile>) {
+    internal fun setActiveProfile(id: Int) {
+        mActiveProfileId = id
+        notifyDataSetChanged()
+    }
 
+    internal fun setProfiles(profiles: List<AccaProfile>) {
         mProfilesList = profiles
         notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
-
         return mProfilesList.size
     }
 

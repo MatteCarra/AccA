@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="current_measure_units_option_values">
+        <item>mA</item>
+        <item>uA</item>
+    </string-array>
+    <string-array name="voltage_measure_units_option_values">
+        <item>mV</item>
+        <item>uV</item>
+    </string-array>
+    <string-array name="acc_version_option_values">
+        <item>bundled</item>
+        <item>master</item>
+        <item>dev</item>
+    </string-array>
+    <string-array name="theme_option_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <integer-array name="schedule_type_entries_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </integer-array>
+</resources>

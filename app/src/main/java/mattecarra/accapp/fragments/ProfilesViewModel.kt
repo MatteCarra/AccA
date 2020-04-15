@@ -3,37 +3,28 @@ package mattecarra.accapp.fragments
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import kotlinx.coroutines.*
-import kotlin.coroutines.CoroutineContext
+import mattecarra.accapp.database.AccaRoomDatabase
+import mattecarra.accapp.database.ProfileDao
 
 
 import mattecarra.accapp.models.AccaProfile
-import mattecarra.accapp.utils.DataRepository
 
 class ProfilesViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val mDataRepository: DataRepository
-
     private val mProfilesListLiveData: LiveData<List<AccaProfile>>
-
-    private var mParentJob = Job()
-    private val mCoroutineContext: CoroutineContext
-        get() = mParentJob + Dispatchers.Main
-
-    private val mScope = CoroutineScope(mCoroutineContext)
+    private val mProfileDao: ProfileDao
 
     init {
+        val accaDatabase = AccaRoomDatabase.getDatabase(application)
+        mProfileDao = accaDatabase.profileDao()
+        mProfilesListLiveData = mProfileDao.getAllProfiles()
+    }
 
-        mDataRepository = DataRepository(application, mScope)
-        mProfilesListLiveData = mDataRepository.getAllProfiles()
+    suspend fun getProfile(id: Int): AccaProfile? {
+        return mProfileDao.getProfileById(id)
     }
 
     fun getProfiles() : LiveData<List<AccaProfile>> {
         return mProfilesListLiveData
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        mParentJob.cancel()
     }
 }

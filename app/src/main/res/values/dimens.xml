@@ -15,4 +15,11 @@
     <!-- Label and Value text sizes -->
     <dimen name="label_text">16sp</dimen>
     <dimen name="value_text">12sp</dimen>
+
+    <!-- Bottom Navigation Depths -->
+    <dimen name="bot_app_bar">8dp</dimen>
+    <dimen name="bot_fab">12dp</dimen>
+    <dimen name="bot_nav_drawer">16dp</dimen>
+
+    <dimen name="about_profile_margin">16dp</dimen>
 </resources>

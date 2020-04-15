@@ -3,17 +3,27 @@ package mattecarra.accapp.receivers
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
+import android.util.Log
 import com.topjohnwu.superuser.Shell
-import mattecarra.accapp.R
+import mattecarra.accapp.Preferences
 import mattecarra.accapp.acc.Acc
-import java.io.File
+import mattecarra.accapp.djs.Djs
 
 class AccBootReceiver: BroadcastReceiver() {
+    private val LOG_TAG = "AccBootReceiver"
+
     override fun onReceive(context: Context, intent: Intent) {
-        if (Intent.ACTION_BOOT_COMPLETED == intent.action) { //TODO check if app is set in bundle/master/dev mode. Only execute this if acc is bundled.
-            if(Shell.rootAccess() && Acc.initBundledAcc(context.filesDir)) {
-                Toast.makeText(context, R.string.acc_daemon_status_running, Toast.LENGTH_SHORT).show() //TODO add an option to disable this (I think it should disabled by default)
+        if (Intent.ACTION_BOOT_COMPLETED == intent.action) {
+            if(Shell.rootAccess()) {
+                val preferences = Preferences(context)
+
+                val accInitResult = Acc.initAcc(context.filesDir)
+                Log.d(LOG_TAG, "Acc deamon init. Success=$accInitResult")
+
+                if(preferences.djsEnabled) {
+                    val djsInitResult = Djs.initDjs(context.filesDir)
+                    Log.d(LOG_TAG, "DJS deamon init. Success=$djsInitResult")
+                }
             }
         }
     }

@@ -11,20 +11,20 @@ interface ProfileDao {
     fun getAllProfiles(): LiveData<List<AccaProfile>>
 
     @Insert
-    fun insert(accaProfile: AccaProfile)
+    suspend fun insert(accaProfile: AccaProfile)
 
     @Update
-    fun update(accaProfile: AccaProfile)
+    suspend fun update(accaProfile: AccaProfile)
 
     @Delete
-    fun delete(accaProfile: AccaProfile)
+    suspend fun delete(accaProfile: AccaProfile)
 
     @Query("SELECT * FROM profiles_table WHERE profileName == :name")
     fun getProfileByName(name: String): List<AccaProfile>
 
     @Query("SELECT * FROM profiles_table WHERE uid == :id")
-    fun getProfileById(id: Int): AccaProfile
+    suspend fun getProfileById(id: Int): AccaProfile?
 
     @Query("DELETE FROM profiles_table")
-    fun deleteAll()
+    suspend fun deleteAll()
 }

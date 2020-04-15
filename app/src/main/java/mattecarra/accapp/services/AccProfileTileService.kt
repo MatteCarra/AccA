@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
+import kotlinx.coroutines.runBlocking
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.fragments.ProfilesViewModel
@@ -86,7 +87,7 @@ class AccProfileTileService: TileService() {
 
             //apply profile
             doAsync {
-                val res = Acc.instance.updateAccConfig(profile.accConfig)
+                val res = runBlocking { Acc.instance.updateAccConfig(profile.accConfig) }
 
                 if(!res.isSuccessful()) {
                     res.debug()

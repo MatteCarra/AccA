@@ -1,11 +1,17 @@
 package mattecarra.accapp.acc.v201903071
 
 import com.topjohnwu.superuser.Shell
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-class AccHandler: mattecarra.accapp.acc.v201905111.AccHandler() {
-    override fun listChargingSwitches(): List<String> {
+class AccHandler: mattecarra.accapp.acc.legacy.AccHandler() {
+    override suspend fun listChargingSwitches(): List<String> = withContext(Dispatchers.IO) {
         val res = Shell.su("acc -s s:").exec()
-        return if(res.isSuccess) res.out.map { it.trim() }.filter { it.isNotEmpty() } else emptyList()
+
+        if(res.isSuccess)
+            res.out.map { it.trim() }.filter { it.isNotEmpty() }
+        else
+            emptyList()
     }
 
     override fun getCurrentChargingSwitch(config: String): String? {
@@ -13,11 +19,9 @@ class AccHandler: mattecarra.accapp.acc.v201905111.AccHandler() {
         return if(switch?.isNotEmpty() == true) switch else null
     }
 
-    override fun updateAccChargingSwitch(switch: String?) : Boolean {
-        if (switch.isNullOrBlank()) {
-            return Shell.su("acc -s s-").exec().isSuccess
-        }
-
-        return Shell.su("acc -s s $switch").exec().isSuccess
-    }
+    override fun getUpdateAccChargingSwitchCommand(switch: String?) : String =
+        if (switch.isNullOrBlank())
+            "acc -s s-"
+        else
+            "acc -s s $switch"
 }

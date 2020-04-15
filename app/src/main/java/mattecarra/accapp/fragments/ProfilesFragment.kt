@@ -2,11 +2,13 @@ package mattecarra.accapp.fragments
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.preference.PreferenceManager
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -19,15 +21,25 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.profiles_fragment.*
+import kotlinx.android.synthetic.main.schedules_fragment.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 import mattecarra.accapp.R
 import mattecarra.accapp._interface.OnProfileClickListener
+import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.adapters.ProfileListAdapter
+import mattecarra.accapp.utils.Constants
+import mattecarra.accapp.utils.ProfileUtils
+import mattecarra.accapp.utils.ScopedFragment
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 // Fragments from: https://codeburst.io/android-swipe-menu-with-recyclerview-8f28a235ff28
 
-class ProfilesFragment : Fragment() {
-
+class ProfilesFragment : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
     companion object {
         fun newInstance() = ProfilesFragment()
     }
@@ -43,23 +55,34 @@ class ProfilesFragment : Fragment() {
         return inflater.inflate(R.layout.profiles_fragment, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val profilesRecycler: RecyclerView = view.findViewById(R.id.profile_recyclerView)
-        mProfilesAdapter = ProfileListAdapter(context!!)
+
+        val context = requireContext()
+
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+        mProfilesAdapter = ProfileListAdapter(context, ProfileUtils.getCurrentProfile(prefs))
         mProfilesAdapter.setOnClickListener(mListener)
 
         profilesRecycler.adapter = mProfilesAdapter
         profilesRecycler.layoutManager = LinearLayoutManager(context)
 
-        activity?.let {
-            mViewModel = ViewModelProviders.of(it).get(ProfilesViewModel::class.java)
+        mViewModel = ViewModelProviders.of(this).get(ProfilesViewModel::class.java)
 
-            // Observe data
-            mViewModel.getProfiles().observe(this, Observer { profiles ->
-                mProfilesAdapter.setProfiles(profiles)
-            })
-        }
+        // Observe data
+        mViewModel.getProfiles().observe(viewLifecycleOwner, Observer { profiles ->
+            if(profiles.isEmpty()) {
+                profiles_empty_textview.visibility = View.VISIBLE
+                profilesRecycler.visibility = View.GONE
+            } else {
+                profiles_empty_textview.visibility = View.GONE
+                profilesRecycler.visibility = View.VISIBLE
+            }
+            mProfilesAdapter.setProfiles(profiles)
+        })
+
+        prefs.registerOnSharedPreferenceChangeListener(this)
 
         val itemTouchCallback = object: ItemTouchHelper.SimpleCallback(0,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
@@ -198,13 +221,30 @@ class ProfilesFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(profilesRecycler)
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+        if (key == Constants.PROFILE_KEY) {
+            launch {
+                val profileId = ProfileUtils.getCurrentProfile(sharedPreferences)
+
+                val currentConfig = Acc.instance.readConfig()
+                val selectedProfileConfig = mViewModel.getProfile(profileId)?.accConfig
+
+                if(profileId != -1 && currentConfig != selectedProfileConfig) {
+                    ProfileUtils.clearCurrentSelectedProfile(sharedPreferences) //if current profile and current config do not match -> the profile is no longer applied
+                } else {
+                    mProfilesAdapter.setActiveProfile(profileId)
+                }
+            }
+        }
+    }
+
+    override fun onAttach(context: Context) {
         super.onAttach(context)
 
         if (context is OnProfileClickListener) {
             mListener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnProfileClickListener")
+            throw RuntimeException("$context must implement OnProfileClickListener")
         }
     }
 }

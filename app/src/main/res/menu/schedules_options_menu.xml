@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/schedules_option_menu_edit"
+        android:title="@string/profile_option_edit"/>
+
+    <item android:id="@+id/schedules_option_menu_delete"
+          android:title="@string/profile_option_delete"/>
+</menu>

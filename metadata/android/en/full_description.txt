@@ -1,0 +1,10 @@
+AccA is a frontend app for ACC.
+ACC is a completely configurable tool that allows to control how your device charges:
+   - Limit charging at a certain percentage
+   - Shutdown the device when battery is too low (ex 5%)
+   - Control battery temperatures and act accordingly
+   - Schedule operations during night
+   - Slow down charging
+   - and much much more
+You can find instructions for running acc at the [https://github.com/VR-25/acc/blob/master/README.md documentation].
+The app requires root to read and write charging control files.

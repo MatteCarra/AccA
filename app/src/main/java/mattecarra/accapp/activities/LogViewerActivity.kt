@@ -55,8 +55,7 @@ class LogViewerActivity : AppCompatActivity() {
 
     private val clickerListener: (String) -> Unit = { line: String ->
         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("log line", line)
-        clipboard.primaryClip = clip
+        clipboard.setPrimaryClip(ClipData.newPlainText("log line", line))
         Toast.makeText(this, R.string.text_copied_to_clipboard, Toast.LENGTH_SHORT).show()
     }
 
@@ -69,7 +68,7 @@ class LogViewerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_viewer)
 
-        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        val toolbar = findViewById<View>(R.id.log_toolbar) as Toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)

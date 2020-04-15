@@ -1,46 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp">
 
-    <TextView
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/schedule_name"
+            android:textColor="?android:attr/textColorPrimary"
+            />
+
+        <EditText
+            android:id="@+id/schedule_name_edit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:hint="@string/schedule_name"
+            android:inputType="text"/>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/profile_name"
-            android:textColor="#80000000"/>
+            android:textColor="?android:attr/textColorPrimary"
+            android:layout_marginTop="18dp"/>
 
-    <Spinner
+        <Spinner
             android:id="@+id/profile_selector"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/schedule_type"
+            android:textColor="?android:attr/textColorPrimary"
+            android:layout_marginTop="18dp" />
+
+        <Spinner
+            android:id="@+id/schedule_type_selector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-    />
+            android:entries="@array/schedule_type_entries"
+            android:entryValues="@array/schedule_type_entries_values"/>
 
-    <TextView
+
+        <LinearLayout
+            android:id="@+id/time_picker_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="@string/execution_time"
-            android:textColor="#80000000"/>
+            android:orientation="vertical">
 
-    <TimePicker
-            android:id="@+id/time_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-    />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="@string/execution_time"
+                android:textColor="?android:attr/textColorPrimary"/>
 
-    <CheckBox
-            android:id="@+id/schedule_recurrency"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginTop="18dp"
-            android:gravity="center"
-            android:text="@string/recurrent_schedule"/>
+            <CheckBox
+                android:id="@+id/execute_on_boot_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/execute_on_boot_schedule"
+                android:layout_marginTop="4dp" />
 
-</LinearLayout>
+            <mattecarra.accapp.view.AccaTimePicker
+                android:id="@+id/time_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

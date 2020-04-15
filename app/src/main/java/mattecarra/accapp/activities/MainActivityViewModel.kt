@@ -1,51 +1,40 @@
 package mattecarra.accapp.activities
 
 import android.app.Application
-import android.content.SharedPreferences
-import android.preference.PreferenceManager
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import mattecarra.accapp.R
-import mattecarra.accapp.acc.Acc
-import mattecarra.accapp.models.AccConfig
+import mattecarra.accapp.database.AccaRoomDatabase
+import mattecarra.accapp.database.ProfileDao
+import mattecarra.accapp.database.ScheduleDao
 import mattecarra.accapp.models.AccaProfile
-import mattecarra.accapp.utils.Constants
-import mattecarra.accapp.utils.DataRepository
-import kotlin.coroutines.CoroutineContext
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
-    var selectedNavBarItem: Int = R.id.botNav_home
+    var selectedNavBarItem = R.id.botNav_home
 
-    private val mDataRepository: DataRepository
-    private var mParentJob = Job()
-    private val mCoroutineContext: CoroutineContext
-        get() = mParentJob + Dispatchers.IO
+    val profiles: LiveData<List<AccaProfile>>
 
-    private val mScope = CoroutineScope(mCoroutineContext)
-
+    private val mProfileDao: ProfileDao
     init {
-        mDataRepository = DataRepository(application, mScope)
+        val accaDatabase = AccaRoomDatabase.getDatabase(application)
+        mProfileDao = accaDatabase.profileDao()
+
+        profiles = mProfileDao.getAllProfiles()
     }
 
-    fun insertProfile(profile: AccaProfile) = mScope.launch(Dispatchers.IO) {
-        mDataRepository.insertProfile(profile)
+    fun insertProfile(profile: AccaProfile) = viewModelScope.launch {
+        mProfileDao.insert(profile)
     }
 
-    fun deleteProfile(profile: AccaProfile) = mScope.launch(Dispatchers.IO) {
-        mDataRepository.deleteProfile(profile)
+    fun deleteProfile(profile: AccaProfile) = viewModelScope.launch {
+        mProfileDao.delete(profile)
     }
 
-    fun updateProfile(profile: AccaProfile) = mScope.launch(Dispatchers.IO) {
-        mDataRepository.updateProfile(profile)
+    fun updateProfile(profile: AccaProfile) = viewModelScope.launch {
+        mProfileDao.update(profile)
     }
 
-    fun getProfileById(id: Int) : AccaProfile {
-        return mDataRepository.getProfileById(id)
+    suspend fun getProfileById(id: Int): AccaProfile? {
+        return mProfileDao.getProfileById(id)
     }
 }

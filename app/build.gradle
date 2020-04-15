@@ -1,9 +1,6 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
 
 androidExtensions {
@@ -11,15 +8,39 @@ androidExtensions {
 }
 
 android {
-    compileSdkVersion 28
+    signingConfigs {
+        release {
+            try {
+                def keystoreProperties = new Properties()
+                try {
+                    keystoreProperties.load(new FileInputStream(rootProject.file(System.getenv("ACCA_KEYSTORE_PROPERTIES_LOCATION") ?: "keystore.properties")))
+                } catch(ignored) {}
+
+                storeFile file(keystoreProperties["ACCA_KEYSTORE_LOCATION"] ?: System.getenv("ACCA_KEYSTORE_LOCATION"))
+                storePassword keystoreProperties["ACCA_KEYSTORE_PASSWORD"] ?: System.getenv("ACCA_KEYSTORE_PASSWORD")
+                keyAlias keystoreProperties["ACCA_KEY_ALIAS"] ?: System.getenv("ACCA_KEY_ALIAS")
+                keyPassword keystoreProperties["ACCA_KEY_PASSWORD"] ?: System.getenv("ACCA_KEY_PASSWORD")
+            } catch (ignored) {
+                println "You should define ACCA_KEYSTORE_LOCATION, ACCA_KEYSTORE_PASSWORD, ACCA_KEY_ALIAS and ACCA_KEY_PASSWORD in your env variables or in keystore.properties."
+            }
+        }
+    }
+    compileSdkVersion 29
     defaultConfig {
         applicationId "mattecarra.accapp"
         minSdkVersion 16
-        targetSdkVersion 28
-        versionCode 17
-        versionName "1.0.12"
+        targetSdkVersion 29
+        versionCode 27
+        versionName "1.0.23"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        signingConfig signingConfigs.release
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas".toString())
+            }
+        }
     }
     buildTypes {
         release {
@@ -31,48 +52,77 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    dataBinding {
+        enabled true
+    }
+    lintOptions {
+        disable 'MissingTranslation'
+    }
 }
 
 dependencies {
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
     implementation "org.jetbrains.anko:anko-commons:0.10.8"
 
-    implementation "androidx.appcompat:appcompat:1.0.2"
-    implementation "androidx.core:core-ktx:1.0.2"
+    implementation "androidx.appcompat:appcompat:1.1.0"
+    implementation "androidx.core:core-ktx:1.2.0"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
-    implementation "androidx.vectordrawable:vectordrawable:1.0.1"
-    implementation "androidx.preference:preference:1.0.0"
+    implementation "androidx.vectordrawable:vectordrawable:1.1.0"
+    implementation "androidx.preference:preference:1.1.0"
     implementation "androidx.cardview:cardview:1.0.0"
 
-    implementation "com.google.android.material:material:1.0.0"
+    implementation "com.google.android.material:material:1.1.0"
 
-    implementation 'com.afollestad.material-dialogs:core:3.0.2'
-    implementation 'com.afollestad.material-dialogs:input:3.0.2'
+    implementation 'com.afollestad.material-dialogs:core:3.1.1'
+    implementation 'com.afollestad.material-dialogs:input:3.1.1'
+    implementation 'com.afollestad.material-dialogs:datetime:3.1.1'
 
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.6'
 
-    implementation project(':updater')
-
-    implementation "com.github.topjohnwu.libsu:core:${versions.libsuVersion}"
+    implementation "com.github.topjohnwu.libsu:core:$versions.libsuVersion"
 
     // CircleProgressBar - https://github.com/dinuscxj/CircleProgressBar
     implementation 'com.dinuscxj:circleprogressbar:1.3.0'
-
+    // Tooltip library: https://github.com/sephiroth74/android-target-tooltip
     implementation 'com.github.sephiroth74:android-target-tooltip:2.0.4'
 
+    // CircilarImageView - https://github.com/hdodenhof/CircleImageView
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+
+    implementation 'org.apache.commons:commons-collections4:4.4'
+
     // Room components
-    implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
-    kapt "android.arch.persistence.room:compiler:$rootProject.roomVersion"
-    androidTestImplementation "android.arch.persistence.room:testing:$rootProject.roomVersion"
+    implementation "androidx.room:room-runtime:$versions.roomVersion"
+    implementation "androidx.room:room-ktx:$versions.roomVersion"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
+    kapt "androidx.room:room-compiler:$versions.roomVersion"
 
     // Lifecycle components
-    implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
-    kapt "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
+    // alternately - if using Java8, use the following instead of lifecycle-compiler
+    implementation "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle"
 
     // Coroutines
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutines"
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutines"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
+
+    // ViewPager
+    // https://developer.android.com/jetpack/androidx/releases/viewpager2
+    implementation "androidx.viewpager2:viewpager2:$versions.viewpager"
+
+    // Google Navigation Components
+//    implementation "androidx.navigation:navigation-fragment-ktx:$versions.nav"
+//    implementation "androidx.navigation:navigation-ui-ktx:$versions.nav"
+
+    // Google Material Components
+    implementation "com.google.android.material:material:$versions.material"
+
+    // For custom tabs
+    implementation "androidx.browser:browser:$versions.browser"
 }

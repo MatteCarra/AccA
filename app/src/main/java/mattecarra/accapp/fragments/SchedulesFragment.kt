@@ -1,21 +1,28 @@
 package mattecarra.accapp.fragments
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.MaterialDialog
+import kotlinx.android.synthetic.main.schedules_fragment.*
 import mattecarra.accapp.R
+import mattecarra.accapp.activities.MainActivity
+import mattecarra.accapp.adapters.OnScheduleClickListener
+import mattecarra.accapp.adapters.ScheduleProfileListAdapter
+import mattecarra.accapp.models.Schedule
+import mattecarra.accapp.utils.ScopedFragment
 
-class SchedulesFragment : Fragment() {
+class SchedulesFragment : ScopedFragment(), OnScheduleClickListener {
+    private lateinit var viewModel: SchedulesViewModel
+    private lateinit var adapter: ScheduleProfileListAdapter
 
     companion object {
         fun newInstance() = SchedulesFragment()
     }
-
-    private lateinit var viewModel: SchedulesViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,8 +33,39 @@ class SchedulesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(SchedulesViewModel::class.java)
-        // TODO: Use the ViewModel
+
+
+        activity?.let { activity ->
+            viewModel = ViewModelProviders.of(activity).get(SchedulesViewModel::class.java)
+
+            adapter = ScheduleProfileListAdapter(activity)
+            adapter.setOnClickListener(this)
+            schedule_recyclerView.adapter = adapter
+            schedule_recyclerView.layoutManager = LinearLayoutManager(context)
+
+            viewModel.schedules.observe(viewLifecycleOwner, Observer { schedules ->
+                if(schedules.isEmpty()) {
+                    schedules_empty_textview.visibility = View.VISIBLE
+                    schedule_recyclerView.visibility = View.GONE
+                } else {
+                    schedules_empty_textview.visibility = View.GONE
+                    schedule_recyclerView.visibility = View.VISIBLE
+                }
+
+                adapter.setList(schedules)
+            })
+        }
     }
 
+    override fun onScheduleProfileClick(schedule: Schedule) {
+        (activity as MainActivity?)?.editSchedule(schedule)
+    }
+
+    override fun onScheduleToggle(schedule: Schedule, isEnabled: Boolean) {
+        viewModel.editSchedule(schedule.profile.uid, schedule.profile.scheduleName, isEnabled, schedule.time, schedule.executeOnce, schedule.executeOnBoot, schedule.profile.accConfig)
+    }
+
+    override fun onScheduleDeleteClick(schedule: Schedule) {
+        viewModel.removeSchedule(schedule)
+    }
 }

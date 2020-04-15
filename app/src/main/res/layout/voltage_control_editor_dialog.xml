@@ -7,22 +7,69 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/voltage_control_file_dialog_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/voltage_control_file"
-            android:textColor="#000000"
+            android:textColor="?android:attr/textColorPrimary"
             android:textAppearance="?android:textAppearanceMedium"
-    />
+            />
 
-    <Spinner
-            android:id="@+id/voltage_control_file"
+        <Spinner
+            android:id="@+id/voltage_control_file_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"/>
+    </LinearLayout>
 
-    <CheckBox
-            android:id="@+id/enable_voltage_max"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <CheckBox
+                android:id="@+id/enable_voltage_max_check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="18dp"
+                android:gravity="center"
+                android:text="@string/enable_voltage_limit"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="@string/voltage_max"
+                android:textColor="?android:attr/textColorPrimary"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:textAppearance="?android:textAppearanceMedium"
+        />
+
+        <EditText
+                android:id="@+id/voltage_max_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:hint="@string/voltage_max"
+                android:inputType="number"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/current_max_dialog_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <CheckBox
+            android:id="@+id/enable_current_max_check_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -30,25 +77,26 @@
             android:gravity="center"
             android:text="@string/enable_voltage_limit"/>
 
-    <TextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:text="@string/voltage_max"
-            android:textColor="#000000"
+            android:text="@string/current_max"
+            android:textColor="?android:attr/textColorPrimary"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:textAppearance="?android:textAppearanceMedium"
-    />
+            />
 
-    <EditText
-            android:id="@+id/voltage_max"
+        <EditText
+            android:id="@+id/current_max_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:hint="@string/voltage_max"
+            android:hint="@string/current_max"
             android:inputType="number"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"/>
+    </LinearLayout>
 
 </LinearLayout>

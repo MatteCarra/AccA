@@ -41,6 +41,7 @@
     <string name="reset_unplugged">Akku-Statistiken beim Ausstecken zurücksetzen</string>
     <string name="reset_stats">Akku-Statistiken zurücksetzen</string>
     <string name="enable_cooldown">Abkühlung aktivieren:</string>
+    <string name="cooldown_capacity">Ab %% Abkühlung starten:</string>
     <string name="resume_charge">Ladevorgang fortsetzen bei:</string>
     <string name="stop_charge">Ladevorgang stoppen bei:</string>
     <string name="cooldown_temp">Abkühltemperatur:</string>
@@ -54,6 +55,10 @@
     <!-- ACC installation -->
     <string name="reboot">Neustart</string>
     <!-- DJS installation -->
+    <string name="djs_installation_failed">Beim Installieren von acc ist etwas schief gelaufen. Bitte stelle sicher, dass eine funktionierende Internetverbindung vorhanden ist. Wenn diese Nachricht weiterhin erscheint, versuche die Installation von \'acc\' mit Magisk Manager - und melde bitte das Problem.</string>
+    <string name="acc_installation_failed_title">Installation fehlgeschlagen</string>
+    <string name="voltage_control_file_not_set">Nicht gesetzt.</string>
+    <string name="edit_on_boot">Bearbeite Befehl für Systemstart (\'On Boot\')</string>
     <string name="edit_on_boot_dialog_hint">Leer lassen, um zu deaktivieren</string>
     <string name="save">Speichern</string>
     <string name="logs">Logs</string>
@@ -77,9 +82,12 @@
     <string name="new_config">Neue benutzerdefinierte Konfiguration</string>
     <string name="enable_voltage_limit">Ladespannungslimit aktivieren</string>
     <string name="voltage_control_file">Spannungs-Kontrolldatei:</string>
+    <string name="voltage_max">Spannungs-max (mV):</string>
     <string name="disabled">Deaktiviert</string>
     <string name="delete">Löschen</string>
     <string name="no_schedules">Keine Zeitpläne gesetzt</string>
+    <string name="wrong_volt_file">Es liegt entweder eine nicht unterstützte Spannungs-max-Kontrolldatei vor, oder der Kernel unterstützt diese Funktion nicht.</string>
+    <string name="invalid_voltage_max">Der Wert sollte zwischen 3920 und 4349 (mV) liegen</string>
     <string name="edit_charging_switch">Ladeschalter bearbeiten</string>
     <string name="test_switch">Ladeschalter testen</string>
     <string name="no_option_selected">Keine Option ausgewählt; bitte eine auswählen!</string>
@@ -89,11 +97,23 @@
     <string name="retry">Erneut versuchen</string>
     <string name="apply">Übernehmen</string>
     <string name="done">Fertig</string>
+    <string name="edit_charging_limit_once_dialog_msg">Wähle den Prozentpunkt, an dem das Laden angehalten werden soll. Dies wirkt sich nur auf einen Ladezyklus aus.</string>
     <string name="info">Info</string>
+    <string name="title_cooldown_control">Abkühlung</string>
+    <string name="title_on_boot">Hochfahr (\'On boot\') Optionen</string>
+    <string name="title_temperature_control">Temperaturregelung</string>
+    <string name="title_capacity_control">Kapazitätskontrolle</string>
+    <string name="capacity_control_info">Benutze \"Herunterfahren bei\" um das System automatisch herunterzuladen, wenn Akku nicht geladen wird und die Kapazität unter den Prozentpunkt sinkt.\nBenutze Ladevorgang stoppen und fortsetzen, um einzustellen, wann das Laden beendet und neu gestartet wird.\nLadeschalter ist die Datei, die verwendet wird, um dem Gerät mitzuteilen, den Ladevorgang zu stoppen. Standardmäßig testet acc alle verfügbaren Ladeschalter, bis einer gefunden wurde, welcher funktioniert.</string>
+    <string name="power_control_info">Diese Einstellung ermöglicht es, eine maximale Ladespannung einzustellen.\nNiedrigere Spannungen schonen den Akku und helfen dabei, ihn kühler zu halten.\nNicht alle Geräte/Kernels unterstützen diese Option.</string>
+    <string name="temperature_control_info">Es erlaubt, das Laden zu stoppen, wenn der Akku zu heiß wird.\nEine Temperatur, wann acc die Abkühlzeit starten sollte (Wechsel zwischen laden und entladen, für eine feste Anzahl von Sekunden), oder die maximale Temperatur - wann der Ladevorgang für die angegebenen Sekunden pausiert werden soll, kann eingestellt werden.</string>
+    <string name="cooldown_info">Lade/Pausenverhältnis in Sekunden (z.B. coolDownRatio=50/10) - reduziert die Belastung des Akkus, welche durch längere hohe Temperaturen und hohe Ladespannungen verursacht wird, durch periodisches Pausieren des Aufladens.\nWenn das Laden zu langsam ist, schalte dies aus (null value) oder ändere das Verhältnis.\nWenn die Einstellung auf null gesetzt ist, werden Kühlkapazität (\'coolDown capacity\') und Kühltemperatur (\'coolDown temperature\') Werte auch auf null gesetzt.\nNormalerweise wird dies nicht benötigt, wenn die maximale Ladespannung begrenzt wird.</string>
+    <string name="acc_config_editor">Acc-Konfigurationseditor</string>
     <string name="profile_creator">Profilersteller</string>
     <string name="schedule_creator">Planersteller</string>
     <string name="charging_switch_label">Ladeschalter:</string>
     <string name="template_capacity_profile">Herunterfahren: %1$d%% - Fortsetzen: %2$d%% - Anhalten: %3$d%%</string>
+     <string name="template_temperature_profile">Abkühlen: %1$d&#176;C - Max: %2$d&#176;C - Pausieren: %3$ds</string>
+    <string name="on_plugged_info">Einsteck (\'On Plug\') Einstellung können eingestellt werden, um Einstellungen jedes Mal zu aktualisieren, wenn mit einer Stromquelle verbunden wird. Dies ist besonders nützlich, um max Spannung/Strom für drahtlose Ladegeräte zu setzen: \"./wireless/voltage_max:V_MAX\" und \"./usb/current_max:CURR_MAX\"</string>
     <!--Profiles Options-->
     <!-- About Activity -->
 </resources>

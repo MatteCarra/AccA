@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorSuccessful">#00C853</color>
+    <color name="colorError">#F44336</color>
+
+    <color name="white">#fafafa</color>
+    <color name="black">#000000</color>
+
+    <color name="colorSelectedProfile">#388E3C</color>
+</resources>
