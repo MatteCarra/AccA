@@ -15,12 +15,15 @@
             android:layout_centerInParent="true"
             android:layout_toStartOf="@+id/pex_item_checkbox"
             android:layout_toLeftOf="@id/pex_item_checkbox"
+            android:maxLines="1"
+            android:ellipsize="end"
             tools:text="Profile 1" />
 
     <CheckBox
             android:id="@+id/pex_item_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="false"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"/>
