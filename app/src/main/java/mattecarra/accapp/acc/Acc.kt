@@ -20,9 +20,9 @@ import kotlin.math.abs
 
 
 interface AccInterface {
-    val defaultConfig: AccConfig
-
     suspend fun readConfig(): AccConfig
+
+    suspend fun readDefaultConfig(): AccConfig
 
     suspend fun listVoltageSupportedControlFiles(): List<String>
 
@@ -173,7 +173,7 @@ interface AccInterface {
 }
 
 object Acc {
-    const val bundledVersion = 202003013
+    const val bundledVersion = 202004171
     private val defaultVersionPackage = mattecarra.accapp.acc.v201910132.AccHandler::class.java //Default AccHandler, used wen version is not recognized
 
     /*

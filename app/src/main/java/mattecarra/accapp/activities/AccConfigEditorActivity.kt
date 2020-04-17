@@ -76,7 +76,7 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
                     } catch (ex: Exception) {
                         ex.printStackTrace()
                         showConfigReadError()
-                        Acc.instance.defaultConfig //if mAccConfig is null I use default mAccConfig values.
+                        runBlocking { Acc.instance.readDefaultConfig() } //if mAccConfig is null I use default mAccConfig values.
                     }
             }
 
@@ -115,7 +115,9 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
                 returnResults()
             }
             R.id.action_restore -> {
-                viewModel.accConfig = Acc.instance.defaultConfig
+                launch {
+                    viewModel.accConfig = Acc.instance.readDefaultConfig()
+                }
             }
             R.id.action_undo -> {
                 viewModel.undoLastConfigOperation()
@@ -580,31 +582,48 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
     }
 
     fun onPluggedRestore(view: View) {
-        viewModel.onPlug = Acc.instance.defaultConfig.configOnPlug
+        launch {
+            viewModel.onPlug = Acc.instance.readDefaultConfig().configOnPlug
+        }
     }
 
     fun onCooldownRestore(view: View) {
-        viewModel.coolDown = Acc.instance.defaultConfig.configCoolDown
+        launch {
+            viewModel.coolDown = Acc.instance.readDefaultConfig().configCoolDown
+        }
     }
 
     fun onCapacityRestore(view: View) {
-        viewModel.accConfig = viewModel.accConfig.copy(configCapacity = Acc.instance.defaultConfig.configCapacity, configChargeSwitch = Acc.instance.defaultConfig.configChargeSwitch)
+        launch {
+            val defaultConfig = Acc.instance.readDefaultConfig()
+            viewModel.capacity = defaultConfig.configCapacity
+            viewModel.chargeSwitch = defaultConfig.configChargeSwitch
+        }
     }
 
     fun onPowerControlRestore(view: View) {
-        viewModel.voltageLimit = Acc.instance.defaultConfig.configVoltage
-        viewModel.currentMaxLimit = Acc.instance.defaultConfig.configCurrMax
+        launch {
+            val defaultConfig = Acc.instance.readDefaultConfig()
+            viewModel.voltageLimit = defaultConfig.configVoltage
+            viewModel.currentMaxLimit = defaultConfig.configCurrMax
+        }
     }
 
     fun onTemperatureControlRestore(view: View) {
-        viewModel.temperature = Acc.instance.defaultConfig.configTemperature
+        launch {
+            viewModel.temperature = Acc.instance.readDefaultConfig().configTemperature
+        }
     }
 
     fun onBootRestoreClick(view: View) {
-        viewModel.onBoot = Acc.instance.defaultConfig.configOnBoot
+        launch {
+            viewModel.onBoot = Acc.instance.readDefaultConfig().configOnBoot
+        }
     }
 
     fun onBatteryIdleRestore(v: View) {
-        viewModel.prioritizeBatteryIdleMode = Acc.instance.defaultConfig.prioritizeBatteryIdleMode
+        launch {
+            viewModel.prioritizeBatteryIdleMode = Acc.instance.readDefaultConfig().prioritizeBatteryIdleMode
+        }
     }
 }

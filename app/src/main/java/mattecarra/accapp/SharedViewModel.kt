@@ -20,7 +20,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             } catch (ex: Exception) {
                 ex.printStackTrace()
                 //TODO: showConfigReadError()
-                config.value = Acc.instance.defaultConfig //if mAccConfig is null I use default mAccConfig values.
+                config.value = Acc.instance.readDefaultConfig() //if mAccConfig is null I use default mAccConfig values.
             }
         }
     }
@@ -82,7 +82,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 Acc.instance.readConfig()
             } catch (ex: Exception) {
                 ex.printStackTrace()
-                Acc.instance.defaultConfig
+                Acc.instance.readDefaultConfig()
             }
 
             config.postValue(currentConfigVal)

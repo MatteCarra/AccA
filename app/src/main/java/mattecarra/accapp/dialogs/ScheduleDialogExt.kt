@@ -11,6 +11,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
+import kotlinx.coroutines.runBlocking
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.models.AccaProfile
@@ -53,7 +54,7 @@ typealias AddScheduleListener =
 
 fun MaterialDialog.addScheduleDialog(
     profilesLiveData: LiveData<List<AccaProfile>>,
-    profiles: MutableList<AccaProfile> = mutableListOf(AccaProfile(-1, context.getString(R.string.new_config), Acc.instance.defaultConfig)),
+    profiles: MutableList<AccaProfile> = mutableListOf(AccaProfile(-1, context.getString(R.string.new_config), runBlocking { Acc.instance.readDefaultConfig() })),
     schedule: Schedule? = null,
     listener: AddScheduleListener
 ): MaterialDialog {
@@ -150,7 +151,9 @@ fun MaterialDialog.editScheduleDialog(
 ): MaterialDialog {
     return addScheduleDialog(
         profilesLiveData,
-        mutableListOf(AccaProfile(-1, context.getString(R.string.schedule_profile_keep_current), Acc.instance.defaultConfig), AccaProfile(-2, context.getString(R.string.schedule_profile_edit_current), Acc.instance.defaultConfig), AccaProfile(-3, context.getString(R.string.new_config), Acc.instance.defaultConfig)),
+        runBlocking { Acc.instance.readDefaultConfig() }.let { defaultConfig ->
+            mutableListOf(AccaProfile(-1, context.getString(R.string.schedule_profile_keep_current), defaultConfig), AccaProfile(-2, context.getString(R.string.schedule_profile_edit_current), defaultConfig), AccaProfile(-3, context.getString(R.string.new_config), defaultConfig))
+        },
         schedule,
         listener
     )

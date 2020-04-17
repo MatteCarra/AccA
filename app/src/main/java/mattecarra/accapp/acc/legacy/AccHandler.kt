@@ -32,21 +32,21 @@ open class AccHandler: AccInterface {
     val SWITCH = """^\s*switch=((?:(?!#).)*)""".toRegex(RegexOption.MULTILINE)
     val PRIORITIZE_BATTERY_IDLE = """^\s*prioritizeBattIdleMode=(true|false)""".toRegex(RegexOption.MULTILINE)
 
-    override val defaultConfig: AccConfig
-        get() =
-            AccConfig(
-                AccConfig.ConfigCapacity(5, 70, 80),
-                AccConfig.ConfigVoltage(null, null),
-                null,
-                AccConfig.ConfigTemperature(40, 45, 90),
-                null,
-                null,
-                null,
-                false,
-                false,
-                null,
-                false
-            )
+    override suspend fun readDefaultConfig(): AccConfig {
+        return AccConfig(
+            AccConfig.ConfigCapacity(5, 70, 80),
+            AccConfig.ConfigVoltage(null, null),
+            null,
+            AccConfig.ConfigTemperature(40, 45, 90),
+            null,
+            null,
+            null,
+            false,
+            false,
+            null,
+            false
+        )
+    }
 
     override suspend fun readConfig(): AccConfig = withContext(Dispatchers.IO) {
         val config = readConfigToString()

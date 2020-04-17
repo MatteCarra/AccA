@@ -46,25 +46,8 @@ open class AccHandler: AccInterface {
     val SWITCH = """^\s*charging_switch=((?:(?!#).)*)""".toRegex(RegexOption.MULTILINE)
     val PRIORITIZE_BATTERY_IDLE = """^\s*prioritize_batt_idle_mode=(true|false)""".toRegex(RegexOption.MULTILINE)
 
-    override val defaultConfig: AccConfig
-        get() =
-            AccConfig(
-                AccConfig.ConfigCapacity(5, 70, 80),
-                AccConfig.ConfigVoltage(null, null),
-                null,
-                AccConfig.ConfigTemperature(40, 45, 90),
-                null,
-                null,
-                null,
-                false,
-                false,
-                null,
-                false
-            )
-
-    override suspend fun readConfig(): AccConfig = withContext(Dispatchers.IO) {
-        val config = readConfigToString()
-
+    @WorkerThread
+    fun parseConfig(config: String): AccConfig {
         val capacityShutdown = SHUTDOWN_CAPACITY_REGEXP.find(config)!!.destructured.component1()
         val capacityCoolDown = COOLDOWN_CAPACITY_REGEXP.find(config)!!.destructured.component1()
         val capacityResume   = RESUME_CAPACITY_REGEXP.find(config)!!.destructured.component1()
@@ -81,7 +64,7 @@ open class AccHandler: AccInterface {
         val maxChargingVoltage = MAX_CHARGING_VOLTAGE.find(config)?.destructured?.component1()
         val maxChargingCurrent = MAX_CHARGING_CURRENT.find(config)?.destructured?.component1()
 
-        AccConfig(
+        return AccConfig(
             AccConfig.ConfigCapacity(capacityShutdown.toIntOrNull() ?: 0, capacityResume.toInt(), capacityPause.toInt()),
             AccConfig.ConfigVoltage(null, maxChargingVoltage?.toIntOrNull()),
             maxChargingCurrent?.toIntOrNull(),
@@ -98,6 +81,16 @@ open class AccHandler: AccInterface {
             getCurrentChargingSwitch(config),
             isPrioritizeBatteryIdleMode(config)
         )
+    }
+
+    override suspend fun readConfig(): AccConfig = withContext(Dispatchers.IO) {
+        parseConfig(readConfigToString())
+    }
+
+    override suspend fun readDefaultConfig(): AccConfig = withContext(Dispatchers.IO) {
+        val defaultConfig = Shell.su("/sbin/acca --set --print-default").exec().out.joinToString(separator = "\n")
+
+        parseConfig(defaultConfig)
     }
 
     @Throws(IOException::class)

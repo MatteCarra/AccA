@@ -216,13 +216,15 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
      * Function for launching the profile creation Activity
      */
     fun accProfilesFabOnClick(view: View) {
-        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-            intent.putExtra(
-                Constants.TITLE_KEY,
-                this@MainActivity.getString(R.string.profile_creator)
-            )
-            intent.putExtra(Constants.ACC_CONFIG_KEY, Acc.instance.defaultConfig)
-            startActivityForResult(intent, ACC_PROFILE_CREATOR_REQUEST)
+        launch {
+            Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+                intent.putExtra(
+                    Constants.TITLE_KEY,
+                    this@MainActivity.getString(R.string.profile_creator)
+                )
+                intent.putExtra(Constants.ACC_CONFIG_KEY, Acc.instance.readDefaultConfig())
+                startActivityForResult(intent, ACC_PROFILE_CREATOR_REQUEST)
+            }
         }
     }
 
@@ -646,17 +648,19 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             title(R.string.create_schedule)
             addScheduleDialog(mMainActivityViewModel.profiles) { profileId, scheduleName, time, executeOnce, executeOnBoot ->
                 if (profileId == -1L) {
-                    Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-                        val dataBundle = Bundle()
-                        dataBundle.putString(Constants.SCHEDULE_NAME_KEY, scheduleName)
-                        dataBundle.putString(Constants.SCHEDULE_TIME_KEY, time)
-                        dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONCE_KEY, executeOnce)
-                        dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY, executeOnBoot)
+                    launch {
+                        Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
+                            val dataBundle = Bundle()
+                            dataBundle.putString(Constants.SCHEDULE_NAME_KEY, scheduleName)
+                            dataBundle.putString(Constants.SCHEDULE_TIME_KEY, time)
+                            dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONCE_KEY, executeOnce)
+                            dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY, executeOnBoot)
 
-                        intent.putExtra(Constants.DATA_KEY, dataBundle)
-                        intent.putExtra(Constants.ACC_CONFIG_KEY, Acc.instance.defaultConfig)
-                        intent.putExtra(Constants.TITLE_KEY, getString(R.string.schedule_creator))
-                        startActivityForResult(intent, ACC_ADD_PROFILE_SCHEDULER_REQUEST)
+                            intent.putExtra(Constants.DATA_KEY, dataBundle)
+                            intent.putExtra(Constants.ACC_CONFIG_KEY, Acc.instance.readDefaultConfig())
+                            intent.putExtra(Constants.TITLE_KEY, getString(R.string.schedule_creator))
+                            startActivityForResult(intent, ACC_ADD_PROFILE_SCHEDULER_REQUEST)
+                        }
                     }
                 } else {
                     launch {
@@ -716,22 +720,24 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                             startActivityForResult(intent, ACC_EDIT_PROFILE_SCHEDULER_REQUEST)
                         }
                     -3L -> //new custom config
-                        Intent(
-                            this@MainActivity,
-                            AccConfigEditorActivity::class.java
-                        ).also { intent ->
-                            val dataBundle = Bundle()
-                            dataBundle.putInt(Constants.SCHEDULE_ID_KEY, schedule.profile.uid)
-                            dataBundle.putString(Constants.SCHEDULE_NAME_KEY, scheduleName)
-                            dataBundle.putString(Constants.SCHEDULE_TIME_KEY, time)
-                            dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONCE_KEY, executeOnce)
-                            dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY, executeOnBoot)
-                            dataBundle.putBoolean(Constants.SCHEDULE_ENABLED_KEY, schedule.isEnabled)
+                        launch {
+                            Intent(
+                                this@MainActivity,
+                                AccConfigEditorActivity::class.java
+                            ).also { intent ->
+                                val dataBundle = Bundle()
+                                dataBundle.putInt(Constants.SCHEDULE_ID_KEY, schedule.profile.uid)
+                                dataBundle.putString(Constants.SCHEDULE_NAME_KEY, scheduleName)
+                                dataBundle.putString(Constants.SCHEDULE_TIME_KEY, time)
+                                dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONCE_KEY, executeOnce)
+                                dataBundle.putBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY, executeOnBoot)
+                                dataBundle.putBoolean(Constants.SCHEDULE_ENABLED_KEY, schedule.isEnabled)
 
-                            intent.putExtra(Constants.DATA_KEY, dataBundle)
-                            intent.putExtra(Constants.TITLE_KEY, getString(R.string.schedule_creator))
-                            intent.putExtra(Constants.ACC_CONFIG_KEY, Acc.instance.defaultConfig)
-                            startActivityForResult(intent, ACC_EDIT_PROFILE_SCHEDULER_REQUEST)
+                                intent.putExtra(Constants.DATA_KEY, dataBundle)
+                                intent.putExtra(Constants.TITLE_KEY, getString(R.string.schedule_creator))
+                                intent.putExtra(Constants.ACC_CONFIG_KEY, Acc.instance.readDefaultConfig())
+                                startActivityForResult(intent, ACC_EDIT_PROFILE_SCHEDULER_REQUEST)
+                            }
                         }
                     else -> launch {
                         mMainActivityViewModel.getProfileById(profileId.toInt())?.let { configProfile ->
