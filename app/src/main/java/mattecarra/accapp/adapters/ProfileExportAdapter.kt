@@ -8,74 +8,75 @@ import android.widget.BaseAdapter
 import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import mattecarra.accapp.R
 import mattecarra.accapp.models.AccaProfile
-import mattecarra.accapp.models.RowProfileExportData
+import mattecarra.accapp.models.ProfileExportItem
 
-class ProfileExportAdapter(private val context: Context, profiles: List<AccaProfile>, checkedChanged: CompoundButton.OnCheckedChangeListener) :
-    BaseAdapter() {
+class ProfileExportAdapter: RecyclerView.Adapter<ProfileExportAdapter.ProfileExportItemHolder>() {
 
-    var mProfileExportList: ArrayList<RowProfileExportData>
-    var mCheckedChangeListener: CompoundButton.OnCheckedChangeListener
+    private var mProfiles: List<ProfileExportItem> = ArrayList()
 
-    init {
-        // Create new RowProfileExportData objexts and assign list
-        val profileExportList: ArrayList<RowProfileExportData> = ArrayList()
-        for (profile: AccaProfile in profiles) {
-             profileExportList.add(RowProfileExportData(profile, profile.profileName))
-        }
-        mProfileExportList = profileExportList
-        mCheckedChangeListener = checkedChanged
-    }
+    inner class ProfileExportItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+        ProfileExportItem.Listener {
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        lateinit var mExportProfile: ProfileExportItem
 
-        var convertView = convertView
-        val holder: RowViewHolder
+        val titleTv: TextView = itemView.findViewById(R.id.pex_item_name_tv)
+        val selectedCb: CheckBox = itemView.findViewById(R.id.pex_item_checkbox)
 
-        val exportProfile = mProfileExportList[position]
-
-        if (convertView == null) {
-            holder = RowViewHolder()
-            convertView = LayoutInflater.from(context).inflate(R.layout.profile_export_item, null, true)
-
-            holder.mCheckBox = convertView!!.findViewById(R.id.pex_item_checkbox)
-            holder.mProfile = exportProfile.getProfile()
-            holder.mTitle = convertView!!.findViewById(R.id.pex_item_name_tv)
-            holder.mListener = exportProfile.getListener()
-
-            convertView.tag = holder
-        } else {
-            // the getTag returns the viewHolder object set as a tag to the view
-            holder = convertView.tag as RowViewHolder
+        fun setData(exportItem: ProfileExportItem) {
+            mExportProfile = exportItem
+            titleTv.text = exportItem.getName()
         }
 
-        convertView.setOnClickListener(holder.mListener)
+        override fun onCheckedChanged(value: Boolean) {
+            selectedCb.isChecked = value
+        }
 
-        holder.mTitle.text = holder.mProfile.profileName
-        holder.mCheckBox.isSelected = exportProfile.getCheckState()
-        holder.mCheckBox.setOnClickListener(exportProfile.getListener())
-        holder.mCheckBox.setOnCheckedChangeListener(mCheckedChangeListener)
-
-        return convertView
+        fun getExportProfile(): ProfileExportItem {
+            return mExportProfile
+        }
     }
 
-    override fun getItem(id: Int): Any {
-        return mProfileExportList[id]
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileExportItemHolder {
+        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.profile_export_item, parent, false)
+        return ProfileExportItemHolder(view)
     }
 
-    override fun getCount(): Int {
-        return mProfileExportList.size
+    override fun onBindViewHolder(holder: ProfileExportItemHolder, position: Int) {
+        val exportProfile: ProfileExportItem = mProfiles[position]
+        exportProfile.setOnCheckedChangedListener(holder)
+        holder.setData(exportProfile)
     }
 
-    override fun getItemId(position: Int): Long {
-        return 0
+    override fun onViewRecycled(holder: ProfileExportItemHolder) {
+        holder.getExportProfile().setOnCheckedChangedListener(null)
     }
 
-    private inner class RowViewHolder {
-        lateinit var mTitle: TextView
-        lateinit var mProfile: AccaProfile
-        lateinit var mCheckBox: CheckBox
-        lateinit var mListener: View.OnClickListener
+    override fun getItemCount(): Int {
+        return mProfiles.size
+    }
+
+    fun getCheckedProfiles(): List<AccaProfile> {
+        val profiles: List<AccaProfile> = ArrayList()
+
+        for (items in mProfiles) {
+            profiles.add(items.getProfile())
+        }
+
+        return profiles
+    }
+
+    fun toggleCheckboxes() {
+        // TODO: Toggle all profiles
+    }
+
+    private fun setCheckboxStates(checked: Boolean) {
+        for (profile in mProfiles) {
+            if (profile.isChecked() != checked) {
+                profile.setIsChecked(checked)
+            }
+        }
     }
 }
