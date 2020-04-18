@@ -44,8 +44,8 @@ class ImportExportActivity : FragmentActivity() {
                 }
 
                 when (position) {
-                    0 -> tab.text = "Import"
-                    1 -> tab.text = "Export"
+                    0 -> tab.text = getString(R.string.import_title)
+                    1 -> tab.text = getString(R.string.export_title)
                 }
             }
         ).attach()
