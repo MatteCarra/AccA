@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.ListView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -59,10 +60,6 @@ class ExportFragment : ScopedFragment() {
                 // Set data for recycler adapter
                 mProfileExportAdapter.setProfiles(profiles)
             }
-
-            // may have to move this out as it doesn't use livedata
-
-
         })
 
         // Export selected profiles as JSON string
@@ -74,16 +71,20 @@ class ExportFragment : ScopedFragment() {
                     profiles.add(export.getProfile())
             }
 
-            // TODO: Export to a file in the internal storage, or let the user select whether they want to share it, or save to file
+            if (!profiles.isEmpty()) {
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, Klaxon().toJsonString(profiles))
+                    type = "text/plain"
+                }
 
-            val sendIntent: Intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, Klaxon().toJsonString(profiles))
-                type = "text/plain"
+                val shareIntent = Intent.createChooser(sendIntent, null)
+                startActivity(shareIntent)
+            } else {
+                Toast.makeText(context, R.string.export_none_selected, Toast.LENGTH_SHORT).show()
             }
 
-            val shareIntent = Intent.createChooser(sendIntent, null)
-            startActivity(shareIntent)
+
         }
 
     }
