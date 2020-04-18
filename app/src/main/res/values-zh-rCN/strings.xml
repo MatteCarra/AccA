@@ -133,6 +133,7 @@
     <string name="title_temperature_control">温度控制</string>
     <string name="title_capacity_control">容量控制</string>
     <string name="about">关于</string>
+    <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- 自动关机阈值: 手机在没有充电的情况下，如果电池电量低于所设置的值，手机将自动关机。&lt;br /&gt;- 停止充电阈值:与“恢复充电阈值”配合，指示手机自动停止充电和自动恢复充电的阈值。&lt;br /&gt;- CHARGING SWITCH is the control file, plus ON and OFF values for switching charging on/off. By default, ACC uses whatever works.</string>
     <string name="acc_config_editor">ACC 配置编辑器</string>
     <string name="profile_creator">创建配置</string>
@@ -219,15 +220,11 @@
     <string name="edit_schedule">编辑计划</string>
     <string name="create_schedule">创建计划</string>
     <!-- About Activity -->
-    <string name="about_team_blurb">感谢你使用 ACCA ！
-        \n我们花了很多时间，以给你最好的体验。
-        \n特别感谢那些通过以下方式支持我们的人：
-        捐赠、提出建议、opening pull requests、提交错误，等等。
-    </string>
     <string name="about_acca_version_label">ACCA 版本：</string>
     <string name="about_acc_version_label">ACC 版本：</string>
     <string name="about_project_github">在 Github 上的项目</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">网站</string>
     <string name="toast_no_browser_installed">无法打开链接！\n请确保您已经安装了浏览器。</string>
+    <!-- Import and Export -->
 </resources>
