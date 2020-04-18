@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_margin="16dp"
-            android:text="Export"
-            app:icon="@drawable/ic_outline_save_alt_24px" />
+            android:text="@string/export_title"
+            app:icon="@drawable/ic_outline_publish_24px" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
