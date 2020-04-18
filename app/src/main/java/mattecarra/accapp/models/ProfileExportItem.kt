@@ -27,13 +27,14 @@ class ProfileExportItem(profile: AccaProfile, title: String) {
         return mName
     }
 
-    fun setIsChecked(checked: Boolean) {
-        mIsChecked = checked
-        mListener?.onCheckedChanged(mIsChecked)
-    }
-
     fun isChecked(): Boolean {
         return mIsChecked
+    }
+
+    // Toggle the internal variable for mIsChecked
+    fun check() {
+        mIsChecked = !mIsChecked
+        mListener?.onCheckedChanged(mIsChecked)
     }
 
     interface Listener {
