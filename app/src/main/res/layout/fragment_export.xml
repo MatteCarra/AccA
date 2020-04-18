@@ -14,13 +14,4 @@
             android:scrollbars="vertical"
             tools:listitem="@layout/profile_export_item"/>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/export_frag_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_margin="16dp"
-            android:text="@string/export_title"
-            app:icon="@drawable/ic_outline_publish_24px" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
