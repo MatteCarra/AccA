@@ -1,13 +1,9 @@
 package mattecarra.accapp.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.CheckBox
-import android.widget.CompoundButton
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import mattecarra.accapp.R
 import mattecarra.accapp.models.AccaProfile
@@ -15,15 +11,24 @@ import mattecarra.accapp.models.ProfileExportItem
 
 class ProfileExportAdapter: RecyclerView.Adapter<ProfileExportAdapter.ProfileExportItemHolder>() {
 
-    private var mProfiles: List<ProfileExportItem> = ArrayList()
+    private var mProfiles: ArrayList<ProfileExportItem> = ArrayList()
 
     inner class ProfileExportItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
-        ProfileExportItem.Listener {
+        ProfileExportItem.Listener, View.OnClickListener {
 
         lateinit var mExportProfile: ProfileExportItem
 
-        val titleTv: TextView = itemView.findViewById(R.id.pex_item_name_tv)
-        val selectedCb: CheckBox = itemView.findViewById(R.id.pex_item_checkbox)
+        private val itemRl: RelativeLayout = itemView.findViewById(R.id.pex_item_rl)
+        private val titleTv: TextView = itemView.findViewById(R.id.pex_item_name_tv)
+        private val selectedCb: CheckBox = itemView.findViewById(R.id.pex_item_checkbox)
+
+        init {
+            itemRl.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+            mProfiles[adapterPosition].check()
+        }
 
         fun setData(exportItem: ProfileExportItem) {
             mExportProfile = exportItem
@@ -58,25 +63,20 @@ class ProfileExportAdapter: RecyclerView.Adapter<ProfileExportAdapter.ProfileExp
         return mProfiles.size
     }
 
-    fun getCheckedProfiles(): List<AccaProfile> {
-        val profiles: List<AccaProfile> = ArrayList()
-
-        for (items in mProfiles) {
-            profiles.add(items.getProfile())
-        }
-
-        return profiles
-    }
-
     fun toggleCheckboxes() {
         // TODO: Toggle all profiles
     }
 
-    private fun setCheckboxStates(checked: Boolean) {
-        for (profile in mProfiles) {
-            if (profile.isChecked() != checked) {
-                profile.setIsChecked(checked)
-            }
+    fun setProfiles(profiles: List<AccaProfile>) {
+        // Create ExportProfile list based off AccaProfile list provided
+        for (profile in profiles) {
+            var exPro = ProfileExportItem(profile, profile.profileName)
+            mProfiles.add(exPro)
         }
+        notifyDataSetChanged()
+    }
+
+    fun getExports(): ArrayList<ProfileExportItem> {
+        return mProfiles
     }
 }
