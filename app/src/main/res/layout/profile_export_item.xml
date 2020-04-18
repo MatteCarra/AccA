@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/pex_item_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="?attr/selectableItemBackground"
@@ -15,16 +16,16 @@
             android:layout_centerInParent="true"
             android:layout_toStartOf="@+id/pex_item_checkbox"
             android:layout_toLeftOf="@id/pex_item_checkbox"
-            android:maxLines="1"
             android:ellipsize="end"
+            android:maxLines="1"
             tools:text="Profile 1" />
 
     <CheckBox
             android:id="@+id/pex_item_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="false"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:clickable="false" />
 </RelativeLayout>
