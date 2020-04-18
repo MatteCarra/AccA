@@ -63,10 +63,6 @@ class ProfileExportAdapter: RecyclerView.Adapter<ProfileExportAdapter.ProfileExp
         return mProfiles.size
     }
 
-    fun toggleCheckboxes() {
-        // TODO: Toggle all profiles
-    }
-
     fun setProfiles(profiles: List<AccaProfile>) {
         // Create ExportProfile list based off AccaProfile list provided
         for (profile in profiles) {
