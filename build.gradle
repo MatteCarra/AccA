@@ -11,7 +11,8 @@ buildscript {
                 nav: "2.1.0",
                 viewpager: "1.0.0",
                 material: "1.2.0-alpha06",
-                browser: "1.2.0"
+                browser: "1.2.0",
+                multidex: "2.0.1"
         ]
     }
     repositories {
