@@ -61,31 +61,10 @@ class ExportFragment : ScopedFragment() {
                 mProfileExportAdapter.setProfiles(profiles)
             }
         })
+    }
 
-        // Export selected profiles as JSON string
-        export_frag_fab.setOnClickListener {
-            val profiles: ArrayList<AccaProfile> = ArrayList()
-
-            for (export in mProfileExportAdapter.getExports()) {
-                if (export.isChecked())
-                    profiles.add(export.getProfile())
-            }
-
-            if (!profiles.isEmpty()) {
-                val sendIntent: Intent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, Klaxon().toJsonString(profiles))
-                    type = "text/plain"
-                }
-
-                val shareIntent = Intent.createChooser(sendIntent, null)
-                startActivity(shareIntent)
-            } else {
-                Toast.makeText(context, R.string.export_none_selected, Toast.LENGTH_SHORT).show()
-            }
-
-
-        }
-
+    // Provides the list of ProfileExportItems
+    fun getExportList(): List<ProfileExportItem> {
+        return mProfileExportAdapter.getExports()
     }
 }
