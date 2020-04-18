@@ -8,6 +8,7 @@ import android.widget.CompoundButton
 import android.widget.ListView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_export.*
 import mattecarra.accapp.R
@@ -15,7 +16,7 @@ import mattecarra.accapp.adapters.ProfileExportAdapter
 import mattecarra.accapp.models.ProfileExportItem
 import mattecarra.accapp.utils.ScopedFragment
 
-class ExportFragment : ScopedFragment(), CompoundButton.OnCheckedChangeListener {
+class ExportFragment : ScopedFragment() {
 
     companion object {
         fun newInstance() = ExportFragment()
@@ -23,6 +24,7 @@ class ExportFragment : ScopedFragment(), CompoundButton.OnCheckedChangeListener 
 
     private lateinit var mViewModel: ExportViewModel
     private lateinit var mProfilesRecycler: RecyclerView
+    private lateinit var mProfileExportAdapter: ProfileExportAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,9 +38,11 @@ class ExportFragment : ScopedFragment(), CompoundButton.OnCheckedChangeListener 
         super.onViewCreated(view, savedInstanceState)
 
         mProfilesRecycler = export_list_rv
+        mProfileExportAdapter = ProfileExportAdapter()
+        mProfilesRecycler.adapter = mProfileExportAdapter
+        mProfilesRecycler.layoutManager = LinearLayoutManager(context)
 
         mViewModel = ViewModelProvider(this).get(ExportViewModel::class.java)
-        val adapter = ProfileExportAdapter()
 
         // Load list of profiles
         mViewModel.getProfiles().observe(viewLifecycleOwner, Observer { profiles ->
@@ -47,27 +51,19 @@ class ExportFragment : ScopedFragment(), CompoundButton.OnCheckedChangeListener 
                 // Hide the view
             } else {
                 // Show the view
+
+                // Set data for recycler adapter
+                mProfileExportAdapter.setProfiles(profiles)
             }
 
-            mProfilesRecycler.adapter = ProfileExportAdapter(view.context, profiles, this)
+            // may have to move this out as it doesn't use livedata
+
+
         })
 
-//        export_frag_fab.setOnClickListener { view ->
-//            mViewModel.exportProfiles()
-//        }
-
-    }
-
-    override fun onCheckedChanged(buttonView: CompoundButton?, checked: Boolean) {
-        val pos = mListView.getPositionForView(buttonView)
-        if (pos != ListView.INVALID_POSITION) {
-            var exProfile: ProfileExportItem = mListView.adapter.getItem(pos) as ProfileExportItem
-            if (checked) {
-                mViewModel.addProfileToExport(exProfile.getProfile())
-            } else {
-                mViewModel.removeProfileToExport(exProfile.getProfile())
-            }
-
+        export_frag_fab.setOnClickListener {
+            mViewModel.exportProfiles(mProfileExportAdapter.getExports())
         }
+
     }
 }
