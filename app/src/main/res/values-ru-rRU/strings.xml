@@ -49,6 +49,7 @@
     <!-- ACC installation -->
     <!-- DJS installation -->
     <string name="save">Сохранить</string>
+    <!-- ACC Config Tooltips -->
     <!--Profiles Options-->
     <string-array name="theme_option_options">
         <item>Light</item>
@@ -65,10 +66,6 @@
     <string name="edit_schedule">Изменить расписание</string>
     <string name="create_schedule">Создание расписание</string>
     <!-- About Activity -->
-    <string name="about_team_blurb">Спасибо за использование ACCA!
-        \nМы потратили кучу времени на то, что вам понравилось.
-        \nОсобая благодарность тем, кто так или иначе внес свой вклад:
-        пожертвование, предложений, замечания, отправка ошибок и т.д..
-    </string>
     <string name="about_acca_version_label">Версия АССА:</string>
+    <!-- Import and Export -->
 </resources>
