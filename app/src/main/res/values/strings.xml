@@ -154,6 +154,7 @@
     <string name="title_capacity_control">Capacity Control</string>
     <string name="about">About</string>
 
+    <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- SHUTDOWN: automatically shutdown the system at or below this battery level when battery is not charging.&lt;br /&gt;- STOP: and RESUME capacities dictate when charging should stop and resume, respectively.&lt;br /&gt;- CHARGING SWITCH is the control file, plus ON and OFF values for switching charging on/off. By default, ACC uses whatever works.</string>
     <string name="power_control_info">- Every reduction in peak charge voltage of 0.10V/cell is said to double the cycle life.&lt;br /&gt;- Unfortunately, not all devices/kernels support this feature.</string>
     <string name="temperature_control_info">- This disables charging for set seconds to cool the battery&lt;br /&gt;- COOL DOWN TEMP depends on COOL DOWN RATIO.&lt;br /&gt;- MAX TEMP works with PAUSE SECONDS.</string>
@@ -289,7 +290,7 @@
     <string name="about_team_blurb">Thank you for using ACCA!
         \nWe spent heaps of time on this all for you to enjoy.
         \nSpecial thanks to those who have contributed in one way or another:
-        donating, offering suggestions, opening pull requests, submitting bugs, etc..
+        donating, offering suggestions, opening pull requests, submitting bugs, and helping one another!
     </string>
 
     <string name="about_acca_version_label">ACCA Version:</string>
@@ -309,4 +310,10 @@
     <string name="reset_bs_on_pause">Reset battery stats on limit reached</string>
     <string name="current_max">Current max (mA):</string>
     <string name="invalid_current_max">Invalid current max value</string>
+
+    <!-- Import and Export -->
+    <string name="import_export_title">Import &amp; Export</string>
+    <string name="export_title">Export</string>
+    <string name="export_none_selected">Please select profiles to export above.</string>
+    <string name="import_title">Import</string>
 </resources>
