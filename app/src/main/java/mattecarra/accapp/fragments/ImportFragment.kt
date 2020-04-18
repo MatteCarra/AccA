@@ -49,7 +49,7 @@ class ImportFragment: ScopedFragment() {
                 val text = clipboard.primaryClip?.getItemAt(0)?.text.toString()
 //                Toast.makeText(context, "Received text: " + text, Toast.LENGTH_SHORT).show()
                 // Process data
-                val result = Klaxon().parse<ArrayList<AccaProfile>>(text)
+                val result = Klaxon().parseArray<AccaProfile>(text)
                 if (result != null) {
                     Toast.makeText(context, "Number of profiles: " + result[0].profileName, Toast.LENGTH_SHORT).show()
                 } else {
