@@ -71,6 +71,8 @@
     <string name="edit_charging_limit_once">Sạc một lần với các hạn chế từ thấp đến 0</string>
     <string name="apply">Áp dụng</string>
     <string name="done">Xong</string>
+    <!-- ACC Config Tooltips -->
     <!--Profiles Options-->
     <!-- About Activity -->
+    <!-- Import and Export -->
 </resources>
