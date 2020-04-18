@@ -138,6 +138,7 @@
     <string name="title_temperature_control">Temperatuur regeling</string>
     <string name="title_capacity_control">Capaciteitscontrole</string>
     <string name="about">Over</string>
+    <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- SHUTDOWN: automatisch het systeem afsluiten op of onder dit batterijniveau wanneer de batterij niet oplaadt.&lt;br /&gt;- STOP: en RESUME capaciteit geeft aan wanneer het opladen moet stoppen en hervatten.&lt;br /&gt;- CHARGING SWITCH is het controlebestand, plus ON en UIT zijn de waarden voor het aan/uit schakelen van het opladen. Standaard gebruikt ACC elke optie die werkt.</string>
     <string name="power_control_info">- Van elke vermindering in piek oplaadspanning van 0.10V/cel wordt gezegd dat het de levensduur verdubbeld.&lt;br /&gt;- Helaas, ondersteunen niet alle apparaten/kernels deze functie.</string>
     <string name="temperature_control_info">- Dit schakelt het opladen x seconden uit om de batterij te koelen&lt;br /&gt;- COOL DOWN TEMP is afhankelijk van COOL DOWN RATIO.&lt;br /&gt;- MAX TEMP werkt met PAUSE SECONDS.</string>
@@ -244,11 +245,6 @@
     <string name="edit_schedule">Bewerk schema</string>
     <string name="create_schedule">Maak schema</string>
     <!-- About Activity -->
-    <string name="about_team_blurb">Bedankt voor het gebruik van ACCA! 
-        \nWe hebben hieraan veel tijd besteed zodat jij er van kan genieten!
-        \nSpeciale dank aan degenen die op een of andere manier hebben bijgedragen:
-        via donaties, suggesties hebben aangeboden, bugs hebben ingediend, etc..
-    </string>
     <string name="about_acca_version_label">ACCA versie:</string>
     <string name="about_acc_version_label">ACC versie:</string>
     <string name="about_project_github">Project\'s GitHub</string>
@@ -265,4 +261,5 @@
     <string name="reset_bs_on_pause">Reset accustatistieken bij bereiken limiet</string>
     <string name="current_max">Stroom max (mA):</string>
     <string name="invalid_current_max">Ongeldige stroom max waarde</string>
+    <!-- Import and Export -->
 </resources>
