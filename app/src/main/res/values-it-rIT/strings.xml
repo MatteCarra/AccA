@@ -112,7 +112,7 @@
     <string name="title_on_boot">Applica all\'avvio</string>
     <string name="title_temperature_control">Controllo Temperatura</string>
     <string name="title_capacity_control">Controllo Capacità</string>
-    <string name="about">Info su</string>
+    <string name="about">Info</string>
     <!-- ACC Config Tooltips -->
     <string name="temperature_control_info">- Questo disabilita la carica per il numero di secondi impostato al fine di raffreddare la batteria&lt;br /&gt;- TEMP COOL DOWN dipende dalla RATIO COOL DOWN.&lt;br /&gt;- MAX TEMP funziona con PAUSE SECONDS.</string>
     <string name="cooldown_info">- Rapporto ON/OFF di ricarica in secondi (e.g., coolDownRatio=50/10) - riduce lo stress a cui è sottoposta la batteria per il prolungato surriscaldamento e l\'alto voltaggio mettendo periodicamente la carica in pausa.&lt;br /&gt;- Se la ricarica è troppo lenta, disattiva questa funzione o cambia il rapporto.&lt;br /&gt;- Quando diaattivato, i valori di COOL DOWN CAPACITY e di COOL DOWN TEMP sono annullati.&lt;br /&gt;- Queste impostazioni sono un\'alternativa alla funzione di limite del voltaggio di ricarica.</string>

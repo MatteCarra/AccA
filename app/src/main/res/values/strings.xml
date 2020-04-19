@@ -69,7 +69,7 @@
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Stop daemon after applying settings</string>
     <string name="description_exit_on_boot">This is used for updating files on boot.</string>
-    <string name="label_on_boot">applyOnBoot:</string>
+    <string name="label_on_boot" translatable="false">applyOnBoot:</string>
 
     <!-- ACC installation -->
     <string name="installing_acc">Installing ACC</string>
@@ -167,7 +167,7 @@
     <string name="schedule_creator">Schedule creator</string>
     <string name="charging_switch_label">Charging switch:</string>
     <string name="title_on_plugged">Apply on Plug</string>
-    <string name="label_on_plugged">applyOnPlug:</string>
+    <string name="label_on_plugged" translatable="false">applyOnPlug:</string>
     <string name="edit_on_plugged">Edit applyOnPlug settings:</string>
 
     <string name="edit_on_plugged_dialog_message">Example: wireless/voltage_max:9000000 usb/current_max:2000000
