@@ -130,6 +130,7 @@
     <string name="title_temperature_control">Controle de temperatura</string>
     <string name="title_capacity_control">Controle de Capacidade</string>
     <string name="about">Sobre</string>
+    <!-- ACC Config Tooltips -->
     <string name="temperature_control_info">- Isso desabilita o carregamento por selecionados segundos para resfriar a bateria&lt;br /&gt;- A TEMPERATURA DE RESFRIAMENTO depende da RAZÃO DE RESFRIAMENTO.&lt;br /&gt;- TEMPERATURA MÁXIMA funciona com o PAUSA EM SEGUNDOS.</string>
     <!--Profiles Options-->
     <string name="voltage_measure_unit_preference_title">Unidade de medida da tensão</string>
@@ -177,4 +178,5 @@
     <string name="about_acc_version_label">Versão ACC:</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Site</string>
+    <!-- Import and Export -->
 </resources>

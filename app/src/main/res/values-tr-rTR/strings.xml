@@ -132,6 +132,7 @@
     <string name="title_temperature_control">Sıcaklık Kontrolü</string>
     <string name="title_capacity_control">Kapasite Kontrolü</string>
     <string name="about">Hakkında</string>
+    <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- KAPATMA: Batarya şarj olmuyorsa, bu değerde veya bu değerin altında telefonu otomatik olarak kapatır.&lt;br /&gt;- DURDUR: ve DURAKLAT seçenekleri şarjın ne zaman duraklatılacağı ve devam ettirileceğini belirler.&lt;br /&gt;- ŞARJ GEÇİŞİ kontrol dosyasıdır, AÇIK ve KAPALI değerleri şarj etmenin aktif olup olmadığının göstergesidir. Varsayılan olarak, ACC hangisi çalışıyorsa onu kullanır.</string>
     <string name="temperature_control_info">- Bu bataryayı soğutmak için ayarlanan süreyi devre dışı bırakır&lt;br /&gt;- SOĞUTMA SICAKLIĞI, SOĞUTMA ORANI\'na bağlıdır.&lt;br /&gt;-MAKS. SICAKLIK, DURAKLATMA SÜRESİ ile birlikte çalışır.</string>
     <string name="cooldown_info">- Şarj AÇIK/KAPALI değerinin saniyeye oranı (mesela coolDownRatio=50/10) - yüksek sıcaklık ve yüksek voltajdan kaynaklanan batarya basıncını periyodik olarak şarjı duraklatarak azaltır.&lt;br /&gt;- Şarj çok yavaşsa bunu kapatın ya da oranı değiştirin.&lt;br /&gt;- İnaktifken SOĞUTMA KAPASİTESİ ve SOĞUTMA SICAKLIĞI boş kalır.&lt;br /&gt;- Bu ayarlar şarj voltaj limiti özelliğine güzel bir alternatiftir.</string>
@@ -223,15 +224,11 @@
     <string name="edit_schedule">Zamanlamayı düzenle</string>
     <string name="create_schedule">Zamanlama yarat</string>
     <!-- About Activity -->
-    <string name="about_team_blurb">ACCA\'yı kullandığınız için teşekkürler!
-        \nTüm bunların tadını çıkarmanız için çok zaman harcadık.
-        \nFarklı şekillerde katkıda bulunanlara özel teşekkürlerimizi sunarız: 
-        bağış yapanlar, öneri sunanlar, pull request açanlar, hataları bildirenler, vs..
-    </string>
     <string name="about_acca_version_label">ACCA Versiyonu:</string>
     <string name="about_acc_version_label">ACC Versiyonu:</string>
     <string name="about_project_github">Projenin GitHub adresi</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Web Sitesi</string>
     <string name="toast_no_browser_installed">Bağlantı açılamadı!\nWeb tarayıcınızın olduğuna emin olun.</string>
+    <!-- Import and Export -->
 </resources>

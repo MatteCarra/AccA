@@ -127,6 +127,7 @@
     <string name="title_temperature_control">温度制御</string>
     <string name="title_capacity_control">容量制御</string>
     <string name="about">About</string>
+    <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- シャットダウン: バッテリーが充電されていないとき, この値以下で自動的にシステムをシャットダウンする.&lt;br /&gt;- 停止: と再開は, 充電が停止または再開するべきときの残量をそれぞれ指示する.&lt;br /&gt;- 充電切り替え は制御ファイルであり, 充電 on/off のための ON と OFF の値である. デフォルトでは, ACC は動作するものを使用する.</string>
     <string name="temperature_control_info">- これはバッテリーを冷却するために設定秒間, 充電を無効にする.&lt;br /&gt;- 「クールダウン温度」は「クールダウン比率」に依存する.&lt;br /&gt;- 「最大温度」は停止秒間に作用する.</string>
     <string name="cooldown_info">- 秒時間での充電 ON/OFF 率 (例 クールダウン比率=50/10) - 充電を周期的に停止することで高い充電電圧と高い温度にされることによるバッテリーストレスを減らす.&lt;br /&gt;- 充電速度が非常に遅い場合, これをオフにするかこの比率を変更せよ.&lt;br /&gt;- 無効化の場合, 「クールダウン残量」と「クールダウン温度」は無効にされる.&lt;br /&gt;- この設定は充電電圧制限機能に適する代替手段です.</string>
@@ -237,4 +238,5 @@
         \nACCA は選択された最新コミットに基づいて Github から ACC の最新版をダウンロードします.
         \n継続しますか？</string>
     <string name="add_charging_switch">充電切り替えの追加</string>
+    <!-- Import and Export -->
 </resources>
