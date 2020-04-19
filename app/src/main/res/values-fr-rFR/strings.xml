@@ -236,7 +236,7 @@
         <item>Valeurs par défaut du système</item>
     </string-array>
     <string-array name="schedule_type_entries">
-        <item>Recurrent</item>
+        <item>Récurrent</item>
         <item>Exécuter une fois</item>
         <item>Exécuter au démarrage</item>
     </string-array>
@@ -245,6 +245,11 @@
     <string name="edit_schedule">Modifier la planification</string>
     <string name="create_schedule">Créer une planification</string>
     <!-- About Activity -->
+    <string name="about_team_blurb">Merci d\'utiliser ACCA !
+        \nNous avons dépensé beaucoup de temps pour que vous puissiez en profiter.
+        \nRemerciements spéciaux à ceux qui ont contribué d\'une manière ou d\'une autre :
+        dons, suggestions, demandes d’amélioration, rapport de bogues et en s\'aidant les uns les autres !
+    </string>
     <string name="about_acca_version_label">Version ACCA :</string>
     <string name="about_acc_version_label">Version ACC :</string>
     <string name="about_project_github">GitHub du projet</string>
@@ -262,4 +267,9 @@
     <string name="current_max">Courant maximal (mA) :</string>
     <string name="invalid_current_max">Valeur de courant maximal invalide</string>
     <!-- Import and Export -->
+    <string name="import_export_title">Importer &amp; Exporter</string>
+    <string name="import_title">Importer</string>
+    <string name="import_load_from_clipboard">Charger des profils depuis le presse-papier</string>
+    <string name="export_title">Exporter</string>
+    <string name="export_none_selected">Veuillez sélectionner les profils à exporter ci-dessus.</string>
 </resources>
