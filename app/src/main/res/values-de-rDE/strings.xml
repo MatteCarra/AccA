@@ -107,10 +107,10 @@
     <string name="edit_power_limit">Strom- und Spannungslimit bearbeiten</string>
     <string name="voltage_max">Spannungsmaximum (Millivolt):</string>
     <string name="disabled">Deaktiviert</string>
-    <string name="schedule_recurrent_row_text">Sich wiederholender Job geplant bei %1$02d:%2$02d</string>
+    <string name="schedule_recurrent_row_text">Wiederkehrende Aufgabe bei %1$02d:%2$02d geplant</string>
     <string name="schedule_execute_once_row_title">Einmal ausführen - %1$02d:%2$02d</string>
-    <string name="schedule_execute_once_row_text">Job geplant bei %1$02d:%2$02d</string>
-    <string name="schedule_boot_row_text">Boot Job geplant</string>
+    <string name="schedule_execute_once_row_text">Aufgabe bei %1$02d:%2$02d geplant</string>
+    <string name="schedule_boot_row_text">Aufgabe beim Hochfahren geplant</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Löschen</string>
     <string name="no_schedules">Keine Zeitpläne gesetzt</string>
@@ -132,11 +132,12 @@
     <string name="title_power_control">Steuerung der Ladeleistung</string>
     <string name="info">Info</string>
     <string name="title_cooldown_control">Abkühlzeit</string>
-    <string name="title_on_boot">Beim Booten anwenden</string>
+    <string name="title_on_boot">Beim Hochfahren anwenden</string>
     <string name="title_temperature_control">Temperaturregelung</string>
     <string name="title_capacity_control">Kapazitätskontrolle</string>
     <string name="about">Über uns</string>
-    <string name="capacity_control_info">- SHUTDOWN: Das System automatisch bei oder unter diesem Akkustand herunterfahren, sofern der Akku nicht geladen wird.&lt;br /&gt;- STOP: und RESUME-Kapazitäten geben an, wann das Laden beendet bzw. wieder aufgenommen werden soll.&lt;br /&gt;- CHARGING SWITCH ist die Kontrolldatei, plus ON- und OFF-Werten um das Laden An- oder Auszuschalten. Standardmäßig verwendet ACC alles, was funkioniert.</string>
+    <!-- ACC Config Tooltips -->
+    <string name="capacity_control_info">- SHUTDOWN: Das System automatisch bei oder unter diesem Akkustand herunterfahren, sofern der Akku nicht geladen wird.&lt;br /&gt;- STOP: und RESUME-Kapazitäten geben an, wann das Laden beendet bzw. wieder aufgenommen werden soll.&lt;br /&gt;- CHARGING SWITCH ist die Kontrolldatei, plus ON- und OFF-Werten um das Laden an- oder auszuschalten. Standardmäßig verwendet ACC alles, was funktioniert.</string>
     <string name="power_control_info">- Anscheinend verdoppelt jede Reduktion der Spitzenspannung um 0,10V pro Zelle die Lebensdauer.&lt;br /&gt;- Leider unterstützen nicht alle Geräte oder Kernel diese Funktion.</string>
     <string name="temperature_control_info">Bei eingestellten Sekunden wird das Laden pausiert, um den Akku abzukühlen &lt;br /&gt;- Die ABKÜHLTEMPERATUR hängt vom ABKÜHLVERHÄLTNIS ab. &lt;br /&gt;- MAXIMALE TEMPERATUR benutzt PAUSE SEKUNDEN.</string>
     <string name="cooldown_info">- Lade/Pausenverhältnis in Sekunden (z.B. coolDownRatio=50/10) - reduziert die Belastung des Akkus, welche durch längere hohe Temperaturen und hohe Ladespannungen verursacht wird, durch periodisches Pausieren des Aufladens.&lt;br /&gt;- Falls das Laden zu langsam ist, schalte dies aus (Nullwert) oder ändere das Verhältnis.&lt;br /&gt;- Wenn die Einstellung auf null gesetzt ist, werden Kühlkapazität (\'coolDown capacity\') und Kühltemperatur (\'coolDown temperature\') Werte auch auf null gesetzt.&lt;br /&gt;- Normalerweise wird dies nicht benötigt, wenn die maximale Ladespannung begrenzt wird.</string>
@@ -245,7 +246,7 @@
     <string name="about_team_blurb">Vielen Dank für die Verwendung von ACCA!
         \nWir haben viele Zeit damit verbracht, dass Sie davon profitieren können.
         \nBesonderen Dank an diejenigen, die auf die eine oder andere Weise beigetragen haben:
-        Spenden, Vorschläge einreichen, Pull-Requests öffnen, Fehler melden, usw...
+        Spenden, Vorschläge einreichen, Pull-Requests öffnen, Fehler melden, oder einander zu helfen!
     </string>
     <string name="about_acca_version_label">ACC-Version:</string>
     <string name="about_acc_version_label">ACC-Version:</string>
@@ -263,4 +264,10 @@
     <string name="reset_bs_on_pause">Akku-Statistik bei Erreichen des Grenzwertes zurücksetzen</string>
     <string name="current_max">Maximal-Strom (mA):</string>
     <string name="invalid_current_max">Ungültiger Maximal-Stromwert</string>
+    <!-- Import and Export -->
+    <string name="import_export_title">Importieren &amp; Exportieren</string>
+    <string name="import_title">Importieren</string>
+    <string name="import_load_from_clipboard">Profile aus der Zwischenablage laden</string>
+    <string name="export_title">Exportieren</string>
+    <string name="export_none_selected">Bitte wählen Sie oben die zu exportierenden Profile aus.</string>
 </resources>

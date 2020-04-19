@@ -136,6 +136,7 @@
     <string name="title_temperature_control">Pengatur suhu</string>
     <string name="title_capacity_control">Kontrol Kapasitas</string>
     <string name="about">Tentang</string>
+    <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- SHUTDOWN: secara otomatis mematikan sistem pada atau di bawah level baterai ini ketika baterai tidak sedang diisi.&lt;br /&gt;- STOP: dan kapasitas RESUME menentukan kapan pengisian harus berhenti dan dilanjutkan, masing-masing.&lt;br /&gt;- CHARGING SWITCH adalah file kontrol, ditambah nilai ON dan OFF untuk mengaktifkan/menonaktifkan pengisian daya. Secara default, ACC menggunakan apa pun yang berfungsi.</string>
     <string name="temperature_control_info">- Ini menonaktifkan pengisian selama beberapa detik untuk mendinginkan baterai&lt;br /&gt;- COOL DOWN TEMP tergantung pada RASIO COOL DOWN.&lt;br /&gt;- MAX TEMP bekerja dengan PAUSE SECONDS.</string>
     <string name="cooldown_info">- Pengisian ON/OFF rasio dalam hitungan detik (mis., CoolDownRatio=50/10) - mengurangi stres baterai yang disebabkan oleh suhu tinggi yang berkepanjangan dan tegangan pengisian yang tinggi dengan menjeda pengisian daya secara berkala.&lt;br /&gt;- Jika pengisian terlalu lambat, matikan ini atau ubah rasio.&lt;br /&gt;- Saat dinonaktifkan, nilai COOL DOWN CAPACITY dan COOL DOWN TEMP dibatalkan.&lt;br /&gt;- Pengaturan ini merupakan alternatif yang adil untuk fitur batas tegangan pengisian daya.</string>
@@ -241,11 +242,6 @@
     <string name="edit_schedule">Edit jadwal</string>
     <string name="create_schedule">Buat jadwal</string>
     <!-- About Activity -->
-    <string name="about_team_blurb">Terima kasih telah menggunakan ACCA!
-         \nKami menghabiskan banyak waktu untuk menikmati semua ini.
-         \nTerima kasih khusus kepada mereka yang telah berkontribusi dalam satu atau lain cara:
-         menyumbang, menawarkan saran, membuka permintaan tarik, mengirimkan bug, dll..
-    </string>
     <string name="about_acca_version_label">Versi ACCA:</string>
     <string name="about_acc_version_label">Versi ACC:</string>
     <string name="about_project_github">Proyek GitHub</string>
@@ -259,4 +255,5 @@
     <string name="add_charging_switch">Tambahkan sakelar pengisian daya</string>
     <string name="charging_switch_on_value_label">Sakelar pengisian ON VALUE</string>
     <string name="charging_switch_off_value_label">Sakelar pengisian OFF VALUE</string>
+    <!-- Import and Export -->
 </resources>

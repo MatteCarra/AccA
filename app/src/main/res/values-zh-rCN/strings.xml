@@ -111,6 +111,7 @@
     <string name="edit_power_limit">编辑电流和电压限制</string>
     <string name="voltage_max">最大电压（毫伏）：</string>
     <string name="disabled">禁用</string>
+    <string name="schedule_recurrent_row_text">重复任务于 %1$02d:%2$02d</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">删除</string>
     <string name="no_schedules">无任务计划</string>
@@ -133,6 +134,7 @@
     <string name="title_temperature_control">温度控制</string>
     <string name="title_capacity_control">容量控制</string>
     <string name="about">关于</string>
+    <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- 自动关机阈值: 手机在没有充电的情况下，如果电池电量低于所设置的值，手机将自动关机。&lt;br /&gt;- 停止充电阈值:与“恢复充电阈值”配合，指示手机自动停止充电和自动恢复充电的阈值。&lt;br /&gt;- CHARGING SWITCH is the control file, plus ON and OFF values for switching charging on/off. By default, ACC uses whatever works.</string>
     <string name="acc_config_editor">ACC 配置编辑器</string>
     <string name="profile_creator">创建配置</string>
@@ -145,10 +147,12 @@
         提示：applyOnPlug=wireless/voltage_max:9000000 可以强制在一些谷歌Pixel设备上快速无线充电。
     </string>
     <string name="template_capacity_profile">关机: %1$d%% - 恢复充电: %2$d%% - 停止充电: %3$d%%</string>
+    <string name="template_temperature_profile">温度： %1$d&#176;C - 最大： %2$d&#176;C - 暂停： %3$d秒</string>
     <!--Profiles Options-->
     <string name="profile_option_edit">编辑</string>
     <string name="profile_option_rename">重命名</string>
     <string name="profile_option_delete">删除</string>
+    <string name="selecting_profile_toast">选择配置文件 %1$s。</string>
     <string name="installation_failed_busybox_title">Busybox 未安装</string>
     <string name="installation_failed_busybox">请先安装busybox库</string>
     <string name="share">分享</string>
@@ -167,6 +171,8 @@
     <string name="units_of_measure">计量单位</string>
     <string name="acc_version_preference_title">ACC 版本</string>
     <string name="install_bundled_version">安装 bundled 版本</string>
+    <string name="acc_version_picker_title">ACC 版本</string>
+    <string name="acc_version_picker_message">选择所需要的 ACC 版本</string>
     <string-array name="current_measure_units_options">
         <item>毫安</item>
         <item>微安</item>
@@ -215,19 +221,18 @@
         <item>运行一次</item>
         <item>启动时运行</item>
     </string-array>
+    <string name="menu_import_export">导入 &amp; 导出</string>
     <string name="execute_on_boot_schedule">启动时执行</string>
     <string name="edit_schedule">编辑计划</string>
     <string name="create_schedule">创建计划</string>
     <!-- About Activity -->
-    <string name="about_team_blurb">感谢你使用 ACCA ！
-        \n我们花了很多时间，以给你最好的体验。
-        \n特别感谢那些通过以下方式支持我们的人：
-        捐赠、提出建议、opening pull requests、提交错误，等等。
-    </string>
     <string name="about_acca_version_label">ACCA 版本：</string>
     <string name="about_acc_version_label">ACC 版本：</string>
     <string name="about_project_github">在 Github 上的项目</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">网站</string>
     <string name="toast_no_browser_installed">无法打开链接！\n请确保您已经安装了浏览器。</string>
+    <string name="install_update_dialog">安装 acc 更新</string>
+    <string name="add_charging_switch">添加充电开关</string>
+    <!-- Import and Export -->
 </resources>

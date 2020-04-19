@@ -139,6 +139,7 @@
     <string name="title_temperature_control">Control de temperatura</string>
     <string name="title_capacity_control">Control de capacidad</string>
     <string name="about">Acerca de</string>
+    <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- SHUTDOWN: apaga automáticamente el sistema por debajo de este nivel de batería cuando la batería no está cargando.&lt;br /&gt;- STOP: y RESUME dictan cuando la carga debe parar y reanudarse, respectivamente.&lt;br /&gt;- CHARGING SWITCH es el archivo de control, más valores ON y OFF para apagar la carga. Por defecto, ACC utiliza cualquier obra.</string>
     <string name="power_control_info">Cada reducción en el voltaje de carga pico de 0.10V/celda duplica el ciclo de vida.&lt;br /&gt;- Desafortunadamente, no todos los dispositivos/kernels admiten esta característica.</string>
     <string name="temperature_control_info">- Esto desactiva la carga por segundos para enfriar la batería&lt;br /&gt;- COOL DOWN TEMP depende de COOL DOWN RATIO.&lt;br /&gt;- MAX TEMP trabaja con PAUSE SECONDS.</string>
@@ -244,11 +245,6 @@ Se garantiza que la versión incluida siempre funcionará con ACCA, por lo que e
     <string name="edit_schedule">Editar programación</string>
     <string name="create_schedule">Crear programación</string>
     <!-- About Activity -->
-    <string name="about_team_blurb">¡Gracias por usar ACCA!
-        \nHemos dedicado montones de tiempo a todo para que disfrutes.
-        \nAgradecimientos Especiales a los que han contribuido de una manera u otra:
-        donando, ofreciendo sugerencias, abriendo solicitudes de pull requests, enviando bugs, etc..
-    </string>
     <string name="about_acca_version_label">Versión de ACCA:</string>
     <string name="about_acc_version_label">Versión de ACC:</string>
     <string name="about_project_github">GitHub del proyecto</string>
@@ -265,4 +261,5 @@ Se garantiza que la versión incluida siempre funcionará con ACCA, por lo que e
     <string name="reset_bs_on_pause">Restablecer estadísticas de batería en el límite alcanzado</string>
     <string name="current_max">Corriente máxima (mA):</string>
     <string name="invalid_current_max">Corriente máxima actual no válida</string>
+    <!-- Import and Export -->
 </resources>

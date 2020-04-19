@@ -138,6 +138,7 @@
     <string name="title_temperature_control">Contrôle de la température</string>
     <string name="title_capacity_control">Contrôle de la capacité</string>
     <string name="about">À propos de</string>
+    <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- ARRÊT : éteindre automatiquement le système à ou en dessous de ce niveau de batterie lorsque la batterie ne se charge pas.&lt;br /&gt;- ARRÊTER et les capacités RÉSUMER dictent quand la charge doit respectivement s\'arrêter et reprendre.&lt;br /&gt;- INTERRUPTEUR DE CHARGE est le fichier de contrôle, plus les valeurs ON et OFF pour allumer ou éteindre. Par défaut, ACC utilise tout ce qui fonctionne.</string>
     <string name="power_control_info">- Toute réduction de la tension de charge de pointe de 0,10V/cellule semblera doubler la durée de vie.&lt;br /&gt;- Malheureusement, tous les appareils/noyaux ne prennent pas en charge cette fonctionnalité.</string>
     <string name="temperature_control_info">- Ceci désactive la charge pendant les secondes réglées pour refroidir la batterie&lt;br /&gt;- COOL DOWN TEMP dépend de COOL DOWN RATIO.&lt;br /&gt;- MAX TEMP fonctionne avec PAUSE SECONDES.</string>
@@ -235,7 +236,7 @@
         <item>Valeurs par défaut du système</item>
     </string-array>
     <string-array name="schedule_type_entries">
-        <item>Recurrent</item>
+        <item>Récurrent</item>
         <item>Exécuter une fois</item>
         <item>Exécuter au démarrage</item>
     </string-array>
@@ -244,10 +245,10 @@
     <string name="edit_schedule">Modifier la planification</string>
     <string name="create_schedule">Créer une planification</string>
     <!-- About Activity -->
-    <string name="about_team_blurb">Merci d\'utiliser ACCA!
-        \nNous avons passé pas mal de temps sur tout cela pour que vous puissiez en profiter.
+    <string name="about_team_blurb">Merci d\'utiliser ACCA !
+        \nNous avons dépensé beaucoup de temps pour que vous puissiez en profiter.
         \nRemerciements spéciaux à ceux qui ont contribué d\'une manière ou d\'une autre :
-        don, en proposant des suggestions, en ouvrant des demandes d’amélioration, en soumettant des bogues, etc..
+        dons, suggestions, demandes d’amélioration, rapport de bogues et en s\'aidant les uns les autres !
     </string>
     <string name="about_acca_version_label">Version ACCA :</string>
     <string name="about_acc_version_label">Version ACC :</string>
@@ -265,4 +266,10 @@
     <string name="reset_bs_on_pause">Réinitialiser les statistiques de la batterie lorsque la limite est atteinte</string>
     <string name="current_max">Courant maximal (mA) :</string>
     <string name="invalid_current_max">Valeur de courant maximal invalide</string>
+    <!-- Import and Export -->
+    <string name="import_export_title">Importer &amp; Exporter</string>
+    <string name="import_title">Importer</string>
+    <string name="import_load_from_clipboard">Charger des profils depuis le presse-papier</string>
+    <string name="export_title">Exporter</string>
+    <string name="export_none_selected">Veuillez sélectionner les profils à exporter ci-dessus.</string>
 </resources>
