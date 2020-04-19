@@ -19,7 +19,7 @@
     <string name="acc_daemon_status_running">ACC Daemon wird ausgeführt</string>
     <string name="acc_daemon_status_not_running">ACC Daemon wird nicht ausgeführt</string>
     <!-- ACC Daemon Toggle -->
-    <string name="menu_stop_accd">ACC Daemon stoppen</string>
+    <string name="menu_stop_accd">ACC Daemon beenden</string>
     <string name="menu_start_accd">ACC Daemon starten</string>
     <string name="start">Start</string>
     <string name="stop">Stopp</string>
@@ -45,7 +45,7 @@
     <string name="enable_cooldown">Abkühlung aktivieren:</string>
     <string name="cooldown_capacity">Ab %% Abkühlung starten:</string>
     <string name="resume_charge">Ladevorgang fortsetzen bei:</string>
-    <string name="stop_charge">Ladevorgang stoppen bei:</string>
+    <string name="stop_charge">Ladevorgang anhalten bei:</string>
     <string name="enable_temp_check">Temperaturüberwachung aktivieren (°C)</string>
     <string name="cooldown_temp">Abkühltemperatur:</string>
     <string name="max_temp">Max Temperatur:</string>
@@ -57,7 +57,7 @@
     <string name="config_error_dialog">Fehler beim Parsen der acc-Konfiguration!/nBitte überprüfen\n Sie, ob \"su -c acc --config cat\" funktioniert.</string>
     <string name="wait">Bitte warten Sie...\nDies wird einige Sekunden dauern.</string>
     <!-- Exit On Boot Card Strings -->
-    <string name="title_exit_on_boot">Daemon nach der Anwendung der Einstellungen beenden</string>
+    <string name="title_exit_on_boot">Daemon nach Anwendung der Einstellungen beenden</string>
     <string name="description_exit_on_boot">Dies dient dem Aktualisieren von Dateien beim Booten.</string>
     <string name="label_on_boot">applyOnBoot:</string>
     <!-- ACC installation -->
@@ -70,7 +70,7 @@
     <!-- DJS installation -->
     <string name="install_djs_title">DJS wird benötigt</string>
     <string name="install_djs_description">Damit dieses Feature funktioniert, müssen wir DJS aktivieren.
-        \nDJS (Daily Job Scheduler) ist ein schlankes Add-on für die Planung von ACC-Einstellungen.
+        \nDJS (Daily Job Scheduler) ist ein schlankes Add-on für die Zeitplanung von ACC-Einstellungen.
         \nDer DJS-Daemon wird beim Booten mit dem ACC-Daemon gestartet.
     </string>
     <string name="installing_djs">Installiere DJS</string>
@@ -82,7 +82,7 @@
     <string name="edit_on_boot">applyOnboot Einstellungen bearbeiten</string>
     <string name="edit_on_boot_dialog_hint">Leer lassen, um zu deaktivieren</string>
     <string name="save">Speichern</string>
-    <string name="edit_on_boot_dialog_message">Beispiel: battery/voltage_max:4100000 /sys/kernel/fast_charge/force_fast_charge:1 --exit.\n\"--exit\" ist optional; es zwingt den daemon, nach dem Übernehmen der Einstellungen zu stoppen.    </string>
+    <string name="edit_on_boot_dialog_message">Beispiel: battery/voltage_max:4100000 /sys/kernel/fast_charge/force_fast_charge:1 --exit.\n\"--exit\" ist optional; es zwingt den Daemon, nach dem Anwenden der Einstellungen anzuhalten.    </string>
     <string name="logs">Logs</string>
     <string name="text_copied_to_clipboard">Text in Zwischenablage kopiert!</string>
     <string name="log_file_not_found_title">Log-Datei nicht gefunden</string>
@@ -114,7 +114,7 @@
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Löschen</string>
     <string name="no_schedules">Keine Zeitpläne gesetzt</string>
-    <string name="wrong_volt_file">Entweder funktioniert die gewählte Datei nicht, oder Ihr Kernel unterstützt diese Funktion nicht.</string>
+    <string name="wrong_volt_file">Entweder funktioniert die gewählte Datei nicht oder Ihr Kernel unterstützt diese Funktion nicht.</string>
     <string name="invalid_voltage_max">Der Wert sollte eine Zahl zwischen 3500 und 4350 (mV) sein</string>
     <string name="edit_charging_switch">Ladeschalter bearbeiten</string>
     <string name="test_switch">Ladeschalter testen</string>
@@ -143,9 +143,9 @@
     <string name="cooldown_info">- Lade/Pausenverhältnis in Sekunden (z.B. coolDownRatio=50/10) - reduziert die Belastung des Akkus, welche durch längere hohe Temperaturen und hohe Ladespannungen verursacht wird, durch periodisches Pausieren des Aufladens.&lt;br /&gt;- Falls das Laden zu langsam ist, schalte dies aus (Nullwert) oder ändere das Verhältnis.&lt;br /&gt;- Wenn die Einstellung auf null gesetzt ist, werden Kühlkapazität (\'coolDown capacity\') und Kühltemperatur (\'coolDown temperature\') Werte auch auf null gesetzt.&lt;br /&gt;- Normalerweise wird dies nicht benötigt, wenn die maximale Ladespannung begrenzt wird.</string>
     <string name="on_plugged_info">Dies wird zum Aktualisieren von Dateien verwendet, deren Inhalt sich bei bestimmten Stromereignissen ändert (z.B. Aus- oder Einstecken). Es ist besonders nützlich, um benutzerdefinierte maximal Spannung/Strom für USB- oder drahtloses Laden zu erzwingen.</string>
     <string name="battery_idle_info_label">Falls dies angeschaltet ist, haben Ladeschalter, die den Akku-Leerlaufmodus unterstützen, Vorrang - so somit kann das Gerät direkt vom externen Netzteil Strom ziehen, wenn das Aufladen angehalten wird.&lt;br /&gt; Wenn das deaktiviert ist, bedeutet dies, dass Ihr Kernel diese Funktion nicht unterstützt.</string>
-    <string name="acc_config_editor">Acc-Konfigurationseditor</string>
+    <string name="acc_config_editor">ACC-Konfigurationseditor</string>
     <string name="profile_creator">Profilersteller</string>
-    <string name="schedule_creator">Planersteller</string>
+    <string name="schedule_creator">Zeitplanersteller</string>
     <string name="charging_switch_label">Ladeschalter:</string>
     <string name="title_on_plugged">Beim Einstecken anwenden</string>
     <string name="label_on_plugged">Eingesteckt:</string>
