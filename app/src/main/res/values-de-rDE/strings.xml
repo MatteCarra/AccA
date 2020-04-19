@@ -107,10 +107,10 @@
     <string name="edit_power_limit">Strom- und Spannungslimit bearbeiten</string>
     <string name="voltage_max">Spannungsmaximum (Millivolt):</string>
     <string name="disabled">Deaktiviert</string>
-    <string name="schedule_recurrent_row_text">Sich wiederholender Job geplant bei %1$02d:%2$02d</string>
+    <string name="schedule_recurrent_row_text">Wiederkehrende Aufgabe bei %1$02d:%2$02d geplant</string>
     <string name="schedule_execute_once_row_title">Einmal ausführen - %1$02d:%2$02d</string>
-    <string name="schedule_execute_once_row_text">Job geplant bei %1$02d:%2$02d</string>
-    <string name="schedule_boot_row_text">Boot Job geplant</string>
+    <string name="schedule_execute_once_row_text">Aufgabe bei %1$02d:%2$02d geplant</string>
+    <string name="schedule_boot_row_text">Aufgabe beim Hochfahren geplant</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Löschen</string>
     <string name="no_schedules">Keine Zeitpläne gesetzt</string>
@@ -132,7 +132,7 @@
     <string name="title_power_control">Steuerung der Ladeleistung</string>
     <string name="info">Info</string>
     <string name="title_cooldown_control">Abkühlzeit</string>
-    <string name="title_on_boot">Beim Booten anwenden</string>
+    <string name="title_on_boot">Beim Hochfahren anwenden</string>
     <string name="title_temperature_control">Temperaturregelung</string>
     <string name="title_capacity_control">Kapazitätskontrolle</string>
     <string name="about">Über uns</string>
