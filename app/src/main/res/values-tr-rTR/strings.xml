@@ -42,23 +42,18 @@
     <string name="battery_info_label">Bilgi:</string>
     <string name="reset_unplugged">Şarjdan çıkarıldığında pil istatistiklerini sıfırla</string>
     <string name="reset_stats">Pil istatistiklerini sıfırla</string>
-    <string name="enable_cooldown">Soğutmayı etkinleştir:</string>
     <string name="cooldown_capacity">Soğutmayı %%\'de/da başlat:</string>
     <string name="resume_charge">Şarj etmeye devam etme sıcaklığı:</string>
     <string name="stop_charge">Şarj etmeyi durdurma sıcaklığı:</string>
     <string name="enable_temp_check">Sıcaklık kontrolü (°C)</string>
-    <string name="cooldown_temp">Şarjı bekletme sıcaklığı:</string>
     <string name="max_temp">Maks. sıcaklık:</string>
     <string name="pause_seconds">Duraklatma süresi (sn):</string>
     <string name="charge_seconds">Şarj etme süresi (sn):</string>
     <string name="shutdown_capacity">Şarj edilmediğinde cihazı kapatma yüzdesi:</string>
     <string name="no_root_message">Bu uygulama ROOT erişimi gerektirir.</string>
-    <string name="config_error_title">Konfigürasyon okuma hatası</string>
-    <string name="config_error_dialog">ACC konfigürasyonu ayrıştırılamadı!\nLütfen \"su -c acc -config cat\" komutunun çalışıp çalışmadığını kontrol edin.</string>
     <string name="wait">Lütfen bekleyin, bu birkaç saniye alabilir.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Ayarları uyguladıktan sonra hizmeti durdur</string>
-    <string name="description_exit_on_boot">Bu, dosyaları başlatma aşamasında güncellemek için kullanılır.</string>
     <string name="label_on_boot">Başlangıçta ayarları uygula:</string>
     <!-- ACC installation -->
     <string name="installing_acc">ACC Kuruluyor</string>
@@ -75,12 +70,8 @@
     <string name="djs_installation_failed">Lütfen logcat dosyasını (/data/adb/acc-data/logs/) geliştiricilere t.me/acc_group/ veya github.com/MatteCarra/AccA/issues/ adreslerinden yollayın.    </string>
     <string name="djs_installation_failed_title">DJS Kurulumu Başarısız!</string>
     <string name="voltage_control_file_not_set">Ayarlı değil.</string>
-    <string name="edit_on_boot">applyOnboot ayarlarını düzenle</string>
     <string name="edit_on_boot_dialog_hint">Etkisizleştirmek için boş bırakın</string>
     <string name="save">Kaydet</string>
-    <string name="edit_on_boot_dialog_message">Örnek: battery/voltage_max:4100000 /sys/kernel/fast_charge/force_fast_charge:1 
-        --exit.\n\"--exit\" opisyoneldir ve ACC hizmetine ayarları uyguladıktan sonra durmasını söyler.
-    </string>
     <string name="logs">Günlükler (Log)</string>
     <string name="text_copied_to_clipboard">Metin panoya kopyalandı!</string>
     <string name="log_file_not_found_title">Günlük (log) dosyası bulunamadı</string>
@@ -104,15 +95,12 @@
     <string name="voltage_control_file">Voltaj kontrol dosyası:</string>
     <string name="voltage_max">Maks. voltaj (milivolt):</string>
     <string name="disabled">Devre Dışı</string>
-    <string name="schedule_recurrent_row_text">Yinelenen İş %1$02d:%2$02d için programlandı</string>
     <string name="schedule_execute_once_row_title">Bir kere uygula - %1$02d:%2$02d</string>
-    <string name="schedule_execute_once_row_text">İş %1$02d:%2$02d için programlandı</string>
     <string name="schedule_boot_row_text">Başlangıç işi programlandı</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Sil</string>
     <string name="no_schedules">Zamanlanmış görev yok</string>
     <string name="wrong_volt_file">Seçilen dosya çalışmadı veya kullandığınız çekirdek (kernel) bu özelliği desteklemiyor.</string>
-    <string name="invalid_voltage_max">Değer 3500 ile 4350 arasında bir sayı olmalıdır (milivolt cinsinden)</string>
     <string name="edit_charging_switch">Şarj etme geçişini düzenle</string>
     <string name="test_switch">Şarj etme geçişini denetle</string>
     <string name="no_option_selected">Herhangi bir seçenek seçilmedi, lütfen bir tanesini seçin!</string>
@@ -122,7 +110,6 @@
     <string name="automatic">Otomatik</string>
     <string name="error_occurred">Bir hata oluştu</string>
     <string name="retry">Yeniden Dene</string>
-    <string name="edit_charging_limit_once">Kısıtlama olmadan veya düşük kısıtlama ile bir defa şarj et</string>
     <string name="apply">Uygula</string>
     <string name="done">Tamam</string>
     <string name="edit_charging_limit_once_dialog_msg">Seçilen pil değerine ulaşıldığında ayarlarınız otomatik olarak eski haline dönecek.</string>
@@ -134,8 +121,6 @@
     <string name="about">Hakkında</string>
     <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- KAPATMA: Batarya şarj olmuyorsa, bu değerde veya bu değerin altında telefonu otomatik olarak kapatır.&lt;br /&gt;- DURDUR: ve DURAKLAT seçenekleri şarjın ne zaman duraklatılacağı ve devam ettirileceğini belirler.&lt;br /&gt;- ŞARJ GEÇİŞİ kontrol dosyasıdır, AÇIK ve KAPALI değerleri şarj etmenin aktif olup olmadığının göstergesidir. Varsayılan olarak, ACC hangisi çalışıyorsa onu kullanır.</string>
-    <string name="temperature_control_info">- Bu bataryayı soğutmak için ayarlanan süreyi devre dışı bırakır&lt;br /&gt;- SOĞUTMA SICAKLIĞI, SOĞUTMA ORANI\'na bağlıdır.&lt;br /&gt;-MAKS. SICAKLIK, DURAKLATMA SÜRESİ ile birlikte çalışır.</string>
-    <string name="cooldown_info">- Şarj AÇIK/KAPALI değerinin saniyeye oranı (mesela coolDownRatio=50/10) - yüksek sıcaklık ve yüksek voltajdan kaynaklanan batarya basıncını periyodik olarak şarjı duraklatarak azaltır.&lt;br /&gt;- Şarj çok yavaşsa bunu kapatın ya da oranı değiştirin.&lt;br /&gt;- İnaktifken SOĞUTMA KAPASİTESİ ve SOĞUTMA SICAKLIĞI boş kalır.&lt;br /&gt;- Bu ayarlar şarj voltaj limiti özelliğine güzel bir alternatiftir.</string>
     <string name="on_plugged_info">Bu, belirli güç etkinliklerinde (şarja takma/şarjdan çıkarma gibi) içeriği değişen dosyaları güncellemek için kullanılır. USB/Kablosuz şarj için kişisel maks. voltaj/akım ayarınızı zorlamada kullanışlıdır.</string>
     <string name="battery_idle_info_label">Bu geçiş seçilirse, pil boşta geçişini destekleyen şarj geçişleri öncelikli hale gelir - şarj duraklatıldığında, cihazın doğrudan harici güç kaynağından güç almasını sağlar.&lt;br /&gt;Eğer sizin geçişiniz devre dışı ise, kullanığınız çekirdeğin (kernel) bu özelliği desteklemediği anlamına gelir.</string>
     <string name="acc_config_editor">ACC konfigrasyon editörü</string>
@@ -144,8 +129,6 @@
     <string name="charging_switch_label">Şarj etme geçişi:</string>
     <string name="title_on_plugged">Şarjdan Çıkarınca Uygula</string>
     <string name="label_on_plugged">applyOnPlug:</string>
-    <string name="edit_on_plugged">applyOnPlug ayarlarını düzenle:</string>
-    <string name="edit_on_plugged_dialog_message">Örnek: wireless/voltage_max:9000000 usb/current_max:2000000\nİpucu: applyOnPlug=wireless/voltage_max:9000000 ayarı bazı Pixel cihazlarını hızlı kablosuz şarja zorlar.    </string>
     <string name="template_capacity_profile">Kapat: %1$d%% - Devam Et: %2$d%% - Durdur: %3$d%%</string>
     <string name="template_temperature_profile">Sıcaklık: %1$d&#176;C - Maks: %2$d&#176;C - Duraklat: %3$ds</string>
     <string name="template_cool_down_profile">Başlat: %1$d%% - %2$d saniye şarj et - %3$d saniye duraklat</string>
