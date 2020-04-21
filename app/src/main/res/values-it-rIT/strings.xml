@@ -42,21 +42,17 @@
     <string name="battery_info_label">Info:</string>
     <string name="reset_unplugged">Reimposta le statistiche della batteria allo scollegamento</string>
     <string name="reset_stats">Ripristina statistiche batteria</string>
-    <string name="enable_cooldown">Abilita cool down:</string>
     <string name="cooldown_capacity">Avvia il cooling down al %%:</string>
     <string name="resume_charge">Riprendi la carica al:</string>
     <string name="stop_charge">Ferma la carica al:</string>
     <string name="enable_temp_check">Abilita controllo temperatura (°C)</string>
-    <string name="cooldown_temp">Temperatura di cool down:</string>
     <string name="max_temp">Temperatura massima:</string>
     <string name="pause_seconds">Secondi di pausa:</string>
     <string name="charge_seconds">Secondi di carica:</string>
     <string name="shutdown_capacity">Spegnimento (se non in carica) al:</string>
     <string name="no_root_message">Questa app richiede il ROOT.</string>
-    <string name="config_error_title">Errore di lettura configurazione</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Interrompi il demone dopo l\'applicazione delle impostazioni</string>
-    <string name="description_exit_on_boot">Questo è utilizzato per aggiornare i file all\'avvio.</string>
     <string name="label_on_boot">applyOnBoot:</string>
     <!-- ACC installation -->
     <string name="installing_acc">Installazione ACC</string>
@@ -65,7 +61,6 @@
     <!-- DJS installation -->
     <string name="installing_djs">Installazione DJS</string>
     <string name="djs_installation_failed_title">Installazione di DJS fallita!</string>
-    <string name="edit_on_boot">Modifica impostazioni applyOnboot</string>
     <string name="edit_on_boot_dialog_hint">Lascia vuoto per disabilitare</string>
     <string name="save">Salva</string>
     <string name="logs">Log</string>
@@ -90,8 +85,6 @@
     <string name="enable_voltage_limit">Abilita limite voltaggio di ricarica</string>
     <string name="voltage_control_file">File di controllo voltaggio:</string>
     <string name="disabled">Disabilitato</string>
-    <string name="schedule_recurrent_row_text">Attività ricorrente programmata alle %1$02d:%2$02d</string>
-    <string name="schedule_execute_once_row_text">Attività ricorrente programmata alle %1$02d:%2$02d</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Elimina</string>
     <string name="no_schedules">Nessuna pianificazione</string>
@@ -114,8 +107,6 @@
     <string name="title_capacity_control">Controllo Capacità</string>
     <string name="about">Info su</string>
     <!-- ACC Config Tooltips -->
-    <string name="temperature_control_info">- Questo disabilita la carica per il numero di secondi impostato al fine di raffreddare la batteria&lt;br /&gt;- TEMP COOL DOWN dipende dalla RATIO COOL DOWN.&lt;br /&gt;- MAX TEMP funziona con PAUSE SECONDS.</string>
-    <string name="cooldown_info">- Rapporto ON/OFF di ricarica in secondi (e.g., coolDownRatio=50/10) - riduce lo stress a cui è sottoposta la batteria per il prolungato surriscaldamento e l\'alto voltaggio mettendo periodicamente la carica in pausa.&lt;br /&gt;- Se la ricarica è troppo lenta, disattiva questa funzione o cambia il rapporto.&lt;br /&gt;- Quando diaattivato, i valori di COOL DOWN CAPACITY e di COOL DOWN TEMP sono annullati.&lt;br /&gt;- Queste impostazioni sono un\'alternativa alla funzione di limite del voltaggio di ricarica.</string>
     <string name="on_plugged_info">Questo è utilizzato per aggiornare i file il cui contenuto cambia su determinati eventi di potenza (ad esempio, collegato/scollegato). È particolarmente utile per l\'applicazione della tensione massima personalizzata/corrente per la ricarica usb/wireless.</string>
     <string name="battery_idle_info_label">Se l\'interruttore è selezionato, gli interruttori di ricarica che supportano la modalità della batteria inattiva hanno la precedenza - consentendo al dispositivo di attingere l\'energia direttamente dall\'alimentazione esterna quando la carica è in pausa.&lt;br /&gt;Se il tuo interruttore è disabilitato, significa che il kernel non supporta questa funzione.</string>
     <string name="profile_creator">Creatore di profilo</string>
@@ -123,7 +114,6 @@
     <string name="charging_switch_label">Interruttore di ricarica:</string>
     <string name="title_on_plugged">Applica al collegamento</string>
     <string name="label_on_plugged">applyOnPlug:</string>
-    <string name="edit_on_plugged">Modifica impostazioni applyOnPlug:</string>
     <string name="template_capacity_profile">Spegnimento: %1$d%% - Riprendi: %2$d%% - Stop: %3$d%%</string>
     <string name="template_temperature_profile">Temperatura: %1$d&#176;C - Max: %2$d&#176;C - Pausa: %3$ds</string>
     <string name="template_cool_down_profile">Inizia a: %1$d%% - Carica per %2$ds - Pausa per %3$ds</string>
