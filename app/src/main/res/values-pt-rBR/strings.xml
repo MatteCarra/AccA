@@ -42,23 +42,18 @@
     <string name="battery_info_label">Informação:</string>
     <string name="reset_unplugged">Zerar estatísticas da bateria ao desconectar o carregador</string>
     <string name="reset_stats">Zerar estatísticas da bateria</string>
-    <string name="enable_cooldown">Ativar resfriamento:</string>
     <string name="cooldown_capacity">Iniciar resfriamento em %%:</string>
     <string name="resume_charge">Continuar carregamento em:</string>
     <string name="stop_charge">Parar carregamento em:</string>
     <string name="enable_temp_check">Ativar verificação de temperatura (°C)</string>
-    <string name="cooldown_temp">Temperatura alvo de resfriamento:</string>
     <string name="max_temp">Temperatura máxima:</string>
     <string name="pause_seconds">Pausa em segundos:</string>
     <string name="charge_seconds">Carregamento em segundos:</string>
     <string name="shutdown_capacity">Desligar (quando não carregando) em:</string>
     <string name="no_root_message">Este aplicativo requer ROOT</string>
-    <string name="config_error_title">Erro de leitura na configuração</string>
-    <string name="config_error_dialog">Falha ao analisar a configuração ACC!\nPor favor, verifique se \"su -c acc --config cat\" funciona.</string>
     <string name="wait">Aguarde...\nIsto vai levar alguns segundos.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Parar serviço após aplicar configurações</string>
-    <string name="description_exit_on_boot">Isto é utilizado para atualizar arquivos na inicialização.</string>
     <string name="label_on_boot">Aplicar na inicialização:</string>
     <!-- ACC installation -->
     <string name="installing_acc">Instalando ACC</string>
@@ -79,10 +74,8 @@
     </string>
     <string name="djs_installation_failed_title">A instalação do DJS falhou!</string>
     <string name="voltage_control_file_not_set">Não definido</string>
-    <string name="edit_on_boot">Editar configurações que serão aplicadas na inicialização</string>
     <string name="edit_on_boot_dialog_hint">Deixe em branco para desativar</string>
     <string name="save">Salvar</string>
-    <string name="edit_on_boot_dialog_message">Exemplo: battery/voltage_max:4100000 /sys/kernel/fast_charge/force_fast_charge:1 --exit.\n\"--exit\" é opcional; ele diz ao daemon para parar após aplicar as configurações    </string>
     <string name="logs">Registros</string>
     <string name="text_copied_to_clipboard">Texto copiado para a área de transferência!</string>
     <string name="log_file_not_found_title">Arquivo de registro não encontrado</string>
@@ -107,8 +100,6 @@
     <string name="edit_power_limit">Editar limite de corrente e tensão</string>
     <string name="voltage_max">Voltagem Máxima (milivolts):</string>
     <string name="disabled">Desabilitado</string>
-    <string name="schedule_recurrent_row_text">Trabalho recorrente agendado para %1$02d:%2$02d</string>
-    <string name="schedule_execute_once_row_text">Trabalho recorrente agendado para %1$02d:%2$02d</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Excluir</string>
     <string name="no_schedules">Nenhum agendamento</string>
@@ -131,7 +122,6 @@
     <string name="title_capacity_control">Controle de Capacidade</string>
     <string name="about">Sobre</string>
     <!-- ACC Config Tooltips -->
-    <string name="temperature_control_info">- Isso desabilita o carregamento por selecionados segundos para resfriar a bateria&lt;br /&gt;- A TEMPERATURA DE RESFRIAMENTO depende da RAZÃO DE RESFRIAMENTO.&lt;br /&gt;- TEMPERATURA MÁXIMA funciona com o PAUSA EM SEGUNDOS.</string>
     <!--Profiles Options-->
     <string name="voltage_measure_unit_preference_title">Unidade de medida da tensão</string>
     <string name="units_of_measure">Unidades de medida</string>
