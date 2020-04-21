@@ -41,7 +41,6 @@
     <string name="battery_info_label">資訊:</string>
     <string name="reset_unplugged">拔出充電線時重設電池用量資料</string>
     <string name="reset_stats">重設電池用量資料</string>
-    <string name="enable_cooldown">開啟 cool down:</string>
     <string name="resume_charge">重新開始充電閥值:</string>
     <string name="stop_charge">停止充電閥值:</string>
     <string name="enable_temp_check">啟用溫度檢查 (°C)</string>
@@ -50,7 +49,6 @@
     <string name="charge_seconds">充電秒數:</string>
     <string name="shutdown_capacity">關機閥值 (沒有充電情況下):</string>
     <string name="no_root_message">需要 ROOT 才可以使用</string>
-    <string name="config_error_dialog">無法分析 ACC config 檔案!\n請嘗試執行 \"su -c acc --config cat\" 檢查是否有效。</string>
     <string name="wait">請稍候...\n可能需要幾秒。</string>
     <!-- Exit On Boot Card Strings -->
     <string name="label_on_boot">applyOnBoot:</string>
@@ -68,7 +66,6 @@
     </string>
     <string name="djs_installation_failed_title">DJS 安裝失敗！</string>
     <string name="voltage_control_file_not_set">未設定。</string>
-    <string name="edit_on_boot">編輯 applyOnboot 設定</string>
     <string name="edit_on_boot_dialog_hint">留空以停用</string>
     <string name="save">保存</string>
     <string name="logs">記錄檔</string>
@@ -90,29 +87,21 @@
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">刪除</string>
     <string name="no_schedules">未安排排程</string>
-    <string name="invalid_voltage_max">此數值通常介於 3500 ~ 4350 (millivolts) 之間</string>
     <string name="plug_battery_to_test">測試必須在電池充電時進行，請插上充電線再測試一次！</string>
     <string name="automatic">自動</string>
     <string name="error_occurred">發生了一個錯誤</string>
     <string name="retry">重試</string>
-    <string name="edit_charging_limit_once">單次充電，並排除任何限制</string>
     <string name="done">Done</string>
     <string name="edit_charging_limit_once_dialog_msg">電量達到所選的數值後，將會自動恢復當前設定。</string>
     <string name="title_temperature_control">控制溫度</string>
     <string name="about">關於</string>
     <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- 關機: 手機在沒有充電的情況下，如果電量低於您設定的數值，手機將會自動關機。&lt;br /&gt;- 停止充電:電量大於您設定的數值將停止充電。重新開始充電:電量小於您設定的數值將開始充電.&lt;br /&gt;- CHARGING SWITCH 是控制文件, 加上ON / OFF值，用於開啟/關閉充電. By default, ACC uses whatever works.</string>
-    <string name="cooldown_info">- Charging ON/OFF ratio in seconds (e.g., coolDownRatio=50/10) - 通過週期性暫停充電來減少由長時間高溫和快速充電的充電電壓引起的電池壓力。&lt;br /&gt;- 如果充電速度太慢，可以停用或是更改數值.&lt;br /&gt;- 停用時，COOL DOWN CAPACITY和COOL DOWN TEMP的數值均無效。&lt;br /&gt;- 此設定是限制充電電壓有效的替代方案。</string>
     <string name="battery_idle_info_label">如果啟用，表示您的內核支援電池空閒模式（idle mode），允許手機在停止充電時直接從充電器獲取電源。- &lt;br /&gt;如果此選項被停用，表示您的內核可能不支援此功能。</string>
     <string name="profile_creator">新增設定檔</string>
     <string name="schedule_creator">新增排程</string>
     <string name="title_on_plugged">Apply on Plug</string>
     <string name="label_on_plugged">applyOnPlug:</string>
-    <string name="edit_on_plugged">編輯 applyOnPlug 設定:</string>
-    <string name="edit_on_plugged_dialog_message">範例: wireless/voltage_max:9000000 usb/current_max:2000000
-        \nTip: applyOnPlug=wireless/voltage_max:9000000  強制開啟 Pixle 手機無線快速充電。
-    
-    </string>
     <string name="template_capacity_profile">關機: %1$d%% - 重新開始充電: %2$d%% - 停止充電: %3$d%%</string>
     <!--Profiles Options-->
     <string name="profile_option_edit">編輯</string>
