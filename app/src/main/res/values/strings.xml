@@ -51,24 +51,24 @@
 
     <string name="reset_unplugged">Reset battery stats on unplug</string>
     <string name="reset_stats">Reset battery stats</string>
-    <string name="enable_cooldown">Enable cool down:</string>
+    <string name="enable_cooldown">Enable cooldown cycle:</string>
     <string name="cooldown_capacity">Start cooling down at %%:</string>
     <string name="resume_charge">Resume charging at:</string>
     <string name="stop_charge">Stop charging at:</string>
     <string name="enable_temp_check">Enable temperature check (°C)</string>
-    <string name="cooldown_temp">Cool down temp:</string>
+    <string name="cooldown_temp">Cooldown temp:</string>
     <string name="max_temp">Max temp:</string>
     <string name="pause_seconds">Pause seconds:</string>
     <string name="charge_seconds">Charge seconds:</string>
     <string name="shutdown_capacity">Shutdown (if not charging) at:</string>
     <string name="no_root_message">This app requires ROOT.</string>
-    <string name="config_error_title">Config read error</string>
-    <string name="config_error_dialog">Failed to parse ACC config!\nPlease check whether \"su -c acc --config cat\" works.</string>
+    <string name="config_error_title">Config parse error</string>
+    <string name="config_error_dialog">Failed to parse ACC config!\nPlease check whether \"su -c acca --set --print\" works.</string>
     <string name="wait">Please wait...\nThis will take a few seconds.</string>
 
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Stop daemon after applying settings</string>
-    <string name="description_exit_on_boot">This is used for updating files on boot.</string>
+    <string name="description_exit_on_boot">This is used for writing to control files on boot.</string>
     <string name="label_on_boot">applyOnBoot:</string>
 
     <!-- ACC installation -->
@@ -92,11 +92,11 @@
     <string name="djs_installation_failed_title">DJS Installation Failed!</string>
 
     <string name="voltage_control_file_not_set">Not set.</string>
-    <string name="edit_on_boot">Edit applyOnboot settings</string>
+    <string name="edit_on_boot">Edit apply_on_boot settings</string>
     <string name="edit_on_boot_dialog_hint">Leave blank to disable</string>
     <string name="save">Save</string>
 
-    <string name="edit_on_boot_dialog_message">Example: battery/voltage_max:4100000 /sys/kernel/fast_charge/force_fast_charge:1
+    <string name="edit_on_boot_dialog_message">Example: /sys/kernel/fast_charge/force_fast_charge::1::0
         --exit.\n\"--exit\" is optional; it tells the daemon to stop after applying settings.
     </string>
 
@@ -124,15 +124,15 @@
     <string name="edit_power_limit">Edit current and voltage limit</string>
     <string name="voltage_max">Voltage max (millivolts):</string>
     <string name="disabled">Disabled</string>
-    <string name="schedule_recurrent_row_text">Recurrent Job scheduled at %1$02d:%2$02d</string>
+    <string name="schedule_recurrent_row_text">Recurrent Job scheduled for %1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_title">Exec. Once - %1$02d:%2$02d</string>
-    <string name="schedule_execute_once_row_text">Job scheduled at %1$02d:%2$02d</string>
+    <string name="schedule_execute_once_row_text">Job scheduled for %1$02d:%2$02d</string>
     <string name="schedule_boot_row_text">Boot job scheduled</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Delete</string>
     <string name="no_schedules">No schedules set</string>
     <string name="wrong_volt_file">Either the chosen file doesn\'t work, or your kernel doesn\'t support this feature.</string>
-    <string name="invalid_voltage_max">The value should be a number between 3500 and 4350 (millivolts)</string>
+    <string name="invalid_voltage_max">The value should be a number between 3700 and 4200 (millivolts)</string>
     <string name="edit_charging_switch">Edit charging switch</string>
     <string name="test_switch">Test charging switch</string>
     <string name="no_option_selected">No option selected; please select one!</string>
@@ -142,7 +142,7 @@
     <string name="automatic">Automatic</string>
     <string name="error_occurred">An error has occurred</string>
     <string name="retry">Retry</string>
-    <string name="edit_charging_limit_once">Charge once with low to zero restrictions</string>
+    <string name="edit_charging_limit_once">Charge once to a given capacity, uninterrupted and without other restrictions</string>
     <string name="apply">Apply</string>
     <string name="done">Done</string>
     <string name="edit_charging_limit_once_dialog_msg">Your current settings are automatically restored once the chosen battery level is reached.</string>
@@ -157,8 +157,8 @@
     <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- SHUTDOWN: automatically shutdown the system at or below this battery level when battery is not charging.&lt;br /&gt;- STOP: and RESUME capacities dictate when charging should stop and resume, respectively.&lt;br /&gt;- CHARGING SWITCH is the control file, plus ON and OFF values for switching charging on/off. By default, ACC uses whatever works.</string>
     <string name="power_control_info">- Every reduction in peak charge voltage of 0.10V/cell is said to double the cycle life.&lt;br /&gt;- Unfortunately, not all devices/kernels support this feature.</string>
-    <string name="temperature_control_info">- This disables charging for set seconds to cool the battery&lt;br /&gt;- COOL DOWN TEMP depends on COOL DOWN RATIO.&lt;br /&gt;- MAX TEMP works with PAUSE SECONDS.</string>
-    <string name="cooldown_info">- Charging ON/OFF ratio in seconds (e.g., coolDownRatio=50/10) - reduces battery stress induced by prolonged high temperature and high charging voltage by periodically pausing charging.&lt;br /&gt;- If charging is too slow, turn this off or change the ratio.&lt;br /&gt;- When disabled, COOL DOWN CAPACITY and COOL DOWN TEMP values are nullified.&lt;br /&gt;- This settings is a fair alternative to the charging voltage limit feature.</string>
+    <string name="temperature_control_info">- This disables charging for set seconds to cool the battery&lt;br /&gt;- COOLDOWN TEMP depends on COOLDOWN RATIO.&lt;br /&gt;- MAX TEMP works with PAUSE SECONDS.</string>
+    <string name="cooldown_info">- Charging ON/OFF ratio in seconds (e.g., coolDownRatio=50/10) - reduces battery stress induced by prolonged high temperature and high charging voltage by periodically pausing charging.&lt;br /&gt;- If charging is too slow, turn this off or change the ratio.&lt;br /&gt;- When disabled, COOLDOWN CAPACITY and COOLDOWN TEMP values are nullified.&lt;br /&gt;- This settings is a fair alternative to the charging voltage limit feature.</string>
     <string name="on_plugged_info">This is used for updating files whose contents change on certain power events (e.g., plugged/unplugged). It is particularly useful for enforcing custom max voltage/current for usb/wireless charging.</string>
     <string name="battery_idle_info_label">If the switch is selected charging switches that support battery idle mode take precedence - allowing the device to draw power directly from the external power supply when charging is paused.&lt;br /&gt;If your switch is disabled it means that your kernel does not support this feature.</string>
 
@@ -168,10 +168,9 @@
     <string name="charging_switch_label">Charging switch:</string>
     <string name="title_on_plugged">Apply on Plug</string>
     <string name="label_on_plugged">applyOnPlug:</string>
-    <string name="edit_on_plugged">Edit applyOnPlug settings:</string>
+    <string name="edit_on_plugged">Edit apply_on_plug settings:</string>
 
-    <string name="edit_on_plugged_dialog_message">Example: wireless/voltage_max:9000000 usb/current_max:2000000
-        \nTip: applyOnPlug=wireless/voltage_max:9000000 can force fast wireless charging on some Pixel devices.
+    <string name="edit_on_plugged_dialog_message">Example: wireless/voltage_max::9000000::9000000 can force fast wireless charging on some Pixel devices.
     </string>
 
     <string name="template_capacity_profile">Shutdown: %1$d%% - Resume: %2$d%% - Stop: %3$d%%</string>
@@ -307,7 +306,7 @@
     <string name="add_charging_switch">Add charging switch</string>
     <string name="charging_switch_on_value_label">Charging switch ON VALUE</string>
     <string name="charging_switch_off_value_label">Charging switch OFF VALUE</string>
-    <string name="reset_bs_on_pause">Reset battery stats on limit reached</string>
+    <string name="reset_bs_on_pause">Reset battery stats on pause \%</string>
     <string name="current_max">Current max (mA):</string>
     <string name="invalid_current_max">Invalid current max value</string>
 
