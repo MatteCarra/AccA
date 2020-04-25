@@ -11,7 +11,7 @@ import mattecarra.accapp.models.ProfileExportItem
 
 class ProfileExportAdapter: RecyclerView.Adapter<ProfileExportAdapter.ProfileExportItemHolder>() {
 
-    private var mProfiles: ArrayList<ProfileExportItem> = ArrayList()
+    private var mProfiles: List<ProfileExportItem> = ArrayList()
 
     inner class ProfileExportItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         ProfileExportItem.Listener, View.OnClickListener {
@@ -63,16 +63,13 @@ class ProfileExportAdapter: RecyclerView.Adapter<ProfileExportAdapter.ProfileExp
         return mProfiles.size
     }
 
-    fun setProfiles(profiles: List<AccaProfile>) {
+    fun setProfiles(profiles: List<ProfileExportItem>) {
         // Create ExportProfile list based off AccaProfile list provided
-        for (profile in profiles) {
-            var exPro = ProfileExportItem(profile, profile.profileName)
-            mProfiles.add(exPro)
-        }
+        mProfiles = profiles
         notifyDataSetChanged()
     }
 
-    fun getExports(): ArrayList<ProfileExportItem> {
+    fun getExports(): List<ProfileExportItem> {
         return mProfiles
     }
 }
