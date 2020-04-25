@@ -23,7 +23,6 @@ import mattecarra.accapp.activities.ImportExportActivityViewModel
 import mattecarra.accapp.adapters.ProfileExportAdapter
 import mattecarra.accapp.adapters.ProfileImportAdapter
 import mattecarra.accapp.models.AccaProfile
-import mattecarra.accapp.models.ProfileExportItem
 import mattecarra.accapp.utils.ScopedFragment
 
 class ImportFragment: ScopedFragment() {
@@ -67,7 +66,6 @@ class ImportFragment: ScopedFragment() {
         })
 
         import_load_clipboard_btn.setOnClickListener {
-            // TODO: Access clipboard, try to parse AccaProfile objects
             val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
             var ready = when {
@@ -78,7 +76,6 @@ class ImportFragment: ScopedFragment() {
 
             if (ready) {
                 val text = clipboard.primaryClip?.getItemAt(0)?.text.toString()
-//                Toast.makeText(context, "Received text: " + text, Toast.LENGTH_SHORT).show()
                 // Process data
                 val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
                 val listType = Types.newParameterizedType(List::class.java, AccaProfile::class.java)

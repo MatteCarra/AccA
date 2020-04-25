@@ -23,6 +23,7 @@
             android:visibility="gone"/>
 
     <TextView
+            android:id="@+id/import_profile_empty_tv"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
