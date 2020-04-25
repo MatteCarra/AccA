@@ -53,6 +53,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
     dataBinding {
         enabled true
     }
@@ -131,5 +134,11 @@ dependencies {
     implementation "androidx.browser:browser:$versions.browser"
 
     // Kotlin JSON Library for exporting and importing
-    implementation 'com.beust:klaxon:5.0.1'
+    implementation 'com.squareup.moshi:moshi:1.9.2'
+    implementation 'com.squareup.moshi:moshi-kotlin:1.9.2'
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.9.2"
+
+    // Fragment KTX module
+    implementation "androidx.fragment:fragment-ktx:1.2.4"
+
 }
