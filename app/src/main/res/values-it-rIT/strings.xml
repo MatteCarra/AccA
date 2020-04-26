@@ -53,7 +53,6 @@
     <string name="no_root_message">Questa app richiede il ROOT.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Interrompi il demone dopo l\'applicazione delle impostazioni</string>
-    <string name="label_on_boot">applyOnBoot:</string>
     <!-- ACC installation -->
     <string name="installing_acc">Installazione ACC</string>
     <string name="reboot">Riavvia</string>
@@ -113,7 +112,6 @@
     <string name="schedule_creator">Creatore di pianificazione</string>
     <string name="charging_switch_label">Interruttore di ricarica:</string>
     <string name="title_on_plugged">Applica al collegamento</string>
-    <string name="label_on_plugged">applyOnPlug:</string>
     <string name="template_capacity_profile">Spegnimento: %1$d%% - Riprendi: %2$d%% - Stop: %3$d%%</string>
     <string name="template_temperature_profile">Temperatura: %1$d&#176;C - Max: %2$d&#176;C - Pausa: %3$ds</string>
     <string name="template_cool_down_profile">Inizia a: %1$d%% - Carica per %2$ds - Pausa per %3$ds</string>
