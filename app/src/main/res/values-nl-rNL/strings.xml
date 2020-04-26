@@ -54,7 +54,6 @@
     <string name="wait">Wacht alstublieft...\nDit duurt een paar seconden.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Stop daemon na het toepassen van instellingen</string>
-    <string name="label_on_boot">pas toe bij opstarten:</string>
     <!-- ACC installation -->
     <string name="installing_acc">Bezig met installeren ACC</string>
     <string name="reboot">Opnieuw opstarten</string>
@@ -135,7 +134,6 @@
     <string name="schedule_creator">Aanmaken schema</string>
     <string name="charging_switch_label">Oplaadschakelaar:</string>
     <string name="title_on_plugged">Bij aansluiten toepassen</string>
-    <string name="label_on_plugged">Bij aansluiten toepassen:</string>
     <string name="template_capacity_profile">Afsluiten: %1$d%% - Hervatten: %2$d%% - Stop: %3$d%%</string>
     <string name="template_temperature_profile">Temperatuur: %1$d&#176;C - Max: %2$d&#176;C - Pauze: %3$ds</string>
     <string name="template_cool_down_profile">Begin om: %1$d%% - Opladen voor %2$ds - Pauze voor %3$ds</string>
