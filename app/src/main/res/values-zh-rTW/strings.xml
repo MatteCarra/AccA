@@ -51,7 +51,6 @@
     <string name="no_root_message">需要 ROOT 才可以使用</string>
     <string name="wait">請稍候...\n可能需要幾秒。</string>
     <!-- Exit On Boot Card Strings -->
-    <string name="label_on_boot">applyOnBoot:</string>
     <!-- ACC installation -->
     <string name="installing_acc">正在安裝 ACC</string>
     <string name="acc_installation_failed">請把 logcat 和 /data/adb/acc-data/logs/ 回報給開發人員
@@ -101,7 +100,6 @@
     <string name="profile_creator">新增設定檔</string>
     <string name="schedule_creator">新增排程</string>
     <string name="title_on_plugged">Apply on Plug</string>
-    <string name="label_on_plugged">applyOnPlug:</string>
     <string name="template_capacity_profile">關機: %1$d%% - 重新開始充電: %2$d%% - 停止充電: %3$d%%</string>
     <!--Profiles Options-->
     <string name="profile_option_edit">編輯</string>
