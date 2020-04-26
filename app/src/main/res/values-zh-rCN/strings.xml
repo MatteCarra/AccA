@@ -54,7 +54,6 @@
     <string name="wait">请稍候...\n这将需要几秒钟时间。</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">应用设置后停止守护进程</string>
-    <string name="label_on_boot">applyOnBoot:</string>
     <!-- ACC installation -->
     <string name="installing_acc">正在安裝 ACC</string>
     <string name="reboot">重启</string>
@@ -130,7 +129,6 @@
     <string name="schedule_creator">创建任务</string>
     <string name="charging_switch_label">充电开关:</string>
     <string name="title_on_plugged">充电时应用</string>
-    <string name="label_on_plugged">applyOnPlug:</string>
     <string name="template_capacity_profile">关机: %1$d%% - 恢复充电: %2$d%% - 停止充电: %3$d%%</string>
     <string name="template_temperature_profile">温度： %1$d&#176;C - 最大： %2$d&#176;C - 暂停： %3$d秒</string>
     <!--Profiles Options-->
