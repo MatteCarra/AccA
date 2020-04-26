@@ -54,7 +54,6 @@
     <string name="wait">Harap tunggu...\nIni akan memakan waktu beberapa detik.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Hentikan daemon setelah menerapkan pengaturan</string>
-    <string name="label_on_boot">applyOnBoot:</string>
     <!-- ACC installation -->
     <string name="installing_acc">Menginstal ACC</string>
     <string name="reboot">Mulai ulang</string>
@@ -132,7 +131,6 @@
     <string name="schedule_creator">Jadwalkan pembuat</string>
     <string name="charging_switch_label">Saklar pengisian:</string>
     <string name="title_on_plugged">Terapkan pada Plug</string>
-    <string name="label_on_plugged">applyOnPlug:</string>
     <string name="template_capacity_profile">Shutdown: %1$d%% - Lanjutkan: %2$d%% - Stop: %3$d%%</string>
     <string name="template_temperature_profile">Suhu: %1$d&#176;C - Maks: %2$d&#176;C - Jeda: %3$ds</string>
     <string name="template_cool_down_profile">Mulai di: %1$d%% - Biaya untuk %2$ds - Jeda untuk %3$ds</string>
