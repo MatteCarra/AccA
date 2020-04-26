@@ -54,7 +54,6 @@
     <string name="wait">Aguarde...\nIsto vai levar alguns segundos.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Parar serviço após aplicar configurações</string>
-    <string name="label_on_boot">Aplicar na inicialização:</string>
     <!-- ACC installation -->
     <string name="installing_acc">Instalando ACC</string>
     <string name="reboot">Reiniciar</string>
