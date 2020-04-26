@@ -54,7 +54,6 @@
     <string name="wait">Por favor espere...\nEsto tomará unos segundos.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Detener daemon después de aplicar la configuración</string>
-    <string name="label_on_boot">Aplicar al inicio:</string>
     <!-- ACC installation -->
     <string name="installing_acc">Instalando ACC</string>
     <string name="reboot">Reiniciar</string>
@@ -136,7 +135,6 @@
     <string name="schedule_creator">Programación</string>
     <string name="charging_switch_label">Interruptor de carga:</string>
     <string name="title_on_plugged">Aplicar al Conectar</string>
-    <string name="label_on_plugged">AplicarAlConectar:</string>
     <string name="template_capacity_profile">Apagar: %1$d%% - Reanudar: %2$d%% - Detener: %3$d%%</string>
     <string name="template_temperature_profile">Temperatura: %1$d&#176;C - Max: %2$d&#176;C - Pausa: %3$ds</string>
     <string name="template_cool_down_profile">Iniciar en: %1$d%% - Cargar por %2$ds - Pausa por %3$ds</string>
