@@ -54,7 +54,6 @@
     <string name="wait">Bitte warten Sie...\nDies wird einige Sekunden dauern.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Daemon nach Anwendung der Einstellungen beenden</string>
-    <string name="label_on_boot">applyOnBoot:</string>
     <!-- ACC installation -->
     <string name="installing_acc">ACC wird installiert</string>
     <string name="reboot">Neustart</string>
@@ -135,7 +134,6 @@
     <string name="schedule_creator">Zeitplanersteller</string>
     <string name="charging_switch_label">Ladeschalter:</string>
     <string name="title_on_plugged">Beim Einstecken anwenden</string>
-    <string name="label_on_plugged">Eingesteckt:</string>
     <string name="template_capacity_profile">Herunterfahren: %1$d%% - Fortsetzen: %2$d%% - Anhalten: %3$d%%</string>
     <string name="template_temperature_profile">Temperatur: %1$d&#176;C - Max: %2$d&#176;C - Pause: %3$ds</string>
     <string name="template_cool_down_profile">Beginnen bei: %1$d%% - Laden für %2$d Sek - Pausieren für %3$d Sek</string>
