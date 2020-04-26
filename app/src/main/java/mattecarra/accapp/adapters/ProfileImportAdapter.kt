@@ -9,11 +9,11 @@ import mattecarra.accapp.R
 import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.models.ProfileExportItem
 
-class ProfileExportAdapter: RecyclerView.Adapter<ProfileExportAdapter.ProfileExportItemHolder>() {
+class ProfileImportAdapter: RecyclerView.Adapter<ProfileImportAdapter.ProfileImportItemHolder>() {
 
-    private var mProfiles: List<ProfileExportItem> = ArrayList()
+    private var mProfiles: ArrayList<ProfileExportItem> = ArrayList()
 
-    inner class ProfileExportItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+    inner class ProfileImportItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         ProfileExportItem.Listener, View.OnClickListener {
 
         lateinit var mExportProfile: ProfileExportItem
@@ -44,18 +44,18 @@ class ProfileExportAdapter: RecyclerView.Adapter<ProfileExportAdapter.ProfileExp
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileExportItemHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileImportItemHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.profile_export_item, parent, false)
-        return ProfileExportItemHolder(view)
+        return ProfileImportItemHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ProfileExportItemHolder, position: Int) {
+    override fun onBindViewHolder(holder: ProfileImportItemHolder, position: Int) {
         val exportProfile: ProfileExportItem = mProfiles[position]
         exportProfile.setOnCheckedChangedListener(holder)
         holder.setData(exportProfile)
     }
 
-    override fun onViewRecycled(holder: ProfileExportItemHolder) {
+    override fun onViewRecycled(holder: ProfileImportItemHolder) {
         holder.getExportProfile().setOnCheckedChangedListener(null)
     }
 
@@ -63,13 +63,20 @@ class ProfileExportAdapter: RecyclerView.Adapter<ProfileExportAdapter.ProfileExp
         return mProfiles.size
     }
 
-    fun setProfiles(profiles: List<ProfileExportItem>) {
+    fun setProfiles(profiles: List<AccaProfile>) {
         // Create ExportProfile list based off AccaProfile list provided
-        mProfiles = profiles
+        // Clear existing profiles
+        mProfiles.clear()
+
+        for (profile in profiles) {
+            var exPro = ProfileExportItem(profile, profile.profileName)
+            mProfiles.add(exPro)
+        }
+
         notifyDataSetChanged()
     }
 
-    fun getExports(): List<ProfileExportItem> {
+    fun getExports(): ArrayList<ProfileExportItem> {
         return mProfiles
     }
 }
