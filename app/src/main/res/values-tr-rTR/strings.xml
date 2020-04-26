@@ -54,7 +54,6 @@
     <string name="wait">Lütfen bekleyin, bu birkaç saniye alabilir.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Ayarları uyguladıktan sonra hizmeti durdur</string>
-    <string name="label_on_boot">Başlangıçta ayarları uygula:</string>
     <!-- ACC installation -->
     <string name="installing_acc">ACC Kuruluyor</string>
     <string name="reboot">Yeniden Başlat</string>
@@ -128,7 +127,6 @@
     <string name="schedule_creator">Zamanlanmış görev oluşturucu</string>
     <string name="charging_switch_label">Şarj etme geçişi:</string>
     <string name="title_on_plugged">Şarjdan Çıkarınca Uygula</string>
-    <string name="label_on_plugged">applyOnPlug:</string>
     <string name="template_capacity_profile">Kapat: %1$d%% - Devam Et: %2$d%% - Durdur: %3$d%%</string>
     <string name="template_temperature_profile">Sıcaklık: %1$d&#176;C - Maks: %2$d&#176;C - Duraklat: %3$ds</string>
     <string name="template_cool_down_profile">Başlat: %1$d%% - %2$d saniye şarj et - %3$d saniye duraklat</string>
