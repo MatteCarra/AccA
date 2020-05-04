@@ -42,24 +42,23 @@
     <string name="battery_info_label">Info:</string>
     <string name="reset_unplugged">Batterij statistieken resetten bij verwijderen stekker</string>
     <string name="reset_stats">Batterij statistieken resetten</string>
-    <string name="enable_cooldown">Schakel cool down in:</string>
+    <string name="enable_cooldown">Schakel afkoelcyclus in:</string>
     <string name="cooldown_capacity">Begin met afkoelen op %%:</string>
     <string name="resume_charge">Hervat opladen om:</string>
     <string name="stop_charge">Stop opladen op:</string>
     <string name="enable_temp_check">Temperatuur check (°C) inschakelen</string>
-    <string name="cooldown_temp">Cool down temperatuur:</string>
+    <string name="cooldown_temp">Afkoel temp:</string>
     <string name="max_temp">Max temp:</string>
     <string name="pause_seconds">Pauzeer seconden:</string>
     <string name="charge_seconds">Seconden laden:</string>
     <string name="shutdown_capacity">Afsluiten (indien niet opladen) op:</string>
     <string name="no_root_message">Deze app vereist ROOT.</string>
-    <string name="config_error_title">Configuratie leesfout</string>
-    <string name="config_error_dialog">Fout bij het parsen van ACC config!!\nControleer of \"su -c acc --config cat\" werkt.</string>
+    <string name="config_error_title">Configuratie parse fout</string>
+    <string name="config_error_dialog">Fout bij het parsen van ACC config!!\nControleer of \"su -c acc --set --print\" werkt.</string>
     <string name="wait">Wacht alstublieft...\nDit duurt een paar seconden.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Stop daemon na het toepassen van instellingen</string>
-    <string name="description_exit_on_boot">Dit wordt gebruikt voor het bijwerken van bestanden bij het opstarten.</string>
-    <string name="label_on_boot">pas toe bij opstarten:</string>
+    <string name="description_exit_on_boot">Dit wordt gebruikt voor het schrijven om bestanden te controleren bij het opstarten.</string>
     <!-- ACC installation -->
     <string name="installing_acc">Bezig met installeren ACC</string>
     <string name="reboot">Opnieuw opstarten</string>
@@ -79,10 +78,10 @@
     </string>
     <string name="djs_installation_failed_title">DJS installatie mislukt!</string>
     <string name="voltage_control_file_not_set">Niet ingesteld.</string>
-    <string name="edit_on_boot">Bewerk applyOnboot instellingen</string>
+    <string name="edit_on_boot">Wijzig opstarttoepassingsinstellingen</string>
     <string name="edit_on_boot_dialog_hint">Laat leeg om uit te schakelen</string>
     <string name="save">Opslaan</string>
-    <string name="edit_on_boot_dialog_message">Voorbeeld: batterij/voltage_max:4100000 /sys/kernel/fast_charge/force_fast_charge:1
+    <string name="edit_on_boot_dialog_message">Voorbeeld: /sys/kernel/fast_charge/force_fast_charge::1::0
         --exit.\n\"--exit\" is optioneel; het vertelt de daemon om te stoppen na het toepassen van de instellingen.
     </string>
     <string name="logs">Logbestanden</string>
@@ -109,7 +108,7 @@
     <string name="edit_power_limit">Huidige stroom- en spanningslimiet bewerken</string>
     <string name="voltage_max">Maximale spanning (millivolts):</string>
     <string name="disabled">Uitgeschakeld</string>
-    <string name="schedule_recurrent_row_text">Terugkerende Taak gepland op %1$02d:%2$02d</string>
+    <string name="schedule_recurrent_row_text">Terugkerende taak gepland op %1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_title">Eenmaal uitvoeren - %1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_text">Taak gepland op %1$02d:%2$02d</string>
     <string name="schedule_boot_row_text">Opstart taak gepland</string>
@@ -117,7 +116,7 @@
     <string name="delete">Verwijder</string>
     <string name="no_schedules">Geen schema\'s ingesteld</string>
     <string name="wrong_volt_file">Of het gekozen bestand werkt niet, of uw kernel ondersteunt deze functie niet.</string>
-    <string name="invalid_voltage_max">De waarde moet een getal zijn tussen 3500 en 4350 (millivolts)</string>
+    <string name="invalid_voltage_max">De waarde moet een getal zijn tussen 3700 en 4200 (millivolts)</string>
     <string name="edit_charging_switch">Bewerk oplaadschakelaar</string>
     <string name="test_switch">Test oplaadschakelaar</string>
     <string name="no_option_selected">Geen optie geselecteerd; selecteer er een!</string>
@@ -127,7 +126,7 @@
     <string name="automatic">Automatisch</string>
     <string name="error_occurred">Er is een fout opgetreden</string>
     <string name="retry">Probeer opnieuw</string>
-    <string name="edit_charging_limit_once">Laad eenmalig op met weinig of geen restricties</string>
+    <string name="edit_charging_limit_once">Laad eenmalig, zonder onderbreking en zonder andere restricties tot een aangegeven capaciteit</string>
     <string name="apply">Toepassen</string>
     <string name="done">Uitgevoerd</string>
     <string name="edit_charging_limit_once_dialog_msg">Uw huidige instellingen worden automatisch hersteld zodra het gekozen batterijniveau is bereikt.</string>
@@ -141,8 +140,8 @@
     <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- SHUTDOWN: automatisch het systeem afsluiten op of onder dit batterijniveau wanneer de batterij niet oplaadt.&lt;br /&gt;- STOP: en RESUME capaciteit geeft aan wanneer het opladen moet stoppen en hervatten.&lt;br /&gt;- CHARGING SWITCH is het controlebestand, plus ON en UIT zijn de waarden voor het aan/uit schakelen van het opladen. Standaard gebruikt ACC elke optie die werkt.</string>
     <string name="power_control_info">- Van elke vermindering in piek oplaadspanning van 0.10V/cel wordt gezegd dat het de levensduur verdubbeld.&lt;br /&gt;- Helaas, ondersteunen niet alle apparaten/kernels deze functie.</string>
-    <string name="temperature_control_info">- Dit schakelt het opladen x seconden uit om de batterij te koelen&lt;br /&gt;- COOL DOWN TEMP is afhankelijk van COOL DOWN RATIO.&lt;br /&gt;- MAX TEMP werkt met PAUSE SECONDS.</string>
-    <string name="cooldown_info">- Charging ON/OFF ratio in seconden (bv., coolDownRatio=50/10) - vermindert de batterijbelasting door langdurig hoge temperaturen en hoge oplaadspanning door het periodiek onderbreken van het opladen.&lt;br /&gt;- Als het opladen te traag wordt, zet deze optie uit of wijzig de verhouding.&lt;br /&gt;- Wanneer uitgeschakeld, COOL DOWN CAPACITY en COOL DOWN TEMP zijn dan nulwaarden.&lt;br /&gt;- Deze instellingen zijn een redelijk alternatief voor de oplaadlimiet functie.</string>
+    <string name="temperature_control_info">- Dit schakelt het opladen de opgegeven aantal seconden uit om de batterij te koelen&lt;br /&gt;- COOLDOWN TEMP is afhankelijk van COOLDOWN RATIO.&lt;br /&gt;- MAX TEMP werkt met PAUSE SECONDS.</string>
+    <string name="cooldown_info">- Charging ON/OFF ratio in seconden (bv., coolDownRatio=50/10) - vermindert de batterijbelasting veroorzaakt door langdurig hoge temperaturen en hoge oplaadspanning door het periodiek onderbreken van het opladen.&lt;br /&gt;- Als het opladen te traag wordt, zet deze optie uit of wijzig de verhouding.&lt;br /&gt;- Wanneer uitgeschakeld, COOLDOWN CAPACITY en COOLDOWN TEMP zijn dan nulwaarden.&lt;br /&gt;- Deze instellingen zijn een redelijk alternatief voor de oplaadvoltage limiet functie.</string>
     <string name="on_plugged_info">Dit wordt gebruikt voor het bijwerken van bestanden waarvan de inhoud verandert bij bepaalde stroomgebeurtenissen (bijv. aangesloten/niet aangesloten). Het is met name handig bij het afdwingen van aangepaste max voltage/netstroom voor usb/draadloos opladen.</string>
     <string name="battery_idle_info_label">Als de schakelaar wordt geselecteerd, krijgt de inschakeling en de ondersteuning van batterij inactieve modus voorrang - waardoor het apparaat direct van de externe stroomvoorziening kan profiteren wanneer het opladen wordt onderbroken.&lt;br /&gt;Als uw schakelaar is uitgeschakeld, betekent dit dat uw kernel deze functie niet ondersteunt.</string>
     <string name="acc_config_editor">ACC configuratie editor</string>
@@ -150,10 +149,8 @@
     <string name="schedule_creator">Aanmaken schema</string>
     <string name="charging_switch_label">Oplaadschakelaar:</string>
     <string name="title_on_plugged">Bij aansluiten toepassen</string>
-    <string name="label_on_plugged">Bij aansluiten toepassen:</string>
-    <string name="edit_on_plugged">Wijzig \"bij aansluiten toepassen\" instellingen:</string>
-    <string name="edit_on_plugged_dialog_message">Voorbeeld: draadloos/voltage_max:9000000 usb/current_max:2000000
-        \nTip: applyOnPlug=wireless/voltage_max:9000000 forceert snel draadloos opladen op sommige Pixel apparaten.
+    <string name="edit_on_plugged">Wijzig de aansluittoepassingsinstellingen:</string>
+    <string name="edit_on_plugged_dialog_message">Voorbeeld: draadloos/voltage_max::9000000::9000000 kan snel draadloos opladen forceren op sommige Pixel apparaten.
     </string>
     <string name="template_capacity_profile">Afsluiten: %1$d%% - Hervatten: %2$d%% - Stop: %3$d%%</string>
     <string name="template_temperature_profile">Temperatuur: %1$d&#176;C - Max: %2$d&#176;C - Pauze: %3$ds</string>
@@ -245,6 +242,11 @@
     <string name="edit_schedule">Bewerk schema</string>
     <string name="create_schedule">Maak schema</string>
     <!-- About Activity -->
+    <string name="about_team_blurb">Bedankt voor het gebruik van ACCA! 
+        \nWe hebben hieraan veel tijd besteed zodat jij er van kan genieten!
+        \nSpeciale dank aan degenen die op een of andere manier hebben bijgedragen:
+        via donaties, suggesties hebben aangeboden, bugs hebben ingediend, en elkaar hebben geholpen!
+    </string>
     <string name="about_acca_version_label">ACCA versie:</string>
     <string name="about_acc_version_label">ACC versie:</string>
     <string name="about_project_github">Project\'s GitHub</string>
@@ -258,8 +260,13 @@
     <string name="add_charging_switch">Oplaadschakelaar toevoegen</string>
     <string name="charging_switch_on_value_label">Oplaadschakelaar AAN</string>
     <string name="charging_switch_off_value_label">Oplaadschakelaar UIT</string>
-    <string name="reset_bs_on_pause">Reset accustatistieken bij bereiken limiet</string>
+    <string name="reset_bs_on_pause">Batterij statistieken resetten bij pauze \%</string>
     <string name="current_max">Stroom max (mA):</string>
     <string name="invalid_current_max">Ongeldige stroom max waarde</string>
     <!-- Import and Export -->
+    <string name="import_export_title">Import &amp; Export</string>
+    <string name="import_title">Importeren</string>
+    <string name="import_load_from_clipboard">Laad profielen van klembord</string>
+    <string name="export_title">Exporteren</string>
+    <string name="export_none_selected">Selecteer profielen om hierboven te exporteren.</string>
 </resources>

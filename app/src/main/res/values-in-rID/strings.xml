@@ -42,24 +42,18 @@
     <string name="battery_info_label">Info:</string>
     <string name="reset_unplugged">Setel ulang statistik baterai pada cabut</string>
     <string name="reset_stats">Setel ulang statistik baterai</string>
-    <string name="enable_cooldown">Aktifkan pendinginan:</string>
     <string name="cooldown_capacity">Mulai pendinginan di %%:</string>
     <string name="resume_charge">Lanjutkan pengisian di:</string>
     <string name="stop_charge">Hentikan pengisian daya di:</string>
     <string name="enable_temp_check">Aktifkan pemeriksaan suhu (°C)</string>
-    <string name="cooldown_temp">Dinginkan suhu:</string>
     <string name="max_temp">Temp maksimum:</string>
     <string name="pause_seconds">Jeda detik:</string>
     <string name="charge_seconds">Isi ulang detik:</string>
     <string name="shutdown_capacity">Shutdown (jika tidak mengisi daya) di:</string>
     <string name="no_root_message">Aplikasi ini membutuhkan ROOT.</string>
-    <string name="config_error_title">Konfigurasi baca kesalahan</string>
-    <string name="config_error_dialog">Gagal menguraikan konfigurasi ACC!\nSilakan periksa apakah \"su -c acc --config cat\" berfungsi.</string>
     <string name="wait">Harap tunggu...\nIni akan memakan waktu beberapa detik.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Hentikan daemon setelah menerapkan pengaturan</string>
-    <string name="description_exit_on_boot">Ini digunakan untuk memperbarui file saat boot.</string>
-    <string name="label_on_boot">applyOnBoot:</string>
     <!-- ACC installation -->
     <string name="installing_acc">Menginstal ACC</string>
     <string name="reboot">Mulai ulang</string>
@@ -79,12 +73,8 @@
     </string>
     <string name="djs_installation_failed_title">Pemasangan DJS Gagal!</string>
     <string name="voltage_control_file_not_set">Tidak diatur.</string>
-    <string name="edit_on_boot">Edit pengaturan applyOnboot</string>
     <string name="edit_on_boot_dialog_hint">Biarkan kosong untuk menonaktifkan</string>
     <string name="save">Menyimpan</string>
-    <string name="edit_on_boot_dialog_message">Contoh: battery/voltage_max:4100000 /sys/kernel/fast_charge/force_fast_charge:1
-         --exit.\n\"--exit\" adalah opsional; itu memberitahu daemon untuk berhenti setelah menerapkan pengaturan.
-    </string>
     <string name="logs">Log</string>
     <string name="text_copied_to_clipboard">Teks disalin ke papan klip!</string>
     <string name="log_file_not_found_title">File log tidak ditemukan</string>
@@ -108,15 +98,12 @@
     <string name="voltage_control_file">File kontrol tegangan:</string>
     <string name="voltage_max">Tegangan maks (milivolt):</string>
     <string name="disabled">Dengan disabilitas</string>
-    <string name="schedule_recurrent_row_text">Pekerjaan Berulang dijadwalkan pada %1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_title">Exec. Sekali - %1$02d:%2$02d</string>
-    <string name="schedule_execute_once_row_text">Pekerjaan dijadwalkan pada %1$02d:%2$02d</string>
     <string name="schedule_boot_row_text">Pekerjaan boot dijadwalkan</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Menghapus</string>
     <string name="no_schedules">Tidak ada jadwal yang ditetapkan</string>
     <string name="wrong_volt_file">File yang dipilih tidak berfungsi, atau kernel Anda tidak mendukung fitur ini.</string>
-    <string name="invalid_voltage_max">Nilai harus berupa angka antara 3500 dan 4350 (milivolt)</string>
     <string name="edit_charging_switch">Edit saklar pengisian daya</string>
     <string name="test_switch">Uji sakelar pengisian daya</string>
     <string name="no_option_selected">Tidak ada opsi yang dipilih; tolong pilih satu!</string>
@@ -126,7 +113,6 @@
     <string name="automatic">Otomatis</string>
     <string name="error_occurred">Sebuah kesalahan telah terjadi</string>
     <string name="retry">Mencoba kembali</string>
-    <string name="edit_charging_limit_once">Isi daya sekali dengan batasan rendah ke nol</string>
     <string name="apply">Menerapkan</string>
     <string name="done">Selesai</string>
     <string name="edit_charging_limit_once_dialog_msg">Pengaturan Anda saat ini secara otomatis dikembalikan setelah tingkat baterai yang dipilih tercapai.</string>
@@ -138,8 +124,6 @@
     <string name="about">Tentang</string>
     <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- SHUTDOWN: secara otomatis mematikan sistem pada atau di bawah level baterai ini ketika baterai tidak sedang diisi.&lt;br /&gt;- STOP: dan kapasitas RESUME menentukan kapan pengisian harus berhenti dan dilanjutkan, masing-masing.&lt;br /&gt;- CHARGING SWITCH adalah file kontrol, ditambah nilai ON dan OFF untuk mengaktifkan/menonaktifkan pengisian daya. Secara default, ACC menggunakan apa pun yang berfungsi.</string>
-    <string name="temperature_control_info">- Ini menonaktifkan pengisian selama beberapa detik untuk mendinginkan baterai&lt;br /&gt;- COOL DOWN TEMP tergantung pada RASIO COOL DOWN.&lt;br /&gt;- MAX TEMP bekerja dengan PAUSE SECONDS.</string>
-    <string name="cooldown_info">- Pengisian ON/OFF rasio dalam hitungan detik (mis., CoolDownRatio=50/10) - mengurangi stres baterai yang disebabkan oleh suhu tinggi yang berkepanjangan dan tegangan pengisian yang tinggi dengan menjeda pengisian daya secara berkala.&lt;br /&gt;- Jika pengisian terlalu lambat, matikan ini atau ubah rasio.&lt;br /&gt;- Saat dinonaktifkan, nilai COOL DOWN CAPACITY dan COOL DOWN TEMP dibatalkan.&lt;br /&gt;- Pengaturan ini merupakan alternatif yang adil untuk fitur batas tegangan pengisian daya.</string>
     <string name="on_plugged_info">Ini digunakan untuk memperbarui file yang isinya berubah pada peristiwa daya tertentu (mis., Terpasang/tidak terhubung). Ini sangat berguna untuk menegakkan voltase/arus maks khusus untuk pengisian daya usb/nirkabel.</string>
     <string name="battery_idle_info_label">Jika sakelar dipilih, sakelar pengisian yang mendukung mode siaga baterai diutamakan - memungkinkan perangkat untuk menarik daya langsung dari catu daya eksternal saat pengisian dijeda.&lt;br /&gt;Jika sakelar Anda dinonaktifkan, artinya kernel Anda tidak mendukung fitur ini.</string>
     <string name="acc_config_editor">Editor konfigurasi ACC</string>
@@ -147,11 +131,6 @@
     <string name="schedule_creator">Jadwalkan pembuat</string>
     <string name="charging_switch_label">Saklar pengisian:</string>
     <string name="title_on_plugged">Terapkan pada Plug</string>
-    <string name="label_on_plugged">applyOnPlug:</string>
-    <string name="edit_on_plugged">Edit pengaturan applyOnPlug:</string>
-    <string name="edit_on_plugged_dialog_message">Contoh: nirkabel/voltage_max:9000000 usb/current_max:2000000
-         \nTips: applyOnPlug=nirkabel/voltage_max:9000000 dapat memaksa pengisian nirkabel cepat pada beberapa perangkat Pixel.
-    </string>
     <string name="template_capacity_profile">Shutdown: %1$d%% - Lanjutkan: %2$d%% - Stop: %3$d%%</string>
     <string name="template_temperature_profile">Suhu: %1$d&#176;C - Maks: %2$d&#176;C - Jeda: %3$ds</string>
     <string name="template_cool_down_profile">Mulai di: %1$d%% - Biaya untuk %2$ds - Jeda untuk %3$ds</string>

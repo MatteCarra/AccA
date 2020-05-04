@@ -42,19 +42,15 @@
     <string name="battery_info_label">Thông tin:</string>
     <string name="reset_unplugged">Đặt lại số liệu thống kê pin khi rút sạc</string>
     <string name="reset_stats">Đặt lại thống kê pin</string>
-    <string name="enable_cooldown">Kích hoạt làm mát:</string>
     <string name="cooldown_capacity">Bắt đầu làm mát ở %%:</string>
     <string name="resume_charge">Tiếp tục sạc ở:</string>
     <string name="stop_charge">Ngừng sạc ở:</string>
     <string name="enable_temp_check">Bật kiểm tra nhiệt độ (°C)</string>
-    <string name="cooldown_temp">Nhiệt độ làm mát:</string>
     <string name="max_temp">Nhiệt độ tối đa:</string>
     <string name="pause_seconds">Số giây tạm dừng:</string>
     <string name="charge_seconds">Số giây sạc:</string>
     <string name="shutdown_capacity">Tắt nguồn (nếu không được sạc) ở:</string>
     <string name="no_root_message">Ứng dụng này cần quyền ROOT.</string>
-    <string name="config_error_title">Lỗi đọc thiết lập</string>
-    <string name="config_error_dialog">Phân tích thiết lập ACC thất bại!\nVui lòng kiểm tra xem \"su -c acc --config cat\" có hoạt động không.</string>
     <string name="wait">Vui lòng chờ…\nĐiều này sẽ mất vài giây.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Dừng trình nền sau khi áp dụng cài đặt</string>
@@ -68,7 +64,6 @@
     <string name="automatic">Tự động</string>
     <string name="error_occurred">Có lỗi xảy ra</string>
     <string name="retry">Thử lại</string>
-    <string name="edit_charging_limit_once">Sạc một lần với các hạn chế từ thấp đến 0</string>
     <string name="apply">Áp dụng</string>
     <string name="done">Xong</string>
     <!-- ACC Config Tooltips -->

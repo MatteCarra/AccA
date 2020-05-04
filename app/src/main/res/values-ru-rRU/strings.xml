@@ -30,19 +30,15 @@
     <string name="battery_info_label">Инфо:</string>
     <string name="reset_unplugged">Сбросить статус батареи при отключении</string>
     <string name="reset_stats">Сбросить статус батареи</string>
-    <string name="enable_cooldown">Включить охлаждение:</string>
     <string name="cooldown_capacity">Начать охлаждение при %%:</string>
     <string name="resume_charge">Возобновить зарядку при:</string>
     <string name="stop_charge">Остановить зарядку при:</string>
     <string name="enable_temp_check">Включить проверка температуры (°C)</string>
-    <string name="cooldown_temp">Температура охлаждения:</string>
     <string name="max_temp">Макс. температура:</string>
     <string name="pause_seconds">Пауза сек.:</string>
     <string name="charge_seconds">Зарядка сек.:</string>
     <string name="shutdown_capacity">Выключение (если не заряжается) в:</string>
     <string name="no_root_message">Это приложение требует ROOT.</string>
-    <string name="config_error_title">Ошибка чтения конфигурации</string>
-    <string name="config_error_dialog">Не удалось распознать конфигурацию ACC!\nПожалуйста, проверьте, работают ли \"su -c acc --config cat\".</string>
     <string name="wait">Пожалуйста, подождите...\nЭто займет несколько секунд.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Остановить DAEMON после применения настроек</string>
