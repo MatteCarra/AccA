@@ -42,24 +42,18 @@
     <string name="battery_info_label">Información:</string>
     <string name="reset_unplugged">Restablecer las estadísticas de batería al desconectar</string>
     <string name="reset_stats">Reiniciar las estadísticas de la batería</string>
-    <string name="enable_cooldown">Activar enfriamiento:</string>
     <string name="cooldown_capacity">Comenzar a enfriar a las %%:</string>
     <string name="resume_charge">Reanudar la carga a las:</string>
     <string name="stop_charge">Detener la carga a las:</string>
     <string name="enable_temp_check">Activar comprobación de temperatura (°C)</string>
-    <string name="cooldown_temp">Temperatura de enfriamiento</string>
     <string name="max_temp">Temperatura máxima:</string>
     <string name="pause_seconds">Pausar durante (segundos):</string>
     <string name="charge_seconds">Cargar durante (segundos):</string>
     <string name="shutdown_capacity">Apagar (si no está cargando) a las:</string>
     <string name="no_root_message">Esta aplicación requiere ROOT.</string>
-    <string name="config_error_title">Error de lectura de configuración</string>
-    <string name="config_error_dialog">¡Error al analizar la configuración ACC!\nPor favor, compruebe si funciona \"su -c acc --config cat\".</string>
     <string name="wait">Por favor espere...\nEsto tomará unos segundos.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Detener daemon después de aplicar la configuración</string>
-    <string name="description_exit_on_boot">Esto se utiliza para actualizar archivos al arrancar.</string>
-    <string name="label_on_boot">Aplicar al inicio:</string>
     <!-- ACC installation -->
     <string name="installing_acc">Instalando ACC</string>
     <string name="reboot">Reiniciar</string>
@@ -80,12 +74,8 @@
     </string>
     <string name="djs_installation_failed_title">¡Instalación de DJS fallida!</string>
     <string name="voltage_control_file_not_set">No establecido.</string>
-    <string name="edit_on_boot">Editar ajustes de Aplicar al inicio</string>
     <string name="edit_on_boot_dialog_hint">Dejar en blanco para desactivar</string>
     <string name="save">Guardar</string>
-    <string name="edit_on_boot_dialog_message">Ejemplo: batería/voltage_max:4100000 /sys/kernel/fast_charge/force_fast_charge:1
-        --exit.\n\"--exit\" es opcional; le dice al daemon que se detenga después de aplicar la configuración.
-    </string>
     <string name="logs">Registros</string>
     <string name="text_copied_to_clipboard">Texto copiado al portapapeles!</string>
     <string name="log_file_not_found_title">Archivo de registro no encontrado</string>
@@ -110,15 +100,12 @@
     <string name="edit_power_limit">Editar límite de corriente y voltaje</string>
     <string name="voltage_max">Voltaje máx. (milivoltios):</string>
     <string name="disabled">Deshabilitado</string>
-    <string name="schedule_recurrent_row_text">Programar carga a las %1$02d: %2$02d</string>
     <string name="schedule_execute_once_row_title">Ejecute una vez - %1$02d:%2$02d</string>
-    <string name="schedule_execute_once_row_text">Trabajo programado en %1$02d:%2$02d</string>
     <string name="schedule_boot_row_text">Programación al iniciar</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Borrar</string>
     <string name="no_schedules">No hay programaciones</string>
     <string name="wrong_volt_file">O el archivo elegido no funciona, o su kernel no soporta esta función.</string>
-    <string name="invalid_voltage_max">El valor debe ser un número entre 3500 y 4350 (milivoltios)</string>
     <string name="edit_charging_switch">Editar interruptor de carga</string>
     <string name="test_switch">Probar interruptor de carga</string>
     <string name="no_option_selected">No hay opción seleccionada; por favor, seleccione una!</string>
@@ -128,7 +115,6 @@
     <string name="automatic">Automático</string>
     <string name="error_occurred">Ha ocurrido un error</string>
     <string name="retry">Reintentar</string>
-    <string name="edit_charging_limit_once">Cargar sin restricciones por una vez</string>
     <string name="apply">Aplicar</string>
     <string name="done">Listo</string>
     <string name="edit_charging_limit_once_dialog_msg">Tus ajustes actuales se restauran automáticamente una vez alcanzado el nivel de batería elegido.</string>
@@ -142,8 +128,6 @@
     <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- SHUTDOWN: apaga automáticamente el sistema por debajo de este nivel de batería cuando la batería no está cargando.&lt;br /&gt;- STOP: y RESUME dictan cuando la carga debe parar y reanudarse, respectivamente.&lt;br /&gt;- CHARGING SWITCH es el archivo de control, más valores ON y OFF para apagar la carga. Por defecto, ACC utiliza cualquier obra.</string>
     <string name="power_control_info">Cada reducción en el voltaje de carga pico de 0.10V/celda duplica el ciclo de vida.&lt;br /&gt;- Desafortunadamente, no todos los dispositivos/kernels admiten esta característica.</string>
-    <string name="temperature_control_info">- Esto desactiva la carga por segundos para enfriar la batería&lt;br /&gt;- COOL DOWN TEMP depende de COOL DOWN RATIO.&lt;br /&gt;- MAX TEMP trabaja con PAUSE SECONDS.</string>
-    <string name="cooldown_info">- Relación de carga ON/OFF en segundos (por ejemplo, coolDownRatio=50/10) - reduce el estrés de la batería inducido por una temperatura alta prolongada y un alto voltaje de carga mediante la pausa periódica de carga.&lt;br /&gt;- Si la carga es demasiado lenta, desactiva o cambia la proporción.&lt;br /&gt;- Cuando está desactivado, los valores COOL DOWN CAPACITY y COOL DOWN TEMP son nulos.&lt;br /&gt;- Esta configuración es una alternativa justa al límite de carga.</string>
     <string name="on_plugged_info">Esto se utiliza para actualizar archivos cuyos contenidos cambian en ciertos eventos de energía (por ejemplo, conectado/desconectado). Es particularmente útil para hacer cumplir el voltaje máximo personalizado/corriente para la carga usb/wireless.</string>
     <string name="battery_idle_info_label">Si el interruptor está seleccionado, los interruptores de carga que soportan el modo de inactividad de la batería tienen prioridad - permitiendo que el dispositivo saque energía directamente del suministro de energía externa cuando se pausa la carga.&lt;br /&gt;Si el interruptor está desactivado, significa que su kernel no soporta esta función.</string>
     <string name="acc_config_editor">Editor de configuración ACC</string>
@@ -151,11 +135,6 @@
     <string name="schedule_creator">Programación</string>
     <string name="charging_switch_label">Interruptor de carga:</string>
     <string name="title_on_plugged">Aplicar al Conectar</string>
-    <string name="label_on_plugged">AplicarAlConectar:</string>
-    <string name="edit_on_plugged">Editar ajustes AplicarAlConectar:</string>
-    <string name="edit_on_plugged_dialog_message">Ejemplo: wireless/voltage_max:9000000 usb/current_max:2000000
-        \nTip: applyOnPlug=wireless/voltage_max:9000000 puede forzar la carga inalámbrica rápida en algunos dispositivos Pixel.
-    </string>
     <string name="template_capacity_profile">Apagar: %1$d%% - Reanudar: %2$d%% - Detener: %3$d%%</string>
     <string name="template_temperature_profile">Temperatura: %1$d&#176;C - Max: %2$d&#176;C - Pausa: %3$ds</string>
     <string name="template_cool_down_profile">Iniciar en: %1$d%% - Cargar por %2$ds - Pausa por %3$ds</string>
@@ -258,7 +237,6 @@ Se garantiza que la versión incluida siempre funcionará con ACCA, por lo que e
     <string name="add_charging_switch">Adicionar interruptor de carga</string>
     <string name="charging_switch_on_value_label">Interruptor de carga ACTIVO</string>
     <string name="charging_switch_off_value_label">Interruptor de carga DESACTIVADO</string>
-    <string name="reset_bs_on_pause">Restablecer estadísticas de batería en el límite alcanzado</string>
     <string name="current_max">Corriente máxima (mA):</string>
     <string name="invalid_current_max">Corriente máxima actual no válida</string>
     <!-- Import and Export -->

@@ -42,24 +42,23 @@
     <string name="battery_info_label">Info:</string>
     <string name="reset_unplugged">Zresetuj statystyki baterii przy odłączeniu</string>
     <string name="reset_stats">Zresetuj statystyki baterii</string>
-    <string name="enable_cooldown">Włącz chłodzenie:</string>
+    <string name="enable_cooldown">Włącz okresowe schładzanie:</string>
     <string name="cooldown_capacity">Rozpocznij chłodzenie od %%:</string>
     <string name="resume_charge">Wznów ładowanie przy:</string>
     <string name="stop_charge">Zatrzymaj ładowanie przy:</string>
     <string name="enable_temp_check">Włącz sprawdzanie temperatury (°C)</string>
-    <string name="cooldown_temp">Temperatura chłodzenia:</string>
+    <string name="cooldown_temp">Temp. chłodzenia:</string>
     <string name="max_temp">Maks. temp.:</string>
     <string name="pause_seconds">Wstrzymaj sekund:</string>
     <string name="charge_seconds">Ładuj sekund:</string>
     <string name="shutdown_capacity">Wyłącz (jeśli nie ładuje) przy:</string>
     <string name="no_root_message">Aplikacja wymaga ROOT-a.</string>
-    <string name="config_error_title">Błąd odczytu konfiguracji</string>
-    <string name="config_error_dialog">Nie udało się przetworzyć konfiguracji ACC!\nProszę sprawdzić, czy \"su -c acc --config cat\" działa.</string>
+    <string name="config_error_title">Błąd przetwarzania konfiguracji</string>
+    <string name="config_error_dialog">Nie udało się przetworzyć konfiguracji ACC!\nSprawdź, czy \"su -c acca --set --print\" działa.</string>
     <string name="wait">Proszę czekać...\nTo zajmie kilka sekund.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Zatrzymaj demon po zastosowaniu ustawień</string>
-    <string name="description_exit_on_boot">To służy do aktualizowania plików podczas rozruchu.</string>
-    <string name="label_on_boot">applyOnBoot:</string>
+    <string name="description_exit_on_boot">To służy do aktualizowania plików ustawień podczas rozruchu.</string>
     <!-- ACC installation -->
     <string name="installing_acc">Instalowanie ACC</string>
     <string name="reboot">Uruchom ponownie</string>
@@ -79,10 +78,10 @@
     </string>
     <string name="djs_installation_failed_title">Instalacja DJS nie powiodła się!</string>
     <string name="voltage_control_file_not_set">Nie ustawiono.</string>
-    <string name="edit_on_boot">Edytuj ustawienia applyOnboot</string>
+    <string name="edit_on_boot">Edytuj ustawienia apply_on_boot</string>
     <string name="edit_on_boot_dialog_hint">Pozostaw puste, aby wyłączyć</string>
     <string name="save">Zapisz</string>
-    <string name="edit_on_boot_dialog_message">Przykład: battery/voltage_max:4100000 /sys/kernel/fast_charge/force_fast_charge:1
+    <string name="edit_on_boot_dialog_message">Przykład: /sys/kernel/fast_charge/force_fast_charge::1::0
         --exit.\n\"--exit\" jest opcjonalne; informuje demon, aby zatrzymał się po zastosowaniu ustawień.
     </string>
     <string name="logs">Logi</string>
@@ -117,7 +116,7 @@
     <string name="delete">Usuń</string>
     <string name="no_schedules">Nie ustawiono harmonogramów</string>
     <string name="wrong_volt_file">Albo wybrany plik nie działa, albo Twój kernel nie obsługuje tej funkcji.</string>
-    <string name="invalid_voltage_max">Wartość powinna być liczbą z zakresu od 3500 do 4350 (miliwoltów)</string>
+    <string name="invalid_voltage_max">Wartość powinna być liczbą z zakresu od 3700 do 4200 (miliwoltów)</string>
     <string name="edit_charging_switch">Edytuj przełącznik ładowania</string>
     <string name="test_switch">Przetestuj przełącznik ładowania</string>
     <string name="no_option_selected">Nie wybrano żadnej opcji; proszę coś wybrać!</string>
@@ -127,7 +126,7 @@
     <string name="automatic">Automatyczny</string>
     <string name="error_occurred">Wystąpił błąd</string>
     <string name="retry">Spróbuj ponownie</string>
-    <string name="edit_charging_limit_once">Naładuj jednorazowo z ograniczeniami od niskich do żadnego</string>
+    <string name="edit_charging_limit_once">Ładowanie jednorazowe do danej pojemności, nieprzerwane i bez innych ograniczeń</string>
     <string name="apply">Zastosuj</string>
     <string name="done">Gotowe</string>
     <string name="edit_charging_limit_once_dialog_msg">Twoje obecne ustawienia są automatycznie przywrócone po osiągnięciu wybranego poziomu naładowania baterii.</string>
@@ -141,8 +140,8 @@
     <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- WYŁĄCZ: automatycznie wyłącz system na tym poziomie ładowania baterii lub poniżej jego, kiedy bateria nie jest ładowana.&lt;br /&gt;- Pojemności ZATRZYMAJ i WZNÓW mówią, kiedy ładowanie powinno się odpowiednio zatrzymać i wznowić.&lt;br /&gt;- PRZEŁĄCZNIK ŁADOWANIA to plik kontrolujący, plus wartości ON i OFF do przełączania stanu ładowania. Domyślnie ACC używa czegokolwiek, co działa.</string>
     <string name="power_control_info">- Mówi się, że każda redukcja szczytowego napięcia ładowania o 0,10V/ogniwo podwaja żywotność cykliczną.&lt;br /&gt;- Niestety, nie wszystkie urządzenia/jądra obsługują tę funkcję.</string>
-    <string name="temperature_control_info">- To wyłącza ładowanie przez kilka sekund aby ochłodzić baterię&lt;br /&gt;- TEMPERATURA CHŁODZENIA zależy od WSPÓŁCZYNNIKA CHŁODZENIA.&lt;br /&gt;- MAKS. TEMP. działa z WSTRZYMAJ SEKUND.</string>
-    <string name="cooldown_info">- Stosunek ON/OFF ładowania w sekundach (np. coolDownRatio=50/10) - zmniejsza obciążenie baterii wywołane przez długotrwałą wysoką temperaturę i wysokie napięcie ładowanie cyklicznie wstrzymując ładowanie.&lt;br /&gt;- Jeśli ładowanie jest zbyt powolne, wyłącz to lub zmień stosunek.&lt;br /&gt;- Gdy wyłączone, wartości POJEMNOŚCI CHŁODZENIA i TEMPERATURY CHŁODZENIA są wyzerowane.&lt;br /&gt;- To ustawienie jest rzetelną alternatywą dla funkcji ograniczenia napięcia ładowania.</string>
+    <string name="temperature_control_info">- To wstrzymuje ładowanie na pewien czas (w sekundach), aby ochłodzić baterię&lt;br /&gt;- COOLDOWN TEMP zależy od COOLDOWN RATIO.&lt;br /&gt;- MAKSYMALNA TEMP działa z SECONDS.</string>
+    <string name="cooldown_info">- Zmienia stosunek czasu ładowania do pauzy (np. coolDownRatio=50/10) - zmniejsza obciążenie baterii wywołane długotrwałym przegrzewaniem i wysokim napięciem przez okresowe wstrzymanie ładowania.&lt;br /&gt;- Jeśli ładowanie jest zbyt powolne, wyłącz lub zmień proporcje.&lt;br /&gt;- Gdy wyłączone, wartości TEMP COOLDOWN CAPACITY i COOLDOWN są unieważnione.&lt;br /&gt;- To ustawienie jest rozsądną alternatywą dla funkcji granicznego napięcia ładowania.</string>
     <string name="on_plugged_info">Służy to do aktualizacji plików, których zawartość zmienia się w przypadku niektórych zdarzeń zasilania (np. podłączone/odłączone). Jest to szczególnie przydatne przy wymuszaniu niestandardowego maksymalnego napięcia/prądu dla ładowania przez USB/bezprzewodowego.</string>
     <string name="battery_idle_info_label">Jeśli przełącznik jest wybrany, przełączniki ładowania obsługujące tryb bezczynności baterii mają pierwszeństwo - pozwalając urządzeniu pobierać zasilanie bezpośrednio z zewnętrznego źródła zasilania, kiedy ładowanie jest wstrzymane.&lt;br /&gt;Jeśli twój przełącznik jest wyłączony, oznacza to, że Twój kernel nie wspiera tej funkcji.</string>
     <string name="acc_config_editor">Edytor konfiguracji ACC</string>
@@ -150,10 +149,8 @@
     <string name="schedule_creator">Kreator harmonogramu</string>
     <string name="charging_switch_label">Przełącznik ładowania:</string>
     <string name="title_on_plugged">Zastosuj przy podłączeniu</string>
-    <string name="label_on_plugged">applyOnPlug:</string>
-    <string name="edit_on_plugged">Edytuj ustawienie applyOnPlug:</string>
-    <string name="edit_on_plugged_dialog_message">Przykład: wireless/voltage_max:9000000 usb/current_max:2000000
-        \nWskazówka: applyOnPlug=wireless/voltage_max:9000000 może wymusić szybkie ładowanie bezprzewodowe na niektórych urządzeniach Pixel.
+    <string name="edit_on_plugged">Edytuj ustawienia apply_on_plug:</string>
+    <string name="edit_on_plugged_dialog_message">Przykład: wireless/voltage_max::9000000::9000000 może wymusić szybkie ładowanie bezprzewodowe na niektórych urządzeniach Pixel.
     </string>
     <string name="template_capacity_profile">Wyłącz: %1$d%% - Wznów: %2$d%% - Zatrzymaj: %3$d%%</string>
     <string name="template_temperature_profile">Temperatura: %1$d&#176;C - Maks. %2$d&#176;C - Wstrzymaj %3$ds</string>
@@ -245,6 +242,11 @@
     <string name="edit_schedule">Edytuj harmonogram</string>
     <string name="create_schedule">Utwórz harmonogram</string>
     <!-- About Activity -->
+    <string name="about_team_blurb">Dziękujemy za korzystanie z ACCA!
+        \nSpędziliśmy mnóstwo czasu, abyś mógł się tym cieszyć.
+        \nSpecjalne podziękowania dla tych, którzy przyczynili się w ten czy inny sposób:
+        darowiznami, sugestiami, otwieraniem pull requestów, zgłaszaniem błędów i wzajemną pomocą!
+    </string>
     <string name="about_acca_version_label">Wersja ACCA:</string>
     <string name="about_acc_version_label">Wersja ACC:</string>
     <string name="about_project_github">GitHub projektu</string>
@@ -258,8 +260,13 @@
     <string name="add_charging_switch">Dodaj przełącznik ładowania</string>
     <string name="charging_switch_on_value_label">WARTOŚĆ ON przełącznika ładowania</string>
     <string name="charging_switch_off_value_label">WARTOŚĆ OFF przełącznika ładowania</string>
-    <string name="reset_bs_on_pause">Zresetuj statystyki baterii przy osiągnięciu limitu</string>
+    <string name="reset_bs_on_pause">Zresetuj statystyki baterii przy wstrzymaniu \%</string>
     <string name="current_max">Maks. natężenie prądu (mA):</string>
     <string name="invalid_current_max">Nieprawidłowa maks. wartość natężenia prądu</string>
     <!-- Import and Export -->
+    <string name="import_export_title">Importuj &amp; eksportuj</string>
+    <string name="import_title">Importuj</string>
+    <string name="import_load_from_clipboard">Załaduj profile ze schowka</string>
+    <string name="export_title">Eksportuj</string>
+    <string name="export_none_selected">Wybierz profile do eksportowania.</string>
 </resources>

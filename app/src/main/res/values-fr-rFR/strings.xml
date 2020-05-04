@@ -42,24 +42,18 @@
     <string name="battery_info_label">Infos :</string>
     <string name="reset_unplugged">Réinitialiser les statistiques de décharge au débranchement</string>
     <string name="reset_stats">Réinitialiser les statistiques de décharge</string>
-    <string name="enable_cooldown">Activer le refroidissement :</string>
     <string name="cooldown_capacity">Commencer le refroidissement à %% :</string>
     <string name="resume_charge">Reprendre la charge à :</string>
     <string name="stop_charge">Arrêter la charge à :</string>
     <string name="enable_temp_check">Activer le contrôle de température (°C)</string>
-    <string name="cooldown_temp">Température de refroidissement :</string>
     <string name="max_temp">Temp. max. :</string>
     <string name="pause_seconds">Pause en secondes :</string>
     <string name="charge_seconds">Charge en secondes :</string>
     <string name="shutdown_capacity">Éteindre (si pas en charge) à :</string>
     <string name="no_root_message">Cette application nécessite un accès ROOT.</string>
-    <string name="config_error_title">Erreur de lecture de la configuration</string>
-    <string name="config_error_dialog">Impossible d\'analyser la configuration ACC !\nVeuillez vérifier si \"su -c acc --config cat\" fonctionne.</string>
     <string name="wait">Veuillez patienter... \nCela peut prendre quelques secondes.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Arrêter le service après avoir appliqué les paramètres</string>
-    <string name="description_exit_on_boot">Ceci est utilisé pour mettre à jour les fichiers au démarrage.</string>
-    <string name="label_on_boot">Appliquer au demarrage:</string>
     <!-- ACC installation -->
     <string name="installing_acc">Installation du service ACC</string>
     <string name="reboot">Redémarrage</string>
@@ -79,12 +73,8 @@
     </string>
     <string name="djs_installation_failed_title">L\'installation du service DJS a échoué !</string>
     <string name="voltage_control_file_not_set">Non configuré.</string>
-    <string name="edit_on_boot">Modifier les paramètres d\'application au démarrage</string>
     <string name="edit_on_boot_dialog_hint">Laisser vide pour désactiver</string>
     <string name="save">Enregistrer</string>
-    <string name="edit_on_boot_dialog_message">Exemple : battery/voltage_max:4100000 /sys/kernel/fast_charge/force_fast_charge:1
-        --exit.\n\"--exit\" est optionnel ; il indique au service de s\'arrêter après avoir appliqué les paramètres.
-    </string>
     <string name="logs">Journaux</string>
     <string name="text_copied_to_clipboard">Texte copié dans le presse-papiers !</string>
     <string name="log_file_not_found_title">Fichier journal introuvable</string>
@@ -109,15 +99,12 @@
     <string name="edit_power_limit">Modifier la limite de courant et de tension</string>
     <string name="voltage_max">Tension max (millivolts) :</string>
     <string name="disabled">Desactivé</string>
-    <string name="schedule_recurrent_row_text">Tâche récurrente planifiée à %1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_title">Exéc. une seule fois - %1$02d:%2$02d</string>
-    <string name="schedule_execute_once_row_text">Tâche planifiée à %1$02d:%2$02d</string>
     <string name="schedule_boot_row_text">Tâche de démarrage planifiée</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Supprimer</string>
     <string name="no_schedules">Aucune planification définie</string>
     <string name="wrong_volt_file">Soit le fichier choisi ne fonctionne pas, soit votre noyau ne supporte pas cette fonctionnalité.</string>
-    <string name="invalid_voltage_max">La valeur doit être un nombre compris entre 3500 et 4350 (millivolts)</string>
     <string name="edit_charging_switch">Modifier l\'interrupteur de charge</string>
     <string name="test_switch">Tester l\'interrupteur de charge</string>
     <string name="no_option_selected">Aucune option sélectionnée; veuillez en sélectionner une!</string>
@@ -127,7 +114,6 @@
     <string name="automatic">Automatique</string>
     <string name="error_occurred">Une erreur est survenue </string>
     <string name="retry">Réessayer</string>
-    <string name="edit_charging_limit_once">Charger une fois avec des faibles restrictions ou zéro</string>
     <string name="apply">Appliquer</string>
     <string name="done">Fait</string>
     <string name="edit_charging_limit_once_dialog_msg">Vos paramètres actuels seront automatiquement restaurés une fois que le niveau de batterie choisi est atteint.</string>
@@ -141,8 +127,6 @@
     <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- ARRÊT : éteindre automatiquement le système à ou en dessous de ce niveau de batterie lorsque la batterie ne se charge pas.&lt;br /&gt;- ARRÊTER et les capacités RÉSUMER dictent quand la charge doit respectivement s\'arrêter et reprendre.&lt;br /&gt;- INTERRUPTEUR DE CHARGE est le fichier de contrôle, plus les valeurs ON et OFF pour allumer ou éteindre. Par défaut, ACC utilise tout ce qui fonctionne.</string>
     <string name="power_control_info">- Toute réduction de la tension de charge de pointe de 0,10V/cellule semblera doubler la durée de vie.&lt;br /&gt;- Malheureusement, tous les appareils/noyaux ne prennent pas en charge cette fonctionnalité.</string>
-    <string name="temperature_control_info">- Ceci désactive la charge pendant les secondes réglées pour refroidir la batterie&lt;br /&gt;- COOL DOWN TEMP dépend de COOL DOWN RATIO.&lt;br /&gt;- MAX TEMP fonctionne avec PAUSE SECONDES.</string>
-    <string name="cooldown_info">- Ratio de charge ON/OFF en secondes (par exemple, coolDownRatio=50/10) - réduit le stress de la batterie induit par une température élevée prolongée et une haute tension de charge par une pause de chargement périodique.&lt;br /&gt;- Si la charge est trop lente, désactivez-la ou modifiez le ratio.&lt;br /&gt;- Lorsque désactivé, les valeurs COOL DOWN TEMP et COOL DOWN TEMP sont nulles.&lt;br /&gt;- Ce paramétrage est une alternative juste à la fonction de limite de tension de charge.</string>
     <string name="on_plugged_info">Ceci est utilisé pour mettre à jour des fichiers dont le contenu change sur certains événements d\'alimentation (par exemple, branché/débranché). Il est particulièrement utile pour appliquer la tension max/courant personnalisé pour la charge USB/sans fil.</string>
     <string name="battery_idle_info_label">Si l\'interrupteur est sélectionné, les interrupteurs de charge qui supportent le mode de veille de la batterie ont priorité - permettant à l\'appareil de tirer directement de l\'alimentation extérieure lorsque la charge est suspendue.&lt;br /&gt;Si votre interrupteur est désactivé, cela signifie que votre noyau ne supporte pas cette fonctionnalité.</string>
     <string name="acc_config_editor">Éditeur de configuration ACC</string>
@@ -150,11 +134,6 @@
     <string name="schedule_creator">Créateur de la planification</string>
     <string name="charging_switch_label">Interrupteur de charge:</string>
     <string name="title_on_plugged">Appliquer au branchement</string>
-    <string name="label_on_plugged">applyOnPlug:</string>
-    <string name="edit_on_plugged">Modifier les paramètres appyOnPlug :</string>
-    <string name="edit_on_plugged_dialog_message">Exemple: wireless/voltage_max:9000000 usb/current_max:2000000
-        \nAstuce: applyOnPlug=wireless/voltage_max:9000000 peut forcer une charge sans fil rapide sur certains appareils Pixel.
-    </string>
     <string name="template_capacity_profile">Extinction : %1$d%% - Reprise : %2$d%% - Arrêt : %3$d%%</string>
     <string name="template_temperature_profile">Température : %1$d&#176;C - Max: %2$d&#176;C - Pause : %3$ds</string>
     <string name="template_cool_down_profile">Commencer à : %1$d%% - Charge pendant %2$ds - Pause pendant %3$ds</string>
@@ -263,7 +242,6 @@
     <string name="add_charging_switch">Ajouter un interrupteur de charge</string>
     <string name="charging_switch_on_value_label">Interrupteur de charge ACTIVÉ</string>
     <string name="charging_switch_off_value_label">Interrupteur de charge DÉSACTIVÉ</string>
-    <string name="reset_bs_on_pause">Réinitialiser les statistiques de la batterie lorsque la limite est atteinte</string>
     <string name="current_max">Courant maximal (mA) :</string>
     <string name="invalid_current_max">Valeur de courant maximal invalide</string>
     <!-- Import and Export -->
