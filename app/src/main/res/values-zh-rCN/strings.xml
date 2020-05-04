@@ -42,18 +42,23 @@
     <string name="battery_info_label">信息:</string>
     <string name="reset_unplugged">断开插头后重置电池状态</string>
     <string name="reset_stats">重置电池状态</string>
+    <string name="enable_cooldown">启用周期性冷却：</string>
     <string name="cooldown_capacity">开始冷却阀值 %% ：</string>
     <string name="resume_charge">恢复充电阀值:</string>
     <string name="stop_charge">停止充电阀值:</string>
     <string name="enable_temp_check">启用温控（°C）</string>
+    <string name="cooldown_temp">冷却温度：</string>
     <string name="max_temp">最高温度:</string>
     <string name="pause_seconds">暂停秒数：</string>
     <string name="charge_seconds">充电秒数:</string>
     <string name="shutdown_capacity">关机(未充电状态)阀值:</string>
     <string name="no_root_message">此应用程序需要 ROOT 权限</string>
+    <string name="config_error_title">配置解析错误</string>
+    <string name="config_error_dialog">解析ACC 配置失败！\n请检查\"su -c acca --set --print\" 是否起作用。</string>
     <string name="wait">请稍候...\n这将需要几秒钟时间。</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">应用设置后停止守护进程</string>
+    <string name="description_exit_on_boot">用于写入启动时的控制文件。</string>
     <!-- ACC installation -->
     <string name="installing_acc">正在安裝 ACC</string>
     <string name="reboot">重启</string>
@@ -75,8 +80,12 @@
     </string>
     <string name="djs_installation_failed_title">DJS 安装失败！</string>
     <string name="voltage_control_file_not_set">未设置。</string>
+    <string name="edit_on_boot">编辑开机应用（apply_on_boot）设置</string>
     <string name="edit_on_boot_dialog_hint">留空以禁用</string>
     <string name="save">保存</string>
+    <string name="edit_on_boot_dialog_message">示例： /sys/kernel/fast_charge/force_fast_charge：:1::0
+        --exit。\n\"--exit\" 是可选的；它命令守护进程在应用设置后停止。
+    </string>
     <string name="logs">日志</string>
     <string name="text_copied_to_clipboard">文本复制到剪贴板!</string>
     <string name="log_file_not_found_title">未找到日志文件</string>
@@ -101,10 +110,15 @@
     <string name="edit_power_limit">编辑电流和电压限制</string>
     <string name="voltage_max">最大电压（毫伏）：</string>
     <string name="disabled">禁用</string>
+    <string name="schedule_recurrent_row_text">重复任务已计划于 %1$02d:%2$02d</string>
+    <string name="schedule_execute_once_row_title">执行一次 - %1$02d:%2$02d</string>
+    <string name="schedule_execute_once_row_text">任务已计划于 %1$02d:%2$02d</string>
+    <string name="schedule_boot_row_text">已计划开机任务</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">删除</string>
     <string name="no_schedules">无任务计划</string>
     <string name="wrong_volt_file">所选文件无效，或内核不支持这功能。</string>
+    <string name="invalid_voltage_max">值应该在 3700 至 4200（毫伏）之间</string>
     <string name="edit_charging_switch">编辑充电开关</string>
     <string name="test_switch">测试充电开关</string>
     <string name="no_option_selected">未选择任何选项，请选择一个!</string>
@@ -114,8 +128,11 @@
     <string name="automatic">自动</string>
     <string name="error_occurred">发生了一个错误</string>
     <string name="retry">重试</string>
+    <string name="edit_charging_limit_once">一次性充电至给定的电量水平（不间断且无无其他限制）</string>
     <string name="apply">应用</string>
     <string name="done">完成</string>
+    <string name="edit_charging_limit_once_dialog_msg">达到设定的电量水平后，将自动恢复为当前设置。</string>
+    <string name="title_power_control">充电功率控制</string>
     <string name="info">信息</string>
     <string name="title_cooldown_control">冷却</string>
     <string name="title_on_boot">系统启动时应用</string>
@@ -124,13 +141,22 @@
     <string name="about">关于</string>
     <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- 自动关机阈值: 手机在没有充电的情况下，如果电池电量低于所设置的值，手机将自动关机。&lt;br /&gt;- 停止充电阈值:与“恢复充电阈值”配合，指示手机自动停止充电和自动恢复充电的阈值。&lt;br /&gt;- CHARGING SWITCH is the control file, plus ON and OFF values for switching charging on/off. By default, ACC uses whatever works.</string>
+    <string name="power_control_info">——充电电压峰值每下降0.1伏，据说就能让电池寿命翻一倍。&lt;br /&gt;——不幸的是，并非所有机型/内核都支持此功能。</string>
+    <string name="temperature_control_info">——此项将按设置的秒数暂停充电，以冷却电池。&lt;br /&gt;——冷却温度取决于冷却比率。&lt;br /&gt;——达到最高温度后充电将按暂停秒数暂停。</string>
+    <string name="cooldown_info">- 以秒为单位的充电开/关比率（例如冷却率=50/10) - 通过定期暂停充电，减少因长时间高温高压充电对电池造成的压力。&lt;br /&gt;- 如果充电太慢，请关闭此设置或改变比率。&lt;br /&gt;- 当禁用时，冷却电量和冷却温度值将被置零。&lt;br /&gt;- 此设置是充电电压限制功能的一种可行替代。</string>
+    <string name="on_plugged_info">一些文件的内容会随特定电源事件（例如插/拔电源）变化。此项设置用于更新这些文件，在为USB/无线充电强行设置最大充电电压/电流时特别有用。</string>
+    <string name="battery_idle_info_label">如此设置启用，则将优先使用支持电池闲置模式的充电开关。这将允许设备在暂停充电时，直接由外部电源供电。&lt;br /&gt;如您无法调整此设置，便意味着您的内核不支持此功能。</string>
     <string name="acc_config_editor">ACC 配置编辑器</string>
     <string name="profile_creator">创建配置</string>
     <string name="schedule_creator">创建任务</string>
     <string name="charging_switch_label">充电开关:</string>
     <string name="title_on_plugged">充电时应用</string>
+    <string name="edit_on_plugged">编辑应用于插入电源时（apply_on_plug）的设置：</string>
+    <string name="edit_on_plugged_dialog_message">示例：无线/电压最大值::9000000::9000000可以强制一些Pixel设备无线快充。
+    </string>
     <string name="template_capacity_profile">关机: %1$d%% - 恢复充电: %2$d%% - 停止充电: %3$d%%</string>
     <string name="template_temperature_profile">温度： %1$d&#176;C - 最大： %2$d&#176;C - 暂停： %3$d秒</string>
+    <string name="template_cool_down_profile">开始于： %1$d%% - 充电 %2$d秒 - 暂停 %3$d秒</string>
     <!--Profiles Options-->
     <string name="profile_option_edit">编辑</string>
     <string name="profile_option_rename">重命名</string>
@@ -153,6 +179,10 @@
     </string>
     <string name="units_of_measure">计量单位</string>
     <string name="acc_version_preference_title">ACC 版本</string>
+    <string name="acc_version_preference_description">您可以选择要使用的 ACC 版本：适配版、主线版、开发版或任何发行版本。
+        适配版保证兼容 AccA 一起工作，因而是推荐的选择。
+        虽然并不能保证，但其他版本通常也是安全的。
+    </string>
     <string name="install_bundled_version">安装 bundled 版本</string>
     <string name="acc_version_picker_title">ACC 版本</string>
     <string name="acc_version_picker_message">选择所需要的 ACC 版本</string>
@@ -173,6 +203,11 @@
     <string name="theme_option_setting">主题外观</string>
     <string name="theme_option_summary">设置应用的主题。</string>
     <string name="acc_version_compatibility_warning_title">ACC 版本兼容性</string>
+    <string name="acc_version_compatibility_warning_description">您选择的 ACC 版本并不保证兼容本app。
+        \nAccA 将从ACC的Github 仓库下载选定的版本。
+        \n实际上大多数情况并不会不兼容。
+        \n要继续吗？
+    </string>
     <string name="restore">恢复为默认</string>
     <string name="undo">撤销</string>
     <string name="checking_updates">正在检查更新</string>
@@ -200,7 +235,7 @@
         <item>跟随系统</item>
     </string-array>
     <string-array name="schedule_type_entries">
-        <item>Recurrent</item>
+        <item>重复</item>
         <item>运行一次</item>
         <item>启动时运行</item>
     </string-array>
@@ -209,6 +244,11 @@
     <string name="edit_schedule">编辑计划</string>
     <string name="create_schedule">创建计划</string>
     <!-- About Activity -->
+    <string name="about_team_blurb">感谢您使用 ACCA！
+        \n我们花费了大量时间来让您享受此应用。
+        \n向通过各种方式作出贡献的人们致以特别的感谢：
+        捐助， 提供建议，提供代码，提交bug，以及互相帮助！
+    </string>
     <string name="about_acca_version_label">ACCA 版本：</string>
     <string name="about_acc_version_label">ACC 版本：</string>
     <string name="about_project_github">在 Github 上的项目</string>
@@ -216,6 +256,19 @@
     <string name="about_website">网站</string>
     <string name="toast_no_browser_installed">无法打开链接！\n请确保您已经安装了浏览器。</string>
     <string name="install_update_dialog">安装 acc 更新</string>
+    <string name="check_update_dialog_message">        是否要从“%1$s”分支安装最新版本的 ACC？
+        \nACCA 将从Github 下载选定分支的最新版ACC。
+        \n要继续吗？</string>
     <string name="add_charging_switch">添加充电开关</string>
+    <string name="charging_switch_on_value_label">充电开始值</string>
+    <string name="charging_switch_off_value_label">充电停止值</string>
+    <string name="reset_bs_on_pause">暂停时重置电池数据 \%</string>
+    <string name="current_max">电流最大值 (mA)：</string>
+    <string name="invalid_current_max">无效电流最大值</string>
     <!-- Import and Export -->
+    <string name="import_export_title">导入与导出</string>
+    <string name="import_title">导入</string>
+    <string name="import_load_from_clipboard">从剪贴板加载配置文件</string>
+    <string name="export_title">导出</string>
+    <string name="export_none_selected">请选择要导出的配置文件。</string>
 </resources>
