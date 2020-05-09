@@ -120,7 +120,6 @@
     <string name="no_option_selected">未选择任何选项，请选择一个!</string>
     <string name="charging_switch_works">所选充电开关可工作！</string>
     <string name="charging_switch_does_not_work">所选充电开关不工作！</string>
-    <string name="plug_battery_to_test">测试前电池必须充电。插入充电器重试！</string>
     <string name="automatic">自动</string>
     <string name="error_occurred">发生了一个错误</string>
     <string name="retry">重试</string>
