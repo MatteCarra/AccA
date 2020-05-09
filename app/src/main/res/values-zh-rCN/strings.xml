@@ -69,10 +69,6 @@
     <string name="acc_installation_failed_title">ACC 安装失败！</string>
     <!-- DJS installation -->
     <string name="install_djs_title">需要 DJS</string>
-    <string name="install_djs_description">为了此功能的操作，我们必须启用 DJS。
-        \nDJS (Daily Job Scheduler) 是用于计划 ACC 设置的轻量级附件。
-        \nDJS 守护程序将在启动时与ACC守护程序一起启动。
-    </string>
     <string name="installing_djs">正在安装 DJS</string>
     <string name="djs_installation_failed">请把错误日志和 /data/adb/acc-data/logs/ 提交给开发者人员
         提交于: t.me/acc_group/ 或是 
