@@ -54,7 +54,6 @@
     <string name="shutdown_capacity">Wyłącz (jeśli nie ładuje) przy:</string>
     <string name="no_root_message">Aplikacja wymaga ROOT-a.</string>
     <string name="config_error_title">Błąd przetwarzania konfiguracji</string>
-    <string name="config_error_dialog">Nie udało się przetworzyć konfiguracji ACC!\nSprawdź, czy \"su -c acca --set --print\" działa.</string>
     <string name="wait">Proszę czekać...\nTo zajmie kilka sekund.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Zatrzymaj demon po zastosowaniu ustawień</string>
