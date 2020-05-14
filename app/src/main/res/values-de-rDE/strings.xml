@@ -53,8 +53,9 @@
     <string name="charge_seconds">Ladezeit in Sekunden:</string>
     <string name="shutdown_capacity">Herunterfahren (wenn nicht geladen wird) bei:</string>
     <string name="no_root_message">Diese App benötigt ROOT.</string>
-    <string name="config_error_title">Konfigurations-Lesefehler</string>
-    <string name="wait">Bitte warten Sie...\nDies wird einige Sekunden dauern.</string>
+    <string name="config_error_title">Fehler beim Parsen (Schreiben) der Konfiguration</string>
+    <string name="config_error_dialog">Fehler beim Parsen (Schreiben) der ACC-Konfiguration!\nBitte überprüfen, ob „su -c acc --set --print“ funktioniert.</string>
+    <string name="wait">Bitte warten …\nDies wird einige Sekunden dauern.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Daemon nach Anwendung der Einstellungen beenden</string>
     <string name="description_exit_on_boot">Dies wird zum Modifizieren von Kontrolldateien beim Hochfahren benutzt.</string>
