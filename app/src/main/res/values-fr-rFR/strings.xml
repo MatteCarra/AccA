@@ -128,11 +128,11 @@
     <string name="capacity_control_info">- ARRÊT : éteindre automatiquement le système à ou en dessous de ce niveau de batterie lorsque la batterie ne se charge pas.&lt;br /&gt;- ARRÊTER et les capacités RÉSUMER dictent quand la charge doit respectivement s\'arrêter et reprendre.&lt;br /&gt;- INTERRUPTEUR DE CHARGE est le fichier de contrôle, plus les valeurs ON et OFF pour allumer ou éteindre. Par défaut, ACC utilise tout ce qui fonctionne.</string>
     <string name="power_control_info">- Toute réduction de la tension de charge de pointe de 0,10V/cellule semblera doubler la durée de vie.&lt;br /&gt;- Malheureusement, tous les appareils/noyaux ne prennent pas en charge cette fonctionnalité.</string>
     <string name="on_plugged_info">Ceci est utilisé pour mettre à jour des fichiers dont le contenu change sur certains événements d\'alimentation (par exemple, branché/débranché). Il est particulièrement utile pour appliquer la tension max/courant personnalisé pour la charge USB/sans fil.</string>
-    <string name="battery_idle_info_label">Si l\'interrupteur est sélectionné, les interrupteurs de charge qui supportent le mode de veille de la batterie ont priorité - permettant à l\'appareil de tirer directement de l\'alimentation extérieure lorsque la charge est suspendue.&lt;br /&gt;Si votre interrupteur est désactivé, cela signifie que votre noyau ne supporte pas cette fonctionnalité.</string>
+    <string name="battery_idle_info_label">Si cet interrupteur est sélectionné, les commutateurs de charge qui supportent le mode de veille de la batterie ont priorité - permettant à l\'appareil de tirer directement de l\'alimentation extérieure lorsque la charge est suspendue.&lt;br /&gt;Si votre interrupteur est désactivé, cela signifie que votre noyau ne supporte pas cette fonctionnalité.</string>
     <string name="acc_config_editor">Éditeur de configuration ACC</string>
     <string name="profile_creator">Créateur de profil</string>
     <string name="schedule_creator">Créateur de la planification</string>
-    <string name="charging_switch_label">Interrupteur de charge:</string>
+    <string name="charging_switch_label">Commutateur de charge :</string>
     <string name="title_on_plugged">Appliquer au branchement</string>
     <string name="template_capacity_profile">Extinction : %1$d%% - Reprise : %2$d%% - Arrêt : %3$d%%</string>
     <string name="template_temperature_profile">Température : %1$d&#176;C - Max: %2$d&#176;C - Pause : %3$ds</string>
