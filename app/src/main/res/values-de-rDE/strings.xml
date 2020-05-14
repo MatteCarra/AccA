@@ -140,6 +140,7 @@
     <string name="capacity_control_info">- SHUTDOWN: Das System automatisch bei oder unter diesem Akkustand herunterfahren, sofern der Akku nicht geladen wird.&lt;br /&gt;- STOP: und RESUME-Kapazitäten geben an, wann das Laden beendet bzw. wieder aufgenommen werden soll.&lt;br /&gt;- CHARGING SWITCH ist die Kontrolldatei, plus ON- und OFF-Werten um das Laden an- oder auszuschalten. Standardmäßig verwendet ACC alles, was funktioniert.</string>
     <string name="power_control_info">- Anscheinend verdoppelt jede Reduktion der Spitzenspannung um 0,10V pro Zelle die Lebensdauer.&lt;br /&gt;- Leider unterstützen nicht alle Geräte oder Kernel diese Funktion.</string>
     <string name="temperature_control_info">Für eingestellten Sekunden wird das Laden pausiert, um den Akku abzukühlen&lt;br /&gt;- Die ABKÜHLTEMPERATUR hängt vom ABKÜHLVERHÄLTNIS ab.&lt;br /&gt;- MAXIMALE TEMPERATUR benutzt PAUSE SEKUNDEN.</string>
+    <string name="cooldown_info">- Lade/Pausenverhältnis in Sekunden (z.B. coolDownRatio=50/10) – reduziert die Belastung des Akkus, welche durch längere hohe Temperaturen und hohe Ladespannungen verursacht wird, durch periodisches Pausieren des Aufladens.&lt;br /&gt;- Falls das Laden zu langsam ist, schalte dies aus (Nullwert) oder ändere das Verhältnis.&lt;br /&gt;- Wenn die Einstellung auf null gesetzt ist, werden Abkühlkapazität (coolDown capacity) und Abkühltemperatur (coolDown temperature) Werte auch auf null gesetzt.&lt;br /&gt;- Diese Einstellung ist eine gute Alternative zum Einrichten einer Begrenzung der maximalen Ladespannung.</string>
     <string name="on_plugged_info">Dies wird zum Aktualisieren von Dateien verwendet, deren Inhalt sich bei bestimmten Stromereignissen ändert (z.B. Aus- oder Einstecken). Es ist besonders nützlich, um benutzerdefinierte maximal Spannung/Strom für USB- oder drahtloses Laden zu erzwingen.</string>
     <string name="battery_idle_info_label">Falls dies angeschaltet ist, haben Ladeschalter, die den Akku-Leerlaufmodus unterstützen, Vorrang - so somit kann das Gerät direkt vom externen Netzteil Strom ziehen, wenn das Aufladen angehalten wird.&lt;br /&gt; Wenn das deaktiviert ist, bedeutet dies, dass Ihr Kernel diese Funktion nicht unterstützt.</string>
     <string name="acc_config_editor">ACC-Konfigurationseditor</string>
@@ -147,6 +148,9 @@
     <string name="schedule_creator">Zeitplanersteller</string>
     <string name="charging_switch_label">Ladeschalter:</string>
     <string name="title_on_plugged">Beim Einstecken anwenden</string>
+    <string name="edit_on_plugged">Einsteck-Einstellungen bearbeiten:</string>
+    <string name="edit_on_plugged_dialog_message">Beispiel: Wireless/voltage_max::9000000::9000000 kann schnelle kabellose Ladungen auf einigen Pixel-Geräten erzwingen.
+    </string>
     <string name="template_capacity_profile">Herunterfahren: %1$d%% - Fortsetzen: %2$d%% - Anhalten: %3$d%%</string>
     <string name="template_temperature_profile">Temperatur: %1$d&#176;C - Max: %2$d&#176;C - Pause: %3$ds</string>
     <string name="template_cool_down_profile">Beginnen bei: %1$d%% - Laden für %2$d Sek - Pausieren für %3$d Sek</string>
@@ -255,6 +259,7 @@
     <string name="add_charging_switch">Ladeschalter hinzufügen</string>
     <string name="charging_switch_on_value_label">Ladeschalter AN</string>
     <string name="charging_switch_off_value_label">Ladeschalter AUS</string>
+    <string name="reset_bs_on_pause">Akku-Statistiken beim Pausieren zurücksetzen \%</string>
     <string name="current_max">Maximal-Strom (mA):</string>
     <string name="invalid_current_max">Ungültiger Maximal-Stromwert</string>
     <!-- Import and Export -->
