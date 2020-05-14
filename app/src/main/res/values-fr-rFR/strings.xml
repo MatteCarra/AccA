@@ -54,6 +54,7 @@
     <string name="shutdown_capacity">Éteindre (si pas en charge) à :</string>
     <string name="no_root_message">Cette application nécessite un accès ROOT.</string>
     <string name="config_error_title">Erreur de lecture de la configuration</string>
+    <string name="config_error_dialog">Impossible d\'écrire la configuration ACC !\nVeuillez vérifier si \"su -c acc --set --print\" fonctionne.</string>
     <string name="wait">Veuillez patienter... \nCela peut prendre quelques secondes.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Arrêter le service après avoir appliqué les paramètres</string>
