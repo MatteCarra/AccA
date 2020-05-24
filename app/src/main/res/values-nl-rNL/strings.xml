@@ -27,7 +27,7 @@
     <string name="title_battery">Batterij</string>
     <string name="info_status">Status</string>
     <string name="info_charging_speed">Oplaadsnelheid</string>
-    <string name="info_discharging_speed">Huidige stroomontlaadsnelheid</string>
+    <string name="info_discharging_speed">Stroomontlading</string>
     <string name="info_capacity">Capaciteit</string>
     <string name="info_temperature">Temperatuur</string>
     <string name="info_health">Gezondheid</string>
