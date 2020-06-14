@@ -173,7 +173,7 @@ interface AccInterface {
 }
 
 object Acc {
-    const val bundledVersion = 202006060
+    const val bundledVersion = 202006140
     private val defaultVersionPackage = mattecarra.accapp.acc.v201910132.AccHandler::class.java //Default AccHandler, used wen version is not recognized
 
     /*
