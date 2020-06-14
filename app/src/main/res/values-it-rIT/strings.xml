@@ -104,7 +104,7 @@
     <string name="title_on_boot">Applica all\'avvio</string>
     <string name="title_temperature_control">Controllo Temperatura</string>
     <string name="title_capacity_control">Controllo Capacità</string>
-    <string name="about">Info</string>
+    <string name="about">Info su</string>
     <!-- ACC Config Tooltips -->
     <string name="on_plugged_info">Questo è utilizzato per aggiornare i file il cui contenuto cambia su determinati eventi di potenza (ad esempio, collegato/scollegato). È particolarmente utile per l\'applicazione della tensione massima personalizzata/corrente per la ricarica usb/wireless.</string>
     <string name="battery_idle_info_label">Se l\'interruttore è selezionato, gli interruttori di ricarica che supportano la modalità della batteria inattiva hanno la precedenza - consentendo al dispositivo di attingere l\'energia direttamente dall\'alimentazione esterna quando la carica è in pausa.&lt;br /&gt;Se il tuo interruttore è disabilitato, significa che il kernel non supporta questa funzione.</string>

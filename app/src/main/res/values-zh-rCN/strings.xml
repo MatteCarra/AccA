@@ -27,7 +27,7 @@
     <string name="title_battery">电池</string>
     <string name="info_status">状态</string>
     <string name="info_charging_speed">充电速度</string>
-    <string name="info_discharging_speed">当前</string>
+    <string name="info_discharging_speed">当前电流</string>
     <string name="info_capacity">容量</string>
     <string name="info_temperature">温度</string>
     <string name="info_health">健康状况</string>
@@ -54,7 +54,6 @@
     <string name="shutdown_capacity">关机(未充电状态)阀值:</string>
     <string name="no_root_message">此应用程序需要 ROOT 权限</string>
     <string name="config_error_title">配置解析错误</string>
-    <string name="config_error_dialog">解析ACC 配置失败！\n请检查\"su -c acca --set --print\" 是否起作用。</string>
     <string name="wait">请稍候...\n这将需要几秒钟时间。</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">应用设置后停止守护进程</string>
@@ -69,10 +68,6 @@
     <string name="acc_installation_failed_title">ACC 安装失败！</string>
     <!-- DJS installation -->
     <string name="install_djs_title">需要 DJS</string>
-    <string name="install_djs_description">为了此功能的操作，我们必须启用 DJS。
-        \nDJS (Daily Job Scheduler) 是用于计划 ACC 设置的轻量级附件。
-        \nDJS 守护程序将在启动时与ACC守护程序一起启动。
-    </string>
     <string name="installing_djs">正在安装 DJS</string>
     <string name="djs_installation_failed">请把错误日志和 /data/adb/acc-data/logs/ 提交给开发者人员
         提交于: t.me/acc_group/ 或是 
@@ -83,7 +78,7 @@
     <string name="edit_on_boot">编辑开机应用（apply_on_boot）设置</string>
     <string name="edit_on_boot_dialog_hint">留空以禁用</string>
     <string name="save">保存</string>
-    <string name="edit_on_boot_dialog_message">示例： /sys/kernel/fast_charge/force_fast_charge：:1::0
+    <string name="edit_on_boot_dialog_message">示例： /sys/kernel/fast_charge/force_fast_charge::1::0
         --exit。\n\"--exit\" 是可选的；它命令守护进程在应用设置后停止。
     </string>
     <string name="logs">日志</string>
@@ -124,18 +119,17 @@
     <string name="no_option_selected">未选择任何选项，请选择一个!</string>
     <string name="charging_switch_works">所选充电开关可工作！</string>
     <string name="charging_switch_does_not_work">所选充电开关不工作！</string>
-    <string name="plug_battery_to_test">测试前电池必须充电。插入充电器重试！</string>
     <string name="automatic">自动</string>
     <string name="error_occurred">发生了一个错误</string>
     <string name="retry">重试</string>
-    <string name="edit_charging_limit_once">一次性充电至给定的电量水平（不间断且无无其他限制）</string>
+    <string name="edit_charging_limit_once">一次性充电至给定电量（不间断且无其他限制）</string>
     <string name="apply">应用</string>
     <string name="done">完成</string>
     <string name="edit_charging_limit_once_dialog_msg">达到设定的电量水平后，将自动恢复为当前设置。</string>
     <string name="title_power_control">充电功率控制</string>
     <string name="info">信息</string>
     <string name="title_cooldown_control">冷却</string>
-    <string name="title_on_boot">系统启动时应用</string>
+    <string name="title_on_boot">开机时应用</string>
     <string name="title_temperature_control">温度控制</string>
     <string name="title_capacity_control">容量控制</string>
     <string name="about">关于</string>
@@ -217,7 +211,7 @@
     <string name="share_log">分享日志文件</string>
     <string name="acc_installation_failed_log">ACC 安装失败日志</string>
     <string name="djs_installation_failed_log">DJS 安装失败日志</string>
-    <string name="select_different_version">修改 ACC 版本</string>
+    <string name="select_different_version">更换 ACC 版本</string>
     <string name="installation_failed_non_bundled">安装其他版本 ACC 失败。
         \n请考虑分享 /data/adb/acc-data/logs/ 给开发者。
     </string>
@@ -237,10 +231,10 @@
     <string-array name="schedule_type_entries">
         <item>重复</item>
         <item>运行一次</item>
-        <item>启动时运行</item>
+        <item>开机时运行</item>
     </string-array>
     <string name="menu_import_export">导入 &amp; 导出</string>
-    <string name="execute_on_boot_schedule">启动时执行</string>
+    <string name="execute_on_boot_schedule">开机时执行</string>
     <string name="edit_schedule">编辑计划</string>
     <string name="create_schedule">创建计划</string>
     <!-- About Activity -->
@@ -251,7 +245,7 @@
     </string>
     <string name="about_acca_version_label">ACCA 版本：</string>
     <string name="about_acc_version_label">ACC 版本：</string>
-    <string name="about_project_github">在 Github 上的项目</string>
+    <string name="about_project_github">项目Github</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">网站</string>
     <string name="toast_no_browser_installed">无法打开链接！\n请确保您已经安装了浏览器。</string>

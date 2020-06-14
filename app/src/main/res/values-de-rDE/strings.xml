@@ -42,18 +42,23 @@
     <string name="battery_info_label">Info:</string>
     <string name="reset_unplugged">Akku-Statistiken beim Ausstecken zurücksetzen</string>
     <string name="reset_stats">Akku-Statistiken zurücksetzen</string>
-    <string name="cooldown_capacity">Ab %% Abkühlung starten:</string>
+    <string name="enable_cooldown">Abkühlzyklus aktivieren:</string>
+    <string name="cooldown_capacity">Abkühlung starten bei (%):</string>
     <string name="resume_charge">Ladevorgang fortsetzen bei:</string>
     <string name="stop_charge">Ladevorgang anhalten bei:</string>
     <string name="enable_temp_check">Temperaturüberwachung aktivieren (°C)</string>
+    <string name="cooldown_temp">Abkühltemperatur:</string>
     <string name="max_temp">Max Temperatur:</string>
     <string name="pause_seconds">Pausieren in Sekunden:</string>
     <string name="charge_seconds">Ladezeit in Sekunden:</string>
     <string name="shutdown_capacity">Herunterfahren (wenn nicht geladen wird) bei:</string>
     <string name="no_root_message">Diese App benötigt ROOT.</string>
-    <string name="wait">Bitte warten Sie...\nDies wird einige Sekunden dauern.</string>
+    <string name="config_error_title">Fehler beim Parsen (Schreiben) der Konfiguration</string>
+    <string name="config_error_dialog">Fehler beim Parsen (Schreiben) der ACC-Konfiguration!\nBitte überprüfen, ob „su -c acc --set --print“ funktioniert.</string>
+    <string name="wait">Bitte warten …\nDies wird einige Sekunden dauern.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Daemon nach Anwendung der Einstellungen beenden</string>
+    <string name="description_exit_on_boot">Dies wird zum Modifizieren von Kontrolldateien beim Hochfahren benutzt.</string>
     <!-- ACC installation -->
     <string name="installing_acc">ACC wird installiert</string>
     <string name="reboot">Neustart</string>
@@ -73,8 +78,12 @@
     </string>
     <string name="djs_installation_failed_title">DJS Installation fehlgeschlagen!</string>
     <string name="voltage_control_file_not_set">Nicht festgelegt.</string>
+    <string name="edit_on_boot">Hochfahr-Einstellungen bearbeiten</string>
     <string name="edit_on_boot_dialog_hint">Leer lassen, um zu deaktivieren</string>
     <string name="save">Speichern</string>
+    <string name="edit_on_boot_dialog_message">Beispiel: /sys/kernel/fast_charge/force_fast_charge::1::0
+        --exit.\n\"--exit\" ist optional; er weist den Daemon an, nach dem Anwenden der Einstellungen anzuhalten.
+    </string>
     <string name="logs">Logs</string>
     <string name="text_copied_to_clipboard">Text in Zwischenablage kopiert!</string>
     <string name="log_file_not_found_title">Log-Datei nicht gefunden</string>
@@ -99,12 +108,15 @@
     <string name="edit_power_limit">Strom- und Spannungslimit bearbeiten</string>
     <string name="voltage_max">Spannungsmaximum (Millivolt):</string>
     <string name="disabled">Deaktiviert</string>
+    <string name="schedule_recurrent_row_text">Wiederkehrende Aufgabe für %1$02d:%2$02d geplant</string>
     <string name="schedule_execute_once_row_title">Einmal ausführen - %1$02d:%2$02d</string>
+    <string name="schedule_execute_once_row_text">Aufgabe für %1$02d:%2$02d geplant</string>
     <string name="schedule_boot_row_text">Aufgabe beim Hochfahren geplant</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Löschen</string>
     <string name="no_schedules">Keine Zeitpläne gesetzt</string>
     <string name="wrong_volt_file">Entweder funktioniert die gewählte Datei nicht oder Ihr Kernel unterstützt diese Funktion nicht.</string>
+    <string name="invalid_voltage_max">Der Wert sollte zwischen 3700 und 4200 (mV) liegen</string>
     <string name="edit_charging_switch">Ladeschalter bearbeiten</string>
     <string name="test_switch">Ladeschalter testen</string>
     <string name="no_option_selected">Keine Option ausgewählt; bitte eine auswählen!</string>
@@ -114,6 +126,7 @@
     <string name="automatic">Automatisch</string>
     <string name="error_occurred">Ein Fehler ist aufgetreten</string>
     <string name="retry">Erneut versuchen</string>
+    <string name="edit_charging_limit_once">Einmal bis auf eine bestimmte Kapazität aufladen, ununterbrochen und ohne andere Einschränkungen</string>
     <string name="apply">Übernehmen</string>
     <string name="done">Fertig</string>
     <string name="edit_charging_limit_once_dialog_msg">Ihre aktuellen Einstellungen werden automatisch wiederhergestellt, sobald der gewählte Akkustand erreicht ist.</string>
@@ -127,6 +140,8 @@
     <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- SHUTDOWN: Das System automatisch bei oder unter diesem Akkustand herunterfahren, sofern der Akku nicht geladen wird.&lt;br /&gt;- STOP: und RESUME-Kapazitäten geben an, wann das Laden beendet bzw. wieder aufgenommen werden soll.&lt;br /&gt;- CHARGING SWITCH ist die Kontrolldatei, plus ON- und OFF-Werten um das Laden an- oder auszuschalten. Standardmäßig verwendet ACC alles, was funktioniert.</string>
     <string name="power_control_info">- Anscheinend verdoppelt jede Reduktion der Spitzenspannung um 0,10V pro Zelle die Lebensdauer.&lt;br /&gt;- Leider unterstützen nicht alle Geräte oder Kernel diese Funktion.</string>
+    <string name="temperature_control_info">Für eingestellten Sekunden wird das Laden pausiert, um den Akku abzukühlen&lt;br /&gt;- Die ABKÜHLTEMPERATUR hängt vom ABKÜHLVERHÄLTNIS ab.&lt;br /&gt;- MAXIMALE TEMPERATUR benutzt PAUSE SEKUNDEN.</string>
+    <string name="cooldown_info">- Lade/Pausenverhältnis in Sekunden (z.B. coolDownRatio=50/10) – reduziert die Belastung des Akkus, welche durch längere hohe Temperaturen und hohe Ladespannungen verursacht wird, durch periodisches Pausieren des Aufladens.&lt;br /&gt;- Falls das Laden zu langsam ist, schalte dies aus (Nullwert) oder ändere das Verhältnis.&lt;br /&gt;- Wenn die Einstellung auf null gesetzt ist, werden Abkühlkapazität (coolDown capacity) und Abkühltemperatur (coolDown temperature) Werte auch auf null gesetzt.&lt;br /&gt;- Diese Einstellung ist eine gute Alternative zum Einrichten einer Begrenzung der maximalen Ladespannung.</string>
     <string name="on_plugged_info">Dies wird zum Aktualisieren von Dateien verwendet, deren Inhalt sich bei bestimmten Stromereignissen ändert (z.B. Aus- oder Einstecken). Es ist besonders nützlich, um benutzerdefinierte maximal Spannung/Strom für USB- oder drahtloses Laden zu erzwingen.</string>
     <string name="battery_idle_info_label">Falls dies angeschaltet ist, haben Ladeschalter, die den Akku-Leerlaufmodus unterstützen, Vorrang - so somit kann das Gerät direkt vom externen Netzteil Strom ziehen, wenn das Aufladen angehalten wird.&lt;br /&gt; Wenn das deaktiviert ist, bedeutet dies, dass Ihr Kernel diese Funktion nicht unterstützt.</string>
     <string name="acc_config_editor">ACC-Konfigurationseditor</string>
@@ -134,6 +149,9 @@
     <string name="schedule_creator">Zeitplanersteller</string>
     <string name="charging_switch_label">Ladeschalter:</string>
     <string name="title_on_plugged">Beim Einstecken anwenden</string>
+    <string name="edit_on_plugged">Einsteck-Einstellungen bearbeiten:</string>
+    <string name="edit_on_plugged_dialog_message">Beispiel: Wireless/voltage_max::9000000::9000000 kann schnelle kabellose Ladungen auf einigen Pixel-Geräten erzwingen.
+    </string>
     <string name="template_capacity_profile">Herunterfahren: %1$d%% - Fortsetzen: %2$d%% - Anhalten: %3$d%%</string>
     <string name="template_temperature_profile">Temperatur: %1$d&#176;C - Max: %2$d&#176;C - Pause: %3$ds</string>
     <string name="template_cool_down_profile">Beginnen bei: %1$d%% - Laden für %2$d Sek - Pausieren für %3$d Sek</string>
@@ -242,6 +260,7 @@
     <string name="add_charging_switch">Ladeschalter hinzufügen</string>
     <string name="charging_switch_on_value_label">Ladeschalter AN</string>
     <string name="charging_switch_off_value_label">Ladeschalter AUS</string>
+    <string name="reset_bs_on_pause">Akku-Statistiken beim Pausieren zurücksetzen \%</string>
     <string name="current_max">Maximal-Strom (mA):</string>
     <string name="invalid_current_max">Ungültiger Maximal-Stromwert</string>
     <!-- Import and Export -->
