@@ -6,8 +6,6 @@ import mattecarra.accapp.djs.Djs
 import mattecarra.accapp.djs.DjsSchedule
 import java.lang.StringBuilder
 
-data class Time(val hour: Int, val minute: Int)
-
 data class Schedule(val isEnabled: Boolean, val time: String, val executeOnce: Boolean, val executeOnBoot: Boolean, val profile: ScheduleProfile) {
     private val timeRegex = """([0-9]{2})([0-9]{2})""".toRegex()
 
@@ -39,4 +37,6 @@ data class Schedule(val isEnabled: Boolean, val time: String, val executeOnce: B
     fun toDjsSchedule(): DjsSchedule {
         return DjsSchedule(profile.uid, isEnabled, time, executeOnce, executeOnBoot, getCommand())
     }
+
+    data class Time(val hour: Int, val minute: Int)
 }
