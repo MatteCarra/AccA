@@ -263,9 +263,6 @@
     <string name="current_max">Stroom max (mA):</string>
     <string name="invalid_current_max">Ongeldige stroom max waarde</string>
     <!-- Import and Export -->
-    <string name="import_export_title">Import &amp; Export</string>
     <string name="import_title">Importeren</string>
-    <string name="import_load_from_clipboard">Laad profielen van klembord</string>
     <string name="export_title">Exporteren</string>
-    <string name="export_none_selected">Selecteer profielen om hierboven te exporteren.</string>
 </resources>
