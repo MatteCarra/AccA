@@ -65,10 +65,10 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         val config =
             when {
                 savedInstanceState?.containsKey(Constants.ACC_CONFIG_KEY) == true ->
-                    savedInstanceState.getParcelable(Constants.ACC_CONFIG_KEY)!!
+                    savedInstanceState.getSerializable(Constants.ACC_CONFIG_KEY) as AccConfig
 
                 intent.hasExtra(Constants.ACC_CONFIG_KEY) ->
-                    intent.getParcelableExtra(Constants.ACC_CONFIG_KEY)!!
+                    intent.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig
 
                 else ->
                     try {
