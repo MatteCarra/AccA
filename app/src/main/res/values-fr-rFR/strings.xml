@@ -264,9 +264,6 @@
     <string name="current_max">Courant maximal (mA) :</string>
     <string name="invalid_current_max">Valeur de courant maximal invalide</string>
     <!-- Import and Export -->
-    <string name="import_export_title">Importer &amp; Exporter</string>
     <string name="import_title">Importer</string>
-    <string name="import_load_from_clipboard">Charger des profils depuis le presse-papier</string>
     <string name="export_title">Exporter</string>
-    <string name="export_none_selected">Veuillez sélectionner les profils à exporter ci-dessus.</string>
 </resources>
