@@ -12,7 +12,6 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AccaTheme.DayNight">
-        <activity android:name=".activities.ImportExportActivity" />
         <activity
             android:name=".activities.AboutActivity"
             android:parentActivityName=".activities.MainActivity" />
@@ -36,7 +35,8 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="mattecarra.accapp.activities.MainActivity" />
         </activity>
-
+        <activity android:name=".activities.ExportProfilesActivity" />
+        <activity android:name=".activities.ImportProfilesActivity" />
         <service
                 android:name=".services.AccProfileTileService"
                 android:icon="@drawable/ic_battery_charging_80"
