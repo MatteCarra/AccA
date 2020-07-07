@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".fragments.ImportFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/about_toolbar"
+                style="?toolbarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:title="@string/about" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <Button
+            android:id="@+id/import_load_clipboard_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:drawableStart="@drawable/ic_save"
+            android:drawableLeft="@drawable/ic_save"
+            android:text="@string/import_load_from_clipboard" />
+    
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/import_profiles_rv"
+            android:layout_below="@+id/import_load_clipboard_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
+    <TextView
+            android:id="@+id/import_profile_empty_tv"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Press Load Profiles from Clipboard!"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
