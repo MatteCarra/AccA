@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_appbar_logs"
-        android:icon="@drawable/ic_round_receipt_24px"
-        android:title="@string/logs"
-        app:showAsAction="ifRoom" />
+            android:id="@+id/menu_appbar_logs"
+            android:icon="@drawable/ic_round_receipt_24px"
+            android:title="@string/logs"
+            app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menu_appbar_settings"
-        android:title="@string/title_settings"
-        app:showAsAction="never" />
+            android:id="@+id/menu_appbar_settings"
+            android:title="@string/title_settings"
+            app:showAsAction="never" />
 
     <item
-        android:id="@+id/menu_appbar_import_export"
-        android:title="@string/menu_import_export"
-        app:showAsAction="never"
-        android:visible="true" />
+            android:id="@+id/menu_appbar_import"
+            android:title="@string/menu_import"
+            app:showAsAction="never"
+            android:visible="true" />
 
     <item
-        android:id="@+id/menu_appbar_about"
-        android:title="@string/about"
-        app:showAsAction="never" />
+            android:id="@+id/menu_appbar_export"
+            android:title="@string/menu_export"
+            app:showAsAction="never"
+            android:visible="true" />
+
+    <item
+            android:id="@+id/menu_appbar_about"
+            android:title="@string/about"
+            app:showAsAction="never" />
 </menu>

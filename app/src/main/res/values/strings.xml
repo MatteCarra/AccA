@@ -311,10 +311,16 @@
     <string name="invalid_current_max">Invalid current max value</string>
 
     <!-- Import and Export -->
-    <string name="import_export_title">Import &amp; Export</string>
     <string name="import_title">Import</string>
-    <string name="import_load_from_clipboard">Load Profiles from Clipboard</string>
+    <string name="import_load_from_clipboard">Press the \'Clipboard\' icon in the toolbar!</string>
     <string name="export_title">Export</string>
-    <string name="export_none_selected">Please select profiles to export above.</string>
+    <string name="export_none_selected">Please select profiles to export above</string>
+    <string name="menu_import">Import</string>
+    <string name="menu_export">Export</string>
+    <string name="menu_title_load_clipboard">Load from Clipboard</string>
+    <string name="menu_title_clear_entries">Clear Entries</string>
+    <string name="import_toast_no_valid_profile_json_clipboard">Valid ACCA Profile JSON not in Clipboard</string>
+    <string name="import_toast_no_selected_profiles">Please select Profiles to Import</string>
+    <string name="import_profile_success">Successfully imported %d profiles</string>
 
 </resources>

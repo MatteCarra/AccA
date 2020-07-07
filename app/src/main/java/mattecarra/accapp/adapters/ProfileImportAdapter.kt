@@ -7,16 +7,16 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import mattecarra.accapp.R
 import mattecarra.accapp.models.AccaProfile
-import mattecarra.accapp.models.ProfileExportItem
+import mattecarra.accapp.models.ExportItem
 
 class ProfileImportAdapter: RecyclerView.Adapter<ProfileImportAdapter.ProfileImportItemHolder>() {
 
-    private var mProfiles: ArrayList<ProfileExportItem> = ArrayList()
+    private var mProfiles: ArrayList<ExportItem> = ArrayList()
 
     inner class ProfileImportItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
-        ProfileExportItem.Listener, View.OnClickListener {
+        ExportItem.Listener, View.OnClickListener {
 
-        lateinit var mExportProfile: ProfileExportItem
+        private lateinit var mExportProfile: ExportItem
 
         private val itemRl: RelativeLayout = itemView.findViewById(R.id.pex_item_rl)
         private val titleTv: TextView = itemView.findViewById(R.id.pex_item_name_tv)
@@ -28,18 +28,23 @@ class ProfileImportAdapter: RecyclerView.Adapter<ProfileImportAdapter.ProfileImp
 
         override fun onClick(p0: View?) {
             mProfiles[adapterPosition].check()
+            // TODO: call viewmodel from activity to update the data (checked item)
         }
 
-        fun setData(exportItem: ProfileExportItem) {
+        fun setData(exportItem: ExportItem) {
             mExportProfile = exportItem
             titleTv.text = exportItem.getName()
+            // Get checked state from model
+            if (mExportProfile.isChecked()) {
+                mExportProfile.check()
+            }
         }
 
         override fun onCheckedChanged(value: Boolean) {
             selectedCb.isChecked = value
         }
 
-        fun getExportProfile(): ProfileExportItem {
+        fun getExportProfile(): ExportItem {
             return mExportProfile
         }
     }
@@ -50,7 +55,7 @@ class ProfileImportAdapter: RecyclerView.Adapter<ProfileImportAdapter.ProfileImp
     }
 
     override fun onBindViewHolder(holder: ProfileImportItemHolder, position: Int) {
-        val exportProfile: ProfileExportItem = mProfiles[position]
+        val exportProfile: ExportItem = mProfiles[position]
         exportProfile.setOnCheckedChangedListener(holder)
         holder.setData(exportProfile)
     }
@@ -69,14 +74,14 @@ class ProfileImportAdapter: RecyclerView.Adapter<ProfileImportAdapter.ProfileImp
         mProfiles.clear()
 
         for (profile in profiles) {
-            var exPro = ProfileExportItem(profile, profile.profileName)
+            var exPro = ExportItem(profile, profile.profileName)
             mProfiles.add(exPro)
         }
 
         notifyDataSetChanged()
     }
 
-    fun getExports(): ArrayList<ProfileExportItem> {
+    fun getExports(): ArrayList<ExportItem> {
         return mProfiles
     }
 }

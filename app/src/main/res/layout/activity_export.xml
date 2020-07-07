@@ -1,47 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:fitsSystemWindows="true"
         android:orientation="vertical"
-        tools:context=".activities.ImportProfilesActivity">
+        tools:context=".activities.ExportProfilesActivity">
 
     <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/import_toolbar"
+                android:id="@+id/export_toolbar"
                 style="?toolbarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:title="@string/import_title" />
+                app:title="@string/export_title" />
     </com.google.android.material.appbar.AppBarLayout>
-    
+
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/import_profiles_rv"
-            android:layout_below="@+id/import_load_clipboard_btn"
-            android:layout_marginTop="?attr/actionBarSize"
+            android:id="@+id/export_entries_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"/>
-
-    <TextView
-            android:id="@+id/import_profile_empty_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/import_load_from_clipboard"/>
+            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:paddingBottom="60dp"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"/>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/import_fab"
-            android:layout_width="wrap_content"
+            android:id="@+id/export_fab"
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
             android:layout_margin="16dp"
-            android:text="@string/import_title"
-            app:icon="@drawable/ic_outline_save_alt_24px" />
-
+            android:text="@string/export_title"
+            app:icon="@drawable/ic_export" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

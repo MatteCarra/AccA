@@ -27,4 +27,7 @@ interface ProfileDao {
 
     @Query("DELETE FROM profiles_table")
     suspend fun deleteAll()
+
+    @Query("SELECT * FROM profiles_table ORDER BY uid DESC")
+    suspend fun getProfiles(): List<AccaProfile>
 }

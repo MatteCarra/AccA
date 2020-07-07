@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/import_load_clipboard_menu"
+            android:icon="@drawable/ic_round_content_paste"
+            android:title="@string/menu_title_load_clipboard"
+            android:visible="true"
+            app:showAsAction="ifRoom" />
+
+    <item   android:id="@+id/import_clear_menu"
+            android:icon="@drawable/ic_round_delete_sweep_24"
+            android:title="@string/menu_title_clear_entries"
+            app:showAsAction="never" />
+</menu>

@@ -6,17 +6,20 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import mattecarra.accapp.R
-import mattecarra.accapp.models.AccaProfile
-import mattecarra.accapp.models.ProfileExportItem
+import mattecarra.accapp._interface.OnExportItemCheckedListener
+import mattecarra.accapp.models.ExportItem
 
-class ProfileExportAdapter: RecyclerView.Adapter<ProfileExportAdapter.ProfileExportItemHolder>() {
+// Lambda functions for replacing interfaces: https://medium.com/@ddst/passing-lambda-function-for-adapter-callback-in-kotlin-6c9552af7262
 
-    private var mProfiles: List<ProfileExportItem> = ArrayList()
+class ProfileExportAdapter(val callback: OnExportItemCheckedListener): RecyclerView.Adapter<ProfileExportAdapter.ProfileExportItemHolder>() {
+
+    private var mProfiles: List<ExportItem> = ArrayList()
 
     inner class ProfileExportItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
-        ProfileExportItem.Listener, View.OnClickListener {
+        ExportItem.Listener, View.OnClickListener {
 
-        lateinit var mExportProfile: ProfileExportItem
+        lateinit var mExportProfile: ExportItem
+        private val mCallback: OnExportItemCheckedListener = callback
 
         private val itemRl: RelativeLayout = itemView.findViewById(R.id.pex_item_rl)
         private val titleTv: TextView = itemView.findViewById(R.id.pex_item_name_tv)
@@ -27,10 +30,12 @@ class ProfileExportAdapter: RecyclerView.Adapter<ProfileExportAdapter.ProfileExp
         }
 
         override fun onClick(p0: View?) {
-            mProfiles[adapterPosition].check()
+//            mProfiles[adapterPosition].check()
+            // use callback
+            mCallback.onExportItemSelected(adapterPosition)
         }
 
-        fun setData(exportItem: ProfileExportItem) {
+        fun setData(exportItem: ExportItem) {
             mExportProfile = exportItem
             titleTv.text = exportItem.getName()
         }
@@ -39,7 +44,7 @@ class ProfileExportAdapter: RecyclerView.Adapter<ProfileExportAdapter.ProfileExp
             selectedCb.isChecked = value
         }
 
-        fun getExportProfile(): ProfileExportItem {
+        fun getExportProfile(): ExportItem {
             return mExportProfile
         }
     }
@@ -50,7 +55,7 @@ class ProfileExportAdapter: RecyclerView.Adapter<ProfileExportAdapter.ProfileExp
     }
 
     override fun onBindViewHolder(holder: ProfileExportItemHolder, position: Int) {
-        val exportProfile: ProfileExportItem = mProfiles[position]
+        val exportProfile: ExportItem = mProfiles[position]
         exportProfile.setOnCheckedChangedListener(holder)
         holder.setData(exportProfile)
     }
@@ -63,13 +68,13 @@ class ProfileExportAdapter: RecyclerView.Adapter<ProfileExportAdapter.ProfileExp
         return mProfiles.size
     }
 
-    fun setProfiles(profiles: List<ProfileExportItem>) {
+    fun setProfiles(profiles: List<ExportItem>) {
         // Create ExportProfile list based off AccaProfile list provided
         mProfiles = profiles
         notifyDataSetChanged()
     }
 
-    fun getExports(): List<ProfileExportItem> {
+    fun getExports(): List<ExportItem> {
         return mProfiles
     }
 }
