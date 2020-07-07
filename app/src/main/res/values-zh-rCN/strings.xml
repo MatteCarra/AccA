@@ -260,9 +260,6 @@
     <string name="current_max">电流最大值 (mA)：</string>
     <string name="invalid_current_max">无效电流最大值</string>
     <!-- Import and Export -->
-    <string name="import_export_title">导入与导出</string>
     <string name="import_title">导入</string>
-    <string name="import_load_from_clipboard">从剪贴板加载配置文件</string>
     <string name="export_title">导出</string>
-    <string name="export_none_selected">请选择要导出的配置文件。</string>
 </resources>
