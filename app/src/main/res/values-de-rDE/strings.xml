@@ -264,9 +264,6 @@
     <string name="current_max">Maximal-Strom (mA):</string>
     <string name="invalid_current_max">Ungültiger Maximal-Stromwert</string>
     <!-- Import and Export -->
-    <string name="import_export_title">Importieren &amp; Exportieren</string>
     <string name="import_title">Importieren</string>
-    <string name="import_load_from_clipboard">Profile aus der Zwischenablage laden</string>
     <string name="export_title">Exportieren</string>
-    <string name="export_none_selected">Bitte wählen Sie oben die zu exportierenden Profile aus.</string>
 </resources>

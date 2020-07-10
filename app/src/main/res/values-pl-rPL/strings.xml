@@ -263,9 +263,6 @@
     <string name="current_max">Maks. natężenie prądu (mA):</string>
     <string name="invalid_current_max">Nieprawidłowa maks. wartość natężenia prądu</string>
     <!-- Import and Export -->
-    <string name="import_export_title">Importuj &amp; eksportuj</string>
     <string name="import_title">Importuj</string>
-    <string name="import_load_from_clipboard">Załaduj profile ze schowka</string>
     <string name="export_title">Eksportuj</string>
-    <string name="export_none_selected">Wybierz profile do eksportowania.</string>
 </resources>

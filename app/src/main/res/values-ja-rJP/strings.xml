@@ -42,18 +42,23 @@
     <string name="battery_info_label">Info</string>
     <string name="reset_unplugged">切断時バッテリー状態リセット</string>
     <string name="reset_stats">バッテリー状態リセット</string>
+    <string name="enable_cooldown">クールダウンサイクル有効化:</string>
     <string name="cooldown_capacity">クールダウン開始 %%:</string>
     <string name="resume_charge">充電再開:</string>
     <string name="stop_charge">充電停止:</string>
     <string name="enable_temp_check">温度チェック有効化 (°C)</string>
+    <string name="cooldown_temp">クールダウン温度:</string>
     <string name="max_temp">最大温度:</string>
     <string name="pause_seconds">停止秒時間:</string>
     <string name="charge_seconds">充電秒時間:</string>
     <string name="shutdown_capacity">シャットダウン (非充電時):</string>
     <string name="no_root_message">このアプリは ROOT が必要です.</string>
+    <string name="config_error_title">設定解析エラー</string>
+    <string name="config_error_dialog">ACC設定の解析に失敗しました！\n\"su-c acc --set --print\"が動作するか確認してください。</string>
     <string name="wait">お待ちください...\nしばらく時間がかかります.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">設定適応後, デーモン停止</string>
+    <string name="description_exit_on_boot">起動時に制御ファイルに書き込むために使用されます.</string>
     <!-- ACC installation -->
     <string name="installing_acc">ACC インストール中</string>
     <string name="reboot">再起動</string>
@@ -75,6 +80,10 @@
     <string name="voltage_control_file_not_set">未設定</string>
     <string name="edit_on_boot_dialog_hint">空欄で無効</string>
     <string name="save">保存</string>
+    <string name="edit_on_boot_dialog_message">Example: /sys/kernel/fast_charge/force_fast_charge::1::0
+        --exit.\n\"--exit\" はオプションです; 設定適応後, デーモンを停止します.
+    
+    </string>
     <string name="logs">ログ</string>
     <string name="text_copied_to_clipboard">クリップボードにコピーされました！</string>
     <string name="log_file_not_found_title">ログファイルが見つかりません</string>
@@ -96,6 +105,7 @@
     <string name="new_config">新規カスタム設定</string>
     <string name="enable_voltage_limit">充電電圧制限有効化</string>
     <string name="voltage_control_file">電圧制御ファイル:</string>
+    <string name="edit_power_limit">電流制限と電圧制限の編集</string>
     <string name="voltage_max">電圧最大 (ミリボルト):</string>
     <string name="disabled">無効化</string>
     <string name="delete">削除</string>
@@ -107,11 +117,13 @@
     <string name="charging_switch_works">選択された充電切り替えは動作します！</string>
     <string name="charging_switch_does_not_work">選択された充電切り替えは動作しません！</string>
     <string name="plug_battery_to_test">テスト前にバッテリは充電されなければなりません. 充電器に接続し, 再び試してください！</string>
+    <string name="automatic">自動</string>
     <string name="error_occurred">エラーが発生しました</string>
     <string name="retry">リトライ</string>
     <string name="apply">適用</string>
     <string name="done">完了</string>
     <string name="edit_charging_limit_once_dialog_msg">一度選択したバッテリレベルに達すると, 自動的に現在の設定が保存されます.</string>
+    <string name="title_power_control">充電電力制御</string>
     <string name="info">Info</string>
     <string name="title_cooldown_control">クールダウン</string>
     <string name="title_on_boot">起動時に適用</string>
@@ -120,6 +132,7 @@
     <string name="about">About</string>
     <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- シャットダウン: バッテリーが充電されていないとき, この値以下で自動的にシステムをシャットダウンする.&lt;br /&gt;- 停止: と再開は, 充電が停止または再開するべきときの残量をそれぞれ指示する.&lt;br /&gt;- 充電切り替え は制御ファイルであり, 充電 on/off のための ON と OFF の値である. デフォルトでは, ACC は動作するものを使用する.</string>
+    <string name="power_control_info">- ピーク時の充電電圧が 0.10V/cell 減少する毎に寿命が2倍になると言われる.&lt;br /&gt;- 残念ながら, すべての機器/カーネルがこの機能をサポートするとは限りません.</string>
     <string name="on_plugged_info">電源イベントによるファイル更新のために使用される(例 プラグ接続/プラグ切断). これは特に最大電圧/usb 電流/無線充電を強制的に変更するために役立ちます.</string>
     <string name="battery_idle_info_label">このスイッチが選択された場合バッテリアイドルモードをサポートする充電切り替えが優先される - 充電が停止したとき, 機器に外部電源から電力を直接供給することの許可.&lt;br /&gt;スイッチが無効の場合はカーネルがこの機能をサポートしていないことを意味する.</string>
     <string name="acc_config_editor">ACC 設定編集</string>
@@ -210,6 +223,7 @@
         <item>一度だけ実行</item>
         <item>起動時実行</item>
     </string-array>
+    <string name="menu_import_export">インポート &amp; エクスポート</string>
     <string name="execute_on_boot_schedule">起動時実行</string>
     <string name="edit_schedule">スケジュール編集</string>
     <string name="create_schedule">スケジュール作成</string>
@@ -224,5 +238,11 @@
         \nACCA は選択された最新コミットに基づいて Github から ACC の最新版をダウンロードします.
         \n継続しますか？</string>
     <string name="add_charging_switch">充電切り替えの追加</string>
+    <string name="charging_switch_on_value_label">充電切り替えをONする値</string>
+    <string name="charging_switch_off_value_label">充電切り替えをOFFする値</string>
+    <string name="reset_bs_on_pause">中断時バッテリー状態リセット \%</string>
+    <string name="current_max">電流最大値 (mA):</string>
     <!-- Import and Export -->
+    <string name="import_title">インポート</string>
+    <string name="export_title">エクスポート</string>
 </resources>
