@@ -54,6 +54,7 @@
     <string name="shutdown_capacity">Afsluiten (indien niet opladen) op:</string>
     <string name="no_root_message">Deze app vereist ROOT.</string>
     <string name="config_error_title">Configuratie parse fout</string>
+    <string name="config_error_dialog">Fout bij het parsen van ACC config!!\nControleer of \"su -c acc --set --print\" werkt.</string>
     <string name="wait">Wacht alstublieft...\nDit duurt een paar seconden.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Stop daemon na het toepassen van instellingen</string>
@@ -264,5 +265,14 @@
     <string name="invalid_current_max">Ongeldige stroom max waarde</string>
     <!-- Import and Export -->
     <string name="import_title">Importeren</string>
+    <string name="import_load_from_clipboard">Druk op het \'Clipboard\' pictogram in de werkbalk!</string>
     <string name="export_title">Exporteren</string>
+    <string name="export_none_selected">Selecteer profielen om bovenstaande te exporteren</string>
+    <string name="menu_import">Importeren</string>
+    <string name="menu_export">Exporteren</string>
+    <string name="menu_title_load_clipboard">Plakken vanaf klembord</string>
+    <string name="menu_title_clear_entries">Invoer wissen</string>
+    <string name="import_toast_no_valid_profile_json_clipboard">Geldig ACCA profiel JSON is niet in Klembord</string>
+    <string name="import_toast_no_selected_profiles">Selecteer Profielen om te importeren</string>
+    <string name="import_profile_success">%d profielen succesvol geïmporteerd</string>
 </resources>
