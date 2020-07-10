@@ -54,6 +54,7 @@
     <string name="shutdown_capacity">关机(未充电状态)阀值:</string>
     <string name="no_root_message">此应用程序需要 ROOT 权限</string>
     <string name="config_error_title">配置解析错误</string>
+    <string name="config_error_dialog">解析ACC 配置失败！\n请检查\"su -c acca --set --print\" 是否正常工作</string>
     <string name="wait">请稍候...\n这将需要几秒钟时间。</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">应用设置后停止守护进程</string>
