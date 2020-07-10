@@ -42,10 +42,12 @@
     <string name="battery_info_label">Información:</string>
     <string name="reset_unplugged">Restablecer las estadísticas de batería al desconectar</string>
     <string name="reset_stats">Reiniciar las estadísticas de la batería</string>
+    <string name="enable_cooldown">Activar ciclo de enfriamiento:</string>
     <string name="cooldown_capacity">Comenzar a enfriar a las %%:</string>
     <string name="resume_charge">Reanudar la carga a las:</string>
     <string name="stop_charge">Detener la carga a las:</string>
     <string name="enable_temp_check">Activar comprobación de temperatura (°C)</string>
+    <string name="cooldown_temp">Temperatura de enfriamiento:</string>
     <string name="max_temp">Temperatura máxima:</string>
     <string name="pause_seconds">Pausar durante (segundos):</string>
     <string name="charge_seconds">Cargar durante (segundos):</string>
@@ -74,6 +76,7 @@
     </string>
     <string name="djs_installation_failed_title">¡Instalación de DJS fallida!</string>
     <string name="voltage_control_file_not_set">No establecido.</string>
+    <string name="edit_on_boot">Editar ajustes de apply_on_boot</string>
     <string name="edit_on_boot_dialog_hint">Dejar en blanco para desactivar</string>
     <string name="save">Guardar</string>
     <string name="logs">Registros</string>
@@ -224,6 +227,11 @@ Se garantiza que la versión incluida siempre funcionará con ACCA, por lo que e
     <string name="edit_schedule">Editar programación</string>
     <string name="create_schedule">Crear programación</string>
     <!-- About Activity -->
+    <string name="about_team_blurb">Gracias por usar ACCA!
+        \nNosotros gastamos un montón de tiempo en todo esto para que lo disfrutes.
+        \nGracias especiales a aquellos que han contribuido en una forma u otra:
+        Donando, ofreciendo sugerencias, abriendo peticiones pull, subiendo bugs y ayudándose unos con los otros!
+    </string>
     <string name="about_acca_version_label">Versión de ACCA:</string>
     <string name="about_acc_version_label">Versión de ACC:</string>
     <string name="about_project_github">GitHub del proyecto</string>
@@ -240,4 +248,6 @@ Se garantiza que la versión incluida siempre funcionará con ACCA, por lo que e
     <string name="current_max">Corriente máxima (mA):</string>
     <string name="invalid_current_max">Corriente máxima actual no válida</string>
     <!-- Import and Export -->
+    <string name="import_title">Importar</string>
+    <string name="export_title">Exportar</string>
 </resources>
