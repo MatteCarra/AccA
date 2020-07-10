@@ -1,15 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">ACCA</string>
+    <string name="app_name_full">Advanced Charging Controller 앱</string>
+    <string name="title_activity_log_view">로그</string>
+    <string name="title_activity_log_view_file_name">로그</string>
     <!-- ACC Tile Strings -->
+    <string name="tile_acc_no_root">루트 권한 없음</string>
+    <string name="tile_acc_enabled">ACC 활성화됨</string>
     <!-- Navigation Strings -->
+    <string name="title_schedules">예약 작업</string>
+    <string name="title_settings">설정</string>
     <!-- ACC Daemon Status -->
+    <string name="title_status">상태</string>
+    <string name="title_acc_daemon">ACC 데몬</string>
     <!-- ACC Daemon Toggle -->
+    <string name="menu_stop_accd">ACC 데몬 정지</string>
+    <string name="menu_start_accd">ACC 데몬 시작</string>
+    <string name="start">시작</string>
+    <string name="stop">중지</string>
     <!-- Battery Card Strings -->
+    <string name="title_battery">배터리</string>
+    <string name="info_status">상태</string>
+    <string name="info_charging_speed">충전 속도</string>
+    <string name="info_discharging_speed">현재 전류</string>
+    <string name="info_capacity">용량</string>
+    <string name="info_temperature">온도</string>
+    <string name="info_health">수명</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
+    <string name="info_status_extended">%1$s (%2$s)</string>
+    <string name="info_charging_speed_extended">%1$dmA / %2$.2fV</string>
+    <string name="info_discharging_speed_extended">%1$dmA</string>
     <!-- Profiles Item Labels -->
+    <string name="item_profile_capacity_label">용량:</string>
+    <string name="item_profile_temperature_label">온도:</string>
+    <string name="status_label">상태:</string>
+    <string name="battery_info_label">정보:</string>
+    <string name="enable_cooldown">냉각 사이클 활성화:</string>
+    <string name="cooldown_capacity">%%에 냉각 시작</string>
+    <string name="resume_charge">재충전 시작할 배터리 잔량:</string>
+    <string name="stop_charge">충전을 중지할 배터리 잔량:</string>
+    <string name="enable_temp_check">온도 확인 활성화(°C)</string>
+    <string name="cooldown_temp">냉각 온도:</string>
+    <string name="max_temp">최대 온도:</string>
+    <string name="pause_seconds">멈출 시간(초):</string>
+    <string name="charge_seconds">충전할 시간(초):</string>
+    <string name="wait">잠시만 기다려주세요...\n몇 초 정도 소요될 수 있습니다.</string>
     <!-- Exit On Boot Card Strings -->
+    <string name="description_exit_on_boot">이것은 부팅 과정에서 설정 파일을 수정하는데 사용됩니다.</string>
     <!-- ACC installation -->
     <!-- DJS installation -->
+    <string name="no_option_selected">어떠한 옵션도 선택 되지 않았습니다; 옵션을 선택해 주세요!</string>
+    <string name="charging_switch_works">선택한 충전 스위치가 정상적으로 작동하고 있습니다!</string>
+    <string name="charging_switch_does_not_work">이런. 선택한 충전 스위치에 문제가 생겼습니다.</string>
+    <string name="automatic">자동</string>
+    <string name="error_occurred">이런, 오류가 발생하였습니다</string>
+    <string name="apply">적용</string>
+    <string name="done">완료</string>
     <!-- ACC Config Tooltips -->
     <!--Profiles Options-->
     <!-- About Activity -->
