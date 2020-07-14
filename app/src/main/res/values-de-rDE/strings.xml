@@ -242,28 +242,18 @@
     <string name="edit_schedule">Zeitplan bearbeiten</string>
     <string name="create_schedule">Zeitplan erstellen</string>
     <!-- About Activity -->
-    <string name="about_team_blurb">Vielen Dank für die Verwendung von ACCA!
-        \nWir haben viele Zeit damit verbracht, dass Sie davon profitieren können.
-        \nBesonderen Dank an diejenigen, die auf die eine oder andere Weise beigetragen haben:
-        Spenden, Vorschläge einreichen, Pull-Requests öffnen, Fehler melden, oder einander zu helfen!
-    </string>
     <string name="about_acca_version_label">ACC-Version:</string>
     <string name="about_acc_version_label">ACC-Version:</string>
-    <string name="about_project_github">Projektseite auf GitHub</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Webseite</string>
-    <string name="toast_no_browser_installed">Kann den Link nicht öffnen!\nHaben Sie einen Webbrowser installiert?</string>
-    <string name="install_update_dialog">ACC-Aktualisierung installieren</string>
     <string name="check_update_dialog_message">        Möchten Sie die neueste Version von ACC vom Zweig \'%1$s\' installieren?
         \nACCA wird die neueste Version von ACC aus Github herunterladen. 
         \nMöchten Sie fortfahren?</string>
-    <string name="add_charging_switch">Ladeschalter hinzufügen</string>
     <string name="charging_switch_on_value_label">Ladeschalter AN</string>
     <string name="charging_switch_off_value_label">Ladeschalter AUS</string>
     <string name="reset_bs_on_pause">Akku-Statistiken beim Pausieren zurücksetzen \%</string>
-    <string name="current_max">Maximal-Strom (mA):</string>
-    <string name="invalid_current_max">Ungültiger Maximal-Stromwert</string>
     <!-- Import and Export -->
     <string name="import_title">Importieren</string>
     <string name="export_title">Exportieren</string>
+    <!-- Config Parse Error -->
 </resources>
