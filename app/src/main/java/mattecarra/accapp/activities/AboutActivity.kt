@@ -64,6 +64,18 @@ class AboutActivity : AppCompatActivity() {
         openUrl("https://github.com/MatteCarra/AccA")
     }
 
+    fun accaTelegramOnClick(v: View) {
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=acc_group")))
+        } catch (ignored: Exception) {
+            try {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/acc_group")))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     fun vr25GitHubOnClick(view: View) {
         openUrl("https://github.com/VR-25")
     }

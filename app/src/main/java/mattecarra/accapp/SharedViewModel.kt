@@ -3,24 +3,35 @@ package mattecarra.accapp
 import android.app.Application
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import android.widget.Toast
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.utils.ProfileUtils
+import org.jetbrains.anko.getStackTraceString
 
 class SharedViewModel(application: Application) : AndroidViewModel(application) {
     private val mSharedPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
-    private val config: MutableLiveData<AccConfig> = MutableLiveData()
+    private val config: MutableLiveData<Pair<AccConfig?, String?>> = MutableLiveData()
 
     init {
         viewModelScope.launch {
             try {
-                config.value = Acc.instance.readConfig()
+                config.postValue(Pair(Acc.instance.readConfig(), null))
             } catch (ex: Exception) {
-                ex.printStackTrace()
-                //TODO: showConfigReadError()
-                config.value = Acc.instance.readDefaultConfig() //if mAccConfig is null I use default mAccConfig values.
+                // Return null config and exception
+                config.postValue(Pair(null, ex.getStackTraceString()))
+            }
+        }
+    }
+
+    fun loadDefaultConfig() {
+        viewModelScope.launch {
+            try {
+                config.postValue(Pair(Acc.instance.readDefaultConfig(), null))
+            } catch (ex: Exception) {
+                config.postValue(Pair(null, ex.getStackTraceString()))
             }
         }
     }
@@ -28,7 +39,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     /**
      * Sets an observer for config.
      */
-    fun observeConfig(owner: LifecycleOwner, observer: Observer<AccConfig>) {
+    fun observeConfig(owner: LifecycleOwner, observer: Observer<Pair<AccConfig?, String?>>) {
         config.observe(owner, observer)
     }
 
@@ -38,7 +49,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     * val parameter = getAccConfigValue { it.oneParameter }
     * */
     fun <T> getAccConfigValue(callback: (AccConfig) -> T): T {
-        return callback(config.value!!)
+        return callback(config.value!!.first!!)
     }
 
     /*
@@ -49,10 +60,10 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     * }
     * */
     suspend fun updateAccConfigValue(operation: (AccConfig) -> Boolean) {
-        val value = config.value!!
+        val value = config.value!!.first!!
 
         if(operation(value)) {
-            this.config.postValue(value)
+            this.config.postValue(Pair(value, null))
             saveAccConfig(value)
         }
     }
@@ -61,7 +72,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     * Updates the AccConfig and write on file
     * */
     suspend fun updateAccConfig(value: AccConfig) {
-        config.postValue(value)
+        config.postValue(Pair(value, null))
         saveAccConfig(value)
     }
 
@@ -85,7 +96,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 Acc.instance.readDefaultConfig()
             }
 
-            config.postValue(currentConfigVal)
+            config.postValue(Pair(currentConfigVal, null))
         }
     }
 

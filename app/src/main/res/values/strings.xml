@@ -286,29 +286,33 @@
     <string name="create_schedule">Create schedule</string>
 
     <!-- About Activity -->
+    <string name="about_team_title">Meet the Team</string>
     <string name="about_team_blurb">Thank you for using ACCA!
-        \nWe spent heaps of time on this all for you to enjoy.
-        \nSpecial thanks to those who have contributed in one way or another:
-        donating, offering suggestions, opening pull requests, submitting bugs, and helping one another!
+        \n\nWe spent heaps of time on this so that you can configure ACC with ease!
+        \n\nSpecial thanks to those who have contributed in one way or another to ACC &amp; ACCA!
     </string>
+
+    <string name="about_attributes">Attributes</string>
+    <string name="about_attrib_telegram_icon">Telegram icon made by Pixel perfect from www.flaticon.com</string>
 
     <string name="about_acca_version_label">ACCA Version:</string>
     <string name="about_acc_version_label">ACC Version:</string>
-    <string name="about_project_github">Project\'s GitHub</string>
+    <string name="about_project_github">ACCA GitHub</string>
+    <string name="about_project_telegram">ACCA Telegram</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Website</string>
-    <string name="toast_no_browser_installed">Unable to Open Link!\nMake sure you have a web browser installed.</string>
-    <string name="install_update_dialog">Install acc update</string>
+    <string name="toast_no_browser_installed">Unable to open link!\nMake sure you have a web browser installed.</string>
+    <string name="install_update_dialog">Install ACC update</string>
     <string name="check_update_dialog_message">
         Do yo want to install the latest version of ACC from branch \'%1$s\'?
         \nACCA will download the latest version of ACC from Github based on the latest commit of the selected branch.
         \nDo you want to continue?</string>
-    <string name="add_charging_switch">Add charging switch</string>
+    <string name="add_charging_switch">Add Charging Switch</string>
     <string name="charging_switch_on_value_label">Charging switch ON VALUE</string>
     <string name="charging_switch_off_value_label">Charging switch OFF VALUE</string>
     <string name="reset_bs_on_pause">Reset battery stats on pause \%</string>
-    <string name="current_max">Current max (mA):</string>
-    <string name="invalid_current_max">Invalid current max value</string>
+    <string name="current_max">Max Current (mA):</string>
+    <string name="invalid_current_max">Invalid Max Current Value</string>
 
     <!-- Import and Export -->
     <string name="import_title">Import</string>
@@ -322,5 +326,10 @@
     <string name="import_toast_no_valid_profile_json_clipboard">Valid ACCA Profile JSON not in Clipboard</string>
     <string name="import_toast_no_selected_profiles">Please select Profiles to Import</string>
     <string name="import_profile_success">Successfully imported %d profiles</string>
+
+    <!-- Config Parse Error -->
+    <string name="parse_failed_title">Failed to Parse ACC Config</string>
+    <string name="parse_failed_body">You may try to load the default configuration by pressing \'Load Default\'. Please note that ACCA will not be functional.
+        \n\nIf the error persists, please share the stack trace below along with ACC &amp; ACCA version (via the 3-dot menu &gt; About) with the developers via Telegram.\n\n%s</string>
 
 </resources>

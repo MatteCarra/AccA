@@ -137,6 +137,15 @@
                             android:text="@string/about_project_github"
                             android:onClick="accaGitHubOnClick"
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+                    <com.google.android.material.button.MaterialButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/card_margin"
+                            app:icon="@drawable/ic_telegram"
+                            android:text="@string/about_project_telegram"
+                            android:onClick="accaTelegramOnClick"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -158,7 +167,7 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Meet The Team"
+                            android:text="@string/about_team_title"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
 
                     <TextView
@@ -335,6 +344,36 @@
                     </RelativeLayout>
 
                 </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/card_margin"
+                    android:layout_marginTop="@dimen/card_margin"
+                    android:layout_marginRight="@dimen/card_margin"
+                    android:layout_marginBottom="@dimen/card_bottom_margin"
+                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardElevation="3dp"
+                    app:contentPadding="@dimen/card_content_padding">
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/about_attributes"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/about_attrib_telegram_icon"/>
+                </LinearLayout>
+
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </ScrollView>

@@ -76,8 +76,8 @@ class DashboardFragment : ScopedFragment() {
             configViewModel = ViewModelProviders.of(it).get(SharedViewModel::class.java)
 
             configViewModel.observeConfig(this, Observer { config ->
-                view.dash_resetStatusUnplug_switch.isChecked = config.configResetUnplugged
-                view.dash_resetBSOnPause_switch.isChecked = config.configResetBsOnPause
+                view.dash_resetStatusUnplug_switch.isChecked = config.first?.configResetUnplugged ?: false
+                view.dash_resetBSOnPause_switch.isChecked = config.first?.configResetBsOnPause ?: false
             })
 
             view.dash_resetBatteryStats_button.setOnClickListener {
