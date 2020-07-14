@@ -223,16 +223,13 @@
     <!-- About Activity -->
     <string name="about_acca_version_label">Versi ACCA:</string>
     <string name="about_acc_version_label">Versi ACC:</string>
-    <string name="about_project_github">Proyek GitHub</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Situs web</string>
-    <string name="toast_no_browser_installed">Tidak dapat Buka Tautan!\nPastikan Anda memiliki peramban web yang diinstal.</string>
-    <string name="install_update_dialog">Instal pembaruan acc</string>
     <string name="check_update_dialog_message">        Apakah Anda ingin menginstal versi ACC terbaru dari cabang \'%1$s\'?
          \nACCA akan mengunduh versi ACC terbaru dari Github berdasarkan komit terbaru dari cabang yang dipilih.
          \nApakah Anda ingin melanjutkan?</string>
-    <string name="add_charging_switch">Tambahkan sakelar pengisian daya</string>
     <string name="charging_switch_on_value_label">Sakelar pengisian ON VALUE</string>
     <string name="charging_switch_off_value_label">Sakelar pengisian OFF VALUE</string>
     <!-- Import and Export -->
+    <!-- Config Parse Error -->
 </resources>
