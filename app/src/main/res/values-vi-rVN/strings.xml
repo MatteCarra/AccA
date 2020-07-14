@@ -229,28 +229,18 @@ Vui lòng xem xét chia sẻ /data/adb/acc-data/logs/ với các nhà phát tri�
     <string name="edit_schedule">Chỉnh sửa lịch biểu</string>
     <string name="create_schedule">Tạo Lịch</string>
     <!-- About Activity -->
-    <string name="about_team_blurb">Cảm ơn bạn đã sử dụng ACCA!
-Chúng tôi đã dành hàng đống thời gian cho việc này để bạn thưởng thức.
-Đặc biệt cảm ơn những người đã đóng góp bằng cách này hay cách khác:
-quyên góp, đưa ra đề xuất, mở yêu cầu kéo, gửi lỗi và giúp đỡ lẫn nhau!    </string>
     <string name="about_acca_version_label">Phiên bản ACCA:</string>
     <string name="about_acc_version_label">Phiên bản ACC:</string>
-    <string name="about_project_github">Dự án Github</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Trang web</string>
-    <string name="toast_no_browser_installed">Không thể mở Liên kết!
-Hãy chắc chắn rằng bạn đã cài đặt trình duyệt web.</string>
-    <string name="install_update_dialog">Cài đặt cập nhật acc</string>
     <string name="check_update_dialog_message">Bạn có muốn cài đặt phiên bản ACC mới nhất từ ​​chi nhánh \'%1$s\'?
 ACCA sẽ tải xuống phiên bản ACC mới nhất từ ​​Github dựa trên cam kết mới nhất của chi nhánh được chọn.
 Bạn có muốn tiếp tục?</string>
-    <string name="add_charging_switch">Thêm công tắc sạc</string>
     <string name="charging_switch_on_value_label">Công tắc sạc ON VALUE</string>
     <string name="charging_switch_off_value_label">Công tắc sạc OFF VALUE</string>
     <string name="reset_bs_on_pause">Đặt lại số liệu thống kê pin khi tạm dừng \%</string>
-    <string name="current_max">Tối đa hiện tại (mA):</string>
-    <string name="invalid_current_max">Giá trị tối đa hiện tại không hợp lệ</string>
     <!-- Import and Export -->
     <string name="import_title">Nhập</string>
     <string name="export_title">Xuất ra</string>
+    <!-- Config Parse Error -->
 </resources>
