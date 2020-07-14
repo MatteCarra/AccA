@@ -168,4 +168,5 @@
     <string name="about_github">GitHub</string>
     <string name="about_website">Site</string>
     <!-- Import and Export -->
+    <!-- Config Parse Error -->
 </resources>
