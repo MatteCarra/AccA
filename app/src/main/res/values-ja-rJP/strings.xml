@@ -230,19 +230,16 @@
     <!-- About Activity -->
     <string name="about_acca_version_label">ACCバージョン:</string>
     <string name="about_acc_version_label">ACCバージョン:</string>
-    <string name="about_project_github">Project\'s GitHub</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">ウェブサイト</string>
-    <string name="toast_no_browser_installed">リンクを開くことができません！\nブラウザがインストールされているか確認してください.</string>
     <string name="check_update_dialog_message">ブランチから ACC の最新版をインストールしますか \'%1$s\'?
         \nACCA は選択された最新コミットに基づいて Github から ACC の最新版をダウンロードします.
         \n継続しますか？</string>
-    <string name="add_charging_switch">充電切り替えの追加</string>
     <string name="charging_switch_on_value_label">充電切り替えをONする値</string>
     <string name="charging_switch_off_value_label">充電切り替えをOFFする値</string>
     <string name="reset_bs_on_pause">中断時バッテリー状態リセット \%</string>
-    <string name="current_max">電流最大値 (mA):</string>
     <!-- Import and Export -->
     <string name="import_title">インポート</string>
     <string name="export_title">エクスポート</string>
+    <!-- Config Parse Error -->
 </resources>
