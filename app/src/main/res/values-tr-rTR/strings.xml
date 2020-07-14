@@ -236,26 +236,16 @@
     <string name="edit_schedule">Zamanlamayı düzenle</string>
     <string name="create_schedule">Zamanlama yarat</string>
     <!-- About Activity -->
-    <string name="about_team_blurb">ACCA\'yı kullandığınız için teşekkürler!
-        \nTüm bunların tadını çıkarmanız için çok zaman harcadık.
-        \nFarklı şekillerde katkıda bulunanlara özel teşekkürlerimizi sunarız: 
-        bağış yapanlar, öneri sunanlar, pull request açanlar, hataları bildirenler, vs!
-    </string>
     <string name="about_acca_version_label">ACCA Versiyonu:</string>
     <string name="about_acc_version_label">ACC Versiyonu:</string>
-    <string name="about_project_github">Projenin GitHub adresi</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Web Sitesi</string>
-    <string name="toast_no_browser_installed">Bağlantı açılamadı!\nWeb tarayıcınızın olduğuna emin olun.</string>
-    <string name="install_update_dialog">Acc Güncellemesini Yükle</string>
     <string name="check_update_dialog_message">\'%1$s\' dalındaki en son ACC sürümünü kurdunuz mu?
 \nACCA, seçilen dalın son taahhüdüne dayanarak ACC\'nin en son sürümünü Github\'dan indirecektir.
 \nDevam etmek ister misin?</string>
-    <string name="add_charging_switch">Şarj anahtarı ekle</string>
     <string name="reset_bs_on_pause">Duraklatma sırasında pil istatistiklerini sıfırla \%</string>
-    <string name="current_max">Max akım (mA):</string>
-    <string name="invalid_current_max">Geçersiz max akım değeri</string>
     <!-- Import and Export -->
     <string name="import_title">İçeri al</string>
     <string name="export_title">Dışa aktar</string>
+    <!-- Config Parse Error -->
 </resources>
