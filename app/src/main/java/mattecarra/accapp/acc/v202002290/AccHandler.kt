@@ -4,16 +4,15 @@ import androidx.annotation.WorkerThread
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import mattecarra.accapp.acc.AccInterface
 import mattecarra.accapp.acc.ConfigUpdateResult
 import mattecarra.accapp.acc.ConfigUpdater
+import mattecarra.accapp.acc._interface.AccInterfaceV2
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.BatteryInfo
 import java.io.IOException
 import java.util.regex.Pattern
 
-
-open class AccHandler: AccInterface {
+open class AccHandler: AccInterfaceV2 {
     // String resources
     private val STRING_UNKNOWN = "Unknown"
     private val STRING_NOT_CHARGING = "Not charging"
@@ -21,8 +20,7 @@ open class AccHandler: AccInterface {
     private val STRING_CHARGING = "Charging"
 
     // ACC Config Regex
-
-    //capacity
+    // Capacity
     val SHUTDOWN_CAPACITY_REGEXP = """^\s*shutdown_capacity=(\d*)""".toRegex(RegexOption.MULTILINE)
     val COOLDOWN_CAPACITY_REGEXP = """^\s*cooldown_capacity=(\d*)""".toRegex(RegexOption.MULTILINE)
     val RESUME_CAPACITY_REGEXP = """^\s*resume_capacity=(\d*)""".toRegex(RegexOption.MULTILINE)
@@ -47,12 +45,11 @@ open class AccHandler: AccInterface {
     val PRIORITIZE_BATTERY_IDLE = """^\s*prioritize_batt_idle_mode=(true|false)""".toRegex(RegexOption.MULTILINE)
 
     @WorkerThread
-    fun parseConfig(config: String): AccConfig {
+    override fun parseConfig(config: String): AccConfig {
         val capacityShutdown = SHUTDOWN_CAPACITY_REGEXP.find(config)!!.destructured.component1()
         val capacityCoolDown = COOLDOWN_CAPACITY_REGEXP.find(config)!!.destructured.component1()
         val capacityResume   = RESUME_CAPACITY_REGEXP.find(config)!!.destructured.component1()
         val capacityPause    = PAUSE_CAPACITY_REGEXP.find(config)!!.destructured.component1()
-
 
         val temperatureCooldown = COOLDOWN_TEMP_REGEXP.find(config)!!.destructured.component1()
         val temperatureMax      = MAX_TEMP_REGEXP.find(config)!!.destructured.component1()

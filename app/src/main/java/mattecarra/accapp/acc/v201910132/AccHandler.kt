@@ -4,16 +4,15 @@ import androidx.annotation.WorkerThread
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import mattecarra.accapp.acc.Acc
-import mattecarra.accapp.acc.AccInterface
 import mattecarra.accapp.acc.ConfigUpdateResult
 import mattecarra.accapp.acc.ConfigUpdater
+import mattecarra.accapp.acc._interface.AccInterfaceV1
 import mattecarra.accapp.models.*
 import java.io.IOException
 import java.util.regex.Pattern
 
 
-open class AccHandler: AccInterface {
+open class AccHandler: AccInterfaceV1 {
     // String resources
     private val STRING_UNKNOWN = "Unknown"
     private val STRING_NOT_CHARGING = "Not charging"

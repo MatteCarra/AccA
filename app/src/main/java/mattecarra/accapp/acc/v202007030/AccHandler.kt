@@ -4,30 +4,30 @@ import androidx.annotation.WorkerThread
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import mattecarra.accapp.acc.AccInterface
 import mattecarra.accapp.acc.ConfigUpdateResult
 import mattecarra.accapp.acc.ConfigUpdater
+import mattecarra.accapp.acc._interface.AccInterfaceV2
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.BatteryInfo
 import java.io.IOException
 import java.util.regex.Pattern
 
-open class AccHandler: AccInterface {
+// String resources
+private const val STRING_UNKNOWN = "Unknown"
+private const val STRING_NOT_CHARGING = "Not charging"
+private const val STRING_DISCHARGING = "Discharging"
+private const val STRING_CHARGING = "Charging"
 
-    // String resources
-    private val STRING_UNKNOWN = "Unknown"
-    private val STRING_NOT_CHARGING = "Not charging"
-    private val STRING_DISCHARGING = "Discharging"
-    private val STRING_CHARGING = "Charging"
+open class AccHandler: AccInterfaceV2 {
 
-    // ACC Config Regex
-
-    //capacity
+    // RegEx Values
+    // Capacity
     val SHUTDOWN_CAPACITY_REGEXP = """^\s*shutdown_capacity=(\d*)""".toRegex(RegexOption.MULTILINE)
     val COOLDOWN_CAPACITY_REGEXP = """^\s*cooldown_capacity=(\d*)""".toRegex(RegexOption.MULTILINE)
     val RESUME_CAPACITY_REGEXP = """^\s*resume_capacity=(\d*)""".toRegex(RegexOption.MULTILINE)
     val PAUSE_CAPACITY_REGEXP = """^\s*pause_capacity=(\d*)""".toRegex(RegexOption.MULTILINE)
 
+    // Cool Down
     val COOLDOWN_TEMP_REGEXP = """^\s*cooldown_temp=(\d*)""".toRegex(RegexOption.MULTILINE)
     val MAX_TEMP_REGEXP = """^\s*max_temp=(\d*)""".toRegex(RegexOption.MULTILINE)
     val MAX_TEMP_PAUSE_REGEXP = """^\s*max_temp_pause=(\d*)""".toRegex(RegexOption.MULTILINE)
@@ -35,6 +35,7 @@ open class AccHandler: AccInterface {
     val COOLDOWN_CHARGE_REGEXP = """^\s*cooldown_charge=(\d*)""".toRegex(RegexOption.MULTILINE)
     val COOLDOWN_PAUSE_REGEXP  = """^\s*cooldown_pause=(\d*)""".toRegex(RegexOption.MULTILINE)
 
+    // Plugged/Pause
     val RESET_UNPLUGGED_CONFIG_REGEXP = """^\s*reset_batt_stats_on_unplug=(true|false)""".toRegex(RegexOption.MULTILINE)
     val RESET_ON_PAUSE_CONFIG_REGEXP = """^\s*reset_batt_stats_on_pause=(true|false)""".toRegex(RegexOption.MULTILINE)
     val ON_BOOT = """^\s*apply_on_boot=((?:(?!#).)*)""".toRegex(RegexOption.MULTILINE)
@@ -47,12 +48,11 @@ open class AccHandler: AccInterface {
     val PRIORITIZE_BATTERY_IDLE = """^\s*prioritize_batt_idle_mode=(true|false)""".toRegex(RegexOption.MULTILINE)
 
     @WorkerThread
-    fun parseConfig(config: String): AccConfig {
+    override fun parseConfig(config: String): AccConfig {
         val capacityShutdown = SHUTDOWN_CAPACITY_REGEXP.find(config)!!.destructured.component1()
         val capacityCoolDown = COOLDOWN_CAPACITY_REGEXP.find(config)!!.destructured.component1()
         val capacityResume   = RESUME_CAPACITY_REGEXP.find(config)!!.destructured.component1()
         val capacityPause    = PAUSE_CAPACITY_REGEXP.find(config)!!.destructured.component1()
-
 
         val temperatureCooldown = COOLDOWN_TEMP_REGEXP.find(config)!!.destructured.component1()
         val temperatureMax      = MAX_TEMP_REGEXP.find(config)!!.destructured.component1()
