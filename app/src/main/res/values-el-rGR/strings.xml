@@ -241,28 +241,18 @@
     <string name="edit_schedule">Επεξεργασία προγράμματος</string>
     <string name="create_schedule">Δημιουργία προγράμματος</string>
     <!-- About Activity -->
-    <string name="about_team_blurb">Ευχαριστούμε που χρησιμοποιείτε το ACCA!
-        \nΈχουμε ξοδέψει σωρούς χρόνου σε αυτό ώστε όλοι σας να το ευχαριστηθείτε.
-        \nΙδιαίτερες ευχαριστίες σε αυτούς που έχουν συμβάλλει σε αυτό με οποιονδήποτε τρόπο:
-        δωρεές, προσφορά προτάσεων, άνοιγμα pull requests, υποβολή προβλημάτων, και βοηθώντας ο ένας τον άλλο!
-    </string>
     <string name="about_acca_version_label">Έκδοση ACCA:</string>
     <string name="about_acc_version_label">Έκδοση ACC:</string>
-    <string name="about_project_github">Το GitHub του Πρότζεκτ</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Ιστοσελίδα</string>
-    <string name="toast_no_browser_installed">Αδυναμία Ανοίγματος Συνδέσμου!\nΣιγουρέψτε πως έχετε κάποιον περιηγητή δικτύου εγκατεστημένο.</string>
-    <string name="install_update_dialog">Εγκατάσταση ενημέρωσης acc</string>
     <string name="check_update_dialog_message">        Θέλετε να εγκαταστήσετε την τελευταία έκδοση του ACC από το branch \'%1$s\';
         \nΤο ACCA θα κατεβάσει την τελευταία έκδοση του ACC από το Github βασισμένο στο τελευταίο commit του επιλεγμένου branch.
         \nΘέλετε να συνεχίσετε;</string>
-    <string name="add_charging_switch">Προσθήκη διακόπτη φόρτισης</string>
     <string name="charging_switch_on_value_label">Διακόπτης φόρτισης ΤΙΜΉ ΕΝΕΡΓΟΠΟΊΗΣΗΣ</string>
     <string name="charging_switch_off_value_label">Διακόπτης φόρτισης ΤΙΜΉ ΑΠΕΝΕΡΓΟΠΟΊΗΣΗΣ</string>
     <string name="reset_bs_on_pause">Επαναφορά στατιστικών μπαταρίας κατά την παύση \%</string>
-    <string name="current_max">Μέγιστo φορτίο (mA):</string>
-    <string name="invalid_current_max">Άκυρη τιμή μέγιστου φορτίου</string>
     <!-- Import and Export -->
     <string name="import_title">Εισαγωγή</string>
     <string name="export_title">Εξαγωγή</string>
+    <!-- Config Parse Error -->
 </resources>
