@@ -155,4 +155,5 @@
     <!-- About Activity -->
     <string name="about_acca_version_label">Версия АССА:</string>
     <!-- Import and Export -->
+    <!-- Config Parse Error -->
 </resources>
