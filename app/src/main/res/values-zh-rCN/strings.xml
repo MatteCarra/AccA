@@ -239,28 +239,18 @@
     <string name="edit_schedule">编辑计划</string>
     <string name="create_schedule">创建计划</string>
     <!-- About Activity -->
-    <string name="about_team_blurb">感谢您使用 ACCA！
-        \n我们花费了大量时间来让您享受此应用。
-        \n向通过各种方式作出贡献的人们致以特别的感谢：
-        捐助， 提供建议，提供代码，提交bug，以及互相帮助！
-    </string>
     <string name="about_acca_version_label">ACCA 版本：</string>
     <string name="about_acc_version_label">ACC 版本：</string>
-    <string name="about_project_github">项目Github</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">网站</string>
-    <string name="toast_no_browser_installed">无法打开链接！\n请确保您已经安装了浏览器。</string>
-    <string name="install_update_dialog">安装 acc 更新</string>
     <string name="check_update_dialog_message">        是否要从“%1$s”分支安装最新版本的 ACC？
         \nACCA 将从Github 下载选定分支的最新版ACC。
         \n要继续吗？</string>
-    <string name="add_charging_switch">添加充电开关</string>
     <string name="charging_switch_on_value_label">充电开始值</string>
     <string name="charging_switch_off_value_label">充电停止值</string>
     <string name="reset_bs_on_pause">暂停时重置电池数据 \%</string>
-    <string name="current_max">电流最大值 (mA)：</string>
-    <string name="invalid_current_max">无效电流最大值</string>
     <!-- Import and Export -->
     <string name="import_title">导入</string>
     <string name="export_title">导出</string>
+    <!-- Config Parse Error -->
 </resources>
