@@ -242,27 +242,16 @@
     <string name="edit_schedule">Bewerk schema</string>
     <string name="create_schedule">Maak schema</string>
     <!-- About Activity -->
-    <string name="about_team_blurb">Bedankt voor het gebruik van ACCA! 
-        \nWe hebben hieraan veel tijd besteed zodat jij er van kan genieten!
-        \nSpeciale dank aan degenen die op een of andere manier hebben bijgedragen:
-        via donaties, suggesties hebben aangeboden, bugs hebben ingediend, en elkaar hebben geholpen!
-    </string>
     <string name="about_acca_version_label">ACCA versie:</string>
     <string name="about_acc_version_label">ACC versie:</string>
-    <string name="about_project_github">Project\'s GitHub</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Website</string>
-    <string name="toast_no_browser_installed">Kan Link niet openen!\nZorg ervoor dat u een webbrowser hebt geïnstalleerd.</string>
-    <string name="install_update_dialog">Installeer acc update</string>
     <string name="check_update_dialog_message">        Wil je de nieuwste ACC versie installeren vanaf branch \'%1$s\'?
         \nACCA zal de laatste versie van ACC downloaden van Github op basis van de laatste commit van de geselecteerde branch.
         \nWilt u doorgaan?</string>
-    <string name="add_charging_switch">Oplaadschakelaar toevoegen</string>
     <string name="charging_switch_on_value_label">Oplaadschakelaar AAN</string>
     <string name="charging_switch_off_value_label">Oplaadschakelaar UIT</string>
     <string name="reset_bs_on_pause">Batterij statistieken resetten bij pauze \%</string>
-    <string name="current_max">Stroom max (mA):</string>
-    <string name="invalid_current_max">Ongeldige stroom max waarde</string>
     <!-- Import and Export -->
     <string name="import_title">Importeren</string>
     <string name="import_load_from_clipboard">Druk op het \'Clipboard\' pictogram in de werkbalk!</string>
@@ -275,4 +264,5 @@
     <string name="import_toast_no_valid_profile_json_clipboard">Geldig ACCA profiel JSON is niet in Klembord</string>
     <string name="import_toast_no_selected_profiles">Selecteer Profielen om te importeren</string>
     <string name="import_profile_success">%d profielen succesvol geïmporteerd</string>
+    <!-- Config Parse Error -->
 </resources>
