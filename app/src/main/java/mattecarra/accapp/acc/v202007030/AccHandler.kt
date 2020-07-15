@@ -12,13 +12,13 @@ import mattecarra.accapp.models.BatteryInfo
 import java.io.IOException
 import java.util.regex.Pattern
 
-// String resources
-private const val STRING_UNKNOWN = "Unknown"
-private const val STRING_NOT_CHARGING = "Not charging"
-private const val STRING_DISCHARGING = "Discharging"
-private const val STRING_CHARGING = "Charging"
+open class AccHandler : AccInterfaceV2 {
 
-open class AccHandler: AccInterfaceV2 {
+    // String resources
+    private val STRING_UNKNOWN = "Unknown"
+    private val STRING_NOT_CHARGING = "Not charging"
+    private val STRING_DISCHARGING = "Discharging"
+    private val STRING_CHARGING = "Charging"
 
     // RegEx Values
     // Capacity
