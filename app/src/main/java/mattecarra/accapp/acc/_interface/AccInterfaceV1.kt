@@ -2,7 +2,6 @@ package mattecarra.accapp.acc._interface
 
 import androidx.annotation.WorkerThread
 import com.topjohnwu.superuser.Shell
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.acc.Acc
