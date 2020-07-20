@@ -14,7 +14,6 @@
     <string name="title_schedules">计划任务</string>
     <string name="title_settings">设置</string>
     <!-- ACC Daemon Status -->
-    <string name="title_status">状态</string>
     <string name="title_acc_daemon">ACC 守护进程</string>
     <string name="acc_daemon_status_running">ACC 守护进程 运行中</string>
     <string name="acc_daemon_status_not_running">ACC 守护进程未运行</string>
