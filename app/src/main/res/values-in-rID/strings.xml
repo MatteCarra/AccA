@@ -14,7 +14,6 @@
     <string name="title_schedules">Jadwal</string>
     <string name="title_settings">Pengaturan</string>
     <!-- ACC Daemon Status -->
-    <string name="title_status">Status</string>
     <string name="title_acc_daemon">ACC Daemon</string>
     <string name="acc_daemon_status_running">ACC Daemon Sedang Berlari</string>
     <string name="acc_daemon_status_not_running">Daemon ACC Tidak Berlari</string>
