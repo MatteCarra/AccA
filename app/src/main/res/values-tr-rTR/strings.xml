@@ -14,7 +14,6 @@
     <string name="title_schedules">Zamanlanmış Görevler</string>
     <string name="title_settings">Ayarlar</string>
     <!-- ACC Daemon Status -->
-    <string name="title_status">Durum</string>
     <string name="title_acc_daemon">ACC Hizmeti</string>
     <string name="acc_daemon_status_running">ACC Hizmeti Çalışıyor</string>
     <string name="acc_daemon_status_not_running">ACC Hizmeti Çalışmıyor</string>
