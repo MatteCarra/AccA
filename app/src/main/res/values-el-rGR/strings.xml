@@ -14,7 +14,6 @@
     <string name="title_schedules">Χρονοδιάγραμμα</string>
     <string name="title_settings">Ρυθμίσεις</string>
     <!-- ACC Daemon Status -->
-    <string name="title_status">Κατάσταση</string>
     <string name="title_acc_daemon">Υπηρεσία ACC</string>
     <string name="acc_daemon_status_running">Η υπηρεσία ACC εκτελείται</string>
     <string name="acc_daemon_status_not_running">Η υπηρεσία ACC δεν εκτελείται</string>
