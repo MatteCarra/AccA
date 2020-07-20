@@ -11,7 +11,7 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AccaTheme.DayNight.Launcher">
+            android:theme="@style/AccaTheme.DayNight">
         <activity
             android:name=".activities.AboutActivity"
             android:parentActivityName=".activities.MainActivity" />
@@ -19,7 +19,8 @@
         <activity android:name=".activities.SettingsActivity" />
         <activity
                 android:name=".activities.MainActivity"
-                android:launchMode="singleTop">
+                android:launchMode="singleTop"
+                android:theme="@style/AccaTheme.DayNight.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
