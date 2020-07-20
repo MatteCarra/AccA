@@ -4,7 +4,6 @@
     <string name="tile_acc_no_root">لا روت</string>
     <!-- Navigation Strings -->
     <!-- ACC Daemon Status -->
-    <string name="title_status">الحالة</string>
     <!-- ACC Daemon Toggle -->
     <string name="start">بدء</string>
     <string name="stop">إيقاف</string>
