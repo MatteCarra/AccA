@@ -521,6 +521,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AccaTheme_DayNight)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
