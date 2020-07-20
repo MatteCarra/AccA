@@ -14,7 +14,6 @@
     <string name="title_schedules">Pianificate</string>
     <string name="title_settings">Impostazioni</string>
     <!-- ACC Daemon Status -->
-    <string name="title_status">Stato</string>
     <string name="title_acc_daemon">Demone ACC</string>
     <string name="acc_daemon_status_running">Il demone ACC è in esecuzione</string>
     <string name="acc_daemon_status_not_running">Il demone ACC non è in esecuzione</string>
