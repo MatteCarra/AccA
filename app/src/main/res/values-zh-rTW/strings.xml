@@ -14,7 +14,6 @@
     <string name="title_schedules">排程</string>
     <string name="title_settings">設定</string>
     <!-- ACC Daemon Status -->
-    <string name="title_status">狀態</string>
     <string name="title_acc_daemon">ACC 守護行程</string>
     <string name="acc_daemon_status_running">ACC 守護行程執行中</string>
     <string name="acc_daemon_status_not_running">ACC 守護行程未執行</string>
