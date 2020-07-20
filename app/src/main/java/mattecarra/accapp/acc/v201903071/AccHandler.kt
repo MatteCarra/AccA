@@ -4,7 +4,7 @@ import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class AccHandler: mattecarra.accapp.acc.legacy.AccHandler() {
+class AccHandler(override val version: Int) : mattecarra.accapp.acc.legacy.AccHandler(version) {
     override suspend fun listChargingSwitches(): List<String> = withContext(Dispatchers.IO) {
         val res = Shell.su("acc -s s:").exec()
 

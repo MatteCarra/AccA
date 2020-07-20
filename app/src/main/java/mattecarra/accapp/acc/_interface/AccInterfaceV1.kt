@@ -10,6 +10,7 @@ import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.BatteryInfo
 
 interface AccInterfaceV1 {
+    val version: Int
 
     suspend fun readConfig(): AccConfig
 

@@ -317,7 +317,7 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         }
 
         //power card
-        if(Acc.getAccVersion() >= 202002170) {
+        if(Acc.instance.version >= 202002170) {
             voltage_control_file_ll.visibility = View.GONE
         } else {
             current_max_ll.visibility = View.GONE

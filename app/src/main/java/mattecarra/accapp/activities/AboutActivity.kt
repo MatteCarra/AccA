@@ -26,7 +26,7 @@ class AboutActivity : AppCompatActivity() {
         // Set appropriate version numbers
         val app = applicationContext.packageManager.getPackageInfo(packageName, 0)
         acca_version_tv.text = String.format("%s (%s)", app.versionName, app.versionCode.toString())
-        acc_version_tv.text = Acc.getAccVersion().toString()
+        acc_version_tv.text = Acc.instance.version.toString()
     }
 
     companion object {

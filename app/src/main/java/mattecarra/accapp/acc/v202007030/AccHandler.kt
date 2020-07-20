@@ -12,8 +12,7 @@ import mattecarra.accapp.models.BatteryInfo
 import java.io.IOException
 import java.util.regex.Pattern
 
-open class AccHandler : AccInterfaceV2 {
-
+open class AccHandler(override val version: Int) : AccInterfaceV2 {
     // String resources
     private val STRING_UNKNOWN = "Unknown"
     private val STRING_NOT_CHARGING = "Not charging"

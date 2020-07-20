@@ -10,6 +10,7 @@ import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
 import mattecarra.accapp.VoltageUnit
 import mattecarra.accapp.acc._interface.AccInterfaceV1
+import mattecarra.accapp.acc.v202007030.AccHandler
 import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -18,7 +19,7 @@ import kotlin.math.abs
 
 object Acc {
     const val bundledVersion = 202007190
-    private val defaultVersionPackage = mattecarra.accapp.acc.v201910132.AccHandler::class.java //Default AccHandler, used wen version is not recognized
+    private val FILES_DIR = "/data/data/mattecarra.accapp/files"
 
     /*
     * This method returns the name of the package with a compatible AccInterface
@@ -48,36 +49,33 @@ object Acc {
 
             synchronized(this) {
                 // Create acc instance here
+                initAcc(File(FILES_DIR))
                 return createAccInstance()
             }
         }
 
-    internal fun createAccInstance(): AccInterfaceV1 {
-        val constructor = try {
-            val version = getAccVersion()
+    internal fun createAccInstance(version: Int = getAccVersion() ?: bundledVersion): AccInterfaceV1{
+        return try {
             val aClass = Class.forName("mattecarra.accapp.acc.${getVersionPackageName(version)}.AccHandler")
-            aClass.getDeclaredConstructor()
+            INSTANCE = (aClass.getDeclaredConstructor(Int::class.java).newInstance(bundledVersion) as AccInterfaceV1)
+            INSTANCE as AccInterfaceV1
         } catch (ex: Exception) {
-            defaultVersionPackage.getDeclaredConstructor()
+            ex.printStackTrace()
+            createAccInstance(bundledVersion)
         }
-
-        INSTANCE = constructor.newInstance() as AccInterfaceV1
-
-        return INSTANCE as AccInterfaceV1
     }
 
     fun isAccInstalled(installationDir: File): Boolean {
-        return Shell.su("test -f ${File(installationDir, "acc/acc-init.sh").absolutePath}").exec().isSuccess
+        return Shell.su("test -f ${File(installationDir, "acc/service.sh").absolutePath}  || test -f ${File(installationDir, "acc/acc-init.sh").absolutePath}").exec().isSuccess
     }
 
     fun isInstalledAccOutdated(): Boolean {
-        return getAccVersion() < bundledVersion
+        return getAccVersion()?.let { it < bundledVersion } ?: true
     }
 
-    //TODO run this every time an acc instance is created to ensure that acc is available.
     fun initAcc(installationDir: File): Boolean {
         return if(isAccInstalled(installationDir))
-            Shell.su("sh ${File(installationDir, "acc/acc-init.sh").absolutePath}").exec().isSuccess
+            Shell.su("/dev/acca --daemon 2>/dev/null || if test -f ${File(installationDir, "acc/service.sh").absolutePath}; then ${File(installationDir, "acc/service.sh").absolutePath}; else ${File(installationDir, "acc/acc-init.sh").absolutePath}; fi").exec().isSuccess
         else
             false
     }
@@ -140,11 +138,12 @@ object Acc {
             val res = Shell.su("sh ${installShFile.absolutePath} acc").exec()
             createAccInstance()
 
-            if(getAccVersion() >= 202002292) {
+            val version = getAccVersion() ?: throw java.lang.Exception("ACC installation failed")
+            if(version >= 202002292) {
                 val preferences = Preferences(context)
                 preferences.currentUnitOfMeasure = CurrentUnit.A
                 preferences.voltageUnitOfMeasure = VoltageUnit.V
-            } else if(getAccVersion() >= 202002290) {
+            } else if(version >= 202002290) {
                 val preferences = Preferences(context)
                 preferences.currentUnitOfMeasure = CurrentUnit.mA
                 preferences.voltageUnitOfMeasure = VoltageUnit.V
@@ -178,7 +177,7 @@ object Acc {
         preferences.voltageUnitOfMeasure = if(microVolts >= 6)  VoltageUnit.uV else VoltageUnit.mV
     }
 
-    fun getAccVersion(): Int {
-        return Shell.su("acc --version").exec().out.joinToString(separator = "\n").split("(").last().split(")").first().trim().toIntOrNull() ?: bundledVersion
+    private fun getAccVersion(): Int? {
+        return Shell.su("acc --version").exec().out.joinToString(separator = "\n").split("(").last().split(")").first().trim().toIntOrNull()
     }
 }

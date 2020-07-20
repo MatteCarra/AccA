@@ -11,7 +11,7 @@ import mattecarra.accapp.models.*
 import java.io.IOException
 import java.util.regex.Pattern
 
-open class AccHandler: AccInterfaceV1 {
+open class AccHandler(override val version: Int) : AccInterfaceV1 {
     // String resources
     private val STRING_UNKNOWN = "Unknown"
     private val STRING_NOT_CHARGING = "Not charging"
