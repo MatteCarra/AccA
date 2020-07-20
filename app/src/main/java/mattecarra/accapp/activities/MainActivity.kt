@@ -12,7 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
@@ -65,9 +65,9 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun initUi() {
         // Assign ViewModel
-        _sharedViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
-        _mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
-        _schedulesViewModel = ViewModelProviders.of(this).get(SchedulesViewModel::class.java)
+        _sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
+        _mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+        _schedulesViewModel = ViewModelProvider(this).get(SchedulesViewModel::class.java)
 
         // Subscribe to viewmodel config and action if config is null
         _sharedViewModel.observeConfig(this, Observer { r ->
@@ -533,7 +533,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         setTheme()
 
         if (!Shell.rootAccess()) {
-            val dialog = MaterialDialog(this).show {
+            MaterialDialog(this).show {
                 title(R.string.tile_acc_no_root)
                 message(R.string.no_root_message)
                 positiveButton(android.R.string.ok) {
@@ -546,10 +546,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                     false
                 }
             }
-            return
-        }
-
-        if (checkAccInstalled()) {
+        } else if (checkAccInstalled()) {
             initUi()
         }
     }
