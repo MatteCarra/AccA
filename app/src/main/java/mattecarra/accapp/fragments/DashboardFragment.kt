@@ -75,11 +75,6 @@ class DashboardFragment : ScopedFragment() {
 
             configViewModel = ViewModelProviders.of(it).get(SharedViewModel::class.java)
 
-            configViewModel.observeConfig(this, Observer { config ->
-                view.dash_resetStatusUnplug_switch.isChecked = config.first?.configResetUnplugged ?: false
-                view.dash_resetBSOnPause_switch.isChecked = config.first?.configResetBsOnPause ?: false
-            })
-
             view.dash_resetBatteryStats_button.setOnClickListener {
                 launch {
                     Acc.instance.resetBatteryStats()
@@ -104,40 +99,6 @@ class DashboardFragment : ScopedFragment() {
                 picker.maxValue = 100
                 picker.minValue = configViewModel.getAccConfigValue { it.configCapacity.pause }
                 picker.value = 100
-            }
-
-            view.dash_resetStatusUnplug_switch.setOnCheckedChangeListener { _, isChecked ->
-                launch {
-                    configViewModel.updateAccConfigValue {
-                        if(it.configResetUnplugged != isChecked) {
-                            it.configResetUnplugged = isChecked
-
-                            //If I manually modify the mAccConfig I have to set current profile to null (custom profile)
-                            configViewModel.clearCurrentSelectedProfile()
-
-                            true
-                        } else {
-                            false
-                        }
-                    }
-                }
-            }
-
-            view.dash_resetBSOnPause_switch.setOnCheckedChangeListener { _, isChecked ->
-                launch {
-                    configViewModel.updateAccConfigValue {
-                        if(it.configResetBsOnPause != isChecked) {
-                            it.configResetBsOnPause = isChecked
-
-                            //If I manually modify the mAccConfig I have to set current profile to null (custom profile)
-                            configViewModel.clearCurrentSelectedProfile()
-
-                            true
-                        } else {
-                            false
-                        }
-                    }
-                }
             }
 
             view.status_card_view.setOnClickListener(::accdOnClick)

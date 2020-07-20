@@ -109,8 +109,26 @@ class AccConfigEditorViewModel(application: Application, private val mAccConfig:
             unsavedChanges = true
         }
 
+    private val resetBSOnPauseLiveData = MutableLiveData(mAccConfig.configResetBsOnPause)
+    var resetBSOnPause: Boolean
+        get() = resetBSOnPauseLiveData.value!!
+        set(value) {
+            resetBSOnPauseLiveData.value = value
+            addConfigToHistory(mAccConfig)
+            unsavedChanges = true
+        }
+
+    private val resetBSOnUnplugLiveData = MutableLiveData(mAccConfig.configResetUnplugged)
+    var resetBSOnUnplug: Boolean
+        get() = resetBSOnUnplugLiveData.value!!
+        set(value) {
+            resetBSOnUnplugLiveData.value = value
+            addConfigToHistory(mAccConfig)
+            unsavedChanges = true
+        }
+
     var accConfig: AccConfig
-        get() = AccConfig(capacity, voltageLimit, currentMaxLimit, temperature, onBoot, onPlug, coolDown, mAccConfig.configResetUnplugged, mAccConfig.configResetBsOnPause, chargeSwitch, prioritizeBatteryIdleMode)
+        get() = AccConfig(capacity, voltageLimit, currentMaxLimit, temperature, onBoot, onPlug, coolDown, resetBSOnUnplug, resetBSOnPause, chargeSwitch, prioritizeBatteryIdleMode)
         set(value) {
             addConfigToHistory(value)
             updateAccConfigLiveData(value)
@@ -179,5 +197,13 @@ class AccConfigEditorViewModel(application: Application, private val mAccConfig:
 
     fun observePrioritizeBatteryIdleMode(owner: LifecycleOwner, observer: Observer<Boolean>) {
         prioritizeBatteryIdleModeLiveData.observe(owner, observer)
+    }
+
+    fun observeResetBSOnPause(owner: LifecycleOwner, observer: Observer<Boolean>) {
+        resetBSOnPauseLiveData.observe(owner, observer)
+    }
+
+    fun observeResetBSOnUnplug(owner: LifecycleOwner, observer: Observer<Boolean>) {
+        resetBSOnUnplugLiveData.observe(owner, observer)
     }
 }

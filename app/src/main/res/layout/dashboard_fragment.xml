@@ -55,7 +55,7 @@
                                 android:paddingTop="@dimen/card_content_padding"
                                 android:paddingBottom="@dimen/card_content_padding"
                                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                                android:text="@string/title_status"
+                                android:text="@string/title_acc"
                                 android:drawablePadding="@dimen/card_content_margin"
                                 android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24px"
                                 android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24px"/>
@@ -144,6 +144,7 @@
                     android:layout_marginTop="@dimen/card_margin"
                     android:layout_marginLeft="@dimen/card_margin"
                     android:layout_marginRight="@dimen/card_margin"
+                    android:layout_marginBottom="@dimen/card_bottom_margin"
                     android:foreground="?selectableItemBackground"
                     app:cardCornerRadius="@dimen/card_corner_radius"
                     app:cardElevation="3dp"
@@ -270,56 +271,17 @@
                                 android:drawableLeft="@drawable/ic_outline_edit_24px"
                                 android:drawableStart="@drawable/ic_outline_edit_24px"
                                 android:text="@string/edit_charging_limit_once"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:id="@+id/dash_resetBatteryStats_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/reset_stats" />
                     </LinearLayout>
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-
-            <!-- Bottom most card - include android:layout_marginBottom for proper looks -->
-            <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.MaterialComponents.CardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/card_margin"
-                    android:layout_marginLeft="@dimen/card_margin"
-                    android:layout_marginRight="@dimen/card_margin"
-                    android:layout_marginBottom="@dimen/card_bottom_margin"
-                    android:foreground="?selectableItemBackground"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
-                    app:cardElevation="3dp"
-                    app:contentPadding="@dimen/card_content_padding">
-
-                <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                    <Switch android:id="@+id/dash_resetStatusUnplug_switch"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/reset_unplugged"
-                            android:textSize="16sp"
-                            android:layout_marginBottom="10dp"/>
-
-                    <Switch android:id="@+id/dash_resetBSOnPause_switch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/reset_bs_on_pause"
-                        android:textSize="16sp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_below="@+id/dash_resetStatusUnplug_switch"/>
-
-                    <com.google.android.material.button.MaterialButton
-                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                            android:id="@+id/dash_resetBatteryStats_button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/reset_stats"
-                            android:layout_centerHorizontal="true"
-                            android:layout_below="@+id/dash_resetBSOnPause_switch"/>
-
-                </RelativeLayout>
-            </com.google.android.material.card.MaterialCardView>
-
         </LinearLayout>
     </ScrollView>
 

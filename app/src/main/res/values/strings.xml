@@ -16,7 +16,7 @@
     <string name="title_settings">Settings</string>
 
     <!-- ACC Daemon Status -->
-    <string name="title_status">Status</string>
+    <string name="title_acc">ACC</string>
     <string name="title_acc_daemon">ACC Daemon</string>
     <string name="acc_daemon_status_running">ACC Daemon is Running</string>
     <string name="acc_daemon_status_not_running">ACC Daemon is Not Running</string>
@@ -152,6 +152,7 @@
     <string name="title_on_boot">Apply on Boot</string>
     <string name="title_temperature_control">Temperature Control</string>
     <string name="title_capacity_control">Capacity Control</string>
+    <string name="title_miscellaneous_control">Miscellaneous</string>
     <string name="about">About</string>
 
     <!-- ACC Config Tooltips -->
@@ -161,6 +162,7 @@
     <string name="cooldown_info">- Charging ON/OFF ratio in seconds (e.g., coolDownRatio=50/10) - reduces battery stress induced by prolonged high temperature and high charging voltage by periodically pausing charging.&lt;br /&gt;- If charging is too slow, turn this off or change the ratio.&lt;br /&gt;- When disabled, COOLDOWN CAPACITY and COOLDOWN TEMP values are nullified.&lt;br /&gt;- This settings is a fair alternative to the charging voltage limit feature.</string>
     <string name="on_plugged_info">This is used for updating files whose contents change on certain power events (e.g., plugged/unplugged). It is particularly useful for enforcing custom max voltage/current for usb/wireless charging.</string>
     <string name="battery_idle_info_label">If the switch is selected charging switches that support battery idle mode take precedence - allowing the device to draw power directly from the external power supply when charging is paused.&lt;br /&gt;If your switch is disabled it means that your kernel does not support this feature.</string>
+    <string name="miscellaneous_info_label">Various acc configurations that did not fit in other defined categories</string>
 
     <string name="acc_config_editor">ACC config editor</string>
     <string name="profile_creator">Profile creator</string>

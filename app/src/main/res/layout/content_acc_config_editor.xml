@@ -731,7 +731,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Enable Cool Down Card : Bottom most card - include android:layout_marginBottom for proper looks. -->
+        <!-- Enable Cool Down Card -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -874,6 +874,83 @@
                 </LinearLayout>
 
             </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Bottom most card - include android:layout_marginBottom for proper looks -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.MaterialComponents.CardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="@dimen/card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:layout_marginBottom="@dimen/card_bottom_margin"
+
+            android:foreground="?selectableItemBackground"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="3dp"
+            app:contentPadding="@dimen/card_content_padding">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/misc_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/card_content_padding">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:text="@string/title_miscellaneous_control" />
+
+                    <ImageView
+                        android:id="@+id/miscellaneous_restore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_restore_24px"
+                        android:onClick="onMiscRestore"
+                        android:contentDescription="@string/restore" />
+
+                    <ImageView
+                        android:id="@+id/miscellaneous_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_info"
+                        android:onClick="onInfoClick"
+                        android:contentDescription="@string/info" />
+                </LinearLayout>
+
+                <Switch android:id="@+id/dash_resetStatusUnplug_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reset_unplugged"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="10dp"/>
+
+                <Switch android:id="@+id/dash_resetBSOnPause_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reset_bs_on_pause"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="10dp" />
+
+            </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
