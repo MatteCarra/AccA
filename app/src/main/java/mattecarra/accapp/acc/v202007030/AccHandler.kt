@@ -329,9 +329,9 @@ open class AccHandler : AccInterfaceV2 {
 
     override fun getUpdateAccTemperatureCommand(coolDownTemperature: Int, temperatureMax: Int, wait: Int): String = "/dev/acca -s cooldown_temp=${coolDownTemperature} max_temp=${temperatureMax} max_temp_pause=$wait"
 
-    override fun getUpdateAccVoltControlCommand(voltFile: String?, voltMax: Int?): String = "/dev/acca --set --voltage ${voltMax?.toString().orEmpty()}"
+    override fun getUpdateAccVoltControlCommand(voltFile: String?, voltMax: Int?): String = "/dev/acca --set --voltage ${voltMax?.toString() ?: "-"}"
 
-    override fun getUpdateAccCurrentMaxCommand(currMax: Int?): String = "/dev/acca --set --current ${currMax?.toString().orEmpty()}"
+    override fun getUpdateAccCurrentMaxCommand(currMax: Int?): String = "/dev/acca --set --current ${currMax?.toString() ?: "-"}"
 
     override fun getUpdateAccOnBootExitCommand(enabled: Boolean): String = "" //Not supported
 
