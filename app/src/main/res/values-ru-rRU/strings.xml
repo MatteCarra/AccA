@@ -14,7 +14,6 @@
     <string name="title_schedules">Расписания</string>
     <string name="title_settings">Настройки</string>
     <!-- ACC Daemon Status -->
-    <string name="title_status">Статус</string>
     <string name="title_acc_daemon">Служба ACC</string>
     <string name="acc_daemon_status_running">Служба ACC запущена</string>
     <string name="acc_daemon_status_not_running">Служба ACC не запущена</string>
