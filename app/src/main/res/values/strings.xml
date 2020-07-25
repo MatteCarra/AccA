@@ -292,7 +292,7 @@
     <string name="about_team_title">Meet the Team</string>
     <string name="about_team_blurb">Thank you for using ACCA!
         \n\nWe spent heaps of time on this so that you can configure ACC with ease!
-        \n\nSpecial thanks to those who have contributed in one way or another to ACC &amp; ACCA!
+        \n\nSpecial thanks to those who have contributed in one way or another to ACC &amp; AccA!
     </string>
 
     <string name="about_attributes">Attributes</string>
@@ -326,13 +326,13 @@
     <string name="menu_export">Export</string>
     <string name="menu_title_load_clipboard">Load from Clipboard</string>
     <string name="menu_title_clear_entries">Clear Entries</string>
-    <string name="import_toast_no_valid_profile_json_clipboard">Valid ACCA Profile JSON not in Clipboard</string>
+    <string name="import_toast_no_valid_profile_json_clipboard">Valid AccA Profile JSON not in Clipboard</string>
     <string name="import_toast_no_selected_profiles">Please select Profiles to Import</string>
     <string name="import_profile_success">Successfully imported %d profiles</string>
 
     <!-- Config Parse Error -->
     <string name="parse_failed_title">Failed to Parse ACC Config</string>
-    <string name="parse_failed_body">You may try to load the default configuration by pressing \'Load Default\'. Please note that ACCA will not be functional.
-        \n\nIf the error persists, please share the stack trace below along with ACC &amp; ACCA version (via the 3-dot menu &gt; About) with the developers via Telegram.\n\n%s</string>
+    <string name="parse_failed_body">You may try to load the default configuration by pressing \'Load Default\'. Please note that AccA will not be functional.
+        \n\nIf the error persists, please share the stack trace below along with ACC &amp; AccA version (via the 3-dot menu &gt; About) with the developers via Telegram.\n\n%s</string>
 
 </resources>
