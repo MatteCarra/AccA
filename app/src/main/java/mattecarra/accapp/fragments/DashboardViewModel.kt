@@ -12,11 +12,11 @@ import mattecarra.accapp.R
 class DashboardViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _battery: MutableLiveData<BatteryInfo> = MutableLiveData()
-    private val _daemon: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val _daemon: MutableLiveData<Boolean?> = MutableLiveData(null)
     private val _chargeSpeed: MutableLiveData<String> = MutableLiveData("N/A")
 
     val battery: LiveData<BatteryInfo> = _battery
-    val daemon: LiveData<Boolean> = _daemon
+    val daemon: LiveData<Boolean?> = _daemon
 
     private val mPreferences: Preferences = Preferences(application)
 
@@ -39,7 +39,7 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
                 }
 
                 if(daemon.hasActiveObservers()) {
-                    _daemon.value = Acc.instance.isAccdRunning()
+                    _daemon.postValue(Acc.instance.isAccdRunning())
                 }
 
                 delay(1000)

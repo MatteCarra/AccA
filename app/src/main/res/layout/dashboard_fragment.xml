@@ -35,8 +35,8 @@
                     app:cardElevation="3dp">
 
                 <LinearLayout android:layout_width="match_parent"
-                              android:layout_height="wrap_content"
-                              android:orientation="vertical">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                     <!-- Title and Settings Button -->
                     <RelativeLayout
@@ -79,16 +79,23 @@
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:foregroundGravity="center"
-                            android:background="@{viewModel.daemon ? @color/colorSuccessful : @color/color_error}"
+                            android:background="@color/color_warning"
                             android:orientation="vertical">
 
                         <ImageView
                                 android:id="@+id/dash_accdStatus_imageView"
-                                android:layout_width="84dp"
-                                android:layout_height="84dp"
+                                android:layout_width="@dimen/acc_status_icon"
+                                android:layout_height="@dimen/acc_status_icon"
                                 android:tint="@color/white"
-                                android:src="@{viewModel.daemon ? @drawable/ic_outline_check_circle_24px : @drawable/ic_outline_error_outline_24px}"
+                                android:visibility="gone"
                                 android:layout_gravity="center"/>
+
+                        <ProgressBar
+                                android:id="@+id/dash_accdStatus_pb"
+                                android:layout_width="@dimen/acc_status_icon"
+                                android:layout_height="@dimen/acc_status_icon"
+                                android:layout_gravity="center"
+                                android:indeterminate="true" />
 
                     </FrameLayout>
 
@@ -98,7 +105,7 @@
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
                             android:padding="10dp"
-                            android:text="@{viewModel.daemon ? @string/acc_daemon_status_running : @string/acc_daemon_status_not_running}"
+                            android:text="@string/acc_daemon_status_reading_status"
                             android:gravity="center"/>
 
                     <LinearLayout
@@ -116,9 +123,10 @@
                                 android:id="@+id/dash_daemonToggle_button"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:text="@{viewModel.daemon ? @string/stop : @string/start}"
-                                app:icon="@{viewModel.daemon ? @drawable/ic_outline_stop_24px : @drawable/ic_outline_play_arrow_24px}"
+                                android:text="@string/start"
+                                app:icon="@drawable/ic_outline_play_arrow_24px"
                                 android:layout_weight="1"
+                                android:enabled="false"
                                 android:layout_marginEnd="8dp"
                                 android:layout_marginStart="8dp"/>
 
@@ -128,7 +136,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/restart"
-                                app:icon="@drawable/ic_sync_24px"/>
+                                app:icon="@drawable/ic_sync_24px"
+                                android:enabled="false"/>
 
                     </LinearLayout>
 
@@ -151,8 +160,8 @@
                     app:contentPadding="@dimen/card_content_padding">
 
                 <LinearLayout android:layout_width="match_parent"
-                              android:layout_height="wrap_content"
-                              android:orientation="vertical">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                     <!-- Title: Battery -->
                     <TextView
@@ -195,7 +204,7 @@
                                         android:layout_height="wrap_content"
                                         android:textSize="@dimen/label_text"
                                         android:text="@string/info_status"
-                                />
+                                        />
 
                                 <TextView
                                         android:id="@+id/dash_batteryStatus_textView"
@@ -273,16 +282,15 @@
                                 android:text="@string/edit_charging_limit_once"/>
 
                         <com.google.android.material.button.MaterialButton
-                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                            android:id="@+id/dash_resetBatteryStats_button"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/reset_stats" />
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                android:id="@+id/dash_resetBatteryStats_button"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/reset_stats" />
                     </LinearLayout>
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </ScrollView>
-
 </layout>

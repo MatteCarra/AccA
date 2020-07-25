@@ -9,6 +9,8 @@
     <color name="color_surface">#ffffff</color>
     <color name="color_error">#b00020</color>
 
+    <color name="color_warning">#ffc107</color>
+
     <color name="color_on_primary">#000000</color>
     <color name="color_on_secondary">#000000</color>
     <color name="color_on_background">#000000</color>

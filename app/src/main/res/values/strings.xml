@@ -20,6 +20,7 @@
     <string name="title_acc_daemon">ACC Daemon</string>
     <string name="acc_daemon_status_running">ACC Daemon is Running</string>
     <string name="acc_daemon_status_not_running">ACC Daemon is Not Running</string>
+    <string name="acc_daemon_status_reading_status">Reading ACC Daemon Status...</string>
 
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">Stop ACC Daemon</string>
