@@ -105,15 +105,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         main_bottom_nav.selectedItemId = _mainActivityViewModel.selectedNavBarItem
     }
 
-
-    private fun showConfigReadError() {
-        MaterialDialog(this).show {
-            title(R.string.config_error_title)
-            message(R.string.config_error_dialog)
-            positiveButton(android.R.string.ok)
-        }
-    }
-
     /**
      * Function for handing navigation bar clicks
      */
