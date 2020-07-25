@@ -260,7 +260,6 @@
     <string name="menu_export">Exporteren</string>
     <string name="menu_title_load_clipboard">Plakken vanaf klembord</string>
     <string name="menu_title_clear_entries">Invoer wissen</string>
-    <string name="import_toast_no_valid_profile_json_clipboard">Geldig ACCA profiel JSON is niet in Klembord</string>
     <string name="import_toast_no_selected_profiles">Selecteer Profielen om te importeren</string>
     <string name="import_profile_success">%d profielen succesvol geïmporteerd</string>
     <!-- Config Parse Error -->
