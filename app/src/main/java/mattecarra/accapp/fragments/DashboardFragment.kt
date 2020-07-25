@@ -9,6 +9,7 @@ import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
@@ -60,7 +61,7 @@ class DashboardFragment : ScopedFragment() {
 
         val view = binding.root
 
-        mViewModel = activity?.let { ViewModelProviders.of(it).get(DashboardViewModel::class.java) } ?: ViewModelProviders.of(this).get(DashboardViewModel::class.java)
+        mViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
         binding.viewModel = mViewModel
         binding.lifecycleOwner = this
 
