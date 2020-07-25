@@ -202,6 +202,7 @@
                                 <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:ellipsize="end"
                                         android:textSize="@dimen/label_text"
                                         android:text="@string/info_status"
                                         />
@@ -220,6 +221,7 @@
                                         android:id="@+id/dash_batteryChargingSpeed_textView"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:ellipsize="end"
                                         android:textSize="@dimen/label_text"
                                         android:text="@{viewModel.battery.isCharging ? @string/info_charging_speed : @string/info_discharging_speed}"/>
 
@@ -236,6 +238,7 @@
                                 <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:ellipsize="end"
                                         android:textSize="@dimen/label_text"
                                         android:text="@string/info_temperature"/>
 
@@ -252,6 +255,7 @@
                                 <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:ellipsize="end"
                                         android:textSize="@dimen/label_text"
                                         android:text="@string/info_health"/>
 

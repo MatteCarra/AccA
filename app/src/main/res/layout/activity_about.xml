@@ -135,6 +135,7 @@
                             android:layout_marginTop="@dimen/card_margin"
                             app:icon="@drawable/ic_github_mark"
                             android:text="@string/about_project_github"
+                            android:ellipsize="end"
                             android:onClick="accaGitHubOnClick"
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
@@ -144,6 +145,7 @@
                             android:layout_marginTop="@dimen/card_margin"
                             app:icon="@drawable/ic_telegram"
                             android:text="@string/about_project_telegram"
+                            android:ellipsize="end"
                             android:onClick="accaTelegramOnClick"
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
                 </LinearLayout>
@@ -218,6 +220,7 @@
                                     android:layout_marginRight="@dimen/card_margin"
                                     android:layout_weight="1"
                                     android:text="@string/about_github"
+                                    android:ellipsize="end"
                                     app:icon="@drawable/ic_github_mark"
                                     android:onClick="vr25GitHubOnClick"/>
 
@@ -226,6 +229,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
+                                    android:ellipsize="end"
                                     android:text="@string/about_website"
                                     android:onClick="vr25WebsiteOnClick"/>
                         </LinearLayout>
@@ -274,6 +278,7 @@
                                     android:layout_marginRight="@dimen/card_margin"
                                     android:layout_weight="1"
                                     android:text="@string/about_github"
+                                    android:ellipsize="end"
                                     app:icon="@drawable/ic_github_mark"
                                     android:onClick="matteGitHubOnClick"/>
 
@@ -283,6 +288,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:text="@string/about_website"
+                                    android:ellipsize="end"
                                     android:onClick="matteWebsiteOnClick"/>
                         </LinearLayout>
                     </RelativeLayout>
@@ -330,6 +336,7 @@
                                     android:layout_marginRight="@dimen/card_margin"
                                     android:layout_weight="1"
                                     android:text="@string/about_github"
+                                    android:ellipsize="end"
                                     app:icon="@drawable/ic_github_mark"
                                     android:onClick="squabbiGitHubOnClick"/>
 
@@ -339,6 +346,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:text="@string/about_website"
+                                    android:ellipsize="end"
                                     android:onClick="squabbiWebsiteOnClick"/>
                         </LinearLayout>
                     </RelativeLayout>
