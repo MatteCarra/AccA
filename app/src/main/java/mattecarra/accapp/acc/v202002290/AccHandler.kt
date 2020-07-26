@@ -76,6 +76,7 @@ open class AccHandler(override val version: Int) : AccInterfaceV2 {
             getResetUnplugged(config),
             getResetOnPause(config),
             getCurrentChargingSwitch(config),
+            isAutomaticSwitchEnabled(config),
             isPrioritizeBatteryIdleMode(config)
         )
     }
@@ -284,7 +285,11 @@ open class AccHandler(override val version: Int) : AccInterfaceV2 {
     }
 
     override fun getCurrentChargingSwitch(config: String): String? {
-        return SWITCH.find(readConfigToString())?.destructured?.component1()?.trim()?.ifBlank { null }
+        return SWITCH.find(config)?.destructured?.component1()?.trim()?.ifBlank { null }
+    }
+
+    override fun isAutomaticSwitchEnabled(config: String): Boolean {
+        return true
     }
 
     override fun isPrioritizeBatteryIdleMode(config: String): Boolean {
@@ -337,11 +342,11 @@ open class AccHandler(override val version: Int) : AccInterfaceV2 {
 
     override fun getUpdateAccOnPluggedCommand(command: String?) : String = "/sbin/acca -s \"apply_on_plug=${command.orEmpty()}\""
 
-    override fun getUpdateAccChargingSwitchCommand(switch: String?) : String = "/sbin/acca -s \"charging_switch=${switch.orEmpty()}\""
+    override fun getUpdateAccChargingSwitchCommand(switch: String?, automaticSwitchingEnabled: Boolean) : String = "/sbin/acca -s \"charging_switch=${switch.orEmpty()}\""
 
     override fun getUpgradeCommand(version: String) = "/sbin/acca --upgrade $version"
 
     override fun getUpdatePrioritizeBatteryIdleModeCommand(enabled: Boolean): String = "/sbin/acca --set prioritize_batt_idle_mode=$enabled"
 
-    override fun getAddChargingSwitchCommand(switch: String): String = getUpdateAccChargingSwitchCommand(switch)
+    override fun getAddChargingSwitchCommand(switch: String): String = getUpdateAccChargingSwitchCommand(switch, false)
 }

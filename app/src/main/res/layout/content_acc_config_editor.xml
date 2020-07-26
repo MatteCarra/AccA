@@ -27,7 +27,8 @@
             app:contentPadding="@dimen/card_content_padding"
             style="@style/Widget.MaterialComponents.CardView">
 
-            <RelativeLayout
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -76,8 +77,7 @@
                     android:layout_height="wrap_content"
                     android:weightSum="3"
                     android:orientation="horizontal"
-                    android:gravity="center_horizontal"
-                    android:layout_below="@+id/charging_control_title">
+                    android:gravity="center_horizontal">
 
                     <TextView
                         android:id="@+id/shutdown_capacity_label"
@@ -121,7 +121,6 @@
                     android:id="@+id/num_pickers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/limits"
                     android:orientation="horizontal"
                     android:weightSum="3">
 
@@ -154,8 +153,7 @@
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_below="@+id/num_pickers">
+                        android:layout_marginTop="@dimen/card_content_margin">
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -184,7 +182,16 @@
                             android:background="?selectableItemBackground"/>
                 </LinearLayout>
 
-            </RelativeLayout>
+                <Switch
+                    android:id="@+id/automatic_switch_enabled_switch"
+                    android:checked="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/automatic_switch_eanbled"
+                    android:textSize="16sp"
+                    android:layout_marginTop="@dimen/card_content_margin" />
+
+            </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
         <!-- Voltage Control Card -->

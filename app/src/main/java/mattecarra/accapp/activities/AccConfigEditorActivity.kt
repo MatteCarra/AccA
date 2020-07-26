@@ -272,6 +272,10 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
             dash_resetBSOnPause_switch.isChecked = it
         })
 
+        viewModel.observeIsAutomaticSwitchEnabled(this, Observer {
+            automatic_switch_enabled_switch.isChecked = it
+        })
+
         //capacity card
         shutdown_capacity_picker.setOnValueChangedListener(this)
         resume_capacity_picker.setOnValueChangedListener(this)
@@ -314,6 +318,13 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         //reset bs on unplug
         dash_resetStatusUnplug_switch.setOnClickListener {
             viewModel.resetBSOnUnplug = dash_resetStatusUnplug_switch.isChecked
+        }
+
+        if(Acc.instance.version < 202007220) {
+            automatic_switch_enabled_switch.visibility = View.GONE
+        }
+        automatic_switch_enabled_switch.setOnClickListener {
+            viewModel.isAutomaticSwitchEanbled = automatic_switch_enabled_switch.isChecked
         }
 
         //power card

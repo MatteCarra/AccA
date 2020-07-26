@@ -26,6 +26,7 @@ data class AccConfig(var configCapacity: ConfigCapacity,
                      var configResetUnplugged: Boolean,
                      var configResetBsOnPause: Boolean,
                      var configChargeSwitch: String?,
+                     var configIsAutomaticSwitchEnabled: Boolean,
                      var prioritizeBatteryIdleMode: Boolean) : Serializable {
 
 //    private companion object : Parceler<AccConfig> {

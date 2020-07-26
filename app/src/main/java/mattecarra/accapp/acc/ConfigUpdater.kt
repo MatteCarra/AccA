@@ -30,7 +30,7 @@ data class ConfigUpdater(val accConfig: AccConfig) {
             acc.updateResetOnPause(accConfig.configResetBsOnPause),
             acc.updateAccOnBoot(accConfig.configOnBoot),
             acc.updateAccOnPlugged(accConfig.configOnPlug),
-            acc.updateAccChargingSwitch(accConfig.configChargeSwitch),
+            acc.updateAccChargingSwitch(accConfig.configChargeSwitch, accConfig.configIsAutomaticSwitchEnabled),
             acc.updatePrioritizeBatteryIdleMode(accConfig.prioritizeBatteryIdleMode)
         )
     }
@@ -58,7 +58,7 @@ data class ConfigUpdater(val accConfig: AccConfig) {
             acc.getUpdateResetOnPauseCommand(accConfig.configResetBsOnPause),
             acc.getUpdateAccOnBootCommand(accConfig.configOnBoot),
             acc.getUpdateAccOnPluggedCommand(accConfig.configOnPlug),
-            acc.getUpdateAccChargingSwitchCommand(accConfig.configChargeSwitch),
+            acc.getUpdateAccChargingSwitchCommand(accConfig.configChargeSwitch, accConfig.configIsAutomaticSwitchEnabled),
             acc.getUpdatePrioritizeBatteryIdleModeCommand(accConfig.prioritizeBatteryIdleMode)
         ).joinToString("; ")
     }

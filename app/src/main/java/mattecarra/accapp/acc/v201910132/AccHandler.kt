@@ -43,6 +43,7 @@ open class AccHandler(override val version: Int) : AccInterfaceV1 {
             false,
             false,
             null,
+            true,
             false
         )
     }
@@ -72,6 +73,7 @@ open class AccHandler(override val version: Int) : AccInterfaceV1 {
             getResetUnplugged(config),
             getResetOnPause(config),
             getCurrentChargingSwitch(config),
+            isAutomaticSwitchEnabled(config),
             isPrioritizeBatteryIdleMode(config)
         )
     }
@@ -266,7 +268,11 @@ open class AccHandler(override val version: Int) : AccInterfaceV1 {
     }
 
     override fun getCurrentChargingSwitch(config: String): String? {
-        return SWITCH.find(readConfigToString())?.destructured?.component1()?.trim()?.ifBlank { null }
+        return SWITCH.find(config)?.destructured?.component1()?.trim()?.ifBlank { null }
+    }
+
+    override fun isAutomaticSwitchEnabled(config: String): Boolean {
+        return true
     }
 
     override fun isPrioritizeBatteryIdleMode(config: String): Boolean {
@@ -330,7 +336,7 @@ open class AccHandler(override val version: Int) : AccInterfaceV1 {
 
     override fun getUpdateAccOnPluggedCommand(command: String?) : String = "acc-en -s applyOnPlug${command?.let{ " $it" } ?: ""}"
 
-    override fun getUpdateAccChargingSwitchCommand(switch: String?) : String =
+    override fun getUpdateAccChargingSwitchCommand(switch: String?, automaticSwitchingEnabled: Boolean) : String =
         if (switch.isNullOrBlank())
             "acc-en -s s-"
         else

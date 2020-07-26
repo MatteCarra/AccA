@@ -36,10 +36,10 @@ interface AccInterfaceV1 {
 
     suspend fun testChargingSwitch(chargingSwitch: String? = null): Int
 
-    @WorkerThread
     fun getCurrentChargingSwitch(config: String): String?
 
-    @WorkerThread
+    fun isAutomaticSwitchEnabled(config: String): Boolean
+
     fun isPrioritizeBatteryIdleMode(config: String): Boolean
 
     suspend fun setChargingLimitForOneCharge(limit: Int): Boolean
@@ -133,9 +133,9 @@ interface AccInterfaceV1 {
         Shell.su(getUpdateResetOnPauseCommand(resetOnPause)).exec().isSuccess
     }
 
-    fun getUpdateAccChargingSwitchCommand(switch: String?): String
-    suspend fun updateAccChargingSwitch(switch: String?) : Boolean = withContext(Dispatchers.IO) {
-        Shell.su(getUpdateAccChargingSwitchCommand(switch)).exec().isSuccess
+    fun getUpdateAccChargingSwitchCommand(switch: String?, automaticSwitchingEnabled: Boolean): String
+    suspend fun updateAccChargingSwitch(switch: String?, automaticSwitchingEnabled: Boolean) : Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getUpdateAccChargingSwitchCommand(switch, automaticSwitchingEnabled)).exec().isSuccess
     }
 
     /**

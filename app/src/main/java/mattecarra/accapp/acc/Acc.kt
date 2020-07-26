@@ -18,7 +18,7 @@ import java.net.URL
 import kotlin.math.abs
 
 object Acc {
-    const val bundledVersion = 202007190
+    const val bundledVersion = 202007250
     private val FILES_DIR = "/data/data/mattecarra.accapp/files"
 
     /*
@@ -28,6 +28,7 @@ object Acc {
     * */
     private fun getVersionPackageName(v: Int): String {
         return when {
+            v >= 202007220 -> "v202007220"
             v >= 202007030 -> "v202007030"
             v >= 202002290 -> "v202002290"
             v >= 202002170 -> "v202002170"

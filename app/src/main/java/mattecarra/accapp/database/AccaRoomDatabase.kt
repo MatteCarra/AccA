@@ -101,7 +101,9 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                         false,
                         false,
                         null,
-                        false)
+                        true,
+                        false
+                    )
                 )
             )
             db.profileDao().insert(
@@ -117,7 +119,9 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                         false,
                         false,
                         null,
-                        false)
+                        true,
+                        false
+                    )
                 )
             )
             db.profileDao().insert(
@@ -133,7 +137,9 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                         false,
                         false,
                         null,
-                        false)
+                        true,
+                        false
+                    )
                 )
             )
         }

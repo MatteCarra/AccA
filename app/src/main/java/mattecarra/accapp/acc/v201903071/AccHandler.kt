@@ -19,7 +19,7 @@ class AccHandler(override val version: Int) : mattecarra.accapp.acc.legacy.AccHa
         return if(switch?.isNotEmpty() == true) switch else null
     }
 
-    override fun getUpdateAccChargingSwitchCommand(switch: String?) : String =
+    override fun getUpdateAccChargingSwitchCommand(switch: String?, automaticSwitchingEnabled: Boolean) : String =
         if (switch.isNullOrBlank())
             "acc -s s-"
         else
