@@ -100,7 +100,7 @@ class AccConfigEditorViewModel(application: Application, private val mAccConfig:
             unsavedChanges = true
         }
 
-    private val configIsAutomaticSwitchEnabled = MutableLiveData(mAccConfig.configIsAutomaticSwitchEnabled)
+    private val configIsAutomaticSwitchEnabled = MutableLiveData(mAccConfig.configIsAutomaticSwitchingEnabled)
     var isAutomaticSwitchEanbled: Boolean
         get() = configIsAutomaticSwitchEnabled.value!!
         set(value) {

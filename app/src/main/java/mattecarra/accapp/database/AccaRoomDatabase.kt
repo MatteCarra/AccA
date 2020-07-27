@@ -15,7 +15,7 @@ import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.models.ScheduleProfile
 
 
-@Database(entities = [AccaProfile::class, ScheduleProfile::class], version = 7)
+@Database(entities = [AccaProfile::class, ScheduleProfile::class], version = 8)
 @TypeConverters(ConfigConverter::class)
 abstract class AccaRoomDatabase : RoomDatabase() {
 
@@ -65,6 +65,13 @@ abstract class AccaRoomDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_7_8: Migration = object : Migration(7, 8) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE profiles_table ADD COLUMN `configIsAutomaticSwitchingEnabled` INTEGER NOT NULL DEFAULT 1");
+                database.execSQL("ALTER TABLE schedules_table ADD COLUMN `configIsAutomaticSwitchingEnabled` INTEGER NOT NULL DEFAULT 1");
+            }
+        }
+
         fun getDatabase(context: Context): AccaRoomDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
@@ -75,7 +82,7 @@ abstract class AccaRoomDatabase : RoomDatabase() {
                 // Create database instance here
                 INSTANCE =
                     Room.databaseBuilder(context.applicationContext, AccaRoomDatabase::class.java, DATABASE_NAME)
-                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7)
+                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8)
                         .addCallback(object : Callback() {
                             override fun onCreate(db: SupportSQLiteDatabase) {
                                 super.onCreate(db)
