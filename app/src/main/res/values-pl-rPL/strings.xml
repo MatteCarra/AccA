@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ACCA</string>
     <string name="app_name_full">Advanced Charging Controller App</string>
     <string name="title_activity_log_view">Logi</string>
     <string name="title_activity_log_view_file_name">Logi</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">Brak root-a</string>
-    <string name="tile_acc_enabled">ACC włączony</string>
-    <string name="tile_acc_disabled">ACC wyłączony</string>
     <!-- Navigation Strings -->
     <string name="title_dashboard">Pulpit</string>
     <string name="title_profiles">Profile</string>
@@ -45,13 +42,11 @@
     <string name="cooldown_capacity">Rozpocznij chłodzenie od %%:</string>
     <string name="resume_charge">Wznów ładowanie przy:</string>
     <string name="stop_charge">Zatrzymaj ładowanie przy:</string>
-    <string name="enable_temp_check">Włącz sprawdzanie temperatury (°C)</string>
     <string name="cooldown_temp">Temp. chłodzenia:</string>
     <string name="max_temp">Maks. temp.:</string>
     <string name="pause_seconds">Wstrzymaj sekund:</string>
     <string name="charge_seconds">Ładuj sekund:</string>
     <string name="shutdown_capacity">Wyłącz (jeśli nie ładuje) przy:</string>
-    <string name="no_root_message">Aplikacja wymaga ROOT-a.</string>
     <string name="config_error_title">Błąd przetwarzania konfiguracji</string>
     <string name="wait">Proszę czekać...\nTo zajmie kilka sekund.</string>
     <!-- Exit On Boot Card Strings -->
@@ -60,20 +55,10 @@
     <!-- ACC installation -->
     <string name="installing_acc">Instalowanie ACC</string>
     <string name="reboot">Uruchom ponownie</string>
-    <string name="acc_installation_failed">Proszę wysłać logcat i /data/adb/acc-data/logs/ do deweloperów
-        na t.me/acc_group/ lub github.com/MatteCarra/AccA/issues/.
-    </string>
     <string name="acc_installation_failed_title">Instalacja ACC nie powiodła się!</string>
     <!-- DJS installation -->
     <string name="install_djs_title">DJS jest wymagany</string>
-    <string name="install_djs_description">Aby ta funkcja działała, musimy włączyć DJS.
-        \nDJS (Daily Job Scheduler) to lekki dodatek do planowania ustawień ACC w czasie.
-        \nDemon DJS zostanie uruchomiony przy rozruchu wraz z demonem ACC.
-    </string>
     <string name="installing_djs">Instalowanie DJS</string>
-    <string name="djs_installation_failed">Proszę wysłać logcat i /data/adb/djs-data/logs/ do deweloperów
-        na t.me/acc_group/ lub github.com/MatteCarra/AccA/issues/.
-    </string>
     <string name="djs_installation_failed_title">Instalacja DJS nie powiodła się!</string>
     <string name="voltage_control_file_not_set">Nie ustawiono.</string>
     <string name="edit_on_boot">Edytuj ustawienia apply_on_boot</string>
@@ -88,7 +73,6 @@
     <string name="unsaved_changes">Posiadasz niezapisane zmiany</string>
     <string name="close_without_saving">Odrzuć</string>
     <string name="edit_config">Edytuj konfigurację</string>
-    <string name="unsaved_changes_message">Posiadasz niezapisane zmiany. Czy chcesz je zapisać?</string>
     <string name="create_acc_profile">Utwórz profil konfiguracji</string>
     <string name="profile_name">Nazwa profilu</string>
     <string name="dialog_profile_name_message">Wprowadź nazwę, którą chcesz przypisać do tego profilu:</string>
@@ -101,10 +85,7 @@
     <string name="recurrent_schedule">Uruchom tylko raz</string>
     <string name="execution_time">Czas wykonania</string>
     <string name="new_config">Nowa niestandardowa konfiguracja</string>
-    <string name="enable_voltage_limit">Włącz limit napięcia ładowania</string>
     <string name="voltage_control_file">Plik regulacji napięcia:</string>
-    <string name="edit_power_limit">Edytuj limit natężenia prądu i napięcia</string>
-    <string name="voltage_max">Maksymalne napięcie (miliwolty):</string>
     <string name="disabled">Wyłączone</string>
     <string name="schedule_recurrent_row_text">Zadanie cykliczne zaplanowane na %1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_title">Wykonaj jednorazowo - %1$02d:%2$02d</string>
@@ -113,21 +94,16 @@
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Usuń</string>
     <string name="no_schedules">Nie ustawiono harmonogramów</string>
-    <string name="wrong_volt_file">Albo wybrany plik nie działa, albo Twój kernel nie obsługuje tej funkcji.</string>
     <string name="invalid_voltage_max">Wartość powinna być liczbą z zakresu od 3700 do 4200 (miliwoltów)</string>
     <string name="edit_charging_switch">Edytuj przełącznik ładowania</string>
     <string name="test_switch">Przetestuj przełącznik ładowania</string>
     <string name="no_option_selected">Nie wybrano żadnej opcji; proszę coś wybrać!</string>
     <string name="charging_switch_works">Wybrany przełącznik ładowania działa!</string>
-    <string name="charging_switch_does_not_work">Wybrany przełącznik ładowania nie działa!</string>
-    <string name="plug_battery_to_test">Bateria musi być podłączona do ładowania przed rozpoczęciem testu. Podłącz ładowarkę i spróbuj ponownie!</string>
     <string name="automatic">Automatyczny</string>
     <string name="error_occurred">Wystąpił błąd</string>
     <string name="retry">Spróbuj ponownie</string>
-    <string name="edit_charging_limit_once">Ładowanie jednorazowe do danej pojemności, nieprzerwane i bez innych ograniczeń</string>
     <string name="apply">Zastosuj</string>
     <string name="done">Gotowe</string>
-    <string name="edit_charging_limit_once_dialog_msg">Twoje obecne ustawienia są automatycznie przywrócone po osiągnięciu wybranego poziomu naładowania baterii.</string>
     <string name="title_power_control">Regulacja mocy ładowania</string>
     <string name="info">Info</string>
     <string name="title_cooldown_control">Chłodzenie</string>
@@ -136,20 +112,14 @@
     <string name="title_capacity_control">Kontrola pojemności</string>
     <string name="about">O aplikacji</string>
     <!-- ACC Config Tooltips -->
-    <string name="capacity_control_info">- WYŁĄCZ: automatycznie wyłącz system na tym poziomie ładowania baterii lub poniżej jego, kiedy bateria nie jest ładowana.&lt;br /&gt;- Pojemności ZATRZYMAJ i WZNÓW mówią, kiedy ładowanie powinno się odpowiednio zatrzymać i wznowić.&lt;br /&gt;- PRZEŁĄCZNIK ŁADOWANIA to plik kontrolujący, plus wartości ON i OFF do przełączania stanu ładowania. Domyślnie ACC używa czegokolwiek, co działa.</string>
     <string name="power_control_info">- Mówi się, że każda redukcja szczytowego napięcia ładowania o 0,10V/ogniwo podwaja żywotność cykliczną.&lt;br /&gt;- Niestety, nie wszystkie urządzenia/jądra obsługują tę funkcję.</string>
     <string name="temperature_control_info">- To wstrzymuje ładowanie na pewien czas (w sekundach), aby ochłodzić baterię&lt;br /&gt;- COOLDOWN TEMP zależy od COOLDOWN RATIO.&lt;br /&gt;- MAKSYMALNA TEMP działa z SECONDS.</string>
-    <string name="cooldown_info">- Zmienia stosunek czasu ładowania do pauzy (np. coolDownRatio=50/10) - zmniejsza obciążenie baterii wywołane długotrwałym przegrzewaniem i wysokim napięciem przez okresowe wstrzymanie ładowania.&lt;br /&gt;- Jeśli ładowanie jest zbyt powolne, wyłącz lub zmień proporcje.&lt;br /&gt;- Gdy wyłączone, wartości TEMP COOLDOWN CAPACITY i COOLDOWN są unieważnione.&lt;br /&gt;- To ustawienie jest rozsądną alternatywą dla funkcji granicznego napięcia ładowania.</string>
-    <string name="on_plugged_info">Służy to do aktualizacji plików, których zawartość zmienia się w przypadku niektórych zdarzeń zasilania (np. podłączone/odłączone). Jest to szczególnie przydatne przy wymuszaniu niestandardowego maksymalnego napięcia/prądu dla ładowania przez USB/bezprzewodowego.</string>
-    <string name="battery_idle_info_label">Jeśli przełącznik jest wybrany, przełączniki ładowania obsługujące tryb bezczynności baterii mają pierwszeństwo - pozwalając urządzeniu pobierać zasilanie bezpośrednio z zewnętrznego źródła zasilania, kiedy ładowanie jest wstrzymane.&lt;br /&gt;Jeśli twój przełącznik jest wyłączony, oznacza to, że Twój kernel nie wspiera tej funkcji.</string>
     <string name="acc_config_editor">Edytor konfiguracji ACC</string>
     <string name="profile_creator">Kreator profili</string>
     <string name="schedule_creator">Kreator harmonogramu</string>
     <string name="charging_switch_label">Przełącznik ładowania:</string>
     <string name="title_on_plugged">Zastosuj przy podłączeniu</string>
     <string name="edit_on_plugged">Edytuj ustawienia apply_on_plug:</string>
-    <string name="edit_on_plugged_dialog_message">Przykład: wireless/voltage_max::9000000::9000000 może wymusić szybkie ładowanie bezprzewodowe na niektórych urządzeniach Pixel.
-    </string>
     <string name="template_capacity_profile">Wyłącz: %1$d%% - Wznów: %2$d%% - Zatrzymaj: %3$d%%</string>
     <string name="template_temperature_profile">Temperatura: %1$d&#176;C - Maks. %2$d&#176;C - Wstrzymaj %3$ds</string>
     <string name="template_cool_down_profile">Rozpocznij przy: %1$d%% - Ładuj przez %2$ds - Wstrzymaj na %3$ds</string>
@@ -159,7 +129,6 @@
     <string name="profile_option_delete">Usuń</string>
     <string name="selecting_profile_toast">Wybieranie profilu %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox nie jest zainstalowany</string>
-    <string name="installation_failed_busybox">Najpierw zainstaluj pliki binarne busybox</string>
     <string name="share">Udostępnij</string>
     <string name="logs_not_found">Nie znaleziono pliku z logiem.</string>
     <string name="acc_telegram">Aby uzyskać dodatkowe wsparcie, dołącz do grupy ACC na Telegramie (t.me/acc_group)!</string>
@@ -175,10 +144,6 @@
     </string>
     <string name="units_of_measure">Jednostki miary</string>
     <string name="acc_version_preference_title">Wersja ACC</string>
-    <string name="acc_version_preference_description">Możesz wybrać wariant ACC do użycia: bundled, master, develop lub którakolwiek z wydanych wersji.
-        Wersja bundled gwarantuje zawsze działać z AccA - dlatego jest to rekomendowany wybór.
-        Chociaż nie są gwarantami, inne warianty są na ogół bezpieczne.
-    </string>
     <string name="install_bundled_version">Zainstaluj wariant bundled</string>
     <string name="acc_version_picker_title">Wersja ACC</string>
     <string name="acc_version_picker_message">Wybierz pożądany wariant ACC</string>
@@ -199,11 +164,6 @@
     <string name="theme_option_setting">Motyw</string>
     <string name="theme_option_summary">Ustaw motyw aplikacji.</string>
     <string name="acc_version_compatibility_warning_title">Zgodność wersji ACC</string>
-    <string name="acc_version_compatibility_warning_description">Wybrałeś wariant ACC, który nie gwarantuje kompatybilności z aplikacją.
-        \nAccA pobierze wybraną wersję z repozytorium ACC na GitHub.
-        \nW większości przypadków nie napotkasz jednak niezgodności.
-        \nCzy chcesz kontynuować?
-    </string>
     <string name="restore">Przywróć domyślne</string>
     <string name="undo">Cofnij</string>
     <string name="checking_updates">Sprawdzanie dostępności aktualizacji</string>
@@ -214,13 +174,8 @@
     <string name="acc_installation_failed_log">Log nieudanej instalacji ACC</string>
     <string name="djs_installation_failed_log">Log nieudanej instalacji DJS</string>
     <string name="select_different_version">Zmień wersję ACC</string>
-    <string name="installation_failed_non_bundled">Instalacja innego wariantu ACC nie powiodła się.
-        \nProszę rozważyć udostępnienie /data/adb/acc-data/logs/ deweloperom.
-    </string>
     <string name="prioritize_battery_idle">Spriorytetyzuj tryb bezczynności baterii</string>
     <string name="test_battery_idle">Przetestuj tryb bezczynności baterii</string>
-    <string name="test_battery_idle_supported_result">Twój kernel wspiera tryb bezczynności baterii.</string>
-    <string name="test_battery_idle_unsupported_result">Twój kernel nie wspiera trybu bezczynności baterii.</string>
     <string name="schedule_profile_edit_current">Edytuj obecną konfigurację</string>
     <string name="schedule_profile_keep_current">Zachowaj obecną konfigurację</string>
     <string name="schedule_type">Typ harmonogramu</string>
@@ -240,13 +195,9 @@
     <string name="edit_schedule">Edytuj harmonogram</string>
     <string name="create_schedule">Utwórz harmonogram</string>
     <!-- About Activity -->
-    <string name="about_acca_version_label">Wersja ACCA:</string>
     <string name="about_acc_version_label">Wersja ACC:</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Strona internetowa</string>
-    <string name="check_update_dialog_message">        Czy chcesz zainstalować najnowszą wersję ACC z brancha \'%1$s\'?
-        \nACCA pobierze najnowszą wersję ACC z GitHub w oparciu o najnowszy commit wybranego brancha.
-        \nCzy chcesz kontynuować?</string>
     <string name="charging_switch_on_value_label">WARTOŚĆ ON przełącznika ładowania</string>
     <string name="charging_switch_off_value_label">WARTOŚĆ OFF przełącznika ładowania</string>
     <string name="reset_bs_on_pause">Zresetuj statystyki baterii przy wstrzymaniu \%</string>
