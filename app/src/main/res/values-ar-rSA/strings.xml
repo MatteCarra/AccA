@@ -19,12 +19,10 @@
     <string name="status_label">الحالة:</string>
     <string name="battery_info_label">معلومات:</string>
     <string name="stop_charge">إيقاف الشحن عند:</string>
-    <string name="enable_temp_check">تمكين فحص درجة الحرارة (°C)</string>
     <string name="cooldown_temp">درجة حرارة الخمول:</string>
     <string name="pause_seconds">وقف الثواني:</string>
     <string name="charge_seconds">شحن لثواني:</string>
     <string name="shutdown_capacity">إيقاف التشغيل (إن لم يكن يشحن) عند:</string>
-    <string name="no_root_message">يتطلب هذا التطبيق روت.</string>
     <string name="config_error_title">خطأ في تحليل التكوين</string>
     <string name="config_error_dialog">فشل تحليل تكوين ACC!
  الرجاء التحقق مما إذا كان \"su -c acc --set --print\" يعمل.</string>
@@ -34,12 +32,9 @@
     <!-- ACC installation -->
     <string name="installing_acc">جاري تثبيت ACC</string>
     <string name="reboot">إعادة التشغيل</string>
-    <string name="acc_installation_failed">الرجاء إرسال logcat و /data/adb/acc-data/logs/ للمطورين
-على t.me/acc_group/ or github.com/MatteCarra/AccA/issues</string>
     <string name="acc_installation_failed_title">فشل تثبيت ACC!</string>
     <!-- DJS installation -->
     <string name="install_djs_title">يتطلب DJS</string>
-    <string name="enable_voltage_limit">تمكين حد فولت الشحن</string>
     <string name="disabled">معطل</string>
     <string name="delete">حذف</string>
     <string name="no_schedules">لم يتم تعيين جداول الزمنية</string>
