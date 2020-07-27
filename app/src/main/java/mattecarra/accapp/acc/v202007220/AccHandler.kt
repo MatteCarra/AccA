@@ -44,7 +44,7 @@ open class AccHandler(override val version: Int) : AccInterfaceV2 {
     val MAX_CHARGING_CURRENT = """^\s*max_charging_current=(\d*)""".toRegex(RegexOption.MULTILINE)
 
     val SWITCH = """^\s*charging_switch=((?:(?!#).)*)""".toRegex(RegexOption.MULTILINE)
-    val AUTOMATIC_SWITCH = """^(.*) --\s*""".toRegex(RegexOption.MULTILINE)
+    val AUTOMATIC_SWITCH_DISABLED = """^(.*) --\s*""".toRegex(RegexOption.MULTILINE)
     val PRIORITIZE_BATTERY_IDLE = """^\s*prioritize_batt_idle_mode=(true|false)""".toRegex(RegexOption.MULTILINE)
 
     @WorkerThread
@@ -288,11 +288,11 @@ open class AccHandler(override val version: Int) : AccInterfaceV2 {
     }
 
     override fun getCurrentChargingSwitch(config: String): String? {
-        return SWITCH.find(config)?.destructured?.component1()?.trim()?.ifBlank { null }?.replace(AUTOMATIC_SWITCH, "$1")
+        return SWITCH.find(config)?.destructured?.component1()?.trim()?.ifBlank { null }?.replace(AUTOMATIC_SWITCH_DISABLED, "$1")
     }
 
     override fun isAutomaticSwitchEnabled(config: String): Boolean {
-        return AUTOMATIC_SWITCH.find(config) != null
+        return AUTOMATIC_SWITCH_DISABLED.find(config) == null
     }
 
     override fun isPrioritizeBatteryIdleMode(config: String): Boolean {
@@ -347,7 +347,7 @@ open class AccHandler(override val version: Int) : AccInterfaceV2 {
 
     override fun getUpdateAccChargingSwitchCommand(switch: String?, automaticSwitchingEnabled: Boolean) : String {
         return if(switch != null) {
-            "/dev/acca -s \"charging_switch=${switch}${if (automaticSwitchingEnabled) " --" else ""}\""
+            "/dev/acca -s \"charging_switch=${switch}${if (automaticSwitchingEnabled) "" else " --"}\""
         } else {
             "/dev/acca -s \"charging_switch=\""
         }
