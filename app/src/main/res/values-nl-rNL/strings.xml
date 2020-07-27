@@ -14,7 +14,6 @@
     <string name="title_schedules">Schema\'s</string>
     <string name="title_settings">Instellingen</string>
     <!-- ACC Daemon Status -->
-    <string name="title_status">Status</string>
     <string name="title_acc_daemon">ACC Daemon</string>
     <string name="acc_daemon_status_running">ACC Daemon wordt uitgevoerd</string>
     <string name="acc_daemon_status_not_running">ACC Daemon wordt niet uitgevoerd</string>

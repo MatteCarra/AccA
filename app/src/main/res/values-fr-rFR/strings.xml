@@ -14,7 +14,6 @@
     <string name="title_schedules">Planification</string>
     <string name="title_settings">Paramètres</string>
     <!-- ACC Daemon Status -->
-    <string name="title_status">État </string>
     <string name="title_acc_daemon">Service ACC</string>
     <string name="acc_daemon_status_running">Le service ACC est actif</string>
     <string name="acc_daemon_status_not_running">Le service ACC n\'est pas actif</string>

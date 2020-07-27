@@ -14,7 +14,6 @@
     <string name="title_schedules">Agendamentos</string>
     <string name="title_settings">Configurações</string>
     <!-- ACC Daemon Status -->
-    <string name="title_status">Estado</string>
     <string name="title_acc_daemon">Serviço ACC</string>
     <string name="acc_daemon_status_running">Serviço ACC está Ativado</string>
     <string name="acc_daemon_status_not_running">Serviços ACC está Desativado</string>

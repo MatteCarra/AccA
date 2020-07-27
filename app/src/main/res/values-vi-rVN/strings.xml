@@ -14,7 +14,6 @@
     <string name="title_schedules">Lịch trình</string>
     <string name="title_settings">Cài đặt</string>
     <!-- ACC Daemon Status -->
-    <string name="title_status">Trạng thái</string>
     <string name="title_acc_daemon">Trình nền ACC</string>
     <string name="acc_daemon_status_running">Trình nền ACC đang chạy</string>
     <string name="acc_daemon_status_not_running">Trình nền ACC hiện không chạy</string>

@@ -14,7 +14,6 @@
     <string name="title_schedules">スケジュール</string>
     <string name="title_settings">設定</string>
     <!-- ACC Daemon Status -->
-    <string name="title_status">状態</string>
     <string name="title_acc_daemon">ACC デーモン</string>
     <string name="acc_daemon_status_running">ACC デーモン実行中</string>
     <string name="acc_daemon_status_not_running">ACC デーモン停止中</string>

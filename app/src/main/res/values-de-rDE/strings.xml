@@ -14,7 +14,6 @@
     <string name="title_schedules">Zeitpläne</string>
     <string name="title_settings">Einstellungen</string>
     <!-- ACC Daemon Status -->
-    <string name="title_status">Status</string>
     <string name="title_acc_daemon">ACC Daemon</string>
     <string name="acc_daemon_status_running">ACC Daemon wird ausgeführt</string>
     <string name="acc_daemon_status_not_running">ACC Daemon wird nicht ausgeführt</string>
