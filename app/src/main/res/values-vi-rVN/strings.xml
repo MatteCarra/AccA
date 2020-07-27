@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ACCA</string>
     <string name="app_name_full">Advanced Charging Controller App</string>
     <string name="title_activity_log_view">Nhật ký</string>
     <string name="title_activity_log_view_file_name">Nhật ký</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">Không có root</string>
-    <string name="tile_acc_enabled">ACC đã bật</string>
-    <string name="tile_acc_disabled">ACC đã tắt</string>
     <!-- Navigation Strings -->
     <string name="title_dashboard">Bảng điều khiển</string>
     <string name="title_profiles">Hồ sơ</string>
@@ -45,13 +42,11 @@
     <string name="cooldown_capacity">Bắt đầu làm mát ở %%:</string>
     <string name="resume_charge">Tiếp tục sạc ở:</string>
     <string name="stop_charge">Ngừng sạc ở:</string>
-    <string name="enable_temp_check">Bật kiểm tra nhiệt độ (°C)</string>
     <string name="cooldown_temp">Nhiệt độ làm mát:</string>
     <string name="max_temp">Nhiệt độ tối đa:</string>
     <string name="pause_seconds">Số giây tạm dừng:</string>
     <string name="charge_seconds">Số giây sạc:</string>
     <string name="shutdown_capacity">Tắt nguồn (nếu không được sạc) ở:</string>
-    <string name="no_root_message">Ứng dụng này cần quyền ROOT.</string>
     <string name="config_error_title">Lỗi đọc thiết lập</string>
     <string name="wait">Vui lòng chờ…\nĐiều này sẽ mất vài giây.</string>
     <!-- Exit On Boot Card Strings -->
@@ -60,15 +55,10 @@
     <!-- ACC installation -->
     <string name="installing_acc">Đang cài đặt ACC</string>
     <string name="reboot">Khởi động lại</string>
-    <string name="acc_installation_failed">Vui lòng gửi logcat trong /data/adb/acc-data/logs/ cho các nhà phát triển tại t.me/acc_group/ hoặc github.com/MatteCarra/AccA/issues/.    </string>
     <string name="acc_installation_failed_title">Cài đặt ACC không thành công!</string>
     <!-- DJS installation -->
     <string name="install_djs_title">DJS là bắt buộc</string>
-    <string name="install_djs_description">Để tính năng này hoạt động, chúng tôi phải kích hoạt DJS.
-DJS (Trình lập lịch công việc hàng ngày) là một tiện ích bổ sung nhẹ để lên lịch cài đặt ACC.
-Daemon DJS sẽ được bắt đầu khi khởi động cùng với ACC daemon.</string>
     <string name="installing_djs">Đang cài đặt DJS</string>
-    <string name="djs_installation_failed">Vui lòng gửi logcat trong /data/adb/acc-data/logs/ cho các nhà phát triển tại t.me/acc_group/ hoặc github.com/MatteCarra/AccA/issues/.    </string>
     <string name="djs_installation_failed_title">Cài đặt DJS thất bại!</string>
     <string name="voltage_control_file_not_set">Không được thiết lập.</string>
     <string name="edit_on_boot">Chỉnh sửa cài đặt apply_on_boot</string>
@@ -82,7 +72,6 @@ Daemon DJS sẽ được bắt đầu khi khởi động cùng với ACC daemon.
     <string name="unsaved_changes">Bạn có thay đổi chưa lưu.</string>
     <string name="close_without_saving">Bỏ qua</string>
     <string name="edit_config">Chỉnh sửa cấu hình</string>
-    <string name="unsaved_changes_message">Bạn chưa lưu các thay đổi. Bạn có muốn lưu nó không?</string>
     <string name="create_acc_profile">Tạo hồ sơ cấu hình</string>
     <string name="profile_name">Tên hồ sơ</string>
     <string name="dialog_profile_name_message">Nhập tên bạn muốn gán cho hồ sơ này:</string>
@@ -95,10 +84,7 @@ Daemon DJS sẽ được bắt đầu khi khởi động cùng với ACC daemon.
     <string name="recurrent_schedule">Chỉ chạy một lần</string>
     <string name="execution_time">Thời gian thực hiện</string>
     <string name="new_config">Cấu hình tùy chỉnh mới</string>
-    <string name="enable_voltage_limit">Cho phép giới hạn điện áp sạc</string>
     <string name="voltage_control_file">Tập tin điều khiển điện áp:</string>
-    <string name="edit_power_limit">Chỉnh sửa giới hạn hiện tại và điện áp</string>
-    <string name="voltage_max">Điện áp tối đa (millivolts):</string>
     <string name="disabled">Vô hiệu hoá</string>
     <string name="schedule_recurrent_row_text">Công việc định kỳ được lên lịch cho%1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_title">Thực thi một lần -%1$02d:%2$02d</string>
@@ -107,21 +93,16 @@ Daemon DJS sẽ được bắt đầu khi khởi động cùng với ACC daemon.
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Xóa</string>
     <string name="no_schedules">Không có lịch trình được thiết lập</string>
-    <string name="wrong_volt_file">Tệp đã chọn không hoạt động hoặc kernel của bạn không hỗ trợ tính năng này.</string>
     <string name="invalid_voltage_max">Giá trị phải là một số trong khoảng từ 3700 đến 4200 (millivolts)</string>
     <string name="edit_charging_switch">Chỉnh sửa công tắc sạc</string>
     <string name="test_switch">Thử công tắc sạc</string>
     <string name="no_option_selected">Không có tùy chọn nào được chọn; vui lòng chọn một!</string>
     <string name="charging_switch_works">Công tắc sạc được chọn hoạt động!</string>
-    <string name="charging_switch_does_not_work">Công tắc sạc được chọn không hoạt động!</string>
-    <string name="plug_battery_to_test">Pin phải đang được sạc trước khi thử nghiệm. Vui lòng cắm sạc và thử lại!</string>
     <string name="automatic">Tự động</string>
     <string name="error_occurred">Có lỗi xảy ra</string>
     <string name="retry">Thử lại</string>
-    <string name="edit_charging_limit_once">Sạc một lần đến một công suất nhất định, không bị gián đoạn và không có các hạn chế khác</string>
     <string name="apply">Áp dụng</string>
     <string name="done">Xong</string>
-    <string name="edit_charging_limit_once_dialog_msg">Cài đặt hiện tại của bạn được tự động khôi phục khi đạt đến mức pin đã chọn.</string>
     <string name="title_power_control">Kiểm soát năng lượng sạc</string>
     <string name="info">Thông tin</string>
     <string name="title_cooldown_control">Làm Mát</string>
@@ -130,19 +111,14 @@ Daemon DJS sẽ được bắt đầu khi khởi động cùng với ACC daemon.
     <string name="title_capacity_control">Kiểm soát năng lực</string>
     <string name="about">Thông tin</string>
     <!-- ACC Config Tooltips -->
-    <string name="capacity_control_info">- SHUTDOWN: tự động tắt hệ thống ở hoặc dưới mức pin này khi pin không được sạc.&lt;br /&gt;- STOP: và công suất RESUME ra lệnh khi sạc nên dừng và tiếp tục, tương ứng.&lt;br /&gt;- CHARGING SWITCH là tệp điều khiển, cộng với các giá trị BẬT và TẮT để chuyển đổi bật / tắt sạc. Theo mặc định, ACC sử dụng bất cứ thứ gì hoạt động.</string>
     <string name="power_control_info">- Mỗi lần giảm điện áp cực đại 0,10V / cell được cho là tăng gấp đôi tuổi thọ.&lt;br /&gt;- Thật không may, không phải tất cả các thiết bị / hạt nhân đều hỗ trợ tính năng này.</string>
     <string name="temperature_control_info">- Điều này vô hiệu hóa tính năng sạc trong vài giây để làm mát pin&lt;br /&gt;- COEDOWN TEMP phụ thuộc vào COATOWN RATIO.&lt;br /&gt;- MAX TEMP hoạt động với PAUSE SECONDS.</string>
-    <string name="cooldown_info">- Tỷ lệ BẬT / TẮT trong vài giây (ví dụ: coolDownRatio=50/10) - giảm căng thẳng pin gây ra bởi nhiệt độ cao kéo dài và điện áp sạc cao bằng cách tạm dừng sạc định kỳ.&lt;br /&gt;- Nếu sạc quá chậm, hãy tắt tính năng này hoặc thay đổi tỷ lệ.&lt;br /&gt;- Khi bị vô hiệu hóa, các giá trị COOLDOWN CAPACITY và COOLDOWN TEMP bị vô hiệu hóa.&lt;br /&gt;- Cài đặt này là một thay thế hợp lý cho tính năng giới hạn điện áp sạc.</string>
-    <string name="on_plugged_info">Điều này được sử dụng để cập nhật các tệp có nội dung thay đổi trong các sự kiện nguồn nhất định (e.g., plugged/unplugged). Nó đặc biệt hữu ích để thực thi điện áp / dòng tố đa tùy chỉnh cho sạc USB / không dây.</string>
-    <string name="battery_idle_info_label">Nếu công tắc được chọn, các công tắc sạc hỗ trợ chế độ không sử dụng pin được ưu tiên - cho phép thiết bị rút điện trực tiếp từ nguồn điện bên ngoài khi tạm dừng sạc.&lt;br /&gt;Nếu công tắc của bạn bị tắt, điều đó có nghĩa là kernel của bạn không hỗ trợ tính năng này.</string>
     <string name="acc_config_editor">Trình chỉnh sửa cấu hình ACC</string>
     <string name="profile_creator">Người tạo hồ sơ</string>
     <string name="schedule_creator">Lịch trình tạo</string>
     <string name="charging_switch_label">Công tắc sạc:</string>
     <string name="title_on_plugged">Áp dụng trên phích cắm</string>
     <string name="edit_on_plugged">Chỉnh sửa cài đặt application_on_plug:</string>
-    <string name="edit_on_plugged_dialog_message">Ví dụ: không dây/voltage_max::9000000::9000000 có thể buộc sạc không dây nhanh trên một số thiết bị Pixel.    </string>
     <string name="template_capacity_profile">Tắt nguồn: %1$d%% - Tiếp tục: %2$d%% - Dừng lại: %3$d%%</string>
     <string name="template_temperature_profile">Nhiệt độ:%1$d&#176;C - Tối đa: %2$d&#176;C - Dừng: %3$ds</string>
     <string name="template_cool_down_profile">Bắt đầu lúc: %1$d%% - Sạc trong %2$ds - Tạm dừng trong %3$ds</string>
@@ -152,7 +128,6 @@ Daemon DJS sẽ được bắt đầu khi khởi động cùng với ACC daemon.
     <string name="profile_option_delete">Xóa</string>
     <string name="selecting_profile_toast">Đang chọn hồ sơ %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox chưa được cài đặt</string>
-    <string name="installation_failed_busybox">Cài đặt busybox binary trước</string>
     <string name="share">Chia sẻ</string>
     <string name="logs_not_found">Không tìm thấy tập tin Log.</string>
     <string name="acc_telegram">Để được hỗ trợ thêm, hãy tham gia nhóm ACC Telegram (t.me/acc_group)!</string>
@@ -166,9 +141,6 @@ Một số hệ thống thể hiện dòng điện trong dòngV (microvolts), s�
 Nếu đơn vị được phát hiện không chính xác, bạn có thể đặt thủ công.</string>
     <string name="units_of_measure">Đơn vị đo lường</string>
     <string name="acc_version_preference_title">Phiên bản ACC</string>
-    <string name="acc_version_preference_description">Bạn có thể chọn biến thể ACC để sử dụng: gói, bản chính, phát triển hoặc bất kỳ phiên bản nào được phát hành.
-Phiên bản đi kèm được đảm bảo luôn hoạt động với AccA - do đó, đây là lựa chọn được đề xuất.
-Mặc dù không được bảo đảm, các biến thể khác thường an toàn.</string>
     <string name="install_bundled_version">Cài đặt phiên bản tích hợp</string>
     <string name="acc_version_picker_title">Phiên bản ACC</string>
     <string name="acc_version_picker_message">Chọn biến thể ACC mong muốn</string>
@@ -189,10 +161,6 @@ Mặc dù không được bảo đảm, các biến thể khác thường an to�
     <string name="theme_option_setting">Chủ đề</string>
     <string name="theme_option_summary">Đặt chủ đề của ứng dụng.</string>
     <string name="acc_version_compatibility_warning_title">Tương thích phiên bản ACC</string>
-    <string name="acc_version_compatibility_warning_description">Bạn đã chọn một biến thể ACC không được đảm bảo để tương thích với ứng dụng.
-AccA sẽ tải xuống phiên bản đã chọn từ kho lưu trữ ACC Github.
-Tuy nhiên, hầu hết thời gian, bạn sẽ không phải đối mặt với sự không tương thích.
-Bạn có muốn tiếp tục?    </string>
     <string name="restore">Khôi phục mặc định</string>
     <string name="undo">Hoàn tác</string>
     <string name="checking_updates">Đang kiểm tra cập nhật</string>
@@ -203,12 +171,8 @@ Bạn có muốn tiếp tục?    </string>
     <string name="acc_installation_failed_log">Cài đặt ACC không thành công</string>
     <string name="djs_installation_failed_log">Cài đặt DJS thất bại</string>
     <string name="select_different_version">Thay đổi phiên bản ACC</string>
-    <string name="installation_failed_non_bundled">Việc cài đặt các biến thể ACC khác nhau không thành công.
-Vui lòng xem xét chia sẻ /data/adb/acc-data/logs/ với các nhà phát triển.    </string>
     <string name="prioritize_battery_idle">Ưu tiên chế độ không sử dụng pin</string>
     <string name="test_battery_idle">Kiểm tra chế độ không sử dụng pin</string>
-    <string name="test_battery_idle_supported_result">Kernel của bạn hỗ trợ chế độ không sử dụng pin.</string>
-    <string name="test_battery_idle_unsupported_result">Kernel của bạn không hỗ trợ chế độ không sử dụng pin.</string>
     <string name="schedule_profile_edit_current">Chỉnh sửa cấu hình hiện tại</string>
     <string name="schedule_profile_keep_current">Giữ cấu hình hiện tại</string>
     <string name="schedule_type">Loại lịch trình</string>
@@ -228,13 +192,9 @@ Vui lòng xem xét chia sẻ /data/adb/acc-data/logs/ với các nhà phát tri�
     <string name="edit_schedule">Chỉnh sửa lịch biểu</string>
     <string name="create_schedule">Tạo Lịch</string>
     <!-- About Activity -->
-    <string name="about_acca_version_label">Phiên bản ACCA:</string>
     <string name="about_acc_version_label">Phiên bản ACC:</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Trang web</string>
-    <string name="check_update_dialog_message">Bạn có muốn cài đặt phiên bản ACC mới nhất từ ​​chi nhánh \'%1$s\'?
-ACCA sẽ tải xuống phiên bản ACC mới nhất từ ​​Github dựa trên cam kết mới nhất của chi nhánh được chọn.
-Bạn có muốn tiếp tục?</string>
     <string name="charging_switch_on_value_label">Công tắc sạc ON VALUE</string>
     <string name="charging_switch_off_value_label">Công tắc sạc OFF VALUE</string>
     <string name="reset_bs_on_pause">Đặt lại số liệu thống kê pin khi tạm dừng \%</string>
