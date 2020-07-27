@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ACCA</string>
     <string name="app_name_full">App di Controllo Avanzato della Carica</string>
     <string name="title_activity_log_view">Log</string>
     <string name="title_activity_log_view_file_name">Log</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">Root non presente</string>
-    <string name="tile_acc_enabled">ACC abilitato</string>
-    <string name="tile_acc_disabled">ACC disabilitato</string>
     <!-- Navigation Strings -->
     <string name="title_dashboard">Dashboard</string>
     <string name="title_profiles">Profili</string>
@@ -44,12 +41,10 @@
     <string name="cooldown_capacity">Avvia il cooling down al %%:</string>
     <string name="resume_charge">Riprendi la carica al:</string>
     <string name="stop_charge">Ferma la carica al:</string>
-    <string name="enable_temp_check">Abilita controllo temperatura (°C)</string>
     <string name="max_temp">Temperatura massima:</string>
     <string name="pause_seconds">Secondi di pausa:</string>
     <string name="charge_seconds">Secondi di carica:</string>
     <string name="shutdown_capacity">Spegnimento (se non in carica) al:</string>
-    <string name="no_root_message">Questa app richiede il ROOT.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Interrompi il demone dopo l\'applicazione delle impostazioni</string>
     <!-- ACC installation -->
@@ -67,7 +62,6 @@
     <string name="unsaved_changes">Hai modifiche non salvate</string>
     <string name="close_without_saving">Scarta</string>
     <string name="edit_config">Modifica configurazione</string>
-    <string name="unsaved_changes_message">Hai modifiche non salvate. Vuoi salvarle?</string>
     <string name="create_acc_profile">Crea profilo di configurazione</string>
     <string name="profile_name">Nome del profilo</string>
     <string name="dialog_profile_name_message">Inserisci il nome che vuoi assegnare a questo profilo:</string>
@@ -80,24 +74,20 @@
     <string name="recurrent_schedule">Esegui solo una volta</string>
     <string name="execution_time">Tempo di esecuzione</string>
     <string name="new_config">Nuova configurazione personalizzata</string>
-    <string name="enable_voltage_limit">Abilita limite voltaggio di ricarica</string>
     <string name="voltage_control_file">File di controllo voltaggio:</string>
     <string name="disabled">Disabilitato</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Elimina</string>
     <string name="no_schedules">Nessuna pianificazione</string>
-    <string name="wrong_volt_file">O il file scelto non funziona, o il kernel non supporta questa funzione.</string>
     <string name="edit_charging_switch">Modifica interruttore di ricarica</string>
     <string name="test_switch">Test interruttore di ricarica</string>
     <string name="no_option_selected">Nessuna opzione selezionata; selezionane una!</string>
     <string name="charging_switch_works">L\'interruttore di ricarica selezionato funziona!</string>
-    <string name="plug_battery_to_test">La batteria deve essere in carica prima di testare. Collega il caricabatterie e riprova!</string>
     <string name="automatic">Automatico</string>
     <string name="error_occurred">Si è verificato un errore</string>
     <string name="retry">Riprova</string>
     <string name="apply">Applica</string>
     <string name="done">Fatto</string>
-    <string name="edit_charging_limit_once_dialog_msg">Le impostazioni correnti sono ripristinate automaticamente una volta raggiunto il livello di carica scelto.</string>
     <string name="info">Info</string>
     <string name="title_cooldown_control">Raffredda</string>
     <string name="title_on_boot">Applica all\'avvio</string>
@@ -105,8 +95,6 @@
     <string name="title_capacity_control">Controllo Capacità</string>
     <string name="about">Info su</string>
     <!-- ACC Config Tooltips -->
-    <string name="on_plugged_info">Questo è utilizzato per aggiornare i file il cui contenuto cambia su determinati eventi di potenza (ad esempio, collegato/scollegato). È particolarmente utile per l\'applicazione della tensione massima personalizzata/corrente per la ricarica usb/wireless.</string>
-    <string name="battery_idle_info_label">Se l\'interruttore è selezionato, gli interruttori di ricarica che supportano la modalità della batteria inattiva hanno la precedenza - consentendo al dispositivo di attingere l\'energia direttamente dall\'alimentazione esterna quando la carica è in pausa.&lt;br /&gt;Se il tuo interruttore è disabilitato, significa che il kernel non supporta questa funzione.</string>
     <string name="profile_creator">Creatore di profilo</string>
     <string name="schedule_creator">Creatore di pianificazione</string>
     <string name="charging_switch_label">Interruttore di ricarica:</string>
@@ -119,7 +107,6 @@
     <string name="profile_option_rename">Rinomina</string>
     <string name="profile_option_delete">Elimina</string>
     <string name="installation_failed_busybox_title">Busybox non è installato</string>
-    <string name="installation_failed_busybox">Installa prima busybox</string>
     <string name="share">Condividi</string>
     <string name="current_measure_unit_preference_title">Unità di misura corrente</string>
     <string name="voltage_measure_unit_preference_title">Unità di misura del voltaggio</string>
@@ -163,7 +150,6 @@
     <string name="edit_schedule">Modifica pianificazione</string>
     <string name="create_schedule">Crea una pianificazione</string>
     <!-- About Activity -->
-    <string name="about_acca_version_label">Versione ACCA:</string>
     <string name="about_acc_version_label">Versione ACC:</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Sito Web</string>
