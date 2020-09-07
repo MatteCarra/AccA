@@ -85,14 +85,20 @@ class DashboardFragment : ScopedFragment() {
                 val dialog = MaterialDialog(it.context).show {
                     title(R.string.edit_charging_limit_once)
                     message(R.string.edit_charging_limit_once_dialog_msg)
+                    cancelOnTouchOutside(false)
                     customView(R.layout.edit_charging_limit_once_dialog)
                     positiveButton(R.string.apply) {
                         launch {
-                            Acc.instance.setChargingLimitForOneCharge(getCustomView().findViewById<NumberPicker>(R.id.charging_limit).value)
-                            Toast.makeText(context, R.string.done, Toast.LENGTH_LONG).show()
+                            val limit = getCustomView().findViewById<NumberPicker>(R.id.charging_limit).value
+                            Acc.instance.setChargingLimitForOneCharge(limit)
+                            Toast.makeText(context, getString(R.string.done_applied_charge_limit, limit), Toast.LENGTH_LONG).show()
                         }
                     }
-                    negativeButton(android.R.string.cancel)
+                    negativeButton(android.R.string.cancel) {
+                        launch {
+                            Toast.makeText(context, R.string.charge_limit_not_applied, Toast.LENGTH_LONG).show()
+                        }
+                    }
                 }
 
                 val picker = dialog.getCustomView().charging_limit

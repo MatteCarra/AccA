@@ -144,6 +144,8 @@
     <string name="error_occurred">An error has occurred</string>
     <string name="retry">Retry</string>
     <string name="edit_charging_limit_once">Charge once to #\%, without restrictions</string>
+    <string name="done_applied_charge_limit">Charging to %1$d%%</string>
+    <string name="charge_limit_not_applied">Apply charge limit canceled</string>
     <string name="apply">Apply</string>
     <string name="done">Done</string>
     <string name="edit_charging_limit_once_dialog_msg">Your regular settings are automatically restored once the chosen battery level is reached.</string>
