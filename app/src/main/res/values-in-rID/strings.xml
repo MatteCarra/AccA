@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">AccA</string>
     <string name="app_name_full">Aplikasi Pengontrol Pengisian Lanjutan</string>
     <string name="title_activity_log_view">Log</string>
     <string name="title_activity_log_view_file_name">Log</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">Tanpa akar</string>
+    <string name="tile_acc_enabled">Aplikasi sedang berjalan dibalik layar</string>
+    <string name="tile_acc_disabled">Aplikasi dibalik layar berhenti</string>
     <!-- Navigation Strings -->
     <string name="title_dashboard">Dasbor</string>
     <string name="title_profiles">Profil</string>
     <string name="title_schedules">Jadwal</string>
     <string name="title_settings">Pengaturan</string>
     <!-- ACC Daemon Status -->
+    <string name="title_acc">ACC</string>
     <string name="title_acc_daemon">ACC Daemon</string>
     <string name="acc_daemon_status_running">ACC Daemon Sedang Berlari</string>
     <string name="acc_daemon_status_not_running">Daemon ACC Tidak Berlari</string>
+    <string name="acc_daemon_status_reading_status">Sedang membaca status aplikasi ACC dibalik layar...</string>
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">Hentikan ACC Daemon</string>
     <string name="menu_start_accd">Mulai ACC Daemon</string>
@@ -38,13 +43,17 @@
     <string name="battery_info_label">Info:</string>
     <string name="reset_unplugged">Setel ulang statistik baterai pada cabut</string>
     <string name="reset_stats">Setel ulang statistik baterai</string>
+    <string name="enable_cooldown">Aktifkan siklus pendinginan:</string>
     <string name="cooldown_capacity">Mulai pendinginan di %%:</string>
     <string name="resume_charge">Lanjutkan pengisian di:</string>
     <string name="stop_charge">Hentikan pengisian daya di:</string>
+    <string name="enable_temp_check">Aktifkan kendali suhu (°C)</string>
     <string name="max_temp">Temp maksimum:</string>
     <string name="pause_seconds">Jeda detik:</string>
     <string name="charge_seconds">Isi ulang detik:</string>
     <string name="shutdown_capacity">Shutdown (jika tidak mengisi daya) di:</string>
+    <string name="no_root_message">AccA membutuhkan akses ROOT.</string>
+    <string name="config_error_dialog">Gagal menguraikan konfigurasi ACC!\nMohon periksa dengan konsol terminal dan masukkan perintah \"su -c acc --set --print\" apakah bekerja dengan baik.</string>
     <string name="wait">Harap tunggu...\nIni akan memakan waktu beberapa detik.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Hentikan daemon setelah menerapkan pengaturan</string>
@@ -57,6 +66,7 @@
     <string name="installing_djs">Menginstal DJS</string>
     <string name="djs_installation_failed_title">Pemasangan DJS Gagal!</string>
     <string name="voltage_control_file_not_set">Tidak diatur.</string>
+    <string name="edit_on_boot">Ubah pengaturan apply_on_boot</string>
     <string name="edit_on_boot_dialog_hint">Biarkan kosong untuk menonaktifkan</string>
     <string name="save">Menyimpan</string>
     <string name="logs">Log</string>
@@ -65,6 +75,7 @@
     <string name="unsaved_changes">Anda memiliki perubahan yang belum disimpan</string>
     <string name="close_without_saving">Membuang</string>
     <string name="edit_config">Edit konfigurasi</string>
+    <string name="unsaved_changes_message">Simpan perubahan?</string>
     <string name="create_acc_profile">Buat profil konfigurasi</string>
     <string name="profile_name">Nama profil</string>
     <string name="dialog_profile_name_message">Masukkan nama yang Anda inginkan untuk profil ini:</string>
@@ -77,27 +88,37 @@
     <string name="recurrent_schedule">Jalankan hanya sekali</string>
     <string name="execution_time">Waktu eksekusi</string>
     <string name="new_config">Konfigurasi khusus baru</string>
+    <string name="enable_voltage_limit">Memilih ambang batas tegangan pengisian daya</string>
     <string name="voltage_control_file">File kontrol tegangan:</string>
+    <string name="edit_power_limit">Ubah ambang batas arus dan tegangan</string>
+    <string name="voltage_max">Tegangan maksimum (milivolt/mV):</string>
     <string name="disabled">Dengan disabilitas</string>
     <string name="schedule_execute_once_row_title">Exec. Sekali - %1$02d:%2$02d</string>
     <string name="schedule_boot_row_text">Pekerjaan boot dijadwalkan</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Menghapus</string>
     <string name="no_schedules">Tidak ada jadwal yang ditetapkan</string>
+    <string name="invalid_voltage_max">Nilai harus berupa angka antara 3700 dan 4200 (milivolt/mV)</string>
     <string name="edit_charging_switch">Edit saklar pengisian daya</string>
     <string name="test_switch">Uji sakelar pengisian daya</string>
     <string name="no_option_selected">Tidak ada opsi yang dipilih; tolong pilih satu!</string>
     <string name="charging_switch_works">Sakelar pengisian daya terpilih berfungsi!</string>
+    <string name="charging_switch_does_not_work">Sakelar pengisian daya yang dipilih salah!</string>
+    <string name="plug_battery_to_test">Pasang pengisi daya dan coba lagi!</string>
     <string name="automatic">Otomatis</string>
     <string name="error_occurred">Sebuah kesalahan telah terjadi</string>
     <string name="retry">Mencoba kembali</string>
+    <string name="edit_charging_limit_once">Pengisian daya sekali untuk #\%, tanpa dibatasi</string>
     <string name="apply">Menerapkan</string>
     <string name="done">Selesai</string>
+    <string name="edit_charging_limit_once_dialog_msg">Pengaturan rutin Anda secara otomatis dipulihkan setelah tingkat baterai yang dipilih tercapai.</string>
+    <string name="title_power_control">Kendali pengisian daya</string>
     <string name="info">Info</string>
     <string name="title_cooldown_control">Tenang</string>
     <string name="title_on_boot">Terapkan pada Boot</string>
     <string name="title_temperature_control">Pengatur suhu</string>
     <string name="title_capacity_control">Kontrol Kapasitas</string>
+    <string name="title_miscellaneous_control">Lainnya</string>
     <string name="about">Tentang</string>
     <!-- ACC Config Tooltips -->
     <string name="acc_config_editor">Editor konfigurasi ACC</string>
@@ -105,6 +126,7 @@
     <string name="schedule_creator">Jadwalkan pembuat</string>
     <string name="charging_switch_label">Saklar pengisian:</string>
     <string name="title_on_plugged">Terapkan pada Plug</string>
+    <string name="edit_on_plugged">Ubah pengaturan apply_on_plug:</string>
     <string name="template_capacity_profile">Shutdown: %1$d%% - Lanjutkan: %2$d%% - Stop: %3$d%%</string>
     <string name="template_temperature_profile">Suhu: %1$d&#176;C - Maks: %2$d&#176;C - Jeda: %3$ds</string>
     <string name="template_cool_down_profile">Mulai di: %1$d%% - Biaya untuk %2$ds - Jeda untuk %3$ds</string>
@@ -161,6 +183,8 @@
     <string name="select_different_version">Ubah versi ACC</string>
     <string name="prioritize_battery_idle">Prioritaskan mode siaga baterai</string>
     <string name="test_battery_idle">Uji mode siaga baterai</string>
+    <string name="test_battery_idle_supported_result">Kernel mendukung mode siaga baterai.</string>
+    <string name="test_battery_idle_unsupported_result">Kernel tidak mendukung mode siaga baterai.</string>
     <string name="schedule_profile_edit_current">Edit konfigurasi saat ini</string>
     <string name="schedule_profile_keep_current">Pertahankan konfigurasi saat ini</string>
     <string name="schedule_type">Jenis jadwal</string>
@@ -180,11 +204,31 @@
     <string name="edit_schedule">Edit jadwal</string>
     <string name="create_schedule">Buat jadwal</string>
     <!-- About Activity -->
+    <string name="about_team_title">Temui Tim</string>
+    <string name="about_attributes">Atribut</string>
+    <string name="about_acca_version_label">Versi AccA:</string>
     <string name="about_acc_version_label">Versi ACC:</string>
+    <string name="about_project_github">AccA GitHub</string>
+    <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Situs web</string>
+    <string name="add_charging_switch">Tambahkan Sakelar Pengisian Daya</string>
     <string name="charging_switch_on_value_label">Sakelar pengisian ON VALUE</string>
     <string name="charging_switch_off_value_label">Sakelar pengisian OFF VALUE</string>
+    <string name="reset_bs_on_pause">Setel ulang statistik baterai pada jeda \%</string>
     <!-- Import and Export -->
+    <string name="import_title">Impor</string>
+    <string name="export_title">Ekspor</string>
+    <string name="export_none_selected">Silakan pilih profil yang akan diekspor di atas</string>
+    <string name="menu_import">Impor</string>
+    <string name="menu_export">Ekspor</string>
+    <string name="menu_title_load_clipboard">Muat dari Papan klip</string>
+    <string name="menu_title_clear_entries">Bersihkan Entri</string>
+    <string name="import_toast_no_valid_profile_json_clipboard">JSON Profil ACCA yang valid tidak ada di Papan klip</string>
+    <string name="import_toast_no_selected_profiles">Silakan pilih Profil yang akan Diimpor</string>
+    <string name="import_profile_success">Berhasil mengimpor %d profil</string>
     <!-- Config Parse Error -->
+    <string name="parse_failed_body">Anda dapat mencoba memuat konfigurasi default dengan menekan \'Muat Default\'. Harap dicatat bahwa AccA tidak akan berfungsi.
+         \n\nJika kesalahan berlanjut, silakan bagikan jejak tumpukan di bawah ini bersama dengan versi ACC&amp; AccA (melalui menu 3-titik &gt; Tentang) dengan pengembang melalui Telegram.\n\n%s</string>
+    <string name="automatic_switch_eanbled">Secara otomatis beralih melalui sakelar</string>
 </resources>
