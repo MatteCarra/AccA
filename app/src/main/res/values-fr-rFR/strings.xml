@@ -5,7 +5,7 @@
     <string name="title_activity_log_view">Logs</string>
     <string name="title_activity_log_view_file_name">Logs</string>
     <!-- ACC Tile Strings -->
-    <string name="tile_acc_no_root">Pas d\'accès \"root\"</string>
+    <string name="tile_acc_no_root">Pas d\'accès » root «</string>
     <string name="tile_acc_enabled">Démon en cours d\'exécution</string>
     <string name="tile_acc_disabled">Démon arrêté</string>
     <!-- Navigation Strings -->
@@ -114,6 +114,7 @@
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Supprimer</string>
     <string name="no_schedules">Aucune planification définie</string>
+    <string name="wrong_volt_file">Soit le fichier choisi ne fonctionne pas, soit votre noyau ne supporte pas cette fonctionnalité.</string>
     <string name="invalid_voltage_max">La valeur doit être un nombre compris entre 3700 et 4200 (millivolts)</string>
     <string name="edit_charging_switch">Modifier l\'interrupteur de charge</string>
     <string name="test_switch">Tester l\'interrupteur de charge</string>
