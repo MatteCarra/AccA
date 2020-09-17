@@ -14,6 +14,7 @@
     <string name="title_acc_daemon">ACC デーモン</string>
     <string name="acc_daemon_status_running">ACC デーモン実行中</string>
     <string name="acc_daemon_status_not_running">ACC デーモン停止中</string>
+    <string name="acc_daemon_status_reading_status">ACC デーモンステータスを読み込んでいます...</string>
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">ACC デーモン停止</string>
     <string name="menu_start_accd">ACC デーモン開始</string>
@@ -42,11 +43,13 @@
     <string name="cooldown_capacity">クールダウン開始 %%:</string>
     <string name="resume_charge">充電再開:</string>
     <string name="stop_charge">充電停止:</string>
+    <string name="enable_temp_check">温度制御を有効にする (°C)</string>
     <string name="cooldown_temp">クールダウン温度:</string>
     <string name="max_temp">最大温度:</string>
     <string name="pause_seconds">停止秒時間:</string>
     <string name="charge_seconds">充電秒時間:</string>
     <string name="shutdown_capacity">シャットダウン (非充電時):</string>
+    <string name="no_root_message">AccA には ROOT が必要です。</string>
     <string name="config_error_title">設定解析エラー</string>
     <string name="config_error_dialog">ACC設定の解析に失敗しました！\n\"su-c acc --set --print\"が動作するか確認してください。</string>
     <string name="wait">お待ちください...\nしばらく時間がかかります.</string>
@@ -56,10 +59,20 @@
     <!-- ACC installation -->
     <string name="installing_acc">ACC インストール中</string>
     <string name="reboot">再起動</string>
+    <string name="acc_installation_failed">アーカイブし, logcat と /data/adb/acc-data/logs/ を開発者に送信してください.
+        t.me/acc_group/ もしくは github.com/MatteCarra/AccA/issues/ まで.
+    </string>
     <string name="acc_installation_failed_title">ACC インストール失敗！</string>
     <!-- DJS installation -->
     <string name="install_djs_title">DJS が必要です</string>
+    <string name="install_djs_description">この機能の動作のために, DJS を有効化する必要があります.
+        \nDJS (Daily Job Scheduler) は, ACC プロファイル/設定をスケジューリングするための軽量なアドオンです.
+        \nDJS デーモンは ACC と共に起動時に開始されます.
+    </string>
     <string name="installing_djs">DJS インストール中</string>
+    <string name="djs_installation_failed">アーカイブし, logcat と /data/adb/djs-data/logs/ を開発者に送信してください.
+        t.me/acc_group/ もしくは github.com/MatteCarra/AccA/issues/ まで.
+    </string>
     <string name="djs_installation_failed_title">DJS インストール失敗！</string>
     <string name="voltage_control_file_not_set">未設定</string>
     <string name="edit_on_boot_dialog_hint">空欄で無効</string>
@@ -74,6 +87,7 @@
     <string name="unsaved_changes">保存していない変更があります</string>
     <string name="close_without_saving">破棄</string>
     <string name="edit_config">設定編集</string>
+    <string name="unsaved_changes_message">変更を保存しますか?</string>
     <string name="create_acc_profile">設定プロファイルを作成</string>
     <string name="profile_name">プロファイル名</string>
     <string name="dialog_profile_name_message">プロファイル名の入力:</string>
@@ -86,7 +100,10 @@
     <string name="recurrent_schedule">1度だけ実行</string>
     <string name="execution_time">実行時間:</string>
     <string name="new_config">新規カスタム設定</string>
+    <string name="enable_voltage_limit">カスタム充電電圧制限</string>
     <string name="voltage_control_file">電圧制御ファイル:</string>
+    <string name="edit_power_limit">電流制限と電圧制限を編集</string>
+    <string name="voltage_max">最大電圧 (ミリボルト):</string>
     <string name="disabled">無効化</string>
     <string name="delete">削除</string>
     <string name="no_schedules">スケジュールなし</string>
@@ -94,25 +111,38 @@
     <string name="test_switch">充電切り替えテスト</string>
     <string name="no_option_selected">選択されたオプションなし; １つ選択してください！</string>
     <string name="charging_switch_works">選択された充電切り替えは動作します！</string>
+    <string name="charging_switch_does_not_work">選択された充電切り替えが動作しません!</string>
+    <string name="plug_battery_to_test">充電器を接続してもう一度お試しください!</string>
     <string name="automatic">自動</string>
     <string name="error_occurred">エラーが発生しました</string>
     <string name="retry">リトライ</string>
+    <string name="edit_charging_limit_once">制限なしで, 一度 #\%, まで充電する</string>
     <string name="apply">適用</string>
     <string name="done">完了</string>
+    <string name="edit_charging_limit_once_dialog_msg">選択したバッテリー残量に達すると、通常の設定が自動的に復元されます.</string>
     <string name="title_power_control">充電電力制御</string>
     <string name="info">Info</string>
     <string name="title_cooldown_control">クールダウン</string>
     <string name="title_on_boot">起動時に適用</string>
     <string name="title_temperature_control">温度制御</string>
     <string name="title_capacity_control">容量制御</string>
+    <string name="title_miscellaneous_control">その他</string>
     <string name="about">About</string>
     <!-- ACC Config Tooltips -->
+    <string name="capacity_control_info">- シャットダウン: バッテリーが充電されていないとき, この値で/以下で自動的にシステムをシャットダウンする.&lt;br /&gt;- 停止: と再開は, 充電が停止または再開するべきときの残量をそれぞれ指示する.&lt;br /&gt;- 充電切り替え は制御ファイルであり, 充電 on/off のための ON と OFF の値である. デフォルトでは, ACC は動作するものを使用する.</string>
     <string name="power_control_info">- ピーク時の充電電圧が 0.10V/cell 減少する毎に寿命が2倍になると言われる.&lt;br /&gt;- 残念ながら, すべての機器/カーネルがこの機能をサポートするとは限りません.</string>
+    <string name="temperature_control_info">- これはバッテリーを冷却するために設定秒間, 充電を無効にする.&lt;br /&gt;- 「クールダウン温度」は「クールダウン比率」に依存する.&lt;br /&gt;- 「最大温度」は停止秒間に作用する.</string>
+    <string name="cooldown_info">- 秒時間での充電 ON/OFF 率 (例 50/10) - 充電を周期的に停止することで高い充電電圧と高い温度にされることによるバッテリーストレスを減らす.&lt;br /&gt;- 充電速度が非常に遅い場合, これをオフにするかこの比率を変更せよ.&lt;br /&gt;- 無効化の場合, 「クールダウン残量」と「クールダウン温度」は無効にされる.&lt;br /&gt;- この機能性は充電電圧制限機能に適する代替手段です.</string>
+    <string name="on_plugged_info">これは, 特定の電源イベントで内容が変化する制御ファイルの更新のために使用される(例 プラグ接続/プラグ切断). 特に usb/ワイヤレス充電のためにカスタム最大電圧/電流を強制的に変更するために役立ちます.</string>
+    <string name="battery_idle_info_label">これは充電が一時停止されたとき, デバイスに外部電源から直接電力を供給することを許可します.</string>
+    <string name="miscellaneous_info_label">他の定義されたカテゴリに適合しなかったさまざまな acc 設定</string>
     <string name="acc_config_editor">ACC 設定編集</string>
     <string name="profile_creator">プロファイル作成</string>
     <string name="schedule_creator">スケジュール作成</string>
     <string name="charging_switch_label">充電切り替え:</string>
     <string name="title_on_plugged">接続時適用</string>
+    <string name="edit_on_plugged_dialog_message">例: wireless/voltage_max::9000000 は, いくつかの Pixel デバイスで高速なワイヤレス充電を強制する.
+    </string>
     <string name="template_capacity_profile">シャットダウン: %1$d%% - 再開: %2$d%% - 停止: %3$d%%</string>
     <string name="template_temperature_profile">温度: %1$d&#176;C - 最大: %2$d&#176;C - 停止: %3$ds</string>
     <string name="template_cool_down_profile">開始: %1$d%% - 充電 %2$ds - 停止 %3$ds</string>
@@ -121,6 +151,7 @@
     <string name="profile_option_rename">名前を変更</string>
     <string name="profile_option_delete">削除</string>
     <string name="installation_failed_busybox_title">Busybox がインストールされていません。</string>
+    <string name="installation_failed_busybox">busybox を最初にインストールするか, バイナリを /data/adb/bin/ に配置せよ</string>
     <string name="share">共有</string>
     <string name="logs_not_found">ログファイルが見つかりません.</string>
     <string name="acc_telegram">追加のサポートのために, ACC Telegram group (t.me/acc_group) に参加して！</string>
@@ -136,6 +167,10 @@
     </string>
     <string name="units_of_measure">測定単位</string>
     <string name="acc_version_preference_title">ACCバージョン</string>
+    <string name="acc_version_preference_description">使用する ACC を選択できます: 同梱版 (安定, 多くの使用者に推奨される), master (安定), develop(テスト段階であるが, 必ずしも不安定ではない) または タグ付けされたいくつかのバージョン.
+        同梱版は常に AccA と動作することが保証されます - それゆえ推奨される選択肢です.
+        保証はされませんが, 別のものは概して安全です.
+    </string>
     <string name="install_bundled_version">同梱版をインストール</string>
     <string name="acc_version_picker_title">ACCバージョン</string>
     <string name="acc_version_picker_message">希望する ACC の選択</string>
@@ -156,6 +191,11 @@
     <string name="theme_option_setting">テーマ</string>
     <string name="theme_option_summary">アプリのテーマ設定</string>
     <string name="acc_version_compatibility_warning_title">ACC バージョン適合性</string>
+    <string name="acc_version_compatibility_warning_description">アプリと適合される保証がない ACC を選択しました.
+        \n多くの場合, 不適合性に直面しないだろうけども.
+        \nAccA は ACC の GitHub リポジトリから選択されたバージョンをダウンロードしようとします.
+        \n継続しますか?
+    </string>
     <string name="restore">デフォルトに戻す</string>
     <string name="undo">元に戻す</string>
     <string name="checking_updates">アップデートの確認</string>
@@ -166,8 +206,13 @@
     <string name="acc_installation_failed_log">ACC インストール失敗ログ</string>
     <string name="djs_installation_failed_log">DJS インストール失敗ログ</string>
     <string name="select_different_version">ACC バージョンの変更</string>
+    <string name="installation_failed_non_bundled">異なる ACC のインストールに失敗しました.
+        \n開発に /data/adb/acc-data/logs/ をアーカイブし, 共有することを検討してください.
+    </string>
     <string name="prioritize_battery_idle">バッテリーアイドルモード優先</string>
     <string name="test_battery_idle">バッテリーアイドルモードテスト</string>
+    <string name="test_battery_idle_supported_result">カーネルはバッテリーアイドルモードをサポートしています.</string>
+    <string name="test_battery_idle_unsupported_result">カーネルはバッテリーアイドルモードをサポートしていません.</string>
     <string name="schedule_profile_edit_current">現在の設定を編集</string>
     <string name="schedule_profile_keep_current">現在の設定を保持</string>
     <string name="schedule_type">スケジュールタイプ</string>
@@ -188,13 +233,34 @@
     <string name="create_schedule">スケジュール作成</string>
     <!-- About Activity -->
     <string name="about_acc_version_label">ACCバージョン:</string>
+    <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">ウェブサイト</string>
+    <string name="toast_no_browser_installed">リンクを開くことができません!\nウェブブラウザがインストールされているか確認してください.</string>
+    <string name="install_update_dialog">ACC アップデートのインストール</string>
+    <string name="check_update_dialog_message">ブランチから ACC の最新版をインストールしますか \'%1$s\'?
+        \nAccA は選択された最新コミットに基づいて GitHub から ACC の最新版をダウンロードします.
+        \n継続しますか?</string>
+    <string name="add_charging_switch">充電切り替えを追加</string>
     <string name="charging_switch_on_value_label">充電切り替えをONする値</string>
     <string name="charging_switch_off_value_label">充電切り替えをOFFする値</string>
     <string name="reset_bs_on_pause">中断時バッテリー状態リセット \%</string>
+    <string name="current_max">最大電流 (mA):</string>
+    <string name="invalid_current_max">最大電流値が無効です</string>
     <!-- Import and Export -->
     <string name="import_title">インポート</string>
+    <string name="import_load_from_clipboard">ツールバーの \'クリップボード\' アイコンを押してください!</string>
     <string name="export_title">エクスポート</string>
+    <string name="export_none_selected">上のエクスポートするプロファイルを選択してください.</string>
+    <string name="menu_import">インポート</string>
+    <string name="menu_export">エクスポート</string>
+    <string name="menu_title_load_clipboard">クリップボードから読み込む</string>
+    <string name="menu_title_clear_entries">入力をクリア</string>
+    <string name="import_toast_no_valid_profile_json_clipboard">有効な ACCA プロファイル JSON がクリップボードにありません</string>
+    <string name="import_toast_no_selected_profiles">インポートするプロファイルを選択してください</string>
+    <string name="import_profile_success">%d プロファイルを正常にインポートしました</string>
     <!-- Config Parse Error -->
+    <string name="parse_failed_title">ACC 設定の解析に失敗しました</string>
+    <string name="parse_failed_body">\'デフォルト読込み\' を押すことでデフォルト設定の読み込むことができます. AccA が動作しないとき留意してください.
+        \n\nもしエラーが継続する場合, Telegram を通して開発者に以下の ACC &amp; AccA バージョン (the 3-dot menu &gt; About から)と一緒に stack trace を共有してください \n\n%s</string>
 </resources>
