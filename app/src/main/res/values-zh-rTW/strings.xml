@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ACCA</string>
     <string name="app_name_full">Advanced Charging Controller App</string>
     <string name="title_activity_log_view">記錄檔</string>
     <string name="title_activity_log_view_file_name">記錄檔</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">沒有 Root 權限</string>
-    <string name="tile_acc_enabled">ACC 已啟用</string>
-    <string name="tile_acc_disabled">ACC 已關閉</string>
     <!-- Navigation Strings -->
     <string name="title_dashboard">資訊面板</string>
     <string name="title_profiles">設定檔</string>
@@ -45,13 +42,11 @@
     <string name="cooldown_capacity">開始冷卻閥值 %% ：</string>
     <string name="resume_charge">重新開始充電閥值:</string>
     <string name="stop_charge">停止充電閥值:</string>
-    <string name="enable_temp_check">啟用溫度檢查 (°C)</string>
     <string name="cooldown_temp">最低溫度：</string>
     <string name="max_temp">最高溫度:</string>
     <string name="pause_seconds">暫停秒數:</string>
     <string name="charge_seconds">充電秒數:</string>
     <string name="shutdown_capacity">關機閥值 (沒有充電情況下):</string>
-    <string name="no_root_message">需要 ROOT 才可以使用</string>
     <string name="config_error_title">設定解析錯誤</string>
     <string name="config_error_dialog">解析 ACC 設定失敗！ \n請檢查\"su -c acca --set --print\" 是否正常工作</string>
     <string name="wait">請稍候...\n可能需要幾秒。</string>
@@ -61,20 +56,10 @@
     <!-- ACC installation -->
     <string name="installing_acc">正在安裝 ACC</string>
     <string name="reboot">重新啟動</string>
-    <string name="acc_installation_failed">請把 logcat 和 /data/adb/acc-data/logs/ 回報給開發人員
-        回報至: t.me/acc_group/ 或github.com/MatteCarra/AccA/issues/.
-    </string>
     <string name="acc_installation_failed_title">ACC 安裝失敗！</string>
     <!-- DJS installation -->
     <string name="install_djs_title">需要安裝 DJS</string>
-    <string name="install_djs_description">這個功能必須起用 DJS 才能正常執行。
-        \nDJS (Daily Job Scheduler) 是用於設定 ACC 每日排程的輕量級插件。
-        \nDJS 將在開機時與 ACC 同時啟動。
-    </string>
     <string name="installing_djs">正在安裝 DJS</string>
-    <string name="djs_installation_failed">請把 logcat 和 /data/adb/djs-data/logs/ 回報給開發人員
-        回報至: t.me/acc_group/ 或 github.com/MatteCarra/AccA/issues/.
-    </string>
     <string name="djs_installation_failed_title">DJS 安裝失敗！</string>
     <string name="voltage_control_file_not_set">未設定。</string>
     <string name="edit_on_boot">編輯 applyOnboot 設定</string>
@@ -88,7 +73,6 @@
     <string name="unsaved_changes">您尚未保存所作的更改</string>
     <string name="close_without_saving">捨棄</string>
     <string name="edit_config">編輯設定</string>
-    <string name="unsaved_changes_message">您有尚未儲存的更動，是否要保存？</string>
     <string name="create_acc_profile">建立設定檔</string>
     <string name="profile_name">設定檔名稱</string>
     <string name="dialog_profile_name_message">請輸入設定檔名稱:</string>
@@ -101,10 +85,7 @@
     <string name="recurrent_schedule">僅運行一次</string>
     <string name="execution_time">執行時間</string>
     <string name="new_config">新增自訂設定</string>
-    <string name="enable_voltage_limit">啟用充電電壓限制</string>
     <string name="voltage_control_file">電壓控制文件:</string>
-    <string name="edit_power_limit">編輯電流和電壓限制</string>
-    <string name="voltage_max">Voltage max (millivolts):</string>
     <string name="disabled">停用</string>
     <string name="schedule_recurrent_row_text">重複任務已計劃於 %1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_title">執行一次 - %1$02d:%2$02d</string>
@@ -113,21 +94,16 @@
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">刪除</string>
     <string name="no_schedules">未安排排程</string>
-    <string name="wrong_volt_file">選擇檔案無效，或是目前內核不支援此功能。</string>
     <string name="invalid_voltage_max">此數值應該在 3700 至 4200 (毫伏) 之間</string>
     <string name="edit_charging_switch">編輯充電開關</string>
     <string name="test_switch">測試充電開關</string>
     <string name="no_option_selected">未選擇任何選項，請選擇一個!</string>
     <string name="charging_switch_works">選擇的充電開關可用！</string>
-    <string name="charging_switch_does_not_work">選擇的充電開關無效！</string>
-    <string name="plug_battery_to_test">測試必須在電池充電時進行，請插上充電線再測試一次！</string>
     <string name="automatic">自動</string>
     <string name="error_occurred">發生了一個錯誤</string>
     <string name="retry">重試</string>
-    <string name="edit_charging_limit_once">一次將電充至指定電量（不間斷且無其餘限制）</string>
     <string name="apply">套用</string>
     <string name="done">Done</string>
-    <string name="edit_charging_limit_once_dialog_msg">電量達到所選的數值後，將會自動恢復當前設定。</string>
     <string name="title_power_control">充電功率控制</string>
     <string name="info">關於</string>
     <string name="title_cooldown_control">冷卻</string>
@@ -135,19 +111,14 @@
     <string name="title_temperature_control">控制溫度</string>
     <string name="about">關於</string>
     <!-- ACC Config Tooltips -->
-    <string name="capacity_control_info">- 關機: 手機在沒有充電的情況下，如果電量低於您設定的數值，手機將會自動關機。&lt;br /&gt;- 停止充電:電量大於您設定的數值將停止充電。重新開始充電:電量小於您設定的數值將開始充電.&lt;br /&gt;- CHARGING SWITCH 是控制文件, 加上ON / OFF值，用於開啟/關閉充電. By default, ACC uses whatever works.</string>
     <string name="power_control_info">- 充電電壓峰值每下降 0.10V, 據說就能讓電池壽命翻倍。&lt;br /&gt; - 不幸的是，並非所有機型/內核都支持此功能。</string>
     <string name="temperature_control_info">- 此選項將按設定的秒數暫停充電，以冷卻電池。&lt;br /&gt; - 冷卻溫度取決於冷卻比率。&lt;br /&gt;　－達到最高溫度後充電將按暫停秒數暫停。</string>
-    <string name="cooldown_info">- 以秒為單位的充電開/關比率(例如冷卻率=50/10) - 通過定期暫停充電，減少因長時間高溫高壓充電對電池造成的壓力。&lt;br /&gt; - 如果充電太慢，請關閉此設定或改變比率。&lt;br /&gt; - 當禁用時，冷卻電量和冷卻溫度值將被置為零。&lt;br /&gt; - 此設定是充電電壓限制功能的一種可行替代。</string>
-    <string name="on_plugged_info">一些文件的內容會隨特定電源事件 (例如插/拔電) 變化。此選項設定用於更新這些文件，在為USB/無線充電 強制設定最大充電電壓/電流時特別有用。</string>
-    <string name="battery_idle_info_label">如果啟用，表示您的內核支援電池空閒模式（idle mode），允許手機在停止充電時直接從充電器獲取電源。- &lt;br /&gt;如果此選項被停用，表示您的內核可能不支援此功能。</string>
     <string name="acc_config_editor">ACC 設定檔編輯</string>
     <string name="profile_creator">新增設定檔</string>
     <string name="schedule_creator">新增排程</string>
     <string name="charging_switch_label">充電開關:</string>
     <string name="title_on_plugged">Apply on Plug</string>
     <string name="edit_on_plugged">編輯（apply_on_plug）設置：</string>
-    <string name="edit_on_plugged_dialog_message">範例: wireless/voltage_max::9000000::9000000 強制開啟Pixel設備無線快充    </string>
     <string name="template_capacity_profile">關機: %1$d%% - 重新開始充電: %2$d%% - 停止充電: %3$d%%</string>
     <string name="template_temperature_profile">溫度: %1$d&#176;C - 最大:%2$d&#176;C -暫停: %3$d秒</string>
     <string name="template_cool_down_profile">開始於: %1$d%% - 充電 %2$d 秒 - 暫停 %3$d 秒</string>
@@ -157,7 +128,6 @@
     <string name="profile_option_delete">刪除</string>
     <string name="selecting_profile_toast">選擇設定檔案 %1$s</string>
     <string name="installation_failed_busybox_title">未安裝 Busybox</string>
-    <string name="installation_failed_busybox">請先安裝 busybox 二進製文件</string>
     <string name="share">分享</string>
     <string name="logs_not_found">找不到 Log 文件。</string>
     <string name="acc_telegram">歡迎加入 ACC Telegram 群組 ，可以瞭解更多的使用方法, (t.me/acc_group)!</string>
@@ -170,9 +140,6 @@
         如果取得的單位不正確，您可以手動選擇。</string>
     <string name="units_of_measure">計量單位</string>
     <string name="acc_version_preference_title">ACC 版本</string>
-    <string name="acc_version_preference_description">您可以自由選擇適合的 ACC 版本：bundled, master, 開發版或任何的正式版本。
-        推薦選擇 Bundled 版本 ，保證與 AccA 相容。
-        其他版本通常來講是穩定的，但也是會有例外發生    </string>
     <string name="install_bundled_version">安裝 bundled 版本</string>
     <string name="acc_version_picker_title">ACC 版本</string>
     <string name="acc_version_picker_message">選擇 ACC 版本</string>
@@ -193,10 +160,6 @@
     <string name="theme_option_setting">主題</string>
     <string name="theme_option_summary">設定主題</string>
     <string name="acc_version_compatibility_warning_title">ACC 版本相容性</string>
-    <string name="acc_version_compatibility_warning_description">您選擇的 ACC 版本並不保證相容本app。
-        \nAccA 將從ACC的Github 下載選取的版本。
-        \n實際上大多情況並不會不相容。
-        \n要繼續嗎？    </string>
     <string name="restore">回復預設值</string>
     <string name="undo">復原</string>
     <string name="checking_updates">檢查更新</string>
@@ -207,12 +170,8 @@
     <string name="acc_installation_failed_log">ACC 安裝失敗記錄檔</string>
     <string name="djs_installation_failed_log">DJS 安裝失敗記錄檔</string>
     <string name="select_different_version">切換 ACC 版本</string>
-    <string name="installation_failed_non_bundled">安裝其他版本 ACC 失敗。
-        \n請考慮分享/data/adb/acc-data/logs/ 給開發者。    </string>
     <string name="prioritize_battery_idle">優先使用電池 idle mode</string>
     <string name="test_battery_idle">測試電池 idle mode</string>
-    <string name="test_battery_idle_supported_result">手機內核支援電池 idle mode。</string>
-    <string name="test_battery_idle_unsupported_result">手機內核不支援電池 idle mode.</string>
     <string name="schedule_profile_edit_current">編輯當前文件</string>
     <string name="schedule_profile_keep_current">保留當前設定</string>
     <string name="schedule_type">排程類型</string>
@@ -232,27 +191,14 @@
     <string name="edit_schedule">編輯排程</string>
     <string name="create_schedule">新增排程</string>
     <!-- About Activity -->
-    <string name="about_team_blurb">感謝您使用 ACCA！
-        \n我們耗費了許多時間來讓您享受此軟體。
-        \n通過各種方式作出貢獻的人們致以特別的感謝：
-        捐款， 提供建議，提供程式碼，提交bug，以及互相幫助！    </string>
-    <string name="about_acca_version_label">ACCA 版本:</string>
     <string name="about_acc_version_label">ACC 版本:</string>
-    <string name="about_project_github">在 GitHub 上的專案</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Website</string>
-    <string name="toast_no_browser_installed">無法開啟連結!\n請檢查您是否有安裝網頁瀏覽器。</string>
-    <string name="install_update_dialog">安裝 ACC 更新</string>
-    <string name="check_update_dialog_message">是否要從\'%1$s\'安裝最新版本的 ACC？
-        \nACCA 將從 Github 下載最新版的ACC
-        \n要繼續嗎？</string>
-    <string name="add_charging_switch">新增充電開關</string>
     <string name="charging_switch_on_value_label">開始充電</string>
     <string name="charging_switch_off_value_label">停止充電</string>
     <string name="reset_bs_on_pause">暫停時重設電池數據 \%</string>
-    <string name="current_max">最大電流（mA）：</string>
-    <string name="invalid_current_max">目前最大值無效</string>
     <!-- Import and Export -->
     <string name="import_title">匯入</string>
     <string name="export_title">匯出</string>
+    <!-- Config Parse Error -->
 </resources>

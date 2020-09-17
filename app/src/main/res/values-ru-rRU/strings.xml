@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">АССА</string>
     <string name="app_name_full">Advanced Charging Controller App</string>
     <string name="title_activity_log_view">Отчеты</string>
     <string name="title_activity_log_view_file_name">Отчеты</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">Отсутствует Root</string>
-    <string name="tile_acc_enabled">ACC включен</string>
-    <string name="tile_acc_disabled">ACC выключен</string>
     <!-- Navigation Strings -->
     <string name="title_dashboard">Мониторинг</string>
     <string name="title_profiles">Профили</string>
@@ -45,13 +42,11 @@
     <string name="cooldown_capacity">Начать охлаждение при %%:</string>
     <string name="resume_charge">Возобновить зарядку при:</string>
     <string name="stop_charge">Остановить зарядку при:</string>
-    <string name="enable_temp_check">Включить проверка температуры (°C)</string>
     <string name="cooldown_temp">Темп замедления:</string>
     <string name="max_temp">Макс. температура:</string>
     <string name="pause_seconds">Пауза сек.:</string>
     <string name="charge_seconds">Зарядка сек.:</string>
     <string name="shutdown_capacity">Выключение (если не заряжается) в:</string>
-    <string name="no_root_message">Это приложение требует ROOT.</string>
     <string name="config_error_title">Ошибка распознавания конфигурации</string>
     <string name="config_error_dialog">Не удалось распознать конфигурацию ACC!\nПожалуйста, проверьте, работает ли \"su -c acc --set --print\".</string>
     <string name="wait">Пожалуйста, подождите...\nЭто займет несколько секунд.</string>
@@ -61,20 +56,10 @@
     <!-- ACC installation -->
     <string name="installing_acc">Установка ACC</string>
     <string name="reboot">Перезапустить</string>
-    <string name="acc_installation_failed">Пожалуйста, отправьте logcat и /data/adb/acc-data/logs/ разработчикам
-        в t.me/acc_group/ или github.com/MatteCarra/AccA/issues/.
-    </string>
     <string name="acc_installation_failed_title">Установка ACC не удалась!</string>
     <!-- DJS installation -->
     <string name="install_djs_title">Требуется DJS</string>
-    <string name="install_djs_description">Для работы этой функции необходимо включить DJS.
-        \nDJS (Daily Job Scheduler) является легким дополнением для планирования настроек ACC.
-        \nDJS будет запущен вместе со службой ACC.
-    </string>
     <string name="installing_djs">Установка DJS</string>
-    <string name="djs_installation_failed">Пожалуйста, отправьте logcat и /data/adb/djs-data/logs/ разработчикам
-        в t.me/acc_group/ или github.com/MatteCarra/AccA/issues/.
-    </string>
     <string name="djs_installation_failed_title">Установка DJS не удалась!</string>
     <string name="voltage_control_file_not_set">Не задано.</string>
     <string name="edit_on_boot">Изменить настройки apply_on_boot</string>
@@ -100,10 +85,7 @@
     <string name="recurrent_schedule">Запустить только один раз</string>
     <string name="execution_time">Время выполнения</string>
     <string name="new_config">Новая пользовательская конфигурация</string>
-    <string name="enable_voltage_limit">Включить ограничение напряжения при зарядке</string>
     <string name="voltage_control_file">Файл управления напряжением:</string>
-    <string name="edit_power_limit">Изменить лимит тока и напряжения</string>
-    <string name="voltage_max">Максимальное напряжение (милливольт):</string>
     <string name="disabled">Отключено</string>
     <string name="schedule_recurrent_row_text">Постоянное задание запланировано на %1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_title">Выполнено один раз - %1$02d:%2$02d</string>
@@ -112,21 +94,16 @@
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Удалить</string>
     <string name="no_schedules">Нет запланированных заданий</string>
-    <string name="wrong_volt_file">Выбранный файл не работает или ваше ядро не поддерживает данную функцию.</string>
     <string name="invalid_voltage_max">Значение должно быть от 3700 до 4200 (милливольт)</string>
     <string name="edit_charging_switch">Редактировать переключение зарядки</string>
     <string name="test_switch">Протестировать переключение зарядки</string>
     <string name="no_option_selected">Нет выбранных опций; пожалуйста, выберите одну!</string>
     <string name="charging_switch_works">Выбранное переключение зарядки работает!</string>
-    <string name="charging_switch_does_not_work">Выбранное переключение зарядки не работает!</string>
-    <string name="plug_battery_to_test">Перед тестированием батарея должна быть заряжена. Подключите зарядное устройство и повторите попытку!</string>
     <string name="automatic">Автоматически</string>
     <string name="error_occurred">Произошла ошибка</string>
     <string name="retry">Повторить</string>
-    <string name="edit_charging_limit_once">Единовременный заряд до установленной емкости, без остановок и ограничений</string>
     <string name="apply">Применить</string>
     <string name="done">Готово</string>
-    <string name="edit_charging_limit_once_dialog_msg">Ваши текущие настройки будут автоматически восстановлены после достижения выбранного уровня заряда батареи.</string>
     <string name="title_power_control">Управление питанием зарядки</string>
     <string name="info">Информация</string>
     <string name="title_cooldown_control">Замедление</string>
@@ -135,7 +112,6 @@
     <string name="title_capacity_control">Контроль емкости</string>
     <string name="about">О приложении</string>
     <!-- ACC Config Tooltips -->
-    <string name="capacity_control_info">- SHUTDOWN: automatically shutdown the system at or below this battery level when battery is not charging.&lt;br /&gt;- STOP: and RESUME capacities dictate when charging should stop and resume, respectively.&lt;br /&gt;- CHARGING SWITCH is the control file, plus ON and OFF values for switching charging on/off. By default, ACC uses whatever works.</string>
     <!--Profiles Options-->
     <string-array name="theme_option_options">
         <item>Light</item>
@@ -152,6 +128,6 @@
     <string name="edit_schedule">Изменить расписание</string>
     <string name="create_schedule">Создание расписание</string>
     <!-- About Activity -->
-    <string name="about_acca_version_label">Версия АССА:</string>
     <!-- Import and Export -->
+    <!-- Config Parse Error -->
 </resources>

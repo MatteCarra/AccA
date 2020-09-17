@@ -1,17 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- ACC Tile Strings -->
+    <string name="tile_acc_no_root">لا روت</string>
     <!-- Navigation Strings -->
     <!-- ACC Daemon Status -->
     <!-- ACC Daemon Toggle -->
+    <string name="start">بدء</string>
+    <string name="stop">إيقاف</string>
     <!-- Battery Card Strings -->
+    <string name="title_battery">البطارية</string>
+    <string name="info_status">الحالة</string>
+    <string name="info_charging_speed">سرعة الشحن</string>
+    <string name="info_capacity">السعة</string>
+    <string name="info_temperature">درجة الحرارة</string>
+    <string name="info_health">الصحة</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <!-- Profiles Item Labels -->
+    <string name="status_label">الحالة:</string>
+    <string name="battery_info_label">معلومات:</string>
+    <string name="stop_charge">إيقاف الشحن عند:</string>
+    <string name="cooldown_temp">درجة حرارة الخمول:</string>
+    <string name="pause_seconds">وقف الثواني:</string>
+    <string name="charge_seconds">شحن لثواني:</string>
+    <string name="shutdown_capacity">إيقاف التشغيل (إن لم يكن يشحن) عند:</string>
+    <string name="config_error_title">خطأ في تحليل التكوين</string>
+    <string name="config_error_dialog">فشل تحليل تكوين ACC!
+ الرجاء التحقق مما إذا كان \"su -c acc --set --print\" يعمل.</string>
+    <string name="wait">الرجاء الانتظار... \nهذا سوف يستغرق ثوان.</string>
     <!-- Exit On Boot Card Strings -->
+    <string name="description_exit_on_boot">يستخدم هذا في كتابة لملفات التحكم عند الإقلاع.</string>
     <!-- ACC installation -->
+    <string name="installing_acc">جاري تثبيت ACC</string>
+    <string name="reboot">إعادة التشغيل</string>
+    <string name="acc_installation_failed_title">فشل تثبيت ACC!</string>
     <!-- DJS installation -->
+    <string name="install_djs_title">يتطلب DJS</string>
+    <string name="disabled">معطل</string>
+    <string name="delete">حذف</string>
+    <string name="no_schedules">لم يتم تعيين جداول الزمنية</string>
     <!-- ACC Config Tooltips -->
     <!--Profiles Options-->
     <!-- About Activity -->
     <!-- Import and Export -->
+    <!-- Config Parse Error -->
 </resources>

@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ACCA</string>
     <string name="app_name_full">Aplikasi Pengontrol Pengisian Lanjutan</string>
     <string name="title_activity_log_view">Log</string>
     <string name="title_activity_log_view_file_name">Log</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">Tanpa akar</string>
-    <string name="tile_acc_enabled">ACC Diaktifkan</string>
-    <string name="tile_acc_disabled">ACC Dinonaktifkan</string>
     <!-- Navigation Strings -->
     <string name="title_dashboard">Dasbor</string>
     <string name="title_profiles">Profil</string>
@@ -44,32 +41,20 @@
     <string name="cooldown_capacity">Mulai pendinginan di %%:</string>
     <string name="resume_charge">Lanjutkan pengisian di:</string>
     <string name="stop_charge">Hentikan pengisian daya di:</string>
-    <string name="enable_temp_check">Aktifkan pemeriksaan suhu (°C)</string>
     <string name="max_temp">Temp maksimum:</string>
     <string name="pause_seconds">Jeda detik:</string>
     <string name="charge_seconds">Isi ulang detik:</string>
     <string name="shutdown_capacity">Shutdown (jika tidak mengisi daya) di:</string>
-    <string name="no_root_message">Aplikasi ini membutuhkan ROOT.</string>
     <string name="wait">Harap tunggu...\nIni akan memakan waktu beberapa detik.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Hentikan daemon setelah menerapkan pengaturan</string>
     <!-- ACC installation -->
     <string name="installing_acc">Menginstal ACC</string>
     <string name="reboot">Mulai ulang</string>
-    <string name="acc_installation_failed">Silakan kirim logcat dan /data/adb/acc-data/logs/ ke pengembang
-         di t.me/acc_group/ atau github.com/MatteCarra/AccA/issues/.
-    </string>
     <string name="acc_installation_failed_title">Instalasi ACC Gagal!</string>
     <!-- DJS installation -->
     <string name="install_djs_title">Diperlukan DJS</string>
-    <string name="install_djs_description">Agar fitur ini berfungsi, kita harus mengaktifkan DJS.
-         \nDJS (Penjadwal Pekerjaan Harian) adalah tambahan ringan untuk menjadwalkan pengaturan ACC.
-         \nDJS daemon akan dimulai saat boot di samping ACC daemon.
-    </string>
     <string name="installing_djs">Menginstal DJS</string>
-    <string name="djs_installation_failed">Silakan kirim logcat dan /data/adb/djs-data/logs/ ke pengembang
-         di t.me/acc_group/ atau github.com/MatteCarra/AccA/issues/.
-    </string>
     <string name="djs_installation_failed_title">Pemasangan DJS Gagal!</string>
     <string name="voltage_control_file_not_set">Tidak diatur.</string>
     <string name="edit_on_boot_dialog_hint">Biarkan kosong untuk menonaktifkan</string>
@@ -80,7 +65,6 @@
     <string name="unsaved_changes">Anda memiliki perubahan yang belum disimpan</string>
     <string name="close_without_saving">Membuang</string>
     <string name="edit_config">Edit konfigurasi</string>
-    <string name="unsaved_changes_message">Anda memiliki perubahan yang belum disimpan. Apakah Anda ingin menyimpannya?</string>
     <string name="create_acc_profile">Buat profil konfigurasi</string>
     <string name="profile_name">Nama profil</string>
     <string name="dialog_profile_name_message">Masukkan nama yang Anda inginkan untuk profil ini:</string>
@@ -93,28 +77,22 @@
     <string name="recurrent_schedule">Jalankan hanya sekali</string>
     <string name="execution_time">Waktu eksekusi</string>
     <string name="new_config">Konfigurasi khusus baru</string>
-    <string name="enable_voltage_limit">Aktifkan batas tegangan pengisian</string>
     <string name="voltage_control_file">File kontrol tegangan:</string>
-    <string name="voltage_max">Tegangan maks (milivolt):</string>
     <string name="disabled">Dengan disabilitas</string>
     <string name="schedule_execute_once_row_title">Exec. Sekali - %1$02d:%2$02d</string>
     <string name="schedule_boot_row_text">Pekerjaan boot dijadwalkan</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Menghapus</string>
     <string name="no_schedules">Tidak ada jadwal yang ditetapkan</string>
-    <string name="wrong_volt_file">File yang dipilih tidak berfungsi, atau kernel Anda tidak mendukung fitur ini.</string>
     <string name="edit_charging_switch">Edit saklar pengisian daya</string>
     <string name="test_switch">Uji sakelar pengisian daya</string>
     <string name="no_option_selected">Tidak ada opsi yang dipilih; tolong pilih satu!</string>
     <string name="charging_switch_works">Sakelar pengisian daya terpilih berfungsi!</string>
-    <string name="charging_switch_does_not_work">Sakelar pengisian daya yang dipilih tidak berfungsi!</string>
-    <string name="plug_battery_to_test">Baterai harus diisi sebelum pengujian. Pasang pengisi daya dan coba lagi!</string>
     <string name="automatic">Otomatis</string>
     <string name="error_occurred">Sebuah kesalahan telah terjadi</string>
     <string name="retry">Mencoba kembali</string>
     <string name="apply">Menerapkan</string>
     <string name="done">Selesai</string>
-    <string name="edit_charging_limit_once_dialog_msg">Pengaturan Anda saat ini secara otomatis dikembalikan setelah tingkat baterai yang dipilih tercapai.</string>
     <string name="info">Info</string>
     <string name="title_cooldown_control">Tenang</string>
     <string name="title_on_boot">Terapkan pada Boot</string>
@@ -122,9 +100,6 @@
     <string name="title_capacity_control">Kontrol Kapasitas</string>
     <string name="about">Tentang</string>
     <!-- ACC Config Tooltips -->
-    <string name="capacity_control_info">- SHUTDOWN: secara otomatis mematikan sistem pada atau di bawah level baterai ini ketika baterai tidak sedang diisi.&lt;br /&gt;- STOP: dan kapasitas RESUME menentukan kapan pengisian harus berhenti dan dilanjutkan, masing-masing.&lt;br /&gt;- CHARGING SWITCH adalah file kontrol, ditambah nilai ON dan OFF untuk mengaktifkan/menonaktifkan pengisian daya. Secara default, ACC menggunakan apa pun yang berfungsi.</string>
-    <string name="on_plugged_info">Ini digunakan untuk memperbarui file yang isinya berubah pada peristiwa daya tertentu (mis., Terpasang/tidak terhubung). Ini sangat berguna untuk menegakkan voltase/arus maks khusus untuk pengisian daya usb/nirkabel.</string>
-    <string name="battery_idle_info_label">Jika sakelar dipilih, sakelar pengisian yang mendukung mode siaga baterai diutamakan - memungkinkan perangkat untuk menarik daya langsung dari catu daya eksternal saat pengisian dijeda.&lt;br /&gt;Jika sakelar Anda dinonaktifkan, artinya kernel Anda tidak mendukung fitur ini.</string>
     <string name="acc_config_editor">Editor konfigurasi ACC</string>
     <string name="profile_creator">Pembuat profil</string>
     <string name="schedule_creator">Jadwalkan pembuat</string>
@@ -139,7 +114,6 @@
     <string name="profile_option_delete">Menghapus</string>
     <string name="selecting_profile_toast">Memilih profil %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox tidak diinstal</string>
-    <string name="installation_failed_busybox">Instal binary busybox terlebih dahulu</string>
     <string name="share">Bagikan</string>
     <string name="logs_not_found">File log tidak ditemukan.</string>
     <string name="acc_telegram">Untuk dukungan tambahan, bergabunglah dengan grup ACC Telegram (t.me/acc_group)!</string>
@@ -155,10 +129,6 @@
     </string>
     <string name="units_of_measure">Satuan ukuran</string>
     <string name="acc_version_preference_title">Versi ACC</string>
-    <string name="acc_version_preference_description">Anda dapat memilih varian ACC untuk digunakan: bundled, master, mengembangkan atau salah satu versi yang dirilis.
-         Versi paket dijamin untuk selalu bekerja dengan AccA - jadi itu adalah pilihan yang disarankan.
-         Meskipun tidak dijamin, varian lain umumnya aman.
-    </string>
     <string name="install_bundled_version">Pasang varian yang dibundel</string>
     <string name="acc_version_picker_title">Versi ACC</string>
     <string name="acc_version_picker_message">Pilih varian ACC yang diinginkan</string>
@@ -179,11 +149,6 @@
     <string name="theme_option_setting">Tema</string>
     <string name="theme_option_summary">Setel tema aplikasi.</string>
     <string name="acc_version_compatibility_warning_title">Kompatibilitas versi ACC</string>
-    <string name="acc_version_compatibility_warning_description">Anda telah memilih varian ACC yang tidak dijamin kompatibel dengan aplikasi.
-         \nAccA akan mengunduh versi yang dipilih dari repositori ACC Github.
-         \nSebagian besar waktu, Anda tidak akan menghadapi ketidakcocokan.
-         \nApakah Anda ingin melanjutkan?
-    </string>
     <string name="restore">Kembalikan ke default</string>
     <string name="undo">Batalkan</string>
     <string name="checking_updates">Memeriksa pembaruan</string>
@@ -194,13 +159,8 @@
     <string name="acc_installation_failed_log">Instalasi ACC gagal log</string>
     <string name="djs_installation_failed_log">Instalasi DJS gagal log</string>
     <string name="select_different_version">Ubah versi ACC</string>
-    <string name="installation_failed_non_bundled">Pemasangan varian ACC yang berbeda gagal.
-         \nSilakan pertimbangkan berbagi /data/adb/acc-data/log/ dengan devs.
-    </string>
     <string name="prioritize_battery_idle">Prioritaskan mode siaga baterai</string>
     <string name="test_battery_idle">Uji mode siaga baterai</string>
-    <string name="test_battery_idle_supported_result">Kernel Anda mendukung mode siaga baterai.</string>
-    <string name="test_battery_idle_unsupported_result">Kernel Anda tidak mendukung mode siaga baterai.</string>
     <string name="schedule_profile_edit_current">Edit konfigurasi saat ini</string>
     <string name="schedule_profile_keep_current">Pertahankan konfigurasi saat ini</string>
     <string name="schedule_type">Jenis jadwal</string>
@@ -220,18 +180,11 @@
     <string name="edit_schedule">Edit jadwal</string>
     <string name="create_schedule">Buat jadwal</string>
     <!-- About Activity -->
-    <string name="about_acca_version_label">Versi ACCA:</string>
     <string name="about_acc_version_label">Versi ACC:</string>
-    <string name="about_project_github">Proyek GitHub</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Situs web</string>
-    <string name="toast_no_browser_installed">Tidak dapat Buka Tautan!\nPastikan Anda memiliki peramban web yang diinstal.</string>
-    <string name="install_update_dialog">Instal pembaruan acc</string>
-    <string name="check_update_dialog_message">        Apakah Anda ingin menginstal versi ACC terbaru dari cabang \'%1$s\'?
-         \nACCA akan mengunduh versi ACC terbaru dari Github berdasarkan komit terbaru dari cabang yang dipilih.
-         \nApakah Anda ingin melanjutkan?</string>
-    <string name="add_charging_switch">Tambahkan sakelar pengisian daya</string>
     <string name="charging_switch_on_value_label">Sakelar pengisian ON VALUE</string>
     <string name="charging_switch_off_value_label">Sakelar pengisian OFF VALUE</string>
     <!-- Import and Export -->
+    <!-- Config Parse Error -->
 </resources>
