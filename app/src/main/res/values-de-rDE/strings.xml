@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">AccA</string>
     <string name="app_name_full">Advanced Charging Controller App</string>
     <string name="title_activity_log_view">Logs</string>
     <string name="title_activity_log_view_file_name">Logs</string>
@@ -17,6 +18,7 @@
     <string name="title_acc_daemon">ACC Daemon</string>
     <string name="acc_daemon_status_running">ACC Daemon wird ausgeführt</string>
     <string name="acc_daemon_status_not_running">ACC Daemon wird nicht ausgeführt</string>
+    <string name="acc_daemon_status_reading_status">Der ACC-Dienststatus wird abgefragt …</string>
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">ACC Daemon beenden</string>
     <string name="menu_start_accd">ACC Daemon starten</string>
@@ -283,4 +285,7 @@
     <string name="import_profile_success">%d Profile erfolgreich importiert</string>
     <!-- Config Parse Error -->
     <string name="parse_failed_title">Fehler beim Parsen der ACC-Konfiguration</string>
+    <string name="parse_failed_body">Du kannst versuchen, die Standardkonfiguration zu laden, indem Du „Standard laden“ drückst. Bitte beachte, dass AccA nicht funktionsfähig ist.
+        \n\nWenn der Fehler weiterhin besteht, teile bitte den Stack-Trace unten zusammen mit der ACC &amp; AccA-Version (über das 3-Punkt-Menü &gt; „Über“) mit den Entwicklern via Telegram.\n\n%s</string>
+    <string name="automatic_switch_eanbled">Automatisch durch die Schalter wechseln</string>
 </resources>
