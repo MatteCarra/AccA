@@ -227,10 +227,6 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         current_max_edit_text.text = currentMax?.let { "$it mA" } ?: getString(R.string.disabled)
     }
 
-    private fun updateBatteryIdlePreference(enabled: Boolean) {
-        battery_idle_switch.isChecked = enabled
-    }
-
     private fun initUi() {
         viewModel.observeCapacity(this, Observer {
             updateCapacityCard(it)
@@ -264,8 +260,20 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
             tv_config_on_boot.text = configOnBoot?.let { if(it.isBlank()) getString(R.string.voltage_control_file_not_set) else it } ?: getString(R.string.voltage_control_file_not_set)
         })
 
-        viewModel.observePrioritizeBatteryIdleMode(this, Observer { checked ->
-            updateBatteryIdlePreference(checked)
+        viewModel.observePrioritizeBatteryIdleMode(this, Observer {
+            battery_idle_switch.isChecked = it
+        })
+
+        viewModel.observeResetBSOnUnplug(this, Observer {
+            dash_resetStatusUnplug_switch.isChecked = it
+        })
+
+        viewModel.observeResetBSOnPause(this, Observer {
+            dash_resetBSOnPause_switch.isChecked = it
+        })
+
+        viewModel.observeIsAutomaticSwitchEnabled(this, Observer {
+            automatic_switch_enabled_switch.isChecked = it
         })
 
         //capacity card
@@ -302,8 +310,25 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
             viewModel.prioritizeBatteryIdleMode = battery_idle_switch.isChecked
         }
 
+        //reset bs on pause
+        dash_resetBSOnPause_switch.setOnClickListener {
+            viewModel.resetBSOnPause = dash_resetBSOnPause_switch.isChecked
+        }
+
+        //reset bs on unplug
+        dash_resetStatusUnplug_switch.setOnClickListener {
+            viewModel.resetBSOnUnplug = dash_resetStatusUnplug_switch.isChecked
+        }
+
+        if(Acc.instance.version < 202007220) {
+            automatic_switch_enabled_switch.visibility = View.GONE
+        }
+        automatic_switch_enabled_switch.setOnClickListener {
+            viewModel.isAutomaticSwitchEanbled = automatic_switch_enabled_switch.isChecked
+        }
+
         //power card
-        if(Acc.getAccVersion() >= 202002170) {
+        if(Acc.instance.version >= 202002170) {
             voltage_control_file_ll.visibility = View.GONE
         } else {
             current_max_ll.visibility = View.GONE
@@ -565,6 +590,7 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
             R.id.cooldown_info -> R.string.cooldown_info
             R.id.on_plugged_info -> R.string.on_plugged_info
             R.id.battery_idle_control_info -> R.string.battery_idle_info_label
+            R.id.miscellaneous_info -> R.string.miscellaneous_info_label
             else -> null
         }?.let {
             Tooltip.Builder(this)
@@ -624,6 +650,14 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
     fun onBatteryIdleRestore(v: View) {
         launch {
             viewModel.prioritizeBatteryIdleMode = Acc.instance.readDefaultConfig().prioritizeBatteryIdleMode
+        }
+    }
+
+    fun onMiscRestore(v: View) {
+        launch {
+            val config = Acc.instance.readDefaultConfig()
+            viewModel.resetBSOnPause = config.configResetBsOnPause
+            viewModel.resetBSOnUnplug = config.configResetUnplugged
         }
     }
 }

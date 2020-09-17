@@ -92,7 +92,7 @@ fun MaterialDialog.powerLimitDialog(
     })
     //END
 
-    if(Acc.getAccVersion() >= 202002170) {
+    if(Acc.instance.version >= 202002170) {
         voltageControlFileLayout.visibility = View.GONE
 
         //CURRENT MAX SELECTION

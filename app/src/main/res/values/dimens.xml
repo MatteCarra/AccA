@@ -22,4 +22,7 @@
     <dimen name="bot_nav_drawer">16dp</dimen>
 
     <dimen name="about_profile_margin">16dp</dimen>
+
+    <!--  Status card status icon  -->
+    <dimen name="acc_status_icon">84dp</dimen>
 </resources>

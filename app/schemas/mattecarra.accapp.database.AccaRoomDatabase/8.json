@@ -1,12 +1,12 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 7,
-    "identityHash": "1995ec77cf686c6f343775822d15cd39",
+    "version": 8,
+    "identityHash": "6c436b1f3edacbcd6e1ff2344e36bd54",
     "entities": [
       {
         "tableName": "profiles_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `profileName` TEXT NOT NULL, `configCapacity` TEXT NOT NULL, `configVoltage` TEXT NOT NULL, `configCurrMax` INTEGER, `configTemperature` TEXT NOT NULL, `configOnBoot` TEXT, `configOnPlug` TEXT, `configCoolDown` TEXT, `configResetUnplugged` INTEGER NOT NULL, `configResetBsOnPause` INTEGER NOT NULL, `configChargeSwitch` TEXT, `configIsAutomaticSwitchEnabled` INTEGER NOT NULL, `prioritizeBatteryIdleMode` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `profileName` TEXT NOT NULL, `configCapacity` TEXT NOT NULL, `configVoltage` TEXT NOT NULL, `configCurrMax` INTEGER, `configTemperature` TEXT NOT NULL, `configOnBoot` TEXT, `configOnPlug` TEXT, `configCoolDown` TEXT, `configResetUnplugged` INTEGER NOT NULL, `configResetBsOnPause` INTEGER NOT NULL, `configChargeSwitch` TEXT, `configIsAutomaticSwitchingEnabled` INTEGER NOT NULL, `prioritizeBatteryIdleMode` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "uid",
@@ -81,8 +81,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "accConfig.configIsAutomaticSwitchEnabled",
-            "columnName": "configIsAutomaticSwitchEnabled",
+            "fieldPath": "accConfig.configIsAutomaticSwitchingEnabled",
+            "columnName": "configIsAutomaticSwitchingEnabled",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -104,7 +104,7 @@
       },
       {
         "tableName": "schedules_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `scheduleName` TEXT NOT NULL, `configCapacity` TEXT NOT NULL, `configVoltage` TEXT NOT NULL, `configCurrMax` INTEGER, `configTemperature` TEXT NOT NULL, `configOnBoot` TEXT, `configOnPlug` TEXT, `configCoolDown` TEXT, `configResetUnplugged` INTEGER NOT NULL, `configResetBsOnPause` INTEGER NOT NULL, `configChargeSwitch` TEXT, `configIsAutomaticSwitchEnabled` INTEGER NOT NULL, `prioritizeBatteryIdleMode` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `scheduleName` TEXT NOT NULL, `configCapacity` TEXT NOT NULL, `configVoltage` TEXT NOT NULL, `configCurrMax` INTEGER, `configTemperature` TEXT NOT NULL, `configOnBoot` TEXT, `configOnPlug` TEXT, `configCoolDown` TEXT, `configResetUnplugged` INTEGER NOT NULL, `configResetBsOnPause` INTEGER NOT NULL, `configChargeSwitch` TEXT, `configIsAutomaticSwitchingEnabled` INTEGER NOT NULL, `prioritizeBatteryIdleMode` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "uid",
@@ -179,8 +179,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "accConfig.configIsAutomaticSwitchEnabled",
-            "columnName": "configIsAutomaticSwitchEnabled",
+            "fieldPath": "accConfig.configIsAutomaticSwitchingEnabled",
+            "columnName": "configIsAutomaticSwitchingEnabled",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -204,7 +204,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1995ec77cf686c6f343775822d15cd39')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6c436b1f3edacbcd6e1ff2344e36bd54')"
     ]
   }
 }

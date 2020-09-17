@@ -62,14 +62,4 @@
             android:icon="@drawable/ic_round_format_paint_24px"/>
 
     </PreferenceCategory>
-
-    <PreferenceCategory
-            android:title="Telegram"
-            app:iconSpaceReserved="false">
-        <Preference
-                android:title="Telegram"
-                android:key="acc_telegram"
-                android:summary="@string/acc_telegram"
-                app:iconSpaceReserved="false"/>
-    </PreferenceCategory>
 </PreferenceScreen>

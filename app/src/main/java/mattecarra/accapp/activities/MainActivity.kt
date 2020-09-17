@@ -10,9 +10,9 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate.*
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
@@ -21,6 +21,7 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.topjohnwu.superuser.Shell
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
@@ -53,36 +54,55 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     private val ACC_EDIT_PROFILE_SCHEDULER_REQUEST = 5
     private val ACC_IMPORT_PROFILE_REQUEST = 6
 
-    private lateinit var mPreferences: Preferences
-    private lateinit var mViewModel: SharedViewModel
-    private lateinit var mMainActivityViewModel: MainActivityViewModel
-    private lateinit var mSchedulesViewModel: SchedulesViewModel
+    private lateinit var _preferences: Preferences
+    private lateinit var _sharedViewModel: SharedViewModel
+    private lateinit var _mainActivityViewModel: MainActivityViewModel
+    private lateinit var _schedulesViewModel: SchedulesViewModel
 
-    val mMainFragment = DashboardFragment.newInstance()
-    val mProfilesFragment = ProfilesFragment.newInstance()
-    val mSchedulesFragment = SchedulesFragment.newInstance()
+    val mainFragment = DashboardFragment.newInstance()
+    val profilesFragment = ProfilesFragment.newInstance()
+    val schedulesFragment = SchedulesFragment.newInstance()
 
     private fun initUi() {
         // Assign ViewModel
-        mViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
-        mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
-        mSchedulesViewModel = ViewModelProviders.of(this).get(SchedulesViewModel::class.java)
+        _sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
+        _mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+        _schedulesViewModel = ViewModelProvider(this).get(SchedulesViewModel::class.java)
+
+        // Subscribe to viewmodel config and action if config is null
+        _sharedViewModel.observeConfig(this, Observer { r ->
+            if (r.first == null) {
+                MaterialAlertDialogBuilder(this)
+                    .setTitle(R.string.parse_failed_title)
+                    .setMessage(getString(R.string.parse_failed_body, r.second))
+                    .setPositiveButton("Load Default") {dialog, _ ->
+                        _sharedViewModel.loadDefaultConfig()
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton("Exit") {dialog, _ ->
+                        dialog.dismiss()
+                        finish()
+                    }
+                    .setNeutralButton("Share") {dialog, _ ->
+                        val sendIntent: Intent = Intent().apply {
+                            action = Intent.ACTION_SEND
+                            putExtra(Intent.EXTRA_TEXT, r.second)
+                            type = "text/plain"
+                        }
+
+                        val shareIntent = Intent.createChooser(sendIntent, null)
+                        startActivity(shareIntent)
+                    }
+                    .show()
+            }
+        })
 
         // Set Bottom Navigation Bar Item Selected Listener
         main_bottom_nav.setOnNavigationItemSelectedListener(this)
         setSupportActionBar(main_toolbar)
 
         // Load in dashboard fragment
-        main_bottom_nav.selectedItemId = mMainActivityViewModel.selectedNavBarItem
-    }
-
-
-    private fun showConfigReadError() {
-        MaterialDialog(this).show {
-            title(R.string.config_error_title)
-            message(R.string.config_error_dialog)
-            positiveButton(android.R.string.ok)
-        }
+        main_bottom_nav.selectedItemId = _mainActivityViewModel.selectedNavBarItem
     }
 
     /**
@@ -90,15 +110,15 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
      */
     override fun onNavigationItemSelected(m: MenuItem): Boolean {
         // Record currently selected navigation item
-        mMainActivityViewModel.selectedNavBarItem = m.itemId
+        _mainActivityViewModel.selectedNavBarItem = m.itemId
 
         when (m.itemId) {
             R.id.botNav_home -> {
-                loadFragment(mMainFragment)
+                loadFragment(mainFragment)
                 return true
             }
             R.id.botNav_profiles -> {
-                loadFragment(mProfilesFragment)
+                loadFragment(profilesFragment)
                 return true
             }
             R.id.botNav_schedules -> {
@@ -110,7 +130,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                         installDjs()
                         false
                     } else {
-                        loadFragment(mSchedulesFragment)
+                        loadFragment(schedulesFragment)
                         true
                     }
                 }
@@ -173,7 +193,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 }
 
                 override fun onSuccess() {
-                    mPreferences.djsEnabled = true
+                    _preferences.djsEnabled = true
                     initUi()
                 }
             })
@@ -204,7 +224,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             // Generate list of ExportEntries TODO: maybe move this to the actual activity to make new ProfileEntries from AccaProfiles
             var profileList: ArrayList<ProfileEntry> = ArrayList()
             launch {
-                for (profile: AccaProfile in mMainActivityViewModel.getProfiles()) {
+                for (profile: AccaProfile in _mainActivityViewModel.getProfiles()) {
                     profileList.add(ProfileEntry(profile))
                 }
             }.invokeOnCompletion {
@@ -255,8 +275,8 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         // Applies the selected profile
 
         launch {
-            mViewModel.updateAccConfig(profile.accConfig)
-            mViewModel.setCurrentSelectedProfile(profile.uid)
+            _sharedViewModel.updateAccConfig(profile.accConfig)
+            _sharedViewModel.setCurrentSelectedProfile(profile.uid)
         }
 
         // Display Toast for the user.
@@ -298,7 +318,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun checkAccInstalled(): Boolean {
-        val version = mPreferences.accVersion
+        val version = _preferences.accVersion
 
         if (!Acc.isAccInstalled(filesDir) || !Acc.initAcc(filesDir) || (version == "bundled" && Acc.isInstalledAccOutdated())) {
             val dialog = MaterialDialog(this).show {
@@ -327,7 +347,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                     title(R.string.acc_installation_failed_title)
                                     message(R.string.installation_failed_non_bundled)
                                     positiveButton(R.string.install_bundled_version) {
-                                        mPreferences.accVersion = "bundled"
+                                        _preferences.accVersion = "bundled"
                                         if (checkAccInstalled()) {
                                             initUi()
                                         }
@@ -339,8 +359,8 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                                 message(R.string.acc_version_picker_message)
                                                 cancelOnTouchOutside(false)
                                                 this@MainActivity.launch {
-                                                    accVersionSingleChoice(mPreferences.accVersion) { version ->
-                                                        mPreferences.accVersion = version
+                                                    accVersionSingleChoice(_preferences.accVersion) { version ->
+                                                        _preferences.accVersion = version
 
                                                         if (checkAccInstalled()) {
                                                             initUi()
@@ -419,8 +439,8 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         }
 
         val time = System.currentTimeMillis() / 1000
-        if ((version == "master" || version == "dev") && time - mPreferences.lastUpdateCheck > 86400) {
-            mPreferences.lastUpdateCheck = time
+        if ((version == "master" || version == "dev") && time - _preferences.lastUpdateCheck > 86400) {
+            _preferences.lastUpdateCheck = time
             checkUpdates(version)
         }
 
@@ -435,8 +455,8 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         launch {
             val lastCommit = GithubUtils.getLatestAccCommit(version)
 
-            if (lastCommit != mPreferences.lastCommit) {
-                mPreferences.lastCommit = lastCommit
+            if (lastCommit != _preferences.lastCommit) {
+                _preferences.lastCommit = lastCommit
 
                 MaterialDialog(this@MainActivity).show {
                     title(R.string.install_update_dialog)
@@ -492,19 +512,20 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AccaTheme_DayNight)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         setSupportActionBar(main_toolbar)
 
         // Load preferences
-        mPreferences = Preferences(this)
+        _preferences = Preferences(this)
 
         // Set theme
         setTheme()
 
         if (!Shell.rootAccess()) {
-            val dialog = MaterialDialog(this).show {
+            MaterialDialog(this).show {
                 title(R.string.tile_acc_no_root)
                 message(R.string.no_root_message)
                 positiveButton(android.R.string.ok) {
@@ -517,10 +538,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                     false
                 }
             }
-            return
-        }
-
-        if (checkAccInstalled()) {
+        } else if (checkAccInstalled()) {
             initUi()
         }
     }
@@ -529,7 +547,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
      * Function for setting the app's theme depending on saved preference.
      */
     private fun setTheme() {
-        when (mPreferences.appTheme) {
+        when (_preferences.appTheme) {
             "0" -> setDefaultNightMode(MODE_NIGHT_NO)
             "1" -> setDefaultNightMode(MODE_NIGHT_YES)
             "2" -> setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
@@ -557,10 +575,10 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 if (resultCode == Activity.RESULT_OK) {
                     if (data?.getBooleanExtra(Constants.ACC_HAS_CHANGES, false) == true) {
                         launch {
-                            mViewModel.updateAccConfig(data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig) //TODO: Check assertion
+                            _sharedViewModel.updateAccConfig(data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig) //TODO: Check assertion
 
                             // Remove the current selected profile
-                            mViewModel.clearCurrentSelectedProfile()
+                            _sharedViewModel.clearCurrentSelectedProfile()
                         }
                     }
                 }
@@ -593,7 +611,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                         accConfig
                                     )
 
-                                    mMainActivityViewModel.insertProfile(profile)
+                                    _mainActivityViewModel.insertProfile(profile)
                                 }
                                 negativeButton(android.R.string.cancel)
                             }
@@ -615,13 +633,13 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                         val editorData = data.getBundleExtra(Constants.DATA_KEY) ?: return
                         val profileId = editorData.getInt(Constants.PROFILE_ID_KEY)
                         launch {
-                            mMainActivityViewModel.getProfileById(profileId)
+                            _mainActivityViewModel.getProfileById(profileId)
                                 ?.let { selectedProfile ->
                                     // Update the selected Profile
                                     selectedProfile.accConfig = accConfig
 
                                     // Update the profile
-                                    mMainActivityViewModel.updateProfile(selectedProfile)
+                                    _mainActivityViewModel.updateProfile(selectedProfile)
                                 }
                         }
                     }
@@ -639,7 +657,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                             val executeOnBoot =
                                 dataBundle.getBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY)
 
-                            mSchedulesViewModel
+                            _schedulesViewModel
                                 .addSchedule(
                                     scheduleName,
                                     time,
@@ -666,7 +684,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                 dataBundle.getBoolean(Constants.SCHEDULE_EXEC_ONBOOT_KEY)
                             val enabled = dataBundle.getBoolean(Constants.SCHEDULE_ENABLED_KEY)
 
-                            mSchedulesViewModel
+                            _schedulesViewModel
                                 .editSchedule(
                                     id,
                                     scheduleName,
@@ -688,7 +706,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                         data?.getSerializableExtra(Constants.DATA_KEY) as List<ProfileEntry>
                     if (!imports.isNullOrEmpty()) {
                         for (entry: ProfileEntry in imports) {
-                            mMainActivityViewModel.insertProfile(AccaProfile(0, entry.getName(), entry.getConfig()))
+                            _mainActivityViewModel.insertProfile(AccaProfile(0, entry.getName(), entry.getConfig()))
                         }
                     }
                     Toast.makeText(
@@ -704,7 +722,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     fun accScheduleFabOnClick(view: View) {
         MaterialDialog(this).show {
             title(R.string.create_schedule)
-            addScheduleDialog(mMainActivityViewModel.profiles) { profileId, scheduleName, time, executeOnce, executeOnBoot ->
+            addScheduleDialog(_mainActivityViewModel.profiles) { profileId, scheduleName, time, executeOnce, executeOnBoot ->
                 if (profileId == -1L) {
                     launch {
                         Intent(
@@ -734,9 +752,9 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                     }
                 } else {
                     launch {
-                        mMainActivityViewModel.getProfileById(profileId.toInt())
+                        _mainActivityViewModel.getProfileById(profileId.toInt())
                             ?.let { configProfile ->
-                                mSchedulesViewModel
+                                _schedulesViewModel
                                     .addSchedule(
                                         scheduleName,
                                         time,
@@ -757,11 +775,11 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             title(R.string.edit_schedule)
             editScheduleDialog(
                 schedule,
-                mMainActivityViewModel.profiles
+                _mainActivityViewModel.profiles
             ) { profileId, scheduleName, time, executeOnce, executeOnBoot ->
                 when (profileId) {
                     -1L -> //keep current config
-                        mSchedulesViewModel
+                        _schedulesViewModel
                             .editSchedule(
                                 schedule.profile.uid,
                                 scheduleName,
@@ -844,9 +862,9 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                             }
                         }
                     else -> launch {
-                        mMainActivityViewModel.getProfileById(profileId.toInt())
+                        _mainActivityViewModel.getProfileById(profileId.toInt())
                             ?.let { configProfile ->
-                                mSchedulesViewModel
+                                _schedulesViewModel
                                     .editSchedule(
                                         schedule.profile.uid,
                                         scheduleName,
@@ -895,7 +913,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                     profile.profileName = charSequence.toString()
 
                     // Update the profile in the DB
-                    mMainActivityViewModel.updateProfile(profile)
+                    _mainActivityViewModel.updateProfile(profile)
                 }
                 positiveButton(R.string.save)
                 negativeButton(android.R.string.cancel)
@@ -904,6 +922,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 
     override fun deleteProfile(profile: AccaProfile) {
         // Delete the selected profile (3rd option).
-        mMainActivityViewModel.deleteProfile(profile)
+        _mainActivityViewModel.deleteProfile(profile)
     }
 }

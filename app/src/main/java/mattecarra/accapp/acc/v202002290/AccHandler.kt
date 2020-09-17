@@ -4,16 +4,15 @@ import androidx.annotation.WorkerThread
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import mattecarra.accapp.acc.AccInterface
 import mattecarra.accapp.acc.ConfigUpdateResult
 import mattecarra.accapp.acc.ConfigUpdater
+import mattecarra.accapp.acc._interface.AccInterfaceV2
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.BatteryInfo
 import java.io.IOException
 import java.util.regex.Pattern
 
-
-open class AccHandler: AccInterface {
+open class AccHandler(override val version: Int) : AccInterfaceV2 {
     // String resources
     private val STRING_UNKNOWN = "Unknown"
     private val STRING_NOT_CHARGING = "Not charging"
@@ -21,8 +20,7 @@ open class AccHandler: AccInterface {
     private val STRING_CHARGING = "Charging"
 
     // ACC Config Regex
-
-    //capacity
+    // Capacity
     val SHUTDOWN_CAPACITY_REGEXP = """^\s*shutdown_capacity=(\d*)""".toRegex(RegexOption.MULTILINE)
     val COOLDOWN_CAPACITY_REGEXP = """^\s*cooldown_capacity=(\d*)""".toRegex(RegexOption.MULTILINE)
     val RESUME_CAPACITY_REGEXP = """^\s*resume_capacity=(\d*)""".toRegex(RegexOption.MULTILINE)
@@ -47,12 +45,11 @@ open class AccHandler: AccInterface {
     val PRIORITIZE_BATTERY_IDLE = """^\s*prioritize_batt_idle_mode=(true|false)""".toRegex(RegexOption.MULTILINE)
 
     @WorkerThread
-    fun parseConfig(config: String): AccConfig {
+    override fun parseConfig(config: String): AccConfig {
         val capacityShutdown = SHUTDOWN_CAPACITY_REGEXP.find(config)!!.destructured.component1()
         val capacityCoolDown = COOLDOWN_CAPACITY_REGEXP.find(config)!!.destructured.component1()
         val capacityResume   = RESUME_CAPACITY_REGEXP.find(config)!!.destructured.component1()
         val capacityPause    = PAUSE_CAPACITY_REGEXP.find(config)!!.destructured.component1()
-
 
         val temperatureCooldown = COOLDOWN_TEMP_REGEXP.find(config)!!.destructured.component1()
         val temperatureMax      = MAX_TEMP_REGEXP.find(config)!!.destructured.component1()
@@ -79,6 +76,7 @@ open class AccHandler: AccInterface {
             getResetUnplugged(config),
             getResetOnPause(config),
             getCurrentChargingSwitch(config),
+            isAutomaticSwitchEnabled(config),
             isPrioritizeBatteryIdleMode(config)
         )
     }
@@ -287,7 +285,11 @@ open class AccHandler: AccInterface {
     }
 
     override fun getCurrentChargingSwitch(config: String): String? {
-        return SWITCH.find(readConfigToString())?.destructured?.component1()?.trim()?.ifBlank { null }
+        return SWITCH.find(config)?.destructured?.component1()?.trim()?.ifBlank { null }
+    }
+
+    override fun isAutomaticSwitchEnabled(config: String): Boolean {
+        return true
     }
 
     override fun isPrioritizeBatteryIdleMode(config: String): Boolean {
@@ -340,11 +342,11 @@ open class AccHandler: AccInterface {
 
     override fun getUpdateAccOnPluggedCommand(command: String?) : String = "/sbin/acca -s \"apply_on_plug=${command.orEmpty()}\""
 
-    override fun getUpdateAccChargingSwitchCommand(switch: String?) : String = "/sbin/acca -s \"charging_switch=${switch.orEmpty()}\""
+    override fun getUpdateAccChargingSwitchCommand(switch: String?, automaticSwitchingEnabled: Boolean) : String = "/sbin/acca -s \"charging_switch=${switch.orEmpty()}\""
 
     override fun getUpgradeCommand(version: String) = "/sbin/acca --upgrade $version"
 
     override fun getUpdatePrioritizeBatteryIdleModeCommand(enabled: Boolean): String = "/sbin/acca --set prioritize_batt_idle_mode=$enabled"
 
-    override fun getAddChargingSwitchCommand(switch: String): String = getUpdateAccChargingSwitchCommand(switch)
+    override fun getAddChargingSwitchCommand(switch: String): String = getUpdateAccChargingSwitchCommand(switch, false)
 }

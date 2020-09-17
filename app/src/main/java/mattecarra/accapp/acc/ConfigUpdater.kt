@@ -2,10 +2,11 @@ package mattecarra.accapp.acc
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import mattecarra.accapp.acc._interface.AccInterfaceV1
 import mattecarra.accapp.models.AccConfig
 
 data class ConfigUpdater(val accConfig: AccConfig) {
-    suspend fun execute(acc: AccInterface): ConfigUpdateResult = withContext(Dispatchers.IO) {
+    suspend fun execute(acc: AccInterfaceV1): ConfigUpdateResult = withContext(Dispatchers.IO) {
         ConfigUpdateResult(
             acc.updateAccCapacity(
                 accConfig.configCapacity.shutdown, accConfig.configCoolDown?.atPercent ?: 101,
@@ -29,12 +30,12 @@ data class ConfigUpdater(val accConfig: AccConfig) {
             acc.updateResetOnPause(accConfig.configResetBsOnPause),
             acc.updateAccOnBoot(accConfig.configOnBoot),
             acc.updateAccOnPlugged(accConfig.configOnPlug),
-            acc.updateAccChargingSwitch(accConfig.configChargeSwitch),
+            acc.updateAccChargingSwitch(accConfig.configChargeSwitch, accConfig.configIsAutomaticSwitchingEnabled),
             acc.updatePrioritizeBatteryIdleMode(accConfig.prioritizeBatteryIdleMode)
         )
     }
 
-    fun concatenateCommands(acc: AccInterface): String {
+    fun concatenateCommands(acc: AccInterfaceV1): String {
         return arrayOf(
             acc.getUpdateAccCapacityCommand(
                 accConfig.configCapacity.shutdown, accConfig.configCoolDown?.atPercent ?: 101,
@@ -57,7 +58,7 @@ data class ConfigUpdater(val accConfig: AccConfig) {
             acc.getUpdateResetOnPauseCommand(accConfig.configResetBsOnPause),
             acc.getUpdateAccOnBootCommand(accConfig.configOnBoot),
             acc.getUpdateAccOnPluggedCommand(accConfig.configOnPlug),
-            acc.getUpdateAccChargingSwitchCommand(accConfig.configChargeSwitch),
+            acc.getUpdateAccChargingSwitchCommand(accConfig.configChargeSwitch, accConfig.configIsAutomaticSwitchingEnabled),
             acc.getUpdatePrioritizeBatteryIdleModeCommand(accConfig.prioritizeBatteryIdleMode)
         ).joinToString("; ")
     }

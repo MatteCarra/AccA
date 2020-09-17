@@ -4,16 +4,15 @@ import androidx.annotation.WorkerThread
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import mattecarra.accapp.acc.Acc
-import mattecarra.accapp.acc.AccInterface
 import mattecarra.accapp.acc.ConfigUpdateResult
 import mattecarra.accapp.acc.ConfigUpdater
+import mattecarra.accapp.acc._interface.AccInterfaceV1
 import mattecarra.accapp.models.*
 import java.io.IOException
 import java.util.regex.Pattern
 
 
-open class AccHandler: AccInterface {
+open class AccHandler(override val version: Int) : AccInterfaceV1 {
     // String resources
     private val STRING_UNKNOWN = "Unknown"
     private val STRING_NOT_CHARGING = "Not charging"
@@ -44,6 +43,7 @@ open class AccHandler: AccInterface {
             false,
             false,
             null,
+            true,
             false
         )
     }
@@ -73,6 +73,7 @@ open class AccHandler: AccInterface {
             getResetUnplugged(config),
             getResetOnPause(config),
             getCurrentChargingSwitch(config),
+            isAutomaticSwitchEnabled(config),
             isPrioritizeBatteryIdleMode(config)
         )
     }
@@ -267,7 +268,11 @@ open class AccHandler: AccInterface {
     }
 
     override fun getCurrentChargingSwitch(config: String): String? {
-        return SWITCH.find(readConfigToString())?.destructured?.component1()?.trim()?.ifBlank { null }
+        return SWITCH.find(config)?.destructured?.component1()?.trim()?.ifBlank { null }
+    }
+
+    override fun isAutomaticSwitchEnabled(config: String): Boolean {
+        return true
     }
 
     override fun isPrioritizeBatteryIdleMode(config: String): Boolean {
@@ -331,7 +336,7 @@ open class AccHandler: AccInterface {
 
     override fun getUpdateAccOnPluggedCommand(command: String?) : String = "acc-en -s applyOnPlug${command?.let{ " $it" } ?: ""}"
 
-    override fun getUpdateAccChargingSwitchCommand(switch: String?) : String =
+    override fun getUpdateAccChargingSwitchCommand(switch: String?, automaticSwitchingEnabled: Boolean) : String =
         if (switch.isNullOrBlank())
             "acc-en -s s-"
         else

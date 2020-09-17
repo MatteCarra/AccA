@@ -30,8 +30,8 @@ android {
         applicationId "mattecarra.accapp"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 27
-        versionName "1.0.23"
+        versionCode 30
+        versionName "1.0.26"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -82,11 +82,9 @@ dependencies {
     implementation "androidx.preference:preference:1.1.1"
     implementation "androidx.cardview:cardview:1.0.0"
 
-    implementation "com.google.android.material:material:1.1.0"
-
-    implementation 'com.afollestad.material-dialogs:core:3.1.1'
-    implementation 'com.afollestad.material-dialogs:input:3.1.1'
-    implementation 'com.afollestad.material-dialogs:datetime:3.1.1'
+    implementation 'com.afollestad.material-dialogs:core:3.3.0'
+    implementation 'com.afollestad.material-dialogs:input:3.3.0'
+    implementation 'com.afollestad.material-dialogs:datetime:3.3.0'
 
     implementation 'com.google.code.gson:gson:2.8.6'
 

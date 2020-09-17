@@ -14,7 +14,6 @@
     <string name="title_settings">Настройки</string>
 
     <!-- ACC Daemon Status -->
-    <string name="title_status">Статус</string>
     <string name="title_acc_daemon">Демон ACC</string>
     <string name="acc_daemon_status_running">Демон ACC работает</string>
     <string name="acc_daemon_status_not_running">Демон ACC не работает</string>

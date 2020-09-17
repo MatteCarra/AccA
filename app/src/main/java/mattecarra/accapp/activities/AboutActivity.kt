@@ -26,7 +26,7 @@ class AboutActivity : AppCompatActivity() {
         // Set appropriate version numbers
         val app = applicationContext.packageManager.getPackageInfo(packageName, 0)
         acca_version_tv.text = String.format("%s (%s)", app.versionName, app.versionCode.toString())
-        acc_version_tv.text = Acc.getAccVersion().toString()
+        acc_version_tv.text = Acc.instance.version.toString()
     }
 
     companion object {
@@ -62,6 +62,18 @@ class AboutActivity : AppCompatActivity() {
 
     fun accaGitHubOnClick(view: View) {
         openUrl("https://github.com/MatteCarra/AccA")
+    }
+
+    fun accaTelegramOnClick(v: View) {
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=acc_group")))
+        } catch (ignored: Exception) {
+            try {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/acc_group")))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     fun vr25GitHubOnClick(view: View) {

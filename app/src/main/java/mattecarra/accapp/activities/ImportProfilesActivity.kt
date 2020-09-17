@@ -79,18 +79,22 @@ class ImportProfilesActivity : AppCompatActivity() {
             val listType = Types.newParameterizedType(List::class.java, ProfileEntry::class.java)
             // todo: put spinner while this works, put into coroutine, this can take a while for some reason (debugging overhead?)
             val jsonAdapter: JsonAdapter<List<ProfileEntry>> = moshi.adapter(listType)
-            val result = jsonAdapter.fromJson(pasteData) as List<ProfileEntry>
 
-            for (entry: ProfileEntry in result) {
-                mAdapter.addEntry(entry)
+            try {
+                val result = jsonAdapter.fromJson(pasteData) as List<ProfileEntry>
+
+                for (entry: ProfileEntry in result) {
+                    mAdapter.addEntry(entry)
+                }
+
+                if (mAdapter.itemCount > 0) {
+                    // Show recyclerview & hide label
+                    import_profiles_rv.visibility = View.VISIBLE
+                    import_profile_empty_tv.visibility = View.GONE
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this, getString(R.string.import_toast_no_valid_profile_json_clipboard), Toast.LENGTH_LONG).show()
             }
-
-            if (mAdapter.itemCount > 0) {
-                // Show recyclerview & hide label
-                import_profiles_rv.visibility = View.VISIBLE
-                import_profile_empty_tv.visibility = View.GONE
-            }
-
         } else {
             Toast.makeText(this, getString(R.string.import_toast_no_valid_profile_json_clipboard), Toast.LENGTH_LONG).show()
         }

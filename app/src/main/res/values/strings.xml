@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">ACCA</string>
+    <string name="app_name">AccA</string>
     <string name="app_name_full">Advanced Charging Controller App</string>
     <string name="title_activity_log_view">Logs</string>
     <string name="title_activity_log_view_file_name">Logs</string>
 
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">No Root</string>
-    <string name="tile_acc_enabled">ACC Enabled</string>
-    <string name="tile_acc_disabled">ACC Disabled</string>
+    <string name="tile_acc_enabled">Daemon running</string>
+    <string name="tile_acc_disabled">Daemon stopped</string>
 
     <!-- Navigation Strings -->
     <string name="title_dashboard">Dashboard</string>
@@ -16,10 +16,11 @@
     <string name="title_settings">Settings</string>
 
     <!-- ACC Daemon Status -->
-    <string name="title_status">Status</string>
+    <string name="title_acc">ACC</string>
     <string name="title_acc_daemon">ACC Daemon</string>
     <string name="acc_daemon_status_running">ACC Daemon is Running</string>
     <string name="acc_daemon_status_not_running">ACC Daemon is Not Running</string>
+    <string name="acc_daemon_status_reading_status">Reading ACC Daemon Status...</string>
 
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">Stop ACC Daemon</string>
@@ -55,13 +56,13 @@
     <string name="cooldown_capacity">Start cooling down at %%:</string>
     <string name="resume_charge">Resume charging at:</string>
     <string name="stop_charge">Stop charging at:</string>
-    <string name="enable_temp_check">Enable temperature check (°C)</string>
+    <string name="enable_temp_check">Enable temperature control (°C)</string>
     <string name="cooldown_temp">Cooldown temp:</string>
     <string name="max_temp">Max temp:</string>
     <string name="pause_seconds">Pause seconds:</string>
     <string name="charge_seconds">Charge seconds:</string>
     <string name="shutdown_capacity">Shutdown (if not charging) at:</string>
-    <string name="no_root_message">This app requires ROOT.</string>
+    <string name="no_root_message">AccA requires ROOT.</string>
     <string name="config_error_title">Config parse error</string>
     <string name="config_error_dialog">Failed to parse ACC config!\nPlease check whether \"su -c acc --set --print\" works.</string>
     <string name="wait">Please wait...\nThis will take a few seconds.</string>
@@ -69,12 +70,12 @@
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Stop daemon after applying settings</string>
     <string name="description_exit_on_boot">This is used for writing to control files on boot.</string>
-    <string name="label_on_boot" translatable="false">applyOnBoot:</string>
+    <string name="label_on_boot" translatable="false">apply_on_boot:</string>
 
     <!-- ACC installation -->
     <string name="installing_acc">Installing ACC</string>
     <string name="reboot">Reboot</string>
-    <string name="acc_installation_failed">Please send logcat and /data/adb/acc-data/logs/ to the developers
+    <string name="acc_installation_failed">Please archive and send logcat and /data/adb/acc-data/logs/ to the developers
         at t.me/acc_group/ or github.com/MatteCarra/AccA/issues/.
     </string>
     <string name="acc_installation_failed_title">ACC Installation Failed!</string>
@@ -82,11 +83,11 @@
     <!-- DJS installation -->
     <string name="install_djs_title">DJS is Required</string>
     <string name="install_djs_description">For this feature to work, we must enable DJS.
-        \nDJS (Daily Job Scheduler) is a lightweight add-on for scheduling ACC settings.
-        \nDJS daemon will be started on boot alongside ACC daemon.
+        \nDJS (Daily Job Scheduler) is a lightweight add-on for scheduling ACC profiles/settings.
+        \nDJS daemon will be started on boot alongside ACC\'s.
     </string>
     <string name="installing_djs">Installing DJS</string>
-    <string name="djs_installation_failed">Please send logcat and /data/adb/djs-data/logs/ to the developers
+    <string name="djs_installation_failed">Please archive and send logcat and /data/adb/djs-data/logs/ to the developers
         at t.me/acc_group/ or github.com/MatteCarra/AccA/issues/.
     </string>
     <string name="djs_installation_failed_title">DJS Installation Failed!</string>
@@ -106,7 +107,7 @@
     <string name="unsaved_changes">You have unsaved changes</string>
     <string name="close_without_saving">Discard</string>
     <string name="edit_config">Edit config</string>
-    <string name="unsaved_changes_message">You have unsaved changes. Do you want to save them?</string>
+    <string name="unsaved_changes_message">Save changes?</string>
     <string name="create_acc_profile">Create config profile</string>
     <string name="profile_name">Profile name</string>
     <string name="dialog_profile_name_message">Enter the name you want assigned to this profile:</string>
@@ -119,10 +120,10 @@
     <string name="recurrent_schedule">Run only once</string>
     <string name="execution_time">Execution time</string>
     <string name="new_config">New custom config</string>
-    <string name="enable_voltage_limit">Enable charging voltage limit</string>
+    <string name="enable_voltage_limit">Custom charging voltage limit</string>
     <string name="voltage_control_file">Voltage control file:</string>
-    <string name="edit_power_limit">Edit current and voltage limit</string>
-    <string name="voltage_max">Voltage max (millivolts):</string>
+    <string name="edit_power_limit">Edit current and voltage limits</string>
+    <string name="voltage_max">Max voltage (millivolts):</string>
     <string name="disabled">Disabled</string>
     <string name="schedule_recurrent_row_text">Recurrent Job scheduled for %1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_title">Exec. Once - %1$02d:%2$02d</string>
@@ -131,36 +132,40 @@
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Delete</string>
     <string name="no_schedules">No schedules set</string>
-    <string name="wrong_volt_file">Either the chosen file doesn\'t work, or your kernel doesn\'t support this feature.</string>
+    <string name="wrong_volt_file">Either the chosen file does not work, or your kernel doesn\'t support this feature.</string>
     <string name="invalid_voltage_max">The value should be a number between 3700 and 4200 (millivolts)</string>
     <string name="edit_charging_switch">Edit charging switch</string>
     <string name="test_switch">Test charging switch</string>
     <string name="no_option_selected">No option selected; please select one!</string>
     <string name="charging_switch_works">Selected charging switch works!</string>
-    <string name="charging_switch_does_not_work">Selected charging switch doesn\'t work!</string>
-    <string name="plug_battery_to_test">Battery must be charging before testing. Plug the charger and try again!</string>
+    <string name="charging_switch_does_not_work">Selected charging switch fails!</string>
+    <string name="plug_battery_to_test">Plug the charger and try again!</string>
     <string name="automatic">Automatic</string>
     <string name="error_occurred">An error has occurred</string>
     <string name="retry">Retry</string>
-    <string name="edit_charging_limit_once">Charge once to a given capacity, uninterrupted and without other restrictions</string>
+    <string name="edit_charging_limit_once">Charge once to #\%, without restrictions</string>
+    <string name="done_applied_charge_limit">Charging to %1$d%%</string>
+    <string name="charge_limit_not_applied">Apply charge limit canceled</string>
     <string name="apply">Apply</string>
     <string name="done">Done</string>
-    <string name="edit_charging_limit_once_dialog_msg">Your current settings are automatically restored once the chosen battery level is reached.</string>
+    <string name="edit_charging_limit_once_dialog_msg">Your regular settings are automatically restored once the chosen battery level is reached.</string>
     <string name="title_power_control">Charging power control</string>
     <string name="info">Info</string>
     <string name="title_cooldown_control">Cool Down</string>
     <string name="title_on_boot">Apply on Boot</string>
     <string name="title_temperature_control">Temperature Control</string>
     <string name="title_capacity_control">Capacity Control</string>
+    <string name="title_miscellaneous_control">Miscellaneous</string>
     <string name="about">About</string>
 
     <!-- ACC Config Tooltips -->
-    <string name="capacity_control_info">- SHUTDOWN: automatically shutdown the system at or below this battery level when battery is not charging.&lt;br /&gt;- STOP: and RESUME capacities dictate when charging should stop and resume, respectively.&lt;br /&gt;- CHARGING SWITCH is the control file, plus ON and OFF values for switching charging on/off. By default, ACC uses whatever works.</string>
+    <string name="capacity_control_info">- SHUTDOWN: automatically shutdown the system at/below this battery level when battery is not charging.&lt;br /&gt;- STOP: and RESUME capacities dictate when charging should stop and resume, respectively.&lt;br /&gt;- CHARGING SWITCH is the control file, plus ON and OFF values for switching charging on/off. By default, ACC uses whatever works.</string>
     <string name="power_control_info">- Every reduction in peak charge voltage of 0.10V/cell is said to double the cycle life.&lt;br /&gt;- Unfortunately, not all devices/kernels support this feature.</string>
     <string name="temperature_control_info">- This disables charging for set seconds to cool the battery&lt;br /&gt;- COOLDOWN TEMP depends on COOLDOWN RATIO.&lt;br /&gt;- MAX TEMP works with PAUSE SECONDS.</string>
-    <string name="cooldown_info">- Charging ON/OFF ratio in seconds (e.g., coolDownRatio=50/10) - reduces battery stress induced by prolonged high temperature and high charging voltage by periodically pausing charging.&lt;br /&gt;- If charging is too slow, turn this off or change the ratio.&lt;br /&gt;- When disabled, COOLDOWN CAPACITY and COOLDOWN TEMP values are nullified.&lt;br /&gt;- This settings is a fair alternative to the charging voltage limit feature.</string>
-    <string name="on_plugged_info">This is used for updating files whose contents change on certain power events (e.g., plugged/unplugged). It is particularly useful for enforcing custom max voltage/current for usb/wireless charging.</string>
-    <string name="battery_idle_info_label">If the switch is selected charging switches that support battery idle mode take precedence - allowing the device to draw power directly from the external power supply when charging is paused.&lt;br /&gt;If your switch is disabled it means that your kernel does not support this feature.</string>
+    <string name="cooldown_info">- Charging ON/OFF ratio in seconds (e.g., 50/10) - reduces battery stress induced by prolonged high temperature and high charging voltage by periodically pausing charging.&lt;br /&gt;- If charging is too slow, turn this off or change the ratio to something like 50/5.&lt;br /&gt;- When disabled, COOLDOWN CAPACITY and COOLDOWN TEMP values have no effect.&lt;br /&gt;- This functionality is a fair alternative to the charging voltage limit feature.</string>
+    <string name="on_plugged_info">This is used for updating control files whose contents change on certain power events (e.g., plug/unplug). It is particularly useful for enforcing custom max voltage/current for usb/wireless charging.</string>
+    <string name="battery_idle_info_label">This allows supported device to draw power directly from the external power supply when charging is paused.</string>
+    <string name="miscellaneous_info_label">Various acc configurations that did not fit in other defined categories</string>
 
     <string name="acc_config_editor">ACC config editor</string>
     <string name="profile_creator">Profile creator</string>
@@ -170,7 +175,7 @@
     <string name="label_on_plugged" translatable="false">applyOnPlug:</string>
     <string name="edit_on_plugged">Edit apply_on_plug settings:</string>
 
-    <string name="edit_on_plugged_dialog_message">Example: wireless/voltage_max::9000000::9000000 can force fast wireless charging on some Pixel devices.
+    <string name="edit_on_plugged_dialog_message">Example: wireless/voltage_max::9000000 forces fast wireless charging on some Pixel devices.
     </string>
 
     <string name="template_capacity_profile">Shutdown: %1$d%% - Resume: %2$d%% - Stop: %3$d%%</string>
@@ -184,7 +189,7 @@
 
     <string name="selecting_profile_toast">Selecting profile %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox is not installed</string>
-    <string name="installation_failed_busybox">Install busybox binary first</string>
+    <string name="installation_failed_busybox">Install busybox first or simply place the binary in /data/adb/bin/</string>
     <string name="share">Share</string>
     <string name="logs_not_found">Log file not found.</string>
     <string name="acc_telegram">For additional support, join ACC Telegram group (t.me/acc_group)!</string>
@@ -205,8 +210,8 @@
     <string name="units_of_measure">Units of measure</string>
     <string name="acc_version_preference_title">ACC version</string>
 
-    <string name="acc_version_preference_description">You can choose the ACC variant to use: bundled, master, develop or any of the released versions.
-        Bundled version is guaranteed to always work with AccA - thus it\'s the recommended choice.
+    <string name="acc_version_preference_description">You can choose the ACC variant to use: bundled (stable, recommended for most users), master (stable), develop (bleeding edge but not necessarily unstable) or any of the tagged versions.
+        Bundled is the most extensively tested version for AccA - thus it\'s the recommended choice.
         While not guaranteed, other variants are generally safe.
     </string>
 
@@ -237,9 +242,9 @@
     <string name="acc_version_compatibility_warning_title">ACC version compatibility</string>
 
     <string name="acc_version_compatibility_warning_description">You have chosen an ACC variant which is not guaranteed to be compatible with the app.
-        \nAccA will download the selected version from the ACC Github repository.
         \nMost of the time, you won\'t face incompatibilities, though.
-        \nDo you want to continue?
+        \nAccA is about to download the selected version from ACC\'s GitHub repository.
+        \nProcced?
     </string>
 
     <string name="restore">Restore to default</string>
@@ -256,13 +261,13 @@
     <string name="select_different_version">Change ACC version</string>
 
     <string name="installation_failed_non_bundled">The installation of different ACC variant failed.
-        \nPlease consider sharing /data/adb/acc-data/logs/ with the devs.
+        \nPlease consider archiving and sharing /data/adb/acc-data/logs/ with the devs.
     </string>
 
     <string name="prioritize_battery_idle">Prioritize battery idle mode</string>
     <string name="test_battery_idle">Test battery idle mode</string>
-    <string name="test_battery_idle_supported_result">Your kernel supports battery idle mode.</string>
-    <string name="test_battery_idle_unsupported_result">Your kernel doesn\'t support battery idle mode.</string>
+    <string name="test_battery_idle_supported_result">The kernel supports battery idle mode.</string>
+    <string name="test_battery_idle_unsupported_result">The kernel does not support battery idle mode.</string>
     <string name="schedule_profile_edit_current">Edit current config</string>
     <string name="schedule_profile_keep_current">Keep current config</string>
     <string name="schedule_type">Schedule type</string>
@@ -286,29 +291,33 @@
     <string name="create_schedule">Create schedule</string>
 
     <!-- About Activity -->
-    <string name="about_team_blurb">Thank you for using ACCA!
-        \nWe spent heaps of time on this all for you to enjoy.
-        \nSpecial thanks to those who have contributed in one way or another:
-        donating, offering suggestions, opening pull requests, submitting bugs, and helping one another!
+    <string name="about_team_title">Meet the Team</string>
+    <string name="about_team_blurb">Thank you for using AccA!
+        \n\nWe spent heaps of time on this so that you can manage ACC with ease!
+        \n\nSpecial thanks to those who have contributed in one way or another to ACC &amp; AccA projects!
     </string>
 
-    <string name="about_acca_version_label">ACCA Version:</string>
+    <string name="about_attributes">Attributes</string>
+    <string name="about_attrib_telegram_icon">Telegram icon made by Pixel perfect from www.flaticon.com</string>
+
+    <string name="about_acca_version_label">AccA Version:</string>
     <string name="about_acc_version_label">ACC Version:</string>
-    <string name="about_project_github">Project\'s GitHub</string>
+    <string name="about_project_github">AccA GitHub</string>
+    <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Website</string>
-    <string name="toast_no_browser_installed">Unable to Open Link!\nMake sure you have a web browser installed.</string>
-    <string name="install_update_dialog">Install acc update</string>
+    <string name="toast_no_browser_installed">Unable to open link!\nMake sure you have a web browser installed.</string>
+    <string name="install_update_dialog">Install ACC update</string>
     <string name="check_update_dialog_message">
         Do yo want to install the latest version of ACC from branch \'%1$s\'?
-        \nACCA will download the latest version of ACC from Github based on the latest commit of the selected branch.
+        \nAccA will download the latest version of ACC from GitHub based on the latest commit of the selected branch.
         \nDo you want to continue?</string>
-    <string name="add_charging_switch">Add charging switch</string>
+    <string name="add_charging_switch">Add Charging Switch</string>
     <string name="charging_switch_on_value_label">Charging switch ON VALUE</string>
     <string name="charging_switch_off_value_label">Charging switch OFF VALUE</string>
     <string name="reset_bs_on_pause">Reset battery stats on pause \%</string>
-    <string name="current_max">Current max (mA):</string>
-    <string name="invalid_current_max">Invalid current max value</string>
+    <string name="current_max">Max Current (mA):</string>
+    <string name="invalid_current_max">Invalid Max Current Value</string>
 
     <!-- Import and Export -->
     <string name="import_title">Import</string>
@@ -323,4 +332,9 @@
     <string name="import_toast_no_selected_profiles">Please select Profiles to Import</string>
     <string name="import_profile_success">Successfully imported %d profiles</string>
 
+    <!-- Config Parse Error -->
+    <string name="parse_failed_title">Failed to Parse ACC Config</string>
+    <string name="parse_failed_body">You may try to load the default configuration by pressing \'Load Default\'. Please note that AccA will not be functional.
+        \n\nIf the error persists, please share the stack trace below along with ACC &amp; AccA version (via the 3-dot menu &gt; About) with the developers via Telegram.\n\n%s</string>
+    <string name="automatic_switch_eanbled">Automatically cycle through switches</string>
 </resources>

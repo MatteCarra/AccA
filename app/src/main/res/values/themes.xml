@@ -4,6 +4,10 @@
     <!--Top level DayNight theme to be used in AndroidManifest.xml-->
     <style name="AccaTheme.DayNight" parent="Base.AccaTheme"/>
 
+    <style name="AccaTheme.DayNight.Launcher" parent="AccaTheme.DayNight">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
+
     <!--Base custom theme which will be shared between both light and dark theme variants-->
     <style name="Base.AccaTheme" parent="Base.MaterialThemeBuilder">
         <!--Material color attributes -->
