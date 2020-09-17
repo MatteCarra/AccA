@@ -119,6 +119,8 @@
     <string name="test_switch">Tester l\'interrupteur de charge</string>
     <string name="no_option_selected">Aucune option sélectionnée ; veuillez en sélectionner une !</string>
     <string name="charging_switch_works">Le commutateur de charge sélectionné fonctionne !</string>
+    <string name="charging_switch_does_not_work">Le commutateur de charge sélectionné ne fonctionne pas !</string>
+    <string name="plug_battery_to_test">Veuillez brancher votre chargeur et réessayez !</string>
     <string name="automatic">Automatique</string>
     <string name="error_occurred">Une erreur est survenue </string>
     <string name="retry">Réessayer</string>
