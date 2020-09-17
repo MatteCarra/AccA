@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">AccA</string>
     <string name="app_name_full">Application de contrôle de chargement avancé</string>
     <string name="title_activity_log_view">Logs</string>
     <string name="title_activity_log_view_file_name">Logs</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">Pas d\'accès \"root\"</string>
+    <string name="tile_acc_enabled">Démon en cours d\'exécution</string>
+    <string name="tile_acc_disabled">Démon arrêté</string>
     <!-- Navigation Strings -->
     <string name="title_dashboard">Tableau de bord</string>
     <string name="title_profiles">Profils</string>
     <string name="title_schedules">Planification</string>
     <string name="title_settings">Paramètres</string>
     <!-- ACC Daemon Status -->
+    <string name="title_acc">ACC</string>
     <string name="title_acc_daemon">Service ACC</string>
     <string name="acc_daemon_status_running">Le service ACC est actif</string>
     <string name="acc_daemon_status_not_running">Le service ACC n\'est pas actif</string>
+    <string name="acc_daemon_status_reading_status">Lecture de l\'état du démon ACC...</string>
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">Arrêter le service ACC</string>
     <string name="menu_start_accd">Démarrer le service ACC</string>
@@ -42,11 +47,13 @@
     <string name="cooldown_capacity">Commencer le refroidissement à %% :</string>
     <string name="resume_charge">Reprendre la charge à :</string>
     <string name="stop_charge">Arrêter la charge à :</string>
+    <string name="enable_temp_check">Activer le contrôle de température (°C)</string>
     <string name="cooldown_temp">Température de refroidissement :</string>
     <string name="max_temp">Temp. max. :</string>
     <string name="pause_seconds">Pause en secondes :</string>
     <string name="charge_seconds">Charge en secondes :</string>
     <string name="shutdown_capacity">Éteindre (si pas en charge) à :</string>
+    <string name="no_root_message">AccA nécessite ROOT.</string>
     <string name="config_error_title">Erreur de lecture de la configuration</string>
     <string name="config_error_dialog">Impossible d\'écrire la configuration ACC !\nVeuillez vérifier si \"su -c acc --set --print\" fonctionne.</string>
     <string name="wait">Veuillez patienter... \nCela peut prendre quelques secondes.</string>
@@ -56,10 +63,20 @@
     <!-- ACC installation -->
     <string name="installing_acc">Installation du service ACC</string>
     <string name="reboot">Redémarrage</string>
+    <string name="acc_installation_failed">Veuillez archiver et envoyer le logcat et /data/adb/acc-data/logs/ aux développeurs
+        sur t.me/acc_group/ ou github.com/MatteCarra/AccA/issues/.
+    </string>
     <string name="acc_installation_failed_title">L\'installation du service ACC a échoué !</string>
     <!-- DJS installation -->
     <string name="install_djs_title">DJS est requis</string>
+    <string name="install_djs_description">Pour que cette fonctionnalité fonctionne, nous devons activer le DJS.
+        \nDJS (Daily Job Scheduler) est un module complémentaire léger pour planifier les paramètres/profiles ACC.
+        \nLe service DJS sera lancé au démarrage du service ACC.
+    </string>
     <string name="installing_djs">Installation du service DJS</string>
+    <string name="djs_installation_failed">Veuillez archiver et envoyer le logcat et /data/adb/djs-data/logs/ aux développeurs
+        sur t.me/acc_group/ ou github.com/MatteCarra/AccA/issues/.
+    </string>
     <string name="djs_installation_failed_title">L\'installation du service DJS a échoué !</string>
     <string name="voltage_control_file_not_set">Non configuré.</string>
     <string name="edit_on_boot">Modifier les paramètres qui sont appliqués au démarrage</string>
@@ -74,6 +91,7 @@
     <string name="unsaved_changes">Vous avez des modifications non enregistrées</string>
     <string name="close_without_saving">Abandonner</string>
     <string name="edit_config">Modifier la configuration</string>
+    <string name="unsaved_changes_message">Enregistrer les modifications ?</string>
     <string name="create_acc_profile">Créer un profil de configuration</string>
     <string name="profile_name">Nom du profil</string>
     <string name="dialog_profile_name_message">Entrez le nom que vous souhaitez attribuer à ce profil :</string>
@@ -86,6 +104,7 @@
     <string name="recurrent_schedule">Exécuter une seule fois</string>
     <string name="execution_time">Temps d\'exécution</string>
     <string name="new_config">Nouvelle configuration personnalisée</string>
+    <string name="enable_voltage_limit">Limite de tension de charge personnalisée</string>
     <string name="voltage_control_file">Fichier de contrôle de la tension :</string>
     <string name="disabled">Desactivé</string>
     <string name="schedule_recurrent_row_text">Tâche récurrente planifiée à %1$02d:%2$02d</string>
@@ -196,14 +215,31 @@
     <string name="edit_schedule">Modifier la planification</string>
     <string name="create_schedule">Créer une planification</string>
     <!-- About Activity -->
+    <string name="about_team_title">Rencontrer l\'équipe</string>
+    <string name="about_attributes">Attributs</string>
+    <string name="about_attrib_telegram_icon">Icône de télégramme réalisée par Pixel perfect à partir de www.flaticon.com</string>
     <string name="about_acc_version_label">Version ACC :</string>
     <string name="about_github">Github</string>
     <string name="about_website">Site Internet</string>
+    <string name="toast_no_browser_installed">Impossible d\'ouvrir le lien !\n Assurez-vous que vous avez un navigateur web installé.</string>
+    <string name="install_update_dialog">Installer la mise à jour de l\'ACC</string>
+    <string name="add_charging_switch">Ajouter un interrupteur de charge</string>
     <string name="charging_switch_on_value_label">Commutateur de charge ACTIVÉ</string>
     <string name="charging_switch_off_value_label">Commutateur de charge DÉSACTIVÉ</string>
     <string name="reset_bs_on_pause">Réinitialiser les statistiques de la batterie en pause \%</string>
+    <string name="current_max">Courant max (mA) :</string>
+    <string name="invalid_current_max">Valeur maximale actuelle invalide</string>
     <!-- Import and Export -->
     <string name="import_title">Importer</string>
+    <string name="import_load_from_clipboard">Appuyez sur l\'icône \'Presse-papier\' dans la barre d\'outils !</string>
     <string name="export_title">Exporter</string>
+    <string name="export_none_selected">Veuillez sélectionner les profils à exporter ci-dessus</string>
+    <string name="menu_import">Importer</string>
+    <string name="menu_export">Exporter</string>
+    <string name="menu_title_load_clipboard">Charger depuis le presse-papiers</string>
+    <string name="menu_title_clear_entries">Effacer les entrées</string>
+    <string name="import_toast_no_selected_profiles">Veuillez sélectionner les profils à importer</string>
+    <string name="import_profile_success">%d profils importés avec succès</string>
     <!-- Config Parse Error -->
+    <string name="parse_failed_title">Échec de l\'analyse de la configuration ACC</string>
 </resources>
