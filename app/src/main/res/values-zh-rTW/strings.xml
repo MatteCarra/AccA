@@ -76,7 +76,6 @@
     <string name="create_acc_profile">建立設定檔</string>
     <string name="profile_name">設定檔名稱</string>
     <string name="dialog_profile_name_message">請輸入設定檔名稱:</string>
-    <string name="no_profiles">沒有設定檔</string>
     <string name="profile_not_selected">自訂設定</string>
     <string name="profile_tile_label">設定檔: %1$s</string>
     <string name="profiles_text_view">設定檔 (長按編輯/刪除):</string>
