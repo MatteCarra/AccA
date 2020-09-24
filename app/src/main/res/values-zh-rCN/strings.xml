@@ -90,7 +90,6 @@
     <string name="create_acc_profile">创建配置文件</string>
     <string name="profile_name">配置名称</string>
     <string name="dialog_profile_name_message">输入要分配给此配置的名称：</string>
-    <string name="no_profiles">配置未设置</string>
     <string name="profile_not_selected">自定义设置</string>
     <string name="profile_tile_label">配置: %1$s</string>
     <string name="profiles_text_view">配置列表 (长按可编辑/删除):</string>
