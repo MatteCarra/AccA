@@ -76,7 +76,6 @@
     <string name="create_acc_profile">Создать профиль конфигурации</string>
     <string name="profile_name">Название профиля</string>
     <string name="dialog_profile_name_message">Введите название, которое вы хотите назначить этому профилю:</string>
-    <string name="no_profiles">Профили не заданы</string>
     <string name="profile_not_selected">Пользовательские настройки</string>
     <string name="profile_tile_label">Профиль: %1$s</string>
     <string name="profiles_text_view">Профили (удерживайте для редактирования/удаления):</string>
