@@ -76,7 +76,6 @@
     <string name="create_acc_profile">Yapılandırma profili oluştur</string>
     <string name="profile_name">Profil ismi</string>
     <string name="dialog_profile_name_message">Bu profile vermek istediğiniz ismi girin:</string>
-    <string name="no_profiles">Profil seçilmedi</string>
     <string name="profile_not_selected">Kişisel ayarlar</string>
     <string name="profile_tile_label">Profil: %1$s</string>
     <string name="profiles_text_view">Profiller (silmek/düzenlemek için uzun basın):</string>
