@@ -65,7 +65,6 @@
     <string name="create_acc_profile">Crea profilo di configurazione</string>
     <string name="profile_name">Nome del profilo</string>
     <string name="dialog_profile_name_message">Inserisci il nome che vuoi assegnare a questo profilo:</string>
-    <string name="no_profiles">Profili non impostati</string>
     <string name="profile_not_selected">Impostazioni personalizzate</string>
     <string name="profile_tile_label">Profilo: %1$s</string>
     <string name="profiles_text_view">Profili (pressione lunga per modificare/eliminare):</string>
