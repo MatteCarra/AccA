@@ -91,8 +91,8 @@ data class AccConfig(var configCapacity: ConfigCapacity,
      */
     data class ConfigCoolDown (var atPercent: Int, var charge: Int, var pause: Int) : Serializable {
         fun toString(context: Context): String {
-            return String.format(context.getString(R.string.template_cool_down_profile,
-                atPercent, charge, pause))
+            return context.getString(R.string.template_cool_down_profile,
+                atPercent, charge, pause)
         }
     }
 
