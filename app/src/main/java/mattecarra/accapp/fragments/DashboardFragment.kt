@@ -24,8 +24,12 @@ import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
 import androidx.databinding.DataBindingUtil
-import mattecarra.accapp.databinding.DashboardFragmentBinding
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import mattecarra.accapp.SharedViewModel
+import mattecarra.accapp.activities.MainActivity
+import mattecarra.accapp.models.DashboardValues
 import mattecarra.accapp.utils.ScopedFragment
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -43,7 +47,7 @@ class DashboardFragment : ScopedFragment() {
         fun newInstance() = DashboardFragment()
     }
 
-    private lateinit var mViewModel: DashboardViewModel
+    private val mViewModel: DashboardViewModel by activityViewModels()
     private lateinit var configViewModel: SharedViewModel
     private lateinit var preferences: Preferences
     private var mIsDaemonRunning: Boolean? = null
@@ -52,23 +56,40 @@ class DashboardFragment : ScopedFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: DashboardFragmentBinding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.dashboard_fragment,
-            container,
-            false
-        )
-
-        mViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
-
-        val view = binding.root
-        binding.viewModel = mViewModel
-        binding.lifecycleOwner = this
-        return view
+        return inflater.inflate(R.layout.dashboard_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        mViewModel.getDashboardValues().observe(viewLifecycleOwner) { dash ->
+            // Set Status Card text
+            dash.daemon?.let { daemon ->
+                setAccdStatusUi(daemon)
+            }
+
+            // Battery/Charge details
+            dash_batteryCapacity_pBar.progress = dash.batteryInfo.capacity
+            dash_batteryStatus_textView.text = getString(R.string.info_status_extended,
+                dash.batteryInfo.status,
+                dash.batteryInfo.chargeType)
+
+            if (dash.batteryInfo.isCharging()) {
+                dash_batteryChargingSpeed_textView.text = getString(R.string.info_charging_speed)
+                dash_chargingSpeed_textView.text = getString(R.string.info_charging_speed_extended,
+                    dash.batteryInfo.getCurrentNow(preferences.currentUnitOfMeasure) * (if(dash.batteryInfo.isCharging()) 1 else -1),
+                    dash.batteryInfo.getVoltageNow(preferences.voltageUnitOfMeasure))
+            } else {
+                dash_batteryChargingSpeed_textView.text = getString(R.string.info_discharging_speed)
+                dash_chargingSpeed_textView.text =
+                    getString(R.string.info_discharging_speed_extended,
+                        dash.batteryInfo.getCurrentNow(preferences.currentUnitOfMeasure) * (if(dash.batteryInfo.isCharging()) 1 else -1))
+            }
+
+            dash_batteryTemperature_textView.text = dash.batteryInfo.temperature.toString() + Typography.degree
+            dash_batteryHealth_textView.text = dash.batteryInfo.health
+
+        }
 
         activity?.let { it ->
             preferences = Preferences(it)
@@ -120,18 +141,16 @@ class DashboardFragment : ScopedFragment() {
                 dash_daemonToggle_button.isEnabled = false
                 dash_daemonRestart_button.isEnabled = false
 
-                val observer = Observer<Boolean?> { accdRunning ->
-                    if (accdRunning != null) {
-                        if(accdRunning == !stopDaemon && !finished.getAndSet(true)) { //if accDeamon status is the opposite of the status it had before the action -> change had effect
-                            finished.set(true)
+                val observer = Observer<DashboardValues> { daemonInfo ->
+                    if(daemonInfo?.daemon == !stopDaemon && !finished.getAndSet(true)) { //if accDeamon status is the opposite of the status it had before the action -> change had effect
+                        finished.set(true)
 
-                            dash_daemonToggle_button.isEnabled = true
-                            dash_daemonRestart_button.isEnabled = true
-                        }
+                        dash_daemonToggle_button.isEnabled = true
+                        dash_daemonRestart_button.isEnabled = true
                     }
                 }
 
-                mViewModel.daemon.observe(viewLifecycleOwner, observer)
+                mViewModel.getDashboardValues().observe(viewLifecycleOwner, observer)
 
                 withContext(Dispatchers.IO) {
                     if (stopDaemon)
@@ -142,7 +161,7 @@ class DashboardFragment : ScopedFragment() {
 
                 delay(5000)
 
-                mViewModel.daemon.removeObserver(observer)
+                mViewModel.getDashboardValues().removeObserver(observer)
 
                 if(!finished.getAndSet(true)) {
                     dash_daemonToggle_button.isEnabled = true
@@ -172,9 +191,9 @@ class DashboardFragment : ScopedFragment() {
             }
         }
 
-        mViewModel.daemon.observe(viewLifecycleOwner, Observer { d ->
-            toggleAccdStatusUi(d)
-            mIsDaemonRunning = d
+        mViewModel.getDashboardValues().observe(viewLifecycleOwner, Observer { d ->
+            toggleAccdStatusUi(d.daemon)
+            mIsDaemonRunning = d.daemon
         })
     }
 
