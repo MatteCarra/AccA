@@ -75,7 +75,6 @@
     <string name="create_acc_profile">Tạo hồ sơ cấu hình</string>
     <string name="profile_name">Tên hồ sơ</string>
     <string name="dialog_profile_name_message">Nhập tên bạn muốn gán cho hồ sơ này:</string>
-    <string name="no_profiles">Hồ sơ không được đặt</string>
     <string name="profile_not_selected">Cài đặt tùy chỉnh</string>
     <string name="profile_tile_label">Hồ sơ: %1$s</string>
     <string name="profiles_text_view">Hồ sơ (nhấn và giữ để chỉnh sửa / xóa):</string>
