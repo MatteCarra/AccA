@@ -79,7 +79,6 @@
     <string name="create_acc_profile">Buat profil konfigurasi</string>
     <string name="profile_name">Nama profil</string>
     <string name="dialog_profile_name_message">Masukkan nama yang Anda inginkan untuk profil ini:</string>
-    <string name="no_profiles">Profil tidak disetel</string>
     <string name="profile_not_selected">Pengaturan khusus</string>
     <string name="profile_tile_label">Profil: %1$s</string>
     <string name="profiles_text_view">Profil (tekan lama untuk mengedit/menghapus):</string>
