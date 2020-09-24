@@ -79,7 +79,6 @@
     <string name="create_acc_profile">Δημιουργία προφίλ παραμέτρων</string>
     <string name="profile_name">Όνομα προφίλ</string>
     <string name="dialog_profile_name_message">Εισάγετε το όνομα που θέλετε να εκχωρήσετε σε αυτό το προφίλ:</string>
-    <string name="no_profiles">Δεν έχουν οριστεί προφίλ</string>
     <string name="profile_not_selected">Ειδικές ρυθμίσεις</string>
     <string name="profile_tile_label">Προφίλ: %1$s</string>
     <string name="profiles_text_view">Προφίλ (πατήστε παρατεταμένα για τροποποίηση/διαγραφή):</string>
