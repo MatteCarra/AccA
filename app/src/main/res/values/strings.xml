@@ -111,7 +111,7 @@
     <string name="create_acc_profile">Create config profile</string>
     <string name="profile_name">Profile name</string>
     <string name="dialog_profile_name_message">Enter the name you want assigned to this profile:</string>
-    <string name="no_profiles">Profiles not set</string>
+    <string name="no_profiles">No Profiles</string>
     <string name="profile_not_selected">Custom settings</string>
     <string name="profile_tile_label">Profile: %1$s</string>
     <string name="profiles_text_view">Profiles (long press to edit/delete):</string>
@@ -144,6 +144,8 @@
     <string name="error_occurred">An error has occurred</string>
     <string name="retry">Retry</string>
     <string name="edit_charging_limit_once">Charge once to #\%, without restrictions</string>
+    <string name="done_applied_charge_limit">Charging to %1$d%%</string>
+    <string name="charge_limit_not_applied">Apply charge limit canceled</string>
     <string name="apply">Apply</string>
     <string name="done">Done</string>
     <string name="edit_charging_limit_once_dialog_msg">Your regular settings are automatically restored once the chosen battery level is reached.</string>

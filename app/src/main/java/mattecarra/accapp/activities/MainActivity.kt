@@ -32,10 +32,7 @@ import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.dialogs.*
 import mattecarra.accapp.djs.Djs
-import mattecarra.accapp.fragments.DashboardFragment
-import mattecarra.accapp.fragments.ProfilesFragment
-import mattecarra.accapp.fragments.SchedulesFragment
-import mattecarra.accapp.fragments.SchedulesViewModel
+import mattecarra.accapp.fragments.*
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.models.ProfileEntry
@@ -57,6 +54,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     private lateinit var _preferences: Preferences
     private lateinit var _sharedViewModel: SharedViewModel
     private lateinit var _mainActivityViewModel: MainActivityViewModel
+    private lateinit var _dashboardViewModel: DashboardViewModel
     private lateinit var _schedulesViewModel: SchedulesViewModel
 
     val mainFragment = DashboardFragment.newInstance()

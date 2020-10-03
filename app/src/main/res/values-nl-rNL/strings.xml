@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ACCA</string>
+    <string name="app_name">AccA</string>
     <string name="app_name_full">Geavanceerde oplaadcontrole App</string>
     <string name="title_activity_log_view">Logbestanden</string>
     <string name="title_activity_log_view_file_name">Logbestanden</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">Geen Root</string>
-    <string name="tile_acc_enabled">ACC ingeschakeld</string>
-    <string name="tile_acc_disabled">ACC uitgeschakeld</string>
+    <string name="tile_acc_enabled">Daemon draait</string>
+    <string name="tile_acc_disabled">Daemon gestopt</string>
     <!-- Navigation Strings -->
     <string name="title_dashboard">Dashboard</string>
     <string name="title_profiles">Profielen</string>
     <string name="title_schedules">Schema\'s</string>
     <string name="title_settings">Instellingen</string>
     <!-- ACC Daemon Status -->
+    <string name="title_acc">ACC</string>
     <string name="title_acc_daemon">ACC Daemon</string>
     <string name="acc_daemon_status_running">ACC Daemon wordt uitgevoerd</string>
     <string name="acc_daemon_status_not_running">ACC Daemon wordt niet uitgevoerd</string>
+    <string name="acc_daemon_status_reading_status">Lezen ACC Daemon Status...</string>
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">Stop ACC Daemon</string>
     <string name="menu_start_accd">Start ACC Daemon</string>
@@ -45,13 +47,13 @@
     <string name="cooldown_capacity">Begin met afkoelen op %%:</string>
     <string name="resume_charge">Hervat opladen om:</string>
     <string name="stop_charge">Stop opladen op:</string>
-    <string name="enable_temp_check">Temperatuur check (°C) inschakelen</string>
+    <string name="enable_temp_check">Temperatuurbeheer inschakelen (°C)</string>
     <string name="cooldown_temp">Afkoel temp:</string>
     <string name="max_temp">Max temp:</string>
     <string name="pause_seconds">Pauzeer seconden:</string>
     <string name="charge_seconds">Seconden laden:</string>
     <string name="shutdown_capacity">Afsluiten (indien niet opladen) op:</string>
-    <string name="no_root_message">Deze app vereist ROOT.</string>
+    <string name="no_root_message">AccA vereist ROOT.</string>
     <string name="config_error_title">Configuratie parse fout</string>
     <string name="config_error_dialog">Fout bij het parsen van ACC config!!\nControleer of \"su -c acc --set --print\" werkt.</string>
     <string name="wait">Wacht alstublieft...\nDit duurt een paar seconden.</string>
@@ -61,8 +63,8 @@
     <!-- ACC installation -->
     <string name="installing_acc">Bezig met installeren ACC</string>
     <string name="reboot">Opnieuw opstarten</string>
-    <string name="acc_installation_failed">Stuur logcat en /data/adb/acc-data/logs/ naar de ontwikkelaars
-        naar t.me/acc_group/ of github.com/MatteCarra/AccA/issues/.
+    <string name="acc_installation_failed">Archiveer en verstuur logcat en /data/adb/acc-data/logs/ naar de ontwikkelaars
+        op t.me/acc_group/ of github.com/MatteCarra/AccA/issues/.
     </string>
     <string name="acc_installation_failed_title">ACC installatie mislukt!</string>
     <!-- DJS installation -->
@@ -72,8 +74,8 @@
         \nDJS daemon zal bij het opstarten tegelijk met ACC daemon worden opgestart.
     </string>
     <string name="installing_djs">DJS installeren</string>
-    <string name="djs_installation_failed">Stuur logcat en /data/adb/acc-data/logs/ naar de ontwikkelaars
-        naar t.me/acc_group/ of github.com/MatteCarra/AccA/issues/.
+    <string name="djs_installation_failed">Archiveer en verstuur logcat en /data/adb/djs-data/logs/ naar de ontwikkelaars
+        op t.me/acc_group/ of github.com/MatteCarra/AccA/issues/.
     </string>
     <string name="djs_installation_failed_title">DJS installatie mislukt!</string>
     <string name="voltage_control_file_not_set">Niet ingesteld.</string>
@@ -89,7 +91,7 @@
     <string name="unsaved_changes">U heeft niet opgeslagen wijzigingen</string>
     <string name="close_without_saving">Negeer</string>
     <string name="edit_config">Bewerk configuratie</string>
-    <string name="unsaved_changes_message">U heeft niet opgeslagen wijzigingen. Wilt u deze opslaan?</string>
+    <string name="unsaved_changes_message">Wijzigingen opslaan?</string>
     <string name="create_acc_profile">Configuratieprofiel aanmaken</string>
     <string name="profile_name">Profielnaam</string>
     <string name="dialog_profile_name_message">Voer de naam in die u aan dit profiel wilt toewijzen:</string>
@@ -102,7 +104,7 @@
     <string name="recurrent_schedule">Start slechts één keer</string>
     <string name="execution_time">Uitvoeringstijd</string>
     <string name="new_config">Nieuwe aangepaste configuratie</string>
-    <string name="enable_voltage_limit">Activeer oplaadvoltage limiet</string>
+    <string name="enable_voltage_limit">Aangepaste spanningslimiet bij opladen</string>
     <string name="voltage_control_file">Voltage controle bestand:</string>
     <string name="edit_power_limit">Huidige stroom- en spanningslimiet bewerken</string>
     <string name="voltage_max">Maximale spanning (millivolts):</string>
@@ -121,11 +123,11 @@
     <string name="no_option_selected">Geen optie geselecteerd; selecteer er een!</string>
     <string name="charging_switch_works">Geselecteerde oplaadschakelaar werkt!</string>
     <string name="charging_switch_does_not_work">Geselecteerde oplaadschakelaar werkt niet!</string>
-    <string name="plug_battery_to_test">Batterij moet worden opgeladen voordat u kunt testen. Sluit de lader aan en probeer het opnieuw!</string>
+    <string name="plug_battery_to_test">Sluit de lader aan en probeer het opnieuw!</string>
     <string name="automatic">Automatisch</string>
     <string name="error_occurred">Er is een fout opgetreden</string>
     <string name="retry">Probeer opnieuw</string>
-    <string name="edit_charging_limit_once">Laad eenmalig, zonder onderbreking en zonder andere restricties tot een aangegeven capaciteit</string>
+    <string name="edit_charging_limit_once">Laad één keer tot #\%, zonder beperkingen</string>
     <string name="apply">Toepassen</string>
     <string name="done">Uitgevoerd</string>
     <string name="edit_charging_limit_once_dialog_msg">Uw huidige instellingen worden automatisch hersteld zodra het gekozen batterijniveau is bereikt.</string>
@@ -135,6 +137,7 @@
     <string name="title_on_boot">Toepassen bij opstarten</string>
     <string name="title_temperature_control">Temperatuur regeling</string>
     <string name="title_capacity_control">Capaciteitscontrole</string>
+    <string name="title_miscellaneous_control">Diversen</string>
     <string name="about">Over</string>
     <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- SHUTDOWN: automatisch het systeem afsluiten op of onder dit batterijniveau wanneer de batterij niet oplaadt.&lt;br /&gt;- STOP: en RESUME capaciteit geeft aan wanneer het opladen moet stoppen en hervatten.&lt;br /&gt;- CHARGING SWITCH is het controlebestand, plus ON en UIT zijn de waarden voor het aan/uit schakelen van het opladen. Standaard gebruikt ACC elke optie die werkt.</string>
@@ -142,14 +145,15 @@
     <string name="temperature_control_info">- Dit schakelt het opladen de opgegeven aantal seconden uit om de batterij te koelen&lt;br /&gt;- COOLDOWN TEMP is afhankelijk van COOLDOWN RATIO.&lt;br /&gt;- MAX TEMP werkt met PAUSE SECONDS.</string>
     <string name="cooldown_info">- Charging ON/OFF ratio in seconden (bv., coolDownRatio=50/10) - vermindert de batterijbelasting veroorzaakt door langdurig hoge temperaturen en hoge oplaadspanning door het periodiek onderbreken van het opladen.&lt;br /&gt;- Als het opladen te traag wordt, zet deze optie uit of wijzig de verhouding.&lt;br /&gt;- Wanneer uitgeschakeld, COOLDOWN CAPACITY en COOLDOWN TEMP zijn dan nulwaarden.&lt;br /&gt;- Deze instellingen zijn een redelijk alternatief voor de oplaadvoltage limiet functie.</string>
     <string name="on_plugged_info">Dit wordt gebruikt voor het bijwerken van bestanden waarvan de inhoud verandert bij bepaalde stroomgebeurtenissen (bijv. aangesloten/niet aangesloten). Het is met name handig bij het afdwingen van aangepaste max voltage/netstroom voor usb/draadloos opladen.</string>
-    <string name="battery_idle_info_label">Als de schakelaar wordt geselecteerd, krijgt de inschakeling en de ondersteuning van batterij inactieve modus voorrang - waardoor het apparaat direct van de externe stroomvoorziening kan profiteren wanneer het opladen wordt onderbroken.&lt;br /&gt;Als uw schakelaar is uitgeschakeld, betekent dit dat uw kernel deze functie niet ondersteunt.</string>
+    <string name="battery_idle_info_label">Dit staat het ondersteunde apparaat toe om rechtstreeks van de externe stroomvoorziening te laden wanneer het opladen wordt onderbroken.</string>
+    <string name="miscellaneous_info_label">Verschillende acc configuraties die niet in andere gedefinieerde categorieën passen</string>
     <string name="acc_config_editor">ACC configuratie editor</string>
     <string name="profile_creator">Aanmaken profiel</string>
     <string name="schedule_creator">Aanmaken schema</string>
     <string name="charging_switch_label">Oplaadschakelaar:</string>
     <string name="title_on_plugged">Bij aansluiten toepassen</string>
     <string name="edit_on_plugged">Wijzig de aansluittoepassingsinstellingen:</string>
-    <string name="edit_on_plugged_dialog_message">Voorbeeld: draadloos/voltage_max::9000000::9000000 kan snel draadloos opladen forceren op sommige Pixel apparaten.
+    <string name="edit_on_plugged_dialog_message">Voorbeeld: draadloos/voltage_max:9000000 forceert snel draadloos opladen op sommige Pixel apparaten.
     </string>
     <string name="template_capacity_profile">Afsluiten: %1$d%% - Hervatten: %2$d%% - Stop: %3$d%%</string>
     <string name="template_temperature_profile">Temperatuur: %1$d&#176;C - Max: %2$d&#176;C - Pauze: %3$ds</string>
@@ -160,7 +164,7 @@
     <string name="profile_option_delete">Verwijder</string>
     <string name="selecting_profile_toast">Profiel %1$s selecteren.</string>
     <string name="installation_failed_busybox_title">Busybox is niet geïnstalleerd</string>
-    <string name="installation_failed_busybox">Installeer busybox binary eerst</string>
+    <string name="installation_failed_busybox">Installeer eerst busybox of plaats de binary in /data/adb/bin/</string>
     <string name="share">Delen</string>
     <string name="logs_not_found">Logbestand niet gevonden.</string>
     <string name="acc_telegram">Voor extra ondersteuning, neem deel aan ACC Telegram groep (t.me/acc_group)!</string>
@@ -176,9 +180,9 @@
     </string>
     <string name="units_of_measure">Maateenheid</string>
     <string name="acc_version_preference_title">ACC versie</string>
-    <string name="acc_version_preference_description">U kunt de ACC-variant kiezen om te gebruiken: gebundeld, meester, ontwikkelen of een van de gepubliceerde versies.
-        gebundelde versie werkt gegarandeerd altijd met AccA - daarom is het de aanbevolen keuze.
-        Hoewel niet gegarandeerd is, zijn andere varianten over het algemeen veilig.
+    <string name="acc_version_preference_description">U kunt de ACC-variant kiezen om te gebruiken: gebundeld (stabiel, aanbevolen voor de meeste gebruikers), master (stabiel), ontwikkelen (nieuwste versie maar niet noodzakelijkerwijs onstabiel) of een van de getagde versies.
+        Bundled is de meest geteste versie voor AccA - dus is de aanbevolen keuze.
+        Hoewel niet gegarandeerd, zijn andere varianten over het algemeen veilig.
     </string>
     <string name="install_bundled_version">Installeer gebundelde variant</string>
     <string name="acc_version_picker_title">ACC versie</string>
@@ -200,10 +204,10 @@
     <string name="theme_option_setting">Thema</string>
     <string name="theme_option_summary">Stel het thema van de apps in.</string>
     <string name="acc_version_compatibility_warning_title">ACC versie compatibiliteit</string>
-    <string name="acc_version_compatibility_warning_description">U heeft een ACC-variant gekozen waarvan niet gegarandeerd is dat ze compatibel is met de app.
-        \nAccA zal de geselecteerde versie van de ACC Github downloaden.
-        \nIn de meeste gevallen zul je niet te maken krijgen met incompatibiliteit.
-        \nWilt u doorgaan?
+    <string name="acc_version_compatibility_warning_description">U heeft een ACC-variant gekozen die niet gegarandeerd compatibel is met de app.
+        \nMeestal zal je echter geen onverenigbaarheid ondervinden.
+        \nAccA staat op het punt om de geselecteerde versie te downloaden uit de GitHub repository van ACC.
+        \nProcced?
     </string>
     <string name="restore">Herstel beginwaarden</string>
     <string name="undo">Herstel</string>
@@ -241,18 +245,21 @@
     <string name="edit_schedule">Bewerk schema</string>
     <string name="create_schedule">Maak schema</string>
     <!-- About Activity -->
-    <string name="about_team_blurb">Bedankt voor het gebruik van ACCA! 
-        \nWe hebben hieraan veel tijd besteed zodat jij er van kan genieten!
-        \nSpeciale dank aan degenen die op een of andere manier hebben bijgedragen:
-        via donaties, suggesties hebben aangeboden, bugs hebben ingediend, en elkaar hebben geholpen!
+    <string name="about_team_title">Maak kennis met het team</string>
+    <string name="about_team_blurb">Bedankt voor het gebruik van AccA!
+        \n\nWe besteden hier veel tijd aan zodat je ACC gemakkelijk kunt beheren!
+        \n\nSpeciale dank aan degenen die op de een of andere manier hebben bijgedragen aan ACC &amp; AccA projecten!
     </string>
-    <string name="about_acca_version_label">ACCA versie:</string>
+    <string name="about_attributes">Kenmerken</string>
+    <string name="about_attrib_telegram_icon">Telegram-pictogram gemaakt door Pixel perfect van www.flaticon.com</string>
+    <string name="about_acca_version_label">AccA Versie:</string>
     <string name="about_acc_version_label">ACC versie:</string>
-    <string name="about_project_github">Project\'s GitHub</string>
+    <string name="about_project_github">AccA GitHub</string>
+    <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Website</string>
     <string name="toast_no_browser_installed">Kan Link niet openen!\nZorg ervoor dat u een webbrowser hebt geïnstalleerd.</string>
-    <string name="install_update_dialog">Installeer acc update</string>
+    <string name="install_update_dialog">Installeer ACC update</string>
     <string name="check_update_dialog_message">        Wil je de nieuwste ACC versie installeren vanaf branch \'%1$s\'?
         \nACCA zal de laatste versie van ACC downloaden van Github op basis van de laatste commit van de geselecteerde branch.
         \nWilt u doorgaan?</string>
@@ -260,8 +267,8 @@
     <string name="charging_switch_on_value_label">Oplaadschakelaar AAN</string>
     <string name="charging_switch_off_value_label">Oplaadschakelaar UIT</string>
     <string name="reset_bs_on_pause">Batterij statistieken resetten bij pauze \%</string>
-    <string name="current_max">Stroom max (mA):</string>
-    <string name="invalid_current_max">Ongeldige stroom max waarde</string>
+    <string name="current_max">Max. stroom (mA):</string>
+    <string name="invalid_current_max">Ongeldige Max stroom waarde</string>
     <!-- Import and Export -->
     <string name="import_title">Importeren</string>
     <string name="import_load_from_clipboard">Druk op het \'Clipboard\' pictogram in de werkbalk!</string>
@@ -274,4 +281,9 @@
     <string name="import_toast_no_valid_profile_json_clipboard">Geldig ACCA profiel JSON is niet in Klembord</string>
     <string name="import_toast_no_selected_profiles">Selecteer Profielen om te importeren</string>
     <string name="import_profile_success">%d profielen succesvol geïmporteerd</string>
+    <!-- Config Parse Error -->
+    <string name="parse_failed_title">Kan ACC-configuratie niet verwerken</string>
+    <string name="parse_failed_body">U kunt de standaardconfiguratie proberen te laden door op \'Standaardinstelling laden\' te drukken. Houd er rekening mee dat AccA niet werkt.
+        \n\nAls de fout aanhoudt, deel de stack trace hieronder samen met ACC &amp; AccA versie (via het 3-punt menu &gt; About) met de ontwikkelaars via Telegram.\n\n%s</string>
+    <string name="automatic_switch_eanbled">Wissel automatisch door schakelaars</string>
 </resources>

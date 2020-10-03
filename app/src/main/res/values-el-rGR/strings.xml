@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ACCA</string>
     <string name="app_name_full">Εφαρμογή προηγμένου ελέγχου φόρτισης</string>
     <string name="title_activity_log_view">Αρχεία καταγραφής</string>
     <string name="title_activity_log_view_file_name">Αρχεία καταγραφής</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">Δεν υπάρχει πρόσβαση root</string>
-    <string name="tile_acc_enabled">ACC ενεργό</string>
-    <string name="tile_acc_disabled">ACC ανενεργό</string>
     <!-- Navigation Strings -->
     <string name="title_dashboard">Πίνακας Ελέγχου</string>
     <string name="title_profiles">Προφίλ</string>
     <string name="title_schedules">Χρονοδιάγραμμα</string>
     <string name="title_settings">Ρυθμίσεις</string>
     <!-- ACC Daemon Status -->
+    <string name="title_acc">ACC</string>
     <string name="title_acc_daemon">Υπηρεσία ACC</string>
     <string name="acc_daemon_status_running">Η υπηρεσία ACC εκτελείται</string>
     <string name="acc_daemon_status_not_running">Η υπηρεσία ACC δεν εκτελείται</string>
+    <string name="acc_daemon_status_reading_status">Ανάγνωση Κατάστασης Υπηρεσίας ACC...</string>
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">Σταματήστε την υπηρεσία</string>
     <string name="menu_start_accd">Εκκινήστε την υπηρεσία</string>
@@ -45,13 +44,11 @@
     <string name="cooldown_capacity">Ξεκινήστε την ψύξη στο %%:</string>
     <string name="resume_charge">Συνεχίστε την φόρτιση στο:</string>
     <string name="stop_charge">Σταματήστε την φόρτιση στο:</string>
-    <string name="enable_temp_check">Ενεργοποίηση ελέγχου θερμοκρασίας (°C)</string>
     <string name="cooldown_temp">Θερμοκρασία ψύξης:</string>
     <string name="max_temp">Μέγιστη θερμοκρασία:</string>
     <string name="pause_seconds">Παύση σε δευτερόλεπτα:</string>
     <string name="charge_seconds">Φόρτιση σε δευτερόλεπτα:</string>
     <string name="shutdown_capacity">Απενεργοποίηση (εάν δε φορτίζει) σε:</string>
-    <string name="no_root_message">Αυτή η εφαρμογή απαιτεί πρόσβαση ROOT.</string>
     <string name="config_error_title">Σφάλμα ανάλυσης παραμέτρων</string>
     <string name="config_error_dialog">Αποτυχία ανάλυσης παραμέτρων του ACC!\nΠαρακαλώ ελέγξτε εάν η εντολή \"su -c acca --set --print\" λειτουργεί.</string>
     <string name="wait">Παρακαλώ περιμένετε...\nΑυτό θα χρειαστεί λίγα δευτερόλεπτα.</string>
@@ -61,19 +58,10 @@
     <!-- ACC installation -->
     <string name="installing_acc">Εγκατάσταση ACC</string>
     <string name="reboot">Επανεκκίνηση</string>
-    <string name="acc_installation_failed">Παρακαλώ στείλτε το αρχείο καταγραφής και /data/adb/acc-data/logs/ στους προγραμματιστές
-        στο t.me/acc_group/ ή github.com/MatteCarra/AccA/issues/.
-    </string>
     <string name="acc_installation_failed_title">Αποτυχία Εγκατάστασης ACC!</string>
     <!-- DJS installation -->
     <string name="install_djs_title">Το DJS Απαιτείται</string>
-    <string name="install_djs_description">Για να δουλέψει αυτή η λειτουργία,  πρέπει να ενεργοποιήσουμε το DJS.
-        \nΤο DJS (Προγραμματιστής Καθημερινών Εργασιών) είναι ένα ελαφρύ πρόσθετο για τον προγραμματισμό των ρυθμίσεων του ACC. 
-        \nΗ υπηρεσία DJS θα ξεκινήσει κατά την εκκίνηση παράλληλα με την υπηρεσία ACC.
-    </string>
     <string name="installing_djs">Εγκατάσταση DJS</string>
-    <string name="djs_installation_failed">Παρακαλώ στείλτε το αρχείο καταγραφής και /data/adb/djs-data/logs/ στους προγραμματιστές
-        στο t.me/acc_group/ ή github.com/MatteCarra/AccA/issues/.    </string>
     <string name="djs_installation_failed_title">Αποτυχία Εγκατάστασης DJS!</string>
     <string name="voltage_control_file_not_set">Μη ορισμένο.</string>
     <string name="edit_on_boot">Επεξεργασία των κατά_την_εκκίνηση ρυθμίσεων</string>
@@ -88,7 +76,6 @@
     <string name="unsaved_changes">Έχετε μη αποθηκευμένες αλλαγές</string>
     <string name="close_without_saving">Απόρριψη</string>
     <string name="edit_config">Τροποποίηση παραμέτρων</string>
-    <string name="unsaved_changes_message">Έχετε μη αποθηκευμένες αλλαγές. Θέλετε να τις αποθηκεύσετε;</string>
     <string name="create_acc_profile">Δημιουργία προφίλ παραμέτρων</string>
     <string name="profile_name">Όνομα προφίλ</string>
     <string name="dialog_profile_name_message">Εισάγετε το όνομα που θέλετε να εκχωρήσετε σε αυτό το προφίλ:</string>
@@ -101,10 +88,7 @@
     <string name="recurrent_schedule">Εκτέλεση μόνο μία φορά</string>
     <string name="execution_time">Χρόνος εκτέλεσης</string>
     <string name="new_config">Νέα ειδική παράμετρος</string>
-    <string name="enable_voltage_limit">Ενεργοποίηση ορίου τάσης φόρτισης</string>
     <string name="voltage_control_file">Αρχείο ελέγχου τάσης:</string>
-    <string name="edit_power_limit">Επεξεργασία ορίου φορτίου κι έντασης</string>
-    <string name="voltage_max">Μέγιστη τάση (μιλιβόλτ):</string>
     <string name="disabled">Απενεργοποιημένο</string>
     <string name="schedule_recurrent_row_text">Η Επανάληψη Εργασίας προγραμματίστηκε για %1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_title">Εκτέλεση Μία Φορά - %1$02d:%2$02d</string>
@@ -113,43 +97,33 @@
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Διαγραφή</string>
     <string name="no_schedules">Δεν έχουν οριστεί προγράμματα</string>
-    <string name="wrong_volt_file">Είτε το επιλεγμένο αρχείο δε λειτουργεί, είτε το kernel σας δεν υποστηρίζει αυτήν τη λειτουργία.</string>
     <string name="invalid_voltage_max">Η τιμή πρέπει να είναι ένας αριθμός μεταξύ 3700 και 4200 (μιλιβόλτ)</string>
     <string name="edit_charging_switch">Επεξεργασία διακόπτη φόρτισης</string>
     <string name="test_switch">Δοκιμή διακόπτη φόρτισης</string>
     <string name="no_option_selected">Καμία επιλογή δεν επιλέχθηκε• παρακαλώ επιλέξτε μία!</string>
     <string name="charging_switch_works">Ο επιλεγμένος διακόπτης φόρτισης λειτουργεί!</string>
-    <string name="charging_switch_does_not_work">Ο επιλεγμένος διακόπτης φόρτισης δε λειτουργεί!</string>
-    <string name="plug_battery_to_test">Η μπαταρία πρέπει να φορτίζει πριν τη δοκιμή. Συνδέστε το φορτιστή και προσπαθήστε ξανά!</string>
     <string name="automatic">Αυτόματο</string>
     <string name="error_occurred">Κάποιο σφάλμα έχει προκύψει</string>
     <string name="retry">Επανάληψη</string>
-    <string name="edit_charging_limit_once">Φορτίστε μία φορά έως μία δεδομένη χωρητικότητα, χωρίς διακοπή και δίχως άλλους περιορισμούς</string>
     <string name="apply">Εφαρμογή</string>
     <string name="done">Ολοκληρώθηκε</string>
-    <string name="edit_charging_limit_once_dialog_msg">Οι τρέχουσες ρυθμίσεις σας επαναφέρονται αυτόματα όταν η επιλεγμένη στάθμη μπαταρίας φτασθεί.</string>
     <string name="title_power_control">Έλεγχος ισχύος φόρτισης</string>
     <string name="info">Πληροφορίες</string>
     <string name="title_cooldown_control">Ψύξη</string>
     <string name="title_on_boot">Εφαρμογή κατά την Εκκίνηση</string>
     <string name="title_temperature_control">Έλεγχος Θερμοκρασίας</string>
     <string name="title_capacity_control">Έλεγχος Χωρητικότητας</string>
+    <string name="title_miscellaneous_control">Διάφορα</string>
     <string name="about">Σχετικά με</string>
     <!-- ACC Config Tooltips -->
-    <string name="capacity_control_info">- ΑΠΕΝΕΡΓΟΠΟΊΗΣΗ: απενεργοποιεί αυτόματα το σύστημα σε αυτή ή χαμηλότερη στάθμη μπαταρίας όταν η μπαταρία δε φορτίζεται.&lt;br /&gt;- ΟΙ ΧΩΡΗΤΙΚΌΤΗΤΕΣ ΠΑΎΣΗΣ και ΣΥΝΈΧΙΣΗΣ υπαγορεύουν πότε η φόρτιση πρέπει να διακοπεί και να συνεχιστεί, αντίστοιχα.&lt;br /&gt;- Ο ΔΙΑΚΌΠΤΗΣ ΦΌΡΤΙΣΗΣ είναι το αρχείο ελέγχου, επιπλέον των τιμών ΕΝΕΡΓΌ κι ΑΝΕΝΕΡΓΌ για εναλλαγή της φόρτισης σε ενεργό/ανενεργό. Ως προεπιλογή, το ACC χρησιμοποιεί οποιοδήποτε λειτουργεί.</string>
     <string name="power_control_info">- Κάθε μείωση της μέγιστης τάσης φόρτισης κατά 0.10V/ηλεκτρικό στοιχείο λέγεται πως διπλασιάζει τη ζωή του κύκλου.&lt;br /&gt;- Δυστυχώς, δεν υποστηρίζουν όλες οι συσκευές/kernels αυτήν τη λειτουργία.</string>
     <string name="temperature_control_info">- Αυτό απενεργοποιεί τη φόρτιση για τα ορισμένα δευτερόλεπτα για να ψυχθεί η μπαταρία&lt;br /&gt;- Η ΘΕΡΜΟΚΡΑΣΊΑ ΨΎΞΗΣ εξαρτάται από την ΑΝΑΛΟΓΊΑ ΨΎΞΗΣ.&lt;br /&gt;- Η ΜΈΓΙΣΤΗ ΘΕΡΜΟΚΡΑΣΊΑ λειτουργεί με τα ΔΕΥΤΕΡΌΛΕΠΤΑ ΠΑΎΣΗΣ.</string>
-    <string name="cooldown_info">- Ο λόγος ΕΝΕΡΓΌ/ΑΝΕΝΕΡΓΌ σε δευτερόλεπτα (π.χ., λόγοςψύξης=50/10) - μειώνει την πίεση στην μπαταρία που προκαλείται από παρατεταμένη υψηλή θερμοκρασία και υψηλή τάση φόρτισης παύοντας περιοδικά τη φόρτιση.&lt;br /&gt;- Εάν η φόρτιση είναι υπερβολικά αργή, απενεργοποιήστε το ή αλλάξτε το λόγο.&lt;br /&gt;- Όταν είναι απενεργοποιημένο, οι τιμές ΧΩΡΗΤΙΚΌΤΗΤΑΣ ΨΎΞΗΣ και ΘΕΡΜΟΚΡΑΣΊΑΣ ΨΎΞΗΣ μηδενίζονται.&lt;br /&gt;- Αυτή η ρύθμιση είναι μία καλή εναλλακτική στη λειτουργία ορίου τάσης φόρτισης.</string>
-    <string name="on_plugged_info">Αυτό χρησιμοποιείται για την ενημέρωση αρχείων των οποίων τα περιεχόμενα αλλάζουν σε συγκεκριμένα γεγονότα ενέργειας (π.χ., συνδεδεμένο/απόσυνδεδεμενο). Είναι ιδιαίτερα χρήσιμο για την επιβολή ειδικής μέγιστης τάσης/έντασης για usb/ασύρματη φόρτιση.</string>
-    <string name="battery_idle_info_label">Εάν ο διακόπτης επιλεγεί οι διακόπτες φόρτισης που υποστηρίζουν τη λειτουργία αδράνειας μπαταρίας αποκτούν προτεραιότητα - επιτρέποντας στη συσκευή να αντλεί ενέργεια απευθείας από την εξωτερική πηγή ενέργειας όταν η φόρτιση είναι σε παύση.&lt;br /&gt;Εάν ο διακόπτης σας είναι απενεργοποιημένος σημαίνει ότι το kernel σας δεν υποστηρίζει αυτήν τη λειτουργία.</string>
     <string name="acc_config_editor">Επεξεργαστής παραμέτρων ACC</string>
     <string name="profile_creator">Δημιουργός προφίλ</string>
     <string name="schedule_creator">Δημιουργός προγραμμάτων</string>
     <string name="charging_switch_label">Διακόπτης φόρτισης:</string>
     <string name="title_on_plugged">Εφαρμογή κατά τη Σύνδεση</string>
     <string name="edit_on_plugged">Επεξεργασία κατά_τη_σύνδεση ρυθμίσεων:</string>
-    <string name="edit_on_plugged_dialog_message">Παράδειγμα: wireless/voltage_max::9000000::9000000 μπορεί να εξαναγκάσει γρήγορη ασύρματη φόρτιση σε μερικές συσκευές Pixel.
-    </string>
     <string name="template_capacity_profile">Απενεργοποίηση: %1$d%% - Συνέχιση: %2$d%% - Διακοπή: %3$d%%</string>
     <string name="template_temperature_profile">Θερμοκρασία: %1$d&#176;C - Μέγιστο: %2$d&#176;C - Παύση: %3$ds</string>
     <string name="template_cool_down_profile">Εκκίνηση σε: %1$d%% - Φόρτιση για %2$ds - Παύση για %3$ds</string>
@@ -159,7 +133,6 @@
     <string name="profile_option_delete">Διαγραφή</string>
     <string name="selecting_profile_toast">Επιλογή προφίλ %1$s.</string>
     <string name="installation_failed_busybox_title">Το busybox δεν είναι εγκατεστημένο</string>
-    <string name="installation_failed_busybox">Εγκαταστήστε το busybox binary πρώτα</string>
     <string name="share">Κοινοποίηση</string>
     <string name="logs_not_found">Δε βρέθηκε το αρχείο καταγραφής.</string>
     <string name="acc_telegram">Για περισσότερη υποστήριξη, επισκεφθείτε την ομάδα ACC στο Telegram (t.me/acc_group)!</string>
@@ -175,10 +148,6 @@
     </string>
     <string name="units_of_measure">Μονάδες μέτρησης</string>
     <string name="acc_version_preference_title">Έκδοση ACC</string>
-    <string name="acc_version_preference_description">Μπορείτε να επιλέξετε ποιά εκδοχή του ACC να χρησιμοποιήσετε: συνημμένο, master, develop ή οποιαδήποτε άλλη από τις εκδόσεις που έχουν κυκλοφορήσει.
-        Η Συνημμένη έκδοση εγγυημένα θα λειτουργεί πάντα με το AccA - συνεπώς είναι η προτεινόμενη επιλογή.
-        Αν και δεν είναι εγγυημένο, οι άλλες εκδοχές είναι γενικά ασφαλείς.
-    </string>
     <string name="install_bundled_version">Εγκατάσταση συνημμένης εκδοχής</string>
     <string name="acc_version_picker_title">Έκδοση ACC</string>
     <string name="acc_version_picker_message">Επιλέξτε την εκδοχή του ACC που επιθυμείτε</string>
@@ -199,11 +168,6 @@
     <string name="theme_option_setting">Θέμα</string>
     <string name="theme_option_summary">Ορίστε το θέμα της εφαρμογής.</string>
     <string name="acc_version_compatibility_warning_title">Συμβατότητα έκδοσης ACC</string>
-    <string name="acc_version_compatibility_warning_description">Έχετε επιλέξει μία εκδοχή του ACC η οποία δεν είναι εγγυημένο ότι είναι συμβατή με την εφαρμογή.
-        \nΤο AccA θα κατεβάσει την επιλεγμένη έκδοση από το Github αποθετήριο ACC.
-        \nΣυνήθως, δε θα αντιμετωπίσετε ασυμβατότητες, ωστόσο.
-        \nΘέλετε να συνεχίσετε;
-    </string>
     <string name="restore">Επαναφορά σε προεπιλογή</string>
     <string name="undo">Αναίρεση</string>
     <string name="checking_updates">Έλεγχος για ενημέρωση</string>
@@ -214,13 +178,8 @@
     <string name="acc_installation_failed_log">Αρχείο καταγραφής αποτυχίας εγκατάστασης ACC</string>
     <string name="djs_installation_failed_log">Αρχείο καταγραφής αποτυχίας εγκατάστασης DJS</string>
     <string name="select_different_version">Αλλαγή έκδοσης ACC</string>
-    <string name="installation_failed_non_bundled">Η εγκατάσταση διαφορετικής εκδοχής του ACC απέτυχε.
-        \nΠαρακαλώ σκεφτείτε να κοινοποιήσετε το /data/adb/acc-data/logs/ στους προγραμματιστές.
-    </string>
     <string name="prioritize_battery_idle">Προτεραιότητα λειτουργίας αδράνειας μπαταρίας</string>
     <string name="test_battery_idle">Δοκιμή λειτουργίας αδράνειας μπαταρίας</string>
-    <string name="test_battery_idle_supported_result">Το kernel σας υποστηρίζει τη λειτουργία αδράνειας μπαταρίας.</string>
-    <string name="test_battery_idle_unsupported_result">Το kernel σας δεν υποστηρίζει τη λειτουργία αδράνειας μπαταρίας.</string>
     <string name="schedule_profile_edit_current">Επεξεργαστείτε τις παραμέτρους φορτίου</string>
     <string name="schedule_profile_keep_current">Διατηρείστε τις παραμέτρους φορτίου</string>
     <string name="schedule_type">Τύπος προγράμματος</string>
@@ -240,28 +199,34 @@
     <string name="edit_schedule">Επεξεργασία προγράμματος</string>
     <string name="create_schedule">Δημιουργία προγράμματος</string>
     <!-- About Activity -->
-    <string name="about_team_blurb">Ευχαριστούμε που χρησιμοποιείτε το ACCA!
-        \nΈχουμε ξοδέψει σωρούς χρόνου σε αυτό ώστε όλοι σας να το ευχαριστηθείτε.
-        \nΙδιαίτερες ευχαριστίες σε αυτούς που έχουν συμβάλλει σε αυτό με οποιονδήποτε τρόπο:
-        δωρεές, προσφορά προτάσεων, άνοιγμα pull requests, υποβολή προβλημάτων, και βοηθώντας ο ένας τον άλλο!
-    </string>
-    <string name="about_acca_version_label">Έκδοση ACCA:</string>
+    <string name="about_team_title">Γνωρίστε την Ομάδα</string>
+    <string name="about_attributes">Χαρακτηριστικά</string>
+    <string name="about_attrib_telegram_icon">Το εικονίδιο στο Telegram δημιουργήθηκε από την Pixel perfect από το www.flaticon.com</string>
     <string name="about_acc_version_label">Έκδοση ACC:</string>
-    <string name="about_project_github">Το GitHub του Πρότζεκτ</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Ιστοσελίδα</string>
-    <string name="toast_no_browser_installed">Αδυναμία Ανοίγματος Συνδέσμου!\nΣιγουρέψτε πως έχετε κάποιον περιηγητή δικτύου εγκατεστημένο.</string>
-    <string name="install_update_dialog">Εγκατάσταση ενημέρωσης acc</string>
-    <string name="check_update_dialog_message">        Θέλετε να εγκαταστήσετε την τελευταία έκδοση του ACC από το branch \'%1$s\';
-        \nΤο ACCA θα κατεβάσει την τελευταία έκδοση του ACC από το Github βασισμένο στο τελευταίο commit του επιλεγμένου branch.
-        \nΘέλετε να συνεχίσετε;</string>
-    <string name="add_charging_switch">Προσθήκη διακόπτη φόρτισης</string>
+    <string name="toast_no_browser_installed">Αδυναμία ανοίγματος συνδέσμου!\nΣιγουρευτείτε πως έχετε περιηγητή δικτύου εγκατεστημένο.</string>
+    <string name="install_update_dialog">Εγκατάσταση ενημέρωσης ACC</string>
+    <string name="add_charging_switch">Προσθήκη Διακόπτη Φόρτισης</string>
     <string name="charging_switch_on_value_label">Διακόπτης φόρτισης ΤΙΜΉ ΕΝΕΡΓΟΠΟΊΗΣΗΣ</string>
     <string name="charging_switch_off_value_label">Διακόπτης φόρτισης ΤΙΜΉ ΑΠΕΝΕΡΓΟΠΟΊΗΣΗΣ</string>
     <string name="reset_bs_on_pause">Επαναφορά στατιστικών μπαταρίας κατά την παύση \%</string>
-    <string name="current_max">Μέγιστo φορτίο (mA):</string>
-    <string name="invalid_current_max">Άκυρη τιμή μέγιστου φορτίου</string>
+    <string name="current_max">Μέγιστη Ένταση (mA):</string>
+    <string name="invalid_current_max">Άκυρη Μέγιστη Τιμή Έντασης</string>
     <!-- Import and Export -->
     <string name="import_title">Εισαγωγή</string>
+    <string name="import_load_from_clipboard">Πατήστε το εικονίδιο \'Πρόχειρο\' στη γραμμή εργαλείων!</string>
     <string name="export_title">Εξαγωγή</string>
+    <string name="export_none_selected">Παρακαλώ επιλέξτε προφίλ για εξαγωγή πιο πάνω</string>
+    <string name="menu_import">Εισαγωγή</string>
+    <string name="menu_export">Εξαγωγή</string>
+    <string name="menu_title_load_clipboard">Φόρτωση από το Πρόχειρο</string>
+    <string name="menu_title_clear_entries">Καθαρισμός Εισόδων</string>
+    <string name="import_toast_no_selected_profiles">Παρακαλώ επιλέξτε Προφίλ για Εισαγωγή</string>
+    <string name="import_profile_success">Επιτυχής εισαγωγή %d προφίλ</string>
+    <!-- Config Parse Error -->
+    <string name="parse_failed_title">Αποτυχία Ανάλυσης προφίλ ρυθμίσεων ACC</string>
+    <string name="parse_failed_body">Δοκιμάστε ίσως να φορτώσετε το προεπιλεγμένο προφίλ ρυθμίσεων πατώντας \'Φόρτωση Προεπιλογής\'. Παρακαλούμε να σημειωθεί ότι το AccA δε θα είναι λειτουργικό.
+        \n\nΕάν το σφάλμα παραμένει, παρακαλούμε να κοινοποιήσετε το stack trace πιο κάτω μαζί με την ACC &amp; AccA έκδοση (μέσω του μενού 3-κουκκίδων &gt; Σχετικά με) στους προγραμματιστές μέσω του Telegram.\n\n%s</string>
+    <string name="automatic_switch_eanbled">Αυτόματη περιήγηση των διακοπτών</string>
 </resources>

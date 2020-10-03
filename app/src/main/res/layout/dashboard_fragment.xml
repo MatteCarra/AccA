@@ -1,300 +1,293 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout
+<ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".activities.MainActivity">
 
-    <data>
-        <variable name="viewModel" type="mattecarra.accapp.fragments.DashboardViewModel"/>
-    </data>
 
-    <ScrollView
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context=".activities.MainActivity">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-
-        <LinearLayout
+        <!-- ACCd Status Card -->
+        <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.MaterialComponents.CardView"
+                android:id="@+id/status_card_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginLeft="@dimen/card_margin"
+                android:layout_marginRight="@dimen/card_margin"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="3dp">
 
-            <!-- ACCd Status Card -->
-            <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.MaterialComponents.CardView"
-                    android:id="@+id/status_card_view"
-                    android:layout_width="match_parent"
+            <LinearLayout android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/card_margin"
-                    android:layout_marginLeft="@dimen/card_margin"
-                    android:layout_marginRight="@dimen/card_margin"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
-                    app:cardElevation="3dp">
+                    android:orientation="vertical">
 
-                <LinearLayout android:layout_width="match_parent"
+                <!-- Title and Settings Button -->
+                <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                    <!-- Title and Settings Button -->
-                    <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/card_content_padding"
-                            android:paddingStart="@dimen/card_content_padding"
-                            android:paddingRight="9dp"
-                            android:paddingEnd="9dp"
-                            android:layout_gravity="center_vertical">
-
-                        <TextView
-                                android:id="@+id/dash_title_accdStatus_textView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingTop="@dimen/card_content_padding"
-                                android:paddingBottom="@dimen/card_content_padding"
-                                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                                android:text="@string/title_acc"
-                                android:drawablePadding="@dimen/card_content_margin"
-                                android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24px"
-                                android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24px"/>
-
-                        <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
-                                android:padding="16dp"
-                                android:foregroundGravity="center"
-                                android:background="?selectableItemBackground"
-                                app:srcCompat="@drawable/ic_outline_settings_24px"
-                                android:onClick="batteryConfigOnClick"/>
-                    </RelativeLayout>
-
-                    <FrameLayout
-                            android:id="@+id/dash_accdStatus_frameLay"
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:foregroundGravity="center"
-                            android:background="@color/color_warning"
-                            android:orientation="vertical">
-
-                        <ImageView
-                                android:id="@+id/dash_accdStatus_imageView"
-                                android:layout_width="@dimen/acc_status_icon"
-                                android:layout_height="@dimen/acc_status_icon"
-                                android:tint="@color/white"
-                                android:visibility="gone"
-                                android:layout_gravity="center"/>
-
-                        <ProgressBar
-                                android:id="@+id/dash_accdStatus_pb"
-                                android:layout_width="@dimen/acc_status_icon"
-                                android:layout_height="@dimen/acc_status_icon"
-                                android:layout_gravity="center"
-                                android:indeterminate="true" />
-
-                    </FrameLayout>
+                        android:paddingLeft="@dimen/card_content_padding"
+                        android:paddingStart="@dimen/card_content_padding"
+                        android:paddingRight="9dp"
+                        android:paddingEnd="9dp"
+                        android:layout_gravity="center_vertical">
 
                     <TextView
-                            android:id="@+id/dash_accdStatus_textView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:padding="10dp"
-                            android:text="@string/acc_daemon_status_reading_status"
-                            android:gravity="center"/>
-
-                    <LinearLayout
-                            android:id="@+id/dash_accdButtons_linLay"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="end"
-                            android:padding="5dp"
-                            android:visibility="gone"
-                            tools:visibility="visible">
-
-                        <com.google.android.material.button.MaterialButton
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-                                android:id="@+id/dash_daemonToggle_button"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:text="@string/start"
-                                app:icon="@drawable/ic_outline_play_arrow_24px"
-                                android:layout_weight="1"
-                                android:enabled="false"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginStart="8dp"/>
-
-                        <com.google.android.material.button.MaterialButton
-                                style="@style/Widget.MaterialComponents.Button.TextButton"
-                                android:id="@+id/dash_daemonRestart_button"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/restart"
-                                app:icon="@drawable/ic_sync_24px"
-                                android:enabled="false"/>
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-
-            <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.MaterialComponents.CardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/card_margin"
-                    android:layout_marginLeft="@dimen/card_margin"
-                    android:layout_marginRight="@dimen/card_margin"
-                    android:layout_marginBottom="@dimen/card_bottom_margin"
-                    android:foreground="?selectableItemBackground"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
-                    app:cardElevation="3dp"
-                    app:contentPadding="@dimen/card_content_padding">
-
-                <LinearLayout android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                    <!-- Title: Battery -->
-                    <TextView
+                            android:id="@+id/dash_title_accdStatus_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/card_content_padding"
+                            android:paddingBottom="@dimen/card_content_padding"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                            android:text="@string/title_battery"/>
+                            android:text="@string/title_acc"
+                            android:drawablePadding="@dimen/card_content_margin"
+                            android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24px"
+                            android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24px"/>
 
-                    <LinearLayout
-                            android:layout_width="match_parent"
+                    <ImageView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:layout_gravity="center_vertical"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:padding="16dp"
+                            android:foregroundGravity="center"
+                            android:background="?selectableItemBackground"
+                            app:srcCompat="@drawable/ic_outline_settings_24px"
+                            android:onClick="batteryConfigOnClick"/>
+                </RelativeLayout>
 
-                        <com.dinuscxj.progressbar.CircleProgressBar
-                                android:id="@+id/dash_batteryCapacity_pBar"
-                                app:style="solid_line"
-                                app:progress_stroke_cap="round"
-                                app:progress_stroke_width="5dp"
-                                app:progress_end_color="@color/color_primary"
-                                app:progress_start_color="@color/color_secondary"
-                                app:progress_shader="sweep"
-                                app:progress_text_color="?android:attr/textColorPrimary"
-                                app:progress_text_size="@dimen/label_text"
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:progress="@{viewModel.battery.capacity}"
-                                android:layout_gravity="center"/>
+                <FrameLayout
+                        android:id="@+id/dash_accdStatus_frameLay"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:foregroundGravity="center"
+                        android:background="@color/color_warning"
+                        android:orientation="vertical">
 
-                        <TableLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/card_content_padding"
-                                android:shrinkColumns="0"
-                                android:stretchColumns="1">
+                    <ImageView
+                            android:id="@+id/dash_accdStatus_imageView"
+                            android:layout_width="@dimen/acc_status_icon"
+                            android:layout_height="@dimen/acc_status_icon"
+                            android:tint="@color/white"
+                            android:visibility="gone"
+                            android:layout_gravity="center"/>
 
-                            <!-- Battery Charging Status -->
-                            <TableRow>
-                                <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:ellipsize="end"
-                                        android:textSize="@dimen/label_text"
-                                        android:text="@string/info_status"
-                                        />
+                    <ProgressBar
+                            android:id="@+id/dash_accdStatus_pb"
+                            android:layout_width="@dimen/acc_status_icon"
+                            android:layout_height="@dimen/acc_status_icon"
+                            android:layout_gravity="center"
+                            android:indeterminate="true" />
 
-                                <TextView
-                                        android:id="@+id/dash_batteryStatus_textView"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="end"
-                                        android:text="@{@string/info_status_extended(viewModel.battery.status, viewModel.battery.chargeType)}"/>
-                            </TableRow>
+                </FrameLayout>
 
-                            <!-- Battery Charging Speed -->
-                            <TableRow>
-                                <TextView
-                                        android:id="@+id/dash_batteryChargingSpeed_textView"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:ellipsize="end"
-                                        android:textSize="@dimen/label_text"
-                                        android:text="@{viewModel.battery.isCharging ? @string/info_charging_speed : @string/info_discharging_speed}"/>
+                <TextView
+                        android:id="@+id/dash_accdStatus_textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:padding="10dp"
+                        android:text="@string/acc_daemon_status_reading_status"
+                        android:gravity="center"/>
 
-                                <TextView
-                                        android:id="@+id/dash_chargingSpeed_textView"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="end"
-                                        android:text="@{viewModel.chargeSpeed}"/>
-                            </TableRow>
+                <LinearLayout
+                        android:id="@+id/dash_accdButtons_linLay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="end"
+                        android:padding="5dp"
+                        android:visibility="gone"
+                        tools:visibility="visible">
 
-                            <!-- Battery Temperature -->
-                            <TableRow>
-                                <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:ellipsize="end"
-                                        android:textSize="@dimen/label_text"
-                                        android:text="@string/info_temperature"/>
-
-                                <TextView
-                                        android:id="@+id/dash_batteryTemperature_textView"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="end"
-                                        android:text="@{String.valueOf(viewModel.battery.temperature) + '\u00B0'}"/>
-                            </TableRow>
-
-                            <!-- Battery Health -->
-                            <TableRow>
-                                <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:ellipsize="end"
-                                        android:textSize="@dimen/label_text"
-                                        android:text="@string/info_health"/>
-
-                                <TextView
-                                        android:id="@+id/dash_batteryHealth_textView"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="end"
-                                        android:text="@{viewModel.battery.health}"/>
-                            </TableRow>
-                        </TableLayout>
-                    </LinearLayout>
-
-                    <!-- Buttons -->
-                    <LinearLayout
-                            android:layout_width="match_parent"
+                    <com.google.android.material.button.MaterialButton
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                            android:id="@+id/dash_daemonToggle_button"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_gravity="center">
+                            android:text="@string/start"
+                            app:icon="@drawable/ic_outline_play_arrow_24px"
+                            android:layout_weight="1"
+                            android:enabled="false"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginStart="8dp"/>
 
-                        <com.google.android.material.button.MaterialButton
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                                android:id="@+id/dash_editCargingLimitOnce_button"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:drawableLeft="@drawable/ic_outline_edit_24px"
-                                android:drawableStart="@drawable/ic_outline_edit_24px"
-                                android:text="@string/edit_charging_limit_once"/>
-
-                        <com.google.android.material.button.MaterialButton
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                                android:id="@+id/dash_resetBatteryStats_button"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/reset_stats" />
-                    </LinearLayout>
+                    <com.google.android.material.button.MaterialButton
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:id="@+id/dash_daemonRestart_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/restart"
+                            app:icon="@drawable/ic_sync_24px"
+                            android:enabled="false"/>
 
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
-    </ScrollView>
-</layout>
+
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.MaterialComponents.CardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginLeft="@dimen/card_margin"
+                android:layout_marginRight="@dimen/card_margin"
+                android:layout_marginBottom="@dimen/card_bottom_margin"
+                android:foreground="?selectableItemBackground"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="3dp"
+                app:contentPadding="@dimen/card_content_padding">
+
+            <LinearLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <!-- Title: Battery -->
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:text="@string/title_battery"/>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <com.dinuscxj.progressbar.CircleProgressBar
+                            android:id="@+id/dash_batteryCapacity_pBar"
+                            app:style="solid_line"
+                            app:progress_stroke_cap="round"
+                            app:progress_stroke_width="5dp"
+                            app:progress_end_color="@color/color_primary"
+                            app:progress_start_color="@color/color_secondary"
+                            app:progress_shader="sweep"
+                            app:progress_text_color="?android:attr/textColorPrimary"
+                            app:progress_text_size="@dimen/label_text"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:progress="0"
+                            android:layout_gravity="center"/>
+
+                    <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/card_content_padding"
+                            android:shrinkColumns="0"
+                            android:stretchColumns="1">
+
+                        <!-- Battery Charging Status -->
+                        <TableRow>
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:textSize="@dimen/label_text"
+                                    android:text="@string/info_status"
+                                    />
+
+                            <TextView
+                                    android:id="@+id/dash_batteryStatus_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="end"
+                                    android:text="..."/>
+                        </TableRow>
+
+                        <!-- Battery Charging Speed -->
+                        <TableRow>
+                            <TextView
+                                    android:id="@+id/dash_batteryChargingSpeed_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:textSize="@dimen/label_text"
+                                    android:text="..."/>
+
+                            <TextView
+                                    android:id="@+id/dash_chargingSpeed_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="end"
+                                    android:text="..."/>
+                        </TableRow>
+
+                        <!-- Battery Temperature -->
+                        <TableRow>
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:textSize="@dimen/label_text"
+                                    android:text="@string/info_temperature"/>
+
+                            <TextView
+                                    android:id="@+id/dash_batteryTemperature_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="end"
+                                    android:text="..."/>
+                        </TableRow>
+
+                        <!-- Battery Health -->
+                        <TableRow>
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:textSize="@dimen/label_text"
+                                    android:text="@string/info_health"/>
+
+                            <TextView
+                                    android:id="@+id/dash_batteryHealth_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="end"
+                                    android:text="..."/>
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
+
+                <!-- Buttons -->
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center">
+
+                    <com.google.android.material.button.MaterialButton
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:id="@+id/dash_editCargingLimitOnce_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_outline_edit_24px"
+                            android:drawableStart="@drawable/ic_outline_edit_24px"
+                            android:text="@string/edit_charging_limit_once"/>
+
+                    <com.google.android.material.button.MaterialButton
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:id="@+id/dash_resetBatteryStats_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/reset_stats" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</ScrollView>

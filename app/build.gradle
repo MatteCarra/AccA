@@ -121,10 +121,6 @@ dependencies {
     // https://developer.android.com/jetpack/androidx/releases/viewpager2
     implementation "androidx.viewpager2:viewpager2:$versions.viewpager"
 
-    // Google Navigation Components
-//    implementation "androidx.navigation:navigation-fragment-ktx:$versions.nav"
-//    implementation "androidx.navigation:navigation-ui-ktx:$versions.nav"
-
     // Google Material Components
     implementation "com.google.android.material:material:$versions.material"
 
