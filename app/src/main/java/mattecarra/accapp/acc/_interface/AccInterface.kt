@@ -28,7 +28,10 @@ interface AccInterface {
 
     suspend fun abcStartDaemon(): Boolean
 
-    suspend fun abcRestartDaemon(): Boolean
+    fun getAccRestartDaemon(): String
+    suspend fun accRestartDaemon(): Boolean = withContext(Dispatchers.IO) {
+        Shell.su(getAccRestartDaemon()).exec().isSuccess
+    }
 
     suspend fun abcStopDaemon(): Boolean
 

@@ -29,6 +29,7 @@ object Acc {
         return when {
             v >= 202007220 -> "v202007220"
             v >= 202007030 -> "v202007030"
+            v >= 202006140 -> "v202006140"
             v >= 202002290 -> "v202002290"
             v >= 202002170 -> "v202002170"
             v >= 201910130 -> "v201910132"
@@ -178,6 +179,10 @@ object Acc {
     }
 
     private fun getAccVersion(): Int? {
-        return Shell.su("/dev/acca --version").exec().out.joinToString(separator = "\n").split("(").last().split(")").first().trim().toIntOrNull()
+        return Shell.su("/dev/acca --version").exec().out.joinToString(separator = "\n").split("(").last().split(")").first().trim().toIntOrNull() ?: getAccVersionLegacy()
+    }
+
+    private fun getAccVersionLegacy(): Int? {
+        return Shell.su("acc --version").exec().out.joinToString(separator = "\n").split("(").last().split(")").first().trim().toIntOrNull()
     }
 }

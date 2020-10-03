@@ -244,9 +244,7 @@ open class AccHandler(override val version: Int) : AccInterface {
         Shell.su("acc -D start").exec().isSuccess
     }
 
-    override suspend fun abcRestartDaemon(): Boolean = withContext(Dispatchers.IO) {
-        Shell.su("acc -D restart").exec().isSuccess
-    }
+    override fun getAccRestartDaemon(): String =  "acc -D restart"
 
     override suspend fun abcStopDaemon(): Boolean = withContext(Dispatchers.IO) {
         Shell.su("acc -D stop").exec().isSuccess

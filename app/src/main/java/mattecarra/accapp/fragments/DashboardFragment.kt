@@ -181,7 +181,7 @@ class DashboardFragment : ScopedFragment() {
                 dash_daemonRestart_button.isEnabled = false
 
                 withContext(Dispatchers.IO) {
-                    Acc.instance.abcRestartDaemon()
+                    Acc.instance.accRestartDaemon()
                 }
 
                 delay(3000)
