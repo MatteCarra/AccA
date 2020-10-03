@@ -9,8 +9,7 @@ import mattecarra.accapp.CurrentUnit
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
 import mattecarra.accapp.VoltageUnit
-import mattecarra.accapp.acc._interface.AccInterfaceV1
-import mattecarra.accapp.acc.v202007030.AccHandler
+import mattecarra.accapp.acc._interface.AccInterface
 import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -39,9 +38,9 @@ object Acc {
     }
 
     @Volatile
-    private var INSTANCE: AccInterfaceV1? = null
+    private var INSTANCE: AccInterface? = null
 
-    val instance: AccInterfaceV1
+    val instance: AccInterface
         get() {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
@@ -55,11 +54,11 @@ object Acc {
             }
         }
 
-    internal fun createAccInstance(version: Int = getAccVersion() ?: bundledVersion): AccInterfaceV1{
+    internal fun createAccInstance(version: Int = getAccVersion() ?: bundledVersion): AccInterface{
         return try {
             val aClass = Class.forName("mattecarra.accapp.acc.${getVersionPackageName(version)}.AccHandler")
-            INSTANCE = (aClass.getDeclaredConstructor(Int::class.java).newInstance(bundledVersion) as AccInterfaceV1)
-            INSTANCE as AccInterfaceV1
+            INSTANCE = (aClass.getDeclaredConstructor(Int::class.java).newInstance(bundledVersion) as AccInterface)
+            INSTANCE as AccInterface
         } catch (ex: Exception) {
             ex.printStackTrace()
             createAccInstance(bundledVersion)

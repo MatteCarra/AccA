@@ -6,13 +6,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.acc.ConfigUpdateResult
 import mattecarra.accapp.acc.ConfigUpdater
-import mattecarra.accapp.acc._interface.AccInterfaceV2
+import mattecarra.accapp.acc._interface.AccInterface
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.BatteryInfo
 import java.io.IOException
 import java.util.regex.Pattern
 
-open class AccHandler(override val version: Int) : AccInterfaceV2 {
+open class AccHandler(override val version: Int) : AccInterface {
     // String resources
     private val STRING_UNKNOWN = "Unknown"
     private val STRING_NOT_CHARGING = "Not charging"
@@ -48,7 +48,7 @@ open class AccHandler(override val version: Int) : AccInterfaceV2 {
     val PRIORITIZE_BATTERY_IDLE = """^\s*prioritize_batt_idle_mode=(true|false)""".toRegex(RegexOption.MULTILINE)
 
     @WorkerThread
-    override fun parseConfig(config: String): AccConfig {
+    fun parseConfig(config: String): AccConfig {
         val capacityShutdown = SHUTDOWN_CAPACITY_REGEXP.find(config)!!.destructured.component1()
         val capacityCoolDown = COOLDOWN_CAPACITY_REGEXP.find(config)!!.destructured.component1()
         val capacityResume   = RESUME_CAPACITY_REGEXP.find(config)!!.destructured.component1()

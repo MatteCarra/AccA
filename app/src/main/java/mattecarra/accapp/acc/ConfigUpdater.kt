@@ -2,11 +2,11 @@ package mattecarra.accapp.acc
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import mattecarra.accapp.acc._interface.AccInterfaceV1
+import mattecarra.accapp.acc._interface.AccInterface
 import mattecarra.accapp.models.AccConfig
 
 data class ConfigUpdater(val accConfig: AccConfig) {
-    suspend fun execute(acc: AccInterfaceV1): ConfigUpdateResult = withContext(Dispatchers.IO) {
+    suspend fun execute(acc: AccInterface): ConfigUpdateResult = withContext(Dispatchers.IO) {
         ConfigUpdateResult(
             acc.updateAccCapacity(
                 accConfig.configCapacity.shutdown, accConfig.configCoolDown?.atPercent ?: 101,
@@ -35,7 +35,7 @@ data class ConfigUpdater(val accConfig: AccConfig) {
         )
     }
 
-    fun concatenateCommands(acc: AccInterfaceV1): String {
+    fun concatenateCommands(acc: AccInterface): String {
         return arrayOf(
             acc.getUpdateAccCapacityCommand(
                 accConfig.configCapacity.shutdown, accConfig.configCoolDown?.atPercent ?: 101,
