@@ -178,6 +178,6 @@ object Acc {
     }
 
     private fun getAccVersion(): Int? {
-        return Shell.su("acc --version").exec().out.joinToString(separator = "\n").split("(").last().split(")").first().trim().toIntOrNull()
+        return Shell.su("/dev/acca --version").exec().out.joinToString(separator = "\n").split("(").last().split(")").first().trim().toIntOrNull()
     }
 }
