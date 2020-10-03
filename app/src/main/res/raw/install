@@ -5,10 +5,12 @@
 
 id=acc
 umask 0077
+data_dir=/sdcard/vr25/${1:-$id}
 
 # log
-mkdir -p /data/adb/${1:-$id}-data/logs
-exec 2>/data/adb/${1:-$id}-data/logs/install-tarball.sh.log
+[ -z "${LINENO-}" ] || export PS4='$LINENO: '
+mkdir -p $data_dir/logs
+exec 2>$data_dir/logs/install-tarball.sh.log
 set -x
 
 # set up busybox
@@ -54,7 +56,7 @@ copy_log() {
     umask 077
     mkdir -p logs
 
-    cp -af /data/adb/${1:-$id}-data/logs/install.log logs/${1:-$id}-install.log 2>/dev/null || return 0
+    cp -af $data_dir/logs/install.log logs/${1:-$id}-install.log 2>/dev/null || return 0
 
     pkg=$(cd ..; pwd)
     pkg=${pkg##/data*/}
@@ -74,9 +76,9 @@ case "$PWD" in
   *mattecarra.accapp*)
     get_ver() { sed -n '/^versionCode=/s/.*=//p' $1/module.prop 2>/dev/null || echo 0; }
     bundled_ver=$(get_ver ${1:-$id}[-_]*)
-    regular_ver=$(get_ver /data/adb/$id)
+    regular_ver=$(get_ver /data/adb/vr25/$id)
     if [ $bundled_ver -le $regular_ver ] && [ $regular_ver -ne 0 ]; then
-      ln -s $(readlink -f /data/adb/$id) .
+      ln -s $(readlink -f /data/adb/vr25/$id) .
       (cd ./${1:-$id}/; ln -fs service.sh ${1:-$id}-init.sh)
       exit 0
     fi 2>/dev/null || :
@@ -84,7 +86,7 @@ case "$PWD" in
 esac
 
 # install ${1:-$id}
-test -f ${1:-$id}[-_]*/install.sh || i=-current # legacy
+test -f ${1:-$id}[-_]*/install.sh || i=-current #legacy
 export installDir="$2"
 /system/bin/sh ${1:-$id}[-_]*/install${i}.sh
 
