@@ -30,8 +30,8 @@ android {
         applicationId "mattecarra.accapp"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 31
-        versionName "1.0.27"
+        versionCode 32
+        versionName "1.0.28"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
