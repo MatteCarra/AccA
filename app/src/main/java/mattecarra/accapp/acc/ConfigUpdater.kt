@@ -31,8 +31,7 @@ data class ConfigUpdater(val accConfig: AccConfig) {
             acc.updateAccOnBoot(accConfig.configOnBoot),
             acc.updateAccOnPlugged(accConfig.configOnPlug),
             acc.updateAccChargingSwitch(accConfig.configChargeSwitch, accConfig.configIsAutomaticSwitchingEnabled),
-            acc.updatePrioritizeBatteryIdleMode(accConfig.prioritizeBatteryIdleMode),
-            acc.accRestartDaemon()
+            acc.updatePrioritizeBatteryIdleMode(accConfig.prioritizeBatteryIdleMode)
         )
     }
 
@@ -60,8 +59,7 @@ data class ConfigUpdater(val accConfig: AccConfig) {
             acc.getUpdateAccOnBootCommand(accConfig.configOnBoot),
             acc.getUpdateAccOnPluggedCommand(accConfig.configOnPlug),
             acc.getUpdateAccChargingSwitchCommand(accConfig.configChargeSwitch, accConfig.configIsAutomaticSwitchingEnabled),
-            acc.getUpdatePrioritizeBatteryIdleModeCommand(accConfig.prioritizeBatteryIdleMode),
-            acc.getAccRestartDaemon()
+            acc.getUpdatePrioritizeBatteryIdleModeCommand(accConfig.prioritizeBatteryIdleMode)
         ).joinToString("; ")
     }
 }
@@ -80,8 +78,7 @@ data class ConfigUpdateResult(
     val onBootUpdateSuccessful: Boolean,
     val onPluggedUpdateSuccessful: Boolean,
     val chargingSwitchUpdateSuccessful: Boolean,
-    val prioritizeBatteryIdleModeSuccessful: Boolean,
-    val restartSuccessful: Boolean
+    val prioritizeBatteryIdleModeSuccessful: Boolean
 ) {
     fun debug() {
         if(!capacityUpdateSuccessful) println("Update capacity update failed")
