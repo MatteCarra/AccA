@@ -17,7 +17,7 @@ import java.net.URL
 import kotlin.math.abs
 
 object Acc {
-    const val bundledVersion = 202010080
+    const val bundledVersion = 202010150
     private val FILES_DIR = "/data/data/mattecarra.accapp/files"
 
     /*
