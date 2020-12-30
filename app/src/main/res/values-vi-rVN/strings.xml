@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name_full">Advanced Charging Controller App</string>
+    <string name="app_name">AccA</string>
+    <string name="app_name_full">Ứng dụng điều chỉnh sạc nâng cao</string>
     <string name="title_activity_log_view">Nhật ký</string>
     <string name="title_activity_log_view_file_name">Nhật ký</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">Không có root</string>
+    <string name="tile_acc_enabled">Đang chạy</string>
+    <string name="tile_acc_disabled">Tạm dừng</string>
     <!-- Navigation Strings -->
     <string name="title_dashboard">Bảng điều khiển</string>
     <string name="title_profiles">Hồ sơ</string>
     <string name="title_schedules">Lịch trình</string>
     <string name="title_settings">Cài đặt</string>
     <!-- ACC Daemon Status -->
+    <string name="title_acc">ACC</string>
     <string name="title_acc_daemon">Trình nền ACC</string>
     <string name="acc_daemon_status_running">Trình nền ACC đang chạy</string>
     <string name="acc_daemon_status_not_running">Trình nền ACC hiện không chạy</string>
+    <string name="acc_daemon_status_reading_status">Đang đọc trạng thái ACC...</string>
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">Dừng trình nền ACC</string>
     <string name="menu_start_accd">Khởi động trình nền ACC</string>
@@ -42,12 +47,15 @@
     <string name="cooldown_capacity">Bắt đầu làm mát ở %%:</string>
     <string name="resume_charge">Tiếp tục sạc ở:</string>
     <string name="stop_charge">Ngừng sạc ở:</string>
+    <string name="enable_temp_check">Bật kiểm tra nhiệt độ (°C)</string>
     <string name="cooldown_temp">Nhiệt độ làm mát:</string>
     <string name="max_temp">Nhiệt độ tối đa:</string>
     <string name="pause_seconds">Số giây tạm dừng:</string>
     <string name="charge_seconds">Số giây sạc:</string>
     <string name="shutdown_capacity">Tắt nguồn (nếu không được sạc) ở:</string>
+    <string name="no_root_message">Vui lòng cấp quyền root cho ACC.</string>
     <string name="config_error_title">Lỗi đọc thiết lập</string>
+    <string name="config_error_dialog">Phân tích thiết lập ACC thất bại!\nVui lòng kiểm tra \"su -c acc --config cat\" có hoạt động không.</string>
     <string name="wait">Vui lòng chờ…\nĐiều này sẽ mất vài giây.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Dừng trình nền sau khi áp dụng cài đặt</string>
@@ -55,10 +63,15 @@
     <!-- ACC installation -->
     <string name="installing_acc">Đang cài đặt ACC</string>
     <string name="reboot">Khởi động lại</string>
+    <string name="acc_installation_failed">Vui lòng gửi logcat trong /data/adb/acc-data/logs/ cho nhà phát triển qua t.me/acc_group/ hoặc github.com/MatteCarra/AccA/issues/.    </string>
     <string name="acc_installation_failed_title">Cài đặt ACC không thành công!</string>
     <!-- DJS installation -->
     <string name="install_djs_title">DJS là bắt buộc</string>
+    <string name="install_djs_description">Để tính năng này hoạt động, chúng tôi phải kích hoạt DJS.
+DJS (Trình lập lịch công việc hàng ngày) là một tiện ích bổ sung nhỏ để lên lịch cài đặt ACC.
+Tiến trình nền DJS sẽ được bắt đầu khi khởi động cùng với ACC.    </string>
     <string name="installing_djs">Đang cài đặt DJS</string>
+    <string name="djs_installation_failed">Vui lòng gửi logcat trong /data/adb/acc-data/logs/ cho nhà phát triển qua t.me/acc_group/ hoặc github.com/MatteCarra/AccA/issues/.    </string>
     <string name="djs_installation_failed_title">Cài đặt DJS thất bại!</string>
     <string name="voltage_control_file_not_set">Không được thiết lập.</string>
     <string name="edit_on_boot">Chỉnh sửa cài đặt apply_on_boot</string>
@@ -72,9 +85,11 @@
     <string name="unsaved_changes">Bạn có thay đổi chưa lưu.</string>
     <string name="close_without_saving">Bỏ qua</string>
     <string name="edit_config">Chỉnh sửa cấu hình</string>
+    <string name="unsaved_changes_message">Lưu Thay Đổi?</string>
     <string name="create_acc_profile">Tạo hồ sơ cấu hình</string>
     <string name="profile_name">Tên hồ sơ</string>
     <string name="dialog_profile_name_message">Nhập tên bạn muốn gán cho hồ sơ này:</string>
+    <string name="no_profiles">Không có thông tin hồ sơ</string>
     <string name="profile_not_selected">Cài đặt tùy chỉnh</string>
     <string name="profile_tile_label">Hồ sơ: %1$s</string>
     <string name="profiles_text_view">Hồ sơ (nhấn và giữ để chỉnh sửa / xóa):</string>
@@ -83,7 +98,10 @@
     <string name="recurrent_schedule">Chỉ chạy một lần</string>
     <string name="execution_time">Thời gian thực hiện</string>
     <string name="new_config">Cấu hình tùy chỉnh mới</string>
+    <string name="enable_voltage_limit">Thay đổi giới hạn điện áp sạc</string>
     <string name="voltage_control_file">Tập tin điều khiển điện áp:</string>
+    <string name="edit_power_limit">Chỉnh sửa giới hạn điện áp hiện tại</string>
+    <string name="voltage_max">Điện áp tối đa (milivolts):</string>
     <string name="disabled">Vô hiệu hoá</string>
     <string name="schedule_recurrent_row_text">Công việc định kỳ được lên lịch cho%1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_title">Thực thi một lần -%1$02d:%2$02d</string>
@@ -92,32 +110,46 @@
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Xóa</string>
     <string name="no_schedules">Không có lịch trình được thiết lập</string>
+    <string name="wrong_volt_file">Tệp đã chọn không hoạt động hoặc kernel của bạn không hỗ trợ tính năng này.</string>
     <string name="invalid_voltage_max">Giá trị phải là một số trong khoảng từ 3700 đến 4200 (millivolts)</string>
     <string name="edit_charging_switch">Chỉnh sửa công tắc sạc</string>
     <string name="test_switch">Thử công tắc sạc</string>
     <string name="no_option_selected">Không có tùy chọn nào được chọn; vui lòng chọn một!</string>
     <string name="charging_switch_works">Công tắc sạc được chọn hoạt động!</string>
+    <string name="charging_switch_does_not_work">Thay đổi không thành công!</string>
+    <string name="plug_battery_to_test">Vui lòng cắm bộ sạc của bạn và thử lại!</string>
     <string name="automatic">Tự động</string>
     <string name="error_occurred">Có lỗi xảy ra</string>
     <string name="retry">Thử lại</string>
+    <string name="edit_charging_limit_once">Sạc đến #\%, bỏ qua các giới hạn</string>
+    <string name="done_applied_charge_limit">Sạc đến %1$d%%</string>
+    <string name="charge_limit_not_applied">Đã hủy áp dụng mức sạc</string>
     <string name="apply">Áp dụng</string>
     <string name="done">Xong</string>
+    <string name="edit_charging_limit_once_dialog_msg">Cài đặt hiện tại của bạn được tự động khôi phục khi đạt đến mức pin đã chọn.</string>
     <string name="title_power_control">Kiểm soát năng lượng sạc</string>
     <string name="info">Thông tin</string>
     <string name="title_cooldown_control">Làm Mát</string>
     <string name="title_on_boot">Áp dụng khi khởi động</string>
     <string name="title_temperature_control">Kiểm soát nhiệt độ</string>
     <string name="title_capacity_control">Kiểm soát năng lực</string>
+    <string name="title_miscellaneous_control">Cài đặt khác</string>
     <string name="about">Thông tin</string>
     <!-- ACC Config Tooltips -->
+    <string name="capacity_control_info">- SHUTDOWN: tự động tắt hệ thống ở hoặc dưới mức pin này khi pin không được sạc.&lt;br /&gt;- STOP: và công suất RESUME ra lệnh khi sạc nên dừng và tiếp tục, tương ứng.&lt;br /&gt;- CHARGING SWITCH là tệp điều khiển, cộng với các giá trị BẬT và TẮT để chuyển đổi bật / tắt sạc. Theo mặc định, ACC sử dụng bất cứ thứ gì khả dụng.</string>
     <string name="power_control_info">- Mỗi lần giảm điện áp cực đại 0,10V / cell được cho là tăng gấp đôi tuổi thọ.&lt;br /&gt;- Thật không may, không phải tất cả các thiết bị / hạt nhân đều hỗ trợ tính năng này.</string>
     <string name="temperature_control_info">- Điều này vô hiệu hóa tính năng sạc trong vài giây để làm mát pin&lt;br /&gt;- COEDOWN TEMP phụ thuộc vào COATOWN RATIO.&lt;br /&gt;- MAX TEMP hoạt động với PAUSE SECONDS.</string>
+    <string name="cooldown_info">- Tỷ lệ BẬT / TẮT sạc tính bằng giây (ví dụ: 50/10) - giảm căng thẳng pin gây ra bởi nhiệt độ cao kéo dài và điện áp sạc cao bằng cách tạm dừng sạc định kỳ.&lt;br /&gt;- Nếu sạc quá chậm, hãy tắt tính năng này hoặc thay đổi tỷ lệ.&lt;br /&gt;- Khi bị vô hiệu hóa, các giá trị COOLDOWN CAPACITY và COOLDOWN TEMP bị vô hiệu hóa.&lt;br /&gt;- Cài đặt này là một thay thế hợp lý cho tính năng giới hạn điện áp sạc.</string>
+    <string name="on_plugged_info">Điều này được sử dụng để cập nhật các tệp có nội dung thay đổi trong các sự kiện nguồn nhất định (ví dụ cắm vào / tháo ra). Nó đặc biệt hữu ích để thực thi điện áp / dòng tố đa tùy chỉnh cho sạc Usb / không dây.</string>
+    <string name="battery_idle_info_label">Cho phép lấy nguồn điện trực tiếp khi quá trình sạc tạm dừng.</string>
+    <string name="miscellaneous_info_label">Cấu hình Acc khác nhau không phù hợp với các danh mục đã xác định khác</string>
     <string name="acc_config_editor">Trình chỉnh sửa cấu hình ACC</string>
     <string name="profile_creator">Người tạo hồ sơ</string>
     <string name="schedule_creator">Lịch trình tạo</string>
     <string name="charging_switch_label">Công tắc sạc:</string>
     <string name="title_on_plugged">Áp dụng trên phích cắm</string>
     <string name="edit_on_plugged">Chỉnh sửa cài đặt application_on_plug:</string>
+    <string name="edit_on_plugged_dialog_message">Ví dụ: wireless/voltage_max::9000000 buộc sạc nhanh không dây trên một số thiết bị Pixel.    </string>
     <string name="template_capacity_profile">Tắt nguồn: %1$d%% - Tiếp tục: %2$d%% - Dừng lại: %3$d%%</string>
     <string name="template_temperature_profile">Nhiệt độ:%1$d&#176;C - Tối đa: %2$d&#176;C - Dừng: %3$ds</string>
     <string name="template_cool_down_profile">Bắt đầu lúc: %1$d%% - Sạc trong %2$ds - Tạm dừng trong %3$ds</string>
@@ -127,6 +159,7 @@
     <string name="profile_option_delete">Xóa</string>
     <string name="selecting_profile_toast">Đang chọn hồ sơ %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox chưa được cài đặt</string>
+    <string name="installation_failed_busybox">Cài đặt busybox trước hoặc cài đặt mã nhị phân vào /data/adb/bin/</string>
     <string name="share">Chia sẻ</string>
     <string name="logs_not_found">Không tìm thấy tập tin Log.</string>
     <string name="acc_telegram">Để được hỗ trợ thêm, hãy tham gia nhóm ACC Telegram (t.me/acc_group)!</string>
@@ -140,6 +173,9 @@ Một số hệ thống thể hiện dòng điện trong dòngV (microvolts), s�
 Nếu đơn vị được phát hiện không chính xác, bạn có thể đặt thủ công.</string>
     <string name="units_of_measure">Đơn vị đo lường</string>
     <string name="acc_version_preference_title">Phiên bản ACC</string>
+    <string name="acc_version_preference_description">Bạn có thể chọn biến thể ACC để sử dụng: gói, bản chính, phát triển hoặc bất kỳ phiên bản nào được phát hành.
+        Phiên bản đi kèm được đảm bảo luôn hoạt động với AccA - do đó, đây là lựa chọn được đề xuất.
+        Mặc dù không được bảo đảm, các biến thể khác thường an toàn.    </string>
     <string name="install_bundled_version">Cài đặt phiên bản tích hợp</string>
     <string name="acc_version_picker_title">Phiên bản ACC</string>
     <string name="acc_version_picker_message">Chọn biến thể ACC mong muốn</string>
@@ -160,6 +196,10 @@ Nếu đơn vị được phát hiện không chính xác, bạn có thể đặ
     <string name="theme_option_setting">Chủ đề</string>
     <string name="theme_option_summary">Đặt chủ đề của ứng dụng.</string>
     <string name="acc_version_compatibility_warning_title">Tương thích phiên bản ACC</string>
+    <string name="acc_version_compatibility_warning_description">Bạn đã chọn một biến thể ACC không được đảm bảo tương thích với ứng dụng.
+        \nAccA sắp tải xuống phiên bản từ kho GitHub của ACC.
+        \nTiến hành?
+    </string>
     <string name="restore">Khôi phục mặc định</string>
     <string name="undo">Hoàn tác</string>
     <string name="checking_updates">Đang kiểm tra cập nhật</string>
@@ -170,8 +210,12 @@ Nếu đơn vị được phát hiện không chính xác, bạn có thể đặ
     <string name="acc_installation_failed_log">Cài đặt ACC không thành công</string>
     <string name="djs_installation_failed_log">Cài đặt DJS thất bại</string>
     <string name="select_different_version">Thay đổi phiên bản ACC</string>
+    <string name="installation_failed_non_bundled">Việc cài đặt các biến thể ACC khác nhau không thành công.
+        \nVui lòng xem xét và chia sẻ /data/adb/acc-data/logs/ với các nhà phát triển.    </string>
     <string name="prioritize_battery_idle">Ưu tiên chế độ không sử dụng pin</string>
     <string name="test_battery_idle">Kiểm tra chế độ không sử dụng pin</string>
+    <string name="test_battery_idle_supported_result">Kernel của bạn hỗ trợ chế độ không sử dụng pin.</string>
+    <string name="test_battery_idle_unsupported_result">Kernel của bạn không hỗ trợ chế độ không sử dụng pin.</string>
     <string name="schedule_profile_edit_current">Chỉnh sửa cấu hình hiện tại</string>
     <string name="schedule_profile_keep_current">Giữ cấu hình hiện tại</string>
     <string name="schedule_type">Loại lịch trình</string>
@@ -191,14 +235,44 @@ Nếu đơn vị được phát hiện không chính xác, bạn có thể đặ
     <string name="edit_schedule">Chỉnh sửa lịch biểu</string>
     <string name="create_schedule">Tạo Lịch</string>
     <!-- About Activity -->
+    <string name="about_team_title">Đội ngũ phát triển</string>
+    <string name="about_team_blurb">Cảm ơn bạn đã sử dụng AccA!
+        \n\nChúng tôi đã dành rất nhiều thời gian cho việc này để bạn có thể quản lý ACC một cách dễ dàng!
+        \n\nĐặc biệt cảm ơn những người đã đóng góp bằng mọi cách cho các dự án của ACC &amp; AccA!    </string>
+    <string name="about_attributes">Thuộc Tính</string>
+    <string name="about_attrib_telegram_icon">Biểu tượng Telegram do Pixel hoàn thiện từ www.flaticon.com</string>
+    <string name="about_acca_version_label">Phiên bản AccA:</string>
     <string name="about_acc_version_label">Phiên bản ACC:</string>
+    <string name="about_project_github">AccA GitHub</string>
+    <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Trang web</string>
+    <string name="toast_no_browser_installed">Không thể mở Liên kết!\nHãy chắc chắn rằng bạn đã cài đặt trình duyệt web.</string>
+    <string name="install_update_dialog">Cài đặt cập nhật acc</string>
+    <string name="check_update_dialog_message">Bạn có muốn cài đặt phiên bản ACC mới nhất từ   \'%1$s\'?
+        \nAccA sẽ tải xuống phiên bản ACC mới nhất từ ​​Github.
+        \nBạn có muốn tiếp tục?</string>
+    <string name="add_charging_switch">Thêm công tắc sạc</string>
     <string name="charging_switch_on_value_label">Công tắc sạc ON VALUE</string>
     <string name="charging_switch_off_value_label">Công tắc sạc OFF VALUE</string>
     <string name="reset_bs_on_pause">Đặt lại số liệu thống kê pin khi tạm dừng \%</string>
+    <string name="current_max">Điện áp tối đa (mA):</string>
+    <string name="invalid_current_max">Giá trị điện áp không hợp lệ</string>
     <!-- Import and Export -->
     <string name="import_title">Nhập</string>
+    <string name="import_load_from_clipboard">Nhấn vào biểu tượng \'Bảng tạm\' trên thanh công cụ!</string>
     <string name="export_title">Xuất ra</string>
+    <string name="export_none_selected">Vui lòng chọn hồ sơ để xuất ở trên</string>
+    <string name="menu_import">Nhập</string>
+    <string name="menu_export">Xuất</string>
+    <string name="menu_title_load_clipboard">Lấy từ bộ nhớ tạm</string>
+    <string name="menu_title_clear_entries">Xóa toàn bộ</string>
+    <string name="import_toast_no_valid_profile_json_clipboard">Cấu hình không có trong Clipboard</string>
+    <string name="import_toast_no_selected_profiles">Vui lòng chọn profiles để nhập</string>
+    <string name="import_profile_success">Hoàn thành nhập dữ liệu %d từ profile</string>
     <!-- Config Parse Error -->
+    <string name="parse_failed_title">Không phân tích được cấu hình ACC</string>
+    <string name="parse_failed_body">Bạn có thể thử tải cấu hình mặc định bằng cách nhấn \'Tải mặc định\'. Xin lưu ý rằng AccA sẽ không hoạt động.
+        \n\nIf lỗi vẫn còn, vui lòng chia sẻ dấu vết ngăn xếp bên dưới cùng với phiên bản của ACC &amp; AccA (qua menu 3 chấm &gt; Giới thiệu) với các nhà phát triển qua Telegram.\n\n%s</string>
+    <string name="automatic_switch_eanbled">Tự động xoay vòng qua các bộ chuyển</string>
 </resources>
