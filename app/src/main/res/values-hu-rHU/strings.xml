@@ -1,18 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">AccA</string>
+    <string name="app_name_full">Expert Töltés Kezelő Alkalmazás</string>
+    <string name="title_activity_log_view">Naplók</string>
+    <string name="title_activity_log_view_file_name">Naplók</string>
     <!-- ACC Tile Strings -->
+    <string name="tile_acc_no_root">Nincs root jog</string>
+    <string name="tile_acc_enabled">Modul fut</string>
+    <string name="tile_acc_disabled">Modul leállítva</string>
     <!-- Navigation Strings -->
+    <string name="title_dashboard">Áttekintés</string>
+    <string name="title_profiles">Profilok</string>
+    <string name="title_schedules">Ütemező</string>
+    <string name="title_settings">Beállítások</string>
     <!-- ACC Daemon Status -->
+    <string name="title_acc">ACC</string>
+    <string name="title_acc_daemon">ETK szolgáltatás</string>
+    <string name="acc_daemon_status_running">Az ETK szolgáltatás fut</string>
+    <string name="acc_daemon_status_not_running">Az ETK szolgáltatás nem fut</string>
+    <string name="acc_daemon_status_reading_status">ACC modul állapot beolvasása...</string>
     <!-- ACC Daemon Toggle -->
+    <string name="menu_stop_accd">Az ETK szolgáltatás leállítása</string>
+    <string name="menu_start_accd">Az ETK szolgáltatás elindítása</string>
+    <string name="start">Indítás</string>
+    <string name="stop">Leállítás</string>
     <!-- Battery Card Strings -->
+    <string name="title_battery">Akku</string>
+    <string name="info_status">Állapot</string>
+    <string name="info_charging_speed">Töltési sebesség</string>
+    <string name="info_discharging_speed">Pillanatnyi fogyasztás</string>
+    <string name="info_capacity">Kapacitás</string>
+    <string name="info_temperature">Hőmérséklet</string>
+    <string name="info_health">Akku státusz</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
+    <string name="info_status_extended">%1$s (%2$s)</string>
+    <string name="info_charging_speed_extended">%1$dmA %2$.2fV-on</string>
+    <string name="info_discharging_speed_extended">%1$dmA</string>
     <!-- Profiles Item Labels -->
+    <string name="item_profile_capacity_label">Kapacitás:</string>
+    <string name="item_profile_temperature_label">Hőmérséklet:</string>
+    <string name="status_label">Állapot:</string>
+    <string name="battery_info_label">Infó:</string>
+    <string name="reset_unplugged">Kihúzáskor az akku adatai resetelődnek</string>
+    <string name="reset_stats">Az akku adatainak resetelése</string>
+    <string name="enable_cooldown">Hűtési ciklus engedélyezése:</string>
+    <string name="cooldown_capacity">Kezdje meg a lehűtést %% százalékon:</string>
+    <string name="resume_charge">Töltés folytatása ekkor:</string>
+    <string name="stop_charge">Töltés megállítása ekkor:</string>
+    <string name="enable_temp_check">Hőmérséklet szabályozás engedélyezése (°C)</string>
+    <string name="cooldown_temp">Lehűtési hőmérséklet:</string>
+    <string name="max_temp">Max hőmérséklet:</string>
+    <string name="pause_seconds">Szünet (másodpercben):</string>
+    <string name="charge_seconds">Töltés (másodpercben):</string>
+    <string name="shutdown_capacity">Leállítás (ha nem tölt) ekkor:</string>
+    <string name="no_root_message">Az AccA-nak szüksége van root hozzáférésre.</string>
+    <string name="config_error_title">Konfigurácio elemzési hiba</string>
+    <string name="config_error_dialog">Nem sikerült elemezni az ACC konfigurációt!\nKérlek ellenőrizd hogy működik-e a \"su -c acc --set --print\" parancs.</string>
+    <string name="wait">Kérlek várj...\nEz eltarthat egy kis ideig.</string>
     <!-- Exit On Boot Card Strings -->
+    <string name="title_exit_on_boot">A szolgáltatás leállítása a beállítások alkalmazása után</string>
+    <string name="description_exit_on_boot">Bootolás után ezeket a parancsokat végrehajtja az app.</string>
     <!-- ACC installation -->
+    <string name="installing_acc">ETK Telepítése</string>
+    <string name="reboot">Újraindítás</string>
+    <string name="acc_installation_failed_title">Az ETK telepítése sikertelen!</string>
     <!-- DJS installation -->
+    <string name="install_djs_title">NÜ szükséges</string>
+    <string name="installing_djs">NÜ Telepítése</string>
+    <string name="djs_installation_failed_title">A NÜ telepítése sikertelen!</string>
+    <string name="voltage_control_file_not_set">Nincs beállítva.</string>
+    <string name="edit_on_boot_dialog_hint">Hagyd üresen, hogy letiltsd</string>
+    <string name="save">Ment</string>
+    <string name="edit_on_boot_dialog_message">Példa: /sys/kernel/fast_charge/force_fast_charge::1::0
+        --exit.\n\"--exit\" opcionális; ez leállítja a szolgáltatást a beállítások alkalmazása után.
+    </string>
+    <string name="logs">Naplók</string>
+    <string name="text_copied_to_clipboard">Szöveg másolva a vágólapra!</string>
+    <string name="log_file_not_found_title">A naplófájl nem találhatók</string>
+    <string name="unsaved_changes">Nem mentett módosításai vannak</string>
+    <string name="close_without_saving">Elvetés</string>
+    <string name="edit_config">Konfiguráció szerkesztése</string>
+    <string name="unsaved_changes_message">Menti a módosításokat?</string>
+    <string name="create_acc_profile">Új profil létrehozása</string>
+    <string name="profile_name">Profil neve</string>
+    <string name="dialog_profile_name_message">Írd ide a profilod nevét:</string>
+    <string name="no_profiles">Nincsenek profilok</string>
+    <string name="profile_not_selected">Egyéni beállítások</string>
+    <string name="profile_tile_label">%1$s profil</string>
+    <string name="profiles_text_view">Profilok (hosszan nyomásra törlés/szerkesztés):</string>
+    <string name="restart">Újraindítás</string>
+    <string name="recurrent_schedule">Csak egyszer fusson</string>
+    <string name="execution_time">Végrehajtás ideje</string>
+    <string name="voltage_max">Max feszültség (millivolt):</string>
+    <string name="disabled">Kikapcsolva</string>
+    <string name="schedule_time">%1$02d:%2$02d</string>
+    <string name="delete">Törlés</string>
+    <string name="no_schedules">Nincs beállítva ütemzés</string>
+    <string name="invalid_voltage_max">Az érték egy 3700 és 4200 közti szám legyen (millivolt)</string>
+    <string name="edit_charging_switch">Töltési kapcsoló beállítása</string>
+    <string name="test_switch">Töltési kapcsoló tesztelése</string>
+    <string name="charging_switch_works">A választott töltési kapcsoló működik!</string>
+    <string name="automatic">Automatikus</string>
+    <string name="error_occurred">Hiba történt</string>
+    <string name="retry">Újra</string>
+    <string name="apply">Alkamaz</string>
+    <string name="done">Kész</string>
+    <string name="info">Infó</string>
+    <string name="title_cooldown_control">Lehűtés</string>
+    <string name="title_on_boot">Alkalmazás bootoláskor</string>
+    <string name="title_temperature_control">Hőmérséklet szabályozás</string>
+    <string name="title_capacity_control">Kapacitás szabályozás</string>
+    <string name="title_miscellaneous_control">Egyebek</string>
+    <string name="about">Névjegy</string>
     <!-- ACC Config Tooltips -->
     <!--Profiles Options-->
+    <string name="profile_option_edit">Szerkeszt</string>
+    <string name="profile_option_rename">Átnevez</string>
+    <string name="profile_option_delete">Töröl</string>
+    <string name="installation_failed_busybox_title">A Busybox nincs telepítve</string>
+    <string name="share">Megosztás</string>
+    <string name="logs_not_found">Naplófájl nem található.</string>
+    <string name="current_measure_unit_preference_title">Mértékegység</string>
+    <string name="units_of_measure">Mértékegység</string>
+    <string name="acc_version_preference_title">ETK verzió</string>
+    <string name="acc_version_picker_title">ACC verzió</string>
+    <string name="ui_options">Felület</string>
+    <string name="theme_option_setting">Kinézet</string>
+    <string name="theme_option_summary">Az alkalmazás témájának beállítása.</string>
+    <string name="restore">Visszaállítás az alapértékekre</string>
+    <string name="undo">Mégse</string>
+    <string name="checking_updates">Frissítések ellenőrzése</string>
+    <string name="no_update_available">Nem érhető el frissítés</string>
+    <string name="update_completed">A frissítés befejeződött!</string>
+    <string name="install">Telepítés</string>
+    <string name="share_log">Napló fájl megosztása</string>
+    <string name="acc_installation_failed_log">ACC telepítési hibanapló</string>
+    <string name="djs_installation_failed_log">DJS telepítési hibanapló</string>
+    <string name="select_different_version">ACC verzió választás</string>
+    <string name="schedule_type">Ütemező típusa</string>
+    <string name="schedule_name">Ütemező neve</string>
+    <string-array name="theme_option_options">
+        <item>Világos</item>
+        <item>Sötét</item>
+        <item>Rendszer alapértelmezett</item>
+    </string-array>
+    <string-array name="schedule_type_entries">
+        <item>Ismétlődő</item>
+        <item>Egyszeri</item>
+        <item>Futtatás rendszerindításkor</item>
+    </string-array>
+    <string name="menu_import_export">Importálás &amp; exportálás</string>
+    <string name="execute_on_boot_schedule">Végrehajtás rendszerindításkor</string>
+    <string name="edit_schedule">Ütemezés szerkesztése</string>
+    <string name="create_schedule">Ütemezés létrehozása</string>
     <!-- About Activity -->
+    <string name="about_attributes">Tulajdonságok</string>
+    <string name="about_acca_version_label">AccA verzió:</string>
+    <string name="about_acc_version_label">ETK verzió:</string>
+    <string name="about_project_github">AccA GitHub</string>
+    <string name="about_project_telegram">AccA Telegram</string>
+    <string name="about_github">GitHub</string>
+    <string name="about_website">Honlap</string>
+    <string name="toast_no_browser_installed">Nem lehet megnyitni a linket!\nGyőződj meg arról, hogy van telepítve böngésző.</string>
+    <string name="install_update_dialog">ETK frissítés telepítése</string>
+    <string name="add_charging_switch">Töltési kapcsoló hozzáadása</string>
+    <string name="reset_bs_on_pause">Kihúzáskor az akku adatai resetelődnek \%</string>
+    <string name="current_max">Max áramerősség (mA):</string>
     <!-- Import and Export -->
+    <string name="import_title">Importálás</string>
+    <string name="export_title">Exportálás</string>
+    <string name="menu_import">Importálás</string>
+    <string name="menu_export">Exportálás</string>
+    <string name="menu_title_load_clipboard">Betöltés vágólapról</string>
+    <string name="import_toast_no_selected_profiles">Válassza ki az importálni kívánt profilt</string>
+    <string name="import_profile_success">A %d profil importálása sikerült</string>
     <!-- Config Parse Error -->
 </resources>
