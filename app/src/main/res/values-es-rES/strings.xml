@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">AccA</string>
     <string name="app_name_full">Aplicación avanzada de controlador de carga</string>
     <string name="title_activity_log_view">Registros</string>
     <string name="title_activity_log_view_file_name">Registros</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">Sin acceso root</string>
+    <string name="tile_acc_enabled">Daemon en ejecución</string>
+    <string name="tile_acc_disabled">Daemon detenido</string>
     <!-- Navigation Strings -->
     <string name="title_dashboard">Panel de Control</string>
     <string name="title_profiles">Perfiles</string>
     <string name="title_schedules">Horarios</string>
     <string name="title_settings">Configuración</string>
     <!-- ACC Daemon Status -->
+    <string name="title_acc">ACC</string>
     <string name="title_acc_daemon">ACC Daemon</string>
     <string name="acc_daemon_status_running">El Daemon ACC está en ejecución</string>
     <string name="acc_daemon_status_not_running">El Daemon de ACC no está en ejecución</string>
+    <string name="acc_daemon_status_reading_status">Leyendo el estado del ACC Daemon...</string>
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">Detener AAC Daemon</string>
     <string name="menu_start_accd">Iniciar ACC Daemon</string>
@@ -42,36 +47,55 @@
     <string name="cooldown_capacity">Comenzar a enfriar a las %%:</string>
     <string name="resume_charge">Reanudar la carga a las:</string>
     <string name="stop_charge">Detener la carga a las:</string>
+    <string name="enable_temp_check">Activar control de temperatura (°C)</string>
     <string name="cooldown_temp">Temperatura de enfriamiento:</string>
     <string name="max_temp">Temperatura máxima:</string>
     <string name="pause_seconds">Pausar durante (segundos):</string>
     <string name="charge_seconds">Cargar durante (segundos):</string>
     <string name="shutdown_capacity">Apagar (si no está cargando) a las:</string>
+    <string name="no_root_message">AccA requiere ROOT.</string>
+    <string name="config_error_title">Error de lectura de configuración</string>
+    <string name="config_error_dialog">¡Error al leer la configuración ACC!\nPor favor, comprueba si funciona \"su -c acc --config cat\".</string>
     <string name="wait">Por favor espere...\nEsto tomará unos segundos.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Detener daemon después de aplicar la configuración</string>
+    <string name="description_exit_on_boot">Esto se utiliza para escribir en los archivos de control al arrancar.</string>
     <!-- ACC installation -->
     <string name="installing_acc">Instalando ACC</string>
     <string name="reboot">Reiniciar</string>
+    <string name="acc_installation_failed">Por favor, archiva y envía logcat y /data/adb/acc-data/logs/ a los desarrolladores
+        en t.me/acc_group/ o github.com/MatteCarra/AccA/issues/.
+    </string>
     <string name="acc_installation_failed_title">ACC Instalación fallida!</string>
     <!-- DJS installation -->
     <string name="install_djs_title">Se requiere DJS</string>
+    <string name="install_djs_description">Para que esta característica funcione, debemos habilitar el DJS.
+        \nDJS (Programador de tareas diarias) es un complemento ligero para programar perfiles y ajustes de ACC.
+        \nEl daemon de DJS se iniciará en el arranque junto con el de ACC.
+    </string>
     <string name="installing_djs">Instalando DJS</string>
+    <string name="djs_installation_failed">Por favor, archiva y envía logcat y /data/adb/acc-data/logs/ a los desarrolladores
+        en t.me/acc_group/ o github.com/MatteCarra/AccA/issues/.
+    </string>
     <string name="djs_installation_failed_title">¡Instalación de DJS fallida!</string>
     <string name="voltage_control_file_not_set">No establecido.</string>
     <string name="edit_on_boot">Editar ajustes de apply_on_boot</string>
     <string name="edit_on_boot_dialog_hint">Dejar en blanco para desactivar</string>
     <string name="save">Guardar</string>
+    <string name="edit_on_boot_dialog_message">Ejemplo: /sys/kernel/fast_charge/force_fast_charge::1::0
+        --exit.\n\"--exit\" es opcional; le dice al daemon que se detenga después de aplicar los ajustes.
+    </string>
     <string name="logs">Registros</string>
     <string name="text_copied_to_clipboard">Texto copiado al portapapeles!</string>
     <string name="log_file_not_found_title">Archivo de registro no encontrado</string>
     <string name="unsaved_changes">Tienes cambios sin guardar</string>
     <string name="close_without_saving">Descartar</string>
     <string name="edit_config">Editar configuración</string>
+    <string name="unsaved_changes_message">¿Guardar los cambios?</string>
     <string name="create_acc_profile">Crear perfil de configuración</string>
     <string name="profile_name">Nombre del perfil</string>
     <string name="dialog_profile_name_message">Introduzca el nombre que desea asignar a este perfil:</string>
-    <string name="no_profiles">Perfil no establecido</string>
+    <string name="no_profiles">No hay perfiles</string>
     <string name="profile_not_selected">Ajustes personalizados</string>
     <string name="profile_tile_label">Perfil: %1$s</string>
     <string name="profiles_text_view">Perfiles (dejar pulsado para editar/borrar):</string>
@@ -80,36 +104,59 @@
     <string name="recurrent_schedule">Ejecutar sólo una vez</string>
     <string name="execution_time">Tiempo de ejecución</string>
     <string name="new_config">Nueva configuración personalizada</string>
+    <string name="enable_voltage_limit">Límite de voltaje de carga personalizado</string>
     <string name="voltage_control_file">Archivo de control de voltaje:</string>
+    <string name="edit_power_limit">Editar límites de corriente y voltaje</string>
+    <string name="voltage_max">Voltaje máximo (milivoltios):</string>
     <string name="disabled">Deshabilitado</string>
+    <string name="schedule_recurrent_row_text">Trabajo recurrente programado para el %1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_title">Ejecute una vez - %1$02d:%2$02d</string>
+    <string name="schedule_execute_once_row_text">Trabajo programado para el %1$02d:%2$02d</string>
     <string name="schedule_boot_row_text">Programación al iniciar</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Borrar</string>
     <string name="no_schedules">No hay programaciones</string>
+    <string name="wrong_volt_file">O el archivo elegido no funciona, o tu kernel no soporta esta función.</string>
+    <string name="invalid_voltage_max">El valor debe ser un número entre 3700 y 4200 (milivoltios)</string>
     <string name="edit_charging_switch">Editar interruptor de carga</string>
     <string name="test_switch">Probar interruptor de carga</string>
     <string name="no_option_selected">No hay opción seleccionada; por favor, seleccione una!</string>
     <string name="charging_switch_works">¡El interruptor de carga seleccionado funciona!</string>
+    <string name="charging_switch_does_not_work">¡El interruptor de carga seleccionado falla!</string>
+    <string name="plug_battery_to_test">¡Conecta el cargador y vuelve a intentarlo!</string>
     <string name="automatic">Automático</string>
     <string name="error_occurred">Ha ocurrido un error</string>
     <string name="retry">Reintentar</string>
+    <string name="edit_charging_limit_once">Carga una vez hasta #\%, sin restricciones</string>
+    <string name="done_applied_charge_limit">Cargado al %1$d%%</string>
+    <string name="charge_limit_not_applied">Aplicar límite de carga cancelado</string>
     <string name="apply">Aplicar</string>
     <string name="done">Listo</string>
+    <string name="edit_charging_limit_once_dialog_msg">Tus ajustes actuales se restauran automáticamente una vez alcanzado el nivel de batería elegido.</string>
     <string name="title_power_control">Control de potencia de carga</string>
     <string name="info">Información</string>
     <string name="title_cooldown_control">Enfriar</string>
     <string name="title_on_boot">Aplicar inicio</string>
     <string name="title_temperature_control">Control de temperatura</string>
     <string name="title_capacity_control">Control de capacidad</string>
+    <string name="title_miscellaneous_control">Varios</string>
     <string name="about">Acerca de</string>
     <!-- ACC Config Tooltips -->
+    <string name="capacity_control_info">- SHUTDOWN: apaga automáticamente el sistema por debajo de este nivel de batería cuando la batería no está cargando.&lt;br /&gt;- STOP: y RESUME dictan cuando la carga debe parar y reanudarse, respectivamente.&lt;br /&gt;- CHARGING SWITCH es el archivo de control, más valores ON y OFF para iniciar y detener la carga. Por defecto, ACC utiliza cualquiera que funciona.</string>
     <string name="power_control_info">Cada reducción en el voltaje de carga pico de 0.10V/celda duplica el ciclo de vida.&lt;br /&gt;- Desafortunadamente, no todos los dispositivos/kernels admiten esta característica.</string>
+    <string name="temperature_control_info">- Esto desactiva la carga durante los segundos establecidos para enfriar la batería&lt;br /&gt;- COOL DOWN TEMP depende de COOL DOWN RATIO.&lt;br /&gt;- MAX TEMP trabaja con PAUSE SECONDS.</string>
+    <string name="cooldown_info">- Relación de carga ON/OFF en segundos (por ejemplo, coolDownRatio=50/10) - reduce el estrés de la batería inducido por una temperatura alta prolongada y un alto voltaje de carga mediante la pausa periódica de carga.&lt;br /&gt;- Si la carga es demasiado lenta, desactiva o cambia la proporción.&lt;br /&gt;- Cuando está desactivado, los valores COOL DOWN CAPACITY y COOL DOWN TEMP son nulos.&lt;br /&gt;- Esta configuración es una buena alternativa al límite de carga.</string>
+    <string name="on_plugged_info">Esto se utiliza para actualizar archivos de control cuyo contenido cambia en ciertos eventos de energía (por ejemplo, conectado/desconectado). Es particularmente útil para hacer cumplir el voltaje/corriente máximos personalizados para la carga usb/wireless.</string>
+    <string name="battery_idle_info_label">Esto permite que un dispositivo soportado obtenga energía directamente de la fuente de alimentación externa cuando se pausa la carga.</string>
+    <string name="miscellaneous_info_label">Configuraciones varias de acc que no encajaban en otras categorías definidas</string>
     <string name="acc_config_editor">Editor de configuración ACC</string>
     <string name="profile_creator">Crear perfil</string>
     <string name="schedule_creator">Programación</string>
     <string name="charging_switch_label">Interruptor de carga:</string>
     <string name="title_on_plugged">Aplicar al Conectar</string>
+    <string name="edit_on_plugged">Editar ajustes de apply_on_boot:</string>
+    <string name="edit_on_plugged_dialog_message">Ejemplo: wireless/voltage_max::9000000 fuerza la carga inalámbrica rápida en algunos dispositivos Pixel.
+    </string>
     <string name="template_capacity_profile">Apagar: %1$d%% - Reanudar: %2$d%% - Detener: %3$d%%</string>
     <string name="template_temperature_profile">Temperatura: %1$d&#176;C - Max: %2$d&#176;C - Pausa: %3$ds</string>
     <string name="template_cool_down_profile">Iniciar en: %1$d%% - Cargar por %2$ds - Pausa por %3$ds</string>
@@ -117,8 +164,9 @@
     <string name="profile_option_edit">Editar</string>
     <string name="profile_option_rename">Renombrar</string>
     <string name="profile_option_delete">Borrar</string>
-    <string name="selecting_profile_toast">Seleccionar perfil %1$s.</string>
+    <string name="selecting_profile_toast">Seleccionando perfil %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox no está instalado</string>
+    <string name="installation_failed_busybox">Instalar busybox primero o simplemente colocar el binario en /data/adb/bin/</string>
     <string name="share">Compartir</string>
     <string name="logs_not_found">Archivo de registro no encontrado.</string>
     <string name="acc_telegram">Para soporte adicional, únase al grupo de Telegram ACC (t.me/acc_group)!</string>
@@ -134,6 +182,10 @@
     </string>
     <string name="units_of_measure">Unidad de medición</string>
     <string name="acc_version_preference_title">Versión de ACC</string>
+    <string name="acc_version_preference_description">Puedes elegir la variante de ACC a utilizar: bundled (estable, recomendado para la mayoría de los usuarios), master (estable), develop (la más actual pero no necesariamente inestable) o cualquiera de las versiones etiquetadas.
+        Bundled es la versión más ampliamente probada para AccA - por lo tanto es la opción recomendada.
+        Aunque no está garantizado, las demás variantes son en general seguras.
+    </string>
     <string name="install_bundled_version">Instalar variante incluida</string>
     <string name="acc_version_picker_title">Versión de ACC</string>
     <string name="acc_version_picker_message">Seleccione la variante ACC deseada</string>
@@ -154,6 +206,11 @@
     <string name="theme_option_setting">Tema</string>
     <string name="theme_option_summary">Establecer el tema de las aplicaciones.</string>
     <string name="acc_version_compatibility_warning_title">Compatibilidad de la versión ACC</string>
+    <string name="acc_version_compatibility_warning_description">Has elegido una variante de ACC que no garantiza ser compatible con la aplicación.
+        \nLa mayoría de las veces no te encontrarás con incompatibilidades, sin embargo.
+        \nAccA está a punto de descargar la versión seleccionada del repositorio de GitHub de ACC.
+        \n¿Proceder?
+    </string>
     <string name="restore">Restaurar por defecto</string>
     <string name="undo">Deshacer</string>
     <string name="checking_updates">Buscando actualizaciones</string>
@@ -164,8 +221,13 @@
     <string name="acc_installation_failed_log">Registro de errores al instalar ACC</string>
     <string name="djs_installation_failed_log">Registro de errores al instalar DJS</string>
     <string name="select_different_version">Cambiar la versión de ACC</string>
+    <string name="installation_failed_non_bundled">La instalación de una variante distinta de ACC ha fallado.
+        \nPor favor, considera compartir /data/adb/acc-data/logs/ con los desarrolladores.
+    </string>
     <string name="prioritize_battery_idle">Priorizar modo inactivo de batería</string>
     <string name="test_battery_idle">Probar modo inactivo de batería</string>
+    <string name="test_battery_idle_supported_result">El kernel soporta el modo inactivo de la batería.</string>
+    <string name="test_battery_idle_unsupported_result">El kernel no soporta el modo inactivo de la batería.</string>
     <string name="schedule_profile_edit_current">Editar configuración actual</string>
     <string name="schedule_profile_keep_current">Mantener configuración actual</string>
     <string name="schedule_type">Tipo de programación</string>
@@ -185,13 +247,45 @@
     <string name="edit_schedule">Editar programación</string>
     <string name="create_schedule">Crear programación</string>
     <!-- About Activity -->
+    <string name="about_team_title">Conoce al Equipo</string>
+    <string name="about_team_blurb">¡Gracias por usar AccA!
+        \n\n¡Hemos dedicado mucho tiempo a esto para que puedas gestionar ACC con facilidad!
+        \n\n¡Un agradecimiento especial a quienes han contribuido de una u otra manera a los proyectos ACC &amp; AccA!
+    </string>
+    <string name="about_attributes">Atributos</string>
+    <string name="about_attrib_telegram_icon">Icono de Telegram hecho por Pixel perfect de www.flaticon.com</string>
+    <string name="about_acca_version_label">Versión de AccA:</string>
     <string name="about_acc_version_label">Versión de ACC:</string>
+    <string name="about_project_github">AccA GitHub</string>
+    <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Sitio Web</string>
+    <string name="toast_no_browser_installed">¡No se puede abrir el enlace!\nAsegúrate de tener un navegador instalado.</string>
+    <string name="install_update_dialog">Instalar actualización de ACC</string>
+    <string name="check_update_dialog_message">        ¿Quieres instalar la última versión de ACC de la rama%1$s\'?
+        \nACCA descargará la última versión de ACC de Github basada en la última confirmación de la rama seleccionada.
+        \n¿Deseas continuar?</string>
+    <string name="add_charging_switch">Añadir Interruptor de Carga</string>
     <string name="charging_switch_on_value_label">Interruptor de carga ACTIVO</string>
     <string name="charging_switch_off_value_label">Interruptor de carga DESACTIVADO</string>
+    <string name="reset_bs_on_pause">Restablecer estadísticas de batería al pausar \%</string>
+    <string name="current_max">Corriente máxima (mA):</string>
+    <string name="invalid_current_max">Valor inválido de corriente máxima</string>
     <!-- Import and Export -->
     <string name="import_title">Importar</string>
+    <string name="import_load_from_clipboard">¡Pulsa el icono \'Portapapeles\' en la barra de herramientas!</string>
     <string name="export_title">Exportar</string>
+    <string name="export_none_selected">Por favor, selecciona arriba los perfiles a exportar</string>
+    <string name="menu_import">Importar</string>
+    <string name="menu_export">Exportar</string>
+    <string name="menu_title_load_clipboard">Cargar desde el portapapeles</string>
+    <string name="menu_title_clear_entries">Borrar entradas</string>
+    <string name="import_toast_no_valid_profile_json_clipboard">El perfil ACCA válido JSON no está en el portapapeles</string>
+    <string name="import_toast_no_selected_profiles">Por favor, selecciona los Perfiles a Importar</string>
+    <string name="import_profile_success">Se han importado correctamente %d perfiles</string>
     <!-- Config Parse Error -->
+    <string name="parse_failed_title">Error al analizar la configuración de ACC</string>
+    <string name="parse_failed_body">Puedes intentar cargar la configuración por defecto pulsando \'Cargar por defecto\'. Ten en cuenta que AccA no será funcional.
+        \n\nSi el error persiste, por favor comparte el stack trace de abajo junto con la versión ACC &amp; de AccA (a través del menú de 3 puntos &gt; Acerca de) con los desarrolladores a través de Telegram.\n\n%s</string>
+    <string name="automatic_switch_eanbled">Probar automáticamente con todos los interruptores</string>
 </resources>

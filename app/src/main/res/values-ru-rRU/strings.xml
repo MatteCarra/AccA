@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">AccA</string>
     <string name="app_name_full">Advanced Charging Controller App</string>
     <string name="title_activity_log_view">Отчеты</string>
     <string name="title_activity_log_view_file_name">Отчеты</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">Отсутствует Root</string>
+    <string name="tile_acc_enabled">Даемон запущен</string>
+    <string name="tile_acc_disabled">Даемон остановлен</string>
     <!-- Navigation Strings -->
     <string name="title_dashboard">Мониторинг</string>
     <string name="title_profiles">Профили</string>
     <string name="title_schedules">Расписания</string>
     <string name="title_settings">Настройки</string>
     <!-- ACC Daemon Status -->
+    <string name="title_acc">ACC</string>
     <string name="title_acc_daemon">Служба ACC</string>
     <string name="acc_daemon_status_running">Служба ACC запущена</string>
     <string name="acc_daemon_status_not_running">Служба ACC не запущена</string>
+    <string name="acc_daemon_status_reading_status">Reading ACC Daemon Status...</string>
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">Остановить службу ACC</string>
     <string name="menu_start_accd">Запустить службу ACC</string>
@@ -42,11 +47,13 @@
     <string name="cooldown_capacity">Начать охлаждение при %%:</string>
     <string name="resume_charge">Возобновить зарядку при:</string>
     <string name="stop_charge">Остановить зарядку при:</string>
+    <string name="enable_temp_check">Включить контроль температуры (°C)</string>
     <string name="cooldown_temp">Темп замедления:</string>
     <string name="max_temp">Макс. температура:</string>
     <string name="pause_seconds">Пауза сек.:</string>
     <string name="charge_seconds">Зарядка сек.:</string>
     <string name="shutdown_capacity">Выключение (если не заряжается) в:</string>
+    <string name="no_root_message">Для AccA требуются права Root.</string>
     <string name="config_error_title">Ошибка распознавания конфигурации</string>
     <string name="config_error_dialog">Не удалось распознать конфигурацию ACC!\nПожалуйста, проверьте, работает ли \"su -c acc --set --print\".</string>
     <string name="wait">Пожалуйста, подождите...\nЭто займет несколько секунд.</string>
@@ -56,10 +63,16 @@
     <!-- ACC installation -->
     <string name="installing_acc">Установка ACC</string>
     <string name="reboot">Перезапустить</string>
+    <string name="acc_installation_failed">Пожалуйста, сохраните и отправьте logcat и /data/adb/acc-data/logs/ разработчикам в t.me/acc_group/ или github.com/MatteCarra/AccA/issues/.    </string>
     <string name="acc_installation_failed_title">Установка ACC не удалась!</string>
     <!-- DJS installation -->
     <string name="install_djs_title">Требуется DJS</string>
+    <string name="install_djs_description">Для работы этой функции необходимо включить DJS.
+        \nDJS (Daily Job Scheduler) является легким дополнением для планирования профилей/настроек ACC.
+        \nDJS будет запущен вместе со службой ACC.
+    </string>
     <string name="installing_djs">Установка DJS</string>
+    <string name="djs_installation_failed">Пожалуйста, сохраните и отправьте logcat и /data/adb/acc-data/logs/ разработчикам в t.me/acc_group/ или github.com/MatteCarra/AccA/issues/.    </string>
     <string name="djs_installation_failed_title">Установка DJS не удалась!</string>
     <string name="voltage_control_file_not_set">Не задано.</string>
     <string name="edit_on_boot">Изменить настройки apply_on_boot</string>
@@ -73,10 +86,11 @@
     <string name="log_file_not_found_title">Файл отчета не найден</string>
     <string name="close_without_saving">Отменить</string>
     <string name="edit_config">Изменить конфигурацию</string>
+    <string name="unsaved_changes_message">Сохранить изменения?</string>
     <string name="create_acc_profile">Создать профиль конфигурации</string>
     <string name="profile_name">Название профиля</string>
     <string name="dialog_profile_name_message">Введите название, которое вы хотите назначить этому профилю:</string>
-    <string name="no_profiles">Профили не заданы</string>
+    <string name="no_profiles">Нет профилей</string>
     <string name="profile_not_selected">Пользовательские настройки</string>
     <string name="profile_tile_label">Профиль: %1$s</string>
     <string name="profiles_text_view">Профили (удерживайте для редактирования/удаления):</string>
@@ -85,7 +99,10 @@
     <string name="recurrent_schedule">Запустить только один раз</string>
     <string name="execution_time">Время выполнения</string>
     <string name="new_config">Новая пользовательская конфигурация</string>
+    <string name="enable_voltage_limit">Включить ограничение напряжения при зарядке</string>
     <string name="voltage_control_file">Файл управления напряжением:</string>
+    <string name="edit_power_limit">Установить ограничения напряжения и силы тока</string>
+    <string name="voltage_max">Максимальное напряжение (милливольт):</string>
     <string name="disabled">Отключено</string>
     <string name="schedule_recurrent_row_text">Постоянное задание запланировано на %1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_title">Выполнено один раз - %1$02d:%2$02d</string>
@@ -94,25 +111,52 @@
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Удалить</string>
     <string name="no_schedules">Нет запланированных заданий</string>
+    <string name="wrong_volt_file">Выбранный файл не работает или ваше ядро не поддерживает данную функцию.</string>
     <string name="invalid_voltage_max">Значение должно быть от 3700 до 4200 (милливольт)</string>
     <string name="edit_charging_switch">Редактировать переключение зарядки</string>
     <string name="test_switch">Протестировать переключение зарядки</string>
     <string name="no_option_selected">Нет выбранных опций; пожалуйста, выберите одну!</string>
     <string name="charging_switch_works">Выбранное переключение зарядки работает!</string>
+    <string name="charging_switch_does_not_work">Выбранный метод зарядки не работает!</string>
+    <string name="plug_battery_to_test">Подключите зарядное устройство и повторите попытку!</string>
     <string name="automatic">Автоматически</string>
     <string name="error_occurred">Произошла ошибка</string>
     <string name="retry">Повторить</string>
+    <string name="edit_charging_limit_once">Однократная зарядка до #\%, без ограничений</string>
+    <string name="done_applied_charge_limit">Заряжено на %1$d%%</string>
+    <string name="charge_limit_not_applied">Ограничение зарядки не установлено</string>
     <string name="apply">Применить</string>
     <string name="done">Готово</string>
+    <string name="edit_charging_limit_once_dialog_msg">Ваши текущие настройки будут автоматически восстановлены после достижения выбранного уровня заряда батареи.</string>
     <string name="title_power_control">Управление питанием зарядки</string>
     <string name="info">Информация</string>
     <string name="title_cooldown_control">Замедление</string>
     <string name="title_on_boot">Применить при загрузке</string>
     <string name="title_temperature_control">Контроль температуры</string>
     <string name="title_capacity_control">Контроль емкости</string>
+    <string name="title_miscellaneous_control">Прочее</string>
     <string name="about">О приложении</string>
     <!-- ACC Config Tooltips -->
+    <string name="capacity_control_info">- SHUTDOWN: автоматическое выключение при заряде уровня батареи ниже данного, если аккумулятор не заряжается.&lt;br /&gt;- STOP: and RESUME установка параметров, когда зарядка должна остановиться и возобновиться.&lt;br /&gt;- CHARGING SWITCH- это управляющий файл, плюс параметры ВКЛ и ВЫКЛ для включения или выключения зарядки. По умолчанию ACC использует всё, что может.</string>
+    <string name="profile_creator">Создать профиль</string>
+    <string name="schedule_creator">Создать расписание</string>
+    <string name="title_on_plugged">Вставьте в розетку</string>
+    <string name="edit_on_plugged">Изменить настройки подключения:</string>
     <!--Profiles Options-->
+    <string name="profile_option_edit">Изменить</string>
+    <string name="profile_option_rename">Переименование</string>
+    <string name="profile_option_delete">Удалить</string>
+    <string name="selecting_profile_toast">Выбор профиля %1$s.</string>
+    <string name="installation_failed_busybox">Сначала установите busybox или просто поместите двоичный файл в /data/adb/bin/</string>
+    <string name="share">Поделиться</string>
+    <string name="acc_telegram">За дополнительной поддержкой присоединяйтесь к группе ACC Telegram (t.me/acc_group)!</string>
+    <string name="current_measure_unit_preference_title">Текущая единица измерения</string>
+    <string name="voltage_measure_unit_preference_title">Единица измерения напряжения</string>
+    <string name="units_of_measure">Единицы измерения</string>
+    <string name="acc_version_preference_title">Версия ACC</string>
+    <string name="acc_version_picker_title">Версия ACC</string>
+    <string name="theme_option_setting">Тема</string>
+    <string name="theme_option_summary">Установите тему приложения.</string>
     <string-array name="theme_option_options">
         <item>Light</item>
         <item>Dark</item>

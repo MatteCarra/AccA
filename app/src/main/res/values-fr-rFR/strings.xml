@@ -5,7 +5,7 @@
     <string name="title_activity_log_view">Logs</string>
     <string name="title_activity_log_view_file_name">Logs</string>
     <!-- ACC Tile Strings -->
-    <string name="tile_acc_no_root">Pas d\'accès \"root\"</string>
+    <string name="tile_acc_no_root">Pas d\'accès » root «</string>
     <string name="tile_acc_enabled">Démon en cours d\'exécution</string>
     <string name="tile_acc_disabled">Démon arrêté</string>
     <!-- Navigation Strings -->
@@ -95,7 +95,6 @@
     <string name="create_acc_profile">Créer un profil de configuration</string>
     <string name="profile_name">Nom du profil</string>
     <string name="dialog_profile_name_message">Entrez le nom que vous souhaitez attribuer à ce profil :</string>
-    <string name="no_profiles">Profils non définis</string>
     <string name="profile_not_selected">Paramètres personnalisés</string>
     <string name="profile_tile_label">Profil : %1$s</string>
     <string name="profiles_text_view">Profils (appui long pour modifier/supprimer) :</string>
@@ -106,6 +105,8 @@
     <string name="new_config">Nouvelle configuration personnalisée</string>
     <string name="enable_voltage_limit">Limite de tension de charge personnalisée</string>
     <string name="voltage_control_file">Fichier de contrôle de la tension :</string>
+    <string name="edit_power_limit">Modifier les limites de courant et de tension</string>
+    <string name="voltage_max">Tension max. (millivolts) :</string>
     <string name="disabled">Desactivé</string>
     <string name="schedule_recurrent_row_text">Tâche récurrente planifiée à %1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_title">Exéc. une seule fois - %1$02d:%2$02d</string>
@@ -114,22 +115,30 @@
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Supprimer</string>
     <string name="no_schedules">Aucune planification définie</string>
+    <string name="wrong_volt_file">Soit le fichier choisi ne fonctionne pas, soit votre noyau ne supporte pas cette fonctionnalité.</string>
     <string name="invalid_voltage_max">La valeur doit être un nombre compris entre 3700 et 4200 (millivolts)</string>
     <string name="edit_charging_switch">Modifier l\'interrupteur de charge</string>
     <string name="test_switch">Tester l\'interrupteur de charge</string>
     <string name="no_option_selected">Aucune option sélectionnée ; veuillez en sélectionner une !</string>
     <string name="charging_switch_works">Le commutateur de charge sélectionné fonctionne !</string>
+    <string name="charging_switch_does_not_work">Le commutateur de charge sélectionné ne fonctionne pas !</string>
+    <string name="plug_battery_to_test">Veuillez brancher votre chargeur et réessayez !</string>
     <string name="automatic">Automatique</string>
     <string name="error_occurred">Une erreur est survenue </string>
     <string name="retry">Réessayer</string>
+    <string name="edit_charging_limit_once">Charger une fois à #\%, sans restrictions</string>
+    <string name="done_applied_charge_limit">Chargement jusqu\'à %1$d%%</string>
+    <string name="charge_limit_not_applied">Appliquer la limite de charge est annulée</string>
     <string name="apply">Appliquer</string>
     <string name="done">Fait</string>
+    <string name="edit_charging_limit_once_dialog_msg">Vos paramètres habituels seront automatiquement restaurés une fois que le niveau de batterie choisi est atteint.</string>
     <string name="title_power_control">Contrôle de l\'alimentation de charge</string>
     <string name="info">Infos</string>
     <string name="title_cooldown_control">Refroidissement</string>
     <string name="title_on_boot">Appliquer au démarrage</string>
     <string name="title_temperature_control">Contrôle de la température</string>
     <string name="title_capacity_control">Contrôle de la capacité</string>
+    <string name="title_miscellaneous_control">Divers</string>
     <string name="about">À propos de</string>
     <!-- ACC Config Tooltips -->
     <string name="power_control_info">- Toute réduction de la tension de charge de pointe de 0,10V/cellule semblera doubler la durée de vie.&lt;br /&gt;- Malheureusement, tous les appareils/noyaux ne prennent pas en charge cette fonctionnalité.</string>
@@ -218,11 +227,17 @@
     <string name="about_team_title">Rencontrer l\'équipe</string>
     <string name="about_attributes">Attributs</string>
     <string name="about_attrib_telegram_icon">Icône de télégramme réalisée par Pixel perfect à partir de www.flaticon.com</string>
+    <string name="about_acca_version_label">Version AccA :</string>
     <string name="about_acc_version_label">Version ACC :</string>
+    <string name="about_project_github">AccA GitHub</string>
+    <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">Github</string>
     <string name="about_website">Site Internet</string>
     <string name="toast_no_browser_installed">Impossible d\'ouvrir le lien !\n Assurez-vous que vous avez un navigateur web installé.</string>
     <string name="install_update_dialog">Installer la mise à jour de l\'ACC</string>
+    <string name="check_update_dialog_message">        Voulez-vous installer la dernière version d\'ACC à partir de la branche »%1$s« ?
+        \nACCA téléchargera la dernière version d\'ACC à partir de Github sur la base du dernier soumission de la branche sélectionnée.
+        \nVoulez-vous continuer ?</string>
     <string name="add_charging_switch">Ajouter un interrupteur de charge</string>
     <string name="charging_switch_on_value_label">Commutateur de charge ACTIVÉ</string>
     <string name="charging_switch_off_value_label">Commutateur de charge DÉSACTIVÉ</string>
@@ -238,6 +253,7 @@
     <string name="menu_export">Exporter</string>
     <string name="menu_title_load_clipboard">Charger depuis le presse-papiers</string>
     <string name="menu_title_clear_entries">Effacer les entrées</string>
+    <string name="import_toast_no_valid_profile_json_clipboard">Pas de profil ACCA JSON valide dans le presse-papiers</string>
     <string name="import_toast_no_selected_profiles">Veuillez sélectionner les profils à importer</string>
     <string name="import_profile_success">%d profils importés avec succès</string>
     <!-- Config Parse Error -->

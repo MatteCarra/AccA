@@ -91,7 +91,6 @@
     <string name="create_acc_profile">設定プロファイルを作成</string>
     <string name="profile_name">プロファイル名</string>
     <string name="dialog_profile_name_message">プロファイル名の入力:</string>
-    <string name="no_profiles">プロファイル未設定</string>
     <string name="profile_not_selected">カスタム設定</string>
     <string name="profile_tile_label">プロファイル: %1$s</string>
     <string name="profiles_text_view">プロファイル (長押しで編集/削除):</string>

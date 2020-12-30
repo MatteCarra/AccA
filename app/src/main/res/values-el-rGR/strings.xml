@@ -79,7 +79,6 @@
     <string name="create_acc_profile">Δημιουργία προφίλ παραμέτρων</string>
     <string name="profile_name">Όνομα προφίλ</string>
     <string name="dialog_profile_name_message">Εισάγετε το όνομα που θέλετε να εκχωρήσετε σε αυτό το προφίλ:</string>
-    <string name="no_profiles">Δεν έχουν οριστεί προφίλ</string>
     <string name="profile_not_selected">Ειδικές ρυθμίσεις</string>
     <string name="profile_tile_label">Προφίλ: %1$s</string>
     <string name="profiles_text_view">Προφίλ (πατήστε παρατεταμένα για τροποποίηση/διαγραφή):</string>
@@ -118,6 +117,7 @@
     <!-- ACC Config Tooltips -->
     <string name="power_control_info">- Κάθε μείωση της μέγιστης τάσης φόρτισης κατά 0.10V/ηλεκτρικό στοιχείο λέγεται πως διπλασιάζει τη ζωή του κύκλου.&lt;br /&gt;- Δυστυχώς, δεν υποστηρίζουν όλες οι συσκευές/kernels αυτήν τη λειτουργία.</string>
     <string name="temperature_control_info">- Αυτό απενεργοποιεί τη φόρτιση για τα ορισμένα δευτερόλεπτα για να ψυχθεί η μπαταρία&lt;br /&gt;- Η ΘΕΡΜΟΚΡΑΣΊΑ ΨΎΞΗΣ εξαρτάται από την ΑΝΑΛΟΓΊΑ ΨΎΞΗΣ.&lt;br /&gt;- Η ΜΈΓΙΣΤΗ ΘΕΡΜΟΚΡΑΣΊΑ λειτουργεί με τα ΔΕΥΤΕΡΌΛΕΠΤΑ ΠΑΎΣΗΣ.</string>
+    <string name="miscellaneous_info_label">Διάφορες ρυθμίσεις του acc οι οποίες δεν ταίριαξαν σε άλλες ορισμένες κατηγορίες</string>
     <string name="acc_config_editor">Επεξεργαστής παραμέτρων ACC</string>
     <string name="profile_creator">Δημιουργός προφίλ</string>
     <string name="schedule_creator">Δημιουργός προγραμμάτων</string>

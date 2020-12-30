@@ -95,7 +95,7 @@
     <string name="create_acc_profile">Configuratieprofiel aanmaken</string>
     <string name="profile_name">Profielnaam</string>
     <string name="dialog_profile_name_message">Voer de naam in die u aan dit profiel wilt toewijzen:</string>
-    <string name="no_profiles">Profielen niet ingesteld</string>
+    <string name="no_profiles">Geen profielen</string>
     <string name="profile_not_selected">Aangepaste instellingen</string>
     <string name="profile_tile_label">Profiel: %1$s</string>
     <string name="profiles_text_view">Profielen (lang indrukken om te bewerken/verwijderen):</string>
@@ -128,6 +128,8 @@
     <string name="error_occurred">Er is een fout opgetreden</string>
     <string name="retry">Probeer opnieuw</string>
     <string name="edit_charging_limit_once">Laad één keer tot #\%, zonder beperkingen</string>
+    <string name="done_applied_charge_limit">Opladen tot %1$d%%</string>
+    <string name="charge_limit_not_applied">Oplaadlimiet geannuleerd</string>
     <string name="apply">Toepassen</string>
     <string name="done">Uitgevoerd</string>
     <string name="edit_charging_limit_once_dialog_msg">Uw huidige instellingen worden automatisch hersteld zodra het gekozen batterijniveau is bereikt.</string>
