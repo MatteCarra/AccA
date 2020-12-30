@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">AccA</string>
     <string name="app_name_full">Advanced Charging Controller App</string>
     <string name="title_activity_log_view">記錄檔</string>
     <string name="title_activity_log_view_file_name">記錄檔</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">沒有 Root 權限</string>
+    <string name="tile_acc_enabled">1</string>
+    <string name="tile_acc_disabled">守護行程已停止</string>
     <!-- Navigation Strings -->
     <string name="title_dashboard">資訊面板</string>
     <string name="title_profiles">設定檔</string>
     <string name="title_schedules">排程</string>
     <string name="title_settings">設定</string>
     <!-- ACC Daemon Status -->
+    <string name="title_acc">ACC</string>
     <string name="title_acc_daemon">ACC 守護行程</string>
     <string name="acc_daemon_status_running">ACC 守護行程執行中</string>
     <string name="acc_daemon_status_not_running">ACC 守護行程未執行</string>
@@ -47,6 +51,7 @@
     <string name="pause_seconds">暫停秒數:</string>
     <string name="charge_seconds">充電秒數:</string>
     <string name="shutdown_capacity">關機閥值 (沒有充電情況下):</string>
+    <string name="no_root_message">AccA 需要 ROOT 權限。</string>
     <string name="config_error_title">設定解析錯誤</string>
     <string name="config_error_dialog">解析 ACC 設定失敗！ \n請檢查\"su -c acca --set --print\" 是否正常工作</string>
     <string name="wait">請稍候...\n可能需要幾秒。</string>
@@ -108,6 +113,7 @@
     <string name="title_cooldown_control">冷卻</string>
     <string name="title_on_boot">開機時套用</string>
     <string name="title_temperature_control">控制溫度</string>
+    <string name="title_miscellaneous_control">其他設定</string>
     <string name="about">關於</string>
     <!-- ACC Config Tooltips -->
     <string name="power_control_info">- 充電電壓峰值每下降 0.10V, 據說就能讓電池壽命翻倍。&lt;br /&gt; - 不幸的是，並非所有機型/內核都支持此功能。</string>
@@ -118,6 +124,7 @@
     <string name="charging_switch_label">充電開關:</string>
     <string name="title_on_plugged">Apply on Plug</string>
     <string name="edit_on_plugged">編輯（apply_on_plug）設置：</string>
+    <string name="edit_on_plugged_dialog_message">範例: wireless/voltage_max::9000000 強制開啟Pixel裝置無線快充    </string>
     <string name="template_capacity_profile">關機: %1$d%% - 重新開始充電: %2$d%% - 停止充電: %3$d%%</string>
     <string name="template_temperature_profile">溫度: %1$d&#176;C - 最大:%2$d&#176;C -暫停: %3$d秒</string>
     <string name="template_cool_down_profile">開始於: %1$d%% - 充電 %2$d 秒 - 暫停 %3$d 秒</string>
@@ -171,6 +178,8 @@
     <string name="select_different_version">切換 ACC 版本</string>
     <string name="prioritize_battery_idle">優先使用電池 idle mode</string>
     <string name="test_battery_idle">測試電池 idle mode</string>
+    <string name="test_battery_idle_supported_result">手機內核支援電池 idle mode。</string>
+    <string name="test_battery_idle_unsupported_result">手機內核不支援電池 idle mode.</string>
     <string name="schedule_profile_edit_current">編輯當前文件</string>
     <string name="schedule_profile_keep_current">保留當前設定</string>
     <string name="schedule_type">排程類型</string>
@@ -190,14 +199,28 @@
     <string name="edit_schedule">編輯排程</string>
     <string name="create_schedule">新增排程</string>
     <!-- About Activity -->
+    <string name="about_attributes">屬性</string>
+    <string name="about_acca_version_label">AccA 版本:</string>
     <string name="about_acc_version_label">ACC 版本:</string>
+    <string name="about_project_github">AccA GitHub</string>
+    <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Website</string>
+    <string name="toast_no_browser_installed">無法開啟連結!\n請檢查您是否有安裝網頁瀏覽器。</string>
+    <string name="install_update_dialog">安裝 ACC 更新</string>
+    <string name="check_update_dialog_message">是否要從\'%1$s\'安裝最新版本的 ACC？
+        \nACCA 將從 Github 下載最新版的ACC
+        \n要繼續嗎？</string>
     <string name="charging_switch_on_value_label">開始充電</string>
     <string name="charging_switch_off_value_label">停止充電</string>
     <string name="reset_bs_on_pause">暫停時重設電池數據 \%</string>
     <!-- Import and Export -->
     <string name="import_title">匯入</string>
     <string name="export_title">匯出</string>
+    <string name="export_none_selected">請選擇要匯出的設定檔</string>
+    <string name="menu_import">匯入</string>
+    <string name="menu_export">匯出</string>
+    <string name="menu_title_load_clipboard">從剪貼簿讀取</string>
+    <string name="import_toast_no_selected_profiles">請選擇要匯入的檔案</string>
     <!-- Config Parse Error -->
 </resources>
