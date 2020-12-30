@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">AccA</string>
     <string name="app_name_full">App di Controllo Avanzato della Carica</string>
     <string name="title_activity_log_view">Log</string>
     <string name="title_activity_log_view_file_name">Log</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">Root non presente</string>
+    <string name="tile_acc_enabled">Daemon in esecuzione</string>
+    <string name="tile_acc_disabled">Daemon interrotto</string>
     <!-- Navigation Strings -->
     <string name="title_dashboard">Dashboard</string>
     <string name="title_profiles">Profili</string>
     <string name="title_schedules">Pianificate</string>
     <string name="title_settings">Impostazioni</string>
     <!-- ACC Daemon Status -->
+    <string name="title_acc">ACC</string>
     <string name="title_acc_daemon">Demone ACC</string>
     <string name="acc_daemon_status_running">Il demone ACC è in esecuzione</string>
     <string name="acc_daemon_status_not_running">Il demone ACC non è in esecuzione</string>
+    <string name="acc_daemon_status_reading_status">Lettura Stato Daemon ACC...</string>
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">Interrompi il demone ACC</string>
     <string name="menu_start_accd">Avvia il demone ACC</string>
@@ -38,33 +43,53 @@
     <string name="battery_info_label">Info:</string>
     <string name="reset_unplugged">Reimposta le statistiche della batteria allo scollegamento</string>
     <string name="reset_stats">Ripristina statistiche batteria</string>
+    <string name="enable_cooldown">Abilita ciclo di raffreddamento:</string>
     <string name="cooldown_capacity">Avvia il cooling down al %%:</string>
     <string name="resume_charge">Riprendi la carica al:</string>
     <string name="stop_charge">Ferma la carica al:</string>
+    <string name="enable_temp_check">Abilita controllo temperatura (°C)</string>
+    <string name="cooldown_temp">Temperatura di raffreddamento:</string>
     <string name="max_temp">Temperatura massima:</string>
     <string name="pause_seconds">Secondi di pausa:</string>
     <string name="charge_seconds">Secondi di carica:</string>
     <string name="shutdown_capacity">Spegnimento (se non in carica) al:</string>
+    <string name="no_root_message">AccA richiede il ROOT.</string>
+    <string name="config_error_title">Errore di analisi configurazione</string>
+    <string name="config_error_dialog">Errore nell\'analizzare la configuarzione di ACC:\nSi prega di controllare il corretto funzoinamento di \"su -c acc --set --print\".</string>
+    <string name="wait">Attendere, prego...\nL\'operazione potrebbe richiedere alcuni secondi.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Interrompi il demone dopo l\'applicazione delle impostazioni</string>
+    <string name="description_exit_on_boot">Questo viene utilizzato per scrivere nei file di controllo all\'avvio.</string>
     <!-- ACC installation -->
     <string name="installing_acc">Installazione ACC</string>
     <string name="reboot">Riavvia</string>
+    <string name="acc_installation_failed">Per favore, comprimere ed inviare un logcat insieme alla cartella /data/adb/acc-data/logs/ agli sviluppatori presso t.me/acc_group/ o github.com/MatteCarra/AccA/issues/.    </string>
     <string name="acc_installation_failed_title">Installazione di ACC fallita!</string>
     <!-- DJS installation -->
+    <string name="install_djs_title">È richiesto DJS</string>
+    <string name="install_djs_description">Per accedere a questa sezione, è necessario abilitare DJS.
+        \nDJS (Daily Job Scheduler) è un componente aggiuntivo per programmare profili/impostazioni di ACC.
+        \nIl servizio DJS sarà inizializzato all\'avvio assiemene a ACC.    </string>
     <string name="installing_djs">Installazione DJS</string>
+    <string name="djs_installation_failed">Per favore, comprimere ed inviare un logcat /data/adb/djs-data/logs/ agli sviluppatori presso t.me/acc_group/ o github.com/MatteCarra/AccA/issues/.    </string>
     <string name="djs_installation_failed_title">Installazione di DJS fallita!</string>
+    <string name="voltage_control_file_not_set">Non impostato.</string>
+    <string name="edit_on_boot">Modifica impostazioni apply_on_boot</string>
     <string name="edit_on_boot_dialog_hint">Lascia vuoto per disabilitare</string>
     <string name="save">Salva</string>
+    <string name="edit_on_boot_dialog_message">Esempio: /sys/kernel/fast_charge/force_fast_charge::1::0
+        --exit.\n\"--exit\" è facoltativo; indica al servizio di terminare una volta applicate le impostazioni.    </string>
     <string name="logs">Log</string>
     <string name="text_copied_to_clipboard">Testo copiato negli appunti!</string>
     <string name="log_file_not_found_title">File di log non trovato</string>
     <string name="unsaved_changes">Hai modifiche non salvate</string>
     <string name="close_without_saving">Scarta</string>
     <string name="edit_config">Modifica configurazione</string>
+    <string name="unsaved_changes_message">Salvare le modifiche?</string>
     <string name="create_acc_profile">Crea profilo di configurazione</string>
     <string name="profile_name">Nome del profilo</string>
     <string name="dialog_profile_name_message">Inserisci il nome che vuoi assegnare a questo profilo:</string>
+    <string name="no_profiles">Nessun Profilo</string>
     <string name="profile_not_selected">Impostazioni personalizzate</string>
     <string name="profile_tile_label">Profilo: %1$s</string>
     <string name="profiles_text_view">Profili (pressione lunga per modificare/eliminare):</string>
@@ -73,31 +98,56 @@
     <string name="recurrent_schedule">Esegui solo una volta</string>
     <string name="execution_time">Tempo di esecuzione</string>
     <string name="new_config">Nuova configurazione personalizzata</string>
+    <string name="enable_voltage_limit">Limite di tensione di carica personalizzato</string>
     <string name="voltage_control_file">File di controllo voltaggio:</string>
+    <string name="edit_power_limit">Modifica limiti di corrente e tensione</string>
+    <string name="voltage_max">Tensione massima (millivolt):</string>
     <string name="disabled">Disabilitato</string>
+    <string name="schedule_recurrent_row_text">Lavoro ricorrente programmato per %1$02d:%2$02d</string>
+    <string name="schedule_execute_once_row_title">Esegui. Una volta - %1$02d:%2$02d</string>
+    <string name="schedule_execute_once_row_text">Operazione programmate per le %1$02d:%2$02d</string>
+    <string name="schedule_boot_row_text">Operazione programmata per essere eseguita all\'avvio</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Elimina</string>
     <string name="no_schedules">Nessuna pianificazione</string>
+    <string name="wrong_volt_file">Il file selezionato non funziona, oppure il kernel non supporta questa funzione.</string>
+    <string name="invalid_voltage_max">Il valore deve essere un numero compreso tra 3700 e 4200 (millivolt)</string>
     <string name="edit_charging_switch">Modifica interruttore di ricarica</string>
     <string name="test_switch">Test interruttore di ricarica</string>
     <string name="no_option_selected">Nessuna opzione selezionata; selezionane una!</string>
     <string name="charging_switch_works">L\'interruttore di ricarica selezionato funziona!</string>
+    <string name="charging_switch_does_not_work">L\'opzione di interruzione ricarica selezionata non funziona!</string>
+    <string name="plug_battery_to_test">Collega il caricatore e riprova!</string>
     <string name="automatic">Automatico</string>
     <string name="error_occurred">Si è verificato un errore</string>
     <string name="retry">Riprova</string>
+    <string name="edit_charging_limit_once">Carica una volta sola fino a #\%, senza limitazioni</string>
+    <string name="done_applied_charge_limit">Ricarica fino a %1$d%%</string>
+    <string name="charge_limit_not_applied">Impostazione del limite di ricarica annullato</string>
     <string name="apply">Applica</string>
     <string name="done">Fatto</string>
+    <string name="edit_charging_limit_once_dialog_msg">Le normali impostazioni sono ripristinate una volta che il livello di ricarica selezionato viene raggiunto.</string>
+    <string name="title_power_control">Controllo della potenza di ricarica</string>
     <string name="info">Info</string>
     <string name="title_cooldown_control">Raffredda</string>
     <string name="title_on_boot">Applica all\'avvio</string>
     <string name="title_temperature_control">Controllo Temperatura</string>
     <string name="title_capacity_control">Controllo Capacità</string>
+    <string name="title_miscellaneous_control">Varie</string>
     <string name="about">Info su</string>
     <!-- ACC Config Tooltips -->
+    <string name="capacity_control_info">- SHUTDOWN: spegni il sistema automaticamente a/sotto questo livello di carica della batteria quando il dispositivo non è collegato all\'alimentazione.&lt;br /&gt;- i valori STOP e RESUME indicano quando la ricarica deve rispettivamente fermarsi e ricominciare.&lt;br /&gt;- CHARGING SWITCH è il file di controllo, con i valori ON e OFF, per cambiare lo stato di ricarica della batteria. Come valore predefinito, ACC usa qualsiasi file che funziona.</string>
+    <string name="power_control_info">- Si dice che ogni riduzione del voltaggio massimo di ricarica di 0.10V per cella raddoppia la vita della batteria.&lt;br /&gt;- Sfortunatamente, non tutti i dispositivi/kernel supportano questa funzione.</string>
+    <string name="temperature_control_info">- Questo disattiva la ricarica per tot secondi per raffreddare la batteria&lt;br /&gt;- COOLDOWN TEMP dipende da COOLDOWN RATIO.&lt;br /&gt;- MAX TEMP funziona con PAUSE SECONDS.</string>
+    <string name="cooldown_info">- Cambiare il rapporto ON/OFF in secondi (es., 50/10) - riduce lo stress sulla batteria causato da sessioni prolungate di ricarica ad alte temperatuere e voltaggi fermando periodicamente la ricarica.&lt;br /&gt;- Se la ricarica è troppo lenta, disabilitare questa funzione o cambiare il rapporto a qualcosa come 50/5.&lt;br /&gt;- Quando disabilitato, i valori COOLDOWN CAPACITY e COOLDOWN TEMP non hanno effetto.&lt;br /&gt;- Questa funzionalità è una buona alternativa al limite del voltaggio di ricarica.</string>
+    <string name="miscellaneous_info_label">Altre impostazioni di Acc che non rinetrano in nessuna delle categorie</string>
+    <string name="acc_config_editor">Editor delle impostazioni di ACC</string>
     <string name="profile_creator">Creatore di profilo</string>
     <string name="schedule_creator">Creatore di pianificazione</string>
     <string name="charging_switch_label">Interruttore di ricarica:</string>
     <string name="title_on_plugged">Applica al collegamento</string>
+    <string name="edit_on_plugged">Cambia le impostazioni di apply_on_plug:</string>
+    <string name="edit_on_plugged_dialog_message">Esempio: wireless/voltage_max::90000000 forza la ricarica wireless rapida in alcuni dispositivi Pixel.    </string>
     <string name="template_capacity_profile">Spegnimento: %1$d%% - Riprendi: %2$d%% - Stop: %3$d%%</string>
     <string name="template_temperature_profile">Temperatura: %1$d&#176;C - Max: %2$d&#176;C - Pausa: %3$ds</string>
     <string name="template_cool_down_profile">Inizia a: %1$d%% - Carica per %2$ds - Pausa per %3$ds</string>
@@ -105,11 +155,18 @@
     <string name="profile_option_edit">Modifica</string>
     <string name="profile_option_rename">Rinomina</string>
     <string name="profile_option_delete">Elimina</string>
+    <string name="selecting_profile_toast">Selezione del profilo %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox non è installato</string>
     <string name="share">Condividi</string>
+    <string name="logs_not_found">File di log non trovato.</string>
+    <string name="acc_telegram">Per support aggiuntivo, unisciti al canale Telegram di ACC (t.me/acc_group)!</string>
     <string name="current_measure_unit_preference_title">Unità di misura corrente</string>
     <string name="voltage_measure_unit_preference_title">Unità di misura del voltaggio</string>
     <string name="units_of_measure">Unità di misura</string>
+    <string name="acc_version_preference_title">Versione di ACC</string>
+    <string name="install_bundled_version">Installa la versione di default</string>
+    <string name="acc_version_picker_title">Versione di ACC</string>
+    <string name="acc_version_picker_message">Selezione la variante di ACC desiderata</string>
     <string-array name="current_measure_units_options">
         <item>mAmpere (1E-03)</item>
         <item>μAmpere (1E-06)</item>
@@ -125,12 +182,23 @@
     </string-array>
     <string name="ui_options">Interfaccia utente</string>
     <string name="theme_option_setting">Tema</string>
+    <string name="theme_option_summary">Cambia il tema dell\'app.</string>
+    <string name="acc_version_compatibility_warning_title">Incompatibiltà di versioni di ACC</string>
+    <string name="acc_version_compatibility_warning_description">Hai scelto una variante di ACC che è possibile non funzione con l\'app.
+        \nNella maggior parte dei casi potresti non riscontrare anomalie.
+        \nAccA sta per scaricare la versione selezionata dal repository GitHub di ACC.
+        \nProcedere?    </string>
     <string name="restore">Ripristina i valori predefiniti</string>
     <string name="undo">Annulla</string>
+    <string name="checking_updates">Ricerca di aggiornamenti</string>
     <string name="no_update_available">Nessun aggiornamento disponibile</string>
     <string name="update_completed">Aggiornamento completato!</string>
     <string name="install">Installa</string>
     <string name="share_log">Condividi file di log</string>
+    <string name="acc_installation_failed_log">Log dell\'installazione fallita di ACC</string>
+    <string name="djs_installation_failed_log">Log dell\'installazione fallita di DJS</string>
+    <string name="select_different_version">Cambia la versione di ACC</string>
+    <string name="test_battery_idle">Prova la modalità \"batteria inattiva\"</string>
     <string name="schedule_profile_edit_current">Modifica configurazione corrente</string>
     <string name="schedule_profile_keep_current">Mantieni la configurazione corrente</string>
     <string name="schedule_type">Tipo di pianificazione</string>
