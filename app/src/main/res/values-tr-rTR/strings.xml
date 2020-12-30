@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">AccA</string>
     <string name="app_name_full">Gelişmiş Şarj Kontrol Uygulaması (ACCA)</string>
     <string name="title_activity_log_view">Günlükler</string>
     <string name="title_activity_log_view_file_name">Günlükler</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">Root erişimi sağlanamadı</string>
+    <string name="tile_acc_enabled">Daemon çalışıyor</string>
+    <string name="tile_acc_disabled">Daemon durduruldu</string>
     <!-- Navigation Strings -->
     <string name="title_dashboard">Pano</string>
     <string name="title_profiles">Profiller</string>
     <string name="title_schedules">Zamanlanmış Görevler</string>
     <string name="title_settings">Ayarlar</string>
     <!-- ACC Daemon Status -->
+    <string name="title_acc">ACC</string>
     <string name="title_acc_daemon">ACC Hizmeti</string>
     <string name="acc_daemon_status_running">ACC Hizmeti Çalışıyor</string>
     <string name="acc_daemon_status_not_running">ACC Hizmeti Çalışmıyor</string>
+    <string name="acc_daemon_status_reading_status">ACC Daeomon Durumu okunuyor...</string>
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">ACC Hizmetini Durdur</string>
     <string name="menu_start_accd">ACC Hizmetini Başlat</string>
@@ -42,11 +47,14 @@
     <string name="cooldown_capacity">Soğutmayı %%\'de/da başlat:</string>
     <string name="resume_charge">Şarj etmeye devam etme sıcaklığı:</string>
     <string name="stop_charge">Şarj etmeyi durdurma sıcaklığı:</string>
+    <string name="enable_temp_check">Sıcaklık kontrolünü etkinleştirin (° C)</string>
     <string name="cooldown_temp">Soğuma sıcaklığı:</string>
     <string name="max_temp">Maks. sıcaklık:</string>
     <string name="pause_seconds">Duraklatma süresi (sn):</string>
     <string name="charge_seconds">Şarj etme süresi (sn):</string>
     <string name="shutdown_capacity">Şarj edilmediğinde cihazı kapatma yüzdesi:</string>
+    <string name="no_root_message">AccA root gerektirir. </string>
+    <string name="config_error_title">Konfigürasyon okuma hatası</string>
     <string name="config_error_dialog">ACC Config Çözümleme hatası!\nLütfen \"su -c acc --set --print\" ile çalışıp çalışmadığını kontrol edin.</string>
     <string name="wait">Lütfen bekleyin, bu birkaç saniye alabilir.</string>
     <!-- Exit On Boot Card Strings -->
@@ -55,10 +63,18 @@
     <!-- ACC installation -->
     <string name="installing_acc">ACC Kuruluyor</string>
     <string name="reboot">Yeniden Başlat</string>
+    <string name="acc_installation_failed">Lütfen logcat dosyasını /data/adb/acc-data/logs/ geliştiricilere t.me/acc_group/ veya github.com/MatteCarra/AccA/issues/ adreslerinden yollayın.    </string>
     <string name="acc_installation_failed_title">ACC Kurulumu Başarısız!</string>
     <!-- DJS installation -->
     <string name="install_djs_title">DJS Gerekli</string>
+    <string name="install_djs_description">Bu özelliğin çalışması için DJS\'yi etkinleştirmemiz gerekiyor.
+        \nDJS (Günlük İş Zamanlayıcısı), ACC profillerini/ayarlarını planlamak için hafif bir eklentidir.
+        \nDJS arka planda, ACC\'nin yanında cihaz açılışında başlatılacaktır.
+    </string>
     <string name="installing_djs">DJS Yükleniyor</string>
+    <string name="djs_installation_failed">Lütfen logcat ve /data/adb/djs-data/logs/logs/
+        t.me/acc_group/ veya github.com/MatteCarra/AccA/issues/\'daki geliştiricilere arşivleyin ve gönderin.
+    </string>
     <string name="djs_installation_failed_title">DJS Kurulumu Başarısız!</string>
     <string name="voltage_control_file_not_set">Ayarlı değil.</string>
     <string name="edit_on_boot">\"apply_on_boot\" ayarını düzenle</string>
@@ -73,9 +89,11 @@
     <string name="unsaved_changes">Kaydedilmemiş değişiklikleriniz var</string>
     <string name="close_without_saving">Vazgeç</string>
     <string name="edit_config">Konfigürasyonu düzenle</string>
+    <string name="unsaved_changes_message">Değişiklikler kaydedilsin mi?</string>
     <string name="create_acc_profile">Yapılandırma profili oluştur</string>
     <string name="profile_name">Profil ismi</string>
     <string name="dialog_profile_name_message">Bu profile vermek istediğiniz ismi girin:</string>
+    <string name="no_profiles">Profil Yok</string>
     <string name="profile_not_selected">Kişisel ayarlar</string>
     <string name="profile_tile_label">Profil: %1$s</string>
     <string name="profiles_text_view">Profiller (silmek/düzenlemek için uzun basın):</string>
@@ -84,7 +102,10 @@
     <string name="recurrent_schedule">Yalnızca bir kez çalıştır</string>
     <string name="execution_time">Çalıştırma zamanı</string>
     <string name="new_config">Yeni kişisel konfigürasyon</string>
+    <string name="enable_voltage_limit">Custom charging voltage limit</string>
     <string name="voltage_control_file">Voltaj kontrol dosyası:</string>
+    <string name="edit_power_limit">Edit current and voltage limits</string>
+    <string name="voltage_max">Maks voltaj (milivolt):</string>
     <string name="disabled">Devre Dışı</string>
     <string name="schedule_recurrent_row_text">Yinelenen İş %1$02d:%2$02d için programlandı</string>
     <string name="schedule_execute_once_row_title">Bir kere uygula - %1$02d:%2$02d</string>
@@ -93,14 +114,19 @@
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Sil</string>
     <string name="no_schedules">Zamanlanmış görev yok</string>
+    <string name="wrong_volt_file">Ya seçilen dosya çalışmıyor ya da kerneliniz bu özelliği desteklemiyor.</string>
     <string name="invalid_voltage_max">Değer 3700 ve 4200 (milivolt) arasında bir sayı olmalıdır</string>
     <string name="edit_charging_switch">Şarj etme geçişini düzenle</string>
     <string name="test_switch">Şarj etme geçişini denetle</string>
     <string name="no_option_selected">Herhangi bir seçenek seçilmedi, lütfen bir tanesini seçin!</string>
     <string name="charging_switch_works">Seçili şarj geçişi çalışıyor!</string>
+    <string name="charging_switch_does_not_work">Seçili şarj geçişi çalışmıyor!</string>
+    <string name="plug_battery_to_test">Şarj cihazınızı takın ve tekrar deneyin!</string>
     <string name="automatic">Otomatik</string>
     <string name="error_occurred">Bir hata oluştu</string>
     <string name="retry">Yeniden Dene</string>
+    <string name="edit_charging_limit_once">Kısıtlama olmaksızın #\% kadar bir kez şarj edin</string>
+    <string name="done_applied_charge_limit">%1$d%% kadar şarj ediliyor</string>
     <string name="apply">Uygula</string>
     <string name="done">Tamam</string>
     <string name="title_power_control">Şarj gücü kontrolü</string>
@@ -197,9 +223,19 @@
     <string name="about_acc_version_label">ACC Versiyonu:</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Web Sitesi</string>
+    <string name="charging_switch_on_value_label">Şarj anahtarı ON VALUE</string>
+    <string name="charging_switch_off_value_label">Şarj anahtarı OFF VALUE</string>
     <string name="reset_bs_on_pause">Duraklatma sırasında pil istatistiklerini sıfırla \%</string>
     <!-- Import and Export -->
     <string name="import_title">İçeri al</string>
+    <string name="import_load_from_clipboard">Araç çubuğundaki \'Pano\' simgesine basın!</string>
     <string name="export_title">Dışa aktar</string>
+    <string name="export_none_selected">Lütfen dışa aktarılacak profili seçin</string>
+    <string name="menu_import">İçe aktar</string>
+    <string name="menu_export">Dışa aktar</string>
+    <string name="menu_title_load_clipboard">Panodan ekle</string>
+    <string name="menu_title_clear_entries">Girişleri temizle</string>
+    <string name="import_toast_no_selected_profiles">Lütfen İçe Aktarılacak Profilleri seçin</string>
+    <string name="import_profile_success">%d Profili başarıyla içeri aktarıldı</string>
     <!-- Config Parse Error -->
 </resources>
