@@ -95,6 +95,7 @@
     <string name="create_acc_profile">Konfigurationsprofil erstellen</string>
     <string name="profile_name">Profilname</string>
     <string name="dialog_profile_name_message">Gebe den Namen ein, der diesem Profil zugewiesen werden soll:</string>
+    <string name="no_profiles">Keine Profile</string>
     <string name="profile_not_selected">Benutzerdefinierte Einstellungen</string>
     <string name="profile_tile_label">Profil: %1$s</string>
     <string name="profiles_text_view">Profile (lange drücken zum Bearbeiten/Löschen):</string>
