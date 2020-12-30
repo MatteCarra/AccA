@@ -47,6 +47,7 @@
     <string name="cooldown_capacity">开始冷却阀值 %% ：</string>
     <string name="resume_charge">恢复充电阀值:</string>
     <string name="stop_charge">停止充电阀值:</string>
+    <string name="enable_temp_check">启用温度控制（℃）</string>
     <string name="cooldown_temp">冷却温度：</string>
     <string name="max_temp">最高温度:</string>
     <string name="pause_seconds">暂停秒数：</string>
@@ -68,6 +69,10 @@
     <string name="acc_installation_failed_title">ACC 安装失败！</string>
     <!-- DJS installation -->
     <string name="install_djs_title">需要 DJS</string>
+    <string name="install_djs_description">要正常运行此功能，必须启用 DJS。
+        \nDJS（Daily Job Scheduler，日任务计划程序）是一个轻量级的插件，用于规划应用 ACC 设置。
+        \nDJS 进程将在设备开机时与ACC守护程序一同启动。
+    </string>
     <string name="installing_djs">正在安装 DJS</string>
     <string name="djs_installation_failed">请将 logcat 和 /data/adb/acc-data/logs/ 打包发送给开发者
         于 t.me/acc_group/ or github.com/MatteCarra/ AccA/issues/ 。
@@ -90,6 +95,7 @@
     <string name="create_acc_profile">创建配置文件</string>
     <string name="profile_name">配置名称</string>
     <string name="dialog_profile_name_message">输入要分配给此配置的名称：</string>
+    <string name="no_profiles">无配置文件</string>
     <string name="profile_not_selected">自定义设置</string>
     <string name="profile_tile_label">配置: %1$s</string>
     <string name="profiles_text_view">配置列表 (长按可编辑/删除):</string>
@@ -101,6 +107,7 @@
     <string name="enable_voltage_limit">自定义充电电压限制</string>
     <string name="voltage_control_file">电压控制文件:</string>
     <string name="edit_power_limit">编辑电流和电压限制</string>
+    <string name="voltage_max">最大电压（毫伏）：</string>
     <string name="disabled">禁用</string>
     <string name="schedule_recurrent_row_text">重复任务已计划于 %1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_title">执行一次 - %1$02d:%2$02d</string>
@@ -138,6 +145,8 @@
     <string name="capacity_control_info">- 自动关机阈值: 手机在没有充电的情况下，如果电池电量低于所设置的值，手机将自动关机。&lt;br /&gt;- 停止充电阈值:与“恢复充电阈值”配合，指示手机自动停止充电和自动恢复充电的阈值。&lt;br /&gt;- CHARGING SWITCH is the control file, plus ON and OFF values for switching charging on/off. By default, ACC uses whatever works.</string>
     <string name="power_control_info">——充电电压峰值每下降0.1伏，据说就能让电池寿命翻一倍。&lt;br /&gt;——不幸的是，并非所有机型/内核都支持此功能。</string>
     <string name="temperature_control_info">——此项将按设置的秒数暂停充电，以冷却电池。&lt;br /&gt;——冷却温度取决于冷却比率。&lt;br /&gt;——达到最高温度后充电将按暂停秒数暂停。</string>
+    <string name="cooldown_info">- 充电开/关比率，以秒计（例如 50/10）- 通过定期暂停充电，减少因长时间高温高电压充电，对电池造成的压力。&lt;br /&gt;- 如果充电太慢，请关闭此功能或改变比率。&lt;br /&gt;- 当禁用时，冷却电量值和冷却温度值将不会生效。&lt;br /&gt;- 此功能是充电电压限制功能的一种可行替代。</string>
+    <string name="on_plugged_info">一些控制文件的内容会随特定电源事件（例如插/拔电源）变化。此项设置用于更新这些文件，在为USB/无线充电强行设置最大充电电压/电流时特别有用。</string>
     <string name="battery_idle_info_label">这允许支持的设备在暂停充电时直接从外部供电。</string>
     <string name="miscellaneous_info_label">不符合其他既有类别的各种 acc 配置</string>
     <string name="acc_config_editor">ACC 配置编辑器</string>
@@ -173,6 +182,10 @@
     </string>
     <string name="units_of_measure">计量单位</string>
     <string name="acc_version_preference_title">ACC 版本</string>
+    <string name="acc_version_preference_description">您可以选择要使用的 ACC 版本：内置版（稳定，推荐使用）、主线版（稳定）、开发版（最新，但可能不稳定）或任何下列版本。
+        内置版经过大量测试，因而是推荐的选择。
+        虽然并不能保证，但其他版本通常也是安全的。
+    </string>
     <string name="install_bundled_version">安装 bundled 版本</string>
     <string name="acc_version_picker_title">ACC 版本</string>
     <string name="acc_version_picker_message">选择所需要的 ACC 版本</string>
@@ -235,9 +248,14 @@
     <string name="create_schedule">创建计划</string>
     <!-- About Activity -->
     <string name="about_team_title">团队介绍</string>
+    <string name="about_team_blurb">感谢您使用 AccA！
+        \n\n我们在此应用上投入了大量时间，以便您轻松管理 ACC！
+        \n\n特别感谢以各种方式向 ACC 或 AccA项目做出贡献的人们！
+    </string>
     <string name="about_attributes">致谢</string>
     <string name="about_attrib_telegram_icon">电报头像由 Pixel perfect 绘制
 取自 www.flaticon.com</string>
+    <string name="about_acca_version_label">AccA 版本：</string>
     <string name="about_acc_version_label">ACC 版本：</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA 电报</string>
@@ -252,6 +270,7 @@
     <string name="charging_switch_on_value_label">充电开始值</string>
     <string name="charging_switch_off_value_label">充电停止值</string>
     <string name="reset_bs_on_pause">暂停时重置电池数据 \%</string>
+    <string name="current_max">最大电流（毫安）：</string>
     <string name="invalid_current_max">当前最大值无效</string>
     <!-- Import and Export -->
     <string name="import_title">导入</string>
@@ -267,5 +286,7 @@
     <string name="import_profile_success">成功导入 %d 个配置文件</string>
     <!-- Config Parse Error -->
     <string name="parse_failed_title">解析 ACC 配置失败</string>
+    <string name="parse_failed_body">您可以尝试通过点按“加载默认值”来加载默认配置。请注意，AccA 将不会起作用。
+        \n\n如果仍然出现错误， 请通过 Telegram 与开发者分享下面的日志以及ACC 和 AccA 版本 (通过3点菜单 &gt; 关于)。\n\n%s</string>
     <string name="automatic_switch_eanbled">自动循环切换开关</string>
 </resources>
