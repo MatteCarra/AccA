@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">AccA</string>
     <string name="app_name_full">Aplicativo de Controle Avançado de Carregamento</string>
     <string name="title_activity_log_view">Registros</string>
     <string name="title_activity_log_view_file_name">Registros</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">Sem root</string>
+    <string name="tile_acc_enabled">Daemon executando</string>
+    <string name="tile_acc_disabled">Daemon parado</string>
     <!-- Navigation Strings -->
     <string name="title_dashboard">Painel de controle</string>
     <string name="title_profiles">Perfis</string>
     <string name="title_schedules">Agendamentos</string>
     <string name="title_settings">Configurações</string>
     <!-- ACC Daemon Status -->
+    <string name="title_acc">ACC</string>
     <string name="title_acc_daemon">Serviço ACC</string>
     <string name="acc_daemon_status_running">Serviço ACC está Ativado</string>
     <string name="acc_daemon_status_not_running">Serviços ACC está Desativado</string>
+    <string name="acc_daemon_status_reading_status">Lendo status do serviço ACC Daemon...</string>
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">Parar serviço ACC</string>
     <string name="menu_start_accd">Iniciar serviço ACC</string>
@@ -38,13 +43,19 @@
     <string name="battery_info_label">Informação:</string>
     <string name="reset_unplugged">Zerar estatísticas da bateria ao desconectar o carregador</string>
     <string name="reset_stats">Zerar estatísticas da bateria</string>
+    <string name="enable_cooldown">Ativar ciclo de resfriamento:</string>
     <string name="cooldown_capacity">Iniciar resfriamento em %%:</string>
     <string name="resume_charge">Continuar carregamento em:</string>
     <string name="stop_charge">Parar carregamento em:</string>
+    <string name="enable_temp_check">Ativar controle de temperatura (°C)</string>
+    <string name="cooldown_temp">Cooldown temp:</string>
     <string name="max_temp">Temperatura máxima:</string>
     <string name="pause_seconds">Pausa em segundos:</string>
     <string name="charge_seconds">Carregamento em segundos:</string>
     <string name="shutdown_capacity">Desligar (quando não carregando) em:</string>
+    <string name="no_root_message">AccA requer ROOT.</string>
+    <string name="config_error_title">Erro de sintaxe na configuração</string>
+    <string name="config_error_dialog">Falha ao analisar a configuração ACC!\nPor favor, verifique se \"su -c acc --set --print\" funciona.</string>
     <string name="wait">Aguarde...\nIsto vai levar alguns segundos.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Parar serviço após aplicar configurações</string>
@@ -65,9 +76,11 @@
     <string name="unsaved_changes">Você possui mudanças não salvas</string>
     <string name="close_without_saving">Descartar</string>
     <string name="edit_config">Editar configurações</string>
+    <string name="unsaved_changes_message">Salvar alterações?</string>
     <string name="create_acc_profile">Criar perfil de configuração</string>
     <string name="profile_name">Nome do perfil</string>
     <string name="dialog_profile_name_message">Digite o nome que você deseja atribuir a este perfil:</string>
+    <string name="no_profiles">Sem perfis</string>
     <string name="profile_not_selected">Configurações personalizadas</string>
     <string name="profile_tile_label">Perfil: %1$s</string>
     <string name="profiles_text_view">Perfis (toque longo para editar/excluir):</string>
@@ -77,6 +90,8 @@
     <string name="execution_time">Tempo de execução</string>
     <string name="new_config">Nova configuração personalizada</string>
     <string name="voltage_control_file">Arquivo de controle de tensão:</string>
+    <string name="edit_power_limit">Editar limite de corrente e tensão</string>
+    <string name="voltage_max">Tensão máxima (milivolts):</string>
     <string name="disabled">Desabilitado</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Excluir</string>
@@ -85,6 +100,7 @@
     <string name="test_switch">Testar o interruptor de carregamento</string>
     <string name="no_option_selected">Nenhuma opção selecionada; por favor selecione uma!</string>
     <string name="charging_switch_works">O interruptor de carregamento selecionado funciona!</string>
+    <string name="plug_battery_to_test">Conecte o carregador e tente novamente!</string>
     <string name="automatic">Automático</string>
     <string name="error_occurred">Ocorreu um erro</string>
     <string name="retry">Tentar novamente</string>
@@ -95,11 +111,25 @@
     <string name="title_on_boot">Aplicar na inicialização</string>
     <string name="title_temperature_control">Controle de temperatura</string>
     <string name="title_capacity_control">Controle de Capacidade</string>
+    <string name="title_miscellaneous_control">Diversos</string>
     <string name="about">Sobre</string>
     <!-- ACC Config Tooltips -->
+    <string name="acc_config_editor">Editor de configuração ACC</string>
+    <string name="profile_creator">Criador de perfil</string>
+    <string name="schedule_creator">Criador de programação</string>
+    <string name="title_on_plugged">Aplicar ao conectar</string>
     <!--Profiles Options-->
+    <string name="profile_option_edit">Editar</string>
+    <string name="profile_option_rename">Renomear</string>
+    <string name="profile_option_delete">Deletar</string>
+    <string name="selecting_profile_toast">Selecionando o perfil %1$s.</string>
+    <string name="installation_failed_busybox_title">Busybox não está instalado</string>
+    <string name="share">Compartilhar</string>
+    <string name="logs_not_found">Arquivo de log não encontrado.</string>
+    <string name="current_measure_unit_preference_title">Unidade de medida atual</string>
     <string name="voltage_measure_unit_preference_title">Unidade de medida da tensão</string>
     <string name="units_of_measure">Unidades de medida</string>
+    <string name="acc_version_picker_title">Versão do Acc</string>
     <string-array name="current_measure_units_options">
         <item>mAmpere (1E-03)</item>
         <item>mAmpere (1E-06)</item>
@@ -115,12 +145,15 @@
     </string-array>
     <string name="ui_options">Interface de usuário</string>
     <string name="theme_option_setting">Tema</string>
+    <string name="theme_option_summary">Define o tema do aplicativo.</string>
     <string name="restore">Restaurar para o padrão</string>
     <string name="undo">Desfazer</string>
+    <string name="checking_updates">Verificando por atualizações</string>
     <string name="no_update_available">Nenhuma atualização disponível</string>
     <string name="update_completed">Atualização concluída!</string>
     <string name="install">Instalar</string>
     <string name="share_log">Compartilhar arquivo de registro</string>
+    <string name="select_different_version">Alterar versão do ACC</string>
     <string name="schedule_profile_edit_current">Editar configuração atual</string>
     <string name="schedule_profile_keep_current">Manter configuração atual</string>
     <string name="schedule_type">Tipo de agendamento</string>
@@ -139,9 +172,23 @@
     <string name="edit_schedule">Alterar agendamento</string>
     <string name="create_schedule">Criar agendamento</string>
     <!-- About Activity -->
+    <string name="about_team_title">Conheça Nossa Equipe</string>
+    <string name="about_team_blurb">Obrigado por usar o AccA!
+        \n\nNós gastamos muito tempo nisto para que você possa gerenciar ACC com facilidade!
+        \n\nAgradecimentos especiais para aqueles que contribuíram de uma forma ou de outra para o projeto ACC &amp; Projeto AccA!
+    </string>
+    <string name="about_acca_version_label">Versão AccA:</string>
     <string name="about_acc_version_label">Versão ACC:</string>
+    <string name="about_project_github">AccA GitHub</string>
+    <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Site</string>
     <!-- Import and Export -->
+    <string name="import_title">Importar</string>
+    <string name="export_title">Exportar</string>
+    <string name="menu_import">Importar</string>
+    <string name="menu_export">Exportar</string>
+    <string name="menu_title_load_clipboard">Carregar da área de transferência</string>
+    <string name="menu_title_clear_entries">Limpar Entradas</string>
     <!-- Config Parse Error -->
 </resources>
