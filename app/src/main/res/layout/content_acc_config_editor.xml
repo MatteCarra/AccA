@@ -325,6 +325,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/edit_power_limit"
+                    android:textColor="@color/color_surface"
                     android:id="@+id/edit_voltage_limit"
                     android:layout_gravity="center_horizontal"
                     android:onClick="editPowerOnClick"/>
@@ -409,6 +410,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/test_battery_idle"
+                    android:textColor="@color/color_surface"
                     android:id="@+id/battery_idle_test_button"
                     android:layout_gravity="center_horizontal"
                     android:onClick="onBatteryIdleTestButtonClick"/>
