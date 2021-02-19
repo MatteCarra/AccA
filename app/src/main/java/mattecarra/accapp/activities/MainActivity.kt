@@ -120,7 +120,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 return true
             }
             R.id.botNav_schedules -> {
-                return if (!Djs.isDjsInstalled(filesDir)) {
+                return if (!Djs.isDjsInstalled()) {
                     djsInstallationDialog()
                     false
                 } else {
