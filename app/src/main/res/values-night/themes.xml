@@ -5,6 +5,6 @@
     <style name="AccaTheme.DayNight" parent="Base.AccaTheme">
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
-        <item name="android:navigationBarColor" tools:targetApi="21">#1b0000</item>
+        <item name="android:navigationBarColor" tools:targetApi="21">#3a3b3d</item>
     </style>
 </resources>
