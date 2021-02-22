@@ -9,6 +9,11 @@
     <color name="color_background">@color/color_surface</color>
     <color name="color_error">#cf6679</color>
 
+    <color name="color_warning">#323336</color>
+
+    <color name="color_shadow">@android:color/transparent</color>
+
+
     <color name="color_on_primary">#000000</color>
     <color name="color_on_secondary">#000000</color>
     <color name="color_on_background">#ffffff</color>
