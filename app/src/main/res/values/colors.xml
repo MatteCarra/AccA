@@ -9,7 +9,9 @@
     <color name="color_background">@color/color_surface</color>
     <color name="color_error">#b00020</color>
 
-    <color name="color_warning">#ffc107</color>
+    <color name="color_warning">@color/color_surface</color>
+
+    <color name="color_shadow">#4D000000</color>
 
     <color name="color_on_primary">#000000</color>
     <color name="color_on_secondary">#000000</color>
