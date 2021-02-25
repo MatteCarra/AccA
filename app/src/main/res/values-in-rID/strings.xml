@@ -16,8 +16,8 @@
     <!-- ACC Daemon Status -->
     <string name="title_acc">ACC</string>
     <string name="title_acc_daemon">ACC Daemon</string>
-    <string name="acc_daemon_status_running">ACC Daemon Sedang Berlari</string>
-    <string name="acc_daemon_status_not_running">Daemon ACC Tidak Berlari</string>
+    <string name="acc_daemon_status_running">ACC Daemon sedang Berjalan</string>
+    <string name="acc_daemon_status_not_running">Daemon ACC Tidak Berjalan</string>
     <string name="acc_daemon_status_reading_status">Sedang membaca status aplikasi ACC dibalik layar...</string>
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">Hentikan ACC Daemon</string>
@@ -48,27 +48,40 @@
     <string name="resume_charge">Lanjutkan pengisian di:</string>
     <string name="stop_charge">Hentikan pengisian daya di:</string>
     <string name="enable_temp_check">Aktifkan kendali suhu (°C)</string>
+    <string name="cooldown_temp">Suhu reda:</string>
     <string name="max_temp">Temp maksimum:</string>
     <string name="pause_seconds">Jeda detik:</string>
     <string name="charge_seconds">Isi ulang detik:</string>
     <string name="shutdown_capacity">Shutdown (jika tidak mengisi daya) di:</string>
     <string name="no_root_message">AccA membutuhkan akses ROOT.</string>
+    <string name="config_error_title">Konfigurasi pengurai error</string>
     <string name="config_error_dialog">Gagal menguraikan konfigurasi ACC!\nMohon periksa dengan konsol terminal dan masukkan perintah \"su -c acc --set --print\" apakah bekerja dengan baik.</string>
     <string name="wait">Harap tunggu...\nIni akan memakan waktu beberapa detik.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Hentikan daemon setelah menerapkan pengaturan</string>
+    <string name="description_exit_on_boot">Ini digunakan untuk menulis kontrol files saat boot.</string>
     <!-- ACC installation -->
     <string name="installing_acc">Menginstal ACC</string>
     <string name="reboot">Mulai ulang</string>
+    <string name="acc_installation_failed">Mohon simpan dan kirim logcat
+/data/adb/acc-data/log/ ke developers
+di --> t.me/acc_group
+atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="acc_installation_failed_title">Instalasi ACC Gagal!</string>
     <!-- DJS installation -->
     <string name="install_djs_title">Diperlukan DJS</string>
     <string name="installing_djs">Menginstal DJS</string>
+    <string name="djs_installation_failed">Mohon simpan dan kirim logcat
+/data/adb/djs-data/log/ ke developers 
+di --> t.me/acc_group
+atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="djs_installation_failed_title">Pemasangan DJS Gagal!</string>
     <string name="voltage_control_file_not_set">Tidak diatur.</string>
     <string name="edit_on_boot">Ubah pengaturan apply_on_boot</string>
     <string name="edit_on_boot_dialog_hint">Biarkan kosong untuk menonaktifkan</string>
     <string name="save">Menyimpan</string>
+    <string name="edit_on_boot_dialog_message">Contoh:\n
+/sys/kernel/fast_charge/force_fast_charge::1::0 --exit.\n\"--exit\" adalah perintah opsional, untuk memberitahu daemon untuk berhenti setelah mengaplikasikan pengaturan.    </string>
     <string name="logs">Log</string>
     <string name="text_copied_to_clipboard">Teks disalin ke papan klip!</string>
     <string name="log_file_not_found_title">File log tidak ditemukan</string>
@@ -79,6 +92,7 @@
     <string name="create_acc_profile">Buat profil konfigurasi</string>
     <string name="profile_name">Nama profil</string>
     <string name="dialog_profile_name_message">Masukkan nama yang Anda inginkan untuk profil ini:</string>
+    <string name="no_profiles">Tidak ada profil</string>
     <string name="profile_not_selected">Pengaturan khusus</string>
     <string name="profile_tile_label">Profil: %1$s</string>
     <string name="profiles_text_view">Profil (tekan lama untuk mengedit/menghapus):</string>
@@ -93,10 +107,12 @@
     <string name="voltage_max">Tegangan maksimum (milivolt/mV):</string>
     <string name="disabled">Dengan disabilitas</string>
     <string name="schedule_execute_once_row_title">Exec. Sekali - %1$02d:%2$02d</string>
+    <string name="schedule_execute_once_row_text">Kerja dijadwalkan saat %1$02d:%2$02d</string>
     <string name="schedule_boot_row_text">Pekerjaan boot dijadwalkan</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Menghapus</string>
     <string name="no_schedules">Tidak ada jadwal yang ditetapkan</string>
+    <string name="wrong_volt_file">File yang dipilih tidak berfungsi, atau kernel Anda tidak mendukung fitur ini.</string>
     <string name="invalid_voltage_max">Nilai harus berupa angka antara 3700 dan 4200 (milivolt/mV)</string>
     <string name="edit_charging_switch">Edit saklar pengisian daya</string>
     <string name="test_switch">Uji sakelar pengisian daya</string>
@@ -108,6 +124,7 @@
     <string name="error_occurred">Sebuah kesalahan telah terjadi</string>
     <string name="retry">Mencoba kembali</string>
     <string name="edit_charging_limit_once">Pengisian daya sekali untuk #\%, tanpa dibatasi</string>
+    <string name="done_applied_charge_limit">Mengisi daya sampai %1$d%%</string>
     <string name="apply">Menerapkan</string>
     <string name="done">Selesai</string>
     <string name="edit_charging_limit_once_dialog_msg">Pengaturan rutin Anda secara otomatis dipulihkan setelah tingkat baterai yang dipilih tercapai.</string>
@@ -120,6 +137,8 @@
     <string name="title_miscellaneous_control">Lainnya</string>
     <string name="about">Tentang</string>
     <!-- ACC Config Tooltips -->
+    <string name="on_plugged_info">Gunakan ini untuk memperbarui file kendali yang isinya akan berubah pada peristiwa daya tertentu (misal colok/cabut). Ini sangat berguna untuk menetapkan tegangan/arus maksimum khusus untuk pengisian daya usb/nirkabel.</string>
+    <string name="miscellaneous_info_label">Berbagai konfigurasi ACC yang tidak sesuai dengan kategori lainnya</string>
     <string name="acc_config_editor">Editor konfigurasi ACC</string>
     <string name="profile_creator">Pembuat profil</string>
     <string name="schedule_creator">Jadwalkan pembuat</string>
@@ -163,8 +182,8 @@
     </string-array>
     <string-array name="acc_version_options">
         <item>Dibundel</item>
-        <item>Menguasai</item>
-        <item>Mengembangkan</item>
+        <item>Master</item>
+        <item>Pengembangan</item>
     </string-array>
     <string name="ui_options">Antarmuka pengguna</string>
     <string name="theme_option_setting">Tema</string>
@@ -180,6 +199,9 @@
     <string name="acc_installation_failed_log">Instalasi ACC gagal log</string>
     <string name="djs_installation_failed_log">Instalasi DJS gagal log</string>
     <string name="select_different_version">Ubah versi ACC</string>
+    <string name="installation_failed_non_bundled">Pemasangan varian ACC yang berbeda gagal.
+         \nSilakan pertimbangkan pengarsipan dan berbagi /data/adb/acc-data/log/ dengan devs.
+    </string>
     <string name="prioritize_battery_idle">Prioritaskan mode siaga baterai</string>
     <string name="test_battery_idle">Uji mode siaga baterai</string>
     <string name="test_battery_idle_supported_result">Kernel mendukung mode siaga baterai.</string>
