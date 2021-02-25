@@ -1,18 +1,274 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">AccA</string>
+    <string name="app_name_full">Вдосконалений додаток контролю заряджання</string>
+    <string name="title_activity_log_view">Журнали подій</string>
+    <string name="title_activity_log_view_file_name">Логи</string>
     <!-- ACC Tile Strings -->
+    <string name="tile_acc_no_root">Немає прав root</string>
+    <string name="tile_acc_enabled">Фонова служба працює</string>
+    <string name="tile_acc_disabled">Фонова служба зупинилась</string>
     <!-- Navigation Strings -->
+    <string name="title_dashboard">Панель управління</string>
+    <string name="title_profiles">Профіль</string>
+    <string name="title_schedules">Заплановано</string>
+    <string name="title_settings">Налаштування</string>
     <!-- ACC Daemon Status -->
+    <string name="title_acc">ACC</string>
+    <string name="title_acc_daemon">ACC Фонова служба</string>
+    <string name="acc_daemon_status_running">Фонова служба ACC працює</string>
+    <string name="acc_daemon_status_not_running">Фонова служба ACC недоступна</string>
+    <string name="acc_daemon_status_reading_status">Читання стану Фонової служби ACC...</string>
     <!-- ACC Daemon Toggle -->
+    <string name="menu_stop_accd">Служба АСС не відповідає</string>
+    <string name="menu_start_accd">Запустити фонову службу АСС</string>
+    <string name="start">Початок</string>
+    <string name="stop">Стоп</string>
     <!-- Battery Card Strings -->
+    <string name="title_battery">Запас в Батареї</string>
+    <string name="info_status">Стан ресурсу</string>
+    <string name="info_charging_speed">Швидкість заряджання</string>
+    <string name="info_discharging_speed">Поточний</string>
+    <string name="info_capacity">Ємність</string>
+    <string name="info_temperature">Температура</string>
+    <string name="info_health">Здоров\'я</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
+    <string name="info_status_extended">%1$s (%2$s)</string>
+    <string name="info_charging_speed_extended">%1$dмА в %2$.2fВ</string>
+    <string name="info_discharging_speed_extended">%1$dмА</string>
     <!-- Profiles Item Labels -->
+    <string name="item_profile_capacity_label">Ємність:</string>
+    <string name="item_profile_temperature_label">Температура:</string>
+    <string name="status_label">Статус:</string>
+    <string name="reset_unplugged">Скинути статистику батареї, при відключенні</string>
+    <string name="reset_stats">Скинути статистику батареї</string>
+    <string name="enable_cooldown">Ввімкнути цикл сповільнення:</string>
+    <string name="cooldown_capacity">Почати охолодження при %%:</string>
+    <string name="resume_charge">Відновити зарядку при:</string>
+    <string name="stop_charge">Зупинити зарядку при:</string>
+    <string name="enable_temp_check">Ввімкнути контроль температури (°C)</string>
+    <string name="cooldown_temp">Температура сповільнення:</string>
+    <string name="max_temp">Макс. температура:</string>
+    <string name="pause_seconds">Пауза сек.:</string>
+    <string name="charge_seconds">Зарядка сек.:</string>
+    <string name="shutdown_capacity">Вимкнення (якщо не заряджається) в:</string>
+    <string name="no_root_message">AccA вимагає ROOT.</string>
+    <string name="config_error_title">Помилка аналізу конфігурації</string>
+    <string name="wait">Зачекайте...\nЦе займе кілька секунд.</string>
     <!-- Exit On Boot Card Strings -->
+    <string name="title_exit_on_boot">Зупинити службу після застосування налаштувань</string>
     <!-- ACC installation -->
+    <string name="installing_acc">Встановлення ACC</string>
+    <string name="reboot">Перезавантажити</string>
+    <string name="acc_installation_failed">Будь ласка, заархівуйте та надішліть logcat та /data/adb/acc-data/logs/ розробникам
+        в t.me/acc_group/ або github.com/MatteCarra/AccA/issues/.
+    </string>
+    <string name="acc_installation_failed_title">Помилка встановлення ACC!</string>
     <!-- DJS installation -->
+    <string name="install_djs_title">Потрібно DJS</string>
+    <string name="install_djs_description">Для роботи цієї функції ми повинні увімкнути DJS.
+        \nDJS (Щоденний Планувальник) є легким додатком для планування профілів/налаштувань ACC.
+        \nDJS буде запущений разом зі службою ACC.
+    </string>
+    <string name="installing_djs">Встановлення DJS</string>
+    <string name="djs_installation_failed">Будь ласка, заархівуйте та надішліть logcat та /data/adb/djs-data/logs/ розробникам
+        в t.me/acc_group/ або github.com/MatteCarra/AccA/issues/.
+    </string>
+    <string name="djs_installation_failed_title">Помилка встановлення DJS!</string>
+    <string name="voltage_control_file_not_set">Не задано.</string>
+    <string name="edit_on_boot">Редагувати параметри apply_on_boot</string>
+    <string name="edit_on_boot_dialog_hint">Залиште порожнім для відключення</string>
+    <string name="save">Зберегти</string>
+    <string name="edit_on_boot_dialog_message">Приклад: /sys/kernel/fast_charge/force_fast_charge::1::0
+        --exit.\n\"--exit\" опціональний; він дає службі команду на зупинку після застосування
+    налаштувань.    </string>
+    <string name="logs">Звіти</string>
+    <string name="text_copied_to_clipboard">Текст скопійовано в буфер обміну!</string>
+    <string name="log_file_not_found_title">Файл звіту не знайдено</string>
+    <string name="unsaved_changes">Є незбережені зміни</string>
+    <string name="close_without_saving">Відмінити</string>
+    <string name="edit_config">Змінити конфігурацію</string>
+    <string name="unsaved_changes_message">Зберегти зміни?</string>
+    <string name="create_acc_profile">Створити профіль конфігурації</string>
+    <string name="profile_name">Назва профілю</string>
+    <string name="dialog_profile_name_message">Введіть ім\'я, яке ви хочете присвоїти профілю:</string>
+    <string name="no_profiles">Профілі відсутні</string>
+    <string name="profile_not_selected">Вибіркові налаштування</string>
+    <string name="profile_tile_label">Профіль: %1$s</string>
+    <string name="profiles_text_view">Профілі (довге натискання для редагування/видалення):</string>
+    <string name="restart">Перезапуск</string>
+    <string name="invalid_chars">Ім\'я профілю містить неприпустимі символи</string>
+    <string name="recurrent_schedule">Запустити один раз</string>
+    <string name="execution_time">Час виконання</string>
+    <string name="new_config">Нова конфігурація</string>
+    <string name="enable_voltage_limit">Обмеження напруги зарядки</string>
+    <string name="voltage_control_file">Файл керування напругою:</string>
+    <string name="edit_power_limit">Встановити обмеження напруги і сили струму</string>
+    <string name="voltage_max">Максимальна напруга (мілівольт):</string>
+    <string name="disabled">Вимкнено</string>
+    <string name="schedule_recurrent_row_text">Постійне завдання заплановано на %1$02d:%2$02d</string>
+    <string name="schedule_execute_once_row_title">Виконання один раз - %1$02d:%2$02d</string>
+    <string name="schedule_execute_once_row_text">Завдання заплановано на %1$02d:%2$02d</string>
+    <string name="schedule_boot_row_text">Завдання при завантаженні заплановано</string>
+    <string name="schedule_time">%1$02d:%2$02d</string>
+    <string name="delete">Видалити</string>
+    <string name="no_schedules">Немає запланованих завдань</string>
+    <string name="wrong_volt_file">Обраний файл не працює, або ваше ядро не підтримує цю функцію.</string>
+    <string name="invalid_voltage_max">Значення має бути числом від 3700 до 4200 (мілівольт)</string>
+    <string name="edit_charging_switch">Редагувати перемикач зарядки</string>
+    <string name="test_switch">Перевірити перемикач зарядки</string>
+    <string name="no_option_selected">Жодної опції не вибрано; будь ласка, оберіть одну!</string>
+    <string name="charging_switch_works">Обраний перемикач зарядки працює!</string>
+    <string name="charging_switch_does_not_work">Обраний перемикач зарядки не працює!</string>
+    <string name="plug_battery_to_test">Підключіть зарядний пристрій та повторіть спробу!</string>
+    <string name="automatic">Автоматично</string>
+    <string name="error_occurred">Сталася помилка</string>
+    <string name="retry">Повтор</string>
+    <string name="edit_charging_limit_once">Зарядити один раз до #\%, без обмежень</string>
+    <string name="done_applied_charge_limit">Заряджається до %1$d%%</string>
+    <string name="charge_limit_not_applied">Застосування ліміту заряду скасовано</string>
+    <string name="apply">Застосувати</string>
+    <string name="done">Виконано</string>
+    <string name="edit_charging_limit_once_dialog_msg">Ваші звичайні налаштування автоматично відновлюються після досягнення обраного рівня заряду батареї.</string>
+    <string name="title_power_control">Контроль потужності зарядки</string>
+    <string name="title_cooldown_control">Уповільнення</string>
+    <string name="title_on_boot">Застосувати при завантаженні</string>
+    <string name="title_temperature_control">Контроль Температури</string>
+    <string name="title_capacity_control">Контроль Ємності</string>
+    <string name="title_miscellaneous_control">Різне</string>
+    <string name="about">Про додаток</string>
     <!-- ACC Config Tooltips -->
+    <string name="capacity_control_info">- SHUTDOWN: автоматично вимикає систему на/нижче цього рівня заряду, коли акумулятор не заряджається.&lt;br /&gt;- STOP: і RESUME можливості диктують, коли зарядка повинна бути зупинена і відновлена відповідно.&lt;br /&gt;- CHARGING SWITCH є контрольним файлом, а також значення ON і OFF для перемикання заряджання/вимкнення. За замовчуванням, ACC використовує все, що працює.</string>
+    <string name="power_control_info">- Кожне зниження пікової напруги заряду 0.10В/елемент, як кажуть, подвоює термін служби.&lt;br /&gt;- На жаль, не всі пристрої/ядра підтримують цю функцію.</string>
+    <string name="temperature_control_info">- Це вимикає заряджання на встановлену кількість секунд для охолодження батареї&lt;br /&gt;- COOLDOWN TEMP залежить від COOLDOWN RATIO.&lt;br /&gt;- MAX TEMP працює з PAUSE SECONDS.</string>
+    <string name="cooldown_info">- Співвідношення зарядки ON/OFF в секундах (наприклад, 50/10) - знижує навантаження на батарею, викликане тривалої високою температурою і високою напругою заряду, періодично зупиняючи зарядку.&lt;br /&gt;- Якщо зарядка занадто повільна, вимкніть це або змініть співвідношення на щось на кшталт 50/5.&lt;br /&gt;- Коли вимкнено, COOLDOWN CAPACITY і COOLDOWN значення не мають ефекту.&lt;br /&gt;- Ця функція є хорошою альтернативою функції обмеження зарядного напруги.</string>
+    <string name="battery_idle_info_label">Це дозволяє підтримуваного пристрою отримувати живлення безпосередньо від зовнішнього джерела живлення, коли зарядка припинена.</string>
+    <string name="miscellaneous_info_label">Різноманітні конфігурації АСС, які не підходять до інших визначених категорій</string>
+    <string name="acc_config_editor">Редактор налаштувань ACC</string>
+    <string name="profile_creator">Створення профілю</string>
+    <string name="schedule_creator">Створення розкладу</string>
+    <string name="charging_switch_label">Перемикач заряджання:</string>
+    <string name="title_on_plugged">Застосувати при підключенні</string>
+    <string name="edit_on_plugged">Редагувати параметри \"при підключенні\":</string>
+    <string name="edit_on_plugged_dialog_message">Приклад: wireless/voltage_max:9000000 форсує швидку бездротову зарядку на деяких пристроях Pixel.
+    </string>
+    <string name="template_capacity_profile">Завершення: %1$d%% - Продовжити: %2$d%% - Зупинити: %3$d%%</string>
+    <string name="template_temperature_profile">Температура: %1$d&#176;C - Макс.: %2$d&#176;C - Пауза: %3$dс</string>
+    <string name="template_cool_down_profile">Старт в: %1$d%% - Заряд за %2$ds - Призупинення на %3$dсек</string>
     <!--Profiles Options-->
+    <string name="profile_option_edit">Редагувати</string>
+    <string name="profile_option_delete">Видалити</string>
+    <string name="selecting_profile_toast">Вибір профілю %1$s.</string>
+    <string name="installation_failed_busybox_title">Busybox не встановлено</string>
+    <string name="installation_failed_busybox">Спочатку встановіть busybox або просто помістіть бінарний файл в /data/adb/bin/</string>
+    <string name="share">Поділитися</string>
+    <string name="logs_not_found">Файл звіту не знайдено.</string>
+    <string name="acc_telegram">Для отримання додаткової підтримки приєднуйтесь до групи ACC в Telegram (t.me/acc_group)!</string>
+    <string name="current_measure_unit_preference_title">Поточна одиниця виміру</string>
+    <string name="voltage_measure_unit_preference_title">Одиниця виміру напруги</string>
+    <string name="voltage_measure_unit_preference_title_description">ACC отримує інформацію про зарядку з системного інтерфейсу.
+        Деякі системи показують напругу в мкВ (мікровольт), інші в мВ (мілівольт).
+        Якщо виявлена одиниця виміру невірна, ви можете встановити її вручну.
+    </string>
+    <string name="units_of_measure">Одиниці виміру</string>
+    <string name="acc_version_preference_title">Версія ACC</string>
+    <string name="acc_version_preference_description">Ви можете вибрати варіант ACC для використання: bundled (стабільний, рекомендований для більшості користувачів), master (стабільний), develop (передній край, але не обов\'язково нестабільний) або будь-яка з відмічених версій.
+        Bundled версія є найбільш протестованою версією для AccA - тому рекомендується вибирати її.
+        Хоча це і не гарантується, інші варіанти, як правило, безпечні.
+    </string>
+    <string name="install_bundled_version">Встановити bundled варіант</string>
+    <string name="acc_version_picker_title">Версія ACC</string>
+    <string name="acc_version_picker_message">Виберіть бажаний варіант ACC</string>
+    <string-array name="voltage_measure_units_options">
+        <item>мВ (1E-03)</item>
+        <item>мкВ (1E-06)</item>
+    </string-array>
+    <string-array name="acc_version_options">
+        <item>Bundled</item>
+        <item>Master</item>
+        <item>Develop</item>
+    </string-array>
+    <string name="ui_options">Інтерфейс</string>
+    <string name="theme_option_setting">Тема</string>
+    <string name="theme_option_summary">Встановити тему додатку.</string>
+    <string name="acc_version_compatibility_warning_title">Сумісність версії ACC</string>
+    <string name="acc_version_compatibility_warning_description">Ви вибрали ACC-варіант, який не гарантовано сумісний з додатком.
+        \nБільшість часу ви не будете стикатися з несумісностями.
+        \nAccA збирається завантажити обрану версію з сховища ACC GitHub.
+        \nПродовжити?
+    </string>
+    <string name="restore">Відновити значення за замовчуванням</string>
+    <string name="undo">Відмінити</string>
+    <string name="checking_updates">Перевірити оновлення</string>
+    <string name="no_update_available">Оновлень немає</string>
+    <string name="update_completed">Оновлення завершено!</string>
+    <string name="install">Встановити</string>
+    <string name="share_log">Поділитися файлом журналу</string>
+    <string name="acc_installation_failed_log">Журнал помилки встановлення ACC</string>
+    <string name="djs_installation_failed_log">Журнал помилки встановлення DJS</string>
+    <string name="select_different_version">Змінити версію ACC</string>
+    <string name="installation_failed_non_bundled">Встановлення іншого варіанту ACC не вдалося.
+        \nБудь ласка, розгляньте можливість архівування та обміну /data/adb/acc-data/logs/ з розробниками.
+    </string>
+    <string name="prioritize_battery_idle">Пріоритет режиму очікування батареї</string>
+    <string name="test_battery_idle">Тест режиму очікування батареї</string>
+    <string name="test_battery_idle_supported_result">Ядро підтримує режим очікування батареї.</string>
+    <string name="test_battery_idle_unsupported_result">Ядро не підтримує режим очікування батареї.</string>
+    <string name="schedule_profile_edit_current">Редагувати поточну конфігурацію</string>
+    <string name="schedule_profile_keep_current">Зберегти поточну конфігурацію</string>
+    <string name="schedule_type">Тип розкладу</string>
+    <string name="schedule_name">Назва розкладу</string>
+    <string-array name="theme_option_options">
+        <item>Світлий</item>
+        <item>Темний</item>
+        <item>Налаштування за замовчуванням</item>
+    </string-array>
+    <string-array name="schedule_type_entries">
+        <item>Повторний</item>
+        <item>Запустити один раз</item>
+        <item>Запустити при завантаженні</item>
+    </string-array>
+    <string name="menu_import_export">Імпорт &amp; Експорт</string>
+    <string name="execute_on_boot_schedule">Виконати при завантаженні</string>
+    <string name="edit_schedule">Змінити розклад</string>
+    <string name="create_schedule">Створити розклад</string>
     <!-- About Activity -->
+    <string name="about_team_title">Познайомтеся з Командою</string>
+    <string name="about_team_blurb">Дякуємо, що користуєтесь AccA!
+        \n\nМи витратили купу часу, щоб з легкістю керувати ACC!
+        \n\nОсоблива подяка тим, хто вніс свій внесок в той чи інший проект ACC &amp; AccA!
+    </string>
+    <string name="about_attributes">Атрибути</string>
+    <string name="about_attrib_telegram_icon">Значок Telegram, зроблений Pixel perfect з www.flaticon.com</string>
+    <string name="about_acca_version_label">Версія AccA:</string>
+    <string name="about_acc_version_label">Версія ACC:</string>
+    <string name="about_project_github">AccA GitHub</string>
+    <string name="about_project_telegram">AccA Telegram</string>
+    <string name="about_github">GitHub</string>
+    <string name="about_website">Вебсайт</string>
+    <string name="toast_no_browser_installed">Не вдалося відкрити посилання!\nПереконайтеся, що у вас встановлено браузер.</string>
+    <string name="install_update_dialog">Встановити оновлення ACC</string>
+    <string name="add_charging_switch">Додати Перемикач Зарядки</string>
+    <string name="charging_switch_on_value_label">Перемикач Зарядки ON VALUE</string>
+    <string name="charging_switch_off_value_label">Перемикач Зарядки OFF VALUE</string>
+    <string name="reset_bs_on_pause">Скинути статистику заряду акумулятора при паузі \%</string>
+    <string name="current_max">Макс. Поточний Струм (мА):</string>
+    <string name="invalid_current_max">Недійсне Макс. Поточне Значення</string>
     <!-- Import and Export -->
+    <string name="import_title">Імпорт</string>
+    <string name="import_load_from_clipboard">Натисніть значок «Буфер обміну» на панелі інструментів!</string>
+    <string name="export_title">Експорт</string>
+    <string name="export_none_selected">Будь ласка, виберіть профілі вище для експорту</string>
+    <string name="menu_import">Імпорт</string>
+    <string name="menu_export">Експорт</string>
+    <string name="menu_title_load_clipboard">Завантажити з буфера обміну</string>
+    <string name="menu_title_clear_entries">Очистити записи</string>
+    <string name="import_toast_no_valid_profile_json_clipboard">JSON дійсного профілю ACCA не в Буфері</string>
+    <string name="import_toast_no_selected_profiles">Будь ласка, виберіть Профілі для імпорту</string>
+    <string name="import_profile_success">Успішно імпортовано %d профілів</string>
     <!-- Config Parse Error -->
+    <string name="parse_failed_title">Не вдалося аналізувати конфігурацію ACC</string>
+    <string name="parse_failed_body">Ви можете спробувати завантажити конфігурацію за замовчуванням, натиснувши \'Load Default\'. Зверніть увагу, що AccA не працюватиме.
+        \n\nЯкщо помилка не зникає, поділіться наведеним нижче стеком разом із ACC &amp; AccA версіями (через меню з трьома крапками &gt; Про додаток) з розробниками через Telegram.\n\n%s</string>
+    <string name="automatic_switch_eanbled">Автоматичний цикл при перемиканні</string>
 </resources>

@@ -140,6 +140,7 @@
     <string name="power_control_info">- Si dice che ogni riduzione del voltaggio massimo di ricarica di 0.10V per cella raddoppia la vita della batteria.&lt;br /&gt;- Sfortunatamente, non tutti i dispositivi/kernel supportano questa funzione.</string>
     <string name="temperature_control_info">- Questo disattiva la ricarica per tot secondi per raffreddare la batteria&lt;br /&gt;- COOLDOWN TEMP dipende da COOLDOWN RATIO.&lt;br /&gt;- MAX TEMP funziona con PAUSE SECONDS.</string>
     <string name="cooldown_info">- Cambiare il rapporto ON/OFF in secondi (es., 50/10) - riduce lo stress sulla batteria causato da sessioni prolungate di ricarica ad alte temperatuere e voltaggi fermando periodicamente la ricarica.&lt;br /&gt;- Se la ricarica è troppo lenta, disabilitare questa funzione o cambiare il rapporto a qualcosa come 50/5.&lt;br /&gt;- Quando disabilitato, i valori COOLDOWN CAPACITY e COOLDOWN TEMP non hanno effetto.&lt;br /&gt;- Questa funzionalità è una buona alternativa al limite del voltaggio di ricarica.</string>
+    <string name="on_plugged_info">Questo viene utilizzato per aggiornare i file di controllo il cui contenuto cambia in determinati eventi di alimentazione (ad esempio, connessione a/disconnessione dalla rete elettrica). È particolarmente utile per applicare un valore massimo personalizzato di tensione/corrente per la ricarica usb/wireless.</string>
     <string name="miscellaneous_info_label">Altre impostazioni di Acc che non rinetrano in nessuna delle categorie</string>
     <string name="acc_config_editor">Editor delle impostazioni di ACC</string>
     <string name="profile_creator">Creatore di profilo</string>
@@ -161,9 +162,21 @@
     <string name="logs_not_found">File di log non trovato.</string>
     <string name="acc_telegram">Per support aggiuntivo, unisciti al canale Telegram di ACC (t.me/acc_group)!</string>
     <string name="current_measure_unit_preference_title">Unità di misura corrente</string>
+    <string name="current_measure_unit_preference_description">ACC ottiene le informazioni di carica dall\'interfaccia sys.
+        Alcuni sistemi esprimono la corrente in μA (microampere), altri in mA (milliampere).
+        Se l\'unità rilevata non è corretta, puoi impostarla manualmente.
+    </string>
     <string name="voltage_measure_unit_preference_title">Unità di misura del voltaggio</string>
+    <string name="voltage_measure_unit_preference_title_description">ACC ottiene le informazioni di ricarica dall\'interfaccia sys.
+        Alcuni sistemi esprimono la tensione in μV (microvolt), altri in mV (millivolt).
+        Se l\'unità rilevata non è corretta, puoi impostarla manualmente.
+    </string>
     <string name="units_of_measure">Unità di misura</string>
     <string name="acc_version_preference_title">Versione di ACC</string>
+    <string name="acc_version_preference_description">È possibile scegliere la variante ACC da utilizzare: bundled (stabile, consigliato per la maggior parte degli utenti), master (stabile), develop (in sviluppo, ma non necessariamente instabile) o una qualsiasi delle versioni contrassegnate.
+        Bundled è la versione più testata per AccA - quindi è la scelta consigliata.
+        Anche se non garantite, le altre varianti sono generalmente sicure.
+    </string>
     <string name="install_bundled_version">Installa la versione di default</string>
     <string name="acc_version_picker_title">Versione di ACC</string>
     <string name="acc_version_picker_message">Selezione la variante di ACC desiderata</string>
@@ -198,7 +211,9 @@
     <string name="acc_installation_failed_log">Log dell\'installazione fallita di ACC</string>
     <string name="djs_installation_failed_log">Log dell\'installazione fallita di DJS</string>
     <string name="select_different_version">Cambia la versione di ACC</string>
+    <string name="prioritize_battery_idle">Priorità alla modalità inattività batteria</string>
     <string name="test_battery_idle">Prova la modalità \"batteria inattiva\"</string>
+    <string name="test_battery_idle_supported_result">Il kernel supporta la modalità inattività della batteria.</string>
     <string name="schedule_profile_edit_current">Modifica configurazione corrente</string>
     <string name="schedule_profile_keep_current">Mantieni la configurazione corrente</string>
     <string name="schedule_type">Tipo di pianificazione</string>
@@ -213,13 +228,41 @@
         <item>Esegui una volta</item>
         <item>Esegui all\'avvio</item>
     </string-array>
+    <string name="menu_import_export">Importa &amp; Esporta</string>
     <string name="execute_on_boot_schedule">Esegui all\'avvio</string>
     <string name="edit_schedule">Modifica pianificazione</string>
     <string name="create_schedule">Crea una pianificazione</string>
     <!-- About Activity -->
+    <string name="about_team_title">Incontra il Team</string>
+    <string name="about_team_blurb">Grazie per aver utilizzato AccA!
+        \n\nAbbiamo speso un sacco di tempo su questa applicazione in modo che tu possa gestire ACC con facilità!
+        \n\nUn ringraziamento speciale a coloro che hanno contribuito in un modo o nell\'altro ai progetti ACC &amp; AccA!
+    </string>
+    <string name="about_attributes">Attributi</string>
+    <string name="about_attrib_telegram_icon">Icona Telegram realizzata da Pixel perfezionata da www.flaticon.com</string>
+    <string name="about_acca_version_label">Versione di AccA:</string>
     <string name="about_acc_version_label">Versione ACC:</string>
+    <string name="about_project_github">AccA GitHub</string>
+    <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Sito Web</string>
+    <string name="toast_no_browser_installed">Impossibile aprire il link!\nAssicurati di avere installato un browser.</string>
+    <string name="install_update_dialog">Installa un aggiornamento di ACC</string>
+    <string name="check_update_dialog_message">        Vuoi installare l\'ultima versione di ACC dal branch \'%1$s\'?
+        \nAccA scaricherà l\'ultima versione di ACC da GitHub in base all\'ultimo commit del branch selezionato.
+        \nVuoi continuare?</string>
+    <string name="add_charging_switch">Aggiungi commutatore di ricarica</string>
+    <string name="current_max">Corrente massima (mA):</string>
+    <string name="invalid_current_max">Valore Massimo Corrente non valido</string>
     <!-- Import and Export -->
+    <string name="import_title">Importa</string>
+    <string name="export_title">Esporta</string>
+    <string name="menu_title_load_clipboard">Carica dagli appunti</string>
+    <string name="import_toast_no_selected_profiles">Selezionare i profili da importare</string>
+    <string name="import_profile_success">Profili %d importati con successo</string>
     <!-- Config Parse Error -->
+    <string name="parse_failed_title">Analisi della configurazione ACC non riuscita</string>
+    <string name="parse_failed_body">Puoi provare a caricare la configurazione predefinita premendo \'Carica predefinita\'. Si prega di notare che AccA non sarà funzionante.
+        \n\nSe l\'errore persiste, si prega di condividere la stack trace qui sotto insieme alle versioni di ACC e AccA (tramite il menu a 3 punti &gt; About) con gli sviluppatori via Telegram.\n\n%s&amp;</string>
+    <string name="automatic_switch_eanbled">Scorri automaticamente gli interruttori</string>
 </resources>
