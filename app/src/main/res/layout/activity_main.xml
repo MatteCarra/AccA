@@ -8,7 +8,8 @@
 
     <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/main_toolbar"
@@ -25,12 +26,20 @@
             android:layout_marginBottom="?attr/actionBarSize"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:background="@drawable/shadow"
+        app:layout_anchor="@+id/main_bottom_nav"
+        app:layout_anchorGravity="top"/>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/main_bottom_nav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             app:menu="@menu/bottom_nav_menu"
-            app:labelVisibilityMode="labeled"/>
+            app:labelVisibilityMode="labeled"
+        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
