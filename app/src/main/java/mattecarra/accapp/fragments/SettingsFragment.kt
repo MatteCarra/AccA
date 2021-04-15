@@ -147,7 +147,7 @@ class SettingsFragment : PreferenceFragmentCompat(), CoroutineScope {
         djsEnable?.setOnPreferenceChangeListener { _, isEnabled ->
             context?.let { context ->
                 when {
-                    isEnabled as Boolean && Djs.isDjsInstalled(context.filesDir) -> {
+                    isEnabled as Boolean && Djs.isDjsInstalled() -> {
                         Djs.initDjs(context.filesDir)
                         true
                     }
@@ -191,7 +191,8 @@ class SettingsFragment : PreferenceFragmentCompat(), CoroutineScope {
 
                     else -> {
                         launch {
-                            Djs.uninstallDjs(context.filesDir)
+                            if (Djs.isDjsInstallerAvailable(context.filesDir))
+                                Djs.uninstallDjs(context.filesDir)
                         }
 
                         true

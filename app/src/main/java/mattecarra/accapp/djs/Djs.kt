@@ -94,15 +94,20 @@ object Djs {
         return INSTANCE as DjsInterface
     }
 
-    fun isDjsInstalled(installationDir: File): Boolean {
+    fun isDjsInstalled(): Boolean {
+        return Shell.su("which djsd > /dev/null").exec().isSuccess
+    }
+
+    fun isDjsInstallerAvailable(installationDir: File): Boolean {
         return Shell.su("test -f ${File(installationDir, "djs/djs-init.sh").absolutePath}").exec().isSuccess
     }
 
     fun initDjs(installationDir: File): Boolean {
-        return if(isDjsInstalled(installationDir))
-            Shell.su("sh ${File(installationDir, "djs/djs-init.sh").absolutePath}").exec().isSuccess
-        else
-            false
+        return when {
+            isDjsInstalled() -> true
+            isDjsInstallerAvailable(installationDir) -> Shell.su("sh ${File(installationDir, "djs/djs-init.sh").absolutePath}").exec().isSuccess
+            else -> false
+        }
     }
 
     fun isInstalledDjsOutdated(): Boolean {
