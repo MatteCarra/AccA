@@ -68,7 +68,7 @@ The command line functionality is also available.
 ---
 ## PREREQUISITES
 
-- [Must read - how to prolong lithium ion batteries lifespan](https://batteryuniversity.com/index.php/learn/article/how_to_prolong_lithium_based_batteries/)
+- [Must read - how to prolong lithium ion batteries lifespan](https://batteryuniversity.com/article/bu-808-how-to-prolong-lithium-based-batteries/)
 - Android or Android based OS
 - Any root solution (e.g., [Magisk](https://github.com/topjohnwu/Magisk/))
 - Busybox\* (only if not rooted with Magisk)
@@ -324,7 +324,7 @@ Refer back to `POWER SUPPLY LOGS (HELP NEEDED)`.
 
 With modern battery management systems, that's generally unnecessary.
 
-However, if your battery is underperforming, you may want to try the procedure described at https://batteryuniversity.com/index.php/learn/article/battery_calibration .
+However, if your battery is underperforming, you may want to try the procedure described at https://batteryuniversity.com/article/bu-603-how-to-calibrate-a-smart-battery .
 
 
 > I set voltage to 4080 mV and that corresponds to just about 75% charge.
@@ -353,7 +353,7 @@ Day/regular profile: max capacity: 75-80% and/or voltage no higher than 4100 mV
 
 Travel profile: capacity up to 95% and/or voltage no higher than 4200 mV
 
-\* https://batteryuniversity.com/index.php/learn/article/how_to_prolong_lithium_based_batteries/
+\* https://batteryuniversity.com/article/bu-808-how-to-prolong-lithium-based-batteries/
 
 
 > I don't really understand what the "-f|--force|--full [capacity]" is meant for.
@@ -416,7 +416,7 @@ A common workaround is having `resume_capacity = pause_capacity - 1`. e.g., resu
 - [ACC repository](https://github.com/VR-25/acc/)
 - [AccA repository](https://github.com/MatteCarra/AccA/)
 - [Daily Job Scheduler](https://github.com/VR-25/djs/)
-- [Must read - how to prolong lithium ion batteries lifespan](http://batteryuniversity.com/learn/article/how_to_prolong_lithium_based_batteries/)
+- [Must read - how to prolong lithium ion batteries lifespan](https://batteryuniversity.com/article/bu-808-how-to-prolong-lithium-based-batteries/)
 - [Telegram group](https://t.me/acc_group/)
 - [XDA thread](https://forum.xda-developers.com/apps/magisk/module-magic-charging-switch-cs-v2017-9-t3668427/)
 
