@@ -153,6 +153,7 @@
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:orientation="vertical"
                         android:layout_marginTop="@dimen/card_content_margin">
                     <TextView
                             android:layout_width="wrap_content"
@@ -161,28 +162,24 @@
                             android:textSize="16sp"
                             android:textColor="?android:attr/textColorPrimary"
                             android:text="@string/charging_switch_label"
-                            android:layout_marginRight="8dp"
-                            android:layout_marginEnd="8dp"
                             android:paddingTop="8dp"
                             android:paddingBottom="8dp"/>
 
                     <TextView
                             android:id="@+id/charging_switch_textview"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:text="@string/automatic"
                             android:textSize="16sp"
-                            android:layout_marginRight="8dp"
-                            android:layout_marginEnd="8dp"
                             android:drawableRight="@drawable/ic_outline_edit_24px"
                             android:drawableEnd="@drawable/ic_outline_edit_24px"
                             android:onClick="editChargingSwitchOnClick"
                             android:background="?selectableItemBackground"/>
                 </LinearLayout>
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/automatic_switch_enabled_switch"
                     android:checked="true"
                     android:layout_width="match_parent"
@@ -392,12 +389,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
-
+                    android:orientation="horizontal" >
                 </LinearLayout>
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/battery_idle_switch"
                     android:checked="true"
                     android:layout_width="match_parent"
@@ -473,7 +468,7 @@
                         android:contentDescription="@string/info" />
                 </LinearLayout>
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/temp_switch"
                     android:checked="true"
                     android:layout_width="match_parent"
@@ -551,6 +546,150 @@
 
                     <NumberPicker
                         android:id="@+id/temperature_max_pause_seconds_picker"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginLeft="3dp" />
+                </LinearLayout>
+
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Enable Cool Down Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:foreground="?selectableItemBackground"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="3dp"
+            app:contentPadding="@dimen/card_content_padding"
+            style="@style/Widget.MaterialComponents.CardView">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/cooldown_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/card_content_padding">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:text="@string/title_cooldown_control" />
+
+                    <ImageView
+                        android:id="@+id/cooldown_restore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_restore_24px"
+                        android:onClick="onCooldownRestore"
+                        android:contentDescription="@string/restore" />
+
+                    <ImageView
+                        android:id="@+id/cooldown_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:foregroundGravity="center"
+                        android:background="?selectableItemBackground"
+                        app:srcCompat="@drawable/ic_baseline_info"
+                        android:onClick="onInfoClick"
+                        android:contentDescription="@string/info" />
+                </LinearLayout>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:layout_below="@+id/cooldown_title"
+                    android:id="@+id/cooldown_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/enable_cooldown"
+                    android:textSize="16sp"
+                    android:checked="true"
+                    android:layout_marginBottom="16dp" />
+
+                <LinearLayout
+                    android:id="@+id/cooldown_labels"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cooldown_switch"
+                    android:layout_marginBottom="8dp"
+                    android:weightSum="3"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/cooldown_percentage"
+                        android:gravity="center_horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:text="@string/cooldown_capacity"/>
+
+                    <TextView
+                        android:id="@+id/charge_ratio"
+                        android:gravity="center_horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:text="@string/charge_seconds"/>
+
+                    <TextView
+                        android:id="@+id/pause_ratio"
+                        android:gravity="center_horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:text="@string/pause_seconds"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/cooldown_pickers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3"
+                    android:layout_below="@+id/cooldown_labels">
+
+                    <NumberPicker
+                        android:id="@+id/cooldown_percentage_picker"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="3dp"
+                        android:layout_marginRight="3dp" />
+
+                    <NumberPicker
+                        android:id="@+id/charge_ratio_picker"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginLeft="3dp" />
+
+                    <NumberPicker
+                        android:id="@+id/pause_ratio_picker"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -740,151 +879,6 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Enable Cool Down Card -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/card_margin"
-            android:layout_marginLeft="@dimen/card_margin"
-            android:layout_marginRight="@dimen/card_margin"
-            android:layout_marginBottom="@dimen/card_bottom_margin"
-            android:foreground="?selectableItemBackground"
-            app:cardCornerRadius="@dimen/card_corner_radius"
-            app:cardElevation="3dp"
-            app:contentPadding="@dimen/card_content_padding"
-            style="@style/Widget.MaterialComponents.CardView">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:id="@+id/cooldown_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:paddingBottom="@dimen/card_content_padding">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                        android:text="@string/title_cooldown_control" />
-
-                    <ImageView
-                        android:id="@+id/cooldown_restore"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:padding="10dp"
-                        android:foregroundGravity="center"
-                        android:background="?selectableItemBackground"
-                        app:srcCompat="@drawable/ic_baseline_restore_24px"
-                        android:onClick="onCooldownRestore"
-                        android:contentDescription="@string/restore" />
-
-                    <ImageView
-                        android:id="@+id/cooldown_info"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:padding="10dp"
-                        android:foregroundGravity="center"
-                        android:background="?selectableItemBackground"
-                        app:srcCompat="@drawable/ic_baseline_info"
-                        android:onClick="onInfoClick"
-                        android:contentDescription="@string/info" />
-                </LinearLayout>
-
-                <Switch
-                    android:layout_below="@+id/cooldown_title"
-                    android:id="@+id/cooldown_switch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/enable_cooldown"
-                    android:textSize="16sp"
-                    android:checked="true"
-                    android:layout_marginBottom="16dp" />
-
-                <LinearLayout
-                    android:id="@+id/cooldown_labels"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/cooldown_switch"
-                    android:layout_marginBottom="8dp"
-                    android:weightSum="3"
-                    android:orientation="horizontal"
-                    android:gravity="center_horizontal">
-
-                    <TextView
-                        android:id="@+id/cooldown_percentage"
-                        android:gravity="center_horizontal"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="14sp"
-                        android:textColor="?android:attr/textColorPrimary"
-                        android:text="@string/cooldown_capacity"/>
-
-                    <TextView
-                        android:id="@+id/charge_ratio"
-                        android:gravity="center_horizontal"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="14sp"
-                        android:textColor="?android:attr/textColorPrimary"
-                        android:text="@string/charge_seconds"/>
-
-                    <TextView
-                        android:id="@+id/pause_ratio"
-                        android:gravity="center_horizontal"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="14sp"
-                        android:textColor="?android:attr/textColorPrimary"
-                        android:text="@string/pause_seconds"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/cooldown_pickers"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="3"
-                    android:layout_below="@+id/cooldown_labels">
-
-                    <NumberPicker
-                        android:id="@+id/cooldown_percentage_picker"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="3dp"
-                        android:layout_marginRight="3dp" />
-
-                    <NumberPicker
-                        android:id="@+id/charge_ratio_picker"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="3dp"
-                        android:layout_marginLeft="3dp" />
-
-                    <NumberPicker
-                        android:id="@+id/pause_ratio_picker"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="3dp"
-                        android:layout_marginLeft="3dp" />
-                </LinearLayout>
-
-            </RelativeLayout>
-        </com.google.android.material.card.MaterialCardView>
-
         <!-- Bottom most card - include android:layout_marginBottom for proper looks -->
         <com.google.android.material.card.MaterialCardView
             style="@style/Widget.MaterialComponents.CardView"
@@ -945,14 +939,16 @@
                         android:contentDescription="@string/info" />
                 </LinearLayout>
 
-                <Switch android:id="@+id/dash_resetStatusUnplug_switch"
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/dash_resetStatusUnplug_switch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/reset_unplugged"
                     android:textSize="16sp"
                     android:layout_marginBottom="10dp"/>
 
-                <Switch android:id="@+id/dash_resetBSOnPause_switch"
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/dash_resetBSOnPause_switch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/reset_bs_on_pause"

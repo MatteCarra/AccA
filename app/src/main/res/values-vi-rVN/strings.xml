@@ -121,7 +121,7 @@ Tiến trình nền DJS sẽ được bắt đầu khi khởi động cùng vớ
     <string name="automatic">Tự động</string>
     <string name="error_occurred">Có lỗi xảy ra</string>
     <string name="retry">Thử lại</string>
-    <string name="edit_charging_limit_once">Sạc đến #\%, bỏ qua các giới hạn</string>
+    <string name="edit_charging_limit_once_button">Sạc đến #\%, bỏ qua các giới hạn</string>
     <string name="done_applied_charge_limit">Sạc đến %1$d%%</string>
     <string name="charge_limit_not_applied">Đã hủy áp dụng mức sạc</string>
     <string name="apply">Áp dụng</string>

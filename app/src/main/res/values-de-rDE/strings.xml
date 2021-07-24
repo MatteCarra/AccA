@@ -127,7 +127,7 @@
     <string name="automatic">Automatisch</string>
     <string name="error_occurred">Ein Fehler ist aufgetreten</string>
     <string name="retry">Erneut versuchen</string>
-    <string name="edit_charging_limit_once">Einmal bis #\% ohne Einschränkungen aufladen</string>
+    <string name="edit_charging_limit_once_button">Einmal bis #\% ohne Einschränkungen aufladen</string>
     <string name="done_applied_charge_limit">Aufgeladen zu %1$d%%</string>
     <string name="charge_limit_not_applied">Ladelimit anwenden wurde aufgehoben</string>
     <string name="apply">Übernehmen</string>

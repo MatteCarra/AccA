@@ -124,7 +124,7 @@
     <string name="automatic">Автоматично</string>
     <string name="error_occurred">Сталася помилка</string>
     <string name="retry">Повтор</string>
-    <string name="edit_charging_limit_once">Зарядити один раз до #\%, без обмежень</string>
+    <string name="edit_charging_limit_once_button">Зарядити один раз до #\%, без обмежень</string>
     <string name="done_applied_charge_limit">Заряджається до %1$d%%</string>
     <string name="charge_limit_not_applied">Застосування ліміту заряду скасовано</string>
     <string name="apply">Застосувати</string>

@@ -127,7 +127,7 @@
     <string name="automatic">Automatisch</string>
     <string name="error_occurred">Er is een fout opgetreden</string>
     <string name="retry">Probeer opnieuw</string>
-    <string name="edit_charging_limit_once">Laad één keer tot #\%, zonder beperkingen</string>
+    <string name="edit_charging_limit_once_button">Laad één keer tot #\%, zonder beperkingen</string>
     <string name="done_applied_charge_limit">Opladen tot %1$d%%</string>
     <string name="charge_limit_not_applied">Oplaadlimiet geannuleerd</string>
     <string name="apply">Toepassen</string>

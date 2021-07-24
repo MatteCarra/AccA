@@ -121,7 +121,7 @@
     <string name="automatic">Automatico</string>
     <string name="error_occurred">Si è verificato un errore</string>
     <string name="retry">Riprova</string>
-    <string name="edit_charging_limit_once">Carica una volta sola fino a #\%, senza limitazioni</string>
+    <string name="edit_charging_limit_once_button">Carica una volta sola fino a #\%, senza limitazioni</string>
     <string name="done_applied_charge_limit">Ricarica fino a %1$d%%</string>
     <string name="charge_limit_not_applied">Impostazione del limite di ricarica annullato</string>
     <string name="apply">Applica</string>

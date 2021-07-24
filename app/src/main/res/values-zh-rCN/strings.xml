@@ -127,7 +127,7 @@
     <string name="automatic">自动</string>
     <string name="error_occurred">发生了一个错误</string>
     <string name="retry">重试</string>
-    <string name="edit_charging_limit_once">一次性充电至 #\%，无限制</string>
+    <string name="edit_charging_limit_once_button">一次性充电至 #\%，无限制</string>
     <string name="done_applied_charge_limit">充电到 %1$d%%</string>
     <string name="charge_limit_not_applied">充电限制已取消</string>
     <string name="apply">应用</string>

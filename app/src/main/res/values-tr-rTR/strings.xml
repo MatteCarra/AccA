@@ -125,7 +125,7 @@
     <string name="automatic">Otomatik</string>
     <string name="error_occurred">Bir hata oluştu</string>
     <string name="retry">Yeniden Dene</string>
-    <string name="edit_charging_limit_once">Kısıtlama olmaksızın #\% kadar bir kez şarj edin</string>
+    <string name="edit_charging_limit_once_button">Kısıtlama olmaksızın #\% kadar bir kez şarj edin</string>
     <string name="done_applied_charge_limit">%1$d%% kadar şarj ediliyor</string>
     <string name="apply">Uygula</string>
     <string name="done">Tamam</string>

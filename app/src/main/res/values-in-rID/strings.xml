@@ -123,7 +123,7 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="automatic">Otomatis</string>
     <string name="error_occurred">Sebuah kesalahan telah terjadi</string>
     <string name="retry">Mencoba kembali</string>
-    <string name="edit_charging_limit_once">Pengisian daya sekali untuk #\%, tanpa dibatasi</string>
+    <string name="edit_charging_limit_once_button">Pengisian daya sekali untuk #\%, tanpa dibatasi</string>
     <string name="done_applied_charge_limit">Mengisi daya sampai %1$d%%</string>
     <string name="apply">Menerapkan</string>
     <string name="done">Selesai</string>
