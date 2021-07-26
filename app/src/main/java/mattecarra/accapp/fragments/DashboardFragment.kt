@@ -124,7 +124,7 @@ class DashboardFragment : ScopedFragment() {
 
                 val picker = dialog.getCustomView().charging_limit
                 picker.maxValue = 100
-                picker.minValue = 50
+                picker.minValue = 20
                 picker.value = 100
             }
 
