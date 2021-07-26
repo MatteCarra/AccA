@@ -179,7 +179,7 @@ object Acc {
     }
 
     private fun getAccVersion(): Int? {
-        return Shell.su("/dev/acca --version").exec().out.joinToString(separator = "\n").split("(").last().split(")").first().trim().toIntOrNull() ?: getAccVersionLegacy()
+        return Shell.su("/dev/.vr25/acc/acc --version").exec().out.joinToString(separator = "\n").split("(").last().split(")").first().trim().toIntOrNull() ?: getAccVersionLegacy()
     }
 
     private fun getAccVersionLegacy(): Int? {

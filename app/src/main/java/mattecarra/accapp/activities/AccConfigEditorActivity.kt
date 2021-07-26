@@ -162,6 +162,10 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
 
     private fun updateChargeSwitch(configChargeSwitch: String?) {
         charging_switch_textview.text = configChargeSwitch ?: getString(R.string.automatic)
+        automatic_switch_enabled_switch.isEnabled = configChargeSwitch != null
+        if(configChargeSwitch == null) {
+            automatic_switch_enabled_switch.isChecked = true
+        }
     }
 
     private fun updateTemperatureCard(configTemperature: AccConfig.ConfigTemperature) {
