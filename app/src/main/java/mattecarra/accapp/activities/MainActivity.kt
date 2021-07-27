@@ -296,8 +296,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         // Set view items and assign values
         val titleTv = preView.findViewById<TextView>(R.id.preview_profile_title_tv)
         val capacityTv = preView.findViewById<TextView>(R.id.preview_profile_capacity_tv)
-        val chargingVoltTv =
-            preView.findViewById<TextView>(R.id.preview_profile_charging_voltage_tv)
+        val chargingVoltTv = preView.findViewById<TextView>(R.id.preview_profile_charging_voltage_tv)
         val temperatureTv = preView.findViewById<TextView>(R.id.preview_profile_temperature_tv)
         val onBootTv = preView.findViewById<TextView>(R.id.preview_profile_on_boot_tv)
         val onPlugTv = preView.findViewById<TextView>(R.id.preview_profile_on_plug_tv)
@@ -310,7 +309,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         temperatureTv.text = profile.accConfig.configTemperature.toString(this)
         onBootTv.text = profile.accConfig.configOnBoot
         onPlugTv.text = profile.accConfig.getOnPlug(this)
-        coolDownTv.text = profile.accConfig.configCoolDown?.toString(this) ?: "Cool Down Not Set"
+        coolDownTv.text = profile.accConfig.configCoolDown?.toString(this)
 
         dialog.show()
     }

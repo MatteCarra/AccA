@@ -184,7 +184,7 @@
     <string name="edit_on_plugged_dialog_message">Пример: wireless/voltage_max:9000000 usb/current_max:2000000</string>
     <string name="template_capacity_profile">Выключить: %1$d%% - Продолжить: %2$d%% - Остановить: %3$d%%</string>
     <string name="template_temperature_profile">Температура: %1$d&#176;C - Максимум: %2$d&#176;C - Пауза: %3$ds</string>
-    <string name="template_cool_down_profile">Начать с: %1$d%% - Заряжать в течение %2$ds - Пауза в течение %3$ds</string>
+    <string name="template_cool_down_profile">Начать с: %1$d%% - Заряжать: %2$ds - Пауза: %3$ds</string>
     <string name="installation_failed_busybox_title">Busybox не установлен</string>
     <string name="logs_not_found">Лог файл не найден.</string>
     <string name="current_measure_unit_preference_description">ACC получает информацию о зарядке из интерфейса sys.</string>
