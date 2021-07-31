@@ -11,10 +11,20 @@
     app:cardCornerRadius="@dimen/card_corner_radius"
     app:cardElevation="3dp">
 
+    <ImageView
+        android:id="@+id/item_profile_load_image"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="@dimen/fab_margin"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_baseline_restore_24px" />
+
     <LinearLayout
+        android:id="@+id/item_profile_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="visible">
 
         <!-- Selected Status View -->
         <View

@@ -63,6 +63,7 @@
                         android:background="?selectableItemBackground"
                         android:foregroundGravity="center"
                         android:onClick="batteryConfigOnClick"
+                        android:visibility="invisible"
                         android:padding="16dp"
                         app:srcCompat="@drawable/ic_outline_settings_24px" />
                 </RelativeLayout>
@@ -123,14 +124,16 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <RelativeLayout
+            android:id="@+id/current_profile"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent" />
+
         <com.google.android.material.card.MaterialCardView
             style="@style/Widget.MaterialComponents.CardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/card_margin"
-            android:layout_marginTop="@dimen/card_margin"
-            android:layout_marginRight="@dimen/card_margin"
-            android:layout_marginBottom="@dimen/card_bottom_margin"
+            android:layout_margin="@dimen/card_margin"
             android:foreground="?selectableItemBackground"
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="3dp"

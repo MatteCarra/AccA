@@ -891,10 +891,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             // Insert the databundle into the intent.
             intent.putExtra(Constants.DATA_KEY, dataBundle)
             intent.putExtra(Constants.ACC_CONFIG_KEY, profile.accConfig)
-            intent.putExtra(
-                Constants.TITLE_KEY,
-                this@MainActivity.getString(R.string.profile_creator)
-            )
+            intent.putExtra(Constants.TITLE_KEY, profile.profileName)
             startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
         }
     }

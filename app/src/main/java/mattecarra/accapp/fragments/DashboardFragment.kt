@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getColor
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
@@ -20,12 +22,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.Preferences
-
 import mattecarra.accapp.R
-import mattecarra.accapp.acc.Acc
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.observe
 import mattecarra.accapp.SharedViewModel
+import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.models.DashboardValues
 import mattecarra.accapp.utils.ScopedFragment
 import java.util.concurrent.atomic.AtomicBoolean
@@ -47,6 +46,7 @@ class DashboardFragment : ScopedFragment()
     }
 
     private val mViewModel: DashboardViewModel by activityViewModels()
+    private lateinit var mDashboardConfigFrg: DashboardConfigFragment
     private lateinit var configViewModel: SharedViewModel
     private lateinit var preferences: Preferences
     private var mIsDaemonRunning: Boolean? = null
@@ -61,6 +61,15 @@ class DashboardFragment : ScopedFragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
+
+        //-----------------------------------------------------------------
+
+        val transaction = activity?.supportFragmentManager?.beginTransaction()
+        mDashboardConfigFrg = DashboardConfigFragment.newInstance()
+        transaction?.replace(R.id.current_profile, mDashboardConfigFrg)
+        transaction?.commit()
+
+        //-----------------------------------------------------------------
 
         mViewModel.getDashboardValues().observe(viewLifecycleOwner) { dash ->
             // Set Status Card text
@@ -82,8 +91,8 @@ class DashboardFragment : ScopedFragment()
         }
 
         activity?.let { it ->
-            preferences = Preferences(it)
 
+            preferences = Preferences(it)
             configViewModel = ViewModelProvider(it).get(SharedViewModel::class.java)
 
             view.dash_resetBatteryStats_button.setOnClickListener {
@@ -206,38 +215,37 @@ class DashboardFragment : ScopedFragment()
 
     private fun setAccdStatusUi(running: Boolean?)
     {
-        if (running != null)
+        if (running == null) return
+
+        if (running)
         {
-            if (running)
-            {
-                // Hide progress bar
-                dash_accdStatus_pb.visibility = View.GONE
-                // Show and change icon
-                dash_accdStatus_imageView.visibility = View.VISIBLE
-                dash_accdStatus_frameLay.setBackgroundColor(getColor(requireActivity().baseContext, R.color.colorSuccessful))
-                dash_accdStatus_imageView.setImageResource(R.drawable.ic_outline_check_circle_24px)
-                dash_accdStatus_textView.setText(R.string.acc_daemon_status_running)
-                // Enable buttons
-                dash_daemonRestart_button.isEnabled = true
-                dash_daemonToggle_button.isEnabled = true
-                dash_daemonToggle_button.setIconResource(R.drawable.ic_outline_stop_24px)
-                dash_daemonToggle_button.setText(R.string.stop)
-            }
-            else
-            {
-                // Hide progress bar
-                dash_accdStatus_pb.visibility = View.GONE
-                // Show and change icon
-                dash_accdStatus_imageView.visibility = View.VISIBLE
-                dash_accdStatus_frameLay.setBackgroundColor(getColor(requireActivity().baseContext, R.color.color_error))
-                dash_accdStatus_imageView.setImageResource(R.drawable.ic_outline_error_outline_24px)
-                dash_accdStatus_textView.setText(R.string.acc_daemon_status_not_running)
-                // Enable buttons
-                dash_daemonRestart_button.isEnabled = true
-                dash_daemonToggle_button.isEnabled = true
-                dash_daemonToggle_button.setIconResource(R.drawable.ic_outline_play_arrow_24px)
-                dash_daemonToggle_button.setText(R.string.start)
-            }
+            // Hide progress bar
+            dash_accdStatus_pb.visibility = View.GONE
+            // Show and change icon
+            dash_accdStatus_imageView.visibility = View.VISIBLE
+            dash_accdStatus_frameLay.setBackgroundColor(getColor(requireActivity().baseContext, R.color.colorSuccessful))
+            dash_accdStatus_imageView.setImageResource(R.drawable.ic_outline_check_circle_24px)
+            dash_accdStatus_textView.setText(R.string.acc_daemon_status_running)
+            // Enable buttons
+            dash_daemonRestart_button.isEnabled = true
+            dash_daemonToggle_button.isEnabled = true
+            dash_daemonToggle_button.setIconResource(R.drawable.ic_outline_stop_24px)
+            dash_daemonToggle_button.setText(R.string.stop)
+        }
+        else
+        {
+            // Hide progress bar
+            dash_accdStatus_pb.visibility = View.GONE
+            // Show and change icon
+            dash_accdStatus_imageView.visibility = View.VISIBLE
+            dash_accdStatus_frameLay.setBackgroundColor(getColor(requireActivity().baseContext, R.color.color_error))
+            dash_accdStatus_imageView.setImageResource(R.drawable.ic_outline_error_outline_24px)
+            dash_accdStatus_textView.setText(R.string.acc_daemon_status_not_running)
+            // Enable buttons
+            dash_daemonRestart_button.isEnabled = true
+            dash_daemonToggle_button.isEnabled = true
+            dash_daemonToggle_button.setIconResource(R.drawable.ic_outline_play_arrow_24px)
+            dash_daemonToggle_button.setText(R.string.start)
         }
     }
 
