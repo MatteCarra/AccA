@@ -21,9 +21,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginBottom="@dimen/card_margindiv2"
             android:layout_marginTop="@dimen/card_margin"
-            android:layout_marginRight="@dimen/card_margin"
-            app:cardCornerRadius="@dimen/card_corner_radius"
+            android:layout_marginRight="@dimen/card_margin"            app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="3dp"
             app:contentPadding="@dimen/card_content_padding">
 
@@ -133,7 +133,10 @@
             style="@style/Widget.MaterialComponents.CardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginBottom="@dimen/card_margin"
+            android:layout_marginTop="@dimen/card_margindiv2"
+            android:layout_marginRight="@dimen/card_margin"
             android:foreground="?selectableItemBackground"
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="3dp"
