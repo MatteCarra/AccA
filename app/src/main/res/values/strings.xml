@@ -176,8 +176,64 @@
     <string name="label_on_plugged" translatable="false">applyOnPlug:</string>
     <string name="edit_on_plugged">Edit apply_on_plug settings:</string>
 
-    <string name="edit_on_plugged_dialog_message">Example: wireless/voltage_max::9000000 forces fast wireless charging on some Pixel devices.
-    </string>
+    <string name="edit_on_plugged_dialog_message">Example: wireless/voltage_max::9000000 forces fast wireless charging on some Pixel devices.</string>
+
+    <string translatable="false" name="lang_ar">العربية</string>
+    <string translatable="false" name="lang_az">Azərbaycan</string>
+    <string translatable="false" name="lang_bg">Български</string>
+    <string translatable="false" name="lang_bs">Bosanski</string>
+    <string translatable="false" name="lang_by">Беларускі</string>
+    <string translatable="false" name="lang_ca">Català</string>
+    <string translatable="false" name="lang_cs">Česky</string>
+    <string translatable="false" name="lang_da">Dansk</string>
+    <string translatable="false" name="lang_de">Deutsch</string>
+    <string translatable="false" name="lang_default">Default as System</string>
+    <string translatable="false" name="lang_el">Default</string>
+    <string translatable="false" name="lang_es">Español</string>
+    <string translatable="false" name="lang_es_mx">Español mexicano</string>
+    <string translatable="false" name="lang_et">Eesti</string>
+    <string translatable="false" name="lang_eu">Euskara</string>
+    <string translatable="false" name="lang_fa">فارسی</string>
+    <string translatable="false" name="lang_fi">Suomi</string>
+    <string translatable="false" name="lang_fil">Tagalog</string>
+    <string translatable="false" name="lang_fr">Français</string>
+    <string translatable="false" name="lang_ga">Gaeilge</string>
+    <string translatable="false" name="lang_gr">Ελληνικά</string>
+    <string translatable="false" name="lang_he">עברית</string>
+    <string translatable="false" name="lang_hi">हिन्दी</string>
+    <string translatable="false" name="lang_hr">Hrvatski</string>
+    <string translatable="false" name="lang_hu">Magyar</string>
+    <string translatable="false" name="lang_in">Bahasa Indonesia</string>
+    <string translatable="false" name="lang_it">Italiano</string>
+    <string translatable="false" name="lang_ja">日本国</string>
+    <string translatable="false" name="lang_ka">ქართული</string>
+    <string translatable="false" name="lang_ko">한국어</string>
+    <string translatable="false" name="lang_lt">Lietuvių</string>
+    <string translatable="false" name="lang_lv">Latviešu</string>
+    <string translatable="false" name="lang_ms">Melayu</string>
+    <string translatable="false" name="lang_my">မြန်မာဘာသာ</string>
+    <string translatable="false" name="lang_nl">Nederlands</string>
+    <string translatable="false" name="lang_no">Norsk</string>
+    <string translatable="false" name="lang_pl">Polski</string>
+    <string translatable="false" name="lang_pt">Português</string>
+    <string translatable="false" name="lang_pt_br">Português brasileiro</string>
+    <string translatable="false" name="lang_ro">Română</string>
+    <string translatable="false" name="lang_ru">Русский</string>
+    <string translatable="false" name="lang_si">සිංහල</string>
+    <string translatable="false" name="lang_sk">Slovenčina</string>
+    <string translatable="false" name="lang_sl">Slovenščina</string>
+    <string translatable="false" name="lang_sq">Shqip</string>
+    <string translatable="false" name="lang_sr">Српски</string>
+    <string translatable="false" name="lang_sr_cs">Srpski</string>
+    <string translatable="false" name="lang_sv">Svenska</string>
+    <string translatable="false" name="lang_th">ไทย</string>
+    <string translatable="false" name="lang_tr">Türkçe</string>
+    <string translatable="false" name="lang_uk">Українська</string>
+    <string translatable="false" name="lang_us">English</string>
+    <string translatable="false" name="lang_uz">Ўзбек</string>
+    <string translatable="false" name="lang_vi">Tiếng Việt</string>
+    <string translatable="false" name="lang_zh">中文</string>
+    <string translatable="false" name="lang_zh_tw">文言</string>
 
     <string name="template_capacity_profile">Shutdown: %1$d%% - Resume: %2$d%% - Stop: %3$d%%</string>
     <string name="template_temperature_profile">Temperature: %1$d&#176;C - Max: %2$d&#176;C - Pause: %3$ds</string>
@@ -278,6 +334,53 @@
         <item>Light</item>
         <item>Dark</item>
         <item>System default</item>
+    </string-array>
+
+    <string name="lang_pref_title">Language</string>
+    <string name="lang_pref_summary">Select the application language. After selecting you need to restart the application</string>
+
+    <string-array name="lang_pref_entries">
+        <item>@string/lang_default</item>
+        <item>@string/lang_ar</item>
+        <item>@string/lang_nl</item>
+        <item>@string/lang_fr</item>
+        <item>@string/lang_de</item>
+        <item>@string/lang_gr</item>
+        <item>@string/lang_hu</item>
+        <item>@string/lang_in</item>
+        <item>@string/lang_it</item>
+        <item>@string/lang_ja</item>
+        <item>@string/lang_ko</item>
+        <item>@string/lang_pl</item>
+        <item>@string/lang_pt</item>
+        <item>@string/lang_ru</item>
+        <item>@string/lang_es</item>
+        <item>@string/lang_tr</item>
+        <item>@string/lang_uk</item>
+        <item>@string/lang_vi</item>
+        <item>@string/lang_zh</item>
+    </string-array>
+
+    <string-array name="lang_pref_value">
+        <item>def</item>
+        <item>ar</item>
+        <item>nl</item>
+        <item>fr</item>
+        <item>de</item>
+        <item>gr</item>
+        <item>hu</item>
+        <item>in</item>
+        <item>it</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pl</item>
+        <item>pt</item>
+        <item>ru</item>
+        <item>es</item>
+        <item>tr</item>
+        <item>uk</item>
+        <item>vi</item>
+        <item>zh</item>
     </string-array>
 
     <string-array name="schedule_type_entries">

@@ -167,6 +167,8 @@
         <item>Запустить один раз</item>
         <item>Запустить при перезагрузке</item>
     </string-array>
+    <string name="lang_pref_title">Язык</string>
+    <string name="lang_pref_summary">Выберите язык для приложения. После выбора необходимо перезапустить приложение</string>
     <string name="menu_import_export">Импорт/Экспорт</string>
     <string name="execute_on_boot_schedule">Выполнить при загрузке</string>
     <string name="edit_schedule">Изменить расписание</string>

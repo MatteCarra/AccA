@@ -2,6 +2,7 @@ package mattecarra.accapp.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -13,6 +14,8 @@ import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.Preference
+import androidx.preference.PreferenceManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
@@ -39,6 +42,8 @@ import mattecarra.accapp.models.ProfileEntry
 import mattecarra.accapp.models.Schedule
 import mattecarra.accapp.utils.*
 import java.io.File
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
     OnProfileClickListener {
@@ -508,9 +513,27 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         setTheme(R.style.AccaTheme_DayNight)
         super.onCreate(savedInstanceState)
+
+        //--------------------------------------------------
+
+        val spl = PreferenceManager.getDefaultSharedPreferences(this).getString("language", "def")
+
+        val config = resources.configuration
+        val locale = if (spl.equals("def")) Locale.getDefault() else Locale(spl)
+
+        Locale.setDefault(locale)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) config.setLocale(locale) else config.locale = locale
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) createConfigurationContext(config)
+
+        resources.updateConfiguration(config, resources.displayMetrics)
+
+        //--------------------------------------------------
+
         setContentView(R.layout.activity_main)
 
         setSupportActionBar(main_toolbar)
