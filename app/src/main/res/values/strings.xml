@@ -193,6 +193,7 @@
     <string translatable="false" name="lang_es_mx">Español mexicano</string>
     <string translatable="false" name="lang_et">Eesti</string>
     <string translatable="false" name="lang_eu">Euskara</string>
+    <string translatable="false" name="lang_en">English</string>
     <string translatable="false" name="lang_fa">فارسی</string>
     <string translatable="false" name="lang_fi">Suomi</string>
     <string translatable="false" name="lang_fil">Tagalog</string>
@@ -229,7 +230,6 @@
     <string translatable="false" name="lang_th">ไทย</string>
     <string translatable="false" name="lang_tr">Türkçe</string>
     <string translatable="false" name="lang_uk">Українська</string>
-    <string translatable="false" name="lang_us">English</string>
     <string translatable="false" name="lang_uz">Ўзбек</string>
     <string translatable="false" name="lang_vi">Tiếng Việt</string>
     <string translatable="false" name="lang_zh">中文</string>
@@ -341,6 +341,7 @@
 
     <string-array name="lang_pref_entries">
         <item>@string/lang_default</item>
+        <item>@string/lang_en</item>
         <item>@string/lang_ar</item>
         <item>@string/lang_nl</item>
         <item>@string/lang_fr</item>
@@ -363,6 +364,7 @@
 
     <string-array name="lang_pref_value">
         <item>def</item>
+        <item>en</item>
         <item>ar</item>
         <item>nl</item>
         <item>fr</item>
@@ -404,8 +406,9 @@
     <string name="about_attributes">Attributes</string>
     <string name="about_attrib_telegram_icon">Telegram icon made by Pixel perfect from www.flaticon.com</string>
 
-    <string name="about_acca_version_label">AccA Version:</string>
-    <string name="about_acc_version_label">ACC Version:</string>
+    <string name="about_acca_version_label">ACCA Version:</string>
+    <string name="about_acc_daemon_version_label">ACC Daemon Version:</string>
+    <string name="about_acc_api_version_label">ACCA⇄ACC API Version:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>

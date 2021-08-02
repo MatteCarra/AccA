@@ -19,7 +19,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -30,14 +30,39 @@
             android:padding="10dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/log_button_end"
+            android:id="@+id/log_button_clear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
+            android:layout_alignEnd="@id/log_recycler"
+            android:layout_alignRight="@id/log_recycler"
+            android:layout_above="@id/log_button_pause"
             android:layout_margin="@dimen/fab_margin"
             app:elevation="@dimen/ttlm_default_elevation"
-            app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24px" />
+            app:srcCompat="@drawable/ic_baseline_delete_24" />
 
-    </FrameLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/log_button_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/log_recycler"
+            android:layout_alignRight="@id/log_recycler"
+            android:layout_above="@id/log_button_scroll_end"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
+            app:elevation="@dimen/ttlm_default_elevation"
+            app:srcCompat="@drawable/ic_baseline_pause_24" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/log_button_scroll_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/log_recycler"
+            android:layout_alignRight="@id/log_recycler"
+            android:layout_alignBottom="@id/log_recycler"
+            android:layout_margin="@dimen/fab_margin"
+            app:elevation="@dimen/ttlm_default_elevation"
+            app:srcCompat="@drawable/ic_baseline_scrolldown_24" />
+
+    </RelativeLayout>
 
 </LinearLayout>

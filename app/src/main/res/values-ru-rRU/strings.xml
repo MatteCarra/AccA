@@ -3,7 +3,7 @@
     <string name="app_name">AccA</string>
     <string name="app_name_full">Advanced Charging Controller App</string>
     <string name="title_activity_log_view">Отчеты</string>
-    <string name="title_activity_log_view_file_name">Отчеты</string>
+    <string name="title_activity_log_view_file_name">Отчет</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">Отсутствует Root</string>
     <string name="tile_acc_enabled">ACC Включён</string>
@@ -216,12 +216,13 @@
     <string name="schedule_profile_keep_current">Сохранить текущую конфигурацию</string>
     <string name="schedule_type">Тип расписания</string>
     <string name="schedule_name">Имя расписания</string>
-    <string name="about_team_title">"Встретить команду "</string>
+    <string name="about_team_title">Познакомьтесь с командой</string>
     <string name="about_team_blurb">Спасибо за использование ACCA!</string>
     <string name="about_attributes">Атрибуты</string>
     <string name="about_attrib_telegram_icon">Telegram Icon, сделанный по пикселю, идеально подходит от www.flaticon.com</string>
     <string name="about_acca_version_label">Версия ACCA:</string>
-    <string name="about_acc_version_label">Версия ACC:</string>
+    <string name="about_acc_daemon_version_label">Версия ядра ACC:</string>
+    <string name="about_acc_api_version_label">ACCA⇄ACC API версия:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="import_title">Импорт</string>

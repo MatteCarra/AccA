@@ -9,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.topjohnwu.superuser.CallbackList
@@ -49,6 +48,11 @@ class LogViewerActivity : AppCompatActivity()
         onBottom = true
     }
 
+    private fun setTitleCount(count: Int)
+    {
+        supportActionBar?.title = getString(R.string.title_activity_log_view_file_name) + ": " + count.toString()
+    }
+
     private val clickerListener: (String) -> Unit = { line: String ->
         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         clipboard.setPrimaryClip(ClipData.newPlainText("log line", line))
@@ -78,7 +82,14 @@ class LogViewerActivity : AppCompatActivity()
         log_recycler.adapter = adapter
         log_recycler.setHasFixedSize(true)
         linearLayoutManager.stackFromEnd = true
-        log_button_end.setOnClickListener(View.OnClickListener { scrollToBottom() })
+
+        log_button_scroll_end.setOnClickListener { scrollToBottom() }
+        log_button_clear.setOnClickListener { adapter.clearAll(); setTitleCount(0) }
+
+        log_button_pause.setOnClickListener {
+            isPaused = !isPaused
+            log_button_pause.setImageResource(if (isPaused) R.drawable.ic_baseline_play_arrow_24 else R.drawable.ic_baseline_pause_24)
+        }
 
         log_recycler.addOnScrollListener(object : RecyclerView.OnScrollListener()
         {
@@ -97,7 +108,7 @@ class LogViewerActivity : AppCompatActivity()
                     e?.let {
                         adapter.add(it, !isPaused)
                         if (!isPaused && onBottom) scrollToBottom()
-                        supportActionBar?.title = getString(R.string.title_activity_log_view_file_name) + ": " + adapter.lines.size.toString()
+                        setTitleCount(adapter.lines.size)
                     }
                 }
 

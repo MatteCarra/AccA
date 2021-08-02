@@ -242,7 +242,7 @@ Nếu đơn vị được phát hiện không chính xác, bạn có thể đặ
     <string name="about_attributes">Thuộc Tính</string>
     <string name="about_attrib_telegram_icon">Biểu tượng Telegram do Pixel hoàn thiện từ www.flaticon.com</string>
     <string name="about_acca_version_label">Phiên bản AccA:</string>
-    <string name="about_acc_version_label">Phiên bản ACC:</string>
+    <string name="about_acc_api_version_label">Phiên bản ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>

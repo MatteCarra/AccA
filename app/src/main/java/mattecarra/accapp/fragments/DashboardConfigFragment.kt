@@ -9,10 +9,6 @@ import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.profiles_item.*
 import kotlinx.coroutines.launch
@@ -30,6 +26,7 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
 {
     private lateinit var mContext: Context
     private lateinit var mViewModel: ProfilesViewModel
+    private lateinit var mSharedViewModel: SharedViewModel
     private lateinit var mPrefs: SharedPreferences
 
     private var mActiveProfile: Boolean = false
@@ -55,13 +52,15 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
 
         mContext = requireContext()
         mViewModel = ViewModelProviders.of(this).get(ProfilesViewModel::class.java)
+        mSharedViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
         mPrefs.registerOnSharedPreferenceChangeListener(this)
 
-        view.setOnClickListener(  View.OnClickListener {
+        view.setOnClickListener(View.OnClickListener {
             Intent(view.context, AccConfigEditorActivity::class.java).also { intent ->
-                startActivityForResult(intent, ACC_CONFIG_EDITOR_REQUEST) }
+                startActivityForResult(intent, ACC_CONFIG_EDITOR_REQUEST)
+            }
         })
 
         checkProfile()
@@ -75,7 +74,7 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
             val currentConfig = Acc.instance.readConfig()
             val selectedProfileConfig = mViewModel.getProfile(profileId)?.accConfig
 
-            if(profileId == -1 || currentConfig != selectedProfileConfig)
+            if (profileId == -1 || currentConfig != selectedProfileConfig)
             {
                 updateInfo(AccaProfile(0, getString(R.string.profile_not_selected), currentConfig))
             }
@@ -93,7 +92,7 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
 
         // if on\off getting from AccConfigEditorActivity :: 168
         // todo prop temperatureTv on\off no exist in table\data ... coolDownLL too
-        item_profile_temperature_ll.visibility = if(mProfile.accConfig.configTemperature.coolDownTemperature >= 90 && mProfile.accConfig.configTemperature.maxTemperature >= 95) View.GONE else View.VISIBLE;
+        item_profile_temperature_ll.visibility = if (mProfile.accConfig.configTemperature.coolDownTemperature >= 90 && mProfile.accConfig.configTemperature.maxTemperature >= 95) View.GONE else View.VISIBLE;
         item_profile_temperature_tv.text = mProfile.accConfig.configTemperature.toString(mContext)
 
         // todo add and integrate current
@@ -101,7 +100,7 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
         item_profile_charging_voltage_tv.text = mProfile.accConfig.configVoltage.toString()
 
         // if on\off getting from AccConfigEditorActivity :: 196
-        item_profile_cooldown_ll.visibility = if(mProfile.accConfig.configCoolDown == null || mProfile.accConfig.configCoolDown!!.atPercent > 100)  View.GONE else View.VISIBLE;
+        item_profile_cooldown_ll.visibility = if (mProfile.accConfig.configCoolDown == null || mProfile.accConfig.configCoolDown!!.atPercent > 100) View.GONE else View.VISIBLE;
         item_profile_cooldown_tv.text = mProfile.accConfig.configCoolDown?.toString(mContext)
 
         item_profile_on_boot_ll.visibility = if (mProfile.accConfig.configOnBoot == null) View.GONE else View.VISIBLE
@@ -130,21 +129,16 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
         {
             ACC_CONFIG_EDITOR_REQUEST ->
             {
-                if (resultCode == Activity.RESULT_OK)
+                if (resultCode == Activity.RESULT_OK && data?.getBooleanExtra(Constants.ACC_HAS_CHANGES, false) == true)
                 {
-                    val _sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
+                    launch {
+                        mSharedViewModel.updateAccConfig(data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig) //TODO: Check assertion
+                        // Remove the current selected profile
+                        mSharedViewModel.clearCurrentSelectedProfile()
 
-                    if (data?.getBooleanExtra(Constants.ACC_HAS_CHANGES, false) == true)
-                    {
-                        launch {
-                            _sharedViewModel.updateAccConfig(data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig) //TODO: Check assertion
-
-                            // Remove the current selected profile
-                            _sharedViewModel.clearCurrentSelectedProfile()
-
-                            updateInfo(AccaProfile(0, getString(R.string.profile_not_selected), data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig))
-                        }
+                        updateInfo(AccaProfile(0, getString(R.string.profile_not_selected), data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig))
                     }
+
                 }
             }
         }
