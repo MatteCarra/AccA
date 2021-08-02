@@ -231,7 +231,7 @@
     <string name="edit_schedule">スケジュール編集</string>
     <string name="create_schedule">スケジュール作成</string>
     <!-- About Activity -->
-    <string name="about_acc_version_label">ACCバージョン:</string>
+    <string name="about_acc_api_version_label">ACCバージョン:</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">ウェブサイト</string>

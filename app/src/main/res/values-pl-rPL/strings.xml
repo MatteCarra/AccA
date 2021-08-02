@@ -194,7 +194,7 @@
     <string name="edit_schedule">Edytuj harmonogram</string>
     <string name="create_schedule">Utwórz harmonogram</string>
     <!-- About Activity -->
-    <string name="about_acc_version_label">Wersja ACC:</string>
+    <string name="about_acc_api_version_label">Wersja ACC:</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Strona internetowa</string>
     <string name="charging_switch_on_value_label">WARTOŚĆ ON przełącznika ładowania</string>

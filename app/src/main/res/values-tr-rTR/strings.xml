@@ -220,7 +220,7 @@
     <string name="edit_schedule">Zamanlamayı düzenle</string>
     <string name="create_schedule">Zamanlama yarat</string>
     <!-- About Activity -->
-    <string name="about_acc_version_label">ACC Versiyonu:</string>
+    <string name="about_acc_api_version_label">ACC Versiyonu:</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Web Sitesi</string>
     <string name="charging_switch_on_value_label">Şarj anahtarı ON VALUE</string>

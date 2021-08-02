@@ -202,7 +202,7 @@
     <string name="about_team_title">Γνωρίστε την Ομάδα</string>
     <string name="about_attributes">Χαρακτηριστικά</string>
     <string name="about_attrib_telegram_icon">Το εικονίδιο στο Telegram δημιουργήθηκε από την Pixel perfect από το www.flaticon.com</string>
-    <string name="about_acc_version_label">Έκδοση ACC:</string>
+    <string name="about_acc_api_version_label">Έκδοση ACC:</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Ιστοσελίδα</string>
     <string name="toast_no_browser_installed">Αδυναμία ανοίγματος συνδέσμου!\nΣιγουρευτείτε πως έχετε περιηγητή δικτύου εγκατεστημένο.</string>

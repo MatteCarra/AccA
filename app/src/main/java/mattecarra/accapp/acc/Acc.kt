@@ -182,6 +182,10 @@ object Acc {
         return Shell.su("/dev/acca --version").exec().out.joinToString(separator = "\n").split("(").last().split(")").first().trim().toIntOrNull() ?: getAccVersionLegacy()
     }
 
+    fun getAccVersionToStr(): String {
+        return Shell.su("/dev/acca --version").exec().out.joinToString(separator = "\n").toString()
+    }
+
     private fun getAccVersionLegacy(): Int? {
         return Shell.su("acc --version").exec().out.joinToString(separator = "\n").split("(").last().split(")").first().trim().toIntOrNull()
     }

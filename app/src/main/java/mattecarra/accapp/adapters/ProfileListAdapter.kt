@@ -51,7 +51,8 @@ class ProfileListAdapter internal constructor(context: Context, activeProfileId:
         }
 
         override fun onLongClick(v: View?): Boolean {
-            mListener.onProfileLongClick(mProfilesList[adapterPosition])
+        //  mListener.onProfileLongClick(mProfilesList[adapterPosition])
+            mListener.editProfile(mProfilesList[adapterPosition])
             return true
         }
     }

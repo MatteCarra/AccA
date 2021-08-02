@@ -1,354 +1,375 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".activities.AboutActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.AboutActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:elevation="0dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/about_toolbar"
-                style="?toolbarStyle"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:title="@string/about" />
+            android:id="@+id/about_toolbar"
+            style="?toolbarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="@string/about" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:clipChildren="false"
-            android:paddingBottom="@dimen/card_content_margin"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/card_content_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.MaterialComponents.CardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-            <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.MaterialComponents.CardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/card_margin"
-                    android:layout_marginTop="@dimen/card_margin"
-                    android:layout_marginRight="@dimen/card_margin"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
-                    app:cardElevation="3dp"
-                    app:contentPadding="@dimen/card_content_padding">
+                android:layout_marginLeft="@dimen/card_margin"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginRight="@dimen/card_margin"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="3dp"
+                app:contentPadding="@dimen/card_content_padding">
 
                 <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                         <ImageView
-                                android:id="@+id/about_app_icon_iv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_centerVertical="true"
-                                android:layout_marginEnd="@dimen/card_margin"
-                                android:layout_marginRight="@dimen/card_margin"
-                                android:src="@mipmap/ic_launcher_round" />
+                            android:id="@+id/about_app_icon_iv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/card_margin"
+                            android:layout_marginRight="@dimen/card_margin"
+                            android:src="@mipmap/ic_launcher_round" />
 
                         <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/about_app_icon_iv"
+                            android:layout_toRightOf="@+id/about_app_icon_iv"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/about_app_name_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_toEndOf="@+id/about_app_icon_iv"
-                                android:layout_toRightOf="@+id/about_app_icon_iv"
-                                android:orientation="vertical">
+                                android:text="@string/app_name"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
 
                             <TextView
-                                    android:id="@+id/about_app_name_tv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/app_name"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
-
-                            <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/app_name_full" />
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/app_name_full" />
                         </LinearLayout>
                     </RelativeLayout>
 
                     <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/card_margin">
-
-                        <TextView
-                                android:id="@+id/about_acca_version_label_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/card_margin"
-                                android:layout_marginRight="@dimen/card_margin"
-                                android:text="@string/about_acca_version_label" />
-
-
-                        <TextView
-                                android:id="@+id/acca_version_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_toEndOf="@+id/about_acca_version_label_tv"
-                                android:layout_toRightOf="@+id/about_acca_version_label_tv"
-                                android:text="1.9.10" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/card_margin">
-
-                        <TextView
-                                android:id="@+id/about_acc_version_label_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/card_margin"
-                                android:layout_marginRight="@dimen/card_margin"
-                                android:text="@string/about_acc_version_label" />
-
-
-                        <TextView
-                                android:id="@+id/acc_version_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_toEndOf="@+id/about_acc_version_label_tv"
-                                android:layout_toRightOf="@+id/about_acc_version_label_tv"
-                                android:text="20190801" />
-                    </RelativeLayout>
-
-                    <com.google.android.material.button.MaterialButton
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/card_margin"
-                            app:icon="@drawable/ic_github_mark"
-                            android:text="@string/about_project_github"
-                            android:ellipsize="end"
-                            android:onClick="accaGitHubOnClick"
-                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
-
-                    <com.google.android.material.button.MaterialButton
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/card_margin"
-                            app:icon="@drawable/ic_telegram"
-                            android:text="@string/about_project_telegram"
-                            android:ellipsize="end"
-                            android:onClick="accaTelegramOnClick"
-                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/card_margin"
-                    android:layout_marginTop="@dimen/card_margin"
-                    android:layout_marginRight="@dimen/card_margin"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
-                    app:cardElevation="3dp"
-                    app:contentPadding="@dimen/card_content_padding">
-
-                <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/about_team_title"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/about_team_blurb" />
-
-                    <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/about_profile_margin">
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/about_vr25_profile_iv"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_marginRight="@dimen/about_profile_margin"
-                                android:layout_marginEnd="@dimen/about_profile_margin"
-                                android:src="@drawable/vr_25_pic" />
+                        android:layout_marginTop="@dimen/card_margin">
 
                         <TextView
-                                android:id="@+id/about_vr25_name_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_toEndOf="@id/about_vr25_profile_iv"
-                                android:layout_toRightOf="@id/about_vr25_profile_iv"
-                                android:text="VR-25"
-                                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+                            android:id="@+id/about_acca_version_label_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/card_margin"
+                            android:layout_marginRight="@dimen/card_margin"
+                            android:text="@string/about_acca_version_label" />
+
+                        <TextView
+                            android:id="@+id/about_acca_version_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/about_acca_version_label_tv"
+                            android:layout_toRightOf="@+id/about_acca_version_label_tv"
+                            android:text="1.9.10" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/card_margin">
+
+                        <TextView
+                            android:id="@+id/about_acc_daemon_version_label_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/card_margin"
+                            android:layout_marginRight="@dimen/card_margin"
+                            android:text="@string/about_acc_daemon_version_label" />
+
+                        <TextView
+                            android:id="@+id/about_acc_daemon_version_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/about_acc_daemon_version_label_tv"
+                            android:layout_toRightOf="@+id/about_acc_daemon_version_label_tv"
+                            android:text="202107281" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/card_margin">
+
+                        <TextView
+                            android:id="@+id/about_acc_api_version_label_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/card_margin"
+                            android:layout_marginRight="@dimen/card_margin"
+                            android:text="@string/about_acc_api_version_label" />
+
+                        <TextView
+                            android:id="@+id/about_acc_api_version_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/about_acc_api_version_label_tv"
+                            android:layout_toRightOf="@+id/about_acc_api_version_label_tv"
+                            android:text="20190801" />
+                    </RelativeLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/card_margin"
+                        android:ellipsize="end"
+                        android:onClick="accaGitHubOnClick"
+                        android:text="@string/about_project_github"
+                        app:icon="@drawable/ic_github_mark" />
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/card_margin"
+                        android:ellipsize="end"
+                        android:onClick="accaTelegramOnClick"
+                        android:text="@string/about_project_telegram"
+                        app:icon="@drawable/ic_telegram" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/card_margin"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginRight="@dimen/card_margin"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="3dp"
+                app:contentPadding="@dimen/card_content_padding">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/about_team_title"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/about_team_blurb" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/about_profile_margin">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/about_vr25_profile_iv"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginEnd="@dimen/about_profile_margin"
+                            android:layout_marginRight="@dimen/about_profile_margin"
+                            android:src="@drawable/vr_25_pic" />
+
+                        <TextView
+                            android:id="@+id/about_vr25_name_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/about_vr25_profile_iv"
+                            android:layout_toRightOf="@id/about_vr25_profile_iv"
+                            android:text="VR-25"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
                         <LinearLayout
-                                android:layout_width="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/about_vr25_name_tv"
+                            android:layout_alignBaseline="@id/about_vr25_profile_iv"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="@dimen/card_margin"
+                            android:layout_toEndOf="@id/about_vr25_profile_iv"
+                            android:layout_toRightOf="@id/about_vr25_profile_iv"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <com.google.android.material.button.MaterialButton
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/about_vr25_name_tv"
-                                android:layout_alignBaseline="@id/about_vr25_profile_iv"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginTop="@dimen/card_margin"
-                                android:layout_toEndOf="@id/about_vr25_profile_iv"
-                                android:layout_toRightOf="@id/about_vr25_profile_iv"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
+                                android:layout_marginEnd="@dimen/card_margin"
+                                android:layout_marginRight="@dimen/card_margin"
+                                android:layout_weight="1"
+                                android:ellipsize="end"
+                                android:onClick="vr25GitHubOnClick"
+                                android:text="@string/about_github"
+                                app:icon="@drawable/ic_github_mark" />
 
                             <com.google.android.material.button.MaterialButton
-                                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="@dimen/card_margin"
-                                    android:layout_marginRight="@dimen/card_margin"
-                                    android:layout_weight="1"
-                                    android:text="@string/about_github"
-                                    android:ellipsize="end"
-                                    app:icon="@drawable/ic_github_mark"
-                                    android:onClick="vr25GitHubOnClick"/>
-
-                            <com.google.android.material.button.MaterialButton
-                                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:ellipsize="end"
-                                    android:text="@string/about_website"
-                                    android:onClick="vr25WebsiteOnClick"/>
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ellipsize="end"
+                                android:onClick="vr25WebsiteOnClick"
+                                android:text="@string/about_website" />
                         </LinearLayout>
                     </RelativeLayout>
 
                     <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/about_profile_margin">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/about_profile_margin">
 
                         <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/about_mattecarra_profile_iv"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_marginRight="@dimen/about_profile_margin"
-                                android:layout_marginEnd="@dimen/about_profile_margin"
-                                android:src="@drawable/matte_carra_pic" />
+                            android:id="@+id/about_mattecarra_profile_iv"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginEnd="@dimen/about_profile_margin"
+                            android:layout_marginRight="@dimen/about_profile_margin"
+                            android:src="@drawable/matte_carra_pic" />
 
                         <TextView
-                                android:id="@+id/about_mattecarra_name_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_toEndOf="@id/about_mattecarra_profile_iv"
-                                android:layout_toRightOf="@id/about_mattecarra_profile_iv"
-                                android:text="Matteo Carrara"
-                                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+                            android:id="@+id/about_mattecarra_name_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/about_mattecarra_profile_iv"
+                            android:layout_toRightOf="@id/about_mattecarra_profile_iv"
+                            android:text="Matteo Carrara"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
                         <LinearLayout
-                                android:layout_width="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/about_mattecarra_name_tv"
+                            android:layout_alignBaseline="@id/about_mattecarra_profile_iv"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="@dimen/card_margin"
+                            android:layout_toEndOf="@id/about_mattecarra_profile_iv"
+                            android:layout_toRightOf="@id/about_mattecarra_profile_iv"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <com.google.android.material.button.MaterialButton
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/about_mattecarra_name_tv"
-                                android:layout_alignBaseline="@id/about_mattecarra_profile_iv"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginTop="@dimen/card_margin"
-                                android:layout_toEndOf="@id/about_mattecarra_profile_iv"
-                                android:layout_toRightOf="@id/about_mattecarra_profile_iv"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
+                                android:layout_marginEnd="@dimen/card_margin"
+                                android:layout_marginRight="@dimen/card_margin"
+                                android:layout_weight="1"
+                                android:ellipsize="end"
+                                android:onClick="matteGitHubOnClick"
+                                android:text="@string/about_github"
+                                app:icon="@drawable/ic_github_mark" />
 
                             <com.google.android.material.button.MaterialButton
-                                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="@dimen/card_margin"
-                                    android:layout_marginRight="@dimen/card_margin"
-                                    android:layout_weight="1"
-                                    android:text="@string/about_github"
-                                    android:ellipsize="end"
-                                    app:icon="@drawable/ic_github_mark"
-                                    android:onClick="matteGitHubOnClick"/>
-
-                            <com.google.android.material.button.MaterialButton
-                                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="@string/about_website"
-                                    android:ellipsize="end"
-                                    android:onClick="matteWebsiteOnClick"/>
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ellipsize="end"
+                                android:onClick="matteWebsiteOnClick"
+                                android:text="@string/about_website" />
                         </LinearLayout>
                     </RelativeLayout>
 
                     <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/about_profile_margin">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/about_profile_margin">
 
                         <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/about_squabbi_profile_iv"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_marginRight="@dimen/about_profile_margin"
-                                android:layout_marginEnd="@dimen/about_profile_margin"
-                                android:src="@drawable/squabbi_pic" />
+                            android:id="@+id/about_squabbi_profile_iv"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginEnd="@dimen/about_profile_margin"
+                            android:layout_marginRight="@dimen/about_profile_margin"
+                            android:src="@drawable/squabbi_pic" />
 
                         <TextView
-                                android:id="@+id/about_squabbi_name_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_toEndOf="@id/about_squabbi_profile_iv"
-                                android:layout_toRightOf="@id/about_squabbi_profile_iv"
-                                android:text="Squabbi"
-                                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+                            android:id="@+id/about_squabbi_name_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/about_squabbi_profile_iv"
+                            android:layout_toRightOf="@id/about_squabbi_profile_iv"
+                            android:text="Squabbi"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
                         <LinearLayout
-                                android:layout_width="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/about_squabbi_name_tv"
+                            android:layout_alignBaseline="@id/about_squabbi_profile_iv"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="@dimen/card_margin"
+                            android:layout_toEndOf="@id/about_squabbi_profile_iv"
+                            android:layout_toRightOf="@id/about_squabbi_profile_iv"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <com.google.android.material.button.MaterialButton
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/about_squabbi_name_tv"
-                                android:layout_alignBaseline="@id/about_squabbi_profile_iv"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginTop="@dimen/card_margin"
-                                android:layout_toEndOf="@id/about_squabbi_profile_iv"
-                                android:layout_toRightOf="@id/about_squabbi_profile_iv"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
+                                android:layout_marginEnd="@dimen/card_margin"
+                                android:layout_marginRight="@dimen/card_margin"
+                                android:layout_weight="1"
+                                android:ellipsize="end"
+                                android:onClick="squabbiGitHubOnClick"
+                                android:text="@string/about_github"
+                                app:icon="@drawable/ic_github_mark" />
 
                             <com.google.android.material.button.MaterialButton
-                                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="@dimen/card_margin"
-                                    android:layout_marginRight="@dimen/card_margin"
-                                    android:layout_weight="1"
-                                    android:text="@string/about_github"
-                                    android:ellipsize="end"
-                                    app:icon="@drawable/ic_github_mark"
-                                    android:onClick="squabbiGitHubOnClick"/>
-
-                            <com.google.android.material.button.MaterialButton
-                                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="@string/about_website"
-                                    android:ellipsize="end"
-                                    android:onClick="squabbiWebsiteOnClick"/>
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ellipsize="end"
+                                android:onClick="squabbiWebsiteOnClick"
+                                android:text="@string/about_website" />
                         </LinearLayout>
                     </RelativeLayout>
 
@@ -356,31 +377,31 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/card_margin"
-                    android:layout_marginTop="@dimen/card_margin"
-                    android:layout_marginRight="@dimen/card_margin"
-                    android:layout_marginBottom="@dimen/card_bottom_margin"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
-                    app:cardElevation="3dp"
-                    app:contentPadding="@dimen/card_content_padding">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/card_margin"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginRight="@dimen/card_margin"
+                android:layout_marginBottom="@dimen/card_bottom_margin"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="3dp"
+                app:contentPadding="@dimen/card_content_padding">
 
                 <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:text="@string/about_attributes"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
 
                     <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/about_attributes"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/about_attrib_telegram_icon"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/about_attrib_telegram_icon" />
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>

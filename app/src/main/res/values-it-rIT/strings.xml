@@ -241,7 +241,7 @@
     <string name="about_attributes">Attributi</string>
     <string name="about_attrib_telegram_icon">Icona Telegram realizzata da Pixel perfezionata da www.flaticon.com</string>
     <string name="about_acca_version_label">Versione di AccA:</string>
-    <string name="about_acc_version_label">Versione ACC:</string>
+    <string name="about_acc_api_version_label">Versione ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>

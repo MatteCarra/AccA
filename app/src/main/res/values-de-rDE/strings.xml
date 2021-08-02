@@ -255,7 +255,7 @@
     <string name="about_attributes">Eigenschaften</string>
     <string name="about_attrib_telegram_icon">Das Telegram-Symbol wurde von Pixel perfekt auf www.flaticon.com gemacht</string>
     <string name="about_acca_version_label">AccA-Version:</string>
-    <string name="about_acc_version_label">ACC-Version:</string>
+    <string name="about_acc_api_version_label">ACC-Version:</string>
     <string name="about_project_github">AccA-GitHub</string>
     <string name="about_project_telegram">AccA-Telegram</string>
     <string name="about_github">GitHub</string>

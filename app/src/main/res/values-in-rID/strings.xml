@@ -228,7 +228,7 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="about_team_title">Temui Tim</string>
     <string name="about_attributes">Atribut</string>
     <string name="about_acca_version_label">Versi AccA:</string>
-    <string name="about_acc_version_label">Versi ACC:</string>
+    <string name="about_acc_api_version_label">Versi ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
