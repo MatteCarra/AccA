@@ -61,7 +61,7 @@
     <string name="title_exit_on_boot">应用设置后停止守护进程</string>
     <string name="description_exit_on_boot">用于写入启动时的控制文件。</string>
     <!-- ACC installation -->
-    <string name="installing_acc">正在安裝 ACC</string>
+    <string name="installing_acc">正在安装 ACC</string>
     <string name="reboot">重启</string>
     <string name="acc_installation_failed">请将 logcat 和 /data/adb/acc-data/logs/ 打包发送给开发者
         于 t.me/acc_group/ or github.com/MatteCarra/ AccA/issues/ 。
@@ -170,7 +170,7 @@
     <string name="share">分享</string>
     <string name="logs_not_found">找不到日志文件。</string>
     <string name="acc_telegram">加入 ACC Telegram 群 (t.me/acc_group) 以获得更多额外支援。</string>
-    <string name="current_measure_unit_preference_title">当前计量单位</string>
+    <string name="current_measure_unit_preference_title">电流计量单位</string>
     <string name="current_measure_unit_preference_description">ACC 从系统接口获取充电信息。
         有些系统以 µA(微安培) 表示电流，有些以 mA (毫安培).
         如果检测单位不正确，您可以手动设置。
@@ -271,7 +271,7 @@
     <string name="charging_switch_off_value_label">充电停止值</string>
     <string name="reset_bs_on_pause">暂停时重置电池数据 \%</string>
     <string name="current_max">最大电流（毫安）：</string>
-    <string name="invalid_current_max">当前最大值无效</string>
+    <string name="invalid_current_max">最大电流值无效</string>
     <!-- Import and Export -->
     <string name="import_title">导入</string>
     <string name="import_load_from_clipboard">点击工具栏中的“剪贴板”图标！</string>
