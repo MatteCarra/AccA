@@ -17,7 +17,7 @@ import java.net.URL
 import kotlin.math.abs
 
 object Acc {
-    const val bundledVersion = 202107240
+    const val bundledVersion = 202107280
     private val FILES_DIR = "/data/data/mattecarra.accapp/files"
 
     /*
@@ -25,16 +25,17 @@ object Acc {
     * Note: there won't be a package per version. There will be a package for every uncompatible version
     * Ex: if releases from 201903071->201907211 are all compatible there will only be a package, but if a new release is incompatible a new package is created
     * */
-    private fun getVersionPackageName(v: Int): String {
+    private fun getAccInterfaceForversion(v: Int): AccInterface {
         return when {
-            v >= 202007220 -> "v202007220"
-            v >= 202007030 -> "v202007030"
-            v >= 202006140 -> "v202006140"
-            v >= 202002290 -> "v202002290"
-            v >= 202002170 -> "v202002170"
-            v >= 201910130 -> "v201910132"
-            v >= 201903071 -> "v201903071"
-            else           -> "legacy" /* This is used for all the versions before v20190371*/
+            v >= 202107280 -> mattecarra.accapp.acc.v202107280.AccHandler(v)
+            v >= 202007220 -> mattecarra.accapp.acc.v202107280.AccHandler(v)
+            v >= 202007030 -> mattecarra.accapp.acc.v202007030.AccHandler(v)
+            v >= 202006140 -> mattecarra.accapp.acc.v202006140.AccHandler(v)
+            v >= 202002290 -> mattecarra.accapp.acc.v202002290.AccHandler(v)
+            v >= 202002170 -> mattecarra.accapp.acc.v202002170.AccHandler(v)
+            v >= 201910130 -> mattecarra.accapp.acc.v201910132.AccHandler(v)
+            v >= 201903071 -> mattecarra.accapp.acc.v201903071.AccHandler(v)
+            else           -> mattecarra.accapp.acc.legacy.AccHandler(v)/* This is used for all the versions before v20190371*/
         }
     }
 
@@ -56,14 +57,8 @@ object Acc {
         }
 
     internal fun createAccInstance(version: Int = getAccVersion() ?: bundledVersion): AccInterface{
-        return try {
-            val aClass = Class.forName("mattecarra.accapp.acc.${getVersionPackageName(version)}.AccHandler")
-            INSTANCE = (aClass.getDeclaredConstructor(Int::class.java).newInstance(bundledVersion) as AccInterface)
-            INSTANCE as AccInterface
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-            createAccInstance(bundledVersion)
-        }
+        INSTANCE = getAccInterfaceForversion(version)
+        return INSTANCE as AccInterface
     }
 
     fun isAccInstalled(installationDir: File): Boolean {
@@ -76,7 +71,7 @@ object Acc {
 
     fun initAcc(installationDir: File): Boolean {
         return if(isAccInstalled(installationDir))
-            Shell.su("/dev/acca --daemon 2>/dev/null || if test -f ${File(installationDir, "acc/service.sh").absolutePath}; then ${File(installationDir, "acc/service.sh").absolutePath}; else ${File(installationDir, "acc/acc-init.sh").absolutePath}; fi").exec().isSuccess
+            Shell.su("/dev/.vr25/acc/acca --daemon 2>/dev/null || if test -f ${File(installationDir, "acc/service.sh").absolutePath}; then ${File(installationDir, "acc/service.sh").absolutePath}; else ${File(installationDir, "acc/acc-init.sh").absolutePath}; fi").exec().isSuccess
         else
             false
     }

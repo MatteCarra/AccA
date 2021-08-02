@@ -5,7 +5,6 @@ import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.R
-import mattecarra.accapp.models.Schedule
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.StringBuilder
@@ -50,17 +49,17 @@ interface DjsInterface {
 }
 
 object Djs {
-    const val bundledVersion = 201910180
-    private val defaultVersionPackage = mattecarra.accapp.djs.legacy.DjsHandler::class.java //Default DjsHandler, used when djs version is not recognized
+    const val bundledVersion = 202107280
 
     /*
     * This method returns the name of the package with a compatible AccInterface
     * Note: there won't be a package per version. There will be a package for every uncompatible version
     * Ex: if releases from 201903071->201907211 are all compatible there will only be a package, but if a new release is incompatible a new package is created
     * */
-    private fun getVersionPackageName(v: Int): String {
+    private fun getDjsInterfaceForversion(v: Int): DjsInterface {
         return when {
-            else           -> "legacy"
+            v >= 202107280 -> mattecarra.accapp.djs.v202107280.DjsHandler()
+            else           -> mattecarra.accapp.djs.legacy.DjsHandler()
         }
     }
 
@@ -81,26 +80,18 @@ object Djs {
         }
 
     private fun createDjsInstance(): DjsInterface {
-        val constructor = try {
-            val version = getDjsVersion()
-            val aClass = Class.forName("mattecarra.accapp.djs.${getVersionPackageName(version)}.DjsHandler")
-            aClass.getDeclaredConstructor()
-        } catch (ex: Exception) {
-            defaultVersionPackage.getDeclaredConstructor()
-        }
-
-        INSTANCE = constructor.newInstance() as DjsInterface
-
+        val version = getDjsVersion()
+        INSTANCE = getDjsInterfaceForversion(version)
         return INSTANCE as DjsInterface
     }
 
     fun isDjsInstalled(installationDir: File): Boolean {
-        return Shell.su("test -f ${File(installationDir, "djs/djs-init.sh").absolutePath}").exec().isSuccess
+        return Shell.su("test -f ${File(installationDir, "djs/service.sh").absolutePath}  || test -f ${File(installationDir, "djs/djs-init.sh").absolutePath}").exec().isSuccess
     }
 
     fun initDjs(installationDir: File): Boolean {
         return if(isDjsInstalled(installationDir))
-            Shell.su("sh ${File(installationDir, "djs/djs-init.sh").absolutePath}").exec().isSuccess
+            Shell.su("if test -f ${File(installationDir, "djs/service.sh").absolutePath}; then ${File(installationDir, "djs/service.sh").absolutePath}; else ${File(installationDir, "djs/djs-init.sh").absolutePath}; fi").exec().isSuccess
         else
             false
     }
@@ -153,6 +144,6 @@ object Djs {
     }
 
     private fun getDjsVersion(): Int {
-        return Shell.su("djs-version").exec().out.joinToString(separator = "\n").trim().toIntOrNull() ?: bundledVersion
+        return Shell.su("/dev/.vr25/djs/djs-version").exec().out.joinToString(separator = "\n").trim().toIntOrNull() ?: bundledVersion
     }
 }

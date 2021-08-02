@@ -6,7 +6,7 @@
 id=acc
 domain=vr25
 umask 0077
-data_dir=/data/media/0/Documents/$domain/${1:-$id}
+data_dir=/data/adb/$domain/${1:-$id}-data
 
 # log
 [ -z "${LINENO-}" ] || export PS4='$LINENO: '
@@ -19,22 +19,22 @@ set -x
 [ -x /dev/.vr25/busybox/ls ] || {
   mkdir -p /dev/.vr25/busybox
   chmod 0700 /dev/.vr25/busybox
-  if [ -f /data/adb/bin/busybox ]; then
-    [ -x /data/adb/bin/busybox ] || chmod -R 0700 /data/adb/bin
-    /data/adb/bin/busybox --install -s /dev/.vr25/busybox
+  if [ -f /data/adb/vr25/bin/busybox ]; then
+    [ -x /data/adb/vr25/bin/busybox ] || chmod -R 0700 /data/adb/vr25/bin
+    /data/adb/vr25/bin/busybox --install -s /dev/.vr25/busybox
   elif [ -f /data/adb/magisk/busybox ]; then
     [ -x /data/adb/magisk/busybox ] || chmod 0700 /data/adb/magisk/busybox
     /data/adb/magisk/busybox --install -s /dev/.vr25/busybox
   elif which busybox > /dev/null; then
     eval "$(which busybox) --install -s /dev/.vr25/busybox"
   else
-    echo "(!) Install busybox or simply place it in /data/adb/bin/"
+    echo "(!) Install busybox or simply place it in /data/adb/vr25/bin/"
     exit 3
   fi
 }
 case $PATH in
-  /data/adb/bin:*) :;;
-  *) export PATH=/data/adb/bin:/dev/.vr25/busybox:$PATH;;
+  /data/adb/vr25/bin:*) :;;
+  *) export PATH=/data/adb/vr25/bin:/dev/.vr25/busybox:$PATH;;
 esac
 #/BB#
 
@@ -75,12 +75,11 @@ tar -xf ${1:-$id}[-_]*.tar.gz
 # prevent AccA from downgrading/reinstalling modules ###
 case "$PWD" in
   *mattecarra.accapp*)
-    get_ver() { sed -n '/^versionCode=/s/.*=//p' $1/module.prop 2>/dev/null || echo 0; }
-    bundled_ver=$(get_ver ${1:-$id}[-_]*)
-    regular_ver=$(get_ver /data/adb/$domain/$id)
+    get_ver() { sed -n '/^versionCode=/s/.*=//p' ${1}module.prop 2>/dev/null || echo 0; }
+    bundled_ver=$(get_ver ${1:-$id}[-_]*/)
+    regular_ver=$(get_ver /data/adb/$domain/${1:-$id}/)
     if [ $bundled_ver -le $regular_ver ] && [ $regular_ver -ne 0 ]; then
-      ln -s $(readlink -f /data/adb/$domain/$id) .
-      (cd ./${1:-$id}/; ln -fs service.sh ${1:-$id}-init.sh)
+      ln -s $(readlink -f /data/adb/$domain/${1:-$id}) .
       exit 0
     fi 2>/dev/null || :
   ;;
