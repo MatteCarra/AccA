@@ -20,7 +20,7 @@
     <string name="acc_daemon_status_not_running">Daemon ACC Tidak Berjalan</string>
     <string name="acc_daemon_status_reading_status">Sedang membaca status aplikasi ACC dibalik layar...</string>
     <!-- ACC Daemon Toggle -->
-    <string name="menu_stop_accd">Hentikan ACC Daemon</string>
+    <string name="menu_stop_accd">Hentikan Layanan Daemon ACC</string>
     <string name="menu_start_accd">Mulai ACC Daemon</string>
     <string name="start">Mulailah</string>
     <string name="stop">Berhenti</string>
@@ -28,7 +28,7 @@
     <string name="title_battery">Baterai</string>
     <string name="info_status">Status</string>
     <string name="info_charging_speed">Kecepatan Pengisian</string>
-    <string name="info_discharging_speed">Sekarang sekarang</string>
+    <string name="info_discharging_speed">Arus baterai</string>
     <string name="info_capacity">Kapasitas</string>
     <string name="info_temperature">Suhu</string>
     <string name="info_health">Kesehatan</string>
