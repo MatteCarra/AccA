@@ -45,6 +45,6 @@ class DjsHandler: DjsInterface {
     }
 
     override suspend fun stop(): Boolean = withContext(Dispatchers.IO) {
-        Shell.su("/dev/.vr25/djs/djsd-stop").exec().isSuccess
+        Shell.su("/dev/.vr25/djs/djs-stop").exec().isSuccess
     }
 }
