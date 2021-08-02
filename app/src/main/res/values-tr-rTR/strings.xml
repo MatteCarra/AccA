@@ -78,7 +78,7 @@
     <string name="djs_installation_failed_title">DJS Kurulumu Başarısız!</string>
     <string name="voltage_control_file_not_set">Ayarlı değil.</string>
     <string name="edit_on_boot">\"apply_on_boot\" ayarını düzenle</string>
-    <string name="edit_on_boot_dialog_hint">Etkisizleştirmek için boş bırakın</string>
+    <string name="edit_on_boot_dialog_hint">Devre dışı bırakmak için boş bırakın</string>
     <string name="save">Kaydet</string>
     <string name="edit_on_boot_dialog_message">Örneğin:
 /sys/kernel/fast_charge/force_fast_charge::1::0
@@ -102,7 +102,7 @@
     <string name="recurrent_schedule">Yalnızca bir kez çalıştır</string>
     <string name="execution_time">Çalıştırma zamanı</string>
     <string name="new_config">Yeni kişisel konfigürasyon</string>
-    <string name="enable_voltage_limit">Custom charging voltage limit</string>
+    <string name="enable_voltage_limit">Özel şarj voltajı sınırı</string>
     <string name="voltage_control_file">Voltaj kontrol dosyası:</string>
     <string name="edit_power_limit">Edit current and voltage limits</string>
     <string name="voltage_max">Maks voltaj (milivolt):</string>
