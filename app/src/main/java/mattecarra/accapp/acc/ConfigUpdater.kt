@@ -45,6 +45,7 @@ data class ConfigUpdater(val accConfig: AccConfig) {
                 accConfig.configVoltage.controlFile,
                 accConfig.configVoltage.max
             ),
+            acc.getUpdateAccCurrentMaxCommand(accConfig.configCurrMax),
             acc.getUpdateAccTemperatureCommand(
                 accConfig.configTemperature.coolDownTemperature,
                 accConfig.configTemperature.maxTemperature,
