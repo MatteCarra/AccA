@@ -70,6 +70,10 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="acc_installation_failed_title">Instalasi ACC Gagal!</string>
     <!-- DJS installation -->
     <string name="install_djs_title">Diperlukan DJS</string>
+    <string name="install_djs_description">For this feature to work, we must enable DJS.
+        \nDJS (Daily Job Scheduler) is a lightweight add-on for scheduling ACC profiles/settings.
+        \nDJS daemon will be started on boot alongside ACC\'s.
+    </string>
     <string name="installing_djs">Menginstal DJS</string>
     <string name="djs_installation_failed">Mohon simpan dan kirim logcat
 /data/adb/djs-data/log/ ke developers 
@@ -106,6 +110,7 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="edit_power_limit">Ubah ambang batas arus dan tegangan</string>
     <string name="voltage_max">Tegangan maksimum (milivolt/mV):</string>
     <string name="disabled">Dengan disabilitas</string>
+    <string name="schedule_recurrent_row_text">Recurrent Job scheduled for %1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_title">Exec. Sekali - %1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_text">Kerja dijadwalkan saat %1$02d:%2$02d</string>
     <string name="schedule_boot_row_text">Pekerjaan boot dijadwalkan</string>
@@ -125,6 +130,7 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="retry">Mencoba kembali</string>
     <string name="edit_charging_limit_once">Pengisian daya sekali untuk #\%, tanpa dibatasi</string>
     <string name="done_applied_charge_limit">Mengisi daya sampai %1$d%%</string>
+    <string name="charge_limit_not_applied">Penerapan pengisi daya terbatas dibatalkan</string>
     <string name="apply">Menerapkan</string>
     <string name="done">Selesai</string>
     <string name="edit_charging_limit_once_dialog_msg">Pengaturan rutin Anda secara otomatis dipulihkan setelah tingkat baterai yang dipilih tercapai.</string>
@@ -137,7 +143,12 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="title_miscellaneous_control">Lainnya</string>
     <string name="about">Tentang</string>
     <!-- ACC Config Tooltips -->
+    <string name="capacity_control_info">- SHUTDOWN: secara otomatis mematikan sistem pada atau di bawah level baterai ini ketika baterai tidak sedang diisi.&lt;br /&gt;- STOP: dan RESUME menentukan kapasitas kapan pengisian harus berhenti dan dilanjutkan, masing-masing.&lt;br /&gt;- CHARGING SWITCH adalah file kontrol, ditambah nilai ON dan OFF untuk mengaktifkan/menonaktifkan pengisian daya. Secara default, ACC menggunakan apa pun yang berfungsi.</string>
+    <string name="power_control_info">- Setiap pengurangan tegangan saat 0,10V/cell memuncak dikatakan dapat menambah masa hidup baterai dua kali lipat.&lt;br /&gt;- Sayangnya, tidak semua perangkat/kernel dapat mendukung fitur ini.</string>
+    <string name="temperature_control_info">- Ini menonaktifkan pengisian daya selama beberapa detik untuk mendinginkan baterai.&lt;br /&gt;- COOLDOWN TEMP tergantung pada RASIO COOLDOWN.&lt;br /&gt;- MAX TEMP bekerja dengan PAUSE SECONDS.</string>
+    <string name="cooldown_info">- Rasio pengisian ON/OFF dalam hitungan detik (misalnya, 50/10) - mengurangi tekanan baterai yang disebabkan oleh suhu tinggi yang lama dan tegangan pengisian yang tinggi dengan menjeda pengisian secara berkala.&lt;br /&gt;- Jika pengisian terlalu lambat, matikan atau ubah rasio menjadi sekitar 50/5.&lt;br /&gt;- Jika dinonaktifkan, nilai COOLDOWN CAPACITY dan COOLDOWN TEMP tidak berpengaruh.&lt;br /&gt;- Fungsi ini merupakan alternatif yang adil untuk fitur batas tegangan pengisian.</string>
     <string name="on_plugged_info">Gunakan ini untuk memperbarui file kendali yang isinya akan berubah pada peristiwa daya tertentu (misal colok/cabut). Ini sangat berguna untuk menetapkan tegangan/arus maksimum khusus untuk pengisian daya usb/nirkabel.</string>
+    <string name="battery_idle_info_label">Ini memungkinkan perangkat diberi daya langsung dari sumber daya eksternal saat pengisian daya dijeda.</string>
     <string name="miscellaneous_info_label">Berbagai konfigurasi ACC yang tidak sesuai dengan kategori lainnya</string>
     <string name="acc_config_editor">Editor konfigurasi ACC</string>
     <string name="profile_creator">Pembuat profil</string>
@@ -145,6 +156,8 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="charging_switch_label">Saklar pengisian:</string>
     <string name="title_on_plugged">Terapkan pada Plug</string>
     <string name="edit_on_plugged">Ubah pengaturan apply_on_plug:</string>
+    <string name="edit_on_plugged_dialog_message">Contoh: nirkabel/voltage_max::9000000 dapat memaksa pengisian nirkabel cepat pada beberapa perangkat Pixel.
+    </string>
     <string name="template_capacity_profile">Shutdown: %1$d%% - Lanjutkan: %2$d%% - Stop: %3$d%%</string>
     <string name="template_temperature_profile">Suhu: %1$d&#176;C - Maks: %2$d&#176;C - Jeda: %3$ds</string>
     <string name="template_cool_down_profile">Mulai di: %1$d%% - Biaya untuk %2$ds - Jeda untuk %3$ds</string>
@@ -154,6 +167,7 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="profile_option_delete">Menghapus</string>
     <string name="selecting_profile_toast">Memilih profil %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox tidak diinstal</string>
+    <string name="installation_failed_busybox">Pasang busybox terlebih dahulu atau letakkan binari di /data/adb/bin/</string>
     <string name="share">Bagikan</string>
     <string name="logs_not_found">File log tidak ditemukan.</string>
     <string name="acc_telegram">Untuk dukungan tambahan, bergabunglah dengan grup ACC Telegram (t.me/acc_group)!</string>
@@ -169,6 +183,10 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     </string>
     <string name="units_of_measure">Satuan ukuran</string>
     <string name="acc_version_preference_title">Versi ACC</string>
+    <string name="acc_version_preference_description">Anda dapat memilih versi ACC untuk digunakan: Paket (stabil, direkomendasikan oleh banyak pengguna), master (stabil), develop (masih pengembangan) atau salah satu versi yang ditandai.
+         Versi paket dijamin untuk selalu bekerja dengan AccA - jadi itu adalah pilihan yang disarankan.
+         Meskipun tidak ada jaminan, versi lain umumnya aman.
+    </string>
     <string name="install_bundled_version">Pasang varian yang dibundel</string>
     <string name="acc_version_picker_title">Versi ACC</string>
     <string name="acc_version_picker_message">Pilih varian ACC yang diinginkan</string>
@@ -189,6 +207,11 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="theme_option_setting">Tema</string>
     <string name="theme_option_summary">Setel tema aplikasi.</string>
     <string name="acc_version_compatibility_warning_title">Kompatibilitas versi ACC</string>
+    <string name="acc_version_compatibility_warning_description">Anda telah memilih varian ACC yang tidak dijamin kompatibel dengan aplikasi.
+         \nSebagian besar waktu, Anda tidak akan menghadapi ketidakcocokan.
+         \nAccA akan mengunduh versi yang dipilih dari repositori GitHub ACC.
+         \nDisetujui?
+    </string>
     <string name="restore">Kembalikan ke default</string>
     <string name="undo">Batalkan</string>
     <string name="checking_updates">Memeriksa pembaruan</string>
@@ -226,19 +249,32 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="create_schedule">Buat jadwal</string>
     <!-- About Activity -->
     <string name="about_team_title">Temui Tim</string>
+    <string name="about_team_blurb">Terima kasih telah menggunakan AccA!
+         \n\nKami menghabiskan banyak waktu untuk hal ini sehingga Anda dapat mengelola ACC dengan mudah!
+         \n\nTerima kasih khusus kepada mereka yang telah ikut dalam satu atau lain cara untuk proyek ACC &amp; AccA!
+    </string>
     <string name="about_attributes">Atribut</string>
+    <string name="about_attrib_telegram_icon">Avatar Telegram digambar oleh Pixel perfect dari www.flaticon.com</string>
     <string name="about_acca_version_label">Versi AccA:</string>
     <string name="about_acc_version_label">Versi ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Situs web</string>
+    <string name="toast_no_browser_installed">Tidak dapat Buka Tautan!\nPastikan Anda memiliki peramban web yang diinstal.</string>
+    <string name="install_update_dialog">Pasang pembaruan ACC</string>
+    <string name="check_update_dialog_message">Apakah Anda ingin pasang ACC versi terbaru dari cabang \'%1$s\'?
+         \nACCA akan download ACC versi terbaru dari GitHub berdasarkan commit terbaru dari cabang yang dipilih.
+         \nApakah Anda ingin melanjutkan?</string>
     <string name="add_charging_switch">Tambahkan Sakelar Pengisian Daya</string>
     <string name="charging_switch_on_value_label">Sakelar pengisian ON VALUE</string>
     <string name="charging_switch_off_value_label">Sakelar pengisian OFF VALUE</string>
     <string name="reset_bs_on_pause">Setel ulang statistik baterai pada jeda \%</string>
+    <string name="current_max">Arus Maksimum (mA):</string>
+    <string name="invalid_current_max">Nilai Maksimum Saat Ini Tidak Valid</string>
     <!-- Import and Export -->
     <string name="import_title">Impor</string>
+    <string name="import_load_from_clipboard">Tekan gambar \'Papan klip\' di bilah alat!</string>
     <string name="export_title">Ekspor</string>
     <string name="export_none_selected">Silakan pilih profil yang akan diekspor di atas</string>
     <string name="menu_import">Impor</string>
@@ -249,6 +285,7 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="import_toast_no_selected_profiles">Silakan pilih Profil yang akan Diimpor</string>
     <string name="import_profile_success">Berhasil mengimpor %d profil</string>
     <!-- Config Parse Error -->
+    <string name="parse_failed_title">Gagal mengurai Konfigurasi ACC</string>
     <string name="parse_failed_body">Anda dapat mencoba memuat konfigurasi default dengan menekan \'Muat Default\'. Harap dicatat bahwa AccA tidak akan berfungsi.
          \n\nJika kesalahan berlanjut, silakan bagikan jejak tumpukan di bawah ini bersama dengan versi ACC&amp; AccA (melalui menu 3-titik &gt; Tentang) dengan pengembang melalui Telegram.\n\n%s</string>
     <string name="automatic_switch_eanbled">Secara otomatis beralih melalui sakelar</string>
