@@ -127,6 +127,7 @@
     <string name="automatic">Automatisch</string>
     <string name="error_occurred">Er is een fout opgetreden</string>
     <string name="retry">Probeer opnieuw</string>
+    <string name="edit_charging_limit_once_button">Laad één keer tot #\%, zonder beperkingen</string>
     <string name="edit_charging_limit_once">Eén keer berekenen tot #\%, zonder beperkingen</string>
     <string name="done_applied_charge_limit">Opladen tot %1$d%%</string>
     <string name="charge_limit_not_applied">Oplaadlimiet geannuleerd</string>
@@ -255,7 +256,7 @@
     <string name="about_attributes">Kenmerken</string>
     <string name="about_attrib_telegram_icon">Telegram-pictogram gemaakt door Pixel perfect van www.flaticon.com</string>
     <string name="about_acca_version_label">AccA Versie:</string>
-    <string name="about_acc_version_label">ACC versie:</string>
+    <string name="about_acc_api_version_label">ACC versie:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>

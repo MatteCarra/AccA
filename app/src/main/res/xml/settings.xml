@@ -61,5 +61,15 @@
             android:defaultValue="2"
             android:icon="@drawable/ic_round_format_paint_24px"/>
 
+        <ListPreference
+            android:title="@string/lang_pref_title"
+            android:key="language"
+            android:summary="@string/lang_pref_summary"
+            android:dialogTitle="@string/lang_pref_title"
+            android:entries="@array/lang_pref_entries"
+            android:entryValues="@array/lang_pref_value"
+            android:defaultValue="def"
+            android:icon="@drawable/ic_outline_check_circle_24px"/>
+
     </PreferenceCategory>
 </PreferenceScreen>

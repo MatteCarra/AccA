@@ -251,7 +251,7 @@
     <string name="about_attributes">屬性</string>
     <string name="about_attrib_telegram_icon">Telegram頻道圖案由Pixel perfect(www.flaticon.com)提供</string>
     <string name="about_acca_version_label">AccA 版本:</string>
-    <string name="about_acc_version_label">ACC 版本:</string>
+    <string name="about_acc_api_version_label">ACC 版本:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>

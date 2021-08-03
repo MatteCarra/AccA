@@ -121,7 +121,7 @@
     <string name="automatic">Automatico</string>
     <string name="error_occurred">Si è verificato un errore</string>
     <string name="retry">Riprova</string>
-    <string name="edit_charging_limit_once">Carica una volta sola fino a #\%, senza limitazioni</string>
+    <string name="edit_charging_limit_once_button">Carica una volta sola fino a #\%, senza limitazioni</string>
     <string name="done_applied_charge_limit">Ricarica fino a %1$d%%</string>
     <string name="charge_limit_not_applied">Impostazione del limite di ricarica annullato</string>
     <string name="apply">Applica</string>
@@ -241,7 +241,7 @@
     <string name="about_attributes">Attributi</string>
     <string name="about_attrib_telegram_icon">Icona Telegram realizzata da Pixel perfezionata da www.flaticon.com</string>
     <string name="about_acca_version_label">Versione di AccA:</string>
-    <string name="about_acc_version_label">Versione ACC:</string>
+    <string name="about_acc_api_version_label">Versione ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>

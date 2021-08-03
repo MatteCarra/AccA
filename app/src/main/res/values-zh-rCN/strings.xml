@@ -127,7 +127,7 @@
     <string name="automatic">自动</string>
     <string name="error_occurred">发生了一个错误</string>
     <string name="retry">重试</string>
-    <string name="edit_charging_limit_once">一次性充电至 #\%，无限制</string>
+    <string name="edit_charging_limit_once_button">一次性充电至 #\%，无限制</string>
     <string name="done_applied_charge_limit">充电到 %1$d%%</string>
     <string name="charge_limit_not_applied">充电限制已取消</string>
     <string name="apply">应用</string>
@@ -256,7 +256,7 @@
     <string name="about_attrib_telegram_icon">电报头像由 Pixel perfect 绘制
 取自 www.flaticon.com</string>
     <string name="about_acca_version_label">AccA 版本：</string>
-    <string name="about_acc_version_label">ACC 版本：</string>
+    <string name="about_acc_api_version_label">ACC 版本：</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA 电报</string>
     <string name="about_github">GitHub</string>
