@@ -13,7 +13,6 @@
 
     <color name="color_shadow">@android:color/transparent</color>
 
-
     <color name="color_on_primary">#000000</color>
     <color name="color_on_secondary">@color/color_surface</color>
     <color name="color_on_background">#ffffff</color>

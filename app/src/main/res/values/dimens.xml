@@ -6,6 +6,7 @@
     <dimen name="card_content_padding">16dp</dimen>
     <dimen name="card_content_margin">8dp</dimen>
     <dimen name="card_margin">8dp</dimen>
+    <dimen name="card_margindiv2">4dp</dimen>
     <dimen name="card_bottom_margin">10dp</dimen>
 
     <dimen name="card_text_margin">5dp</dimen>

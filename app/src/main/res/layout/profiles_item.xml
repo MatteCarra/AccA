@@ -1,77 +1,268 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/Widget.MaterialComponents.CardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/card_margin"
     android:layout_marginLeft="@dimen/card_margin"
+    android:layout_marginBottom="@dimen/card_margindiv2"
+    android:layout_marginTop="@dimen/card_margindiv2"
     android:layout_marginRight="@dimen/card_margin"
     app:cardCornerRadius="@dimen/card_corner_radius"
     app:cardElevation="3dp">
 
-    <LinearLayout android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/item_profile_load_image"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="@dimen/fab_margin"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_baseline_restore_24px" />
+
+    <LinearLayout
+        android:id="@+id/item_profile_info"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="visible">
 
         <!-- Selected Status View -->
-        <View android:id="@+id/item_profile_selectedIndicator_view"
+        <View
+            android:id="@+id/item_profile_selectedIndicator_view"
             android:layout_width="10dp"
             android:layout_height="match_parent"
             android:background="@color/colorSelectedProfile"
             android:visibility="gone"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
         <!-- Details Linear Layout -->
-        <LinearLayout android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/card_content_padding">
 
-            <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/item_profile_title_textView"
+                    style="@style/OneLinerText.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toStartOf="@+id/item_profile_options_ib"
-                    android:layout_toLeftOf="@+id/item_profile_options_ib"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    style="@style/OneLinerText.Title"
-                    tools:text="@tools:sample/full_names"/>
+                    android:layout_toStartOf="@+id/item_profile_options_ib"
+                    android:layout_toLeftOf="@+id/item_profile_options_ib"
+                    tools:text="@tools:sample/full_names" />
 
-                <ImageButton android:id="@+id/item_profile_options_ib"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_outline_more_vert_24px" android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true" style="@style/ActionIcon"/>
+                <ImageButton
+                    android:id="@+id/item_profile_options_ib"
+                    style="@style/ActionIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    app:srcCompat="@drawable/ic_outline_more_vert_24px" />
             </RelativeLayout>
 
-            <LinearLayout android:orientation="vertical" android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <LinearLayout style="@style/CardDetail">
-                    <ImageView style="@style/IndexIcon" app:srcCompat="@drawable/ic_outline_battery_50_24px"/>
-                    <TextView android:id="@+id/item_profile_capacity_tv" style="@style/OneLinerText"
-                        android:layout_height="wrap_content" android:layout_width="wrap_content"
-                        tools:text="@tools:sample/full_names" android:ellipsize="end"/>
+                <LinearLayout
+                    android:id="@+id/item_profile_capacity_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            style="@style/IndexIcon"
+                            app:srcCompat="@drawable/ic_outline_battery_50_24px" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_capacity_control" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/item_profile_capacity_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        tools:text="@tools:sample/full_names" />
+
                 </LinearLayout>
 
-                <LinearLayout style="@style/CardDetail">
-                    <ImageView style="@style/IndexIcon" app:srcCompat="@drawable/ic_thermometer"/>
-                    <TextView android:id="@+id/item_profile_temperature_tv" style="@style/OneLinerText"
-                        android:layout_height="wrap_content" android:layout_width="wrap_content"
-                        tools:text="@tools:sample/full_names" android:ellipsize="end"/>
+                <LinearLayout
+                    android:id="@+id/item_profile_charging_voltage_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            style="@style/IndexIcon"
+                            app:srcCompat="@drawable/ic_outline_flash_on_24px" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_power_control" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/item_profile_charging_voltage_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        tools:text="@tools:sample/full_names" />
+
                 </LinearLayout>
 
-                <LinearLayout style="@style/CardDetailEnd">
-                    <ImageView style="@style/IndexIcon" app:srcCompat="@drawable/ic_outline_usb_24px"/>
-                    <TextView android:id="@+id/item_profile_on_plug_tv" style="@style/OneLinerText"
-                        android:layout_height="wrap_content" android:layout_width="wrap_content"
-                        tools:text="@tools:sample/full_names"/>
+                <LinearLayout
+                    android:id="@+id/item_profile_temperature_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            style="@style/IndexIcon"
+                            app:srcCompat="@drawable/ic_thermometer" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_temperature_control" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/item_profile_temperature_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        tools:text="@tools:sample/full_names" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/item_profile_cooldown_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            style="@style/IndexIcon"
+                            app:srcCompat="@drawable/ic_outline_ac_unit_24px" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_cooldown_control" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/item_profile_cooldown_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        tools:text="@tools:sample/full_names" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/item_profile_on_boot_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            style="@style/IndexIcon"
+                            app:srcCompat="@drawable/ic_outline_power_settings_new_24px" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="applyOnBoot" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/item_profile_on_boot_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        tools:text="@tools:sample/full_names" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/item_profile_on_plug_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            style="@style/IndexIcon"
+                            app:srcCompat="@drawable/ic_outline_usb_24px" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="applyOnPlug" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/item_profile_on_plug_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        tools:text="@tools:sample/full_names" />
+
                 </LinearLayout>
 
             </LinearLayout>

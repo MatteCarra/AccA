@@ -125,7 +125,7 @@
     <string name="automatic">Otomatik</string>
     <string name="error_occurred">Bir hata oluştu</string>
     <string name="retry">Yeniden Dene</string>
-    <string name="edit_charging_limit_once">Kısıtlama olmaksızın #\% kadar bir kez şarj edin</string>
+    <string name="edit_charging_limit_once_button">Kısıtlama olmaksızın #\% kadar bir kez şarj edin</string>
     <string name="done_applied_charge_limit">%1$d%% kadar şarj ediliyor</string>
     <string name="charge_limit_not_applied">Şarj limiti iptal edildi</string>
     <string name="apply">Uygula</string>
@@ -252,9 +252,9 @@
     <string name="about_attributes">Öznitelikler</string>
     <string name="about_attrib_telegram_icon">Pixel perfect tarafından www.flaticon.com\'dan yapılan telegram simgesi</string>
     <string name="about_acca_version_label">AccA Versiyonu:</string>
-    <string name="about_acc_version_label">ACC Versiyonu:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
+    <string name="about_acc_api_version_label">ACC Versiyonu:</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Web Sitesi</string>
     <string name="toast_no_browser_installed">Bağlantı açılmıyor!\nBir web tarayıcının kurulu olduğuna emin olun.</string>

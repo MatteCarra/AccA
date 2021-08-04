@@ -121,7 +121,7 @@ Tiến trình nền DJS sẽ được bắt đầu khi khởi động cùng vớ
     <string name="automatic">Tự động</string>
     <string name="error_occurred">Có lỗi xảy ra</string>
     <string name="retry">Thử lại</string>
-    <string name="edit_charging_limit_once">Sạc đến #\%, bỏ qua các giới hạn</string>
+    <string name="edit_charging_limit_once_button">Sạc đến #\%, bỏ qua các giới hạn</string>
     <string name="done_applied_charge_limit">Sạc đến %1$d%%</string>
     <string name="charge_limit_not_applied">Đã hủy áp dụng mức sạc</string>
     <string name="apply">Áp dụng</string>
@@ -242,7 +242,7 @@ Nếu đơn vị được phát hiện không chính xác, bạn có thể đặ
     <string name="about_attributes">Thuộc Tính</string>
     <string name="about_attrib_telegram_icon">Biểu tượng Telegram do Pixel hoàn thiện từ www.flaticon.com</string>
     <string name="about_acca_version_label">Phiên bản AccA:</string>
-    <string name="about_acc_version_label">Phiên bản ACC:</string>
+    <string name="about_acc_api_version_label">Phiên bản ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>

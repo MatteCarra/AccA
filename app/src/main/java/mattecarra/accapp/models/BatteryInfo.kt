@@ -119,4 +119,15 @@ class BatteryInfo(val name: String,
     fun isCharging(): Boolean {
         return status == "Charging"
     }
+
+    //------------------------------------------------------
+    // with Round to one decimal places
+
+    fun getTempFahrenheit(): String
+    {
+        return String.format("%.1f", temperature * 1.8 + 32)
+    }
+
+    //------------------------------------------------------
+
 }
