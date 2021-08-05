@@ -124,7 +124,6 @@
     <string name="automatic">Автоматично</string>
     <string name="error_occurred">Сталася помилка</string>
     <string name="retry">Повтор</string>
-    <string name="edit_charging_limit_once">Зарядити один раз до #\%, без обмежень</string>
     <string name="done_applied_charge_limit">Заряджається до %1$d%%</string>
     <string name="charge_limit_not_applied">Застосування ліміту заряду скасовано</string>
     <string name="apply">Застосувати</string>
@@ -150,8 +149,6 @@
     <string name="charging_switch_label">Перемикач заряджання:</string>
     <string name="title_on_plugged">Застосувати при підключенні</string>
     <string name="edit_on_plugged">Редагувати параметри \"при підключенні\":</string>
-    <string name="edit_on_plugged_dialog_message">Приклад: wireless/voltage_max:9000000 форсує швидку бездротову зарядку на деяких пристроях Pixel.
-    </string>
     <string name="template_capacity_profile">Завершення: %1$d%% - Продовжити: %2$d%% - Зупинити: %3$d%%</string>
     <string name="template_temperature_profile">Температура: %1$d&#176;C - Макс.: %2$d&#176;C - Пауза: %3$dс</string>
     <string name="template_cool_down_profile">Старт в: %1$d%% - Заряд за %2$ds - Призупинення на %3$dсек</string>
@@ -240,8 +237,6 @@
     </string>
     <string name="about_attributes">Атрибути</string>
     <string name="about_attrib_telegram_icon">Значок Telegram, зроблений Pixel perfect з www.flaticon.com</string>
-    <string name="about_acca_version_label">Версія AccA:</string>
-    <string name="about_acc_version_label">Версія ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
