@@ -127,7 +127,6 @@
     <string name="automatic">Automático</string>
     <string name="error_occurred">Ha ocurrido un error</string>
     <string name="retry">Reintentar</string>
-    <string name="edit_charging_limit_once">Carga una vez hasta #\%, sin restricciones</string>
     <string name="done_applied_charge_limit">Cargado al %1$d%%</string>
     <string name="charge_limit_not_applied">Aplicar límite de carga cancelado</string>
     <string name="apply">Aplicar</string>
@@ -155,8 +154,6 @@
     <string name="charging_switch_label">Interruptor de carga:</string>
     <string name="title_on_plugged">Aplicar al Conectar</string>
     <string name="edit_on_plugged">Editar ajustes de apply_on_boot:</string>
-    <string name="edit_on_plugged_dialog_message">Ejemplo: wireless/voltage_max::9000000 fuerza la carga inalámbrica rápida en algunos dispositivos Pixel.
-    </string>
     <string name="template_capacity_profile">Apagar: %1$d%% - Reanudar: %2$d%% - Detener: %3$d%%</string>
     <string name="template_temperature_profile">Temperatura: %1$d&#176;C - Max: %2$d&#176;C - Pausa: %3$ds</string>
     <string name="template_cool_down_profile">Iniciar en: %1$d%% - Cargar por %2$ds - Pausa por %3$ds</string>
@@ -254,8 +251,6 @@
     </string>
     <string name="about_attributes">Atributos</string>
     <string name="about_attrib_telegram_icon">Icono de Telegram hecho por Pixel perfect de www.flaticon.com</string>
-    <string name="about_acca_version_label">Versión de AccA:</string>
-    <string name="about_acc_version_label">Versión de ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
