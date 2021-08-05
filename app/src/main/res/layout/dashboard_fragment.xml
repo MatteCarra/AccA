@@ -33,27 +33,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- Title and Settings Button -->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/dash_title_accdStatus_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/title_acc"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
-
-                    <TextView
-                        android:id="@+id/dash_accdStatus_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:text="@string/acc_daemon_status_reading_status"
-                        android:textStyle="bold" />
-                </RelativeLayout>
+                <TextView
+                    android:id="@+id/dash_title_accdStatus_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_acc"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -107,6 +92,15 @@
 
                     </LinearLayout>
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/dash_accdStatus_textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:padding="10dp"
+                    android:text="@string/acc_daemon_status_reading_status"
+                    android:gravity="center"/>
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
