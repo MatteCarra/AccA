@@ -23,7 +23,8 @@
             android:layout_marginLeft="@dimen/card_margin"
             android:layout_marginBottom="@dimen/card_margindiv2"
             android:layout_marginTop="@dimen/card_margin"
-            android:layout_marginRight="@dimen/card_margin"            app:cardCornerRadius="@dimen/card_corner_radius"
+            android:layout_marginRight="@dimen/card_margin"
+            app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="3dp"
             app:contentPadding="@dimen/card_content_padding">
 
@@ -41,7 +42,6 @@
                         android:id="@+id/dash_title_accdStatus_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
                         android:text="@string/title_acc"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
 
@@ -53,19 +53,6 @@
                         android:layout_centerVertical="true"
                         android:text="@string/acc_daemon_status_reading_status"
                         android:textStyle="bold" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="?selectableItemBackground"
-                        android:foregroundGravity="center"
-                        android:onClick="batteryConfigOnClick"
-                        android:visibility="invisible"
-                        android:padding="16dp"
-                        app:srcCompat="@drawable/ic_outline_settings_24px" />
                 </RelativeLayout>
 
                 <LinearLayout

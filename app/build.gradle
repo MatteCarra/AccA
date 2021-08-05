@@ -58,6 +58,7 @@ android {
     }
     buildFeatures {
         dataBinding true
+        viewBinding true
     }
     lintOptions {
         disable 'MissingTranslation'

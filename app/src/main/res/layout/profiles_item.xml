@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/card_margin"
     android:layout_marginBottom="@dimen/card_margindiv2"
-    android:layout_marginTop="@dimen/card_margindiv2"
+    android:layout_marginTop="@dimen/card_margin"
     android:layout_marginRight="@dimen/card_margin"
     app:cardCornerRadius="@dimen/card_corner_radius"
     app:cardElevation="3dp">
@@ -43,36 +43,40 @@
             android:orientation="vertical"
             android:padding="@dimen/card_content_padding">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/item_profile_title_textView"
-                    style="@style/OneLinerText.Title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                    tools:text="@tools:sample/full_names" />
+
+                <ImageView
+                    android:id="@+id/edit_config_button"
+                    style="@style/ActionIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/item_profile_options_ib"
-                    android:layout_toLeftOf="@+id/item_profile_options_ib"
-                    tools:text="@tools:sample/full_names" />
+                    android:background="?selectableItemBackground"
+                    app:srcCompat="@drawable/ic_outline_settings_24px"
+                    android:visibility="gone" />
 
                 <ImageButton
                     android:id="@+id/item_profile_options_ib"
                     style="@style/ActionIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
                     app:srcCompat="@drawable/ic_outline_more_vert_24px" />
-            </RelativeLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="8dp">
 
                 <LinearLayout
                     android:id="@+id/item_profile_capacity_ll"
@@ -102,6 +106,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:paddingStart="8dp"
+                        android:paddingLeft="8dp"
                         tools:text="@tools:sample/full_names" />
 
                 </LinearLayout>
@@ -134,6 +140,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:paddingStart="8dp"
+                        android:paddingLeft="8dp"
                         tools:text="@tools:sample/full_names" />
 
                 </LinearLayout>
@@ -166,6 +174,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:paddingStart="8dp"
+                        android:paddingLeft="8dp"
                         tools:text="@tools:sample/full_names" />
 
                 </LinearLayout>
@@ -198,6 +208,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:paddingStart="8dp"
+                        android:paddingLeft="8dp"
                         tools:text="@tools:sample/full_names" />
 
                 </LinearLayout>
@@ -230,6 +242,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:paddingStart="8dp"
+                        android:paddingLeft="8dp"
                         tools:text="@tools:sample/full_names" />
 
                 </LinearLayout>
@@ -261,6 +275,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:paddingStart="8dp"
+                        android:paddingLeft="8dp"
                         tools:text="@tools:sample/full_names" />
 
                 </LinearLayout>
