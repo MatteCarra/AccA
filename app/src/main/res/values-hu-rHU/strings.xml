@@ -155,8 +155,6 @@
     <string name="create_schedule">Ütemezés létrehozása</string>
     <!-- About Activity -->
     <string name="about_attributes">Tulajdonságok</string>
-    <string name="about_acca_version_label">AccA verzió:</string>
-    <string name="about_acc_version_label">ETK verzió:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
