@@ -128,7 +128,6 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="automatic">Otomatis</string>
     <string name="error_occurred">Sebuah kesalahan telah terjadi</string>
     <string name="retry">Mencoba kembali</string>
-    <string name="edit_charging_limit_once">Pengisian daya sekali untuk #\%, tanpa dibatasi</string>
     <string name="done_applied_charge_limit">Mengisi daya sampai %1$d%%</string>
     <string name="charge_limit_not_applied">Penerapan pengisi daya terbatas dibatalkan</string>
     <string name="apply">Menerapkan</string>
@@ -156,8 +155,6 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="charging_switch_label">Saklar pengisian:</string>
     <string name="title_on_plugged">Terapkan pada Plug</string>
     <string name="edit_on_plugged">Ubah pengaturan apply_on_plug:</string>
-    <string name="edit_on_plugged_dialog_message">Contoh: nirkabel/voltage_max::9000000 dapat memaksa pengisian nirkabel cepat pada beberapa perangkat Pixel.
-    </string>
     <string name="template_capacity_profile">Shutdown: %1$d%% - Lanjutkan: %2$d%% - Stop: %3$d%%</string>
     <string name="template_temperature_profile">Suhu: %1$d&#176;C - Maks: %2$d&#176;C - Jeda: %3$ds</string>
     <string name="template_cool_down_profile">Mulai di: %1$d%% - Biaya untuk %2$ds - Jeda untuk %3$ds</string>
@@ -255,8 +252,6 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     </string>
     <string name="about_attributes">Atribut</string>
     <string name="about_attrib_telegram_icon">Avatar Telegram digambar oleh Pixel perfect dari www.flaticon.com</string>
-    <string name="about_acca_version_label">Versi AccA:</string>
-    <string name="about_acc_version_label">Versi ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
