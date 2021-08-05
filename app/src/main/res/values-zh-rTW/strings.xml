@@ -126,7 +126,6 @@
     <string name="automatic">自動</string>
     <string name="error_occurred">發生了一個錯誤</string>
     <string name="retry">重試</string>
-    <string name="edit_charging_limit_once">一次性無限制充電至 #\%</string>
     <string name="done_applied_charge_limit">充電至 %1$d%%</string>
     <string name="charge_limit_not_applied">充電限制已取消</string>
     <string name="apply">套用</string>
@@ -154,7 +153,6 @@
     <string name="charging_switch_label">充電開關:</string>
     <string name="title_on_plugged">Apply on Plug</string>
     <string name="edit_on_plugged">編輯（apply_on_plug）設置：</string>
-    <string name="edit_on_plugged_dialog_message">範例: wireless/voltage_max::9000000 強制開啟Pixel裝置無線快充    </string>
     <string name="template_capacity_profile">關機: %1$d%% - 重新開始充電: %2$d%% - 停止充電: %3$d%%</string>
     <string name="template_temperature_profile">溫度: %1$d&#176;C - 最大:%2$d&#176;C -暫停: %3$d秒</string>
     <string name="template_cool_down_profile">開始於: %1$d%% - 充電 %2$d 秒 - 暫停 %3$d 秒</string>
@@ -250,8 +248,6 @@
     </string>
     <string name="about_attributes">屬性</string>
     <string name="about_attrib_telegram_icon">Telegram頻道圖案由Pixel perfect(www.flaticon.com)提供</string>
-    <string name="about_acca_version_label">AccA 版本:</string>
-    <string name="about_acc_version_label">ACC 版本:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
