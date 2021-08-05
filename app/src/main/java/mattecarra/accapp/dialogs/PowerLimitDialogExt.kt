@@ -25,6 +25,7 @@ fun MaterialDialog.powerLimitDialog(
     listener: PowerLimitSelectionListener
 ): MaterialDialog {
     val dialog = customView(R.layout.voltage_control_editor_dialog)
+        .title(R.string.edit_power_limit)
         .positiveButton(android.R.string.ok) { dialog ->
             val view = dialog.getCustomView()
             val voltageControl = view.findViewById<Spinner>(R.id.voltage_control_file_spinner)

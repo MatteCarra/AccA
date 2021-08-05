@@ -178,7 +178,7 @@
         \n\nAgradecimentos especiais para aqueles que contribuíram de uma forma ou de outra para o projeto ACC &amp; Projeto AccA!
     </string>
     <string name="about_acca_version_label">Versão AccA:</string>
-    <string name="about_acc_version_label">Versão ACC:</string>
+    <string name="about_acc_api_version_label">Versão ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>

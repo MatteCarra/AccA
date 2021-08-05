@@ -128,7 +128,7 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="automatic">Otomatis</string>
     <string name="error_occurred">Sebuah kesalahan telah terjadi</string>
     <string name="retry">Mencoba kembali</string>
-    <string name="edit_charging_limit_once">Pengisian daya sekali untuk #\%, tanpa dibatasi</string>
+    <string name="edit_charging_limit_once_button">Pengisian daya sekali untuk #\%, tanpa dibatasi</string>
     <string name="done_applied_charge_limit">Mengisi daya sampai %1$d%%</string>
     <string name="charge_limit_not_applied">Penerapan pengisi daya terbatas dibatalkan</string>
     <string name="apply">Menerapkan</string>
@@ -256,7 +256,7 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="about_attributes">Atribut</string>
     <string name="about_attrib_telegram_icon">Avatar Telegram digambar oleh Pixel perfect dari www.flaticon.com</string>
     <string name="about_acca_version_label">Versi AccA:</string>
-    <string name="about_acc_version_label">Versi ACC:</string>
+    <string name="about_acc_api_version_label">Versi ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>

@@ -127,7 +127,7 @@
     <string name="automatic">Automatisch</string>
     <string name="error_occurred">Ein Fehler ist aufgetreten</string>
     <string name="retry">Erneut versuchen</string>
-    <string name="edit_charging_limit_once">Einmal bis #\% ohne Einschränkungen aufladen</string>
+    <string name="edit_charging_limit_once_button">Einmal bis #\% ohne Einschränkungen aufladen</string>
     <string name="done_applied_charge_limit">Aufgeladen zu %1$d%%</string>
     <string name="charge_limit_not_applied">Ladelimit anwenden wurde aufgehoben</string>
     <string name="apply">Übernehmen</string>
@@ -255,7 +255,7 @@
     <string name="about_attributes">Eigenschaften</string>
     <string name="about_attrib_telegram_icon">Das Telegram-Symbol wurde von Pixel perfekt auf www.flaticon.com gemacht</string>
     <string name="about_acca_version_label">AccA-Version:</string>
-    <string name="about_acc_version_label">ACC-Version:</string>
+    <string name="about_acc_api_version_label">ACC-Version:</string>
     <string name="about_project_github">AccA-GitHub</string>
     <string name="about_project_telegram">AccA-Telegram</string>
     <string name="about_github">GitHub</string>
