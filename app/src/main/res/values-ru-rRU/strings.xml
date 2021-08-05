@@ -123,7 +123,6 @@
     <string name="automatic">Автоматически</string>
     <string name="error_occurred">Произошла ошибка</string>
     <string name="retry">Повторить</string>
-    <string name="edit_charging_limit_once">Однократная зарядка до #\%, без ограничений</string>
     <string name="done_applied_charge_limit">Заряжено на %1$d%%</string>
     <string name="charge_limit_not_applied">Ограничение зарядки не установлено</string>
     <string name="apply">Применить</string>
@@ -151,8 +150,6 @@
     <string name="charging_switch_label">Переключатель зарядки:</string>
     <string name="title_on_plugged">Вставьте в розетку</string>
     <string name="edit_on_plugged">Изменить настройки подключения:</string>
-    <string name="edit_on_plugged_dialog_message">Пример: wireless/voltage_max::9000000 принудительно включает быструю беспроводную зарядку на некоторых устройствах Pixel.
-    </string>
     <string name="template_capacity_profile">Выключение устройства при: %1$d%% - Зарядка при: %2$d%% - Остановка при: %3$d%%</string>
     <string name="template_temperature_profile">Температура: %1$d&#176;C - Макс: %2$d&#176;C - Пауза: %3$dс</string>
     <string name="template_cool_down_profile">Начинать с: %1$d%% - Заряжать до: %2$dс - Пауза при: %3$dс</string>
@@ -250,8 +247,6 @@
     </string>
     <string name="about_attributes">Дополнительно</string>
     <string name="about_attrib_telegram_icon">Используется Telegram иконка, сделанная пользователем Pixel perfect с сайта www.flaticon.com</string>
-    <string name="about_acca_version_label">Версия АссА:</string>
-    <string name="about_acc_version_label">Версия ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
