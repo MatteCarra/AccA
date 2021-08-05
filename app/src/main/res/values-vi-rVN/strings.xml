@@ -121,7 +121,6 @@ Tiến trình nền DJS sẽ được bắt đầu khi khởi động cùng vớ
     <string name="automatic">Tự động</string>
     <string name="error_occurred">Có lỗi xảy ra</string>
     <string name="retry">Thử lại</string>
-    <string name="edit_charging_limit_once">Sạc đến #\%, bỏ qua các giới hạn</string>
     <string name="done_applied_charge_limit">Sạc đến %1$d%%</string>
     <string name="charge_limit_not_applied">Đã hủy áp dụng mức sạc</string>
     <string name="apply">Áp dụng</string>
@@ -149,7 +148,6 @@ Tiến trình nền DJS sẽ được bắt đầu khi khởi động cùng vớ
     <string name="charging_switch_label">Công tắc sạc:</string>
     <string name="title_on_plugged">Áp dụng trên phích cắm</string>
     <string name="edit_on_plugged">Chỉnh sửa cài đặt application_on_plug:</string>
-    <string name="edit_on_plugged_dialog_message">Ví dụ: wireless/voltage_max::9000000 buộc sạc nhanh không dây trên một số thiết bị Pixel.    </string>
     <string name="template_capacity_profile">Tắt nguồn: %1$d%% - Tiếp tục: %2$d%% - Dừng lại: %3$d%%</string>
     <string name="template_temperature_profile">Nhiệt độ:%1$d&#176;C - Tối đa: %2$d&#176;C - Dừng: %3$ds</string>
     <string name="template_cool_down_profile">Bắt đầu lúc: %1$d%% - Sạc trong %2$ds - Tạm dừng trong %3$ds</string>
@@ -241,8 +239,6 @@ Nếu đơn vị được phát hiện không chính xác, bạn có thể đặ
         \n\nĐặc biệt cảm ơn những người đã đóng góp bằng mọi cách cho các dự án của ACC &amp; AccA!    </string>
     <string name="about_attributes">Thuộc Tính</string>
     <string name="about_attrib_telegram_icon">Biểu tượng Telegram do Pixel hoàn thiện từ www.flaticon.com</string>
-    <string name="about_acca_version_label">Phiên bản AccA:</string>
-    <string name="about_acc_version_label">Phiên bản ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
