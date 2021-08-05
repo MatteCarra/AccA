@@ -168,4 +168,8 @@ interface AccInterface {
     suspend fun addChargingSwitch(switch: String): Boolean = withContext(Dispatchers.IO) {
         Shell.su(getAddChargingSwitchCommand(switch)).exec().isSuccess
     }
+
+    suspend fun getAccVersion(): Int? = withContext(Dispatchers.IO) {
+        Shell.su("/dev/.vr25/acc/acc --version").exec().out.joinToString(separator = "\n").split("(").last().split(")").first().trim().toIntOrNull() ?: Shell.su("acc --version").exec().out.joinToString(separator = "\n").split("(").last().split(")").first().trim().toIntOrNull()
+    }
 }
