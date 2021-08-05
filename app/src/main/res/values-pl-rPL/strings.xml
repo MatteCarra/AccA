@@ -129,7 +129,6 @@ Jebac pis?</string>
     <string name="automatic">Automatyczny</string>
     <string name="error_occurred">Wystąpił błąd</string>
     <string name="retry">Spróbuj ponownie</string>
-    <string name="edit_charging_limit_once">Ładuj raz do #\%, bez ograniczeń</string>
     <string name="done_applied_charge_limit">Ładowanie do %1$d%%</string>
     <string name="charge_limit_not_applied">Stosowanie limitu ładowania zostało przerwane</string>
     <string name="apply">Zastosuj</string>
@@ -157,8 +156,6 @@ Jebac pis?</string>
     <string name="charging_switch_label">Przełącznik ładowania:</string>
     <string name="title_on_plugged">Zastosuj przy podłączeniu</string>
     <string name="edit_on_plugged">Edytuj ustawienia apply_on_plug:</string>
-    <string name="edit_on_plugged_dialog_message">Przykład: wireless/voltage_max::9000000 wymusza szybkie ładowanie bezprzewodowe na niektórych urządzeniach Pixel.
-    </string>
     <string name="template_capacity_profile">Wyłącz: %1$d%% - Wznów: %2$d%% - Zatrzymaj: %3$d%%</string>
     <string name="template_temperature_profile">Temperatura: %1$d&#176;C - Maks. %2$d&#176;C - Wstrzymaj %3$ds</string>
     <string name="template_cool_down_profile">Rozpocznij przy: %1$d%% - Ładuj przez %2$ds - Wstrzymaj na %3$ds</string>
@@ -254,8 +251,6 @@ Wersja Bundled jest testowana pod kątem działania z aplikacją AccA, dlatego j
     </string>
     <string name="about_attributes">Atrybuty</string>
     <string name="about_attrib_telegram_icon">Ikona Telegram wykonana przez Pixel perfect z www.flaticon.com</string>
-    <string name="about_acca_version_label">Wersja AccA:</string>
-    <string name="about_acc_version_label">Wersja ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
