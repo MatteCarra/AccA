@@ -44,15 +44,15 @@
     <string name="reset_unplugged">断开插头后重置电池状态</string>
     <string name="reset_stats">重置电池状态</string>
     <string name="enable_cooldown">启用周期性冷却：</string>
-    <string name="cooldown_capacity">开始冷却阈值 %% ：</string>
-    <string name="resume_charge">恢复充电阈值:</string>
-    <string name="stop_charge">停止充电阈值:</string>
+    <string name="cooldown_capacity">开始冷却阀值 %% ：</string>
+    <string name="resume_charge">恢复充电阀值:</string>
+    <string name="stop_charge">停止充电阀值:</string>
     <string name="enable_temp_check">启用温度控制（℃）</string>
     <string name="cooldown_temp">冷却温度：</string>
     <string name="max_temp">最高温度:</string>
     <string name="pause_seconds">暂停秒数：</string>
     <string name="charge_seconds">充电秒数:</string>
-    <string name="shutdown_capacity">关机(未充电状态)阈值:</string>
+    <string name="shutdown_capacity">关机(未充电状态)阀值:</string>
     <string name="no_root_message">AccA需要root权限。</string>
     <string name="config_error_title">配置解析错误</string>
     <string name="config_error_dialog">解析ACC 配置失败！\n请检查\"su -c acca --set --print\" 是否正常工作</string>
@@ -127,7 +127,6 @@
     <string name="automatic">自动</string>
     <string name="error_occurred">发生了一个错误</string>
     <string name="retry">重试</string>
-    <string name="edit_charging_limit_once">一次性充电至 #\%，无限制</string>
     <string name="done_applied_charge_limit">充电到 %1$d%%</string>
     <string name="charge_limit_not_applied">充电限制已取消</string>
     <string name="apply">应用</string>
@@ -155,8 +154,6 @@
     <string name="charging_switch_label">充电开关:</string>
     <string name="title_on_plugged">充电时应用</string>
     <string name="edit_on_plugged">编辑应用于插入电源时（apply_on_plug）的设置：</string>
-    <string name="edit_on_plugged_dialog_message">示例：wireless/voltage_max::9000000 可以强制一些 Pixel 设备启用无线快充。
-    </string>
     <string name="template_capacity_profile">关机: %1$d%% - 恢复充电: %2$d%% - 停止充电: %3$d%%</string>
     <string name="template_temperature_profile">温度： %1$d&#176;C - 最大： %2$d&#176;C - 暂停： %3$d秒</string>
     <string name="template_cool_down_profile">开始于： %1$d%% - 充电 %2$d秒 - 暂停 %3$d秒</string>
@@ -255,8 +252,6 @@
     <string name="about_attributes">致谢</string>
     <string name="about_attrib_telegram_icon">电报头像由 Pixel perfect 绘制
 取自 www.flaticon.com</string>
-    <string name="about_acca_version_label">AccA 版本：</string>
-    <string name="about_acc_version_label">ACC 版本：</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA 电报</string>
     <string name="about_github">GitHub</string>
