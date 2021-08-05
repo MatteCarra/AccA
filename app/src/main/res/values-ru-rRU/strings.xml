@@ -257,7 +257,6 @@
     <string name="about_attributes">Дополнительно</string>
     <string name="about_attrib_telegram_icon">Используется Telegram иконка, сделанная пользователем Pixel perfect с сайта www.flaticon.com</string>
     <string name="about_acca_version_label">Версия АссА:</string>
-    <string name="about_acc_version_label">Версия ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>

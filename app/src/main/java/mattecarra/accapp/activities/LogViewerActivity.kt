@@ -28,8 +28,7 @@ class LogViewerActivity : AppCompatActivity()
     private lateinit var job: Shell.Job
     private var isPaused = false
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean
-    {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId)
         {
             android.R.id.home ->
@@ -42,10 +41,10 @@ class LogViewerActivity : AppCompatActivity()
         return super.onOptionsItemSelected(item)
     }
 
-    private fun scrollToBottom()
-    {
+    private fun scrollToBottom() {
         log_recycler.scrollToPosition(adapter.itemCount - 1)
         onBottom = true
+        log_button_scroll_end.visibility = View.GONE
     }
 
     private fun setTitleCount(count: Int)
@@ -59,14 +58,14 @@ class LogViewerActivity : AppCompatActivity()
         Toast.makeText(this, R.string.text_copied_to_clipboard, Toast.LENGTH_SHORT).show()
     }
 
-    public override fun onSaveInstanceState(outState: Bundle)
-    {
+    public override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         this.adapter.saveState(outState)
+        outState.putBoolean("paused", isPaused)
+        outState.putBoolean("onBottom", onBottom)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_viewer)
 
@@ -78,7 +77,11 @@ class LogViewerActivity : AppCompatActivity()
         linearLayoutManager = LinearLayoutManager(this)
         log_recycler.layoutManager = linearLayoutManager
         adapter = LogRecyclerViewAdapter(ArrayList(), clickerListener)
-        if (savedInstanceState != null) this.adapter.restoreState(savedInstanceState)
+        if (savedInstanceState != null){
+            isPaused = savedInstanceState.getBoolean("paused")
+            onBottom = savedInstanceState.getBoolean("onBottom")
+            this.adapter.restoreState(savedInstanceState)
+        }
         log_recycler.adapter = adapter
         log_recycler.setHasFixedSize(true)
         linearLayoutManager.stackFromEnd = true
@@ -86,6 +89,7 @@ class LogViewerActivity : AppCompatActivity()
         log_button_scroll_end.setOnClickListener { scrollToBottom() }
         log_button_clear.setOnClickListener { adapter.clearAll(); setTitleCount(0) }
 
+        log_button_pause.setImageResource(if (isPaused) R.drawable.ic_baseline_play_arrow_24 else R.drawable.ic_baseline_pause_24)
         log_button_pause.setOnClickListener {
             isPaused = !isPaused
             log_button_pause.setImageResource(if (isPaused) R.drawable.ic_baseline_play_arrow_24 else R.drawable.ic_baseline_pause_24)
@@ -96,8 +100,13 @@ class LogViewerActivity : AppCompatActivity()
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int)
             {
                 if (dy == 0) return
-                if (dy < 0) onBottom = false else
-                if (!onBottom) if (linearLayoutManager.findLastCompletelyVisibleItemPosition() == adapter.itemCount - 1) onBottom = true
+                if (dy < 0) {
+                    onBottom = false
+                    log_button_scroll_end.visibility = View.VISIBLE
+                } else if (!onBottom && linearLayoutManager.findLastCompletelyVisibleItemPosition() == adapter.itemCount - 1) {
+                    onBottom = true
+                    log_button_scroll_end.visibility = View.GONE
+                }
             }
         })
 
@@ -117,25 +126,8 @@ class LogViewerActivity : AppCompatActivity()
         job.submit { println(it.code) }
     }
 
-    override fun onDestroy()
-    {
+    override fun onDestroy() {
         Shell.getCachedShell()?.close()
         super.onDestroy()
-    }
-
-    override fun onResume()
-    {
-        Log.d(LOG_TAG, "onResume")
-        adapter.notifyDataSetChanged()
-        scrollToBottom()
-        isPaused = false
-        super.onResume()
-    }
-
-    override fun onPause()
-    {
-        Log.d(LOG_TAG, "onPause")
-        isPaused = true
-        super.onPause()
     }
 }

@@ -129,7 +129,7 @@ Jebac pis?</string>
     <string name="automatic">Automatyczny</string>
     <string name="error_occurred">Wystąpił błąd</string>
     <string name="retry">Spróbuj ponownie</string>
-    <string name="edit_charging_limit_once">Ładuj raz do #\%, bez ograniczeń</string>
+    <string name="edit_charging_limit_once_button">Ładuj raz do #\%, bez ograniczeń</string>
     <string name="done_applied_charge_limit">Ładowanie do %1$d%%</string>
     <string name="charge_limit_not_applied">Stosowanie limitu ładowania zostało przerwane</string>
     <string name="apply">Zastosuj</string>
