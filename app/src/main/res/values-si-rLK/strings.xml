@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name_full">ඇඩ්වාන්ස් චාර්ජින් කොන්ට්‍රෝලර් ඇප්</string>
     <!-- ACC Tile Strings -->
     <!-- Navigation Strings -->
     <string name="title_profiles">පැතිකඩයන්</string>
@@ -11,6 +12,7 @@
     <!-- Battery Card Strings -->
     <string name="title_battery">විදුලිකෝෂය</string>
     <string name="info_status">තත්වය</string>
+    <string name="info_charging_speed">ආරෝපණ වේගය</string>
     <string name="info_capacity">ධාරිතාව</string>
     <string name="info_temperature">උෂ්ණත්වය</string>
     <string name="info_health">සෞඛ්‍යය</string>
@@ -25,7 +27,9 @@
     <!-- ACC installation -->
     <!-- DJS installation -->
     <string name="save">සුරකින්න</string>
+    <string name="edit_config">වින්‍යාසය සංස්කරණය</string>
     <string name="unsaved_changes_message">වෙනස්කම් සුරකින්නද?</string>
+    <string name="create_acc_profile">වින්‍යාස පැතිකඩක් සාදන්න</string>
     <string name="profile_name">පැතිකඩ නාමය</string>
     <string name="no_profiles">පැතිකඩක් නැත</string>
     <string name="profile_not_selected">අභිරුචි සැකසුම්</string>
@@ -34,10 +38,15 @@
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="automatic">ස්වයංක්‍රීය</string>
     <string name="apply">යොදන්න</string>
+    <string name="info">තොරතුරු</string>
+    <string name="about">පිලිබඳව</string>
     <!-- ACC Config Tooltips -->
     <!--Profiles Options-->
     <string name="profile_option_edit">සංස්කරණය</string>
+    <string name="installation_failed_busybox_title">බිසීබොක්ස් ස්ථාපනය කර නැත</string>
     <string name="share">බෙදාගන්න</string>
+    <string name="acc_version_preference_title">ACC අනුවාදය</string>
+    <string name="acc_version_picker_title">ACC අනුවාදය</string>
     <string-array name="acc_version_options">
         <item>Bundled</item>
         <item>Master</item>
@@ -47,6 +56,10 @@
     <string name="theme_option_setting">තේමාව</string>
     <string name="theme_option_summary">යෙදුමේ තේමාව සකසන්න.</string>
     <string name="undo">පෙරසේ</string>
+    <string name="install">ස්ථාපනය</string>
+    <string name="select_different_version">ACC අනු. වෙනස්කරන්න</string>
+    <string name="schedule_profile_edit_current">වත්මන් වින්‍යාසය සංස්කරණය</string>
+    <string name="schedule_profile_keep_current">වත්මන් වින්‍යාසය තබාගන්න</string>
     <string-array name="theme_option_options">
         <item>Light</item>
         <item>අඳුරු</item>
@@ -97,11 +110,17 @@
         <item>vi</item>
         <item>zh</item>
     </string-array>
+    <string name="menu_import_export">ආයාත &amp; නිර්යාත</string>
     <!-- About Activity -->
     <string name="about_project_github">AccA ගිට්හබ්</string>
     <string name="about_project_telegram">AccA ටෙලිග්‍රෑම්</string>
     <string name="about_github">ගිට්හබ්</string>
     <string name="about_website">වියමන අඩවිය</string>
     <!-- Import and Export -->
+    <string name="import_title">ආයාත</string>
+    <string name="export_title">නිර්යාත</string>
+    <string name="menu_import">ආයාත</string>
+    <string name="menu_export">නිර්යාත</string>
+    <string name="menu_title_load_clipboard">පසුරුපුවරුවෙන් පූරණයකරන්න</string>
     <!-- Config Parse Error -->
 </resources>
