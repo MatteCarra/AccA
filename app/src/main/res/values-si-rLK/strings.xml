@@ -3,6 +3,7 @@
     <string name="app_name_full">ඇඩ්වාන්ස් චාර්ජින් කොන්ට්‍රෝලර් ඇප්</string>
     <!-- ACC Tile Strings -->
     <!-- Navigation Strings -->
+    <string name="title_dashboard">උපකරණ පුවරුව</string>
     <string name="title_profiles">පැතිකඩයන්</string>
     <string name="title_settings">සැකසුම්</string>
     <!-- ACC Daemon Status -->
@@ -23,8 +24,12 @@
     <string name="item_profile_temperature_label">උෂ්ණත්වය:</string>
     <string name="status_label">තත්වය:</string>
     <string name="battery_info_label">තොරතුරු:</string>
+    <string name="reset_stats">විදුලිකෝෂයේ තත්වය යළිසකසන්න</string>
+    <string name="max_temp">උපරිම උෂ්.:</string>
+    <string name="wait">රැඳෙන්න...\nමෙයට තත්පර කිහිපයක් ගතවේවි.</string>
     <!-- Exit On Boot Card Strings -->
     <!-- ACC installation -->
+    <string name="installing_acc">ACC ස්ථාපනය වෙමින්</string>
     <!-- DJS installation -->
     <string name="save">සුරකින්න</string>
     <string name="edit_config">වින්‍යාසය සංස්කරණය</string>
@@ -34,11 +39,17 @@
     <string name="no_profiles">පැතිකඩක් නැත</string>
     <string name="profile_not_selected">අභිරුචි සැකසුම්</string>
     <string name="profile_tile_label">පැතිකඩ: %1$s</string>
+    <string name="restart">නැවත පටන්ගන්න</string>
+    <string name="invalid_chars">පැතිකඩ නාමයෙහි වලංගු නොවන අකුරු අඩංගුය</string>
+    <string name="new_config">නව අභිරුචි වින්‍යාසය</string>
     <string name="disabled">අබලයි</string>
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="automatic">ස්වයංක්‍රීය</string>
+    <string name="done_applied_charge_limit">%1$d%% ට ආරෝපණය වෙමින්</string>
     <string name="apply">යොදන්න</string>
     <string name="info">තොරතුරු</string>
+    <string name="title_temperature_control">උෂ්ණත්වය පාලනය</string>
+    <string name="title_capacity_control">ධාරිතාව පාලනය</string>
     <string name="about">පිලිබඳව</string>
     <!-- ACC Config Tooltips -->
     <!--Profiles Options-->
