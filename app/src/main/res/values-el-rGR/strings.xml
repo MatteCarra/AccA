@@ -96,7 +96,6 @@
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Διαγραφή</string>
     <string name="no_schedules">Δεν έχουν οριστεί προγράμματα</string>
-    <string name="invalid_voltage_max">Η τιμή πρέπει να είναι ένας αριθμός μεταξύ 3700 και 4200 (μιλιβόλτ)</string>
     <string name="edit_charging_switch">Επεξεργασία διακόπτη φόρτισης</string>
     <string name="test_switch">Δοκιμή διακόπτη φόρτισης</string>
     <string name="no_option_selected">Καμία επιλογή δεν επιλέχθηκε• παρακαλώ επιλέξτε μία!</string>
