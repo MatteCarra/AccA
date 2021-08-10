@@ -117,7 +117,6 @@
     <string name="delete">Borrar</string>
     <string name="no_schedules">No hay programaciones</string>
     <string name="wrong_volt_file">O el archivo elegido no funciona, o tu kernel no soporta esta función.</string>
-    <string name="invalid_voltage_max">El valor debe ser un número entre 3700 y 4200 (milivoltios)</string>
     <string name="edit_charging_switch">Editar interruptor de carga</string>
     <string name="test_switch">Probar interruptor de carga</string>
     <string name="no_option_selected">No hay opción seleccionada; por favor, seleccione una!</string>
