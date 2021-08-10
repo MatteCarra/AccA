@@ -118,7 +118,7 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="delete">Menghapus</string>
     <string name="no_schedules">Tidak ada jadwal yang ditetapkan</string>
     <string name="wrong_volt_file">File yang dipilih tidak berfungsi, atau kernel Anda tidak mendukung fitur ini.</string>
-    <string name="invalid_voltage_max">Nilai harus berupa angka antara 3700 dan 4200 (milivolt/mV)</string>
+    <string name="invalid_voltage_max">Nilai harus berupa angka antara 3700 dan 4300 (milivolt/mV)</string>
     <string name="edit_charging_switch">Edit saklar pengisian daya</string>
     <string name="test_switch">Uji sakelar pengisian daya</string>
     <string name="no_option_selected">Tidak ada opsi yang dipilih; tolong pilih satu!</string>

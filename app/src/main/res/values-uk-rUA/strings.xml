@@ -114,7 +114,7 @@
     <string name="delete">Видалити</string>
     <string name="no_schedules">Немає запланованих завдань</string>
     <string name="wrong_volt_file">Обраний файл не працює, або ваше ядро не підтримує цю функцію.</string>
-    <string name="invalid_voltage_max">Значення має бути числом від 3700 до 4200 (мілівольт)</string>
+    <string name="invalid_voltage_max">Значення має бути числом від 3700 до 4300 (мілівольт)</string>
     <string name="edit_charging_switch">Редагувати перемикач зарядки</string>
     <string name="test_switch">Перевірити перемикач зарядки</string>
     <string name="no_option_selected">Жодної опції не вибрано; будь ласка, оберіть одну!</string>
