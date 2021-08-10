@@ -113,7 +113,6 @@
     <string name="delete">Удалить</string>
     <string name="no_schedules">Нет запланированных заданий</string>
     <string name="wrong_volt_file">Выбранный файл не работает или ваше ядро не поддерживает данную функцию.</string>
-    <string name="invalid_voltage_max">Значение должно быть от 3700 до 4200 (милливольт)</string>
     <string name="edit_charging_switch">Редактировать переключение зарядки</string>
     <string name="test_switch">Протестировать переключение зарядки</string>
     <string name="no_option_selected">Нет выбранных опций; пожалуйста, выберите одну!</string>
