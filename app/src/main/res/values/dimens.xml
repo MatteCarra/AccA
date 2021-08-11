@@ -26,4 +26,10 @@
 
     <!--  Status card status icon  -->
     <dimen name="acc_status_icon">84dp</dimen>
+
+    <dimen name="item_profile_info_two_lp">8dp</dimen>
+    <dimen name="item_profile_info_block_lp">8dp</dimen>
+    <dimen name="item_profile_info_block_rp">8dp</dimen>
+    <dimen name="item_profile_info_block_tp">8dp</dimen>
+    <dimen name="item_profile_info_block_bp">8dp</dimen>
 </resources>

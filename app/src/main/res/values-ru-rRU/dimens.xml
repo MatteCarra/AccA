@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="item_profile_info_two_lp">4dp</dimen>
+    <dimen name="item_profile_info_block_lp">0dp</dimen>
+    <dimen name="item_profile_info_block_rp">0dp</dimen>
+    <dimen name="item_profile_info_block_tp">8dp</dimen>
+    <dimen name="item_profile_info_block_bp">0dp</dimen>
+</resources>

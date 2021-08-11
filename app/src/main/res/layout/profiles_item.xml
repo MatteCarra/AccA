@@ -76,7 +76,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="8dp">
+                android:paddingLeft="@dimen/item_profile_info_block_lp"
+                android:paddingRight="@dimen/item_profile_info_block_rp"
+                android:paddingTop="@dimen/item_profile_info_block_tp"
+                android:paddingBottom="@dimen/item_profile_info_block_bp"
+                >
 
                 <LinearLayout
                     android:id="@+id/item_profile_capacity_ll"
@@ -106,9 +110,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
-                        android:paddingStart="8dp"
-                        android:paddingLeft="8dp"
-                        tools:text="@tools:sample/full_names" />
+                        android:paddingStart="@dimen/item_profile_info_two_lp"
+                        android:paddingLeft="@dimen/item_profile_info_two_lp"
+                        tools:text="@string/template_capacity_profile" />
 
                 </LinearLayout>
 
@@ -140,8 +144,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
-                        android:paddingStart="8dp"
-                        android:paddingLeft="8dp"
+                        android:paddingStart="@dimen/item_profile_info_two_lp"
+                        android:paddingLeft="@dimen/item_profile_info_two_lp"
                         tools:text="@tools:sample/full_names" />
 
                 </LinearLayout>
@@ -174,9 +178,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
-                        android:paddingStart="8dp"
-                        android:paddingLeft="8dp"
-                        tools:text="@tools:sample/full_names" />
+                        android:paddingStart="@dimen/item_profile_info_two_lp"
+                        android:paddingLeft="@dimen/item_profile_info_two_lp"
+                        tools:text="@string/template_temperature_profile" />
 
                 </LinearLayout>
 
@@ -208,9 +212,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
-                        android:paddingStart="8dp"
-                        android:paddingLeft="8dp"
-                        tools:text="@tools:sample/full_names" />
+                        android:paddingStart="@dimen/item_profile_info_two_lp"
+                        android:paddingLeft="@dimen/item_profile_info_two_lp"
+                        tools:text="@string/template_cool_down_profile" />
 
                 </LinearLayout>
 
@@ -242,8 +246,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
-                        android:paddingStart="8dp"
-                        android:paddingLeft="8dp"
+                        android:paddingStart="@dimen/item_profile_info_two_lp"
+                        android:paddingLeft="@dimen/item_profile_info_two_lp"
                         tools:text="@tools:sample/full_names" />
 
                 </LinearLayout>
@@ -275,8 +279,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
-                        android:paddingStart="8dp"
-                        android:paddingLeft="8dp"
+                        android:paddingStart="@dimen/item_profile_info_two_lp"
+                        android:paddingLeft="@dimen/item_profile_info_two_lp"
                         tools:text="@tools:sample/full_names" />
 
                 </LinearLayout>
