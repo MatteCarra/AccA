@@ -34,7 +34,7 @@
     <string name="info_health">Состояние</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
-    <string name="info_charging_speed_extended">%1$dмА в %2$.2fВ</string>
+    <string name="info_charging_speed_extended">%1$dмА при %2$.2fВ</string>
     <string name="info_discharging_speed_extended">%1$dмА</string>
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">Ёмкость:</string>
@@ -43,14 +43,14 @@
     <string name="battery_info_label">Инфо:</string>
     <string name="reset_unplugged">Сбросить статус батареи при отключении</string>
     <string name="reset_stats">Сбросить статус батареи</string>
-    <string name="enable_cooldown">Включить цикл замедления:</string>
+    <string name="enable_cooldown">Включить цикл охлаждения:</string>
     <string name="cooldown_capacity">Начать охлаждение при %%:</string>
     <string name="resume_charge">Возобновить зарядку при:</string>
     <string name="stop_charge">Остановить зарядку при:</string>
     <string name="enable_temp_check">Включить контроль температуры (°C)</string>
-    <string name="cooldown_temp">Темп замедления:</string>
+    <string name="cooldown_temp">Температура охлаждения:</string>
     <string name="max_temp">Макс. температура:</string>
-    <string name="pause_seconds">Пауза сек.:</string>
+    <string name="pause_seconds">Пауза в сек.:</string>
     <string name="charge_seconds">Зарядка сек.:</string>
     <string name="shutdown_capacity">Выключение (если не заряжается) в:</string>
     <string name="no_root_message">Для AccA требуются права Root.</string>
@@ -100,7 +100,8 @@
     <string name="recurrent_schedule">Запустить только один раз</string>
     <string name="execution_time">Время выполнения</string>
     <string name="new_config">Новая пользовательская конфигурация</string>
-    <string name="enable_voltage_limit">Включить ограничение напряжения при зарядке</string>
+    <string name="enable_voltage_limit">Ограничение напряжения зарядки</string>
+    <string name="enable_current_limit">Ограничение силы тока зарядки</string>
     <string name="voltage_control_file">Файл управления напряжением:</string>
     <string name="edit_power_limit">Установить ограничения напряжения и силы тока</string>
     <string name="voltage_max">Максимальное напряжение (милливольт):</string>
@@ -122,6 +123,7 @@
     <string name="automatic">Автоматически</string>
     <string name="error_occurred">Произошла ошибка</string>
     <string name="retry">Повторить</string>
+    <string name="edit_charging_limit_once_button">Один раз зарядить до #\% без ограничений</string>
     <string name="done_applied_charge_limit">Заряжено на %1$d%%</string>
     <string name="charge_limit_not_applied">Ограничение зарядки не установлено</string>
     <string name="apply">Применить</string>
@@ -129,17 +131,17 @@
     <string name="edit_charging_limit_once_dialog_msg">Ваши текущие настройки будут автоматически восстановлены после достижения выбранного уровня заряда батареи.</string>
     <string name="title_power_control">Управление питанием зарядки</string>
     <string name="info">Информация</string>
-    <string name="title_cooldown_control">Замедление</string>
+    <string name="title_cooldown_control">Охладить</string>
     <string name="title_on_boot">Применить при загрузке</string>
     <string name="title_temperature_control">Контроль температуры</string>
-    <string name="title_capacity_control">Контроль емкости</string>
+    <string name="title_capacity_control">Контроль ёмкости</string>
     <string name="title_miscellaneous_control">Прочее</string>
     <string name="about">О приложении</string>
     <!-- ACC Config Tooltips -->
     <string name="capacity_control_info">- SHUTDOWN: автоматическое выключение при заряде уровня батареи ниже данного, если аккумулятор не заряжается.&lt;br /&gt;- STOP: and RESUME установка параметров, когда зарядка должна остановиться и возобновиться.&lt;br /&gt;- CHARGING SWITCH- это управляющий файл, плюс параметры ВКЛ и ВЫКЛ для включения или выключения зарядки. По умолчанию ACC использует всё, что может.</string>
     <string name="power_control_info">- Каждое сокращение пикового напряжения зарядки 0.10V/cell удваивает срок службы цикла&lt;br /&gt;- К сожалению, не все устройства/ядра поддерживают эту функцию.</string>
-    <string name="temperature_control_info">- This disables charging for set seconds to cool the battery&lt;br /&gt;- COOLDOWN TEMP depends on COOLDOWN RATIO.&lt;br /&gt;- MAX TEMP works with PAUSE SECONDS.</string>
-    <string name="cooldown_info">&amp;ltbr /&gt; &lt;br /&gt; &lt;br /&gt;.</string>
+    <string name="temperature_control_info">- Отключает зарядку на заданное время, чтобы охладить батарею&lt;br /&gt;- «Температура охлаждения» зависит от соотношения охлаждения.&lt;br /&gt;- «Максимальная температура« работает с «Паузой».</string>
+    <string name="cooldown_info">- Соотношение ВКЛ/ВЫКЛ зарядки в секундах (например, 50/10) для уменьшения износа аккумулятора, вызванного продолжительной высокой температурой и высоким напряжением зарядки, за счет периодической паузы.&lt;br /&gt;- Если зарядка слишком медленная, выключите или измените отношение к 50/5.&lt;br /&gt;- Если отключено, значения «Охлаждения по ёмкости» и «Замедления по температуре» не влияют.&lt;br /&gt;- Эта функция является альтернативой ограничению зарядки по напряжению.</string>
     <string name="on_plugged_info">Используется для обновления управляющих файлов, содержание которых изменяется при определенных событиях питания (например, подключение/отключение). Особенно это полезно для обеспечения максимальной нагрузки/силы тока, для работы с компьютером и беспроводной зарядкой.</string>
     <string name="battery_idle_info_label">Эта опция позволяет поддерживаемому устройству получать питание непосредственно из внешнего источника питания при остановке зарядки аккумулятора.</string>
     <string name="miscellaneous_info_label">Остальные настройки ACC, которые не вошли в другие категории</string>
@@ -150,8 +152,8 @@
     <string name="title_on_plugged">Вставьте в розетку</string>
     <string name="edit_on_plugged">Изменить настройки подключения:</string>
     <string name="template_capacity_profile">Выключение устройства при: %1$d%% - Зарядка при: %2$d%% - Остановка при: %3$d%%</string>
-    <string name="template_temperature_profile">Температура: %1$d&#176;C - Макс: %2$d&#176;C - Пауза: %3$dс</string>
-    <string name="template_cool_down_profile">Начинать с: %1$d%% - Заряжать до: %2$dс - Пауза при: %3$dс</string>
+    <string name="template_temperature_profile">Температура: %1$d&#176;C - Макс.: %2$d&#176;C - Пауза: %3$dс</string>
+    <string name="template_cool_down_profile">Начинать с: %1$d%% - Заряжать: %2$dс - Пауза на: %3$dс</string>
     <!--Profiles Options-->
     <string name="profile_option_edit">Изменить</string>
     <string name="profile_option_rename">Переименовать</string>
@@ -247,7 +249,9 @@
     </string>
     <string name="about_attributes">Дополнительно</string>
     <string name="about_attrib_telegram_icon">Используется Telegram иконка, сделанная пользователем Pixel perfect с сайта www.flaticon.com</string>
+    <string name="about_acca_version_label">Версия АССА:</string>
     <string name="about_acc_daemon_version_label">Версия службы ACC:</string>
+    <string name="about_acc_api_version_label">Версия ACCA⇄ACC API:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
