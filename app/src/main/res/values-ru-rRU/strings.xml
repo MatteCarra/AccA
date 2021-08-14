@@ -6,8 +6,8 @@
     <string name="title_activity_log_view_file_name">Журнал</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">Отсутствует Root</string>
-    <string name="tile_acc_enabled">Даемон запущен</string>
-    <string name="tile_acc_disabled">Даемон остановлен</string>
+    <string name="tile_acc_enabled">Служба запущена</string>
+    <string name="tile_acc_disabled">Служба остановлена</string>
     <!-- Navigation Strings -->
     <string name="title_dashboard">Мониторинг</string>
     <string name="title_profiles">Профили</string>
@@ -18,7 +18,7 @@
     <string name="title_acc_daemon">Служба ACC</string>
     <string name="acc_daemon_status_running">Служба ACC запущена</string>
     <string name="acc_daemon_status_not_running">Служба ACC не запущена</string>
-    <string name="acc_daemon_status_reading_status">Reading ACC Daemon Status...</string>
+    <string name="acc_daemon_status_reading_status">Чтение статуса службы ACC...</string>
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">Остановить службу ACC</string>
     <string name="menu_start_accd">Запустить службу ACC</string>
@@ -31,7 +31,7 @@
     <string name="info_discharging_speed">Текущая сила тока</string>
     <string name="info_capacity">Ёмкость</string>
     <string name="info_temperature">Температура</string>
-    <string name="info_health">Здоровье</string>
+    <string name="info_health">Состояние</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
     <string name="info_charging_speed_extended">%1$dмА в %2$.2fВ</string>
@@ -58,7 +58,7 @@
     <string name="config_error_dialog">Не удалось распознать конфигурацию ACC!\nПожалуйста, проверьте, работает ли \"su -c acc --set --print\".</string>
     <string name="wait">Пожалуйста, подождите...\nЭто займет несколько секунд.</string>
     <!-- Exit On Boot Card Strings -->
-    <string name="title_exit_on_boot">Остановить DAEMON после применения настроек</string>
+    <string name="title_exit_on_boot">Остановить службу после применения настроек</string>
     <string name="description_exit_on_boot">Используется для записи файлов при загрузке.</string>
     <!-- ACC installation -->
     <string name="installing_acc">Установка ACC</string>
@@ -81,7 +81,7 @@
     <string name="edit_on_boot_dialog_message">Пример: /sys/kernel/fast_charge/force_fast_charge::1::0
         --exit.\n\"--exit\" опционален; он дает службе команду на остановку после применения настроек.
     </string>
-    <string name="logs">Отчеты</string>
+    <string name="logs">Журнал</string>
     <string name="text_copied_to_clipboard">Текст скопирован в буфер обмена!</string>
     <string name="log_file_not_found_title">Файл отчета не найден</string>
     <string name="unsaved_changes">У вас есть несохраненные изменения</string>
@@ -154,7 +154,7 @@
     <string name="template_cool_down_profile">Начинать с: %1$d%% - Заряжать до: %2$dс - Пауза при: %3$dс</string>
     <!--Profiles Options-->
     <string name="profile_option_edit">Изменить</string>
-    <string name="profile_option_rename">Переименование</string>
+    <string name="profile_option_rename">Переименовать</string>
     <string name="profile_option_delete">Удалить</string>
     <string name="selecting_profile_toast">Выбор профиля %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox не установлен</string>
@@ -229,6 +229,7 @@
         <item>Тёмная</item>
         <item>Настройки по умолчанию</item>
     </string-array>
+    <string name="lang_pref_title">Язык</string>
     <string-array name="schedule_type_entries">
         <item>Переодичный</item>
         <item>Запустить один раз</item>
@@ -246,6 +247,7 @@
     </string>
     <string name="about_attributes">Дополнительно</string>
     <string name="about_attrib_telegram_icon">Используется Telegram иконка, сделанная пользователем Pixel perfect с сайта www.flaticon.com</string>
+    <string name="about_acc_daemon_version_label">Версия службы ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
@@ -278,4 +280,5 @@
     <string name="parse_failed_body">Вы можете попытаться загрузить настройки по умолчанию, нажав \'Load Default\'. Пожалуйста, обратите внимание, что AccA не будет работать.
         \n\nЕсли ошибка повторяется, пожалуйста, поделитесь трассировкой ниже вместе с ACC и AccA версией (через меню &gt; О программе) с разработчиками через Telegram.\n\n%s</string>
     <string name="automatic_switch_eanbled">Автоматические циклы переключения</string>
+    <string name="info_voltage">Напряжение</string>
 </resources>
