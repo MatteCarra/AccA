@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">AccA</string>
     <string name="app_name_full">Advanced Charging Controller App</string>
-    <string name="title_activity_log_view">Отчеты</string>
-    <string name="title_activity_log_view_file_name">Отчеты</string>
+    <string name="title_activity_log_view">Журнал</string>
+    <string name="title_activity_log_view_file_name">Журнал</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">Отсутствует Root</string>
     <string name="tile_acc_enabled">Даемон запущен</string>
