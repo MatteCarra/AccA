@@ -4,15 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.switchmaterial.SwitchMaterial
-import kotlinx.android.synthetic.main.dashboard_fragment.*
-import kotlinx.android.synthetic.main.schedule_item.view.*
 import mattecarra.accapp.R
+import mattecarra.accapp.databinding.ScheduleItemBinding
 import mattecarra.accapp.models.Schedule
 
 interface OnScheduleClickListener {
@@ -29,21 +24,22 @@ class ScheduleProfileListAdapter internal constructor(context: Context) :
     private val mContext = context
 
     inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val binding = ScheduleItemBinding.bind(itemView)
 
-        val titleTv: TextView = itemView.findViewById(R.id.item_schedule_title_tv)
-        val profileTv: TextView = itemView.findViewById(R.id.item_schedule_profile_tv)
-        val whenTv: TextView = itemView.findViewById(R.id.item_schedule_when_tv)
-        val optionsIb: ImageButton = itemView.findViewById(R.id.item_schedule_options_ib)
-        val scheduleToogleSwitch: SwitchMaterial = itemView.findViewById(R.id.item_schedule_toggle_switch)
-        val profileCapacityTv: TextView = itemView.findViewById(R.id.item_profile_capacity_tv)
-        val profileTemperatureTv: TextView = itemView.findViewById(R.id.item_profile_temperature_tv)
-        val profileOnPlugTv: TextView = itemView.findViewById(R.id.item_profile_on_plug_tv)
+        val titleTv = binding.itemScheduleTitleTv
+        val profileTv = binding.itemScheduleProfileTv
+        val whenTv = binding.itemScheduleWhenTv
+        val optionsIb = binding.itemScheduleOptionsIb
+        val scheduleToogleSwitch = binding.itemScheduleToggleSwitch
+        val profileCapacityTv = binding.itemProfileCapacityTv
+        val profileTemperatureTv = binding.itemProfileTemperatureTv
+        val profileOnPlugTv = binding.itemProfileOnPlugTv
 
 
         init {
             itemView.setOnClickListener { v ->
-                if (v.schedule_details_ll.visibility == View.GONE) {
-                    v.schedule_details_ll.visibility = View.VISIBLE
+                if (binding.scheduleDetailsLl.visibility == View.GONE) {
+                    binding.scheduleDetailsLl.visibility = View.VISIBLE
                     titleTv.setCompoundDrawablesWithIntrinsicBounds(
                         0,
                         0,
@@ -51,7 +47,7 @@ class ScheduleProfileListAdapter internal constructor(context: Context) :
                         0
                     )
                 } else {
-                    v.schedule_details_ll.visibility = View.GONE
+                    binding.scheduleDetailsLl.visibility = View.GONE
                     titleTv.setCompoundDrawablesWithIntrinsicBounds(
                         0,
                         0,
@@ -66,7 +62,8 @@ class ScheduleProfileListAdapter internal constructor(context: Context) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
-        val itemView = mInflater.inflate(R.layout.schedule_item, parent, false)
+        val binding = ScheduleItemBinding.inflate(mInflater,parent,false)
+        val itemView = binding.root
         return ProfileViewHolder(itemView)
     }
 

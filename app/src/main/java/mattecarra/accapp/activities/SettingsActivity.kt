@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.FragmentManager
 import mattecarra.accapp.R
+import mattecarra.accapp.databinding.ActivitySettingsBinding
 import mattecarra.accapp.fragments.SettingsFragment
 
 class SettingsActivity: AppCompatActivity(), FragmentManager.OnBackStackChangedListener {
@@ -15,7 +16,8 @@ class SettingsActivity: AppCompatActivity(), FragmentManager.OnBackStackChangedL
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
+        val binding = ActivitySettingsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (savedInstanceState == null) {
             mSettingsFragment = SettingsFragment.newInstance()
