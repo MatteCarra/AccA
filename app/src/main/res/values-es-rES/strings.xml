@@ -12,7 +12,6 @@
     <string name="title_dashboard">Panel de Control</string>
     <string name="title_profiles">Perfiles</string>
     <string name="title_schedules">Horarios</string>
-    <string name="title_settings">Configuración</string>
     <!-- ACC Daemon Status -->
     <string name="title_acc">ACC</string>
     <string name="title_acc_daemon">ACC Daemon</string>
@@ -44,15 +43,11 @@
     <string name="reset_unplugged">Restablecer las estadísticas de batería al desconectar</string>
     <string name="reset_stats">Reiniciar las estadísticas de la batería</string>
     <string name="enable_cooldown">Activar ciclo de enfriamiento:</string>
-    <string name="cooldown_capacity">Comenzar a enfriar a las %%:</string>
-    <string name="resume_charge">Reanudar la carga a las:</string>
-    <string name="stop_charge">Detener la carga a las:</string>
     <string name="enable_temp_check">Activar control de temperatura (°C)</string>
     <string name="cooldown_temp">Temperatura de enfriamiento:</string>
     <string name="max_temp">Temperatura máxima:</string>
     <string name="pause_seconds">Pausar durante (segundos):</string>
     <string name="charge_seconds">Cargar durante (segundos):</string>
-    <string name="shutdown_capacity">Apagar (si no está cargando) a las:</string>
     <string name="no_root_message">AccA requiere ROOT.</string>
     <string name="config_error_title">Error de lectura de configuración</string>
     <string name="config_error_dialog">¡Error al leer la configuración ACC!\nPor favor, comprueba si funciona \"su -c acc --config cat\".</string>
