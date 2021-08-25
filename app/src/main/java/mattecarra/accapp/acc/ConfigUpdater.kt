@@ -31,8 +31,8 @@ data class ConfigUpdaterEnable(  // primary constructor, all values as TRUE
 
     fun getParam(mSharedPrefs: SharedPreferences)
     {
-        sendCurrMax = mSharedPrefs.getBoolean("escCurrMax", true)
-        sendVoltage = mSharedPrefs.getBoolean("escVoltage", true)
+        sendCurrMax = mSharedPrefs.getBoolean("cueCurrMax", true)
+        sendVoltage = mSharedPrefs.getBoolean("cueVoltage", true)
 
     }
 }

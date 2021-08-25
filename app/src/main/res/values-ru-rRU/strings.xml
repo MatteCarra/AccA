@@ -248,6 +248,14 @@
     <string name="about_acc_api_version_label">ACCA⇄ACC API версия:</string>
     <string name="enable_current_limit">Ограничение на зарядный ток</string>
 
+    <string name="experimental_pref_title">Экспериментальные Настройки</string>
+    <string name="experimental_pref_summary">Здесь можно отключить отправку команд службе АСС, которые после выполнения, дают зависание / сбой / перезагрузку устройства. Некоторые устройства на Mediatek.</string>
+
+    <string name="cue_AccCurrentMax_pref_title">AccCurrentMax</string>
+    <string name="cue_AccCurrentMax_pref_summary">Включить команду: "acca —set —current"</string>
+    <string name="cue_AccVoltControl_pref_title">AccVoltControl</string>
+    <string name="cue_AccVoltControl_pref_summary">Включить команду: "acca —set —voltage"</string>
+
     <!-- About Activity -->
     <string name="about_team_title">Наша команда</string>
     <string name="about_team_blurb">Спасибо за то, что используете AccA!

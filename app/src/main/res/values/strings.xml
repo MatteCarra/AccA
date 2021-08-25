@@ -330,6 +330,14 @@
     <string name="schedule_type">Schedule type</string>
     <string name="schedule_name">Schedule name</string>
 
+    <string name="experimental_pref_title">Experimental Tools</string>
+    <string name="experimental_pref_summary">Here you can disable the sending commands to the ACC service, which after execution, give freezing\\failure\\restarting the device. Some devices on MediaTek.</string>
+
+    <string name="cue_AccCurrentMax_pref_title">AccCurrentMax</string>
+    <string name="cue_AccCurrentMax_pref_summary">Enable send \"acca —set —current\" command</string>
+    <string name="cue_AccVoltControl_pref_title">AccVoltControl</string>
+    <string name="cue_AccVoltControl_pref_summary">Enable send \"acca -set —voltage\" command</string>
+
     <string-array name="theme_option_options">
         <item>Light</item>
         <item>Dark</item>

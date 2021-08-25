@@ -48,6 +48,32 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/experimental_pref_title"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            android:summary="@string/experimental_pref_summary"
+            app:iconSpaceReserved="false"/>
+
+        <CheckBoxPreference
+            android:title="@string/cue_AccCurrentMax_pref_title"
+            android:summary="@string/cue_AccCurrentMax_pref_summary"
+            android:defaultValue="true"
+            android:key="cueCurrMax"
+            app:iconSpaceReserved="false">
+        </CheckBoxPreference>
+
+        <CheckBoxPreference
+            android:title="@string/cue_AccVoltControl_pref_title"
+            android:summary="@string/cue_AccVoltControl_pref_summary"
+            android:defaultValue="true"
+            android:key="cueVoltage"
+            app:iconSpaceReserved="false">
+        </CheckBoxPreference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
             android:title="@string/ui_options"
             app:iconSpaceReserved="false">
 
