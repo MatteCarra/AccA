@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import mattecarra.accapp.acc.Acc
+import mattecarra.accapp.acc.ConfigUpdaterEnable
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.utils.ProfileUtils
 import org.jetbrains.anko.getStackTraceString
@@ -80,7 +81,8 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     * Saves config on file. It's run in an async thread every time config is updated.
     */
     private suspend fun saveAccConfig(value: AccConfig) {
-        val res = Acc.instance.updateAccConfig(value)
+
+        val res = Acc.instance.updateAccConfig(value, ConfigUpdaterEnable(mSharedPrefs))
         if(!res.isSuccessful()) {
             res.debug()
 

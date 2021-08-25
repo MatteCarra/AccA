@@ -1,37 +1,77 @@
 package mattecarra.accapp.acc
 
+import android.content.SharedPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.acc._interface.AccInterface
 import mattecarra.accapp.models.AccConfig
 
-data class ConfigUpdater(val accConfig: AccConfig) {
+//----------------------------------------------------------------------
+// Class to enable\disable Shell commands for greater flexibility
+
+data class ConfigUpdaterEnable(  // primary constructor, all values as TRUE
+    var sendCapacity: Boolean = true,
+    var sendVoltage: Boolean = true,
+    var sendCurrMax: Boolean = true,
+    var sendTemperature: Boolean = true,
+    var sendCoolDown: Boolean = true,
+    var sendOnBoot: Boolean = true,
+    var sendOnPlug: Boolean = true,
+    var sendResetUnplugged: Boolean = true,
+    var sendResetBsOnPause: Boolean = true,
+    var sendChargeSwitch: Boolean = true,
+    var sendBatteryIdleMode: Boolean = true
+) {
+
+    // Secondary constructor, values are obtained from setting over the base
+    constructor(mSharedPrefs: SharedPreferences) : this()
+    {
+        getParam(mSharedPrefs)
+    }
+
+    fun getParam(mSharedPrefs: SharedPreferences)
+    {
+        sendCurrMax = mSharedPrefs.getBoolean("escCurrMax", true)
+        sendVoltage = mSharedPrefs.getBoolean("escVoltage", true)
+
+    }
+}
+
+//----------------------------------------------------------------------
+
+data class ConfigUpdater(val accConfig: AccConfig, val cue: ConfigUpdaterEnable) {
     suspend fun execute(acc: AccInterface): ConfigUpdateResult = withContext(Dispatchers.IO) {
         ConfigUpdateResult(
-            acc.updateAccCapacity(
+
+            cue.sendCapacity && acc.updateAccCapacity(
                 accConfig.configCapacity.shutdown, accConfig.configCoolDown?.atPercent ?: 101,
                 accConfig.configCapacity.resume, accConfig.configCapacity.pause
             ),
-            acc.updateAccVoltControl(
+
+            cue.sendVoltage && acc.updateAccVoltControl(
                 accConfig.configVoltage.controlFile,
                 accConfig.configVoltage.max
             ),
-            acc.updateAccCurrentMaxCommand(accConfig.configCurrMax),
-            acc.updateAccTemperature(
+
+            cue.sendCurrMax && acc.updateAccCurrentMaxCommand(accConfig.configCurrMax),
+
+            cue.sendTemperature && acc.updateAccTemperature(
                 accConfig.configTemperature.coolDownTemperature,
                 accConfig.configTemperature.maxTemperature,
                 accConfig.configTemperature.pause
             ),
-            acc.updateAccCoolDown(
+
+            cue.sendCoolDown && acc.updateAccCoolDown(
                 accConfig.configCoolDown?.charge,
                 accConfig.configCoolDown?.pause
             ),
-            acc.updateResetUnplugged(accConfig.configResetUnplugged),
-            acc.updateResetOnPause(accConfig.configResetBsOnPause),
-            acc.updateAccOnBoot(accConfig.configOnBoot),
-            acc.updateAccOnPlugged(accConfig.configOnPlug),
-            acc.updateAccChargingSwitch(accConfig.configChargeSwitch, accConfig.configIsAutomaticSwitchingEnabled),
-            acc.updatePrioritizeBatteryIdleMode(accConfig.prioritizeBatteryIdleMode)
+
+            cue.sendResetUnplugged && acc.updateResetUnplugged(accConfig.configResetUnplugged),
+            cue.sendResetBsOnPause && acc.updateResetOnPause(accConfig.configResetBsOnPause),
+            cue.sendOnBoot && acc.updateAccOnBoot(accConfig.configOnBoot),
+            cue.sendOnPlug && acc.updateAccOnPlugged(accConfig.configOnPlug),
+            cue.sendChargeSwitch && acc.updateAccChargingSwitch(accConfig.configChargeSwitch, accConfig.configIsAutomaticSwitchingEnabled),
+            cue.sendBatteryIdleMode && acc.updatePrioritizeBatteryIdleMode(accConfig.prioritizeBatteryIdleMode)
         )
     }
 
@@ -82,27 +122,27 @@ data class ConfigUpdateResult(
     val prioritizeBatteryIdleModeSuccessful: Boolean
 ) {
     fun debug() {
-        if(!capacityUpdateSuccessful) println("Update capacity update failed")
+        if(!capacityUpdateSuccessful) println("Update capacity update failed or disable")
 
-        if(!voltControlUpdateSuccessful) println("Volt control update failed")
+        if(!voltControlUpdateSuccessful) println("Volt control update failed or disable")
 
-        if(!currentMaxUpdateSuccessful) println("Current max update failed")
+        if(!currentMaxUpdateSuccessful) println("Current max update failed or disable")
 
-        if(!tempUpdateSuccessful) println("Temp update update failed")
+        if(!tempUpdateSuccessful) println("Temp update update failed or disable")
 
-        if(!coolDownUpdateSuccessful) println("Cooldown update update failed")
+        if(!coolDownUpdateSuccessful) println("Cooldown update update failed or disable")
 
-        if(!resetUnpluggedUpdateSuccessful) println("Reset unplugged update failed")
+        if(!resetUnpluggedUpdateSuccessful) println("Reset unplugged update failed or disable")
 
-        if(!resetBSOnPauseSuccessful) println("Reset battery stats on pause update failed")
+        if(!resetBSOnPauseSuccessful) println("Reset battery stats on pause update failed or disable")
 
-        if(!onBootUpdateSuccessful) println("onBoot update failed")
+        if(!onBootUpdateSuccessful) println("onBoot update failed or disable")
 
-        if(!onPluggedUpdateSuccessful) println("onPlugged update failed")
+        if(!onPluggedUpdateSuccessful) println("onPlugged update failed or disable")
 
-        if(!chargingSwitchUpdateSuccessful) println("Charging switch update failed")
+        if(!chargingSwitchUpdateSuccessful) println("Charging switch update failed or disable")
 
-        if(!prioritizeBatteryIdleModeSuccessful) println("Battery idle mode update failed")
+        if(!prioritizeBatteryIdleModeSuccessful) println("Battery idle mode update failed or disable")
     }
 
     fun isSuccessful(): Boolean {

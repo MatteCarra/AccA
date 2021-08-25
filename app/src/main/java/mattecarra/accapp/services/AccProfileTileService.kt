@@ -16,6 +16,7 @@ import com.google.gson.Gson
 import kotlinx.coroutines.runBlocking
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
+import mattecarra.accapp.acc.ConfigUpdaterEnable
 import mattecarra.accapp.fragments.ProfilesViewModel
 import mattecarra.accapp.utils.ProfileUtils
 import org.jetbrains.anko.doAsync
@@ -74,10 +75,10 @@ class AccProfileTileService: TileService() {
     override fun onClick() {
         super.onClick()
 
-        val sharedPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val mSharedPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         profilesViewModel.getProfiles().value?.let { profileList ->
-            val currentProfile = ProfileUtils.getCurrentProfile(sharedPrefs)
+            val currentProfile = ProfileUtils.getCurrentProfile(mSharedPrefs)
 
             var index = profileList.indexOfFirst { it.uid ==  currentProfile} + 1
             if(index >= profileList.size)
@@ -87,7 +88,7 @@ class AccProfileTileService: TileService() {
 
             //apply profile
             doAsync {
-                val res = runBlocking { Acc.instance.updateAccConfig(profile.accConfig) }
+                val res = runBlocking { Acc.instance.updateAccConfig(profile.accConfig, ConfigUpdaterEnable(mSharedPrefs)) }
 
                 if(!res.isSuccessful()) {
                     res.debug()
@@ -107,7 +108,7 @@ class AccProfileTileService: TileService() {
                     }
                 }
 
-                ProfileUtils.saveCurrentProfile(profile.uid, sharedPrefs)
+                ProfileUtils.saveCurrentProfile(profile.uid, mSharedPrefs)
             }
         }
     }
