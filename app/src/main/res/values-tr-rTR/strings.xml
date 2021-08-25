@@ -115,7 +115,7 @@
     <string name="delete">Sil</string>
     <string name="no_schedules">Zamanlanmış görev yok</string>
     <string name="wrong_volt_file">Ya seçilen dosya çalışmıyor ya da kerneliniz bu özelliği desteklemiyor.</string>
-    <string name="invalid_voltage_max">Değer 3700 ve 4200 (milivolt) arasında bir sayı olmalıdır</string>
+    <string name="invalid_voltage_max">Değer 3700 ve 4300 (milivolt) arasında bir sayı olmalıdır</string>
     <string name="edit_charging_switch">Şarj etme geçişini düzenle</string>
     <string name="test_switch">Şarj etme geçişini denetle</string>
     <string name="no_option_selected">Herhangi bir seçenek seçilmedi, lütfen bir tanesini seçin!</string>

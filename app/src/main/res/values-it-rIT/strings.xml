@@ -111,7 +111,7 @@
     <string name="delete">Elimina</string>
     <string name="no_schedules">Nessuna pianificazione</string>
     <string name="wrong_volt_file">Il file selezionato non funziona, oppure il kernel non supporta questa funzione.</string>
-    <string name="invalid_voltage_max">Il valore deve essere un numero compreso tra 3700 e 4200 (millivolt)</string>
+    <string name="invalid_voltage_max">Il valore deve essere un numero compreso tra 3700 e 4300 (millivolt)</string>
     <string name="edit_charging_switch">Modifica interruttore di ricarica</string>
     <string name="test_switch">Test interruttore di ricarica</string>
     <string name="no_option_selected">Nessuna opzione selezionata; selezionane una!</string>

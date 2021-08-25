@@ -116,7 +116,7 @@
     <string name="delete">刪除</string>
     <string name="no_schedules">未安排排程</string>
     <string name="wrong_volt_file">所選文件無效，或您的內核不支持此功能。</string>
-    <string name="invalid_voltage_max">此數值應該在 3700 至 4200 (毫伏) 之間</string>
+    <string name="invalid_voltage_max">此數值應該在 3700 至 4300 (毫伏) 之間</string>
     <string name="edit_charging_switch">編輯充電開關</string>
     <string name="test_switch">測試充電開關</string>
     <string name="no_option_selected">未選擇任何選項，請選擇一個!</string>

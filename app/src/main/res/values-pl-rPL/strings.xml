@@ -119,7 +119,7 @@ Jebac pis?</string>
     <string name="delete">Usuń</string>
     <string name="no_schedules">Nie ustawiono harmonogramów</string>
     <string name="wrong_volt_file">Wybrany plik nie działa, albo Twój kernel nie obsługuje tej funkcji.</string>
-    <string name="invalid_voltage_max">Wartość powinna być liczbą z zakresu od 3700 do 4200 (miliwoltów)</string>
+    <string name="invalid_voltage_max">Wartość powinna być liczbą z zakresu od 3700 do 4300 (miliwoltów)</string>
     <string name="edit_charging_switch">Edytuj przełącznik ładowania</string>
     <string name="test_switch">Przetestuj przełącznik ładowania</string>
     <string name="no_option_selected">Nie wybrano żadnej opcji; proszę coś wybrać!</string>

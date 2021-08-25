@@ -134,7 +134,7 @@
     <string name="delete">Delete</string>
     <string name="no_schedules">No schedules set</string>
     <string name="wrong_volt_file">Either the chosen file does not work, or your kernel doesn\'t support this feature.</string>
-    <string name="invalid_voltage_max">The value should be a number between 3700 and 4200 (millivolts)</string>
+    <string name="invalid_voltage_max">The value should be a number between 3700 and 4300 (millivolts)</string>
     <string name="edit_charging_switch">Edit charging switch</string>
     <string name="test_switch">Test charging switch</string>
     <string name="no_option_selected">No option selected; please select one!</string>
