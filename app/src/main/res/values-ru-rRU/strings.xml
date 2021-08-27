@@ -152,6 +152,7 @@
     <string name="charging_switch_label">Переключатель зарядки:</string>
     <string name="title_on_plugged">Вставьте в розетку</string>
     <string name="edit_on_plugged">Изменить настройки подключения:</string>
+    <string name="edit_on_plugged_dialog_message">Пример: wireless/voltage_max::9000000 принудительно включает быструю беспроводную зарядку на некоторых устройствах Pixel.</string>
     <string name="template_capacity_profile">Выключение устройства при: %1$d%% - Зарядка при: %2$d%% - Остановка при: %3$d%%</string>
     <string name="template_temperature_profile">Температура: %1$d&#176;C - Макс.: %2$d&#176;C - Пауза: %3$dс</string>
     <string name="template_cool_down_profile">Начинать с: %1$d%% - Заряжать: %2$dс - Пауза на: %3$dс</string>
@@ -233,6 +234,7 @@
         <item>Настройки по умолчанию</item>
     </string-array>
     <string name="lang_pref_title">Язык</string>
+    <string name="lang_pref_summary">Выберите язык приложения. После выбора необходимо перезапустить приложение</string>
     <string-array name="schedule_type_entries">
         <item>Переодичный</item>
         <item>Запустить один раз</item>
