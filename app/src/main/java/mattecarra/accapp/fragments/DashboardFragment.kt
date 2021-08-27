@@ -82,7 +82,10 @@ class DashboardFragment : ScopedFragment()
             dash_batteryStatus_textView.text = getString(R.string.info_status_extended, dash.batteryInfo.status, dash.batteryInfo.chargeType)
 
             dash_batteryChargingSpeed_textView.text = if (dash.batteryInfo.isCharging()) getString(R.string.info_charging_speed) else getString(R.string.info_discharging_speed)
-            dash_chargingSpeed_textView.text = getString(R.string.info_discharging_speed_extended, dash.batteryInfo.getCurrentNow(preferences.currentUnitOfMeasure) * (if (dash.batteryInfo.isCharging()) 1 else -1))
+
+            var chSpeed = dash.batteryInfo.getCurrentNow(preferences.currentUnitOfMeasure)
+            if (Acc.instance.version < 202107280) chSpeed *= (if (dash.batteryInfo.isCharging()) 1 else -1)
+            dash_chargingSpeed_textView.text = getString(R.string.info_discharging_speed_extended, chSpeed)
 
             dash_batteryTemperature_textView.text = dash.batteryInfo.temperature.toString() + Typography.degree + "C/" + dash.batteryInfo.getTempFahrenheit() + Typography.degree + "F"
             dash_batteryHealth_textView.text = dash.batteryInfo.health
