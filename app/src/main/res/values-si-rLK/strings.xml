@@ -99,28 +99,6 @@
         <item>@string/lang_vi</item>
         <item>@string/lang_zh</item>
     </string-array>
-    <string-array name="lang_pref_value">
-        <item>def</item>
-        <item>en</item>
-        <item>ar</item>
-        <item>nl</item>
-        <item>fr</item>
-        <item>de</item>
-        <item>gr</item>
-        <item>hu</item>
-        <item>in</item>
-        <item>it</item>
-        <item>ja</item>
-        <item>ko</item>
-        <item>pl</item>
-        <item>pt</item>
-        <item>ru</item>
-        <item>es</item>
-        <item>tr</item>
-        <item>uk</item>
-        <item>vi</item>
-        <item>zh</item>
-    </string-array>
     <string name="menu_import_export">ආයාත &amp; නිර්යාත</string>
     <!-- About Activity -->
     <string name="about_project_github">AccA ගිට්හබ්</string>
