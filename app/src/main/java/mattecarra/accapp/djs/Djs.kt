@@ -50,7 +50,7 @@ interface DjsInterface {
 }
 
 object Djs {
-    const val bundledVersion = 202108020
+    const val bundledVersion = 202108260
 
     /*
     * This method returns the name of the package with a compatible AccInterface
