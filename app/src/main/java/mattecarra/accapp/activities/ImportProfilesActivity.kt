@@ -11,7 +11,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -19,23 +18,23 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import kotlinx.android.synthetic.main.activity_export.*
-import kotlinx.android.synthetic.main.activity_import.*
 import mattecarra.accapp.R
 import mattecarra.accapp.adapters.ProfileEntriesAdapter
-import mattecarra.accapp.models.AccaProfile
+import mattecarra.accapp.databinding.ActivityImportBinding
 import mattecarra.accapp.models.ProfileEntry
 import mattecarra.accapp.utils.Constants
 import java.io.Serializable
 
 class ImportProfilesActivity : AppCompatActivity() {
+    private lateinit var binding : ActivityImportBinding
     private lateinit var mAdapter: ProfileEntriesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_import)
+        binding = ActivityImportBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setSupportActionBar(import_toolbar)
+        setSupportActionBar(binding.importToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         mAdapter = ProfileEntriesAdapter()
@@ -89,8 +88,8 @@ class ImportProfilesActivity : AppCompatActivity() {
 
                 if (mAdapter.itemCount > 0) {
                     // Show recyclerview & hide label
-                    import_profiles_rv.visibility = View.VISIBLE
-                    import_profile_empty_tv.visibility = View.GONE
+                    binding.importProfilesRv.visibility = View.VISIBLE
+                    binding.importProfileEmptyTv.visibility = View.GONE
                 }
             } catch (e: Exception) {
                 Toast.makeText(this, getString(R.string.import_toast_no_valid_profile_json_clipboard), Toast.LENGTH_LONG).show()
@@ -102,8 +101,8 @@ class ImportProfilesActivity : AppCompatActivity() {
 
     fun clearEntries() {
         mAdapter.clearEntries()
-        import_profiles_rv.visibility = View.GONE
-        import_profile_empty_tv.visibility = View.VISIBLE
+        binding.importProfilesRv.visibility = View.GONE
+        binding.importProfileEmptyTv.visibility = View.VISIBLE
     }
 
     fun importSelectedEntries() {

@@ -8,31 +8,29 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.preference.Preference
 import androidx.preference.PreferenceManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.topjohnwu.superuser.Shell
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
 import mattecarra.accapp.SharedViewModel
 import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.acc.Acc
+import mattecarra.accapp.databinding.ActivityMainBinding
+import mattecarra.accapp.databinding.ProfilePreviewDialogBinding
 import mattecarra.accapp.dialogs.*
 import mattecarra.accapp.djs.Djs
 import mattecarra.accapp.fragments.*
@@ -56,6 +54,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     private val ACC_EDIT_PROFILE_SCHEDULER_REQUEST = 5
     private val ACC_IMPORT_PROFILE_REQUEST = 6
 
+    private lateinit var binding: ActivityMainBinding
     private lateinit var _preferences: Preferences
     private lateinit var _sharedViewModel: SharedViewModel
     private lateinit var _mainActivityViewModel: MainActivityViewModel
@@ -101,11 +100,11 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         })
 
         // Set Bottom Navigation Bar Item Selected Listener
-        main_bottom_nav.setOnNavigationItemSelectedListener(this)
-        setSupportActionBar(main_toolbar)
+        binding.mainBottomNav.setOnNavigationItemSelectedListener(this)
+        setSupportActionBar(binding.mainToolbar)
 
         // Load in dashboard fragment
-        main_bottom_nav.selectedItemId = _mainActivityViewModel.selectedNavBarItem
+        binding.mainBottomNav.selectedItemId = _mainActivityViewModel.selectedNavBarItem
     }
 
     /**
@@ -169,7 +168,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                 installDjs()
                             }
                             negativeButton(android.R.string.cancel) {
-                                main_bottom_nav.selectedItemId = R.id.botNav_schedules
+                                binding.mainBottomNav.selectedItemId = R.id.botNav_schedules
                             }
                             if (result != null)
                                 shareLogsNeutralButton(
@@ -189,7 +188,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                 installDjs()
                             }
                             negativeButton(android.R.string.cancel) {
-                                main_bottom_nav.selectedItemId = R.id.botNav_schedules
+                                binding.mainBottomNav.selectedItemId = R.id.botNav_schedules
                             }
                             cancelOnTouchOutside(false)
                         }
@@ -292,20 +291,25 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onProfileLongClick(profile: AccaProfile) {
-        val dialog = MaterialDialog(this@MainActivity).customView(
+/*        val dialog = MaterialDialog(this@MainActivity).customView(
             R.layout.profile_preview_dialog,
             scrollable = true
         )
+*/
+        val preView = ProfilePreviewDialogBinding.inflate(layoutInflater)
+        val dialog = MaterialDialog(this@MainActivity).customView(
+            view = preView.root,
+            scrollable = true
+        )
 
-        val preView = dialog.getCustomView()
         // Set view items and assign values
-        val titleTv = preView.findViewById<TextView>(R.id.preview_profile_title_tv)
-        val capacityTv = preView.findViewById<TextView>(R.id.preview_profile_capacity_tv)
-        val chargingVoltTv = preView.findViewById<TextView>(R.id.preview_profile_charging_voltage_tv)
-        val temperatureTv = preView.findViewById<TextView>(R.id.preview_profile_temperature_tv)
-        val onBootTv = preView.findViewById<TextView>(R.id.preview_profile_on_boot_tv)
-        val onPlugTv = preView.findViewById<TextView>(R.id.preview_profile_on_plug_tv)
-        val coolDownTv = preView.findViewById<TextView>(R.id.preview_profile_cool_down_tv)
+        val titleTv = preView.previewProfileTitleTv
+        val capacityTv = preView.previewProfileCapacityTv
+        val chargingVoltTv = preView.previewProfileChargingVoltageTv
+        val temperatureTv = preView.previewProfileTemperatureTv
+        val onBootTv = preView.previewProfileOnBootTv
+        val onPlugTv = preView.previewProfileOnPlugTv
+        val coolDownTv = preView.previewProfileCoolDownTv
 
         // Assign the appropriate text values from the profile
         titleTv.text = profile.profileName
@@ -533,10 +537,11 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         resources.updateConfiguration(config, resources.displayMetrics)
 
         //--------------------------------------------------
+        binding = ActivityMainBinding.inflate(layoutInflater)
 
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
-        setSupportActionBar(main_toolbar)
+        setSupportActionBar(binding.mainToolbar)
 
         // Load preferences
         _preferences = Preferences(this)
@@ -580,10 +585,10 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onBackPressed() {
-        if (main_bottom_nav.selectedItemId == R.id.botNav_home) {
+        if (binding.mainBottomNav.selectedItemId == R.id.botNav_home) {
             super.onBackPressed()
         } else {
-            main_bottom_nav.selectedItemId = R.id.botNav_home
+            binding.mainBottomNav.selectedItemId = R.id.botNav_home
         }
     }
 
