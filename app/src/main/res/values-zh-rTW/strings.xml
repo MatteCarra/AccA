@@ -258,28 +258,6 @@
         <item>@string/lang_vi</item>
         <item>@string/lang_zh</item>
     </string-array>
-    <string-array name="lang_pref_value">
-        <item>預設</item>
-        <item>英語</item>
-        <item>阿拉伯語</item>
-        <item>荷蘭語</item>
-        <item>法語</item>
-        <item>德語</item>
-        <item>希臘語</item>
-        <item>匈牙利語</item>
-        <item>印度語</item>
-        <item>義大利語</item>
-        <item>日語</item>
-        <item>韓語</item>
-        <item>波蘭語</item>
-        <item>葡萄牙語</item>
-        <item>俄語</item>
-        <item>西班牙語</item>
-        <item>土耳其語</item>
-        <item>英語（英國）</item>
-        <item>越南語</item>
-        <item>中文</item>
-    </string-array>
     <string-array name="schedule_type_entries">
         <item>重複</item>
         <item>僅運行一次</item>
