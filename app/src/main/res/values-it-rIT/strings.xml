@@ -99,6 +99,7 @@
     <string name="execution_time">Tempo di esecuzione</string>
     <string name="new_config">Nuova configurazione personalizzata</string>
     <string name="enable_voltage_limit">Limite di tensione di carica personalizzato</string>
+    <string name="enable_current_limit">Limite di tensione di carica personalizzato</string>
     <string name="voltage_control_file">File di controllo voltaggio:</string>
     <string name="edit_power_limit">Modifica limiti di corrente e tensione</string>
     <string name="voltage_max">Tensione massima (millivolt):</string>
@@ -120,6 +121,7 @@
     <string name="automatic">Automatico</string>
     <string name="error_occurred">Si è verificato un errore</string>
     <string name="retry">Riprova</string>
+    <string name="edit_charging_limit_once_button">Carica una volta sola fino a #\%, senza limitazioni</string>
     <string name="done_applied_charge_limit">Ricarica fino a %1$d%%</string>
     <string name="charge_limit_not_applied">Impostazione del limite di ricarica annullato</string>
     <string name="apply">Applica</string>
@@ -139,6 +141,7 @@
     <string name="temperature_control_info">- Questo disattiva la ricarica per tot secondi per raffreddare la batteria&lt;br /&gt;- COOLDOWN TEMP dipende da COOLDOWN RATIO.&lt;br /&gt;- MAX TEMP funziona con PAUSE SECONDS.</string>
     <string name="cooldown_info">- Cambiare il rapporto ON/OFF in secondi (es., 50/10) - riduce lo stress sulla batteria causato da sessioni prolungate di ricarica ad alte temperatuere e voltaggi fermando periodicamente la ricarica.&lt;br /&gt;- Se la ricarica è troppo lenta, disabilitare questa funzione o cambiare il rapporto a qualcosa come 50/5.&lt;br /&gt;- Quando disabilitato, i valori COOLDOWN CAPACITY e COOLDOWN TEMP non hanno effetto.&lt;br /&gt;- Questa funzionalità è una buona alternativa al limite del voltaggio di ricarica.</string>
     <string name="on_plugged_info">Questo viene utilizzato per aggiornare i file di controllo il cui contenuto cambia in determinati eventi di alimentazione (ad esempio, connessione a/disconnessione dalla rete elettrica). È particolarmente utile per applicare un valore massimo personalizzato di tensione/corrente per la ricarica usb/wireless.</string>
+    <string name="battery_idle_info_label">Questo consente al dispositivo supportato di prelevare energia direttamente dall\'alimentatore esterno quando la ricarica è in pausa.</string>
     <string name="miscellaneous_info_label">Altre impostazioni di Acc che non rinetrano in nessuna delle categorie</string>
     <string name="acc_config_editor">Editor delle impostazioni di ACC</string>
     <string name="profile_creator">Creatore di profilo</string>
@@ -146,6 +149,7 @@
     <string name="charging_switch_label">Interruttore di ricarica:</string>
     <string name="title_on_plugged">Applica al collegamento</string>
     <string name="edit_on_plugged">Cambia le impostazioni di apply_on_plug:</string>
+    <string name="edit_on_plugged_dialog_message">Esempio: wireless/voltage_max::90000000 forza la ricarica wireless rapida in alcuni dispositivi Pixel.</string>
     <string name="template_capacity_profile">Spegnimento: %1$d%% - Riprendi: %2$d%% - Stop: %3$d%%</string>
     <string name="template_temperature_profile">Temperatura: %1$d&#176;C - Max: %2$d&#176;C - Pausa: %3$ds</string>
     <string name="template_cool_down_profile">Inizia a: %1$d%% - Carica per %2$ds - Pausa per %3$ds</string>
@@ -155,6 +159,7 @@
     <string name="profile_option_delete">Elimina</string>
     <string name="selecting_profile_toast">Selezione del profilo %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox non è installato</string>
+    <string name="installation_failed_busybox">Installare prima busybox o semplicemente posizionare il binario in /data/adb/bin/</string>
     <string name="share">Condividi</string>
     <string name="logs_not_found">File di log non trovato.</string>
     <string name="acc_telegram">Per support aggiuntivo, unisciti al canale Telegram di ACC (t.me/acc_group)!</string>
@@ -208,9 +213,13 @@
     <string name="acc_installation_failed_log">Log dell\'installazione fallita di ACC</string>
     <string name="djs_installation_failed_log">Log dell\'installazione fallita di DJS</string>
     <string name="select_different_version">Cambia la versione di ACC</string>
+    <string name="installation_failed_non_bundled">L\'installazione di diverse varianti ACC non è riuscita.
+        \nSi prega di considerare l\'archiviazione e la condivisione /data/adb/acc-data/logs/ con i devs.
+    </string>
     <string name="prioritize_battery_idle">Priorità alla modalità inattività batteria</string>
     <string name="test_battery_idle">Prova la modalità \"batteria inattiva\"</string>
     <string name="test_battery_idle_supported_result">Il kernel supporta la modalità inattività della batteria.</string>
+    <string name="test_battery_idle_unsupported_result">Il kernel supporta la modalità inattività della batteria.</string>
     <string name="schedule_profile_edit_current">Modifica configurazione corrente</string>
     <string name="schedule_profile_keep_current">Mantieni la configurazione corrente</string>
     <string name="schedule_type">Tipo di pianificazione</string>
@@ -219,6 +228,52 @@
         <item>Chiaro</item>
         <item>Scuro</item>
         <item>Predefinito di sistema</item>
+    </string-array>
+    <string name="lang_pref_title">Lingua</string>
+    <string name="lang_pref_summary">Selezionare la lingua dell\'applicazione. Dopo aver selezionato è necessario riavviare l\'applicazione</string>
+    <string-array name="lang_pref_entries">
+        <item>@string/lang_default</item>
+        <item>@string/lang_en</item>
+        <item>@string/lang_ar</item>
+        <item>@string/lang_nl</item>
+        <item>@string/lang_fr</item>
+        <item>@string/lang_de</item>
+        <item>@string/lang_gr</item>
+        <item>@string/lang_hu</item>
+        <item>@string/lang_in</item>
+        <item>@string/lang_it</item>
+        <item>@string/lang_ja</item>
+        <item>@string/lang_ko</item>
+        <item>@string/lang_pl</item>
+        <item>@string/lang_pt</item>
+        <item>@string/lang_ru</item>
+        <item>@string/lang_es</item>
+        <item>@string/lang_tr</item>
+        <item>@string/lang_uk</item>
+        <item>@string/lang_vi</item>
+        <item>@string/lang_zh</item>
+    </string-array>
+    <string-array name="lang_pref_value">
+        <item>def</item>
+        <item>en</item>
+        <item>ar</item>
+        <item>nl</item>
+        <item>fr</item>
+        <item>de</item>
+        <item>gr</item>
+        <item>hu</item>
+        <item>in</item>
+        <item>it</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pl</item>
+        <item>pt</item>
+        <item>ru</item>
+        <item>es</item>
+        <item>tr</item>
+        <item>uk</item>
+        <item>vi</item>
+        <item>zh</item>
     </string-array>
     <string-array name="schedule_type_entries">
         <item>Ricorrente</item>
@@ -237,6 +292,7 @@
     </string>
     <string name="about_attributes">Attributi</string>
     <string name="about_attrib_telegram_icon">Icona Telegram realizzata da Pixel perfezionata da www.flaticon.com</string>
+    <string name="about_acca_version_label">Versione di AccA:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
