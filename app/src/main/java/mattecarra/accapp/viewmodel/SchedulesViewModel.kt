@@ -1,4 +1,4 @@
-package mattecarra.accapp.fragments
+package mattecarra.accapp.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -8,8 +8,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import mattecarra.accapp.acc.Acc
-import mattecarra.accapp.acc.ConfigUpdater
 import mattecarra.accapp.database.AccaRoomDatabase
 import mattecarra.accapp.database.ScheduleDao
 import mattecarra.accapp.djs.Djs

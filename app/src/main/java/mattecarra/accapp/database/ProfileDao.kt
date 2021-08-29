@@ -5,11 +5,8 @@ import androidx.room.*
 import mattecarra.accapp.models.AccaProfile
 
 @Dao
-interface ProfileDao {
-
-    @Query("SELECT * FROM profiles_table ORDER BY uid DESC")
-    fun getAllProfiles(): LiveData<List<AccaProfile>>
-
+interface ProfileDao
+{
     @Insert
     suspend fun insert(accaProfile: AccaProfile)
 
@@ -30,4 +27,7 @@ interface ProfileDao {
 
     @Query("SELECT * FROM profiles_table ORDER BY uid DESC")
     suspend fun getProfiles(): List<AccaProfile>
+
+    @Query("SELECT * FROM profiles_table ORDER BY uid DESC")
+    fun getAllProfiles(): LiveData<List<AccaProfile>>
 }

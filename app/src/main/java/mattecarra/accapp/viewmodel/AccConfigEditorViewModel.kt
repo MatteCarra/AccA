@@ -1,4 +1,4 @@
-package mattecarra.accapp.activities
+package mattecarra.accapp.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.*

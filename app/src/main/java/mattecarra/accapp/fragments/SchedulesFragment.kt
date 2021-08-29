@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.afollestad.materialdialogs.MaterialDialog
 import kotlinx.android.synthetic.main.schedules_fragment.*
 import mattecarra.accapp.R
 import mattecarra.accapp.activities.MainActivity
@@ -15,6 +14,7 @@ import mattecarra.accapp.adapters.OnScheduleClickListener
 import mattecarra.accapp.adapters.ScheduleProfileListAdapter
 import mattecarra.accapp.models.Schedule
 import mattecarra.accapp.utils.ScopedFragment
+import mattecarra.accapp.viewmodel.SchedulesViewModel
 
 class SchedulesFragment : ScopedFragment(), OnScheduleClickListener {
     private lateinit var viewModel: SchedulesViewModel

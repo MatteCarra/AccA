@@ -34,6 +34,8 @@ import mattecarra.accapp.dialogs.powerLimitDialog
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.utils.Constants
 import mattecarra.accapp.utils.ScopedAppActivity
+import mattecarra.accapp.viewmodel.AccConfigEditorViewModel
+import mattecarra.accapp.viewmodel.AccConfigEditorViewModelFactory
 
 class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeListener {
     private lateinit var viewModel: AccConfigEditorViewModel
@@ -80,7 +82,8 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
                     }
             }
 
-        viewModel = ViewModelProviders.of(this, AccConfigEditorViewModelFactory(application, config)).get(AccConfigEditorViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, AccConfigEditorViewModelFactory(application, config)).get(
+            AccConfigEditorViewModel::class.java)
 
         initUi()
     }

@@ -27,6 +27,7 @@ import mattecarra.accapp.SharedViewModel
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.models.DashboardValues
 import mattecarra.accapp.utils.ScopedFragment
+import mattecarra.accapp.viewmodel.DashboardViewModel
 import java.util.concurrent.atomic.AtomicBoolean
 
 class DashboardFragment : ScopedFragment()
