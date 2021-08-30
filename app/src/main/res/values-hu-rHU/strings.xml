@@ -114,9 +114,9 @@
     <string name="about">Névjegy</string>
     <!-- ACC Config Tooltips -->
     <!--Profiles Options-->
-    <string name="profile_option_edit">Szerkeszt</string>
-    <string name="profile_option_rename">Átnevez</string>
-    <string name="profile_option_delete">Töröl</string>
+    <string name="menu_option_edit">Szerkeszt</string>
+    <string name="menu_option_rename">Átnevez</string>
+    <string name="menu_option_delete">Töröl</string>
     <string name="installation_failed_busybox_title">A Busybox nincs telepítve</string>
     <string name="share">Megosztás</string>
     <string name="logs_not_found">Naplófájl nem található.</string>

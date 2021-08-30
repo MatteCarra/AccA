@@ -158,9 +158,9 @@
     <string name="template_temperature_profile">Sıcaklık: %1$d&#176;C - Maks: %2$d&#176;C - Duraklat: %3$ds</string>
     <string name="template_cool_down_profile">Başlat: %1$d%% - %2$d saniye şarj et - %3$d saniye duraklat</string>
     <!--Profiles Options-->
-    <string name="profile_option_edit">Düzenle</string>
-    <string name="profile_option_rename">Yeniden Adlandır</string>
-    <string name="profile_option_delete">Sil</string>
+    <string name="menu_option_edit">Düzenle</string>
+    <string name="menu_option_rename">Yeniden Adlandır</string>
+    <string name="menu_option_delete">Sil</string>
     <string name="selecting_profile_toast">%1$s profili seçildi.</string>
     <string name="installation_failed_busybox_title">Busybox yüklü değil</string>
     <string name="installation_failed_busybox">İlk olarak busybox kur ya da basitçe binary dosyasını /data/adb/bin/ içine yerleştir</string>

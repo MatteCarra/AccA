@@ -99,6 +99,7 @@
     <string name="recurrent_schedule">Запустить только один раз</string>
     <string name="execution_time">Время выполнения</string>
     <string name="new_config">Новая пользовательская конфигурация</string>
+    <string name="new_script">Новый скрипт</string>
     <string name="enable_voltage_limit">Ограничение на зарядное напряжение</string>
     <string name="voltage_control_file">Файл управления напряжением:</string>
     <string name="edit_power_limit">Изменить контроль питания</string>
@@ -154,10 +155,14 @@
     <string name="template_capacity_profile">Выключить: %1$d%% - Продолжить: %2$d%% - Остановить: %3$d%%</string>
     <string name="template_temperature_profile">Температура: %1$d&#176;C - Максимум: %2$d&#176;C - Пауза: %3$ds</string>
     <string name="template_cool_down_profile">Начать с: %1$d%% - Заряжать: %2$ds - Пауза: %3$ds</string>
-    <!--Profiles Options-->
-    <string name="profile_option_edit">Изменить</string>
-    <string name="profile_option_rename">Переименование</string>
-    <string name="profile_option_delete">Удалить</string>
+
+    <!--Menus Options-->
+    <string name="menu_option_run">Запустить</string>
+    <string name="menu_option_run_silent">Запустить (тихий)</string>
+    <string name="menu_option_edit">Изменить</string>
+    <string name="menu_option_copy">Копировать</string>
+    <string name="menu_option_rename">Переименовать</string>
+    <string name="menu_option_delete">Удалить</string>
     <string name="selecting_profile_toast">Выбор профиля %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox не установлен</string>
     <string name="installation_failed_busybox">Сначала установите busybox или просто поместите двоичный файл в /data/adb/bin/</string>

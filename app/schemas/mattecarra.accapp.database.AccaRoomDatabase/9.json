@@ -1,0 +1,260 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 9,
+    "identityHash": "0e6a07700b52a7aa210e71dd5996f3d2",
+    "entities": [
+      {
+        "tableName": "profiles_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `profileName` TEXT NOT NULL, `configCapacity` TEXT NOT NULL, `configVoltage` TEXT NOT NULL, `configCurrMax` INTEGER, `configTemperature` TEXT NOT NULL, `configOnBoot` TEXT, `configOnPlug` TEXT, `configCoolDown` TEXT, `configResetUnplugged` INTEGER NOT NULL, `configResetBsOnPause` INTEGER NOT NULL, `configChargeSwitch` TEXT, `configIsAutomaticSwitchingEnabled` INTEGER NOT NULL, `prioritizeBatteryIdleMode` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "profileName",
+            "columnName": "profileName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accConfig.configCapacity",
+            "columnName": "configCapacity",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accConfig.configVoltage",
+            "columnName": "configVoltage",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accConfig.configCurrMax",
+            "columnName": "configCurrMax",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "accConfig.configTemperature",
+            "columnName": "configTemperature",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accConfig.configOnBoot",
+            "columnName": "configOnBoot",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "accConfig.configOnPlug",
+            "columnName": "configOnPlug",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "accConfig.configCoolDown",
+            "columnName": "configCoolDown",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "accConfig.configResetUnplugged",
+            "columnName": "configResetUnplugged",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accConfig.configResetBsOnPause",
+            "columnName": "configResetBsOnPause",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accConfig.configChargeSwitch",
+            "columnName": "configChargeSwitch",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "accConfig.configIsAutomaticSwitchingEnabled",
+            "columnName": "configIsAutomaticSwitchingEnabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accConfig.prioritizeBatteryIdleMode",
+            "columnName": "prioritizeBatteryIdleMode",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "schedules_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `scheduleName` TEXT NOT NULL, `configCapacity` TEXT NOT NULL, `configVoltage` TEXT NOT NULL, `configCurrMax` INTEGER, `configTemperature` TEXT NOT NULL, `configOnBoot` TEXT, `configOnPlug` TEXT, `configCoolDown` TEXT, `configResetUnplugged` INTEGER NOT NULL, `configResetBsOnPause` INTEGER NOT NULL, `configChargeSwitch` TEXT, `configIsAutomaticSwitchingEnabled` INTEGER NOT NULL, `prioritizeBatteryIdleMode` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scheduleName",
+            "columnName": "scheduleName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accConfig.configCapacity",
+            "columnName": "configCapacity",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accConfig.configVoltage",
+            "columnName": "configVoltage",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accConfig.configCurrMax",
+            "columnName": "configCurrMax",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "accConfig.configTemperature",
+            "columnName": "configTemperature",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accConfig.configOnBoot",
+            "columnName": "configOnBoot",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "accConfig.configOnPlug",
+            "columnName": "configOnPlug",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "accConfig.configCoolDown",
+            "columnName": "configCoolDown",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "accConfig.configResetUnplugged",
+            "columnName": "configResetUnplugged",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accConfig.configResetBsOnPause",
+            "columnName": "configResetBsOnPause",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accConfig.configChargeSwitch",
+            "columnName": "configChargeSwitch",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "accConfig.configIsAutomaticSwitchingEnabled",
+            "columnName": "configIsAutomaticSwitchingEnabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accConfig.prioritizeBatteryIdleMode",
+            "columnName": "prioritizeBatteryIdleMode",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "scripts_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `scName` TEXT NOT NULL, `scDescription` TEXT NOT NULL, `scBody` TEXT NOT NULL, `scOutput` TEXT NOT NULL, `scExitCode` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scName",
+            "columnName": "scName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scDescription",
+            "columnName": "scDescription",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scBody",
+            "columnName": "scBody",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scOutput",
+            "columnName": "scOutput",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scExitCode",
+            "columnName": "scExitCode",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0e6a07700b52a7aa210e71dd5996f3d2')"
+    ]
+  }
+}

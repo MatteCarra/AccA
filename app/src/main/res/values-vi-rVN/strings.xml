@@ -154,9 +154,9 @@ Tiến trình nền DJS sẽ được bắt đầu khi khởi động cùng vớ
     <string name="template_temperature_profile">Nhiệt độ:%1$d&#176;C - Tối đa: %2$d&#176;C - Dừng: %3$ds</string>
     <string name="template_cool_down_profile">Bắt đầu lúc: %1$d%% - Sạc trong %2$ds - Tạm dừng trong %3$ds</string>
     <!--Profiles Options-->
-    <string name="profile_option_edit">Sửa</string>
-    <string name="profile_option_rename">Đổi tên</string>
-    <string name="profile_option_delete">Xóa</string>
+    <string name="menu_option_edit">Sửa</string>
+    <string name="menu_option_rename">Đổi tên</string>
+    <string name="menu_option_delete">Xóa</string>
     <string name="selecting_profile_toast">Đang chọn hồ sơ %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox chưa được cài đặt</string>
     <string name="installation_failed_busybox">Cài đặt busybox trước hoặc cài đặt mã nhị phân vào /data/adb/bin/</string>

@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
-import mattecarra.accapp.SharedViewModel
+import mattecarra.accapp.viewmodel.SharedViewModel
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.models.DashboardValues
 import mattecarra.accapp.utils.ScopedFragment

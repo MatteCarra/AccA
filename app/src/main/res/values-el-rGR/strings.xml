@@ -128,9 +128,9 @@
     <string name="template_temperature_profile">Θερμοκρασία: %1$d&#176;C - Μέγιστο: %2$d&#176;C - Παύση: %3$ds</string>
     <string name="template_cool_down_profile">Εκκίνηση σε: %1$d%% - Φόρτιση για %2$ds - Παύση για %3$ds</string>
     <!--Profiles Options-->
-    <string name="profile_option_edit">Επεξεργασία</string>
-    <string name="profile_option_rename">Μετονομασία</string>
-    <string name="profile_option_delete">Διαγραφή</string>
+    <string name="menu_option_edit">Επεξεργασία</string>
+    <string name="menu_option_rename">Μετονομασία</string>
+    <string name="menu_option_delete">Διαγραφή</string>
     <string name="selecting_profile_toast">Επιλογή προφίλ %1$s.</string>
     <string name="installation_failed_busybox_title">Το busybox δεν είναι εγκατεστημένο</string>
     <string name="share">Κοινοποίηση</string>

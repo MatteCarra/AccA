@@ -13,7 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.launch
 import mattecarra.accapp.R
-import mattecarra.accapp.SharedViewModel
+import mattecarra.accapp.viewmodel.SharedViewModel
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.activities.AccConfigEditorActivity
 import mattecarra.accapp.databinding.ProfilesItemBinding

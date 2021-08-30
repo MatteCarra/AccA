@@ -13,7 +13,6 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -25,13 +24,11 @@ import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.input.input
 import kotlinx.android.synthetic.main.profiles_fragment.*
 import kotlinx.coroutines.launch
 import mattecarra.accapp.R
-import mattecarra.accapp.SharedViewModel
+import mattecarra.accapp.viewmodel.SharedViewModel
 import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.activities.AccConfigEditorActivity

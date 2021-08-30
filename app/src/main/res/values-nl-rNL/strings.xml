@@ -161,9 +161,9 @@
     <string name="template_temperature_profile">Temperatuur: %1$d&#176;C - Max: %2$d&#176;C - Pauze: %3$ds</string>
     <string name="template_cool_down_profile">Begin om: %1$d%% - Opladen voor %2$ds - Pauze voor %3$ds</string>
     <!--Profiles Options-->
-    <string name="profile_option_edit">Wijzig</string>
-    <string name="profile_option_rename">Hernoem</string>
-    <string name="profile_option_delete">Verwijder</string>
+    <string name="menu_option_edit">Wijzig</string>
+    <string name="menu_option_rename">Hernoem</string>
+    <string name="menu_option_delete">Verwijder</string>
     <string name="selecting_profile_toast">Profiel %1$s selecteren.</string>
     <string name="installation_failed_busybox_title">Busybox is niet geïnstalleerd</string>
     <string name="installation_failed_busybox">Installeer eerst busybox of plaats de binary in /data/adb/bin/</string>

@@ -153,9 +153,9 @@
     <string name="template_temperature_profile">Temperatura: %1$d&#176;C - Max: %2$d&#176;C - Pausa: %3$ds</string>
     <string name="template_cool_down_profile">Inizia a: %1$d%% - Carica per %2$ds - Pausa per %3$ds</string>
     <!--Profiles Options-->
-    <string name="profile_option_edit">Modifica</string>
-    <string name="profile_option_rename">Rinomina</string>
-    <string name="profile_option_delete">Elimina</string>
+    <string name="menu_option_edit">Modifica</string>
+    <string name="menu_option_rename">Rinomina</string>
+    <string name="menu_option_delete">Elimina</string>
     <string name="selecting_profile_toast">Selezione del profilo %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox non è installato</string>
     <string name="share">Condividi</string>
