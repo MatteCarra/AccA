@@ -1,9 +1,8 @@
-package mattecarra.accapp
+package mattecarra.accapp.viewmodel
 
 import android.app.Application
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import android.widget.Toast
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import mattecarra.accapp.acc.Acc
