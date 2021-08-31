@@ -86,12 +86,12 @@ object Djs {
     }
 
     fun isDjsInstalled(installationDir: File): Boolean {
-        return Shell.su("test -f ${File(installationDir, "djs/service.sh").absolutePath}  || test -f ${File(installationDir, "djs/djs-init.sh").absolutePath}").exec().isSuccess
+        return Shell.su("test -f ${File(installationDir, "djs/service.sh").absolutePath}").exec().isSuccess
     }
 
     fun initDjs(installationDir: File): Boolean {
         return if(isDjsInstalled(installationDir))
-            Shell.su("if test -f ${File(installationDir, "djs/service.sh").absolutePath}; then ${File(installationDir, "djs/service.sh").absolutePath}; else ${File(installationDir, "djs/djs-init.sh").absolutePath}; fi").exec().isSuccess
+            Shell.su("[ -f /dev/.vr25/djs/djsc ] || ${File(installationDir, "djs/service.sh").absolutePath}").exec().isSuccess
         else
             false
     }

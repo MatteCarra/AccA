@@ -140,8 +140,6 @@
     <string name="schedule_creator">スケジュール作成</string>
     <string name="charging_switch_label">充電切り替え:</string>
     <string name="title_on_plugged">接続時適用</string>
-    <string name="edit_on_plugged_dialog_message">例: wireless/voltage_max::9000000 は, いくつかの Pixel デバイスで高速なワイヤレス充電を強制する.
-    </string>
     <string name="template_capacity_profile">シャットダウン: %1$d%% - 再開: %2$d%% - 停止: %3$d%%</string>
     <string name="template_temperature_profile">温度: %1$d&#176;C - 最大: %2$d&#176;C - 停止: %3$ds</string>
     <string name="template_cool_down_profile">開始: %1$d%% - 充電 %2$ds - 停止 %3$ds</string>

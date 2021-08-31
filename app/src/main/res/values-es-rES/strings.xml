@@ -12,7 +12,7 @@
     <string name="title_dashboard">Panel de Control</string>
     <string name="title_profiles">Perfiles</string>
     <string name="title_schedules">Horarios</string>
-    <string name="title_settings">Configuración</string>
+    <string name="title_settings">Ajustes</string>
     <!-- ACC Daemon Status -->
     <string name="title_acc">ACC</string>
     <string name="title_acc_daemon">ACC Daemon</string>
@@ -44,15 +44,15 @@
     <string name="reset_unplugged">Restablecer las estadísticas de batería al desconectar</string>
     <string name="reset_stats">Reiniciar las estadísticas de la batería</string>
     <string name="enable_cooldown">Activar ciclo de enfriamiento:</string>
-    <string name="cooldown_capacity">Comenzar a enfriar a las %%:</string>
-    <string name="resume_charge">Reanudar la carga a las:</string>
-    <string name="stop_charge">Detener la carga a las:</string>
+    <string name="cooldown_capacity">Comenzar a enfriar al %%:</string>
+    <string name="resume_charge">Reanudar la carga al:</string>
+    <string name="stop_charge">Detener la carga al:</string>
     <string name="enable_temp_check">Activar control de temperatura (°C)</string>
     <string name="cooldown_temp">Temperatura de enfriamiento:</string>
     <string name="max_temp">Temperatura máxima:</string>
     <string name="pause_seconds">Pausar durante (segundos):</string>
     <string name="charge_seconds">Cargar durante (segundos):</string>
-    <string name="shutdown_capacity">Apagar (si no está cargando) a las:</string>
+    <string name="shutdown_capacity">Apagar (si no está cargando) al:</string>
     <string name="no_root_message">AccA requiere ROOT.</string>
     <string name="config_error_title">Error de lectura de configuración</string>
     <string name="config_error_dialog">¡Error al leer la configuración ACC!\nPor favor, comprueba si funciona \"su -c acc --config cat\".</string>
@@ -105,10 +105,11 @@
     <string name="execution_time">Tiempo de ejecución</string>
     <string name="new_config">Nueva configuración personalizada</string>
     <string name="enable_voltage_limit">Límite de voltaje de carga personalizado</string>
+    <string name="enable_current_limit">Límite actual de carga personalizada</string>
     <string name="voltage_control_file">Archivo de control de voltaje:</string>
     <string name="edit_power_limit">Editar límites de corriente y voltaje</string>
     <string name="voltage_max">Voltaje máximo (milivoltios):</string>
-    <string name="disabled">Deshabilitado</string>
+    <string name="disabled">Desactivado</string>
     <string name="schedule_recurrent_row_text">Trabajo recurrente programado para el %1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_title">Ejecute una vez - %1$02d:%2$02d</string>
     <string name="schedule_execute_once_row_text">Trabajo programado para el %1$02d:%2$02d</string>
@@ -117,7 +118,7 @@
     <string name="delete">Borrar</string>
     <string name="no_schedules">No hay programaciones</string>
     <string name="wrong_volt_file">O el archivo elegido no funciona, o tu kernel no soporta esta función.</string>
-    <string name="invalid_voltage_max">El valor debe ser un número entre 3700 y 4300 (milivoltios)</string>
+    <string name="invalid_voltage_max">El número debe de estar entre 3700 y 4300 (en milivoltios)</string>
     <string name="edit_charging_switch">Editar interruptor de carga</string>
     <string name="test_switch">Probar interruptor de carga</string>
     <string name="no_option_selected">No hay opción seleccionada; por favor, seleccione una!</string>
@@ -153,10 +154,9 @@
     <string name="profile_creator">Crear perfil</string>
     <string name="schedule_creator">Programación</string>
     <string name="charging_switch_label">Interruptor de carga:</string>
-    <string name="title_on_plugged">Aplicar al Conectar</string>
+    <string name="title_on_plugged">Aplicar al conectar</string>
     <string name="edit_on_plugged">Editar ajustes de apply_on_boot:</string>
-    <string name="edit_on_plugged_dialog_message">Ejemplo: wireless/voltage_max::9000000 fuerza la carga inalámbrica rápida en algunos dispositivos Pixel.
-    </string>
+    <string name="edit_on_plugged_dialog_message">Ejemplo: wireless/voltage_max::9000000 fuerza la carga inalámbrica rápida en algunos dispositivos Pixel.</string>
     <string name="template_capacity_profile">Apagar: %1$d%% - Reanudar: %2$d%% - Detener: %3$d%%</string>
     <string name="template_temperature_profile">Temperatura: %1$d&#176;C - Max: %2$d&#176;C - Pausa: %3$ds</string>
     <string name="template_cool_down_profile">Iniciar en: %1$d%% - Cargar por %2$ds - Pausa por %3$ds</string>
@@ -237,6 +237,30 @@
         <item>Oscuro</item>
         <item>Predeterminado por el sistema</item>
     </string-array>
+    <string name="lang_pref_title">Idioma</string>
+    <string name="lang_pref_summary">Seleccione el idioma de la aplicación. Después de seleccionar debe reiniciar la aplicación</string>
+    <string-array name="lang_pref_entries">
+        <item>@string/lang_default</item>
+        <item>@string/lang_en</item>
+        <item>@string/lang_ar</item>
+        <item>@string/lang_nl</item>
+        <item>@string/lang_fr</item>
+        <item>@string/lang_de</item>
+        <item>@string/lang_gr</item>
+        <item>@string/lang_hu</item>
+        <item>@string/lang_in</item>
+        <item>@string/lang_it</item>
+        <item>@string/lang_ja</item>
+        <item>@string/lang_ko</item>
+        <item>@string/lang_pl</item>
+        <item>@string/lang_pt</item>
+        <item>@string/lang_ru</item>
+        <item>@string/lang_es</item>
+        <item>@string/lang_tr</item>
+        <item>@string/lang_uk</item>
+        <item>@string/lang_vi</item>
+        <item>@string/lang_zh</item>
+    </string-array>
     <string-array name="schedule_type_entries">
         <item>Recurrente</item>
         <item>Ejecutar una vez</item>
@@ -254,8 +278,9 @@
     </string>
     <string name="about_attributes">Atributos</string>
     <string name="about_attrib_telegram_icon">Icono de Telegram hecho por Pixel perfect de www.flaticon.com</string>
-    <string name="about_acca_version_label">Versión de AccA:</string>
-    <string name="about_acc_api_version_label">Versión de ACC:</string>
+    <string name="about_acca_version_label">Versión de ACCA:</string>
+    <string name="about_acc_daemon_version_label">Versión del servicio ACC:</string>
+    <string name="about_acc_api_version_label">Versión de la API entre ACCA⇄ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
@@ -288,4 +313,5 @@
     <string name="parse_failed_body">Puedes intentar cargar la configuración por defecto pulsando \'Cargar por defecto\'. Ten en cuenta que AccA no será funcional.
         \n\nSi el error persiste, por favor comparte el stack trace de abajo junto con la versión ACC &amp; de AccA (a través del menú de 3 puntos &gt; Acerca de) con los desarrolladores a través de Telegram.\n\n%s</string>
     <string name="automatic_switch_eanbled">Probar automáticamente con todos los interruptores</string>
+    <string name="info_voltage">Voltaje</string>
 </resources>

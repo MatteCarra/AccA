@@ -1,15 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">AccA</string>
+    <string name="app_name_full">Advanced Charging Controller App</string>
+    <string name="title_activity_log_view">Protokoly</string>
+    <string name="title_activity_log_view_file_name">Protokoly</string>
     <!-- ACC Tile Strings -->
+    <string name="tile_acc_no_root">Nemáte root oprávnění</string>
+    <string name="tile_acc_enabled">Daemon běží</string>
+    <string name="tile_acc_disabled">Daemon byl zastaven</string>
     <!-- Navigation Strings -->
+    <string name="title_dashboard">Nástěnka</string>
+    <string name="title_profiles">Profily</string>
+    <string name="title_schedules">Plány</string>
+    <string name="title_settings">Nastavení</string>
     <!-- ACC Daemon Status -->
+    <string name="title_acc">ACC</string>
+    <string name="title_acc_daemon">ACC Daemon</string>
+    <string name="acc_daemon_status_running">ACC Daemon běží</string>
+    <string name="acc_daemon_status_not_running">ACC Daemon není spuštěn</string>
+    <string name="acc_daemon_status_reading_status">Čtení ACC Daemon stavu...</string>
     <!-- ACC Daemon Toggle -->
+    <string name="menu_stop_accd">Zastavení ACC Daemon</string>
+    <string name="menu_start_accd">Spustit ACC Daemon</string>
+    <string name="start">Spustit</string>
+    <string name="stop">Zastavit</string>
     <!-- Battery Card Strings -->
+    <string name="title_battery">Baterie</string>
+    <string name="info_status">Stav</string>
+    <string name="info_charging_speed">Rychlost nabíjení</string>
+    <string name="info_discharging_speed">Aktuální</string>
+    <string name="info_capacity">Kapacita</string>
+    <string name="info_temperature">Teplota</string>
+    <string name="info_health">Zdraví</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
+    <string name="info_status_extended">%1$s (%2$s)</string>
+    <string name="info_charging_speed_extended">%1$dmA při %2$.2fV</string>
+    <string name="info_discharging_speed_extended">%1$dmA</string>
     <!-- Profiles Item Labels -->
+    <string name="item_profile_capacity_label">Kapacita:</string>
+    <string name="item_profile_temperature_label">Teplota:</string>
+    <string name="status_label">Stav:</string>
+    <string name="battery_info_label">Info:</string>
+    <string name="reset_unplugged">Obnovit statistiky baterie při odpojení</string>
+    <string name="reset_stats">Obnovit statistiky baterie</string>
+    <string name="enable_cooldown">Povolit cyklus chlazení:</string>
+    <string name="cooldown_capacity">Začněte ochlazovat při %%:</string>
+    <string name="resume_charge">Pokračovat v nabíjení:</string>
+    <string name="stop_charge">Zastavit nabíjení:</string>
+    <string name="enable_temp_check">Povolit řízení teploty (°C)</string>
+    <string name="cooldown_temp">Teplota chlazení:</string>
+    <string name="max_temp">Maximální teplota:</string>
+    <string name="pause_seconds">Interval pauzy:</string>
+    <string name="charge_seconds">Interval nabíjení:</string>
+    <string name="shutdown_capacity">Vypnout (pokud se nenabijí) v:</string>
+    <string name="no_root_message">AccA vyžaduje ROOT.</string>
+    <string name="config_error_title">Nastavit analýzu chyb</string>
+    <string name="config_error_dialog">Nelze načíst nastavení ACC!\nVyzkoušejte, jestli funguje \"su -c acc --set --print\"...</string>
+    <string name="wait">Čekejte prosím...\nToto zabere chvíli času.</string>
     <!-- Exit On Boot Card Strings -->
+    <string name="title_exit_on_boot">Zastavit démona po aplikování nastavení</string>
+    <string name="description_exit_on_boot">Toto slouží pro zápis do nastavení po spuštění.</string>
     <!-- ACC installation -->
+    <string name="installing_acc">Instalace ACC</string>
+    <string name="reboot">Restart</string>
+    <string name="acc_installation_failed">Pošlete prosím logcat a /data/adb/acc-data/logs/ vývojářům na         t.me/acc_group/ nebo github.com/MatteCarra/AccA/issues/.    </string>
+    <string name="acc_installation_failed_title">Instalace ACC neúspěšná!</string>
     <!-- DJS installation -->
+    <string name="install_djs_title">Vyžadováno DJS</string>
+    <string name="install_djs_description">Pro správnou funkci musíte povolit DJS.        \nDJS (Daily Job Scheduler) je doplněk pro plánování profilů/nastavení ACC.        \nDJS démon se spustí po zapnutí zařízení bez ohledu na ACC.    </string>
+    <string name="installing_djs">Instalace DJS</string>
     <!-- ACC Config Tooltips -->
     <!--Profiles Options-->
     <!-- About Activity -->

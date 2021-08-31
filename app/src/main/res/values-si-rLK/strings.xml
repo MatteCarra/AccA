@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_full">ඇඩ්වාන්ස් චාර්ජින් කොන්ට්‍රෝලර් ඇප්</string>
+    <!-- ACC Tile Strings -->
+    <!-- Navigation Strings -->
+    <string name="title_dashboard">උපකරණ පුවරුව</string>
+    <string name="title_profiles">පැතිකඩයන්</string>
+    <string name="title_settings">සැකසුම්</string>
+    <!-- ACC Daemon Status -->
+    <!-- ACC Daemon Toggle -->
+    <string name="start">පටන්ගන්න</string>
+    <string name="stop">නවත්වන්න</string>
+    <!-- Battery Card Strings -->
+    <string name="title_battery">විදුලිකෝෂය</string>
+    <string name="info_status">තත්වය</string>
+    <string name="info_charging_speed">ආරෝපණ වේගය</string>
+    <string name="info_capacity">ධාරිතාව</string>
+    <string name="info_temperature">උෂ්ණත්වය</string>
+    <string name="info_health">සෞඛ්‍යය</string>
+    <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
+    <string name="info_status_extended">%1$s (%2$s)</string>
+    <!-- Profiles Item Labels -->
+    <string name="item_profile_capacity_label">ධාරිතාව:</string>
+    <string name="item_profile_temperature_label">උෂ්ණත්වය:</string>
+    <string name="status_label">තත්වය:</string>
+    <string name="battery_info_label">තොරතුරු:</string>
+    <string name="reset_stats">විදුලිකෝෂයේ තත්වය යළිසකසන්න</string>
+    <string name="max_temp">උපරිම උෂ්.:</string>
+    <string name="wait">රැඳෙන්න...\nමෙයට තත්පර කිහිපයක් ගතවේවි.</string>
+    <!-- Exit On Boot Card Strings -->
+    <!-- ACC installation -->
+    <string name="installing_acc">ACC ස්ථාපනය වෙමින්</string>
+    <!-- DJS installation -->
+    <string name="save">සුරකින්න</string>
+    <string name="edit_config">වින්‍යාසය සංස්කරණය</string>
+    <string name="unsaved_changes_message">වෙනස්කම් සුරකින්නද?</string>
+    <string name="create_acc_profile">වින්‍යාස පැතිකඩක් සාදන්න</string>
+    <string name="profile_name">පැතිකඩ නාමය</string>
+    <string name="no_profiles">පැතිකඩක් නැත</string>
+    <string name="profile_not_selected">අභිරුචි සැකසුම්</string>
+    <string name="profile_tile_label">පැතිකඩ: %1$s</string>
+    <string name="restart">නැවත පටන්ගන්න</string>
+    <string name="invalid_chars">පැතිකඩ නාමයෙහි වලංගු නොවන අකුරු අඩංගුය</string>
+    <string name="new_config">නව අභිරුචි වින්‍යාසය</string>
+    <string name="disabled">අබලයි</string>
+    <string name="schedule_time">%1$02d:%2$02d</string>
+    <string name="automatic">ස්වයංක්‍රීය</string>
+    <string name="done_applied_charge_limit">%1$d%% ට ආරෝපණය වෙමින්</string>
+    <string name="apply">යොදන්න</string>
+    <string name="info">තොරතුරු</string>
+    <string name="title_temperature_control">උෂ්ණත්වය පාලනය</string>
+    <string name="title_capacity_control">ධාරිතාව පාලනය</string>
+    <string name="about">පිලිබඳව</string>
+    <!-- ACC Config Tooltips -->
+    <!--Profiles Options-->
+    <string name="profile_option_edit">සංස්කරණය</string>
+    <string name="installation_failed_busybox_title">බිසීබොක්ස් ස්ථාපනය කර නැත</string>
+    <string name="share">බෙදාගන්න</string>
+    <string name="acc_version_preference_title">ACC අනුවාදය</string>
+    <string name="acc_version_picker_title">ACC අනුවාදය</string>
+    <string-array name="acc_version_options">
+        <item>Bundled</item>
+        <item>Master</item>
+        <item>සංවර්ධනය</item>
+    </string-array>
+    <string name="ui_options">අතුරු මුහුණත</string>
+    <string name="theme_option_setting">තේමාව</string>
+    <string name="theme_option_summary">යෙදුමේ තේමාව සකසන්න.</string>
+    <string name="undo">පෙරසේ</string>
+    <string name="install">ස්ථාපනය</string>
+    <string name="select_different_version">ACC අනු. වෙනස්කරන්න</string>
+    <string name="schedule_profile_edit_current">වත්මන් වින්‍යාසය සංස්කරණය</string>
+    <string name="schedule_profile_keep_current">වත්මන් වින්‍යාසය තබාගන්න</string>
+    <string-array name="theme_option_options">
+        <item>Light</item>
+        <item>අඳුරු</item>
+        <item>System default</item>
+    </string-array>
+    <string name="lang_pref_title">භාෂාව</string>
+    <string-array name="lang_pref_entries">
+        <item>@string/lang_default</item>
+        <item>@string/lang_en</item>
+        <item>@string/lang_ar</item>
+        <item>@string/lang_nl</item>
+        <item>@string/lang_fr</item>
+        <item>@string/lang_de</item>
+        <item>@string/lang_gr</item>
+        <item>@string/lang_hu</item>
+        <item>@string/lang_in</item>
+        <item>@string/lang_it</item>
+        <item>@string/lang_ja</item>
+        <item>@string/lang_ko</item>
+        <item>@string/lang_pl</item>
+        <item>@string/lang_pt</item>
+        <item>@string/lang_ru</item>
+        <item>@string/lang_es</item>
+        <item>@string/lang_tr</item>
+        <item>@string/lang_uk</item>
+        <item>@string/lang_vi</item>
+        <item>@string/lang_zh</item>
+    </string-array>
+    <string name="menu_import_export">ආයාත &amp; නිර්යාත</string>
+    <!-- About Activity -->
+    <string name="about_project_github">AccA ගිට්හබ්</string>
+    <string name="about_project_telegram">AccA ටෙලිග්‍රෑම්</string>
+    <string name="about_github">ගිට්හබ්</string>
+    <string name="about_website">වියමන අඩවිය</string>
+    <!-- Import and Export -->
+    <string name="import_title">ආයාත</string>
+    <string name="export_title">නිර්යාත</string>
+    <string name="menu_import">ආයාත</string>
+    <string name="menu_export">නිර්යාත</string>
+    <string name="menu_title_load_clipboard">පසුරුපුවරුවෙන් පූරණයකරන්න</string>
+    <!-- Config Parse Error -->
+</resources>
