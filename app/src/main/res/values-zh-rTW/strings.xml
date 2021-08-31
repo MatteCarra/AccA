@@ -117,7 +117,7 @@
     <string name="delete">刪除</string>
     <string name="no_schedules">未安排排程</string>
     <string name="wrong_volt_file">所選文件無效，或您的內核不支持此功能。</string>
-    <string name="invalid_voltage_max">此數值應該在 3700 至 4300 (毫伏) 之間</string>
+    <string name="invalid_voltage_max">這個數值需要在 3700 ~ 4300（millivolts）之間</string>
     <string name="edit_charging_switch">編輯充電開關</string>
     <string name="test_switch">測試充電開關</string>
     <string name="no_option_selected">未選擇任何選項，請選擇一個!</string>
@@ -127,7 +127,7 @@
     <string name="automatic">自動</string>
     <string name="error_occurred">發生了一個錯誤</string>
     <string name="retry">重試</string>
-    <string name="edit_charging_limit_once_button">一次性無限制充電至 #\%</string>
+    <string name="edit_charging_limit_once_button">一次不限制的充到 #\%</string>
     <string name="done_applied_charge_limit">充電至 %1$d%%</string>
     <string name="charge_limit_not_applied">充電限制已取消</string>
     <string name="apply">套用</string>
@@ -159,10 +159,7 @@
     <string name="template_capacity_profile">關機: %1$d%% - 重新開始充電: %2$d%% - 停止充電: %3$d%%</string>
     <string name="template_temperature_profile">溫度: %1$d&#176;C - 最大:%2$d&#176;C -暫停: %3$d秒</string>
     <string name="template_cool_down_profile">開始於: %1$d%% - 充電 %2$d 秒 - 暫停 %3$d 秒</string>
-    <!--Profiles Options-->
-    <string name="menu_option_edit">編輯</string>
-    <string name="menu_option_rename">重新命名</string>
-    <string name="menu_option_delete">刪除</string>
+    <!--Menus Options-->
     <string name="selecting_profile_toast">選擇設定檔案 %1$s</string>
     <string name="installation_failed_busybox_title">未安裝 Busybox</string>
     <string name="installation_failed_busybox">請先安裝 busybox，或直接把二進製文件放入 /data/adb/bin/</string>
