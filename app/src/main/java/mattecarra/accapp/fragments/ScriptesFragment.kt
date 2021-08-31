@@ -34,6 +34,7 @@ import mattecarra.accapp.databinding.*
 import mattecarra.accapp.models.AccaScript
 import mattecarra.accapp.utils.ScopedFragment
 import mattecarra.accapp.viewmodel.ScriptsViewModel
+import kotlin.math.absoluteValue
 
 class ScriptesFragment : ScopedFragment(), OnScriptClickListener
 {
@@ -189,7 +190,7 @@ class ScriptesFragment : ScopedFragment(), OnScriptClickListener
                             }
                             if (dX < -300)
                             { // Show right side
-                                onScriptLongClick(mScriptesAdapter.getScriptAt(viewHolder.adapterPosition))
+                                onScriptRunSilent(mScriptesAdapter.getScriptAt(viewHolder.adapterPosition))
                             }
                         }
 
@@ -221,24 +222,13 @@ class ScriptesFragment : ScopedFragment(), OnScriptClickListener
 
     override fun onScriptClick(script: AccaScript)
     {
-        launch {
-            Toast.makeText(mContext, "Running..\n" + script.scName, Toast.LENGTH_SHORT).show()
-            val sr = runScript(script)
-            mScriptsViewModel.updateScript(script)
-            Toast.makeText(mContext, "Finish is " + sr.scExitCode.equals(0).toString().uppercase(), Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    override fun onScriptLongClick(script: AccaScript)
-    {
         MaterialDialog(mContext).show {
-
             noAutoDismiss()
             title(text = script.scName)
             negativeButton { dismiss() }
 
             val binding = MdRunScriptBinding.inflate(layoutInflater)
-            customView(view = binding.root)
+            customView(view = binding.root, scrollable = true)
             binding.mdRunContent.setText(script.scBody)
             binding.mdStatusPb.visibility = View.VISIBLE
 
@@ -261,7 +251,15 @@ class ScriptesFragment : ScopedFragment(), OnScriptClickListener
                 }
             }
         }
+    }
 
+    override fun onScriptRunSilent(script: AccaScript) {
+        launch {
+            Toast.makeText(mContext, "Running..\n" + script.scName, Toast.LENGTH_SHORT).show()
+            val sr = runScript(script)
+            mScriptsViewModel.updateScript(script)
+            Toast.makeText(mContext, "Finished with result " + sr.scExitCode.equals(0).toString().uppercase(), Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun onAddScript()

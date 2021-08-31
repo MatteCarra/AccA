@@ -30,7 +30,6 @@ class ScriptListAdapter internal constructor(context: Context) : RecyclerView.Ad
         init
         {
             itemView.setOnClickListener { mListener.onScriptClick(mScriptsList[adapterPosition]) }
-            itemView.setOnLongClickListener { mListener.onScriptLongClick(mScriptsList[adapterPosition]);true }
         }
     }
 
@@ -57,8 +56,8 @@ class ScriptListAdapter internal constructor(context: Context) : RecyclerView.Ad
                 setOnMenuItemClickListener {
                     when (it.itemId)
                     {
-                        R.id.script_option_menu_run -> mListener.onScriptLongClick(mScriptsList[position])
-                        R.id.script_option_menu_run_silent -> mListener.onScriptClick(mScriptsList[position])
+                        R.id.script_option_menu_run -> mListener.onScriptClick(mScriptsList[position])
+                        R.id.script_option_menu_run_silent -> mListener.onScriptRunSilent(mScriptsList[position])
                         R.id.script_option_menu_edit -> mListener.onEditScript(mScriptsList[position])
                         R.id.script_option_menu_copy -> mListener.onCopyScript(mScriptsList[position])
                         R.id.script_option_menu_rename -> mListener.onRenameScript(mScriptsList[position])
