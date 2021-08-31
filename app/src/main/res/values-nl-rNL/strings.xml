@@ -128,7 +128,6 @@
     <string name="automatic">Automatisch</string>
     <string name="error_occurred">Er is een fout opgetreden</string>
     <string name="retry">Probeer opnieuw</string>
-    <string name="edit_charging_limit_once_button">Eén keer berekenen tot #\%, zonder beperkingen</string>
     <string name="done_applied_charge_limit">Opladen tot %1$d%%</string>
     <string name="charge_limit_not_applied">Oplaadlimiet geannuleerd</string>
     <string name="apply">Toepassen</string>
@@ -160,10 +159,7 @@
     <string name="template_capacity_profile">Afsluiten: %1$d%% - Hervatten: %2$d%% - Stop: %3$d%%</string>
     <string name="template_temperature_profile">Temperatuur: %1$d&#176;C - Max: %2$d&#176;C - Pauze: %3$ds</string>
     <string name="template_cool_down_profile">Begin om: %1$d%% - Opladen voor %2$ds - Pauze voor %3$ds</string>
-    <!--Profiles Options-->
-    <string name="menu_option_edit">Wijzig</string>
-    <string name="menu_option_rename">Hernoem</string>
-    <string name="menu_option_delete">Verwijder</string>
+    <!--Menus Options-->
     <string name="selecting_profile_toast">Profiel %1$s selecteren.</string>
     <string name="installation_failed_busybox_title">Busybox is niet geïnstalleerd</string>
     <string name="installation_failed_busybox">Installeer eerst busybox of plaats de binary in /data/adb/bin/</string>
