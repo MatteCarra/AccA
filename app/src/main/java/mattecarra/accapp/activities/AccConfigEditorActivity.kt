@@ -54,7 +54,7 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         val binding = ActivityAccConfigEditorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        content = ContentAccConfigEditorBinding.inflate(layoutInflater)
+        content = binding.content
 
         // Load preferences
         mPreferences = Preferences(this)
