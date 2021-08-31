@@ -115,7 +115,6 @@
     <string name="automatic">自動</string>
     <string name="error_occurred">エラーが発生しました</string>
     <string name="retry">リトライ</string>
-    <string name="edit_charging_limit_once_button">制限なしで, 一度 #\%, まで充電する</string>
     <string name="apply">適用</string>
     <string name="done">完了</string>
     <string name="edit_charging_limit_once_dialog_msg">選択したバッテリー残量に達すると、通常の設定が自動的に復元されます.</string>
@@ -143,10 +142,7 @@
     <string name="template_capacity_profile">シャットダウン: %1$d%% - 再開: %2$d%% - 停止: %3$d%%</string>
     <string name="template_temperature_profile">温度: %1$d&#176;C - 最大: %2$d&#176;C - 停止: %3$ds</string>
     <string name="template_cool_down_profile">開始: %1$d%% - 充電 %2$ds - 停止 %3$ds</string>
-    <!--Profiles Options-->
-    <string name="menu_option_edit">編集</string>
-    <string name="menu_option_rename">名前を変更</string>
-    <string name="menu_option_delete">削除</string>
+    <!--Menus Options-->
     <string name="installation_failed_busybox_title">Busybox がインストールされていません。</string>
     <string name="installation_failed_busybox">busybox を最初にインストールするか, バイナリを /data/adb/bin/ に配置せよ</string>
     <string name="share">共有</string>
@@ -229,7 +225,6 @@
     <string name="edit_schedule">スケジュール編集</string>
     <string name="create_schedule">スケジュール作成</string>
     <!-- About Activity -->
-    <string name="about_acc_api_version_label">ACCバージョン:</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">ウェブサイト</string>
