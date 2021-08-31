@@ -63,7 +63,7 @@ object Acc {
     }
 
     fun isAccInstalled(installationDir: File): Boolean {
-        return Shell.su("test -f ${File(installationDir, "acc/service.sh").absolutePath}  || test -f ${File(installationDir, "acc/acc-init.sh").absolutePath}").exec().isSuccess
+        return Shell.su("test -f ${File(installationDir, "acc/service.sh").absolutePath}").exec().isSuccess
     }
 
     fun isInstalledAccOutdated(): Boolean = runBlocking {
@@ -72,7 +72,7 @@ object Acc {
 
     fun initAcc(installationDir: File): Boolean {
         return if(isAccInstalled(installationDir))
-            Shell.su("/dev/.vr25/acc/acca --daemon 2>/dev/null || if test -f ${File(installationDir, "acc/service.sh").absolutePath}; then ${File(installationDir, "acc/service.sh").absolutePath}; else ${File(installationDir, "acc/acc-init.sh").absolutePath}; fi").exec().isSuccess
+            Shell.su("[ -f /dev/.vr25/acc/acca ] || ${File(installationDir, "acc/service.sh").absolutePath}").exec().isSuccess
         else
             false
     }
