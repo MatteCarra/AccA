@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.core.graphics.toColor
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -21,35 +20,20 @@ import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.input.input
-import com.afollestad.materialdialogs.list.toggleItemChecked
-import com.afollestad.materialdialogs.list.updateListItemsSingleChoice
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.topjohnwu.superuser.Shell
-import kotlinx.android.synthetic.main.add_charging_switch_dialog.view.*
-import kotlinx.android.synthetic.main.dashboard_fragment.*
-import kotlinx.android.synthetic.main.md_dialog_progress_indeterminate.view.*
-import kotlinx.android.synthetic.main.md_dialog_progress_indeterminate.view.md_content
-import kotlinx.android.synthetic.main.md_run_script.view.*
-import kotlinx.android.synthetic.main.script_newedit_dialog.*
-import kotlinx.android.synthetic.main.script_newedit_dialog.view.*
-import kotlinx.android.synthetic.main.scripts_fragment.*
-import kotlinx.android.synthetic.main.scripts_fragment.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.R
 import mattecarra.accapp._interface.OnScriptClickListener
-import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.adapters.ScriptListAdapter
-import mattecarra.accapp.dialogs.progress
+import mattecarra.accapp.databinding.*
 import mattecarra.accapp.models.AccaScript
 import mattecarra.accapp.utils.ScopedFragment
 import mattecarra.accapp.viewmodel.ScriptsViewModel
-import org.jetbrains.anko.find
 
 class ScriptesFragment : ScopedFragment(), OnScriptClickListener
 {
@@ -64,19 +48,20 @@ class ScriptesFragment : ScopedFragment(), OnScriptClickListener
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
-        return inflater.inflate(R.layout.scripts_fragment, container, false)
+        return ScriptsFragmentBinding.inflate(inflater, container, false).root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
-        val scriptsRecycler: RecyclerView = view.findViewById(R.id.scripts_recyclerView)
+        val binding = ScriptsFragmentBinding.bind(view)
+
         mContext = requireContext()
 
         mScriptesAdapter = ScriptListAdapter(mContext)
         mScriptesAdapter.setOnClickListener(this)
 
-        scriptsRecycler.adapter = mScriptesAdapter
-        scriptsRecycler.layoutManager = LinearLayoutManager(mContext)
+        binding.scriptsRecyclerView.adapter = mScriptesAdapter
+        binding.scriptsRecyclerView.layoutManager = LinearLayoutManager(mContext)
 
         mScriptsViewModel = ViewModelProviders.of(this).get(ScriptsViewModel::class.java)
 
@@ -85,13 +70,13 @@ class ScriptesFragment : ScopedFragment(), OnScriptClickListener
 
             if (scripts.isEmpty())
             {
-                scripts_empty_textview.visibility = View.VISIBLE
-                scriptsRecycler.visibility = View.GONE
+                binding.scriptsEmptyTextview.visibility = View.VISIBLE
+                binding.scriptsRecyclerView.visibility = View.GONE
             }
             else
             {
-                scripts_empty_textview.visibility = View.GONE
-                scriptsRecycler.visibility = View.VISIBLE
+                binding.scriptsEmptyTextview.visibility = View.GONE
+                binding.scriptsRecyclerView.visibility = View.VISIBLE
             }
             mScriptesAdapter.setScripts(scripts)
         })
@@ -221,7 +206,7 @@ class ScriptesFragment : ScopedFragment(), OnScriptClickListener
         }
 
         val itemTouchHelper = ItemTouchHelper(itemTouchCallback)
-        itemTouchHelper.attachToRecyclerView(scriptsRecycler)
+        itemTouchHelper.attachToRecyclerView(binding.scriptsRecyclerView)
     }
 
     //-----------------------------------------------------------------------------------
@@ -250,9 +235,10 @@ class ScriptesFragment : ScopedFragment(), OnScriptClickListener
 
             noAutoDismiss()
             title(text = script.scName)
-            customView(R.layout.md_run_script)
-            view.md_content.setText(script.scBody)
-            view.md_status_pb.visibility = View.VISIBLE
+            val binding = MdRunScriptBinding.inflate(layoutInflater)
+            customView(view = binding.root)
+            binding.mdRunContent.setText(script.scBody)
+            binding.mdStatusPb.visibility = View.VISIBLE
 
             launch {
                 val sr = runScript(script)
@@ -261,15 +247,15 @@ class ScriptesFragment : ScopedFragment(), OnScriptClickListener
                 if (isShowing) {
 
                     if (sr.scExitCode.equals(0)) {
-                        view.md_status_imageView.setImageResource(R.drawable.ic_outline_check_circle_24px)
-                        view.md_status_pb.visibility = View.INVISIBLE
+                        binding.mdStatusImageView.setImageResource(R.drawable.ic_outline_check_circle_24px)
+                        binding.mdStatusPb.visibility = View.INVISIBLE
                     } else {
-                        view.md_status_imageView.setImageResource(R.drawable.ic_outline_error_outline_24px)
-                        view.md_status_pb.visibility = View.INVISIBLE
+                        binding.mdStatusImageView.setImageResource(R.drawable.ic_outline_error_outline_24px)
+                        binding.mdStatusPb.visibility = View.INVISIBLE
                     }
 
-                    view.md_out_content.setText(script.scOutput)
-                    view.md_out_content.visibility = View.VISIBLE
+                    binding.mdOutContent.setText(script.scOutput)
+                    binding.mdOutContent.visibility = View.VISIBLE
                 }
             }
         }
@@ -282,17 +268,19 @@ class ScriptesFragment : ScopedFragment(), OnScriptClickListener
 
             noAutoDismiss()
             title(text = getString(R.string.new_script))
-            customView(R.layout.script_newedit_dialog)
+            val binding = ScriptNeweditDialogBinding.inflate(layoutInflater)
+            customView(view = binding.root)
             var script = AccaScript(0,"","","","",0)
 
             positiveButton { dialog ->
-                val view = dialog.getCustomView()
-                if (view.script_name_ed.text.trim().isEmpty()) {
-                    view.script_name_ed.requestFocus() ; return@positiveButton }
 
-                script.scName = view.script_name_ed.text.toString()
-                script.scDescription = view.script_description_ed.text.toString()
-                script.scBody = view.script_body_text_ed.text.toString()
+                if (binding.scriptNameEd.text.trim().isEmpty()) {
+                    binding.scriptNameEd.requestFocus() ; return@positiveButton }
+
+                script.scName = binding.scriptNameEd.text.toString()
+                script.scDescription = binding.scriptDescriptionEd.text.toString()
+                script.scBody = binding.scriptBodyTextEd.text.toString()
+
                 mScriptsViewModel.copyScript(script)
                 dismiss()
             }
@@ -307,18 +295,21 @@ class ScriptesFragment : ScopedFragment(), OnScriptClickListener
 
             noAutoDismiss()
             title(text = script.scName)
-            customView(R.layout.script_newedit_dialog)
-            view.script_name_ed.setText(script.scName)
-            view.script_description_ed.setText(script.scDescription)
-            view.script_body_text_ed.setText(script.scBody)
+            val binding = ScriptNeweditDialogBinding.inflate(layoutInflater)
+            customView(view = binding.root)
+            binding.scriptNameEd.setText(script.scName)
+            binding.scriptDescriptionEd.setText(script.scDescription)
+            binding.scriptBodyTextEd.setText(script.scBody)
 
             positiveButton { dialog ->
-                val view = dialog.getCustomView()
-                if (view.script_name_ed.text.trim().isEmpty()) {
-                    view.script_name_ed.requestFocus() ; return@positiveButton }
-                script.scName = view.script_name_ed.text.toString()
-                script.scDescription = view.script_description_ed.text.toString()
-                script.scBody = view.script_body_text_ed.text.toString()
+
+                if (binding.scriptNameEd.text.trim().isEmpty()) {
+                    binding.scriptNameEd.requestFocus() ; return@positiveButton }
+
+                script.scName = binding.scriptNameEd.text.toString()
+                script.scDescription = binding.scriptDescriptionEd.text.toString()
+                script.scBody = binding.scriptBodyTextEd.text.toString()
+
                 mScriptsViewModel.updateScript(script)
                 dismiss()
             }
@@ -348,18 +339,21 @@ class ScriptesFragment : ScopedFragment(), OnScriptClickListener
 
             noAutoDismiss()
             title(text = getString(R.string.menu_option_copy))
-            customView(R.layout.script_newedit_dialog)
-            view.script_name_ed.setText(script.scName)
-            view.script_description_ed.setText(script.scDescription)
-            view.script_body_text_ed.setText(script.scBody)
+            val binding = ScriptNeweditDialogBinding.inflate(layoutInflater)
+            customView(view = binding.root)
+            binding.scriptNameEd.setText(script.scName)
+            binding.scriptDescriptionEd.setText(script.scDescription)
+            binding.scriptBodyTextEd.setText(script.scBody)
 
             positiveButton { dialog ->
-                val view = dialog.getCustomView()
-                if (view.script_name_ed.text.trim().isEmpty()) {
-                    view.script_name_ed.requestFocus() ; return@positiveButton }
-                script.scName = view.script_name_ed.text.toString()
-                script.scDescription = view.script_description_ed.text.toString()
-                script.scBody = view.script_body_text_ed.text.toString()
+
+                if (binding.scriptNameEd.text.trim().isEmpty()) {
+                    binding.scriptNameEd.requestFocus() ; return@positiveButton }
+
+                script.scName = binding.scriptNameEd.text.toString()
+                script.scDescription = binding.scriptDescriptionEd.text.toString()
+                script.scBody = binding.scriptBodyTextEd.text.toString()
+
                 mScriptsViewModel.copyScript(script)
                 dismiss()
             }

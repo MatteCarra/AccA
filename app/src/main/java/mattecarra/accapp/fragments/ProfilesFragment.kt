@@ -25,7 +25,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
-import kotlinx.android.synthetic.main.profiles_fragment.*
 import kotlinx.coroutines.launch
 import mattecarra.accapp.R
 import mattecarra.accapp.viewmodel.SharedViewModel
@@ -56,12 +55,9 @@ class ProfilesFragment : ScopedFragment(),
     private lateinit var mProfilesAdapter: ProfileListAdapter
     private lateinit var mContext: Context
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val binding = ProfilesFragmentBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+    {
+        return ProfilesFragmentBinding.inflate(inflater, container, false).root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)

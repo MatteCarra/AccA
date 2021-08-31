@@ -17,7 +17,6 @@ import androidx.preference.PreferenceManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
-import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -26,10 +25,8 @@ import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.launch
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
-import mattecarra.accapp.viewmodel.SharedViewModel
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.databinding.ActivityMainBinding
-import mattecarra.accapp.databinding.ProfilePreviewDialogBinding
 import mattecarra.accapp.dialogs.*
 import mattecarra.accapp.djs.Djs
 import mattecarra.accapp.fragments.*
@@ -40,6 +37,7 @@ import mattecarra.accapp.models.Schedule
 import mattecarra.accapp.utils.*
 import mattecarra.accapp.viewmodel.ProfilesViewModel
 import mattecarra.accapp.viewmodel.SchedulesViewModel
+import mattecarra.accapp.viewmodel.SharedViewModel
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -109,7 +107,7 @@ class MainActivity : ScopedAppActivity(),
         setSupportActionBar(binding.mainToolbar)
 
         // Load in dashboard fragment
-        binding.mainBottomNav.selectedItemId = _mainActivityViewModel.selectedNavBarItem
+        binding.mainBottomNav.selectedItemId = selectedNavBarItem
     }
 
     /**

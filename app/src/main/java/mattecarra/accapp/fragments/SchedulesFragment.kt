@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.schedules_fragment.*
-import mattecarra.accapp.R
 import mattecarra.accapp.activities.MainActivity
 import mattecarra.accapp.adapters.OnScheduleClickListener
 import mattecarra.accapp.adapters.ScheduleProfileListAdapter
