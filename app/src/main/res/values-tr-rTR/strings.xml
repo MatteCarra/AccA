@@ -153,7 +153,6 @@
     <string name="charging_switch_label">Şarj etme geçişi:</string>
     <string name="title_on_plugged">Şarjdan Çıkarınca Uygula</string>
     <string name="edit_on_plugged">ApplyOnPlug ayarlarını düzenle:</string>
-    <string name="edit_on_plugged_dialog_message">Örnek: wireless/voltage_max::9000000 bazı pixel cihazları kablosuz hızlı şarja zorlar.    </string>
     <string name="template_capacity_profile">Kapat: %1$d%% - Devam Et: %2$d%% - Durdur: %3$d%%</string>
     <string name="template_temperature_profile">Sıcaklık: %1$d&#176;C - Maks: %2$d&#176;C - Duraklat: %3$ds</string>
     <string name="template_cool_down_profile">Başlat: %1$d%% - %2$d saniye şarj et - %3$d saniye duraklat</string>

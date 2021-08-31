@@ -104,6 +104,7 @@
     <string name="execution_time">執行時間</string>
     <string name="new_config">新增自訂設定</string>
     <string name="enable_voltage_limit">自定義充電電壓限制</string>
+    <string name="enable_current_limit">自定義充電電流限制</string>
     <string name="voltage_control_file">電壓控制文件:</string>
     <string name="edit_power_limit">編輯電流和電壓限制</string>
     <string name="voltage_max">最大電壓 (毫伏):</string>
@@ -154,7 +155,7 @@
     <string name="charging_switch_label">充電開關:</string>
     <string name="title_on_plugged">Apply on Plug</string>
     <string name="edit_on_plugged">編輯（apply_on_plug）設置：</string>
-    <string name="edit_on_plugged_dialog_message">範例: wireless/voltage_max::9000000 強制開啟Pixel裝置無線快充    </string>
+    <string name="edit_on_plugged_dialog_message">Example: wireless/voltage_max::9000000 強制在某些 Pixel 設備上使用快速無線充電。</string>
     <string name="template_capacity_profile">關機: %1$d%% - 重新開始充電: %2$d%% - 停止充電: %3$d%%</string>
     <string name="template_temperature_profile">溫度: %1$d&#176;C - 最大:%2$d&#176;C -暫停: %3$d秒</string>
     <string name="template_cool_down_profile">開始於: %1$d%% - 充電 %2$d 秒 - 暫停 %3$d 秒</string>
@@ -233,6 +234,30 @@
         <item>暗黑</item>
         <item>系統預設</item>
     </string-array>
+    <string name="lang_pref_title">語言</string>
+    <string name="lang_pref_summary">選擇程式語言。 選擇後需要重啟以設定語言</string>
+    <string-array name="lang_pref_entries">
+        <item>@string/lang_default</item>
+        <item>@string/lang_en</item>
+        <item>@string/lang_ar</item>
+        <item>@string/lang_nl</item>
+        <item>@string/lang_fr</item>
+        <item>@string/lang_de</item>
+        <item>@string/lang_gr</item>
+        <item>@string/lang_hu</item>
+        <item>@string/lang_in</item>
+        <item>@string/lang_it</item>
+        <item>@string/lang_ja</item>
+        <item>@string/lang_ko</item>
+        <item>@string/lang_pl</item>
+        <item>@string/lang_pt</item>
+        <item>@string/lang_ru</item>
+        <item>@string/lang_es</item>
+        <item>@string/lang_tr</item>
+        <item>@string/lang_uk</item>
+        <item>@string/lang_vi</item>
+        <item>@string/lang_zh</item>
+    </string-array>
     <string-array name="schedule_type_entries">
         <item>重複</item>
         <item>僅運行一次</item>
@@ -250,8 +275,9 @@
     </string>
     <string name="about_attributes">屬性</string>
     <string name="about_attrib_telegram_icon">Telegram頻道圖案由Pixel perfect(www.flaticon.com)提供</string>
-    <string name="about_acca_version_label">AccA 版本:</string>
-    <string name="about_acc_api_version_label">ACC 版本:</string>
+    <string name="about_acca_version_label">ACCA 版本：</string>
+    <string name="about_acc_daemon_version_label">ACC 守護行程版本：</string>
+    <string name="about_acc_api_version_label">ACCA⇄ACC API 版本：</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
@@ -284,4 +310,5 @@
     <string name="parse_failed_body">您可以嘗試通過點按“加載設定值”來加載預設設定。請注意，AccA 將不會起作用。
         \n\n如果仍然出現錯誤， 請通過 Telegram 與開發者分享下面的日誌文件以及ACC 和 AccA 版本 (通過3點菜單按鈕 &gt; 關於)。 \n\n%s</string>
     <string name="automatic_switch_eanbled">自動循環切換開關</string>
+    <string name="info_voltage">電壓</string>
 </resources>

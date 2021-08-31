@@ -105,6 +105,7 @@
     <string name="execution_time">Uitvoeringstijd</string>
     <string name="new_config">Nieuwe aangepaste configuratie</string>
     <string name="enable_voltage_limit">Aangepaste spanningslimiet bij opladen</string>
+    <string name="enable_current_limit">Aangepaste laadstroomlimiet</string>
     <string name="voltage_control_file">Voltage controle bestand:</string>
     <string name="edit_power_limit">Huidige stroom- en spanningslimiet bewerken</string>
     <string name="voltage_max">Maximale spanning (millivolts):</string>
@@ -155,8 +156,7 @@
     <string name="charging_switch_label">Oplaadschakelaar:</string>
     <string name="title_on_plugged">Bij aansluiten toepassen</string>
     <string name="edit_on_plugged">Wijzig de aansluittoepassingsinstellingen:</string>
-    <string name="edit_on_plugged_dialog_message">Voorbeeld: draadloos/voltage_max:9000000 forceert snel draadloos opladen op sommige Pixel apparaten.
-    </string>
+    <string name="edit_on_plugged_dialog_message">Voorbeeld: draadloos/voltage_max:9000000 forceert snel draadloos opladen op sommige Pixel apparaten.</string>
     <string name="template_capacity_profile">Afsluiten: %1$d%% - Hervatten: %2$d%% - Stop: %3$d%%</string>
     <string name="template_temperature_profile">Temperatuur: %1$d&#176;C - Max: %2$d&#176;C - Pauze: %3$ds</string>
     <string name="template_cool_down_profile">Begin om: %1$d%% - Opladen voor %2$ds - Pauze voor %3$ds</string>
@@ -237,6 +237,29 @@
         <item>Donker</item>
         <item>Systeem standaard</item>
     </string-array>
+    <string name="lang_pref_title">Taal</string>
+    <string-array name="lang_pref_entries">
+        <item>@string/lang_default</item>
+        <item>@string/lang_en</item>
+        <item>@string/lang_ar</item>
+        <item>@string/lang_nl</item>
+        <item>@string/lang_fr</item>
+        <item>@string/lang_de</item>
+        <item>@string/lang_gr</item>
+        <item>@string/lang_hu</item>
+        <item>@string/lang_in</item>
+        <item>@string/lang_it</item>
+        <item>@string/lang_ja</item>
+        <item>@string/lang_ko</item>
+        <item>@string/lang_pl</item>
+        <item>@string/lang_pt</item>
+        <item>@string/lang_ru</item>
+        <item>@string/lang_es</item>
+        <item>@string/lang_tr</item>
+        <item>@string/lang_uk</item>
+        <item>@string/lang_vi</item>
+        <item>@string/lang_zh</item>
+    </string-array>
     <string-array name="schedule_type_entries">
         <item>Terugkerend</item>
         <item>Start eenmalig</item>
@@ -254,8 +277,9 @@
     </string>
     <string name="about_attributes">Kenmerken</string>
     <string name="about_attrib_telegram_icon">Telegram-pictogram gemaakt door Pixel perfect van www.flaticon.com</string>
-    <string name="about_acca_version_label">AccA Versie:</string>
-    <string name="about_acc_api_version_label">ACC versie:</string>
+    <string name="about_acca_version_label">ACCA Versie:</string>
+    <string name="about_acc_daemon_version_label">ACC Daemon Versie:</string>
+    <string name="about_acc_api_version_label">ACCA⇄ACC API Versie:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
@@ -288,4 +312,5 @@
     <string name="parse_failed_body">U kunt de standaardconfiguratie proberen te laden door op \'Standaardinstelling laden\' te drukken. Houd er rekening mee dat AccA niet werkt.
         \n\nAls de fout aanhoudt, deel de stack trace hieronder samen met ACC &amp; AccA versie (via het 3-punt menu &gt; About) met de ontwikkelaars via Telegram.\n\n%s</string>
     <string name="automatic_switch_eanbled">Wissel automatisch door schakelaars</string>
+    <string name="info_voltage">Spanning</string>
 </resources>

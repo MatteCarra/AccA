@@ -155,8 +155,6 @@
     <string name="charging_switch_label">Ladeschalter:</string>
     <string name="title_on_plugged">Beim Einstecken anwenden</string>
     <string name="edit_on_plugged">Einsteck-Einstellungen bearbeiten:</string>
-    <string name="edit_on_plugged_dialog_message">Beispiel: Wireless/voltage_max::9000000 erzwingt eine schnelle kabellose Ladungen auf einigen Pixel-Geräten.
-    </string>
     <string name="template_capacity_profile">Herunterfahren: %1$d%% - Fortsetzen: %2$d%% - Anhalten: %3$d%%</string>
     <string name="template_temperature_profile">Temperatur: %1$d&#176;C - Max: %2$d&#176;C - Pause: %3$ds</string>
     <string name="template_cool_down_profile">Beginnen bei: %1$d%% - Laden für %2$d Sek - Pausieren für %3$d Sek</string>
