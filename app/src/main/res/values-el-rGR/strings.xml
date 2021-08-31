@@ -96,7 +96,6 @@
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Διαγραφή</string>
     <string name="no_schedules">Δεν έχουν οριστεί προγράμματα</string>
-    <string name="invalid_voltage_max">Η τιμή πρέπει να είναι ένας αριθμός μεταξύ 3700 και 4300 (μιλιβόλτ)</string>
     <string name="edit_charging_switch">Επεξεργασία διακόπτη φόρτισης</string>
     <string name="test_switch">Δοκιμή διακόπτη φόρτισης</string>
     <string name="no_option_selected">Καμία επιλογή δεν επιλέχθηκε• παρακαλώ επιλέξτε μία!</string>
@@ -127,10 +126,7 @@
     <string name="template_capacity_profile">Απενεργοποίηση: %1$d%% - Συνέχιση: %2$d%% - Διακοπή: %3$d%%</string>
     <string name="template_temperature_profile">Θερμοκρασία: %1$d&#176;C - Μέγιστο: %2$d&#176;C - Παύση: %3$ds</string>
     <string name="template_cool_down_profile">Εκκίνηση σε: %1$d%% - Φόρτιση για %2$ds - Παύση για %3$ds</string>
-    <!--Profiles Options-->
-    <string name="menu_option_edit">Επεξεργασία</string>
-    <string name="menu_option_rename">Μετονομασία</string>
-    <string name="menu_option_delete">Διαγραφή</string>
+    <!--Menus Options-->
     <string name="selecting_profile_toast">Επιλογή προφίλ %1$s.</string>
     <string name="installation_failed_busybox_title">Το busybox δεν είναι εγκατεστημένο</string>
     <string name="share">Κοινοποίηση</string>
@@ -202,7 +198,6 @@
     <string name="about_team_title">Γνωρίστε την Ομάδα</string>
     <string name="about_attributes">Χαρακτηριστικά</string>
     <string name="about_attrib_telegram_icon">Το εικονίδιο στο Telegram δημιουργήθηκε από την Pixel perfect από το www.flaticon.com</string>
-    <string name="about_acc_api_version_label">Έκδοση ACC:</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Ιστοσελίδα</string>
     <string name="toast_no_browser_installed">Αδυναμία ανοίγματος συνδέσμου!\nΣιγουρευτείτε πως έχετε περιηγητή δικτύου εγκατεστημένο.</string>
