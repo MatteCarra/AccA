@@ -59,7 +59,6 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         setContentView(binding.root)
 
         content = binding.contentAccConfigEditor
-        content = binding.content
 
         // Load preferences
         mPreferences = Preferences(this)
