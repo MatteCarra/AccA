@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import mattecarra.accapp.models.*
 
-@Database(entities = [AccaProfile::class, ScheduleProfile::class, AccaScript::class], version = 9)
+@Database(entities = [AccaProfile::class, ScheduleProfile::class, AccaScript::class], version = 10)
 @TypeConverters(ConfigConverter::class)
 abstract class AccaRoomDatabase : RoomDatabase()
 {
@@ -77,6 +77,12 @@ abstract class AccaRoomDatabase : RoomDatabase()
             }
         }
 
+        private val MIGRATION_9_10: Migration = object : Migration(9, 10) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("INSERT INTO scripts_table (scName, scDescription, scBody, scOutput, scExitCode) VALUES (\"ACC Version\", \"-v|--version  Print acc version and version code\", \"acca -v\", \"\", 0);");
+            }
+        }
+
         fun getDatabase(context: Context): AccaRoomDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
@@ -87,7 +93,7 @@ abstract class AccaRoomDatabase : RoomDatabase()
                 // Create database instance here
                 INSTANCE =
                     Room.databaseBuilder(context.applicationContext, AccaRoomDatabase::class.java, DATABASE_NAME)
-                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9)
+                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10)
                         .addCallback(object : Callback() {
                             override fun onCreate(db: SupportSQLiteDatabase) {
                                 super.onCreate(db)
@@ -213,10 +219,6 @@ abstract class AccaRoomDatabase : RoomDatabase()
                 "",
                 0)
             )
-        }
-
-        fun destroyInstance() {
-            INSTANCE = null
         }
     }
 }
