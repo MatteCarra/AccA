@@ -160,10 +160,7 @@
     <string name="template_capacity_profile">关机: %1$d%% - 恢复充电: %2$d%% - 停止充电: %3$d%%</string>
     <string name="template_temperature_profile">温度： %1$d&#176;C - 最大： %2$d&#176;C - 暂停： %3$d秒</string>
     <string name="template_cool_down_profile">开始于： %1$d%% - 充电 %2$d秒 - 暂停 %3$d秒</string>
-    <!--Profiles Options-->
-    <string name="menu_option_edit">编辑</string>
-    <string name="menu_option_rename">重命名</string>
-    <string name="menu_option_delete">删除</string>
+    <!--Menus Options-->
     <string name="selecting_profile_toast">选择配置文件 %1$s。</string>
     <string name="installation_failed_busybox_title">Busybox 未安装</string>
     <string name="installation_failed_busybox">请先安装 busybox，或直接把二进制文件放入 /data/adb/bin/</string>
