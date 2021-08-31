@@ -52,8 +52,7 @@
     <string name="title_capacity_control">ධාරිතාව පාලනය</string>
     <string name="about">පිලිබඳව</string>
     <!-- ACC Config Tooltips -->
-    <!--Profiles Options-->
-    <string name="profile_option_edit">සංස්කරණය</string>
+    <!--Menus Options-->
     <string name="installation_failed_busybox_title">බිසීබොක්ස් ස්ථාපනය කර නැත</string>
     <string name="share">බෙදාගන්න</string>
     <string name="acc_version_preference_title">ACC අනුවාදය</string>
