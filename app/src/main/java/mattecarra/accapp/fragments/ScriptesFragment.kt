@@ -235,6 +235,8 @@ class ScriptesFragment : ScopedFragment(), OnScriptClickListener
 
             noAutoDismiss()
             title(text = script.scName)
+            negativeButton { dismiss() }
+
             val binding = MdRunScriptBinding.inflate(layoutInflater)
             customView(view = binding.root)
             binding.mdRunContent.setText(script.scBody)
