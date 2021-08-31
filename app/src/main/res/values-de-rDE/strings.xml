@@ -117,7 +117,6 @@
     <string name="delete">Löschen</string>
     <string name="no_schedules">Keine Zeitpläne gesetzt</string>
     <string name="wrong_volt_file">Entweder funktioniert die ausgewählte Datei nicht oder Dein Kernel unterstützt diese Funktion nicht.</string>
-    <string name="invalid_voltage_max">Der Wert sollte zwischen 3700 und 4300 (mV) liegen</string>
     <string name="edit_charging_switch">Ladeschalter bearbeiten</string>
     <string name="test_switch">Ladeschalter testen</string>
     <string name="no_option_selected">Keine Option ausgewählt; bitte eine auswählen!</string>
@@ -127,7 +126,6 @@
     <string name="automatic">Automatisch</string>
     <string name="error_occurred">Ein Fehler ist aufgetreten</string>
     <string name="retry">Erneut versuchen</string>
-    <string name="edit_charging_limit_once_button">Einmal bis #\% ohne Einschränkungen aufladen</string>
     <string name="done_applied_charge_limit">Aufgeladen zu %1$d%%</string>
     <string name="charge_limit_not_applied">Ladelimit anwenden wurde aufgehoben</string>
     <string name="apply">Übernehmen</string>
@@ -158,10 +156,7 @@
     <string name="template_capacity_profile">Herunterfahren: %1$d%% - Fortsetzen: %2$d%% - Anhalten: %3$d%%</string>
     <string name="template_temperature_profile">Temperatur: %1$d&#176;C - Max: %2$d&#176;C - Pause: %3$ds</string>
     <string name="template_cool_down_profile">Beginnen bei: %1$d%% - Laden für %2$d Sek - Pausieren für %3$d Sek</string>
-    <!--Profiles Options-->
-    <string name="menu_option_edit">Bearbeiten</string>
-    <string name="menu_option_rename">Umbenennen</string>
-    <string name="menu_option_delete">Löschen</string>
+    <!--Menus Options-->
     <string name="selecting_profile_toast">Profil %1$s wird ausgewählt.</string>
     <string name="installation_failed_busybox_title">Busybox ist nicht installiert</string>
     <string name="installation_failed_busybox">Installiere zuerst Busybox oder lege einfach die Binärdatei in /data/adb/bin/</string>
@@ -252,8 +247,6 @@
     </string>
     <string name="about_attributes">Eigenschaften</string>
     <string name="about_attrib_telegram_icon">Das Telegram-Symbol wurde von Pixel perfekt auf www.flaticon.com gemacht</string>
-    <string name="about_acca_version_label">AccA-Version:</string>
-    <string name="about_acc_api_version_label">ACC-Version:</string>
     <string name="about_project_github">AccA-GitHub</string>
     <string name="about_project_telegram">AccA-Telegram</string>
     <string name="about_github">GitHub</string>
