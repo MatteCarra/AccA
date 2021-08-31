@@ -115,7 +115,6 @@
     <string name="delete">Sil</string>
     <string name="no_schedules">Zamanlanmış görev yok</string>
     <string name="wrong_volt_file">Ya seçilen dosya çalışmıyor ya da kerneliniz bu özelliği desteklemiyor.</string>
-    <string name="invalid_voltage_max">Değer 3700 ve 4300 (milivolt) arasında bir sayı olmalıdır</string>
     <string name="edit_charging_switch">Şarj etme geçişini düzenle</string>
     <string name="test_switch">Şarj etme geçişini denetle</string>
     <string name="no_option_selected">Herhangi bir seçenek seçilmedi, lütfen bir tanesini seçin!</string>
@@ -125,7 +124,6 @@
     <string name="automatic">Otomatik</string>
     <string name="error_occurred">Bir hata oluştu</string>
     <string name="retry">Yeniden Dene</string>
-    <string name="edit_charging_limit_once_button">Kısıtlama olmaksızın #\% kadar bir kez şarj edin</string>
     <string name="done_applied_charge_limit">%1$d%% kadar şarj ediliyor</string>
     <string name="charge_limit_not_applied">Şarj limiti iptal edildi</string>
     <string name="apply">Uygula</string>
@@ -156,10 +154,7 @@
     <string name="template_capacity_profile">Kapat: %1$d%% - Devam Et: %2$d%% - Durdur: %3$d%%</string>
     <string name="template_temperature_profile">Sıcaklık: %1$d&#176;C - Maks: %2$d&#176;C - Duraklat: %3$ds</string>
     <string name="template_cool_down_profile">Başlat: %1$d%% - %2$d saniye şarj et - %3$d saniye duraklat</string>
-    <!--Profiles Options-->
-    <string name="menu_option_edit">Düzenle</string>
-    <string name="menu_option_rename">Yeniden Adlandır</string>
-    <string name="menu_option_delete">Sil</string>
+    <!--Menus Options-->
     <string name="selecting_profile_toast">%1$s profili seçildi.</string>
     <string name="installation_failed_busybox_title">Busybox yüklü değil</string>
     <string name="installation_failed_busybox">İlk olarak busybox kur ya da basitçe binary dosyasını /data/adb/bin/ içine yerleştir</string>
@@ -250,10 +245,8 @@
     </string>
     <string name="about_attributes">Öznitelikler</string>
     <string name="about_attrib_telegram_icon">Pixel perfect tarafından www.flaticon.com\'dan yapılan telegram simgesi</string>
-    <string name="about_acca_version_label">AccA Versiyonu:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
-    <string name="about_acc_api_version_label">ACC Versiyonu:</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Web Sitesi</string>
     <string name="toast_no_browser_installed">Bağlantı açılmıyor!\nBir web tarayıcının kurulu olduğuna emin olun.</string>
