@@ -159,9 +159,9 @@
     <string name="template_temperature_profile">Temperatur: %1$d&#176;C - Max: %2$d&#176;C - Pause: %3$ds</string>
     <string name="template_cool_down_profile">Beginnen bei: %1$d%% - Laden für %2$d Sek - Pausieren für %3$d Sek</string>
     <!--Profiles Options-->
-    <string name="profile_option_edit">Bearbeiten</string>
-    <string name="profile_option_rename">Umbenennen</string>
-    <string name="profile_option_delete">Löschen</string>
+    <string name="menu_option_edit">Bearbeiten</string>
+    <string name="menu_option_rename">Umbenennen</string>
+    <string name="menu_option_delete">Löschen</string>
     <string name="selecting_profile_toast">Profil %1$s wird ausgewählt.</string>
     <string name="installation_failed_busybox_title">Busybox ist nicht installiert</string>
     <string name="installation_failed_busybox">Installiere zuerst Busybox oder lege einfach die Binärdatei in /data/adb/bin/</string>

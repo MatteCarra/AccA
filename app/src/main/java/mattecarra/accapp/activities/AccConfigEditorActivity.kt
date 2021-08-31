@@ -10,6 +10,7 @@ import android.app.Activity
 import android.content.Intent
 import android.widget.*
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
@@ -33,6 +34,8 @@ import mattecarra.accapp.dialogs.powerLimitDialog
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.utils.Constants
 import mattecarra.accapp.utils.ScopedAppActivity
+import mattecarra.accapp.viewmodel.AccConfigEditorViewModel
+import mattecarra.accapp.viewmodel.AccConfigEditorViewModelFactory
 
 class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeListener {
     private lateinit var content: ContentAccConfigEditorBinding
@@ -49,12 +52,13 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         finish()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         val binding = ActivityAccConfigEditorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        content = binding.content
+        content = binding.contentAccConfigEditor
 
         // Load preferences
         mPreferences = Preferences(this)
@@ -83,7 +87,8 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
                     }
             }
 
-        viewModel = ViewModelProviders.of(this, AccConfigEditorViewModelFactory(application, config)).get(AccConfigEditorViewModel::class.java)
+        viewModel = ViewModelProvider(this, AccConfigEditorViewModelFactory(application, config))
+            .get(AccConfigEditorViewModel::class.java)
 
         initUi()
     }

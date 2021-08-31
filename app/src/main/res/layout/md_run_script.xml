@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="start|center_vertical"
+        android:background="@color/color_warning">
+
+        <FrameLayout
+            android:layout_width="@dimen/acc_status2_icon"
+            android:layout_height="@dimen/acc_status2_icon"
+            android:background="@color/color_warning">
+
+            <ImageView
+                android:id="@+id/md_status_imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ProgressBar
+                android:id="@+id/md_status_pb"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:indeterminate="true" />
+
+        </FrameLayout>
+
+        <TextView
+                android:id="@+id/md_run_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:gravity="start"
+                android:paddingLeft="16dp"
+                android:paddingStart="16dp"
+                android:textAlignment="viewStart"
+                android:textSize="16dp"
+                tools:ignore="NewApi,RtlSymmetry,UnusedAttribute"
+                tools:text="Message"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/md_out_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:singleLine="false"
+        tools:ignore="NewApi,RtlSymmetry,UnusedAttribute"
+        tools:text="Output Message"/>
+
+</LinearLayout>

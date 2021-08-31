@@ -6,6 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.acc.ConfigUpdateResult
+import mattecarra.accapp.acc.ConfigUpdaterEnable
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.BatteryInfo
 
@@ -49,7 +50,7 @@ interface AccInterface {
 
     suspend fun isBatteryIdleSupported(): Pair<Int, Boolean>
 
-    suspend fun updateAccConfig(accConfig: AccConfig): ConfigUpdateResult
+    suspend fun updateAccConfig(accConfig: AccConfig, cue: ConfigUpdaterEnable): ConfigUpdateResult
 
     /**
      * Updates the OnBoot command configuration in ACC.

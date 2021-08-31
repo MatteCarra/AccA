@@ -154,8 +154,8 @@
     <string name="template_temperature_profile">Температура: %1$d&#176;C - Макс.: %2$d&#176;C - Пауза: %3$dс</string>
     <string name="template_cool_down_profile">Старт в: %1$d%% - Заряд за %2$ds - Призупинення на %3$dсек</string>
     <!--Profiles Options-->
-    <string name="profile_option_edit">Редагувати</string>
-    <string name="profile_option_delete">Видалити</string>
+    <string name="menu_option_edit">Редагувати</string>
+    <string name="menu_option_delete">Видалити</string>
     <string name="selecting_profile_toast">Вибір профілю %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox не встановлено</string>
     <string name="installation_failed_busybox">Спочатку встановіть busybox або просто помістіть бінарний файл в /data/adb/bin/</string>

@@ -144,9 +144,9 @@
     <string name="template_temperature_profile">温度: %1$d&#176;C - 最大: %2$d&#176;C - 停止: %3$ds</string>
     <string name="template_cool_down_profile">開始: %1$d%% - 充電 %2$ds - 停止 %3$ds</string>
     <!--Profiles Options-->
-    <string name="profile_option_edit">編集</string>
-    <string name="profile_option_rename">名前を変更</string>
-    <string name="profile_option_delete">削除</string>
+    <string name="menu_option_edit">編集</string>
+    <string name="menu_option_rename">名前を変更</string>
+    <string name="menu_option_delete">削除</string>
     <string name="installation_failed_busybox_title">Busybox がインストールされていません。</string>
     <string name="installation_failed_busybox">busybox を最初にインストールするか, バイナリを /data/adb/bin/ に配置せよ</string>
     <string name="share">共有</string>

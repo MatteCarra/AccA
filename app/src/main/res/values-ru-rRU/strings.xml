@@ -18,7 +18,7 @@
     <string name="title_acc_daemon">Служба ACC</string>
     <string name="acc_daemon_status_running">Служба ACC запущена</string>
     <string name="acc_daemon_status_not_running">Служба ACC не запущена</string>
-    <string name="acc_daemon_status_reading_status">Чтение статуса службы ACC...</string>
+    <string name="acc_daemon_status_reading_status">Чтение статуса службы ACC…</string>
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">Остановить службу ACC</string>
     <string name="menu_start_accd">Запустить службу ACC</string>
@@ -55,8 +55,8 @@
     <string name="shutdown_capacity">Выключение (если не заряжается) в:</string>
     <string name="no_root_message">Для AccA требуются права Root.</string>
     <string name="config_error_title">Ошибка распознавания конфигурации</string>
-    <string name="config_error_dialog">Не удалось распознать конфигурацию ACC!\nПожалуйста, проверьте, работает ли \"su -c acc --set --print\".</string>
-    <string name="wait">Пожалуйста, подождите...\nЭто займет несколько секунд.</string>
+    <string name="config_error_dialog">Не удалось распознать конфигурацию ACC!\nПожалуйста, проверьте, работает ли \"su -c acc —set —print\".</string>
+    <string name="wait">Пожалуйста, подождите…\nЭто займет несколько секунд.</string>
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Остановить службу после применения настроек</string>
     <string name="description_exit_on_boot">Используется для записи файлов при загрузке.</string>
@@ -79,7 +79,7 @@
     <string name="edit_on_boot_dialog_hint">Оставьте пустым для отключения</string>
     <string name="save">Сохранить</string>
     <string name="edit_on_boot_dialog_message">Пример: /sys/kernel/fast_charge/force_fast_charge::1::0
-        --exit.\n\"--exit\" опционален; он дает службе команду на остановку после применения настроек.
+        —exit.\n\"—exit\" опционален; он дает службе команду на остановку после применения настроек.
     </string>
     <string name="logs">Журнал</string>
     <string name="text_copied_to_clipboard">Текст скопирован в буфер обмена!</string>
@@ -90,7 +90,9 @@
     <string name="unsaved_changes_message">Сохранить изменения?</string>
     <string name="create_acc_profile">Создать профиль конфигурации</string>
     <string name="profile_name">Название профиля</string>
+    <string name="script_name">Название скрипта</string>
     <string name="dialog_profile_name_message">Введите название, которое вы хотите назначить этому профилю:</string>
+    <string name="dialog_script_name_message">Введите название, которое вы хотите назначить этому скрипту:</string>
     <string name="no_profiles">Нет профилей</string>
     <string name="profile_not_selected">Пользовательские настройки</string>
     <string name="profile_tile_label">Профиль: %1$s</string>
@@ -100,6 +102,7 @@
     <string name="recurrent_schedule">Запустить только один раз</string>
     <string name="execution_time">Время выполнения</string>
     <string name="new_config">Новая пользовательская конфигурация</string>
+    <string name="new_script">Новый скрипт</string>
     <string name="enable_voltage_limit">Ограничение напряжения зарядки</string>
     <string name="enable_current_limit">Ограничение силы тока зарядки</string>
     <string name="voltage_control_file">Файл управления напряжением:</string>
@@ -150,16 +153,23 @@
     <string name="profile_creator">Создать профиль</string>
     <string name="schedule_creator">Создать расписание</string>
     <string name="charging_switch_label">Переключатель зарядки:</string>
+
+    <string name="edit_on_plugged_dialog_message">Пример: wireless/voltage_max::9000000 принудительно включает быструю беспроводную зарядку на некоторых устройствах Pixel.</string>
+    <string name="template_capacity_profile">Выключить: %1$d%% - Продолжить: %2$d%% - Остановить: %3$d%%</string>
+    <string name="template_temperature_profile">Температура: %1$d&#176;C - Максимум: %2$d&#176;C - Пауза: %3$ds</string>
+    <string name="template_cool_down_profile">Начать с: %1$d%% - Заряжать: %2$ds - Пауза: %3$ds</string>
+
+    <!--Menus Options-->
+    <string name="menu_option_run">Запустить</string>
+    <string name="menu_option_run_silent">Запустить (тихий)</string>
+    <string name="menu_option_edit">Изменить</string>
+    <string name="menu_option_copy">Копировать</string>
+    <string name="menu_option_rename">Переименовать</string>
+    <string name="menu_option_delete">Удалить</string>
+
     <string name="title_on_plugged">Вставьте в розетку</string>
     <string name="edit_on_plugged">Изменить настройки подключения:</string>
-    <string name="edit_on_plugged_dialog_message">Пример: wireless/voltage_max::9000000 принудительно включает быструю беспроводную зарядку на некоторых устройствах Pixel.</string>
-    <string name="template_capacity_profile">Выключение устройства при: %1$d%% - Зарядка при: %2$d%% - Остановка при: %3$d%%</string>
-    <string name="template_temperature_profile">Температура: %1$d&#176;C - Макс.: %2$d&#176;C - Пауза: %3$dс</string>
-    <string name="template_cool_down_profile">Начинать с: %1$d%% - Заряжать: %2$dс - Пауза на: %3$dс</string>
-    <!--Profiles Options-->
-    <string name="profile_option_edit">Изменить</string>
-    <string name="profile_option_rename">Переименовать</string>
-    <string name="profile_option_delete">Удалить</string>
+
     <string name="selecting_profile_toast">Выбор профиля %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox не установлен</string>
     <string name="installation_failed_busybox">Сначала установите busybox или просто поместите двоичный файл в /data/adb/bin/</string>
@@ -266,6 +276,15 @@
     <string name="execute_on_boot_schedule">Выполнить при загрузке</string>
     <string name="edit_schedule">Изменить расписание</string>
     <string name="create_schedule">Создание расписание</string>
+
+    <string name="experimental_pref_title">Экспериментальные Настройки</string>
+    <string name="experimental_pref_summary">Здесь можно отключить отправку команд службе АСС, которые после выполнения, дают зависание / сбой / перезагрузку устройства. Некоторые устройства на Mediatek.</string>
+
+    <string name="cue_AccCurrentMax_pref_title">AccCurrentMax</string>
+    <string name="cue_AccCurrentMax_pref_summary">Включить команду: "acca —set —current"</string>
+    <string name="cue_AccVoltControl_pref_title">AccVoltControl</string>
+    <string name="cue_AccVoltControl_pref_summary">Включить команду: "acca —set —voltage"</string>
+
     <!-- About Activity -->
     <string name="about_team_title">Наша команда</string>
     <string name="about_team_blurb">Спасибо за то, что используете AccA!

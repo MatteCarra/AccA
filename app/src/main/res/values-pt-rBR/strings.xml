@@ -119,9 +119,9 @@
     <string name="schedule_creator">Criador de programação</string>
     <string name="title_on_plugged">Aplicar ao conectar</string>
     <!--Profiles Options-->
-    <string name="profile_option_edit">Editar</string>
-    <string name="profile_option_rename">Renomear</string>
-    <string name="profile_option_delete">Deletar</string>
+    <string name="menu_option_edit">Editar</string>
+    <string name="menu_option_rename">Renomear</string>
+    <string name="menu_option_delete">Deletar</string>
     <string name="selecting_profile_toast">Selecionando o perfil %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox não está instalado</string>
     <string name="share">Compartilhar</string>

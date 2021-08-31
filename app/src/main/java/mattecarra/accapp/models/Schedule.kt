@@ -2,6 +2,7 @@ package mattecarra.accapp.models
 
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.acc.ConfigUpdater
+import mattecarra.accapp.acc.ConfigUpdaterEnable
 import mattecarra.accapp.djs.Djs
 import mattecarra.accapp.djs.DjsSchedule
 import java.lang.StringBuilder
@@ -10,7 +11,7 @@ data class Schedule(val isEnabled: Boolean, val time: String, val executeOnce: B
     private val timeRegex = """([0-9]{2})([0-9]{2})""".toRegex()
 
     fun getCommand(): String {
-        val string = StringBuilder(": accaScheduleId${profile.uid}; ${ConfigUpdater(profile.accConfig).concatenateCommands(Acc.instance)}")
+        val string = StringBuilder(": accaScheduleId${profile.uid}; ${ConfigUpdater(profile.accConfig, ConfigUpdaterEnable()).concatenateCommands(Acc.instance)}")
 
         if(executeOnce)
             string.append("; : --delete")

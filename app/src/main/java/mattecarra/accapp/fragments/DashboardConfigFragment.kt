@@ -13,7 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.launch
 import mattecarra.accapp.R
-import mattecarra.accapp.SharedViewModel
+import mattecarra.accapp.viewmodel.SharedViewModel
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.activities.AccConfigEditorActivity
 import mattecarra.accapp.databinding.ProfilesItemBinding
@@ -22,6 +22,7 @@ import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.utils.Constants
 import mattecarra.accapp.utils.ProfileUtils
 import mattecarra.accapp.utils.ScopedFragment
+import mattecarra.accapp.viewmodel.ProfilesViewModel
 
 class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener  {
     private lateinit var mContext: Context
@@ -92,7 +93,7 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
 
             val profileId = ProfileUtils.getCurrentProfile(mPrefs)
             val currentConfig = Acc.instance.readConfig()
-            val selectedProfileConfig = mViewModel.getProfile(profileId)?.accConfig
+            val selectedProfileConfig = mViewModel.getProfileById(profileId)?.accConfig
 
             if (profileId == -1 || currentConfig != selectedProfileConfig)
             {
@@ -100,7 +101,7 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
             }
             else
             {
-                updateInfo(AccaProfile(0, mViewModel.getProfile(profileId)?.profileName.toString(), currentConfig))
+                updateInfo(AccaProfile(0, mViewModel.getProfileById(profileId)?.profileName.toString(), currentConfig))
             }
         }
     }

@@ -12,6 +12,7 @@
     <!-- Navigation Strings -->
     <string name="title_dashboard">Dashboard</string>
     <string name="title_profiles">Profiles</string>
+    <string name="title_scripts">Scripts</string>
     <string name="title_schedules">Schedules</string>
     <string name="title_settings">Settings</string>
 
@@ -110,8 +111,11 @@
     <string name="unsaved_changes_message">Save changes?</string>
     <string name="create_acc_profile">Create config profile</string>
     <string name="profile_name">Profile name</string>
+    <string name="script_name">Script name</string>
     <string name="dialog_profile_name_message">Enter the name you want assigned to this profile:</string>
+    <string name="dialog_script_name_message">Enter the name you want assigned to this script:</string>
     <string name="no_profiles">No Profiles</string>
+    <string name="no_scripts">No Scripts</string>
     <string name="profile_not_selected">Custom settings</string>
     <string name="profile_tile_label">Profile: %1$s</string>
     <string name="profiles_text_view">Profiles (long press to edit/delete):</string>
@@ -120,6 +124,7 @@
     <string name="recurrent_schedule">Run only once</string>
     <string name="execution_time">Execution time</string>
     <string name="new_config">New custom config</string>
+    <string name="new_script">New script</string>
     <string name="enable_voltage_limit">Custom charging voltage limit</string>
     <string name="enable_current_limit">Custom charging current limit</string>
     <string name="voltage_control_file">Voltage control file:</string>
@@ -172,6 +177,10 @@
     <string name="profile_creator">Profile creator</string>
     <string name="schedule_creator">Schedule creator</string>
     <string name="charging_switch_label">Charging switch:</string>
+    <string name="script_label">Script name:</string>
+    <string name="script_description">Description:</string>
+    <string name="script_body_text">Shell text:</string>
+
     <string name="title_on_plugged">Apply on Plug</string>
     <string name="label_on_plugged" translatable="false">applyOnPlug:</string>
     <string name="edit_on_plugged">Edit apply_on_plug settings:</string>
@@ -239,10 +248,13 @@
     <string name="template_temperature_profile">Temperature: %1$d&#176;C - Max: %2$d&#176;C - Pause: %3$ds</string>
     <string name="template_cool_down_profile">Start at: %1$d%% - Charge for %2$ds - Pause for %3$ds</string>
 
-    <!--Profiles Options-->
-    <string name="profile_option_edit">Edit</string>
-    <string name="profile_option_rename">Rename</string>
-    <string name="profile_option_delete">Delete</string>
+    <!--Menus Options-->
+    <string name="menu_option_run">Run</string>
+    <string name="menu_option_run_silent">Run (Silent)</string>
+    <string name="menu_option_edit">Edit</string>
+    <string name="menu_option_copy">Copy</string>
+    <string name="menu_option_rename">Rename</string>
+    <string name="menu_option_delete">Delete</string>
 
     <string name="selecting_profile_toast">Selecting profile %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox is not installed</string>
@@ -329,6 +341,14 @@
     <string name="schedule_profile_keep_current">Keep current config</string>
     <string name="schedule_type">Schedule type</string>
     <string name="schedule_name">Schedule name</string>
+
+    <string name="experimental_pref_title">Experimental Tools</string>
+    <string name="experimental_pref_summary">Here you can disable the sending commands to the ACC service, which after execution, give freezing\\failure\\restarting the device. Some devices on MediaTek.</string>
+
+    <string name="cue_AccCurrentMax_pref_title">AccCurrentMax</string>
+    <string name="cue_AccCurrentMax_pref_summary">Enable send \"acca —set —current\" command</string>
+    <string name="cue_AccVoltControl_pref_title">AccVoltControl</string>
+    <string name="cue_AccVoltControl_pref_summary">Enable send \"acca -set —voltage\" command</string>
 
     <string-array name="theme_option_options">
         <item>Light</item>

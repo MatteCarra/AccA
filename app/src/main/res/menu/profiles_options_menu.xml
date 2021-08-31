@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/profile_option_menu_edit"
-          android:title="@string/profile_option_edit"/>
+          android:title="@string/menu_option_edit"/>
     <item android:id="@+id/profile_option_menu_rename"
-          android:title="@string/profile_option_rename"/>
+          android:title="@string/menu_option_rename"/>
     <item android:id="@+id/profile_option_menu_delete"
-          android:title="@string/profile_option_delete"/>
+          android:title="@string/menu_option_delete"/>
 </menu>

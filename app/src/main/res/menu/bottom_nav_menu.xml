@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-            android:id="@+id/botNav_home"
-            android:title="@string/title_dashboard"
-            android:icon="@drawable/ic_outline_dashboard_24px"/>
+        android:id="@+id/botNav_home"
+        android:icon="@drawable/ic_outline_dashboard_24px"
+        android:title="@string/title_dashboard" />
     <item
-            android:id="@+id/botNav_profiles"
-            android:title="@string/title_profiles"
-            android:icon="@drawable/ic_outline_recent_actors_24px"/>
+        android:id="@+id/botNav_profiles"
+        android:icon="@drawable/ic_outline_recent_actors_24px"
+        android:title="@string/title_profiles" />
     <item
-            android:id="@+id/botNav_schedules"
-            android:title="@string/title_schedules"
-            android:icon="@drawable/ic_outline_schedule_24px"/>
+        android:id="@+id/botNav_scriptes"
+        android:icon="@drawable/ic_baseline_scripte_24px"
+        android:title="@string/title_scripts" />
     <item
-            android:id="@+id/botNav_settings"
-            android:title="@string/title_settings"
-            android:icon="@drawable/ic_outline_settings_24px"
-            android:visible="false"/>
+        android:id="@+id/botNav_schedules"
+        android:icon="@drawable/ic_outline_schedule_24px"
+        android:title="@string/title_schedules" />
+    <item
+        android:id="@+id/botNav_settings"
+        android:icon="@drawable/ic_outline_settings_24px"
+        android:title="@string/title_settings"
+        android:visible="false" />
 </menu>

@@ -17,7 +17,6 @@ import androidx.preference.PreferenceManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
-import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -26,11 +25,8 @@ import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.launch
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
-import mattecarra.accapp.SharedViewModel
-import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.databinding.ActivityMainBinding
-import mattecarra.accapp.databinding.ProfilePreviewDialogBinding
 import mattecarra.accapp.dialogs.*
 import mattecarra.accapp.djs.Djs
 import mattecarra.accapp.fragments.*
@@ -39,36 +35,43 @@ import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.models.ProfileEntry
 import mattecarra.accapp.models.Schedule
 import mattecarra.accapp.utils.*
+import mattecarra.accapp.viewmodel.ProfilesViewModel
+import mattecarra.accapp.viewmodel.SchedulesViewModel
+import mattecarra.accapp.viewmodel.SharedViewModel
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
-    OnProfileClickListener {
+class MainActivity : ScopedAppActivity(),
+    BottomNavigationView.OnNavigationItemSelectedListener
+{
 
     private val LOG_TAG = "MainActivity"
-    private val ACC_CONFIG_EDITOR_REQUEST = 1
-    private val ACC_PROFILE_CREATOR_REQUEST = 2
-    private val ACC_PROFILE_EDITOR_REQUEST = 3
-    private val ACC_ADD_PROFILE_SCHEDULER_REQUEST = 4
-    private val ACC_EDIT_PROFILE_SCHEDULER_REQUEST = 5
-    private val ACC_IMPORT_PROFILE_REQUEST = 6
+    val ACC_CONFIG_EDITOR_REQUEST = 1
+    val ACC_PROFILE_CREATOR_REQUEST = 2
+    val ACC_PROFILE_EDITOR_REQUEST = 3
+    val ACC_ADD_PROFILE_SCHEDULER_REQUEST = 4
+    val ACC_EDIT_PROFILE_SCHEDULER_REQUEST = 5
+    val ACC_IMPORT_PROFILE_REQUEST = 6
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var _preferences: Preferences
     private lateinit var _sharedViewModel: SharedViewModel
-    private lateinit var _mainActivityViewModel: MainActivityViewModel
-    private lateinit var _dashboardViewModel: DashboardViewModel
     private lateinit var _schedulesViewModel: SchedulesViewModel
+    private lateinit var _profilesViewModel: ProfilesViewModel
 
     val mainFragment = DashboardFragment.newInstance()
     val profilesFragment = ProfilesFragment.newInstance()
+    val scriptsFragment = ScriptesFragment.newInstance()
     val schedulesFragment = SchedulesFragment.newInstance()
 
-    private fun initUi() {
+    var selectedNavBarItem = R.id.botNav_home
+
+    private fun initUi()
+    {
         // Assign ViewModel
         _sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
-        _mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+        _profilesViewModel = ViewModelProvider(this).get(ProfilesViewModel::class.java)
         _schedulesViewModel = ViewModelProvider(this).get(SchedulesViewModel::class.java)
 
         // Subscribe to viewmodel config and action if config is null
@@ -104,7 +107,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         setSupportActionBar(binding.mainToolbar)
 
         // Load in dashboard fragment
-        binding.mainBottomNav.selectedItemId = _mainActivityViewModel.selectedNavBarItem
+        binding.mainBottomNav.selectedItemId = selectedNavBarItem
     }
 
     /**
@@ -112,7 +115,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
      */
     override fun onNavigationItemSelected(m: MenuItem): Boolean {
         // Record currently selected navigation item
-        _mainActivityViewModel.selectedNavBarItem = m.itemId
+        selectedNavBarItem = m.itemId
 
         when (m.itemId) {
             R.id.botNav_home -> {
@@ -121,6 +124,10 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             }
             R.id.botNav_profiles -> {
                 loadFragment(profilesFragment)
+                return true
+            }
+            R.id.botNav_scriptes -> {
+                loadFragment(scriptsFragment)
                 return true
             }
             R.id.botNav_schedules -> {
@@ -226,7 +233,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             // Generate list of ExportEntries TODO: maybe move this to the actual activity to make new ProfileEntries from AccaProfiles
             var profileList: ArrayList<ProfileEntry> = ArrayList()
             launch {
-                for (profile: AccaProfile in _mainActivityViewModel.getProfiles()) {
+                for (profile: AccaProfile in _profilesViewModel.getProfiles()) {
                     profileList.add(ProfileEntry(profile))
                 }
             }.invokeOnCompletion {
@@ -268,59 +275,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                 startActivityForResult(intent, ACC_PROFILE_CREATOR_REQUEST)
             }
         }
-    }
-
-    /**
-     * Override function for handling ProfileOnClicks
-     */
-    override fun onProfileClick(profile: AccaProfile) {
-        // Applies the selected profile
-
-        launch {
-            _sharedViewModel.updateAccConfig(profile.accConfig)
-            _sharedViewModel.setCurrentSelectedProfile(profile.uid)
-        }
-
-        // Display Toast for the user.
-        Toast.makeText(
-            this,
-            getString(R.string.selecting_profile_toast, profile.profileName),
-            Toast.LENGTH_LONG
-        ).show()
-
-    }
-
-    override fun onProfileLongClick(profile: AccaProfile) {
-/*        val dialog = MaterialDialog(this@MainActivity).customView(
-            R.layout.profile_preview_dialog,
-            scrollable = true
-        )
-*/
-        val preView = ProfilePreviewDialogBinding.inflate(layoutInflater)
-        val dialog = MaterialDialog(this@MainActivity).customView(
-            view = preView.root,
-            scrollable = true
-        )
-
-        // Set view items and assign values
-        val titleTv = preView.previewProfileTitleTv
-        val capacityTv = preView.previewProfileCapacityTv
-        val chargingVoltTv = preView.previewProfileChargingVoltageTv
-        val temperatureTv = preView.previewProfileTemperatureTv
-        val onBootTv = preView.previewProfileOnBootTv
-        val onPlugTv = preView.previewProfileOnPlugTv
-        val coolDownTv = preView.previewProfileCoolDownTv
-
-        // Assign the appropriate text values from the profile
-        titleTv.text = profile.profileName
-        capacityTv.text = profile.accConfig.configCapacity.toString(this)
-        chargingVoltTv.text = profile.accConfig.configVoltage.toString()
-        temperatureTv.text = profile.accConfig.configTemperature.toString(this)
-        onBootTv.text = profile.accConfig.configOnBoot
-        onPlugTv.text = profile.accConfig.getOnPlug(this)
-        coolDownTv.text = profile.accConfig.configCoolDown?.toString(this)
-
-        dialog.show()
     }
 
     private fun checkAccInstalled(): Boolean {
@@ -628,15 +582,9 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                 }
                                 positiveButton(R.string.save) { dialog ->
                                     val profileName = dialog.getInputField().text.toString()
-
                                     // Add Profile to Database via ViewModel function
-                                    val profile = AccaProfile(
-                                        0,
-                                        profileName,
-                                        accConfig
-                                    )
-
-                                    _mainActivityViewModel.insertProfile(profile)
+                                    val profile = AccaProfile(0, profileName, accConfig)
+                                    _profilesViewModel.insertProfile(profile)
                                 }
                                 negativeButton(android.R.string.cancel)
                             }
@@ -658,13 +606,13 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                         val editorData = data.getBundleExtra(Constants.DATA_KEY) ?: return
                         val profileId = editorData.getInt(Constants.PROFILE_ID_KEY)
                         launch {
-                            _mainActivityViewModel.getProfileById(profileId)
+                            _profilesViewModel.getProfileById(profileId)
                                 ?.let { selectedProfile ->
                                     // Update the selected Profile
                                     selectedProfile.accConfig = accConfig
 
                                     // Update the profile
-                                    _mainActivityViewModel.updateProfile(selectedProfile)
+                                    _profilesViewModel.updateProfile(selectedProfile)
                                 }
                         }
                     }
@@ -731,7 +679,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                         data?.getSerializableExtra(Constants.DATA_KEY) as List<ProfileEntry>
                     if (!imports.isNullOrEmpty()) {
                         for (entry: ProfileEntry in imports) {
-                            _mainActivityViewModel.insertProfile(AccaProfile(0, entry.getName(), entry.getConfig()))
+                            _profilesViewModel.insertProfile(AccaProfile(0, entry.getName(), entry.getConfig()))
                         }
                     }
                     Toast.makeText(
@@ -747,7 +695,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     fun accScheduleFabOnClick(view: View) {
         MaterialDialog(this).show {
             title(R.string.create_schedule)
-            addScheduleDialog(_mainActivityViewModel.profiles) { profileId, scheduleName, time, executeOnce, executeOnBoot ->
+            addScheduleDialog(_profilesViewModel.getLiveData()) { profileId, scheduleName, time, executeOnce, executeOnBoot ->
                 if (profileId == -1L) {
                     launch {
                         Intent(
@@ -777,7 +725,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                     }
                 } else {
                     launch {
-                        _mainActivityViewModel.getProfileById(profileId.toInt())
+                        _profilesViewModel.getProfileById(profileId.toInt())
                             ?.let { configProfile ->
                                 _schedulesViewModel
                                     .addSchedule(
@@ -800,7 +748,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             title(R.string.edit_schedule)
             editScheduleDialog(
                 schedule,
-                _mainActivityViewModel.profiles
+                _profilesViewModel.getLiveData()
             ) { profileId, scheduleName, time, executeOnce, executeOnBoot ->
                 when (profileId) {
                     -1L -> //keep current config
@@ -887,7 +835,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                             }
                         }
                     else -> launch {
-                        _mainActivityViewModel.getProfileById(profileId.toInt())
+                        _profilesViewModel.getProfileById(profileId.toInt())
                             ?.let { configProfile ->
                                 _schedulesViewModel
                                     .editSchedule(
@@ -907,43 +855,4 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
-    override fun editProfile(profile: AccaProfile) {
-        // Edit the configuration of the selected profile.
-        Intent(
-            this@MainActivity,
-            AccConfigEditorActivity::class.java
-        ).also { intent ->
-            val dataBundle = Bundle()
-            dataBundle.putInt(Constants.PROFILE_ID_KEY, profile.uid)
-
-            // Insert the databundle into the intent.
-            intent.putExtra(Constants.DATA_KEY, dataBundle)
-            intent.putExtra(Constants.ACC_CONFIG_KEY, profile.accConfig)
-            intent.putExtra(Constants.TITLE_KEY, profile.profileName)
-            startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
-        }
-    }
-
-    override fun renameProfile(profile: AccaProfile) {
-        // Rename the selected profile (2nd option).
-        MaterialDialog(this@MainActivity)
-            .show {
-                title(R.string.profile_name)
-                message(R.string.dialog_profile_name_message)
-                input(prefill = profile.profileName) { _, charSequence ->
-                    // Set profile name
-                    profile.profileName = charSequence.toString()
-
-                    // Update the profile in the DB
-                    _mainActivityViewModel.updateProfile(profile)
-                }
-                positiveButton(R.string.save)
-                negativeButton(android.R.string.cancel)
-            }
-    }
-
-    override fun deleteProfile(profile: AccaProfile) {
-        // Delete the selected profile (3rd option).
-        _mainActivityViewModel.deleteProfile(profile)
-    }
 }

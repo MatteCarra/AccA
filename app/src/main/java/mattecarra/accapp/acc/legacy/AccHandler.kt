@@ -6,6 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.acc.ConfigUpdateResult
 import mattecarra.accapp.acc.ConfigUpdater
+import mattecarra.accapp.acc.ConfigUpdaterEnable
 import mattecarra.accapp.acc._interface.AccInterface
 import mattecarra.accapp.models.*
 import java.io.IOException
@@ -296,8 +297,8 @@ open class AccHandler(override val version: Int) : AccInterface {
      * @param accConfig Configuration file to apply.
      * @return ConfigUpdateResult data class.
      */
-    override suspend fun updateAccConfig(accConfig: AccConfig): ConfigUpdateResult {
-        return ConfigUpdater(accConfig)
+    override suspend fun updateAccConfig(accConfig: AccConfig, cue: ConfigUpdaterEnable): ConfigUpdateResult {
+        return ConfigUpdater(accConfig, cue)
             .execute(this)
     }
 

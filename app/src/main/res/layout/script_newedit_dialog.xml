@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/script_label"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <EditText
+            android:id="@+id/script_name_ed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:hint="@string/script_label" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/script_description"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <EditText
+            android:id="@+id/script_description_ed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:hint="@string/script_description"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/script_body_text"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <EditText
+            android:id="@+id/script_body_text_ed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:hint="@string/script_body_text" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

@@ -27,7 +27,8 @@
                  android:layout_height="match_parent"
                  app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include android:id="@+id/content" layout="@layout/content_acc_config_editor"/>
+        <include layout="@layout/content_acc_config_editor"
+            android:id="@+id/content_acc_config_editor"/>
 
     </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

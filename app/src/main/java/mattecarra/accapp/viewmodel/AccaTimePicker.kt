@@ -1,4 +1,4 @@
-package mattecarra.accapp.view
+package mattecarra.accapp.viewmodel
 
 import android.content.Context
 import android.util.AttributeSet

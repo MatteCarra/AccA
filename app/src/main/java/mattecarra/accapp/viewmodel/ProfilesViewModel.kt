@@ -1,25 +1,37 @@
-package mattecarra.accapp.activities
+package mattecarra.accapp.viewmodel
+
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import mattecarra.accapp.R
 import mattecarra.accapp.database.AccaRoomDatabase
 import mattecarra.accapp.database.ProfileDao
-import mattecarra.accapp.database.ScheduleDao
 import mattecarra.accapp.models.AccaProfile
 
-class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
-    var selectedNavBarItem = R.id.botNav_home
+class ProfilesViewModel(application: Application) : AndroidViewModel(application) {
 
-    val profiles: LiveData<List<AccaProfile>>
-
+    private val mProfilesListLiveData: LiveData<List<AccaProfile>>
     private val mProfileDao: ProfileDao
-    init {
+
+    init
+    {
         val accaDatabase = AccaRoomDatabase.getDatabase(application)
         mProfileDao = accaDatabase.profileDao()
+        mProfilesListLiveData = mProfileDao.getAllProfiles()
+    }
 
-        profiles = mProfileDao.getAllProfiles()
+    suspend fun getProfiles(): List<AccaProfile> {
+        return mProfileDao.getProfiles()
+    }
+
+    suspend fun getProfileById(id: Int): AccaProfile? {
+        return mProfileDao.getProfileById(id)
+    }
+
+    fun getLiveData(): LiveData<List<AccaProfile>> {
+        return mProfilesListLiveData
     }
 
     fun insertProfile(profile: AccaProfile) = viewModelScope.launch {
@@ -32,13 +44,5 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     fun updateProfile(profile: AccaProfile) = viewModelScope.launch {
         mProfileDao.update(profile)
-    }
-
-    suspend fun getProfiles(): List<AccaProfile> {
-        return mProfileDao.getProfiles()
-    }
-
-    suspend fun getProfileById(id: Int): AccaProfile? {
-        return mProfileDao.getProfileById(id)
     }
 }

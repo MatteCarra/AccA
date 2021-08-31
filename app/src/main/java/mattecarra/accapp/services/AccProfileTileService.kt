@@ -1,26 +1,21 @@
 package mattecarra.accapp.services
 
-import android.Manifest
 import android.annotation.TargetApi
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.graphics.drawable.Icon
 import android.os.Build
 import android.preference.PreferenceManager
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import com.google.gson.Gson
 import kotlinx.coroutines.runBlocking
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
-import mattecarra.accapp.fragments.ProfilesViewModel
+import mattecarra.accapp.acc.ConfigUpdaterEnable
+import mattecarra.accapp.viewmodel.ProfilesViewModel
 import mattecarra.accapp.utils.ProfileUtils
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
-import java.io.File
 
 @TargetApi(Build.VERSION_CODES.N)
 class AccProfileTileService: TileService() {
@@ -31,7 +26,7 @@ class AccProfileTileService: TileService() {
         super.onCreate()
 
         profilesViewModel = ProfilesViewModel(application)
-        profilesViewModel.getProfiles().observeForever(Observer {
+        profilesViewModel.getLiveData().observeForever(Observer {
             updateTile()
         })
     }
@@ -39,7 +34,7 @@ class AccProfileTileService: TileService() {
     private fun updateTile() {
         val tile = qsTile
 
-        val profiles = profilesViewModel.getProfiles().value
+        val profiles = profilesViewModel.getLiveData().value
         if(profiles?.isNotEmpty() == true) {
             val profileId = ProfileUtils.getCurrentProfile(PreferenceManager.getDefaultSharedPreferences(this))
             val currProfile = if(profileId != -1) profiles.find { it.uid == profileId } else null
@@ -74,10 +69,10 @@ class AccProfileTileService: TileService() {
     override fun onClick() {
         super.onClick()
 
-        val sharedPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val mSharedPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
-        profilesViewModel.getProfiles().value?.let { profileList ->
-            val currentProfile = ProfileUtils.getCurrentProfile(sharedPrefs)
+        profilesViewModel.getLiveData().value?.let { profileList ->
+            val currentProfile = ProfileUtils.getCurrentProfile(mSharedPrefs)
 
             var index = profileList.indexOfFirst { it.uid ==  currentProfile} + 1
             if(index >= profileList.size)
@@ -87,7 +82,7 @@ class AccProfileTileService: TileService() {
 
             //apply profile
             doAsync {
-                val res = runBlocking { Acc.instance.updateAccConfig(profile.accConfig) }
+                val res = runBlocking { Acc.instance.updateAccConfig(profile.accConfig, ConfigUpdaterEnable(mSharedPrefs)) }
 
                 if(!res.isSuccessful()) {
                     res.debug()
@@ -107,7 +102,7 @@ class AccProfileTileService: TileService() {
                     }
                 }
 
-                ProfileUtils.saveCurrentProfile(profile.uid, sharedPrefs)
+                ProfileUtils.saveCurrentProfile(profile.uid, mSharedPrefs)
             }
         }
     }
