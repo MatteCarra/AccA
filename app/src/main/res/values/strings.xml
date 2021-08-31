@@ -359,58 +359,6 @@
     <string name="lang_pref_title">Language</string>
     <string name="lang_pref_summary">Select the application language. After selecting you need to restart the application</string>
 
-    <string-array name="lang_pref_entries">
-        <item>@string/lang_default</item>
-        <item>@string/lang_en</item>
-        <item>@string/lang_ar</item>
-        <item>@string/lang_nl</item>
-        <item>@string/lang_fr</item>
-        <item>@string/lang_de</item>
-        <item>@string/lang_gr</item>
-        <item>@string/lang_hu</item>
-        <item>@string/lang_in</item>
-        <item>@string/lang_it</item>
-        <item>@string/lang_ja</item>
-        <item>@string/lang_ko</item>
-        <item>@string/lang_pl</item>
-        <item>@string/lang_pt</item>
-        <item>@string/lang_ru</item>
-        <item>@string/lang_es</item>
-        <item>@string/lang_tr</item>
-        <item>@string/lang_uk</item>
-        <item>@string/lang_vi</item>
-        <item>@string/lang_zh</item>
-    </string-array>
-
-    <string-array name="lang_pref_value" translatable="false">
-        <item>def</item>
-        <item>en</item>
-        <item>ar</item>
-        <item>nl</item>
-        <item>fr</item>
-        <item>de</item>
-        <item>gr</item>
-        <item>hu</item>
-        <item>in</item>
-        <item>it</item>
-        <item>ja</item>
-        <item>ko</item>
-        <item>pl</item>
-        <item>pt</item>
-        <item>ru</item>
-        <item>es</item>
-        <item>tr</item>
-        <item>uk</item>
-        <item>vi</item>
-        <item>zh</item>
-    </string-array>
-
-    <string-array name="schedule_type_entries">
-        <item>Recurrent</item>
-        <item>Run once</item>
-        <item>Run on boot</item>
-    </string-array>
-
     <string name="menu_import_export">Import &amp; Export</string>
     <string name="execute_on_boot_schedule">Execute on boot</string>
     <string name="edit_schedule">Edit schedule</string>
