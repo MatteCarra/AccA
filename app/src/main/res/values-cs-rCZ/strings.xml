@@ -70,7 +70,7 @@
     <string name="install_djs_description">Pro správnou funkci musíte povolit DJS.        \nDJS (Daily Job Scheduler) je doplněk pro plánování profilů/nastavení ACC.        \nDJS démon se spustí po zapnutí zařízení bez ohledu na ACC.    </string>
     <string name="installing_djs">Instalace DJS</string>
     <!-- ACC Config Tooltips -->
-    <!--Profiles Options-->
+    <!--Menus Options-->
     <!-- About Activity -->
     <!-- Import and Export -->
     <!-- Config Parse Error -->
