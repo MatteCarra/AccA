@@ -10,6 +10,7 @@ import android.app.Activity
 import android.content.Intent
 import android.widget.*
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
@@ -51,12 +52,13 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         finish()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         val binding = ActivityAccConfigEditorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        content = ContentAccConfigEditorBinding.inflate(layoutInflater)
+        content = binding.contentAccConfigEditor
 
         // Load preferences
         mPreferences = Preferences(this)
@@ -85,8 +87,8 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
                     }
             }
 
-        viewModel = ViewModelProviders.of(this, AccConfigEditorViewModelFactory(application, config)).get(
-            AccConfigEditorViewModel::class.java)
+        viewModel = ViewModelProvider(this, AccConfigEditorViewModelFactory(application, config))
+            .get(AccConfigEditorViewModel::class.java)
 
         initUi()
     }
