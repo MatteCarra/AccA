@@ -112,7 +112,6 @@
     <string name="delete">Elimina</string>
     <string name="no_schedules">Nessuna pianificazione</string>
     <string name="wrong_volt_file">Il file selezionato non funziona, oppure il kernel non supporta questa funzione.</string>
-    <string name="invalid_voltage_max">Il valore deve essere un numero compreso tra 3700 e 4300 (millivolt)</string>
     <string name="edit_charging_switch">Modifica interruttore di ricarica</string>
     <string name="test_switch">Test interruttore di ricarica</string>
     <string name="no_option_selected">Nessuna opzione selezionata; selezionane una!</string>
@@ -154,10 +153,7 @@
     <string name="template_capacity_profile">Spegnimento: %1$d%% - Riprendi: %2$d%% - Stop: %3$d%%</string>
     <string name="template_temperature_profile">Temperatura: %1$d&#176;C - Max: %2$d&#176;C - Pausa: %3$ds</string>
     <string name="template_cool_down_profile">Inizia a: %1$d%% - Carica per %2$ds - Pausa per %3$ds</string>
-    <!--Profiles Options-->
-    <string name="menu_option_edit">Modifica</string>
-    <string name="menu_option_rename">Rinomina</string>
-    <string name="menu_option_delete">Elimina</string>
+    <!--Menus Options-->
     <string name="selecting_profile_toast">Selezione del profilo %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox non è installato</string>
     <string name="installation_failed_busybox">Installare prima busybox o semplicemente posizionare il binario in /data/adb/bin/</string>
@@ -272,7 +268,6 @@
     <string name="about_attributes">Attributi</string>
     <string name="about_attrib_telegram_icon">Icona Telegram realizzata da Pixel perfezionata da www.flaticon.com</string>
     <string name="about_acca_version_label">Versione di AccA:</string>
-    <string name="about_acc_api_version_label">Versione ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
