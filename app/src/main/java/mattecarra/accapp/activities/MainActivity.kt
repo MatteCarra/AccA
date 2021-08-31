@@ -2,34 +2,35 @@ package mattecarra.accapp.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.topjohnwu.superuser.Shell
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
 import mattecarra.accapp.SharedViewModel
 import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.acc.Acc
+import mattecarra.accapp.databinding.ActivityMainBinding
+import mattecarra.accapp.databinding.ProfilePreviewDialogBinding
 import mattecarra.accapp.dialogs.*
 import mattecarra.accapp.djs.Djs
 import mattecarra.accapp.fragments.*
@@ -39,6 +40,8 @@ import mattecarra.accapp.models.ProfileEntry
 import mattecarra.accapp.models.Schedule
 import mattecarra.accapp.utils.*
 import java.io.File
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
     OnProfileClickListener {
@@ -51,6 +54,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     private val ACC_EDIT_PROFILE_SCHEDULER_REQUEST = 5
     private val ACC_IMPORT_PROFILE_REQUEST = 6
 
+    private lateinit var binding: ActivityMainBinding
     private lateinit var _preferences: Preferences
     private lateinit var _sharedViewModel: SharedViewModel
     private lateinit var _mainActivityViewModel: MainActivityViewModel
@@ -96,11 +100,11 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         })
 
         // Set Bottom Navigation Bar Item Selected Listener
-        main_bottom_nav.setOnNavigationItemSelectedListener(this)
-        setSupportActionBar(main_toolbar)
+        binding.mainBottomNav.setOnNavigationItemSelectedListener(this)
+        setSupportActionBar(binding.mainToolbar)
 
         // Load in dashboard fragment
-        main_bottom_nav.selectedItemId = _mainActivityViewModel.selectedNavBarItem
+        binding.mainBottomNav.selectedItemId = _mainActivityViewModel.selectedNavBarItem
     }
 
     /**
@@ -164,7 +168,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                 installDjs()
                             }
                             negativeButton(android.R.string.cancel) {
-                                main_bottom_nav.selectedItemId = R.id.botNav_schedules
+                                binding.mainBottomNav.selectedItemId = R.id.botNav_schedules
                             }
                             if (result != null)
                                 shareLogsNeutralButton(
@@ -184,7 +188,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                 installDjs()
                             }
                             negativeButton(android.R.string.cancel) {
-                                main_bottom_nav.selectedItemId = R.id.botNav_schedules
+                                binding.mainBottomNav.selectedItemId = R.id.botNav_schedules
                             }
                             cancelOnTouchOutside(false)
                         }
@@ -287,21 +291,25 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onProfileLongClick(profile: AccaProfile) {
-        val dialog = MaterialDialog(this@MainActivity).customView(
+/*        val dialog = MaterialDialog(this@MainActivity).customView(
             R.layout.profile_preview_dialog,
             scrollable = true
         )
+*/
+        val preView = ProfilePreviewDialogBinding.inflate(layoutInflater)
+        val dialog = MaterialDialog(this@MainActivity).customView(
+            view = preView.root,
+            scrollable = true
+        )
 
-        val preView = dialog.getCustomView()
         // Set view items and assign values
-        val titleTv = preView.findViewById<TextView>(R.id.preview_profile_title_tv)
-        val capacityTv = preView.findViewById<TextView>(R.id.preview_profile_capacity_tv)
-        val chargingVoltTv =
-            preView.findViewById<TextView>(R.id.preview_profile_charging_voltage_tv)
-        val temperatureTv = preView.findViewById<TextView>(R.id.preview_profile_temperature_tv)
-        val onBootTv = preView.findViewById<TextView>(R.id.preview_profile_on_boot_tv)
-        val onPlugTv = preView.findViewById<TextView>(R.id.preview_profile_on_plug_tv)
-        val coolDownTv = preView.findViewById<TextView>(R.id.preview_profile_cool_down_tv)
+        val titleTv = preView.previewProfileTitleTv
+        val capacityTv = preView.previewProfileCapacityTv
+        val chargingVoltTv = preView.previewProfileChargingVoltageTv
+        val temperatureTv = preView.previewProfileTemperatureTv
+        val onBootTv = preView.previewProfileOnBootTv
+        val onPlugTv = preView.previewProfileOnPlugTv
+        val coolDownTv = preView.previewProfileCoolDownTv
 
         // Assign the appropriate text values from the profile
         titleTv.text = profile.profileName
@@ -310,7 +318,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         temperatureTv.text = profile.accConfig.configTemperature.toString(this)
         onBootTv.text = profile.accConfig.configOnBoot
         onPlugTv.text = profile.accConfig.getOnPlug(this)
-        coolDownTv.text = profile.accConfig.configCoolDown?.toString(this) ?: "Cool Down Not Set"
+        coolDownTv.text = profile.accConfig.configCoolDown?.toString(this)
 
         dialog.show()
     }
@@ -318,7 +326,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     private fun checkAccInstalled(): Boolean {
         val version = _preferences.accVersion
 
-        if (!Acc.isAccInstalled(filesDir) || !Acc.initAcc(filesDir) || (version == "bundled" && Acc.isInstalledAccOutdated())) {
+        if (!Acc.isAccInstalled(filesDir) || (version == "bundled" && Acc.isInstalledAccOutdated())) {
             val dialog = MaterialDialog(this).show {
                 title(R.string.installing_acc)
                 progress(R.string.wait)
@@ -509,12 +517,31 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         setTheme(R.style.AccaTheme_DayNight)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        setSupportActionBar(main_toolbar)
+        //--------------------------------------------------
+
+        val spl = PreferenceManager.getDefaultSharedPreferences(this).getString("language", "def")
+
+        val config = resources.configuration
+        val locale = if (spl.equals("def")) Locale.getDefault() else Locale(spl)
+
+        Locale.setDefault(locale)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) config.setLocale(locale) else config.locale = locale
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) createConfigurationContext(config)
+
+        resources.updateConfiguration(config, resources.displayMetrics)
+
+        //--------------------------------------------------
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
+
+        setSupportActionBar(binding.mainToolbar)
 
         // Load preferences
         _preferences = Preferences(this)
@@ -558,10 +585,10 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onBackPressed() {
-        if (main_bottom_nav.selectedItemId == R.id.botNav_home) {
+        if (binding.mainBottomNav.selectedItemId == R.id.botNav_home) {
             super.onBackPressed()
         } else {
-            main_bottom_nav.selectedItemId = R.id.botNav_home
+            binding.mainBottomNav.selectedItemId = R.id.botNav_home
         }
     }
 
@@ -892,10 +919,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
             // Insert the databundle into the intent.
             intent.putExtra(Constants.DATA_KEY, dataBundle)
             intent.putExtra(Constants.ACC_CONFIG_KEY, profile.accConfig)
-            intent.putExtra(
-                Constants.TITLE_KEY,
-                this@MainActivity.getString(R.string.profile_creator)
-            )
+            intent.putExtra(Constants.TITLE_KEY, profile.profileName)
             startActivityForResult(intent, ACC_PROFILE_EDITOR_REQUEST)
         }
     }

@@ -96,6 +96,7 @@
     <string name="schedule_time">%1$02d:%2$02d</string>
     <string name="delete">Törlés</string>
     <string name="no_schedules">Nincs beállítva ütemzés</string>
+    <string name="invalid_voltage_max">Az érték egy 3700 és 4300 közti szám legyen (millivolt)</string>
     <string name="edit_charging_switch">Töltési kapcsoló beállítása</string>
     <string name="test_switch">Töltési kapcsoló tesztelése</string>
     <string name="charging_switch_works">A választott töltési kapcsoló működik!</string>
@@ -154,6 +155,8 @@
     <string name="create_schedule">Ütemezés létrehozása</string>
     <!-- About Activity -->
     <string name="about_attributes">Tulajdonságok</string>
+    <string name="about_acca_version_label">AccA verzió:</string>
+    <string name="about_acc_api_version_label">ETK verzió:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>

@@ -5,6 +5,7 @@ import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.R
+import mattecarra.accapp.acc.Acc
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.StringBuilder
@@ -49,7 +50,7 @@ interface DjsInterface {
 }
 
 object Djs {
-    const val bundledVersion = 202108020
+    const val bundledVersion = 202108260
 
     /*
     * This method returns the name of the package with a compatible AccInterface
@@ -79,25 +80,24 @@ object Djs {
             }
         }
 
-    private fun createDjsInstance(): DjsInterface {
-        val version = getDjsVersion()
+    private fun createDjsInstance(version: Int = getDjsVersion() ?: bundledVersion): DjsInterface {
         INSTANCE = getDjsInterfaceForversion(version)
         return INSTANCE as DjsInterface
     }
 
     fun isDjsInstalled(installationDir: File): Boolean {
-        return Shell.su("test -f ${File(installationDir, "djs/service.sh").absolutePath}  || test -f ${File(installationDir, "djs/djs-init.sh").absolutePath}").exec().isSuccess
+        return Shell.su("test -f ${File(installationDir, "djs/service.sh").absolutePath}").exec().isSuccess
     }
 
     fun initDjs(installationDir: File): Boolean {
         return if(isDjsInstalled(installationDir))
-            Shell.su("if test -f ${File(installationDir, "djs/service.sh").absolutePath}; then ${File(installationDir, "djs/service.sh").absolutePath}; else ${File(installationDir, "djs/djs-init.sh").absolutePath}; fi").exec().isSuccess
+            Shell.su("[ -f /dev/.vr25/djs/djsc ] || ${File(installationDir, "djs/service.sh").absolutePath}").exec().isSuccess
         else
             false
     }
 
     fun isInstalledDjsOutdated(): Boolean {
-        return getDjsVersion() < bundledVersion
+        return getDjsVersion()?.let { it < bundledVersion } ?: true
     }
 
     suspend fun installBundledAccModule(context: Context): Shell.Result?  = withContext(Dispatchers.IO) {
@@ -131,7 +131,10 @@ object Djs {
             }
 
             val res = Shell.su("sh ${installShFile.absolutePath} djs").exec()
-            createDjsInstance()
+
+            val version = getDjsVersion() ?: throw java.lang.Exception("DJS installation failed")
+
+            createDjsInstance(version)
             res
         } catch (ex: java.lang.Exception) {
             ex.printStackTrace()
@@ -143,7 +146,7 @@ object Djs {
         Shell.su("sh ${File(installationDir, "djs/uninstall.sh").absolutePath}").exec()
     }
 
-    private fun getDjsVersion(): Int {
-        return Shell.su("/dev/.vr25/djs/djs-version").exec().out.joinToString(separator = "\n").trim().toIntOrNull() ?: bundledVersion
+    private fun getDjsVersion(): Int? {
+        return Shell.su("/dev/.vr25/djs/djs-version").exec().out.joinToString(separator = "\n").trim().toIntOrNull()
     }
 }

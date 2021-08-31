@@ -4,6 +4,7 @@ import android.content.Context
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.CurrentUnit
 import mattecarra.accapp.Preferences
@@ -17,7 +18,7 @@ import java.net.URL
 import kotlin.math.abs
 
 object Acc {
-    const val bundledVersion = 202108020
+    const val bundledVersion = 202108290
     private val FILES_DIR = "/data/data/mattecarra.accapp/files"
 
     /*
@@ -62,16 +63,16 @@ object Acc {
     }
 
     fun isAccInstalled(installationDir: File): Boolean {
-        return Shell.su("test -f ${File(installationDir, "acc/service.sh").absolutePath}  || test -f ${File(installationDir, "acc/acc-init.sh").absolutePath}").exec().isSuccess
+        return Shell.su("test -f ${File(installationDir, "acc/service.sh").absolutePath}").exec().isSuccess
     }
 
-    fun isInstalledAccOutdated(): Boolean {
-        return getAccVersion()?.let { it < bundledVersion } ?: true
+    fun isInstalledAccOutdated(): Boolean = runBlocking {
+        instance.getAccVersion()?.let { it < bundledVersion } ?: true
     }
 
     fun initAcc(installationDir: File): Boolean {
         return if(isAccInstalled(installationDir))
-            Shell.su("/dev/.vr25/acc/acca --daemon 2>/dev/null || if test -f ${File(installationDir, "acc/service.sh").absolutePath}; then ${File(installationDir, "acc/service.sh").absolutePath}; else ${File(installationDir, "acc/acc-init.sh").absolutePath}; fi").exec().isSuccess
+            Shell.su("[ -f /dev/.vr25/acc/acca ] || ${File(installationDir, "acc/service.sh").absolutePath}").exec().isSuccess
         else
             false
     }
@@ -132,9 +133,11 @@ object Acc {
             }
 
             val res = Shell.su("sh ${installShFile.absolutePath} acc").exec()
-            createAccInstance()
 
             val version = getAccVersion() ?: throw java.lang.Exception("ACC installation failed")
+
+            createAccInstance()
+
             if(version >= 202002292) {
                 val preferences = Preferences(context)
                 preferences.currentUnitOfMeasure = CurrentUnit.A
@@ -175,6 +178,10 @@ object Acc {
 
     private fun getAccVersion(): Int? {
         return Shell.su("/dev/.vr25/acc/acc --version").exec().out.joinToString(separator = "\n").split("(").last().split(")").first().trim().toIntOrNull() ?: getAccVersionLegacy()
+    }
+
+    fun getAccVersionToStr(): String {
+        return Shell.su("/dev/acca --version").exec().out.joinToString(separator = "\n").toString()
     }
 
     private fun getAccVersionLegacy(): Int? {

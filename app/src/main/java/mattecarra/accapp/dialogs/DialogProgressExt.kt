@@ -7,8 +7,8 @@ import androidx.annotation.CheckResult
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
-import kotlinx.android.synthetic.main.md_dialog_progress_indeterminate.view.*
 import mattecarra.accapp.R
+import mattecarra.accapp.databinding.MdDialogProgressIndeterminateBinding
 
 /**
  * Gets the input layout for the dialog if it's an input dialog.
@@ -27,7 +27,8 @@ import mattecarra.accapp.R
  * @throws IllegalStateException if the dialog is not an input dialog.
  */
 @CheckResult fun MaterialDialog.getTextView(): TextView {
-    return getProgressLayout().md_content ?: throw IllegalStateException(
+    val binding = MdDialogProgressIndeterminateBinding.bind(getProgressLayout())
+    return binding.mdContent ?: throw IllegalStateException(
         "You have not setup this dialog as an input dialog."
     )
 }

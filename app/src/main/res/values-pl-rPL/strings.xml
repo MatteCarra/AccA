@@ -119,6 +119,7 @@ Jebac pis?</string>
     <string name="delete">Usuń</string>
     <string name="no_schedules">Nie ustawiono harmonogramów</string>
     <string name="wrong_volt_file">Wybrany plik nie działa, albo Twój kernel nie obsługuje tej funkcji.</string>
+    <string name="invalid_voltage_max">Wartość powinna być liczbą z zakresu od 3700 do 4300 (miliwoltów)</string>
     <string name="edit_charging_switch">Edytuj przełącznik ładowania</string>
     <string name="test_switch">Przetestuj przełącznik ładowania</string>
     <string name="no_option_selected">Nie wybrano żadnej opcji; proszę coś wybrać!</string>
@@ -128,6 +129,7 @@ Jebac pis?</string>
     <string name="automatic">Automatyczny</string>
     <string name="error_occurred">Wystąpił błąd</string>
     <string name="retry">Spróbuj ponownie</string>
+    <string name="edit_charging_limit_once_button">Ładuj raz do #\%, bez ograniczeń</string>
     <string name="done_applied_charge_limit">Ładowanie do %1$d%%</string>
     <string name="charge_limit_not_applied">Stosowanie limitu ładowania zostało przerwane</string>
     <string name="apply">Zastosuj</string>
@@ -250,6 +252,8 @@ Wersja Bundled jest testowana pod kątem działania z aplikacją AccA, dlatego j
     </string>
     <string name="about_attributes">Atrybuty</string>
     <string name="about_attrib_telegram_icon">Ikona Telegram wykonana przez Pixel perfect z www.flaticon.com</string>
+    <string name="about_acca_version_label">Wersja AccA:</string>
+    <string name="about_acc_api_version_label">Wersja ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>

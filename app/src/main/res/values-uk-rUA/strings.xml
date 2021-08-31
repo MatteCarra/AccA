@@ -114,6 +114,7 @@
     <string name="delete">Видалити</string>
     <string name="no_schedules">Немає запланованих завдань</string>
     <string name="wrong_volt_file">Обраний файл не працює, або ваше ядро не підтримує цю функцію.</string>
+    <string name="invalid_voltage_max">Значення має бути числом від 3700 до 4300 (мілівольт)</string>
     <string name="edit_charging_switch">Редагувати перемикач зарядки</string>
     <string name="test_switch">Перевірити перемикач зарядки</string>
     <string name="no_option_selected">Жодної опції не вибрано; будь ласка, оберіть одну!</string>
@@ -123,6 +124,7 @@
     <string name="automatic">Автоматично</string>
     <string name="error_occurred">Сталася помилка</string>
     <string name="retry">Повтор</string>
+    <string name="edit_charging_limit_once_button">Зарядити один раз до #\%, без обмежень</string>
     <string name="done_applied_charge_limit">Заряджається до %1$d%%</string>
     <string name="charge_limit_not_applied">Застосування ліміту заряду скасовано</string>
     <string name="apply">Застосувати</string>
@@ -236,6 +238,8 @@
     </string>
     <string name="about_attributes">Атрибути</string>
     <string name="about_attrib_telegram_icon">Значок Telegram, зроблений Pixel perfect з www.flaticon.com</string>
+    <string name="about_acca_version_label">Версія AccA:</string>
+    <string name="about_acc_api_version_label">Версія ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>

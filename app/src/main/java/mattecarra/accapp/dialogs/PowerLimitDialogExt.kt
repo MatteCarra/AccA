@@ -25,6 +25,7 @@ fun MaterialDialog.powerLimitDialog(
     listener: PowerLimitSelectionListener
 ): MaterialDialog {
     val dialog = customView(R.layout.voltage_control_editor_dialog)
+        .title(R.string.edit_power_limit)
         .positiveButton(android.R.string.ok) { dialog ->
             val view = dialog.getCustomView()
             val voltageControl = view.findViewById<Spinner>(R.id.voltage_control_file_spinner)
@@ -65,7 +66,7 @@ fun MaterialDialog.powerLimitDialog(
         voltageMaxEditText.isEnabled = isChecked
 
         val voltageMaxVal = voltageMaxEditText.text?.toString()?.toIntOrNull()
-        inputVoltageMaxOk = voltageMaxVal != null && voltageMaxVal >= 3700 && voltageMaxVal <= 4200
+        inputVoltageMaxOk = voltageMaxVal != null && voltageMaxVal >= 3700 && voltageMaxVal <= 4300
         voltageMaxEditText.error = if (inputVoltageMaxOk) null else context.getString(R.string.invalid_voltage_max)
         dialog.setActionButtonEnabled(WhichButton.POSITIVE, inputCurrentMaxOK && inputVoltageMaxOk && inputVoltageControlFileOk)
     }
@@ -82,7 +83,7 @@ fun MaterialDialog.powerLimitDialog(
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             val voltageMaxVal = s?.toString()?.toIntOrNull()
             val isValid =
-                voltageMaxVal != null && voltageMaxVal >= 3700 && voltageMaxVal <= 4200
+                voltageMaxVal != null && voltageMaxVal >= 3700 && voltageMaxVal <= 4300
             voltageMaxEditText.error =
                 if (isValid) null else context.getString(R.string.invalid_voltage_max)
 
@@ -169,7 +170,7 @@ fun MaterialDialog.powerLimitDialog(
 
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val voltageMaxVal = voltageMaxEditText.text?.toString()?.toIntOrNull()
-                    val isValid = voltageMaxVal != null && voltageMaxVal >= 3700 && voltageMaxVal <= 4200
+                    val isValid = voltageMaxVal != null && voltageMaxVal >= 3700 && voltageMaxVal <= 4300
 
                     inputVoltageControlFileOk = isValid
                     dialog.setActionButtonEnabled(WhichButton.POSITIVE, inputCurrentMaxOK && inputVoltageMaxOk && inputVoltageControlFileOk)

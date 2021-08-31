@@ -7,18 +7,17 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.afollestad.materialdialogs.MaterialDialog
-import kotlinx.android.synthetic.main.schedules_fragment.*
-import mattecarra.accapp.R
 import mattecarra.accapp.activities.MainActivity
 import mattecarra.accapp.adapters.OnScheduleClickListener
 import mattecarra.accapp.adapters.ScheduleProfileListAdapter
+import mattecarra.accapp.databinding.SchedulesFragmentBinding
 import mattecarra.accapp.models.Schedule
 import mattecarra.accapp.utils.ScopedFragment
 
 class SchedulesFragment : ScopedFragment(), OnScheduleClickListener {
     private lateinit var viewModel: SchedulesViewModel
     private lateinit var adapter: ScheduleProfileListAdapter
+    private lateinit var binding : SchedulesFragmentBinding
 
     companion object {
         fun newInstance() = SchedulesFragment()
@@ -28,7 +27,8 @@ class SchedulesFragment : ScopedFragment(), OnScheduleClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.schedules_fragment, container, false)
+        binding = SchedulesFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -40,16 +40,16 @@ class SchedulesFragment : ScopedFragment(), OnScheduleClickListener {
 
             adapter = ScheduleProfileListAdapter(activity)
             adapter.setOnClickListener(this)
-            schedule_recyclerView.adapter = adapter
-            schedule_recyclerView.layoutManager = LinearLayoutManager(context)
+            binding.scheduleRecyclerView.adapter = adapter
+            binding.scheduleRecyclerView.layoutManager = LinearLayoutManager(context)
 
             viewModel.schedules.observe(viewLifecycleOwner, Observer { schedules ->
                 if(schedules.isEmpty()) {
-                    schedules_empty_textview.visibility = View.VISIBLE
-                    schedule_recyclerView.visibility = View.GONE
+                    binding.schedulesEmptyTextview.visibility = View.VISIBLE
+                    binding.scheduleRecyclerView.visibility = View.GONE
                 } else {
-                    schedules_empty_textview.visibility = View.GONE
-                    schedule_recyclerView.visibility = View.VISIBLE
+                    binding.schedulesEmptyTextview.visibility = View.GONE
+                    binding.scheduleRecyclerView.visibility = View.VISIBLE
                 }
 
                 adapter.setList(schedules)

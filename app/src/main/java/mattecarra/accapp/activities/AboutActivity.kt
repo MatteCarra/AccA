@@ -10,23 +10,26 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
-import kotlinx.android.synthetic.main.activity_about.*
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
+import mattecarra.accapp.databinding.ActivityAboutBinding
 
 class AboutActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_about)
 
-        setSupportActionBar(about_toolbar)
+        val binding=ActivityAboutBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setSupportActionBar(binding.aboutToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Set appropriate version numbers
         val app = applicationContext.packageManager.getPackageInfo(packageName, 0)
-        acca_version_tv.text = String.format("%s (%s)", app.versionName, app.versionCode.toString())
-        acc_version_tv.text = Acc.instance.version.toString()
+        binding.aboutAccaVersionTv.text = String.format("%s (%s)", app.versionName, app.versionCode.toString())
+        binding.aboutAccDaemonVersionTv.text = Acc.getAccVersionToStr()
+        binding.aboutAccApiVersionTv.text = Acc.instance.version.toString()
     }
 
     companion object {
@@ -96,6 +99,4 @@ class AboutActivity : AppCompatActivity() {
     fun squabbiWebsiteOnClick(view: View) {
         openUrl("https://squabbi.com/")
     }
-
-
 }

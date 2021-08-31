@@ -111,6 +111,7 @@ Tiến trình nền DJS sẽ được bắt đầu khi khởi động cùng vớ
     <string name="delete">Xóa</string>
     <string name="no_schedules">Không có lịch trình được thiết lập</string>
     <string name="wrong_volt_file">Tệp đã chọn không hoạt động hoặc kernel của bạn không hỗ trợ tính năng này.</string>
+    <string name="invalid_voltage_max">Giá trị phải là một số trong khoảng từ 3700 đến 4300 (millivolts)</string>
     <string name="edit_charging_switch">Chỉnh sửa công tắc sạc</string>
     <string name="test_switch">Thử công tắc sạc</string>
     <string name="no_option_selected">Không có tùy chọn nào được chọn; vui lòng chọn một!</string>
@@ -120,6 +121,7 @@ Tiến trình nền DJS sẽ được bắt đầu khi khởi động cùng vớ
     <string name="automatic">Tự động</string>
     <string name="error_occurred">Có lỗi xảy ra</string>
     <string name="retry">Thử lại</string>
+    <string name="edit_charging_limit_once_button">Sạc đến #\%, bỏ qua các giới hạn</string>
     <string name="done_applied_charge_limit">Sạc đến %1$d%%</string>
     <string name="charge_limit_not_applied">Đã hủy áp dụng mức sạc</string>
     <string name="apply">Áp dụng</string>
@@ -238,6 +240,8 @@ Nếu đơn vị được phát hiện không chính xác, bạn có thể đặ
         \n\nĐặc biệt cảm ơn những người đã đóng góp bằng mọi cách cho các dự án của ACC &amp; AccA!    </string>
     <string name="about_attributes">Thuộc Tính</string>
     <string name="about_attrib_telegram_icon">Biểu tượng Telegram do Pixel hoàn thiện từ www.flaticon.com</string>
+    <string name="about_acca_version_label">Phiên bản AccA:</string>
+    <string name="about_acc_api_version_label">Phiên bản ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
