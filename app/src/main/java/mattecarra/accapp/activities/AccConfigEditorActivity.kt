@@ -4,11 +4,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.widget.Toolbar
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
-import kotlinx.android.synthetic.main.content_acc_config_editor.*
-import mattecarra.accapp.R
 import android.app.Activity
 import android.content.Intent
 import android.widget.*
@@ -18,17 +15,19 @@ import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.afollestad.materialdialogs.list.toggleItemChecked
 import com.afollestad.materialdialogs.list.updateListItemsSingleChoice
 import it.sephiroth.android.library.xtooltip.ClosePolicy
 import it.sephiroth.android.library.xtooltip.Tooltip
-import kotlinx.android.synthetic.main.add_charging_switch_dialog.view.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import mattecarra.accapp.Preferences
+import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
+import mattecarra.accapp.databinding.ActivityAccConfigEditorBinding
+import mattecarra.accapp.databinding.AddChargingSwitchDialogBinding
+import mattecarra.accapp.databinding.ContentAccConfigEditorBinding
 import mattecarra.accapp.dialogs.progress
 import mattecarra.accapp.dialogs.powerLimitDialog
 import mattecarra.accapp.models.AccConfig
@@ -38,6 +37,7 @@ import mattecarra.accapp.viewmodel.AccConfigEditorViewModel
 import mattecarra.accapp.viewmodel.AccConfigEditorViewModelFactory
 
 class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeListener {
+    private lateinit var content: ContentAccConfigEditorBinding
     private lateinit var viewModel: AccConfigEditorViewModel
     private lateinit var mUndoMenuItem: MenuItem
     private lateinit var mPreferences: Preferences
@@ -53,12 +53,15 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_acc_config_editor)
+        val binding = ActivityAccConfigEditorBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        content = ContentAccConfigEditorBinding.inflate(layoutInflater)
 
         // Load preferences
         mPreferences = Preferences(this)
 
-        val toolbar = findViewById<View>(R.id.acc_conf_editor_toolbar) as Toolbar
+        val toolbar = binding.accConfEditorToolbar
         setSupportActionBar(toolbar)
         supportActionBar?.title = intent?.getStringExtra(Constants.TITLE_KEY) ?: getString(R.string.acc_config_editor)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -150,88 +153,86 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
     }
 
     private fun updateCapacityCard(configCapacity: AccConfig.ConfigCapacity) {
-        shutdown_capacity_picker.minValue = 0
-        shutdown_capacity_picker.maxValue = 20
-        shutdown_capacity_picker.value = configCapacity.shutdown
+        content.shutdownCapacityPicker.minValue = 0
+        content.shutdownCapacityPicker.maxValue = 20
+        content.shutdownCapacityPicker.value = configCapacity.shutdown
 
-        resume_capacity_picker.minValue = configCapacity.shutdown
-        resume_capacity_picker.maxValue = if(configCapacity.pause == 101) 101 else configCapacity.pause - 1
-        resume_capacity_picker.value = configCapacity.resume
+        content.resumeCapacityPicker.minValue = configCapacity.shutdown
+        content.resumeCapacityPicker.maxValue = if(configCapacity.pause == 101) 101 else configCapacity.pause - 1
+        content.resumeCapacityPicker.value = configCapacity.resume
 
-        pause_capacity_picker.minValue = if(configCapacity.resume == 101) 101 else configCapacity.resume + 1
-        pause_capacity_picker.maxValue = 101
-        pause_capacity_picker.value = configCapacity.pause
+        content.pauseCapacityPicker.minValue = if(configCapacity.resume == 101) 101 else configCapacity.resume + 1
+        content.pauseCapacityPicker.maxValue = 101
+        content.pauseCapacityPicker.value = configCapacity.pause
     }
 
     private fun updateChargeSwitch(configChargeSwitch: String?) {
-        charging_switch_textview.text = configChargeSwitch ?: getString(R.string.automatic)
-        automatic_switch_enabled_switch.isEnabled = configChargeSwitch != null
+        content.chargingSwitchTextview.text = configChargeSwitch ?: getString(R.string.automatic)
+        content.automaticSwitchEnabledSwitch.isEnabled = configChargeSwitch != null
         if(configChargeSwitch == null) {
-            automatic_switch_enabled_switch.isChecked = true
+            content.automaticSwitchEnabledSwitch.isChecked = true
         }
     }
 
     private fun updateTemperatureCard(configTemperature: AccConfig.ConfigTemperature) {
         if(configTemperature.coolDownTemperature >= 90 && configTemperature.maxTemperature >= 95) {
-            temp_switch.isChecked = false
-            temperature_cooldown_picker.isEnabled = false
-            temperature_max_picker.isEnabled = false
-            temperature_max_pause_seconds_picker.isEnabled = false
+            content.tempSwitch.isChecked = false
+            content.temperatureCooldownPicker.isEnabled = false
+            content.temperatureMaxPicker.isEnabled = false
+            content.temperatureMaxPauseSecondsPicker.isEnabled = false
         } else {
-            temp_switch.isChecked = true
-            temperature_cooldown_picker.isEnabled = true
-            temperature_max_picker.isEnabled = true
-            temperature_max_pause_seconds_picker.isEnabled = true
+            content.tempSwitch.isChecked = true
+            content.temperatureCooldownPicker.isEnabled = true
+            content.temperatureMaxPicker.isEnabled = true
+            content.temperatureMaxPauseSecondsPicker.isEnabled = true
         }
 
-        temperature_cooldown_picker.minValue = 20
-        temperature_cooldown_picker.maxValue = 90
-        temperature_cooldown_picker.value = configTemperature.coolDownTemperature
+        content.temperatureCooldownPicker.minValue = 20
+        content.temperatureCooldownPicker.maxValue = 90
+        content.temperatureCooldownPicker.value = configTemperature.coolDownTemperature
 
+        content.temperatureMaxPicker.minValue = 20
+        content.temperatureMaxPicker.maxValue = 95
+        content.temperatureMaxPicker.value = configTemperature.maxTemperature
 
-        temperature_max_picker.minValue = 20
-        temperature_max_picker.maxValue = 95
-        temperature_max_picker.value = configTemperature.maxTemperature
-
-
-        temperature_max_pause_seconds_picker.minValue = 10
-        temperature_max_pause_seconds_picker.maxValue = 120
-        temperature_max_pause_seconds_picker.value = configTemperature.pause
+        content.temperatureMaxPauseSecondsPicker.minValue = 10
+        content.temperatureMaxPauseSecondsPicker.maxValue = 120
+        content.temperatureMaxPauseSecondsPicker.value = configTemperature.pause
     }
 
     private fun updateCoolDownCard(configCoolDown: AccConfig.ConfigCoolDown?) {
         if(configCoolDown == null || configCoolDown.atPercent > 100) {
-            cooldown_switch.isChecked = false
-            cooldown_percentage_picker.isEnabled = false
-            charge_ratio_picker.isEnabled = false
-            pause_ratio_picker.isEnabled = false
+            content.cooldownSwitch.isChecked = false
+            content.cooldownPercentagePicker.isEnabled = false
+            content.chargeRatioPicker.isEnabled = false
+            content.pauseRatioPicker.isEnabled = false
         } else {
-            cooldown_switch.isChecked = true
-            cooldown_percentage_picker.isEnabled = true
-            charge_ratio_picker.isEnabled = true
-            pause_ratio_picker.isEnabled = true
+            content.cooldownSwitch.isChecked = true
+            content.cooldownPercentagePicker.isEnabled = true
+            content.chargeRatioPicker.isEnabled = true
+            content.pauseRatioPicker.isEnabled = true
         }
 
-        cooldown_percentage_picker.minValue = 0
-        cooldown_percentage_picker.maxValue = 100 //if someone wants to disable it should use the switch but I'm gonna leave it there
-        cooldown_percentage_picker.value = configCoolDown?.atPercent ?: 60
+        content.cooldownPercentagePicker.minValue = 0
+        content.cooldownPercentagePicker.maxValue = 100 //if someone wants to disable it should use the switch but I'm gonna leave it there
+        content.cooldownPercentagePicker.value = configCoolDown?.atPercent ?: 60
 
-        charge_ratio_picker.minValue = 1
-        charge_ratio_picker.maxValue = 120 //no reason behind this value
-        charge_ratio_picker.value = configCoolDown?.charge ?: 50
+        content.chargeRatioPicker.minValue = 1
+        content.chargeRatioPicker.maxValue = 120 //no reason behind this value
+        content.chargeRatioPicker.value = configCoolDown?.charge ?: 50
 
-        pause_ratio_picker.minValue = 1
-        pause_ratio_picker.maxValue = 120 //no reason behind this value
-        pause_ratio_picker.value = configCoolDown?.pause ?: 10
+        content.pauseRatioPicker.minValue = 1
+        content.pauseRatioPicker.maxValue = 120 //no reason behind this value
+        content.pauseRatioPicker.value = configCoolDown?.pause ?: 10
     }
 
     private fun updateVoltageControlCard(configVoltage: AccConfig.ConfigVoltage) {
-        voltage_control_file_spinner.text = configVoltage.controlFile ?: "Not supported"
-        voltage_max_edit_text.text = configVoltage.max?.let { "$it mV" } ?: getString(R.string.disabled)
+        content.voltageControlFileSpinner.text = configVoltage.controlFile ?: "Not supported"
+        content.voltageMaxEditText.text = configVoltage.max?.let { "$it mV" } ?: getString(R.string.disabled)
     }
 
     private fun updateCurrentMaxControlCard(currentMax: Int?) {
-        current_max_edit_text.text = currentMax?.let { "$it mA" } ?: getString(R.string.disabled)
+        content.currentMaxEditText.text = currentMax?.let { "$it mA" } ?: getString(R.string.disabled)
     }
 
     private fun initUi() {
@@ -260,85 +261,85 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         })
 
         viewModel.observeOnPlug(this, Observer { configOnPlug ->
-            config_on_plugged_textview.text = configOnPlug?.let { if(it.isBlank()) getString(R.string.voltage_control_file_not_set) else it } ?: getString(R.string.voltage_control_file_not_set)
+            content.configOnPluggedTextview.text = configOnPlug?.let { if(it.isBlank()) getString(R.string.voltage_control_file_not_set) else it } ?: getString(R.string.voltage_control_file_not_set)
         })
 
         viewModel.observeOnBoot(this, Observer { configOnBoot ->
-            tv_config_on_boot.text = configOnBoot?.let { if(it.isBlank()) getString(R.string.voltage_control_file_not_set) else it } ?: getString(R.string.voltage_control_file_not_set)
+            content.tvConfigOnBoot.text = configOnBoot?.let { if(it.isBlank()) getString(R.string.voltage_control_file_not_set) else it } ?: getString(R.string.voltage_control_file_not_set)
         })
 
         viewModel.observePrioritizeBatteryIdleMode(this, Observer {
-            battery_idle_switch.isChecked = it
+            content.batteryIdleSwitch.isChecked = it
         })
 
         viewModel.observeResetBSOnUnplug(this, Observer {
-            dash_resetStatusUnplug_switch.isChecked = it
+            content.dashResetStatusUnplugSwitch.isChecked = it
         })
 
         viewModel.observeResetBSOnPause(this, Observer {
-            dash_resetBSOnPause_switch.isChecked = it
+            content.dashResetBSOnPauseSwitch.isChecked = it
         })
 
         viewModel.observeIsAutomaticSwitchEnabled(this, Observer {
-            automatic_switch_enabled_switch.isChecked = it
+            content.automaticSwitchEnabledSwitch.isChecked = it
         })
 
         //capacity card
-        shutdown_capacity_picker.setOnValueChangedListener(this)
-        resume_capacity_picker.setOnValueChangedListener(this)
-        pause_capacity_picker.setOnValueChangedListener(this)
+        content.shutdownCapacityPicker.setOnValueChangedListener(this)
+        content.resumeCapacityPicker.setOnValueChangedListener(this)
+        content.pauseCapacityPicker.setOnValueChangedListener(this)
 
         //temps
-        temp_switch.setOnClickListener {
-            if(temp_switch.isChecked) {
+        content.tempSwitch.setOnClickListener {
+            if(content.tempSwitch.isChecked) {
                 viewModel.temperature = viewModel.temperature.copy(coolDownTemperature = 40, maxTemperature = 45)
             } else {
                 viewModel.temperature = viewModel.temperature.copy(coolDownTemperature = 90, maxTemperature = 95)
             }
         }
-        temperature_cooldown_picker.setOnValueChangedListener(this)
-        temperature_max_picker.setOnValueChangedListener(this)
-        temperature_max_pause_seconds_picker.setOnValueChangedListener(this)
+        content.temperatureCooldownPicker.setOnValueChangedListener(this)
+        content.temperatureMaxPicker.setOnValueChangedListener(this)
+        content.temperatureMaxPauseSecondsPicker.setOnValueChangedListener(this)
 
         //coolDown
-        cooldown_switch.setOnClickListener {
-            if(cooldown_switch.isChecked) {
+        content.cooldownSwitch.setOnClickListener {
+            if(content.cooldownSwitch.isChecked) {
                 viewModel.coolDown = AccConfig.ConfigCoolDown(60, 50, 10)
             } else {
                 viewModel.coolDown = null
             }
         }
-        cooldown_percentage_picker.setOnValueChangedListener(this)
-        charge_ratio_picker.setOnValueChangedListener(this)
-        pause_ratio_picker.setOnValueChangedListener(this)
+        content.cooldownPercentagePicker.setOnValueChangedListener(this)
+        content.chargeRatioPicker.setOnValueChangedListener(this)
+        content.pauseRatioPicker.setOnValueChangedListener(this)
 
         //battery idle
-        battery_idle_switch.setOnClickListener {
-            viewModel.prioritizeBatteryIdleMode = battery_idle_switch.isChecked
+        content.batteryIdleSwitch.setOnClickListener {
+            viewModel.prioritizeBatteryIdleMode = content.batteryIdleSwitch.isChecked
         }
 
         //reset bs on pause
-        dash_resetBSOnPause_switch.setOnClickListener {
-            viewModel.resetBSOnPause = dash_resetBSOnPause_switch.isChecked
+        content.dashResetBSOnPauseSwitch.setOnClickListener {
+            viewModel.resetBSOnPause = content.dashResetBSOnPauseSwitch.isChecked
         }
 
         //reset bs on unplug
-        dash_resetStatusUnplug_switch.setOnClickListener {
-            viewModel.resetBSOnUnplug = dash_resetStatusUnplug_switch.isChecked
+        content.dashResetStatusUnplugSwitch.setOnClickListener {
+            viewModel.resetBSOnUnplug = content.dashResetStatusUnplugSwitch.isChecked
         }
 
         if(Acc.instance.version < 202007220) {
-            automatic_switch_enabled_switch.visibility = View.GONE
+            content.automaticSwitchEnabledSwitch.visibility = View.GONE
         }
-        automatic_switch_enabled_switch.setOnClickListener {
-            viewModel.isAutomaticSwitchEanbled = automatic_switch_enabled_switch.isChecked
+        content.automaticSwitchEnabledSwitch.setOnClickListener {
+            viewModel.isAutomaticSwitchEanbled = content.automaticSwitchEnabledSwitch.isChecked
         }
 
         //power card
         if(Acc.instance.version >= 202002170) {
-            voltage_control_file_ll.visibility = View.GONE
+            content.voltageControlFileLl.visibility = View.GONE
         } else {
-            current_max_ll.visibility = View.GONE
+            content.currentMaxLl.visibility = View.GONE
         }
     }
 
@@ -366,13 +367,13 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
                     if(!supported)
                         viewModel.prioritizeBatteryIdleMode = false
 
-                    this@AccConfigEditorActivity.battery_idle_switch.isEnabled = supported
+                    content.batteryIdleSwitch.isEnabled = supported
 
                     MaterialDialog(this@AccConfigEditorActivity).show {
                         title(R.string.test_battery_idle)
 
                         if(!supported) {
-                            this@AccConfigEditorActivity.battery_idle_switch.isChecked = false
+                            content.batteryIdleSwitch.isChecked = false
                             message(R.string.test_battery_idle_unsupported_result)
                         } else {
                             message(R.string.test_battery_idle_supported_result)
@@ -478,15 +479,18 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
                         MaterialDialog(this@AccConfigEditorActivity).show {
                             noAutoDismiss()
                             title(text = addNewChargingSwitchString)
-                            customView(R.layout.add_charging_switch_dialog)
+//                            customView(R.layout.add_charging_switch_dialog)
+                            val binding = AddChargingSwitchDialogBinding.inflate(layoutInflater)
+                            customView(view = binding.root)
                             positiveButton { dialog ->
                                 val progressDialog = MaterialDialog(this@AccConfigEditorActivity).show {
                                     title(R.string.test_switch)
                                     progress(R.string.wait)
                                 }
 
-                                val view = dialog.getCustomView()
-                                val switch = "${view.charging_switch_edit_text.text} ${view.charging_switch_on_value_edit_text.text} ${view.charging_switch_off_value_edit_text.text}"
+//                                val view = dialog.getCustomView()
+//                                val switch = "${view.charging_switch_edit_text.text} ${view.charging_switch_on_value_edit_text.text} ${view.charging_switch_off_value_edit_text.text}"
+                                val switch = "${binding.chargingSwitchEditText.text} ${binding.chargingSwitchOnValueEditText.text} ${binding.chargingSwitchOffValueEditText.text}"
                                 this@AccConfigEditorActivity.launch {
                                     var success = true
 

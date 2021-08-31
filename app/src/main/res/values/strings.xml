@@ -382,7 +382,7 @@
         <item>@string/lang_zh</item>
     </string-array>
 
-    <string-array name="lang_pref_value">
+    <string-array name="lang_pref_value" translatable="false">
         <item>def</item>
         <item>en</item>
         <item>ar</item>

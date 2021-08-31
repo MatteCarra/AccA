@@ -33,6 +33,7 @@ import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.activities.AccConfigEditorActivity
 import mattecarra.accapp.adapters.ProfileListAdapter
+import mattecarra.accapp.databinding.ProfilesFragmentBinding
 import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.utils.Constants
 import mattecarra.accapp.utils.ProfileUtils
@@ -55,14 +56,18 @@ class ProfilesFragment : ScopedFragment(),
     private lateinit var mProfilesAdapter: ProfileListAdapter
     private lateinit var mContext: Context
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-    {
-        return inflater.inflate(R.layout.profiles_fragment, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val binding = ProfilesFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
-        val profilesRecycler: RecyclerView = view.findViewById(R.id.profile_recyclerView)
+        val binding = ProfilesFragmentBinding.bind(view)
+        val profilesRecycler = binding.profileRecyclerView
 
         mContext = requireContext()
 
@@ -80,10 +85,10 @@ class ProfilesFragment : ScopedFragment(),
         // Observe data
         mProfilesViewModel.getLiveData().observe(viewLifecycleOwner, Observer { profiles ->
             if (profiles.isEmpty()) {
-                profiles_empty_textview.visibility = View.VISIBLE
+                binding.profilesEmptyTextview.visibility = View.VISIBLE
                 profilesRecycler.visibility = View.GONE
             } else {
-                profiles_empty_textview.visibility = View.GONE
+                binding.profilesEmptyTextview.visibility = View.GONE
                 profilesRecycler.visibility = View.VISIBLE
             }
             mProfilesAdapter.setProfiles(profiles)

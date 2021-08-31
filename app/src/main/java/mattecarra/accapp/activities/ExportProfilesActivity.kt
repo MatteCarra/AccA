@@ -12,9 +12,9 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import kotlinx.android.synthetic.main.activity_export.*
 import mattecarra.accapp.R
 import mattecarra.accapp.adapters.ProfileEntriesAdapter
+import mattecarra.accapp.databinding.ActivityExportBinding
 import mattecarra.accapp.models.ProfileEntry
 
 class ExportProfilesActivity: AppCompatActivity() {
@@ -23,9 +23,10 @@ class ExportProfilesActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_export)
+        val binding = ActivityExportBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setSupportActionBar(export_toolbar)
+        setSupportActionBar(binding.exportToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         mAdapter = ProfileEntriesAdapter()

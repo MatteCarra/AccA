@@ -17,17 +17,19 @@ import androidx.preference.PreferenceManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
+import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.topjohnwu.superuser.Shell
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
 import mattecarra.accapp.viewmodel.SharedViewModel
 import mattecarra.accapp.acc.Acc
+import mattecarra.accapp.databinding.ActivityMainBinding
+import mattecarra.accapp.databinding.ProfilePreviewDialogBinding
 import mattecarra.accapp.dialogs.*
 import mattecarra.accapp.djs.Djs
 import mattecarra.accapp.fragments.*
@@ -54,6 +56,7 @@ class MainActivity : ScopedAppActivity(),
     val ACC_EDIT_PROFILE_SCHEDULER_REQUEST = 5
     val ACC_IMPORT_PROFILE_REQUEST = 6
 
+    private lateinit var binding: ActivityMainBinding
     private lateinit var _preferences: Preferences
     private lateinit var _sharedViewModel: SharedViewModel
     private lateinit var _schedulesViewModel: SchedulesViewModel
@@ -102,11 +105,11 @@ class MainActivity : ScopedAppActivity(),
         })
 
         // Set Bottom Navigation Bar Item Selected Listener
-        main_bottom_nav.setOnNavigationItemSelectedListener(this)
-        setSupportActionBar(main_toolbar)
+        binding.mainBottomNav.setOnNavigationItemSelectedListener(this)
+        setSupportActionBar(binding.mainToolbar)
 
         // Load in dashboard fragment
-        main_bottom_nav.selectedItemId = selectedNavBarItem
+        binding.mainBottomNav.selectedItemId = _mainActivityViewModel.selectedNavBarItem
     }
 
     /**
@@ -174,7 +177,7 @@ class MainActivity : ScopedAppActivity(),
                                 installDjs()
                             }
                             negativeButton(android.R.string.cancel) {
-                                main_bottom_nav.selectedItemId = R.id.botNav_schedules
+                                binding.mainBottomNav.selectedItemId = R.id.botNav_schedules
                             }
                             if (result != null)
                                 shareLogsNeutralButton(
@@ -194,7 +197,7 @@ class MainActivity : ScopedAppActivity(),
                                 installDjs()
                             }
                             negativeButton(android.R.string.cancel) {
-                                main_bottom_nav.selectedItemId = R.id.botNav_schedules
+                                binding.mainBottomNav.selectedItemId = R.id.botNav_schedules
                             }
                             cancelOnTouchOutside(false)
                         }
@@ -490,10 +493,11 @@ class MainActivity : ScopedAppActivity(),
         resources.updateConfiguration(config, resources.displayMetrics)
 
         //--------------------------------------------------
+        binding = ActivityMainBinding.inflate(layoutInflater)
 
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
-        setSupportActionBar(main_toolbar)
+        setSupportActionBar(binding.mainToolbar)
 
         // Load preferences
         _preferences = Preferences(this)
@@ -537,10 +541,10 @@ class MainActivity : ScopedAppActivity(),
     }
 
     override fun onBackPressed() {
-        if (main_bottom_nav.selectedItemId == R.id.botNav_home) {
+        if (binding.mainBottomNav.selectedItemId == R.id.botNav_home) {
             super.onBackPressed()
         } else {
-            main_bottom_nav.selectedItemId = R.id.botNav_home
+            binding.mainBottomNav.selectedItemId = R.id.botNav_home
         }
     }
 
