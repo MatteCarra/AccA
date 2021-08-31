@@ -160,10 +160,7 @@
     <string name="template_capacity_profile">Apagar: %1$d%% - Reanudar: %2$d%% - Detener: %3$d%%</string>
     <string name="template_temperature_profile">Temperatura: %1$d&#176;C - Max: %2$d&#176;C - Pausa: %3$ds</string>
     <string name="template_cool_down_profile">Iniciar en: %1$d%% - Cargar por %2$ds - Pausa por %3$ds</string>
-    <!--Profiles Options-->
-    <string name="menu_option_edit">Editar</string>
-    <string name="menu_option_rename">Renombrar</string>
-    <string name="menu_option_delete">Borrar</string>
+    <!--Menus Options-->
     <string name="selecting_profile_toast">Seleccionando perfil %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox no está instalado</string>
     <string name="installation_failed_busybox">Instalar busybox primero o simplemente colocar el binario en /data/adb/bin/</string>
