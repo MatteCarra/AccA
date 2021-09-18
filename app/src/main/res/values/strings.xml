@@ -71,7 +71,7 @@
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Stop daemon after applying settings</string>
     <string name="description_exit_on_boot">This is used for writing to control files on boot.</string>
-    <string name="label_on_boot" translatable="false">apply_on_boot:</string>
+    <string name="label_on_boot">apply_on_boot:</string>
 
     <!-- ACC installation -->
     <string name="installing_acc">Installing ACC</string>
@@ -183,7 +183,7 @@
     <string name="script_body_text">Shell text:</string>
 
     <string name="title_on_plugged">Apply on Plug</string>
-    <string name="label_on_plugged" translatable="false">applyOnPlug:</string>
+    <string name="label_on_plugged">applyOnPlug:</string>
     <string name="edit_on_plugged">Edit apply_on_plug settings:</string>
 
     <string name="edit_on_plugged_dialog_message">Example: wireless/voltage_max::9000000 forces fast wireless charging on some Pixel devices.</string>
@@ -414,4 +414,7 @@
         \n\nIf the error persists, please share the stack trace below along with ACC &amp; AccA version (via the 3-dot menu &gt; About) with the developers via Telegram.\n\n%s</string>
     <string name="automatic_switch_eanbled">Automatically cycle through switches</string>
     <string name="info_voltage">Voltage</string>
+    <string name="profile_option_edit">Edit</string>
+    <string name="profile_option_rename">Rename</string>
+    <string name="profile_option_delete">Delete</string>
 </resources>

@@ -19,14 +19,14 @@
 
         <EditText
             android:id="@+id/schedule_name_edit_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:hint="@string/schedule_name"
             android:inputType="text"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/profile_name"
             android:textColor="?android:attr/textColorPrimary"
@@ -34,7 +34,7 @@
 
         <Spinner
             android:id="@+id/profile_selector"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp" />
 
@@ -47,7 +47,7 @@
 
         <Spinner
             android:id="@+id/schedule_type_selector"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:entries="@array/schedule_type_entries"

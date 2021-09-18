@@ -53,9 +53,7 @@ class DashboardFragment : ScopedFragment()
     private lateinit var preferences: Preferences
     private var mIsDaemonRunning: Boolean? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View?
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         binding = DashboardFragmentBinding.inflate(inflater, container, false)
         return binding.root
@@ -76,9 +74,7 @@ class DashboardFragment : ScopedFragment()
 
         mViewModel.getDashboardValues().observe(viewLifecycleOwner) { dash ->
             // Set Status Card text
-            dash.daemon?.let { daemon ->
-                setAccdStatusUi(daemon)
-            }
+            dash.daemon?.let { daemon -> setAccdStatusUi(daemon) }
 
             // Battery/Charge details
             binding.dashBatteryCapacityPBar.progress = dash.batteryInfo.capacity
@@ -92,8 +88,7 @@ class DashboardFragment : ScopedFragment()
 
             binding.dashBatteryTemperatureTextView.text = dash.batteryInfo.temperature.toString() + Typography.degree + "C/" + dash.batteryInfo.getTempFahrenheit() + Typography.degree + "F"
             binding.dashBatteryHealthTextView.text = dash.batteryInfo.health
-            binding.dashBatteryVoltageTextView.text = dash.batteryInfo.getVoltageNow(preferences.voltageUnitOfMeasure).toString()
-
+            binding.dashBatteryVoltageTextView.text = dash.batteryInfo.getVoltageNow(preferences.voltageUnitOfMeasure) + " V"
         }
 
         activity?.let { it ->
@@ -102,9 +97,7 @@ class DashboardFragment : ScopedFragment()
             configViewModel = ViewModelProvider(it).get(SharedViewModel::class.java)
 
             binding.dashResetBatteryStatsButton.setOnClickListener {
-                launch {
-                    Acc.instance.resetBatteryStats()
-                }
+                launch { Acc.instance.resetBatteryStats() }
             }
 
             binding.dashEditCargingLimitOnceButton.setOnClickListener {

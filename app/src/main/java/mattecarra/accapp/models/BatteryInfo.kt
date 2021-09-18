@@ -88,28 +88,23 @@ class BatteryInfo(val name: String,
      * Returns voltage now as float.
      * @return current battery operating voltage in V.
      */
-    fun getVoltageNow(unit: VoltageUnit): Float {
-        return if (unit == VoltageUnit.uV) {
-            voltageNow / 1000000f
-        } else if (unit == VoltageUnit.mV) {
-            voltageNow / 1000f
-        } else {
-            voltageNow
-        }
+    fun getVoltageNow(unit: VoltageUnit): String
+    {
+        return String.format("%.3f",
+            if (unit == VoltageUnit.uV) voltageNow / 1000000f
+            else if (unit == VoltageUnit.mV) voltageNow / 1000f
+            else voltageNow)
     }
 
     /**
      * Returns inverted, friendly value for CURRENT_NOW expressed in mAh
      * @return current mAh draw.
      */
-    fun getCurrentNow(unit: CurrentUnit): Int {
-        return if (unit == CurrentUnit.uA) {
-            (currentNow / 1000f).toInt()
-        } else if(unit == CurrentUnit.mA) {
-            currentNow.toInt()
-        } else {
-            (currentNow * 1000).toInt()
-        }
+    fun getCurrentNow(unit: CurrentUnit): Int
+    {
+        return if (unit == CurrentUnit.uA) (currentNow / 1000f).toInt()
+        else if(unit == CurrentUnit.mA) currentNow.toInt()
+        else (currentNow * 1000).toInt()
     }
 
     /**

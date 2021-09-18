@@ -155,22 +155,25 @@
                         app:progress_text_size="@dimen/label_text"
                         app:style="solid_line" />
 
-                    <TableLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/card_content_padding"
-                        android:shrinkColumns="0"
-                        android:stretchColumns="1">
+                        android:orientation="vertical">
 
                         <!-- Battery Charging Status -->
-                        <TableRow>
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content"
+                             android:layout_width="match_parent">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
                                 android:text="@string/info_status"
-                                android:textSize="@dimen/label_text" />
+                                android:textSize="@dimen/label_text"
+                                android:layout_weight="1"/>
 
                             <TextView
                                 android:id="@+id/dash_batteryStatus_textView"
@@ -178,18 +181,22 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="end"
                                 android:text="..." />
-                        </TableRow>
+                        </LinearLayout>
 
                         <!-- Battery Charging Speed -->
-                        <TableRow>
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent">
 
                             <TextView
                                 android:id="@+id/dash_batteryChargingSpeed_textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
-                                android:text="..."
-                                android:textSize="@dimen/label_text" />
+                                android:text="@string/info_charging_speed"
+                                android:textSize="@dimen/label_text"
+                                android:layout_weight="1"/>
 
                             <TextView
                                 android:id="@+id/dash_chargingSpeed_textView"
@@ -197,17 +204,21 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="end"
                                 android:text="..." />
-                        </TableRow>
+                        </LinearLayout>
 
                         <!-- Battery Temperature -->
-                        <TableRow>
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
                                 android:text="@string/info_temperature"
-                                android:textSize="@dimen/label_text" />
+                                android:textSize="@dimen/label_text"
+                                android:layout_weight="1"/>
 
                             <TextView
                                 android:id="@+id/dash_batteryTemperature_textView"
@@ -215,17 +226,21 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="end"
                                 android:text="..." />
-                        </TableRow>
+                        </LinearLayout>
 
                         <!-- Battery Voltage -->
-                        <TableRow>
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
                                 android:text="@string/info_voltage"
-                                android:textSize="@dimen/label_text" />
+                                android:textSize="@dimen/label_text"
+                                android:layout_weight="1"/>
 
                             <TextView
                                 android:id="@+id/dash_batteryVoltage_textView"
@@ -233,17 +248,21 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="end"
                                 android:text="..." />
-                        </TableRow>
+                        </LinearLayout>
 
                         <!-- Battery Health -->
-                        <TableRow>
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
                                 android:text="@string/info_health"
-                                android:textSize="@dimen/label_text" />
+                                android:textSize="@dimen/label_text"
+                                android:layout_weight="1"/>
 
                             <TextView
                                 android:id="@+id/dash_batteryHealth_textView"
@@ -251,8 +270,9 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="end"
                                 android:text="..." />
-                        </TableRow>
-                    </TableLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
                 </LinearLayout>
 
                 <!-- Buttons -->

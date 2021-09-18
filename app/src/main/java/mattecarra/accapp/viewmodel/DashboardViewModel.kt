@@ -29,7 +29,7 @@ class DashboardViewModel : ViewModel() {
                         Acc.instance.isAccdRunning()
                     )
                 }
-                delay(1000)
+                delay(2000)
             }
         }
     }
