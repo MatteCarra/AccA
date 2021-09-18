@@ -24,8 +24,7 @@ import mattecarra.accapp.utils.ScopedFragment
 import mattecarra.accapp.viewmodel.ProfilesViewModel
 import mattecarra.accapp.viewmodel.SharedViewModel
 
-class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
-{
+class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener  {
     private lateinit var mContext: Context
     private lateinit var mViewModel: ProfilesViewModel
     private lateinit var mSharedViewModel: SharedViewModel
@@ -40,20 +39,14 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
     {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 7 && resultCode == Activity.RESULT_OK && data?.getBooleanExtra(
-                Constants.ACC_HAS_CHANGES,
-                false
-            ) == true)
+        if (requestCode == 7 && resultCode == Activity.RESULT_OK && data?.getBooleanExtra(Constants.ACC_HAS_CHANGES, false) == true)
         {
             launch {
                 mSharedViewModel.updateAccConfig(data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig) //TODO: Check assertion
                 // Remove the current selected profile
                 mSharedViewModel.clearCurrentSelectedProfile()
 
-                updateInfo(
-                    getString(R.string.profile_not_selected),
-                    data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig
-                )
+                updateInfo(getString(R.string.profile_not_selected), data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig)
             }
         }
     }
@@ -107,9 +100,8 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
             val currentConfig = Acc.instance.readConfig()
             val selectedProfileConfig = mViewModel.getProfileById(profileId)?.accConfig
 
-            val name =
-                if (profileId == -1 || currentConfig != selectedProfileConfig) getString(R.string.profile_not_selected)
-                else mViewModel.getProfileById(profileId)?.profileName.toString()
+            val name = if (profileId == -1 || currentConfig != selectedProfileConfig) getString(R.string.profile_not_selected)
+            else mViewModel.getProfileById(profileId)?.profileName.toString()
 
             updateInfo(name, currentConfig)
         }
@@ -121,25 +113,20 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
         binding.itemProfileCapacityTv.text = accConfig.configCapacity.toString(mContext)
 
         binding.itemProfileSwitchLl.isGone = accConfig.configChargeSwitch.isNullOrEmpty()
-        binding.itemProfileSwitchDataTv.text =
-            accConfig.configChargeSwitch ?: mContext.getString(R.string.automatic)
-        binding.itemProfileAutomaticSwitchingTv.isVisible =
-            accConfig.configIsAutomaticSwitchingEnabled
+        binding.itemProfileSwitchDataTv.text = accConfig.configChargeSwitch ?: mContext.getString(R.string.automatic)
+        binding.itemProfileAutomaticSwitchingTv.isVisible = accConfig.configIsAutomaticSwitchingEnabled
 
         //-----------------------------------------------
 
-        binding.itemProfileChargingVoltageLl.isVisible =
-            (accConfig.configVoltage.controlFile != null || accConfig.configVoltage.max != null || accConfig.configCurrMax != null)
+        binding.itemProfileChargingVoltageLl.isVisible = (accConfig.configVoltage.controlFile != null || accConfig.configVoltage.max != null || accConfig.configCurrMax != null)
 
         binding.itemProfileChargingVoltageTv.text = accConfig.configVoltage.toString(mContext)
-        binding.itemProfileCurrentMaxTv.text =
-            mContext.getString(R.string.current_max) + " " + accConfig.configCurrMax.toString()
+        binding.itemProfileCurrentMaxTv.text = mContext.getString(R.string.current_max) +" "+ accConfig.configCurrMax.toString()
 
-        if ((accConfig.configVoltage.controlFile == null || accConfig.configVoltage.max == null) && accConfig.configCurrMax == null)
-        else
+        if ((accConfig.configVoltage.controlFile == null || accConfig.configVoltage.max == null)
+            && accConfig.configCurrMax == null) else
         {
-            binding.itemProfileChargingVoltageTv.isGone =
-                accConfig.configVoltage.controlFile == null && accConfig.configVoltage.max == null
+            binding.itemProfileChargingVoltageTv.isGone = accConfig.configVoltage.controlFile == null && accConfig.configVoltage.max == null
             binding.itemProfileCurrentMaxTv.isGone = accConfig.configCurrMax == null
         }
 

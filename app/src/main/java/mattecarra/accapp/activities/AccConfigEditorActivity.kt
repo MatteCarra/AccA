@@ -39,8 +39,8 @@ import mattecarra.accapp.utils.ScopedAppActivity
 import mattecarra.accapp.viewmodel.AccConfigEditorViewModel
 import mattecarra.accapp.viewmodel.AccConfigEditorViewModelFactory
 
-class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeListener,
-    CompoundButton.OnCheckedChangeListener
+class AccConfigEditorActivity : ScopedAppActivity(),
+    NumberPicker.OnValueChangeListener, CompoundButton.OnCheckedChangeListener
 {
     private lateinit var content: ContentAccConfigEditorBinding
     private lateinit var viewModel: AccConfigEditorViewModel
@@ -54,17 +54,13 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         if (accConfigOnly)  // FIX OUT if load ONLY ACC Config
         {
             if (!viewModel.enables.eCoolDown) viewModel.coolDown = null
-            if (!viewModel.enables.eVoltage) viewModel.voltageLimit =
-                AccConfig.ConfigVoltage(null, null)
+            if (!viewModel.enables.eVoltage) viewModel.voltageLimit = AccConfig.ConfigVoltage(null, null)
             if (!viewModel.enables.eRunOnBoot) viewModel.onBoot = null
             if (!viewModel.enables.eRunOnPlug) viewModel.onPlug = null
         }
 
         val returnIntent = Intent()
-        returnIntent.putExtra(
-            Constants.PROFILE_ID_KEY,
-            intent.getIntExtra(Constants.PROFILE_ID_KEY, -1)
-        )
+        returnIntent.putExtra(Constants.PROFILE_ID_KEY, intent.getIntExtra(Constants.PROFILE_ID_KEY, -1))
         returnIntent.putExtra(Constants.ACC_HAS_CHANGES, viewModel.unsavedChanges)
         returnIntent.putExtra(Constants.ACC_CONFIG_KEY, viewModel.profile.accConfig)
         returnIntent.putExtra(Constants.PROFILE_CONFIG_KEY, viewModel.profile)
@@ -84,38 +80,38 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         mPreferences = Preferences(this)
 
         setSupportActionBar(binding.accConfEditorToolbar)
-        supportActionBar?.title =
-            intent?.getStringExtra(Constants.TITLE_KEY) ?: getString(R.string.acc_config_editor)
+        supportActionBar?.title = intent?.getStringExtra(Constants.TITLE_KEY) ?: getString(R.string.acc_config_editor)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val profile = when // load profile from intent
         {
-            savedInstanceState?.containsKey(Constants.PROFILE_CONFIG_KEY) == true -> savedInstanceState.getSerializable(
-                Constants.PROFILE_CONFIG_KEY
-            ) as AccaProfile
+            savedInstanceState?.containsKey(Constants.PROFILE_CONFIG_KEY) == true ->
+                savedInstanceState.getSerializable(Constants.PROFILE_CONFIG_KEY) as AccaProfile
 
-            intent.hasExtra(Constants.PROFILE_CONFIG_KEY) -> intent.getSerializableExtra(Constants.PROFILE_CONFIG_KEY) as AccaProfile
+            intent.hasExtra(Constants.PROFILE_CONFIG_KEY) ->
+                intent.getSerializableExtra(Constants.PROFILE_CONFIG_KEY) as AccaProfile
 
             else ->
             {
                 accConfigOnly = true
-                AccaProfile(-1, "", AccConfig(), ProfileEnables())
+                AccaProfile(-1,"", AccConfig(), ProfileEnables())
             }
         }
 
         val config = when // load config from intent or current config
         {
-            savedInstanceState?.containsKey(Constants.ACC_CONFIG_KEY) == true -> savedInstanceState.getSerializable(
-                Constants.ACC_CONFIG_KEY
-            ) as AccConfig
+            savedInstanceState?.containsKey(Constants.ACC_CONFIG_KEY) == true ->
+                savedInstanceState.getSerializable(Constants.ACC_CONFIG_KEY) as AccConfig
 
-            intent.hasExtra(Constants.ACC_CONFIG_KEY) -> intent.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig
+            intent.hasExtra(Constants.ACC_CONFIG_KEY) ->
+                intent.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig
 
             else -> try
             {
                 runBlocking { Acc.instance.readConfig() }
-            } catch (ex: Exception)
+            }
+            catch (ex: Exception)
             {
                 ex.printStackTrace()
                 showConfigReadError()
@@ -126,10 +122,8 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         if (accConfigOnly) profile.accConfig = config
         initConfig = profile.accConfig.copy()
 
-        viewModel =
-            ViewModelProvider(this, AccConfigEditorViewModelFactory(application, profile)).get(
-                    AccConfigEditorViewModel::class.java
-                )
+        viewModel = ViewModelProvider(this, AccConfigEditorViewModelFactory(application, profile))
+            .get(AccConfigEditorViewModel::class.java)
 
         initUi()
 
@@ -138,7 +132,8 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
 
     private fun initUi()
     {
-        viewModel.observeEnables(this, Observer {
+        viewModel.observeEnables(this, Observer
+        {
             content.capacitySwitchEnabled.isChecked = it.eCapacity
             content.voltcontrolSwitchEnabled.isChecked = it.eVoltage
             content.tempSwitchEnabled.isChecked = it.eTemperature
@@ -147,20 +142,13 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
             content.onPluggedSwitchEnabled.isChecked = it.eRunOnPlug
         })
 
-        viewModel.observePrioritizeBatteryIdleMode(
-            this,
-            Observer { content.batteryPrioritizeIdleSwitchEnabled.isChecked = it })
-        viewModel.observeResetBSOnUnplug(
-            this,
-            Observer { content.resetStatusUnplugSwitch.isChecked = it })
-        viewModel.observeResetBSOnPause(
-            this,
-            Observer { content.resetBSOnPauseSwitch.isChecked = it })
-        viewModel.observeIsAutomaticSwitchEnabled(
-            this,
-            Observer { content.automaticSwitchEnabled.isChecked = it })
+        viewModel.observePrioritizeBatteryIdleMode(this, Observer { content.batteryPrioritizeIdleSwitchEnabled.isChecked = it })
+        viewModel.observeResetBSOnUnplug(this, Observer { content.resetStatusUnplugSwitch.isChecked = it })
+        viewModel.observeResetBSOnPause(this, Observer { content.resetBSOnPauseSwitch.isChecked = it })
+        viewModel.observeIsAutomaticSwitchEnabled(this, Observer { content.automaticSwitchEnabled.isChecked = it })
 
-        viewModel.observeCapacity(this, Observer {
+        viewModel.observeCapacity(this, Observer
+        {
             content.shutdownCapacityPicker.minValue = 2
             content.shutdownCapacityPicker.maxValue = 20
             content.shutdownCapacityPicker.value = it.shutdown
@@ -174,13 +162,15 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
             content.pauseCapacityPicker.value = it.pause
         })
 
-        viewModel.observeChargeSwitch(this, Observer {
+        viewModel.observeChargeSwitch(this, Observer
+        {
             content.chargingSwitchTextview.text = it ?: getString(R.string.automatic)
             content.automaticSwitchEnabled.isEnabled = it != null
             if (it == null) content.automaticSwitchEnabled.isChecked = true
         })
 
-        viewModel.observeTemperature(this, Observer {
+        viewModel.observeTemperature(this, Observer
+        {
             content.temperatureCooldownPicker.minValue = 20
             content.temperatureCooldownPicker.maxValue = 90
             content.temperatureCooldownPicker.value = it.coolDownTemperature
@@ -194,7 +184,8 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
             content.temperatureMaxPauseSecondsPicker.value = it.pause
         })
 
-        viewModel.observeCoolDown(this, Observer {
+        viewModel.observeCoolDown(this, Observer
+        {
             content.cooldownPercentagePicker.minValue = 0
             content.cooldownPercentagePicker.maxValue = 100
             content.cooldownPercentagePicker.value = it?.atPercent ?: 60
@@ -208,26 +199,25 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
             content.cooldownPauseRatioPicker.value = it?.pause ?: 10
         })
 
-        viewModel.observeVoltageLimit(this, Observer {
+        viewModel.observeVoltageLimit(this, Observer
+        {
             content.voltageControlFileSpinner.text = it.controlFile ?: "Not supported"
-            content.voltageMaxEditText.text =
-                it.max?.let { "$it mV" } ?: getString(R.string.disabled)
+            content.voltageMaxEditText.text = it.max?.let { "$it mV" } ?: getString(R.string.disabled)
         })
 
-        viewModel.observeCurrentMax(this, Observer {
+        viewModel.observeCurrentMax(this, Observer
+        {
             content.currentMaxEditText.text = it?.let { "$it mA" } ?: getString(R.string.disabled)
         })
 
-        viewModel.observeOnPlug(this, Observer { configOnPlug ->
-            content.tvConfigOnPlugged.text =
-                configOnPlug?.let { if (it.isBlank()) getString(R.string.voltage_control_file_not_set) else it }
-                    ?: getString(R.string.voltage_control_file_not_set)
+        viewModel.observeOnPlug(this, Observer
+        { configOnPlug ->
+            content.tvConfigOnPlugged.text = configOnPlug?.let { if(it.isBlank()) getString(R.string.voltage_control_file_not_set) else it } ?: getString(R.string.voltage_control_file_not_set)
         })
 
-        viewModel.observeOnBoot(this, Observer { configOnBoot ->
-            content.tvConfigOnBoot.text =
-                configOnBoot?.let { if (it.isBlank()) getString(R.string.voltage_control_file_not_set) else it }
-                    ?: getString(R.string.voltage_control_file_not_set)
+        viewModel.observeOnBoot(this, Observer
+        { configOnBoot ->
+            content.tvConfigOnBoot.text = configOnBoot?.let { if(it.isBlank()) getString(R.string.voltage_control_file_not_set) else it } ?: getString(R.string.voltage_control_file_not_set)
         })
 
         //--------------------------------------------------------------------------
@@ -271,7 +261,7 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         content.cooldownSwitchEnabled.setOnCheckedChangeListener(this)
         content.applyOnBootSwitchEnabled.setOnCheckedChangeListener(this)
         content.onPluggedSwitchEnabled.setOnCheckedChangeListener(this)
-        content.resetStatusUnplugSwitch.setOnCheckedChangeListener(this)
+        content.resetStatusUnplugSwitch.setOnCheckedChangeListener (this)
         content.resetBSOnPauseSwitch.setOnCheckedChangeListener(this)
 
         if (accConfigOnly) // FIX Checks and Visibility if loaded ONLY ACC Config
@@ -303,9 +293,7 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
     {
         menuInflater.inflate(R.menu.acc_config_editor_menu, menu)
         mUndoMenuItem = menu.findItem(R.id.action_undo)
-        viewModel.undoOperationAvailableLiveData.observe(
-            this,
-            Observer { mUndoMenuItem.isEnabled = it })
+        viewModel.undoOperationAvailableLiveData.observe(this, Observer { mUndoMenuItem.isEnabled = it })
         return true
     }
 
@@ -316,10 +304,7 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
             R.id.action_save -> returnResults()
             R.id.action_restore -> viewModel.profile.accConfig = initConfig.copy()
             R.id.action_undo -> viewModel.undoLastConfigOperation()
-            android.R.id.home ->
-            {
-                onBackPressed(); return true
-            }
+            android.R.id.home -> { onBackPressed(); return true }
         }
 
         return super.onOptionsItemSelected(item)
@@ -330,12 +315,12 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         if (viewModel.unsavedChanges)
         {
             MaterialDialog(this).show {
-                title(R.string.unsaved_changes)
-                message(R.string.unsaved_changes_message)
-                positiveButton(R.string.save) { returnResults() }
-                negativeButton(R.string.close_without_saving) { finish() }
-                neutralButton(android.R.string.cancel)
-            }
+                    title(R.string.unsaved_changes)
+                    message(R.string.unsaved_changes_message)
+                    positiveButton(R.string.save) { returnResults() }
+                    negativeButton(R.string.close_without_saving) { finish() }
+                    neutralButton(android.R.string.cancel)
+                }
         }
         else super.onBackPressed()
     }
@@ -349,32 +334,25 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
 //    }
 
     private fun updateProfileSwitchCard(profileEnables: ProfileEnables)
-    {
-    }
+    {}
 
     private fun updateCapacityCard(configCapacity: AccConfig.ConfigCapacity)
-    {
-    }
+    {}
 
     private fun updateChargeSwitch(configChargeSwitch: String?)
-    {
-    }
+    {}
 
     private fun updateTemperatureCard(configTemperature: AccConfig.ConfigTemperature)
-    {
-    }
+    {}
 
     private fun updateCoolDownCard(configCoolDown: AccConfig.ConfigCoolDown?)
-    {
-    }
+    {}
 
     private fun updateVoltageControlCard(configVoltage: AccConfig.ConfigVoltage)
-    {
-    }
+    {}
 
     private fun updateCurrentMaxControlCard(currentMax: Int?)
-    {
-    }
+    {}
 
     //-------------------------------------------------------------------------------------
 
@@ -505,26 +483,20 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
         when (picker)
         {
             //capacity
-            content.shutdownCapacityPicker -> viewModel.capacity =
-                viewModel.capacity.copy(shutdown = newVal)
-            content.resumeCapacityPicker -> viewModel.capacity =
-                viewModel.capacity.copy(resume = newVal)
-            content.pauseCapacityPicker -> viewModel.capacity =
-                viewModel.capacity.copy(pause = newVal)
-            content.temperatureCooldownPicker -> viewModel.temperature =
-                viewModel.temperature.copy(coolDownTemperature = newVal)
-            content.temperatureMaxPicker -> viewModel.temperature =
-                viewModel.temperature.copy(maxTemperature = newVal)
-            content.temperatureMaxPauseSecondsPicker -> viewModel.temperature =
-                viewModel.temperature.copy(pause = newVal)
+            content.shutdownCapacityPicker -> viewModel.capacity = viewModel.capacity.copy(shutdown = newVal)
+            content.resumeCapacityPicker -> viewModel.capacity = viewModel.capacity.copy(resume = newVal)
+            content.pauseCapacityPicker -> viewModel.capacity = viewModel.capacity.copy(pause = newVal)
+            content.temperatureCooldownPicker -> viewModel.temperature = viewModel.temperature.copy(coolDownTemperature = newVal)
+            content.temperatureMaxPicker -> viewModel.temperature = viewModel.temperature.copy(maxTemperature = newVal)
+            content.temperatureMaxPauseSecondsPicker -> viewModel.temperature = viewModel.temperature.copy(pause = newVal)
 
             //coolDown
-            content.cooldownPercentagePicker, content.cooldownChargeRatioPicker, content.cooldownPauseRatioPicker -> viewModel.coolDown =
+            content.cooldownPercentagePicker, content.cooldownChargeRatioPicker,
+            content.cooldownPauseRatioPicker -> viewModel.coolDown =
                 AccConfig.ConfigCoolDown(
                     content.cooldownPercentagePicker.value,
                     content.cooldownChargeRatioPicker.value,
-                    content.cooldownPauseRatioPicker.value
-                )
+                    content.cooldownPauseRatioPicker.value)
 
             else -> return
         }
@@ -548,7 +520,7 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
             ) { _, text -> viewModel.onBoot = if (text.isNotBlank()) text.toString() else null }
             positiveButton(R.string.save)
             negativeButton(android.R.string.cancel)
-            neutralButton(text = "clear", click = { viewModel.onBoot = null })
+            neutralButton(text = "clear", click = { viewModel.onBoot = null }  )
         }
     }
 
@@ -562,12 +534,10 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
                 prefill = viewModel.onPlug ?: "",
                 allowEmpty = true,
                 hintRes = R.string.edit_on_boot_dialog_hint
-            ) { _, text ->
-                viewModel.onPlug = if (text.trim().isNotEmpty()) text.toString() else null
-            }
+            ) { _, text -> viewModel.onPlug = if (text.trim().isNotEmpty()) text.toString() else null }
             positiveButton(R.string.save)
             negativeButton(android.R.string.cancel)
-            neutralButton(text = "clear", click = { viewModel.onPlug = null })
+            neutralButton(text = "clear", click = { viewModel.onPlug = null }  )
 
         }
     }
@@ -619,8 +589,7 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
 
 //                                val view = dialog.getCustomView()
 //                                val switch = "${view.charging_switch_edit_text.text} ${view.charging_switch_on_value_edit_text.text} ${view.charging_switch_off_value_edit_text.text}"
-                                val switch =
-                                    "${binding.chargingSwitchEditText.text} ${binding.chargingSwitchOnValueEditText.text} ${binding.chargingSwitchOffValueEditText.text}"
+                                val switch = "${binding.chargingSwitchEditText.text} ${binding.chargingSwitchOnValueEditText.text} ${binding.chargingSwitchOffValueEditText.text}"
                                 this@AccConfigEditorActivity.launch {
                                     var success = true
 
@@ -639,21 +608,14 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
 
                                     if (success)
                                     {
-                                        chargingSwitches = listOf(
-                                            *chargingSwitches.toTypedArray(),
-                                            switch
-                                        ) //update the list of switches with the new switch
+                                        chargingSwitches = listOf(*chargingSwitches.toTypedArray(), switch) //update the list of switches with the new switch
 
                                         if (Acc.instance.addChargingSwitch(switch))
                                         {
                                             previousDialog.updateListItemsSingleChoice(items = chargingSwitches)
                                             currentIndex = chargingSwitches.size - 1
                                         }
-                                        else Toast.makeText(
-                                            this@AccConfigEditorActivity,
-                                            R.string.error_occurred,
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                        else Toast.makeText(this@AccConfigEditorActivity, R.string.error_occurred, Toast.LENGTH_SHORT).show()
                                     }
 
                                     progressDialog.dismiss()
@@ -675,8 +637,7 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
                 }
 
                 positiveButton(R.string.save) {
-                    viewModel.chargeSwitch =
-                        if (currentIndex == 0) null else chargingSwitches[currentIndex]
+                    viewModel.chargeSwitch = if (currentIndex == 0) null else chargingSwitches[currentIndex]
                     dismiss()
                 }
 
@@ -715,11 +676,8 @@ class AccConfigEditorActivity : ScopedAppActivity(), NumberPicker.OnValueChangeL
     fun editPowerOnClick(v: View)
     {
         MaterialDialog(this@AccConfigEditorActivity).show {
-            powerLimitDialog(
-                viewModel.voltageLimit,
-                viewModel.currentMaxLimit,
-                this@AccConfigEditorActivity
-            ) { controlFile, voltageMaxEnabled, voltageMax, currentMaxEnabled, currentMax ->
+            powerLimitDialog(viewModel.voltageLimit, viewModel.currentMaxLimit, this@AccConfigEditorActivity)
+            { controlFile, voltageMaxEnabled, voltageMax, currentMaxEnabled, currentMax ->
 
                 if (voltageMaxEnabled && voltageMax != null)
                 {

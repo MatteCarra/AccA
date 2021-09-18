@@ -110,25 +110,11 @@ abstract class AccaRoomDatabase : RoomDatabase()
 
             synchronized(this) {
                 // Create database instance here
-                INSTANCE = Room.databaseBuilder(
-                    context.applicationContext,
-                    AccaRoomDatabase::class.java,
-                    DATABASE_NAME
-                ).addMigrations(
-                        MIGRATION_1_2,
-                        MIGRATION_2_3,
-                        MIGRATION_3_4,
-                        MIGRATION_4_5,
-                        MIGRATION_5_6,
-                        MIGRATION_6_7,
-                        MIGRATION_7_8,
-                        MIGRATION_8_9,
-                        MIGRATION_9_10,
-                        MIGRATION_10_11
-                    ).addCallback(object : Callback()
-                    {
-                        override fun onCreate(db: SupportSQLiteDatabase)
-                        {
+                INSTANCE =
+                    Room.databaseBuilder(context.applicationContext, AccaRoomDatabase::class.java, DATABASE_NAME)
+                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10, MIGRATION_10_11)
+                        .addCallback(object : Callback() {
+                            override fun onCreate(db: SupportSQLiteDatabase) {
                                 super.onCreate(db)
                                 prepopulateDb(getDatabase(context))
                             }
@@ -141,8 +127,7 @@ abstract class AccaRoomDatabase : RoomDatabase()
         private fun prepopulateDb(db: AccaRoomDatabase) = CoroutineScope(Dispatchers.Default).launch {
 
             db.profileDao().insert(
-                AccaProfile(
-                    0, "Default Custom",
+                AccaProfile(0, "Default Custom",
                     AccConfig(
                         configCapacity = AccConfig.ConfigCapacity(5, 70, 80),
                         configTemperature = AccConfig.ConfigTemperature(40, 45, 90)
@@ -152,21 +137,23 @@ abstract class AccaRoomDatabase : RoomDatabase()
             )
 
             db.profileDao().insert(
-                AccaProfile(
-                    0, "Charge to 90%", AccConfig(
+                AccaProfile(0, "Charge to 90%",
+                    AccConfig(
                         configCapacity = AccConfig.ConfigCapacity(5, 85, 90),
                         configTemperature = AccConfig.ConfigTemperature(40, 45, 90)
-                    ), ProfileEnables(eCapacity = true, eTemperature = true)
+                    ),
+                    ProfileEnables(eCapacity = true, eTemperature = true)
                 )
             )
 
             db.profileDao().insert(
-                AccaProfile(
-                    0, "Cool down after 60%", AccConfig(
+                AccaProfile(0, "Cool down after 60%",
+                    AccConfig(
                         configCapacity = AccConfig.ConfigCapacity(5, 70, 80),
                         configTemperature = AccConfig.ConfigTemperature(40, 45, 90),
                         configCoolDown = AccConfig.ConfigCoolDown(60, 50, 10)
-                    ), ProfileEnables(eCapacity = true, eTemperature = true, eCoolDown = true)
+                    ),
+                    ProfileEnables(eCapacity = true, eTemperature = true, eCoolDown = true)
                 )
             )
 

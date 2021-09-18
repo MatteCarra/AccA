@@ -61,37 +61,22 @@ class ProfilesFragment : ScopedFragment(),
     {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 7 && resultCode == Activity.RESULT_OK && data?.getBooleanExtra(
-                Constants.ACC_HAS_CHANGES,
-                false
-            ) == true)
+        if (requestCode == 7 && resultCode == Activity.RESULT_OK && data?.getBooleanExtra(Constants.ACC_HAS_CHANGES, false) == true)
         {
             launch {
 
                 val uid = data.getIntExtra(Constants.PROFILE_ID_KEY, -1) as Int
                 val newConfig = data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig
-                val newProfile =
-                    data.getSerializableExtra(Constants.PROFILE_CONFIG_KEY) as AccaProfile
+                val newProfile = data.getSerializableExtra(Constants.PROFILE_CONFIG_KEY) as AccaProfile
 
                 mProfilesViewModel.updateProfile(newProfile)
 
-                Toast.makeText(
-                    mContext,
-                    mContext.getString(
-                        R.string.profile_tile_label,
-                        newProfile.profileName
-                    ) + '\n' + mContext.getString(R.string.update_completed),
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(mContext, mContext.getString(R.string.profile_tile_label, newProfile.profileName) + '\n' + mContext.getString(R.string.update_completed), Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View?
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         return ProfilesFragmentBinding.inflate(inflater, container, false).root
     }
@@ -128,10 +113,7 @@ class ProfilesFragment : ScopedFragment(),
 
         prefs.registerOnSharedPreferenceChangeListener(this)
 
-        val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(
-            0,
-            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-        ) {
+        val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 
             private var swipeBack: Boolean = true
             private val background = ColorDrawable()
@@ -256,9 +238,8 @@ class ProfilesFragment : ScopedFragment(),
                 val currentConfig = Acc.instance.readConfig()
                 val selectedProfileConfig = mProfilesViewModel.getProfileById(profileId)?.accConfig
 
-                if (profileId != -1 && currentConfig != selectedProfileConfig) ProfileUtils.clearCurrentSelectedProfile(
-                    sharedPreferences
-                )
+                if (profileId != -1 && currentConfig != selectedProfileConfig)
+                    ProfileUtils.clearCurrentSelectedProfile(sharedPreferences)
                 else mProfilesAdapter.setActiveProfile(profileId)
             }
         }

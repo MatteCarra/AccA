@@ -6,26 +6,26 @@ import mattecarra.accapp.acc.Acc
 import java.io.Serializable
 
 /**
- * Data class for AccConfig.
- * @param configResetUnplugged Reset the battery stats upon unplugging the device.
- * @param configChargeSwitch changes the charge switch file.
- */
-//@Parcelize
-data class AccConfig(
-    var configCapacity: ConfigCapacity = ConfigCapacity(),
-    var configVoltage: ConfigVoltage = ConfigVoltage(),
-    var configCurrMax: Int? = null,
-    var configTemperature: ConfigTemperature = ConfigTemperature(),
-    var configOnBoot: String? = null,
-    var configOnPlug: String? = null,
-    var configCoolDown: ConfigCoolDown? = null,
-    var configResetUnplugged: Boolean = false,
-    var configResetBsOnPause: Boolean = false,
-    var configChargeSwitch: String? = null,
-    var configIsAutomaticSwitchingEnabled: Boolean = true,
-    var prioritizeBatteryIdleMode: Boolean = false
-) : Serializable
-{
+     * Data class for AccConfig.
+     * @param configResetUnplugged Reset the battery stats upon unplugging the device.
+     * @param configChargeSwitch changes the charge switch file.
+     */
+    //@Parcelize
+    data class AccConfig(
+        var configCapacity: ConfigCapacity = ConfigCapacity(),
+        var configVoltage: ConfigVoltage = ConfigVoltage(),
+        var configCurrMax: Int? = null,
+        var configTemperature: ConfigTemperature = ConfigTemperature(),
+        var configOnBoot: String? = null,
+        var configOnPlug: String? = null,
+        var configCoolDown: ConfigCoolDown? = null,
+        var configResetUnplugged: Boolean = false,
+        var configResetBsOnPause: Boolean = false,
+        var configChargeSwitch: String? = null,
+        var configIsAutomaticSwitchingEnabled: Boolean = true,
+        var prioritizeBatteryIdleMode: Boolean = false
+    ) : Serializable
+    {
 
     //    private companion object : Parceler<AccConfig> {
     ////
@@ -53,17 +53,11 @@ data class AccConfig(
      */
 //    data class ConfigCapacity (var shutdown: Int, var resume: Int, var pause: Int)
 
-    data class ConfigCapacity(var shutdown: Int = 0, var resume: Int = 60, var pause: Int = 70) :
-        Serializable
+    data class ConfigCapacity(var shutdown: Int = 0, var resume: Int = 60, var pause: Int = 70) : Serializable
     {
         fun toString(context: Context): String
         {
-            return String.format(
-                context.getString(R.string.template_capacity_profile),
-                shutdown,
-                resume,
-                pause
-            )
+            return String.format(context.getString(R.string.template_capacity_profile), shutdown, resume, pause)
         }
     }
 
@@ -76,10 +70,8 @@ data class AccConfig(
     {
         fun toString(context: Context): String
         {
-            return if (Acc.instance.version >= 202002170) context.getString(R.string.voltage_max) + " " + (max.toString()
-                ?: "-")
-            else context.getString(R.string.voltage_control_file) + " " + (controlFile.toString()
-                ?: "-")
+            return if (Acc.instance.version >= 202002170) context.getString(R.string.voltage_max) +" "+ (max.toString() ?: "-")
+            else context.getString(R.string.voltage_control_file) +" "+ (controlFile.toString() ?: "-")
         }
     }
 
@@ -90,22 +82,14 @@ data class AccConfig(
      * @param maxTemperature maximum temperature of the battery while charging. When met, charging will pause for <pause> seconds.
      * @param pause time in seconds to wait for the temperature to drop below <max>, to resume charging.
      */
-    data class ConfigTemperature(
-        var coolDownTemperature: Int = 40,
-        var maxTemperature: Int = 60,
-        var pause: Int = 90
-    ) : Serializable
+    data class ConfigTemperature(var coolDownTemperature: Int = 40, var maxTemperature: Int = 60, var pause: Int = 90) : Serializable
     {
         fun toString(context: Context): String
         {
-            return String.format(
-                context.getString(
+            return String.format(context.getString(
                     R.string.template_temperature_profile,
-                    coolDownTemperature,
-                    maxTemperature,
-                    pause
-                )
-            )
+                    coolDownTemperature, maxTemperature, pause
+                ))
         }
     }
 
@@ -116,8 +100,7 @@ data class AccConfig(
      * @param charge charge time in seconds.
      * @param pause pause time in seconds.
      */
-    data class ConfigCoolDown(var atPercent: Int = 60, var charge: Int = 50, var pause: Int = 10) :
-        Serializable
+    data class ConfigCoolDown(var atPercent: Int = 60, var charge: Int = 50, var pause: Int = 10) : Serializable
     {
         fun toString(context: Context): String
         {

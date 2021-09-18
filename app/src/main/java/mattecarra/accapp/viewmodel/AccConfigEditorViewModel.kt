@@ -7,8 +7,7 @@ import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.models.ProfileEnables
 import org.apache.commons.collections4.queue.CircularFifoQueue
 
-class AccConfigEditorViewModelFactory(val application: Application, val accaProfile: AccaProfile) :
-    ViewModelProvider.Factory
+class AccConfigEditorViewModelFactory(val application: Application, val accaProfile: AccaProfile) : ViewModelProvider.Factory
 {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T
     {
@@ -16,8 +15,7 @@ class AccConfigEditorViewModelFactory(val application: Application, val accaProf
     }
 }
 
-class AccConfigEditorViewModel(application: Application, private val _profile: AccaProfile) :
-    AndroidViewModel(application)
+class AccConfigEditorViewModel(application: Application, private val _profile: AccaProfile): AndroidViewModel(application)
 {
     var unsavedChanges = false
     private val profileHistory = CircularFifoQueue<AccaProfile>(10)
@@ -25,23 +23,22 @@ class AccConfigEditorViewModel(application: Application, private val _profile: A
 
     var profile: AccaProfile
         get() = AccaProfile(
-            _profile.uid, _profile.profileName, AccConfig(
-                capacity,
-                voltageLimit,
-                currentMaxLimit,
-                temperature,
-                onBoot,
-                onPlug,
-                coolDown,
-                resetBSOnUnplug,
-                resetBSOnPause,
-                chargeSwitch,
-                isAutomaticSwitchEanbled,
-                prioritizeBatteryIdleMode
-            ), enables
-        )
-        set(value)
-        {
+            _profile.uid,
+            _profile.profileName, AccConfig(
+            capacity,
+            voltageLimit,
+            currentMaxLimit,
+            temperature,
+            onBoot,
+            onPlug,
+            coolDown,
+            resetBSOnUnplug,
+            resetBSOnPause,
+            chargeSwitch,
+            isAutomaticSwitchEanbled,
+            prioritizeBatteryIdleMode),
+            enables)
+        set(value) {
             addToHistory(profile)
             updateProfileLiveData(value)
             unsavedChanges = true
@@ -50,10 +47,8 @@ class AccConfigEditorViewModel(application: Application, private val _profile: A
     private val enablesLiveData = MutableLiveData(_profile.pEnables)
     var enables: ProfileEnables
         get() = enablesLiveData.value!!
-        set(value)
-        {
-            if (enablesLiveData.value != value)
-            {
+        set(value) {
+            if (enablesLiveData.value != value) {
                 addToHistory(profile)
                 enablesLiveData.value = value
                 unsavedChanges = true
@@ -63,10 +58,8 @@ class AccConfigEditorViewModel(application: Application, private val _profile: A
     private val capacityLiveData = MutableLiveData(_profile.accConfig.configCapacity)
     var capacity: AccConfig.ConfigCapacity
         get() = capacityLiveData.value!!
-        set(value)
-        {
-            if (capacityLiveData.value != value)
-            {
+        set(value) {
+            if (capacityLiveData.value != value) {
                 addToHistory(profile)
                 capacityLiveData.value = value
                 unsavedChanges = true
@@ -76,10 +69,8 @@ class AccConfigEditorViewModel(application: Application, private val _profile: A
     private val voltageLiveData = MutableLiveData(_profile.accConfig.configVoltage)
     var voltageLimit: AccConfig.ConfigVoltage
         get() = voltageLiveData.value!!
-        set(value)
-        {
-            if (voltageLiveData.value != value)
-            {
+        set(value) {
+            if (voltageLiveData.value != value) {
                 addToHistory(profile)
                 voltageLiveData.value = value
                 unsavedChanges = true
@@ -89,10 +80,8 @@ class AccConfigEditorViewModel(application: Application, private val _profile: A
     private val currentMaxLiveData = MutableLiveData(_profile.accConfig.configCurrMax)
     var currentMaxLimit: Int?
         get() = currentMaxLiveData.value
-        set(value)
-        {
-            if (currentMaxLiveData.value != value)
-            {
+        set(value) {
+            if (currentMaxLiveData.value != value) {
                 addToHistory(profile)
                 currentMaxLiveData.value = value
                 unsavedChanges = true
@@ -102,10 +91,8 @@ class AccConfigEditorViewModel(application: Application, private val _profile: A
     private val temperatureLiveData = MutableLiveData(_profile.accConfig.configTemperature)
     var temperature: AccConfig.ConfigTemperature
         get() = temperatureLiveData.value!!
-        set(value)
-        {
-            if (temperatureLiveData.value != value)
-            {
+        set(value) {
+            if (temperatureLiveData.value != value) {
                 addToHistory(profile)
                 temperatureLiveData.value = value
                 unsavedChanges = true
@@ -115,10 +102,8 @@ class AccConfigEditorViewModel(application: Application, private val _profile: A
     private val onBootLiveData = MutableLiveData(_profile.accConfig.configOnBoot)
     var onBoot: String?
         get() = onBootLiveData.value
-        set(value)
-        {
-            if (onBootLiveData.value != value)
-            {
+        set(value) {
+            if (onBootLiveData.value != value) {
                 addToHistory(profile)
                 onBootLiveData.value = value
                 unsavedChanges = true
@@ -128,10 +113,8 @@ class AccConfigEditorViewModel(application: Application, private val _profile: A
     private val onPlugLiveData = MutableLiveData(_profile.accConfig.configOnPlug)
     var onPlug: String?
         get() = onPlugLiveData.value
-        set(value)
-        {
-            if (onPlugLiveData.value != value)
-            {
+        set(value) {
+            if (onPlugLiveData.value != value) {
                 addToHistory(profile)
                 onPlugLiveData.value = value
                 unsavedChanges = true
@@ -141,10 +124,8 @@ class AccConfigEditorViewModel(application: Application, private val _profile: A
     private val configCoolDownLiveData = MutableLiveData(_profile.accConfig.configCoolDown)
     var coolDown: AccConfig.ConfigCoolDown?
         get() = configCoolDownLiveData.value
-        set(value)
-        {
-            if (configCoolDownLiveData.value != value)
-            {
+        set(value) {
+            if (configCoolDownLiveData.value != value) {
                 addToHistory(profile)
                 configCoolDownLiveData.value = value
                 unsavedChanges = true
@@ -156,36 +137,29 @@ class AccConfigEditorViewModel(application: Application, private val _profile: A
         get() = configChargeSwitchLiveData.value
         set(value)
         {
-            if (configChargeSwitchLiveData.value != value)
-            {
+            if (configChargeSwitchLiveData.value != value) {
                 addToHistory(profile)
                 configChargeSwitchLiveData.value = value
                 unsavedChanges = true
             }
         }
 
-    private val configIsAutomaticSwitchEnabled =
-        MutableLiveData(_profile.accConfig.configIsAutomaticSwitchingEnabled)
+    private val configIsAutomaticSwitchEnabled = MutableLiveData(_profile.accConfig.configIsAutomaticSwitchingEnabled)
     var isAutomaticSwitchEanbled: Boolean
         get() = configIsAutomaticSwitchEnabled.value!!
-        set(value)
-        {
-            if (configIsAutomaticSwitchEnabled.value != value)
-            {
+        set(value) {
+            if (configIsAutomaticSwitchEnabled.value != value) {
                 addToHistory(profile)
                 configIsAutomaticSwitchEnabled.value = value
                 unsavedChanges = true
             }
         }
 
-    private val prioritizeBatteryIdleModeLiveData =
-        MutableLiveData(_profile.accConfig.prioritizeBatteryIdleMode)
+    private val prioritizeBatteryIdleModeLiveData = MutableLiveData(_profile.accConfig.prioritizeBatteryIdleMode)
     var prioritizeBatteryIdleMode: Boolean
         get() = prioritizeBatteryIdleModeLiveData.value!!
-        set(value)
-        {
-            if (prioritizeBatteryIdleModeLiveData.value != value)
-            {
+        set(value) {
+            if (prioritizeBatteryIdleModeLiveData.value != value) {
                 addToHistory(profile)
                 prioritizeBatteryIdleModeLiveData.value = value
                 unsavedChanges = true
@@ -195,10 +169,8 @@ class AccConfigEditorViewModel(application: Application, private val _profile: A
     private val resetBSOnPauseLiveData = MutableLiveData(_profile.accConfig.configResetBsOnPause)
     var resetBSOnPause: Boolean
         get() = resetBSOnPauseLiveData.value!!
-        set(value)
-        {
-            if (resetBSOnPauseLiveData.value != value)
-            {
+        set(value) {
+            if (resetBSOnPauseLiveData.value != value) {
                 addToHistory(profile)
                 resetBSOnPauseLiveData.value = value
                 unsavedChanges = true
@@ -208,10 +180,8 @@ class AccConfigEditorViewModel(application: Application, private val _profile: A
     private val resetBSOnUnplugLiveData = MutableLiveData(_profile.accConfig.configResetUnplugged)
     var resetBSOnUnplug: Boolean
         get() = resetBSOnUnplugLiveData.value!!
-        set(value)
-        {
-            if (resetBSOnUnplugLiveData.value != value)
-            {
+        set(value) {
+            if (resetBSOnUnplugLiveData.value != value) {
                 addToHistory(profile)
                 resetBSOnUnplugLiveData.value = value
                 unsavedChanges = true
@@ -314,15 +284,18 @@ class AccConfigEditorViewModel(application: Application, private val _profile: A
         configIsAutomaticSwitchEnabled.observe(owner, observer)
     }
 
-    fun observePrioritizeBatteryIdleMode(owner: LifecycleOwner, observer: Observer<Boolean>) {
+    fun observePrioritizeBatteryIdleMode(owner: LifecycleOwner, observer: Observer<Boolean>)
+    {
         prioritizeBatteryIdleModeLiveData.observe(owner, observer)
     }
 
-    fun observeResetBSOnPause(owner: LifecycleOwner, observer: Observer<Boolean>) {
+    fun observeResetBSOnPause(owner: LifecycleOwner, observer: Observer<Boolean>)
+    {
         resetBSOnPauseLiveData.observe(owner, observer)
     }
 
-    fun observeResetBSOnUnplug(owner: LifecycleOwner, observer: Observer<Boolean>) {
+    fun observeResetBSOnUnplug(owner: LifecycleOwner, observer: Observer<Boolean>)
+    {
         resetBSOnUnplugLiveData.observe(owner, observer)
     }
 }
