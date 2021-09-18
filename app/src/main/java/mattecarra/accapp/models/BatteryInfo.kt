@@ -74,15 +74,11 @@ class BatteryInfo(val name: String,
                   val chargeControlLimit: Int,
                   val inputCurrentMax: Int,
                   val cycleCount: Int,
-                  val powerNow: Float = 0.0f): Parcelable {
+                  val powerNow: Float = 0.0f): Parcelable
+{
 
-    fun getRawVoltageNow(): Float {
-        return voltageNow
-    }
-
-    fun getRawCurrentNow(): Float {
-        return currentNow
-    }
+    fun getRawVoltageNow(): Float = voltageNow
+    fun getRawCurrentNow(): Float = currentNow
 
     /**
      * Returns voltage now as float.
@@ -111,9 +107,7 @@ class BatteryInfo(val name: String,
      * Returns whether the battery is charging or not.
      * @return if battery is charging.
      */
-    fun isCharging(): Boolean {
-        return status == "Charging"
-    }
+    fun isCharging(): Boolean = status == "Charging"
 
     //------------------------------------------------------
     // with Round to one decimal places

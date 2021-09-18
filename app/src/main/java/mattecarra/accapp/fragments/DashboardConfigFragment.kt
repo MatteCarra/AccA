@@ -123,11 +123,13 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
         binding.itemProfileChargingVoltageTv.text = accConfig.configVoltage.toString(mContext)
         binding.itemProfileCurrentMaxTv.text = mContext.getString(R.string.current_max) +" "+ accConfig.configCurrMax.toString()
 
-        if ((accConfig.configVoltage.controlFile == null || accConfig.configVoltage.max == null)
-            && accConfig.configCurrMax == null) else
+        val volt = (accConfig.configVoltage.controlFile != null || accConfig.configVoltage.max != null)
+        val currmax = accConfig.configCurrMax != null
+
+        if ((volt && !currmax) || (!volt && currmax))
         {
-            binding.itemProfileChargingVoltageTv.isGone = accConfig.configVoltage.controlFile == null && accConfig.configVoltage.max == null
-            binding.itemProfileCurrentMaxTv.isGone = accConfig.configCurrMax == null
+            binding.itemProfileChargingVoltageTv.isVisible = volt
+            binding.itemProfileCurrentMaxTv.isVisible = currmax
         }
 
         //-----------------------------------------------
