@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import mattecarra.accapp.models.*
 
-@Database(entities = [AccaProfile::class, ScheduleProfile::class, AccaScript::class], version = 10)
+@Database(entities = [AccaProfile::class, ScheduleProfile::class, AccaScript::class], version = 11)
 @TypeConverters(ConfigConverter::class)
 abstract class AccaRoomDatabase : RoomDatabase()
 {
@@ -80,6 +80,7 @@ abstract class AccaRoomDatabase : RoomDatabase()
         private val MIGRATION_9_10: Migration = object : Migration(9, 10) {
             override fun migrate(database: SupportSQLiteDatabase)
             {
+                // Tested!
                 database.execSQL("INSERT INTO scripts_table (scName, scDescription, scBody, scOutput, scExitCode) VALUES (\"CoolDown Temp after 40%\", \"temperature=(cooldown_temp max_temp max_temp_pause shutdown_temp)\", \"acca -s cooldown_temp=40 max_temp=45 max_temp_pause=90\", \"\", 0);");
                 database.execSQL("INSERT INTO scripts_table (scName, scDescription, scBody, scOutput, scExitCode) VALUES (\"Charge to 90%\", \"capacity=(shutdown_capacity cooldown_capacity resume_capacity pause_capacity capacity_freeze2)\", \"acca -s shutdown_capacity=10 resume_capacity=85 pause_capacity=90\", \"\", 0);");
                 database.execSQL("INSERT INTO scripts_table (scName, scDescription, scBody, scOutput, scExitCode) VALUES (\"Reset current Config\", \"-s|--set r|--reset Restore default config\", \"acca -s r\", \"\", 0);");
@@ -93,19 +94,41 @@ abstract class AccaRoomDatabase : RoomDatabase()
             }
         }
 
-        fun getDatabase(context: Context): AccaRoomDatabase {
-            val tempInstance = INSTANCE
-            if (tempInstance != null) {
-                return tempInstance
+        private val MIGRATION_10_11: Migration = object : Migration(10, 11)
+        {
+            override fun migrate(database: SupportSQLiteDatabase)
+            {
+                database.execSQL("ALTER TABLE profiles_table ADD COLUMN `pEnables` TEXT NOT NULL");
+                database.execSQL("ALTER TABLE profiles_table ADD COLUMN `pScripts` TEXT");
             }
+        }
+
+        fun getDatabase(context: Context): AccaRoomDatabase
+        {
+            val tempInstance = INSTANCE
+            if (tempInstance != null) return tempInstance
 
             synchronized(this) {
                 // Create database instance here
-                INSTANCE =
-                    Room.databaseBuilder(context.applicationContext, AccaRoomDatabase::class.java, DATABASE_NAME)
-                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10)
-                        .addCallback(object : Callback() {
-                            override fun onCreate(db: SupportSQLiteDatabase) {
+                INSTANCE = Room.databaseBuilder(
+                    context.applicationContext,
+                    AccaRoomDatabase::class.java,
+                    DATABASE_NAME
+                ).addMigrations(
+                        MIGRATION_1_2,
+                        MIGRATION_2_3,
+                        MIGRATION_3_4,
+                        MIGRATION_4_5,
+                        MIGRATION_5_6,
+                        MIGRATION_6_7,
+                        MIGRATION_7_8,
+                        MIGRATION_8_9,
+                        MIGRATION_9_10,
+                        MIGRATION_10_11
+                    ).addCallback(object : Callback()
+                    {
+                        override fun onCreate(db: SupportSQLiteDatabase)
+                        {
                                 super.onCreate(db)
                                 prepopulateDb(getDatabase(context))
                             }
@@ -118,59 +141,32 @@ abstract class AccaRoomDatabase : RoomDatabase()
         private fun prepopulateDb(db: AccaRoomDatabase) = CoroutineScope(Dispatchers.Default).launch {
 
             db.profileDao().insert(
-                AccaProfile(0, "Default",
+                AccaProfile(
+                    0, "Default Custom",
                     AccConfig(
-                        AccConfig.ConfigCapacity(5, 70, 80),
-                        AccConfig.ConfigVoltage(null, null),
-                        null,
-                        AccConfig.ConfigTemperature(40, 45, 90),
-                        null,
-                        null,
-                        null,
-                        false,
-                        false,
-                        null,
-                        true,
-                        false
-                    )
+                        configCapacity = AccConfig.ConfigCapacity(5, 70, 80),
+                        configTemperature = AccConfig.ConfigTemperature(40, 45, 90)
+                    ),
+                    ProfileEnables(eCapacity = true, eVoltage = true, eTemperature = true),
                 )
             )
 
             db.profileDao().insert(
-                AccaProfile(0, "Charge to 90%",
-                    AccConfig(
-                        AccConfig.ConfigCapacity(5, 85, 90),
-                        AccConfig.ConfigVoltage(null, null),
-                        null,
-                        AccConfig.ConfigTemperature(40, 45, 90),
-                        null,
-                        null,
-                        null,
-                        false,
-                        false,
-                        null,
-                        true,
-                        false
-                    )
+                AccaProfile(
+                    0, "Charge to 90%", AccConfig(
+                        configCapacity = AccConfig.ConfigCapacity(5, 85, 90),
+                        configTemperature = AccConfig.ConfigTemperature(40, 45, 90)
+                    ), ProfileEnables(eCapacity = true, eTemperature = true)
                 )
             )
 
             db.profileDao().insert(
-                AccaProfile(0, "Cool down after 60%",
-                    AccConfig(
-                        AccConfig.ConfigCapacity(5, 70, 80),
-                        AccConfig.ConfigVoltage(null, null),
-                        null,
-                        AccConfig.ConfigTemperature(40, 45, 90),
-                        null,
-                        null,
-                        AccConfig.ConfigCoolDown(60, 50, 10),
-                        false,
-                        false,
-                        null,
-                        true,
-                        false
-                    )
+                AccaProfile(
+                    0, "Cool down after 60%", AccConfig(
+                        configCapacity = AccConfig.ConfigCapacity(5, 70, 80),
+                        configTemperature = AccConfig.ConfigTemperature(40, 45, 90),
+                        configCoolDown = AccConfig.ConfigCoolDown(60, 50, 10)
+                    ), ProfileEnables(eCapacity = true, eTemperature = true, eCoolDown = true)
                 )
             )
 

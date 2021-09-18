@@ -2,19 +2,53 @@ package mattecarra.accapp.database
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import mattecarra.accapp.models.AccConfig
+import mattecarra.accapp.models.ProfileEnables
 
-object ConfigConverter {
+object ConfigConverter
+{
 
     @TypeConverter
     @JvmStatic
-    fun fromConfigCapacity(configCapacity: AccConfig.ConfigCapacity) : String {
+    fun fromEnables(enables: ProfileEnables): String
+    {
+        return Gson().toJson(enables)
+    }
+
+    @TypeConverter
+    @JvmStatic
+    fun toEnables(enables: String): ProfileEnables
+    {
+        return Gson().fromJson(enables, ProfileEnables::class.java)
+    }
+
+    @TypeConverter
+    @JvmStatic
+    fun fromScripts(scripts: List<Int>?): String?
+    {
+        return Gson().toJson(scripts)
+    }
+
+    @TypeConverter
+    @JvmStatic
+    fun toScripts(scripts: String?): List<Int>?
+    {
+        return Gson().fromJson(scripts, object : TypeToken<List<Int>>()
+        {}.type)
+    }
+
+    @TypeConverter
+    @JvmStatic
+    fun fromConfigCapacity(configCapacity: AccConfig.ConfigCapacity): String
+    {
         return Gson().toJson(configCapacity)
     }
 
     @TypeConverter
     @JvmStatic
-    fun toConfigCapacity(configCapacity: String) : AccConfig.ConfigCapacity {
+    fun toConfigCapacity(configCapacity: String): AccConfig.ConfigCapacity
+    {
         return Gson().fromJson(configCapacity, AccConfig.ConfigCapacity::class.java)
     }
 

@@ -1,4 +1,5 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
+
     <style name="ToolTipAltStyle" parent="ToolTipLayoutDefaultStyle">
         <item name="ttlm_backgroundColor">@color/color_primary_variant</item>
         <item name="ttlm_textStyle">@style/ToolTipAltTextStyle</item>
@@ -7,4 +8,9 @@
     <style name="ToolTipAltTextStyle" parent="ToolTipTextStyle">
         <item name="android:textColor">@color/white</item>
     </style>
+
+    <style name="NumberPickerText">
+        <item name="android:textSize">20sp</item>
+    </style>
+
 </resources>

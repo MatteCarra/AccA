@@ -20,13 +20,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
-import mattecarra.accapp.viewmodel.SharedViewModel
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.databinding.DashboardFragmentBinding
 import mattecarra.accapp.databinding.EditChargingLimitOnceDialogBinding
 import mattecarra.accapp.models.DashboardValues
 import mattecarra.accapp.utils.ScopedFragment
 import mattecarra.accapp.viewmodel.DashboardViewModel
+import mattecarra.accapp.viewmodel.SharedViewModel
 import java.util.concurrent.atomic.AtomicBoolean
 
 class DashboardFragment : ScopedFragment()

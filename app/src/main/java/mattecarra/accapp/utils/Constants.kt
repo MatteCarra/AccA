@@ -2,6 +2,7 @@ package mattecarra.accapp.utils
 
 object Constants {
     val PROFILE_KEY = "profile"
+    val PROFILE_CONFIG_KEY = "profileConfig"
     val PROFILE_ID_KEY = "profileId"
     val ACC_HAS_CHANGES = "hasChanges"
     val ACC_CONFIG_KEY = "accConfig"

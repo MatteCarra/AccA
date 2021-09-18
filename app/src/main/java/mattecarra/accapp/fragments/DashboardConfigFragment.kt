@@ -9,22 +9,23 @@ import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.launch
 import mattecarra.accapp.R
-import mattecarra.accapp.viewmodel.SharedViewModel
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.activities.AccConfigEditorActivity
 import mattecarra.accapp.databinding.ProfilesItemBinding
 import mattecarra.accapp.models.AccConfig
-import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.utils.Constants
 import mattecarra.accapp.utils.ProfileUtils
 import mattecarra.accapp.utils.ScopedFragment
 import mattecarra.accapp.viewmodel.ProfilesViewModel
+import mattecarra.accapp.viewmodel.SharedViewModel
 
-class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener  {
+class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
+{
     private lateinit var mContext: Context
     private lateinit var mViewModel: ProfilesViewModel
     private lateinit var mSharedViewModel: SharedViewModel
@@ -34,17 +35,26 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
 
     private var _binding: ProfilesItemBinding? = null
     private val binding get() = _binding!!
-    private val activityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        val data = result.data
-        if (result.resultCode == Activity.RESULT_OK && data?.getBooleanExtra(Constants.ACC_HAS_CHANGES, false) == true) {
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+    {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 7 && resultCode == Activity.RESULT_OK && data?.getBooleanExtra(
+                Constants.ACC_HAS_CHANGES,
+                false
+            ) == true)
+        {
             launch {
                 mSharedViewModel.updateAccConfig(data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig) //TODO: Check assertion
                 // Remove the current selected profile
                 mSharedViewModel.clearCurrentSelectedProfile()
 
-                updateInfo(AccaProfile(0, getString(R.string.profile_not_selected), data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig))
+                updateInfo(
+                    getString(R.string.profile_not_selected),
+                    data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig
+                )
             }
-
         }
     }
 
@@ -84,53 +94,77 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
         checkProfile()
     }
 
-    private fun startAccConfigEditorActivity() {
-        activityLauncher.launch(Intent(context, AccConfigEditorActivity::class.java))
+    private fun startAccConfigEditorActivity()
+    {
+        startActivityForResult(Intent(context, AccConfigEditorActivity::class.java), 7)
     }
 
-    fun checkProfile() {
+    fun checkProfile()
+    {
         launch {
 
             val profileId = ProfileUtils.getCurrentProfile(mPrefs)
             val currentConfig = Acc.instance.readConfig()
             val selectedProfileConfig = mViewModel.getProfileById(profileId)?.accConfig
 
-            if (profileId == -1 || currentConfig != selectedProfileConfig)
-            {
-                updateInfo(AccaProfile(0, getString(R.string.profile_not_selected), currentConfig))
-            }
-            else
-            {
-                updateInfo(AccaProfile(0, mViewModel.getProfileById(profileId)?.profileName.toString(), currentConfig))
-            }
+            val name =
+                if (profileId == -1 || currentConfig != selectedProfileConfig) getString(R.string.profile_not_selected)
+                else mViewModel.getProfileById(profileId)?.profileName.toString()
+
+            updateInfo(name, currentConfig)
         }
     }
 
-    fun updateInfo(mProfile: AccaProfile) {
-        binding.itemProfileTitleTextView.text = mProfile.profileName
-        binding.itemProfileCapacityTv.text = mProfile.accConfig.configCapacity.toString(mContext)
+    fun updateInfo(nameTitle: String, accConfig: AccConfig)
+    {
+        binding.itemProfileTitleTextView.text = nameTitle
+        binding.itemProfileCapacityTv.text = accConfig.configCapacity.toString(mContext)
 
-        // if on\off getting from AccConfigEditorActivity :: 168
-        // todo prop temperatureTv on\off no exist in table\data ... coolDownLL too
-        binding.itemProfileTemperatureLl.visibility = if (mProfile.accConfig.configTemperature.coolDownTemperature >= 90 && mProfile.accConfig.configTemperature.maxTemperature >= 95) View.GONE else View.VISIBLE;
-        binding.itemProfileTemperatureTv.text = mProfile.accConfig.configTemperature.toString(mContext)
+        binding.itemProfileSwitchLl.isGone = accConfig.configChargeSwitch.isNullOrEmpty()
+        binding.itemProfileSwitchDataTv.text =
+            accConfig.configChargeSwitch ?: mContext.getString(R.string.automatic)
+        binding.itemProfileAutomaticSwitchingTv.isVisible =
+            accConfig.configIsAutomaticSwitchingEnabled
 
-        // todo add and integrate current
-        binding.itemProfileChargingVoltageLl.visibility = if (mProfile.accConfig.configVoltage.controlFile == null && mProfile.accConfig.configVoltage.max == null) View.GONE else View.VISIBLE;
-        binding.itemProfileChargingVoltageTv.text = mProfile.accConfig.configVoltage.toString()
+        //-----------------------------------------------
 
-        // if on\off getting from AccConfigEditorActivity :: 196
-        binding.itemProfileCooldownLl.visibility = if (mProfile.accConfig.configCoolDown == null || mProfile.accConfig.configCoolDown!!.atPercent > 100) View.GONE else View.VISIBLE;
-        binding.itemProfileCooldownTv.text = mProfile.accConfig.configCoolDown?.toString(mContext)
+        binding.itemProfileChargingVoltageLl.isVisible =
+            (accConfig.configVoltage.controlFile != null || accConfig.configVoltage.max != null || accConfig.configCurrMax != null)
 
-        binding.itemProfileOnBootLl.visibility = if (mProfile.accConfig.configOnBoot == null) View.GONE else View.VISIBLE
-        binding.itemProfileOnBootTv.text = mProfile.accConfig.configOnBoot
+        binding.itemProfileChargingVoltageTv.text = accConfig.configVoltage.toString(mContext)
+        binding.itemProfileCurrentMaxTv.text =
+            mContext.getString(R.string.current_max) + " " + accConfig.configCurrMax.toString()
 
-        binding.itemProfileOnPlugLl.visibility = if (mProfile.accConfig.configOnPlug == null) View.GONE else View.VISIBLE
-        binding.itemProfileOnPlugTv.text = mProfile.accConfig.getOnPlug(mContext);
+        if ((accConfig.configVoltage.controlFile == null || accConfig.configVoltage.max == null) && accConfig.configCurrMax == null)
+        else
+        {
+            binding.itemProfileChargingVoltageTv.isGone =
+                accConfig.configVoltage.controlFile == null && accConfig.configVoltage.max == null
+            binding.itemProfileCurrentMaxTv.isGone = accConfig.configCurrMax == null
+        }
+
+        //-----------------------------------------------
+
+        binding.itemProfileTemperatureTv.text = accConfig.configTemperature.toString(mContext)
+
+        binding.itemProfileCooldownLl.isVisible = accConfig.configCoolDown != null
+        binding.itemProfileCooldownTv.text = if (accConfig.configCoolDown == null) "-"
+        else accConfig.configCoolDown?.toString(mContext)
+
+        binding.itemProfileOnBootLl.isVisible = accConfig.configOnBoot != null
+        binding.itemProfileOnBootTv.text = if (accConfig.configOnBoot == null) "-"
+        else accConfig.configOnBoot
+
+        binding.itemProfileOnPlugLl.isVisible = accConfig.configOnPlug != null
+        binding.itemProfileOnPlugTv.text = if (accConfig.configOnPlug == null) "-"
+        else accConfig.getOnPlug(mContext)
+
+        binding.itemProfilePrioritizeBatteryIdleTv.isVisible = accConfig.prioritizeBatteryIdleMode
+        binding.itemProfileResetBsOnPauseTv.isVisible = accConfig.configResetBsOnPause
+        binding.itemProfileResettUnpluggedTv.isVisible = accConfig.configResetUnplugged
 
         binding.itemProfileOptionsIb.visibility = View.GONE
-        binding.itemProfileSelectedIndicatorView.visibility = if (mActiveProfile) View.VISIBLE else View.GONE
+        binding.itemProfileSelectedIndicatorView.isVisible = mActiveProfile
 
         binding.itemProfileLoadImage.visibility = View.GONE;
         binding.itemProfileInfo.visibility = View.VISIBLE;

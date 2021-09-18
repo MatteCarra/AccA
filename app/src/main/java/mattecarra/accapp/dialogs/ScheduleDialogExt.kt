@@ -4,19 +4,21 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.BaseAdapter
+import android.widget.SpinnerAdapter
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.customview.getCustomView
 import kotlinx.coroutines.runBlocking
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.databinding.ScheduleDialogBinding
-import mattecarra.accapp.databinding.VoltageControlEditorDialogBinding
 import mattecarra.accapp.models.AccaProfile
+import mattecarra.accapp.models.ProfileEnables
 import mattecarra.accapp.models.Schedule
 
 class ProfileSpinnerAdapter : BaseAdapter(), SpinnerAdapter
@@ -49,7 +51,14 @@ typealias AddScheduleListener = ((profileId: Long, scheduleName: String, time: S
 
 fun MaterialDialog.addScheduleDialog(
     profilesLiveData: LiveData<List<AccaProfile>>,
-    profiles: MutableList<AccaProfile> = mutableListOf(AccaProfile(-1, context.getString(R.string.new_config), runBlocking { Acc.instance.readDefaultConfig() })),
+    profiles: MutableList<AccaProfile> = mutableListOf(
+        AccaProfile(
+            -1,
+            context.getString(R.string.new_config),
+            runBlocking { Acc.instance.readDefaultConfig() },
+            ProfileEnables()
+        )
+    ),
     schedule: Schedule? = null,
     listener: AddScheduleListener
 ): MaterialDialog
@@ -134,7 +143,26 @@ fun MaterialDialog.editScheduleDialog(
     return addScheduleDialog(
         profilesLiveData,
         runBlocking { Acc.instance.readDefaultConfig() }.let { defaultConfig ->
-            mutableListOf(AccaProfile(-1, context.getString(R.string.schedule_profile_keep_current), defaultConfig), AccaProfile(-2, context.getString(R.string.schedule_profile_edit_current), defaultConfig), AccaProfile(-3, context.getString(R.string.new_config), defaultConfig))
+            mutableListOf(
+                AccaProfile(
+                    -1,
+                    context.getString(R.string.schedule_profile_keep_current),
+                    defaultConfig,
+                    ProfileEnables()
+                ),
+                AccaProfile(
+                    -2,
+                    context.getString(R.string.schedule_profile_edit_current),
+                    defaultConfig,
+                    ProfileEnables()
+                ),
+                AccaProfile(
+                    -3,
+                    context.getString(R.string.new_config),
+                    defaultConfig,
+                    ProfileEnables()
+                )
+            )
         },
         schedule,
         listener

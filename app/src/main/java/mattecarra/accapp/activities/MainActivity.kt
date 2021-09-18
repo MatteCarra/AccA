@@ -30,10 +30,7 @@ import mattecarra.accapp.databinding.ActivityMainBinding
 import mattecarra.accapp.dialogs.*
 import mattecarra.accapp.djs.Djs
 import mattecarra.accapp.fragments.*
-import mattecarra.accapp.models.AccConfig
-import mattecarra.accapp.models.AccaProfile
-import mattecarra.accapp.models.ProfileEntry
-import mattecarra.accapp.models.Schedule
+import mattecarra.accapp.models.*
 import mattecarra.accapp.utils.*
 import mattecarra.accapp.viewmodel.ProfilesViewModel
 import mattecarra.accapp.viewmodel.SchedulesViewModel
@@ -562,6 +559,7 @@ class MainActivity : ScopedAppActivity(),
                     }
                 }
             }
+
             ACC_PROFILE_CREATOR_REQUEST -> {
                 if (resultCode == Activity.RESULT_OK) {
                     if (data != null) {
@@ -583,7 +581,8 @@ class MainActivity : ScopedAppActivity(),
                                 positiveButton(R.string.save) { dialog ->
                                     val profileName = dialog.getInputField().text.toString()
                                     // Add Profile to Database via ViewModel function
-                                    val profile = AccaProfile(0, profileName, accConfig)
+                                    val profile =
+                                        AccaProfile(0, profileName, accConfig, ProfileEnables())
                                     _profilesViewModel.insertProfile(profile)
                                 }
                                 negativeButton(android.R.string.cancel)
@@ -591,33 +590,31 @@ class MainActivity : ScopedAppActivity(),
                     }
                 }
             }
-            ACC_PROFILE_EDITOR_REQUEST -> {
-                if (resultCode == Activity.RESULT_OK) {
+
+            ACC_PROFILE_EDITOR_REQUEST -> // SQl DAO
+            {
+                if (resultCode == Activity.RESULT_OK)
+                {
                     if (data?.getBooleanExtra(
-                            Constants.ACC_HAS_CHANGES,
-                            false
-                        ) == true && data.hasExtra(Constants.DATA_KEY)
-                    ) {
+                            Constants.ACC_HAS_CHANGES, false
+                        ) == true && data.hasExtra(Constants.DATA_KEY))
+                    {
+
                         val accConfig: AccConfig =
                             data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig
-                                ?: return
-
-                        // Extract the data
                         val editorData = data.getBundleExtra(Constants.DATA_KEY) ?: return
                         val profileId = editorData.getInt(Constants.PROFILE_ID_KEY)
-                        launch {
-                            _profilesViewModel.getProfileById(profileId)
-                                ?.let { selectedProfile ->
-                                    // Update the selected Profile
-                                    selectedProfile.accConfig = accConfig
 
-                                    // Update the profile
-                                    _profilesViewModel.updateProfile(selectedProfile)
-                                }
+                        launch {
+                            _profilesViewModel.getProfileById(profileId)?.let { selectedProfile ->
+                                // Update the profile with new accConfig
+                                _profilesViewModel.updateProfile(selectedProfile.copy(accConfig = accConfig))
+                            }
                         }
                     }
                 }
             }
+
             ACC_ADD_PROFILE_SCHEDULER_REQUEST -> {
                 if (resultCode == Activity.RESULT_OK) {
                     if (data?.hasExtra(Constants.DATA_KEY) == true) {
@@ -679,7 +676,14 @@ class MainActivity : ScopedAppActivity(),
                         data?.getSerializableExtra(Constants.DATA_KEY) as List<ProfileEntry>
                     if (!imports.isNullOrEmpty()) {
                         for (entry: ProfileEntry in imports) {
-                            _profilesViewModel.insertProfile(AccaProfile(0, entry.getName(), entry.getConfig()))
+                            _profilesViewModel.insertProfile(
+                                AccaProfile(
+                                    0,
+                                    entry.getName(),
+                                    entry.getConfig(),
+                                    ProfileEnables()
+                                )
+                            )
                         }
                     }
                     Toast.makeText(
