@@ -11,6 +11,7 @@
     <!-- Navigation Strings -->
     <string name="title_dashboard">Übersicht</string>
     <string name="title_profiles">Profile</string>
+    <string name="title_scripts">Skripte</string>
     <string name="title_schedules">Zeitpläne</string>
     <string name="title_settings">Einstellungen</string>
     <!-- ACC Daemon Status -->
@@ -94,6 +95,7 @@
     <string name="unsaved_changes_message">Änderungen speichern?</string>
     <string name="create_acc_profile">Konfigurationsprofil erstellen</string>
     <string name="profile_name">Profilname</string>
+    <string name="script_name">Skriptname</string>
     <string name="dialog_profile_name_message">Gebe den Namen ein, der diesem Profil zugewiesen werden soll:</string>
     <string name="no_profiles">Keine Profile</string>
     <string name="profile_not_selected">Benutzerdefinierte Einstellungen</string>
