@@ -97,7 +97,9 @@
     <string name="profile_name">Profilname</string>
     <string name="script_name">Skriptname</string>
     <string name="dialog_profile_name_message">Gebe den Namen ein, der diesem Profil zugewiesen werden soll:</string>
+    <string name="dialog_script_name_message">Gebe den Namen ein, der Du diesem Skript zuweisen möchtest:</string>
     <string name="no_profiles">Keine Profile</string>
+    <string name="no_scripts">Keine Skripte</string>
     <string name="profile_not_selected">Benutzerdefinierte Einstellungen</string>
     <string name="profile_tile_label">Profil: %1$s</string>
     <string name="profiles_text_view">Profile (lange drücken zum Bearbeiten/Löschen):</string>
@@ -106,6 +108,7 @@
     <string name="recurrent_schedule">Nur einmal ausführen</string>
     <string name="execution_time">Ausführungszeit</string>
     <string name="new_config">Neue benutzerdefinierte Konfiguration</string>
+    <string name="new_script">Neues Skript</string>
     <string name="enable_voltage_limit">Benutzerdefiniertes Ladespannungslimit</string>
     <string name="voltage_control_file">Spannungs-Kontrolldatei:</string>
     <string name="edit_power_limit">Strom- und Spannungslimit bearbeiten</string>
