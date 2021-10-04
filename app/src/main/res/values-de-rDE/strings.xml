@@ -131,6 +131,7 @@
     <string name="automatic">Automatisch</string>
     <string name="error_occurred">Ein Fehler ist aufgetreten</string>
     <string name="retry">Erneut versuchen</string>
+    <string name="edit_charging_limit_once_button">Einmal auf #\% aufladen, ohne Einschränkungen</string>
     <string name="done_applied_charge_limit">Aufgeladen zu %1$d%%</string>
     <string name="charge_limit_not_applied">Ladelimit anwenden wurde aufgehoben</string>
     <string name="apply">Übernehmen</string>
@@ -156,12 +157,20 @@
     <string name="profile_creator">Profilersteller</string>
     <string name="schedule_creator">Zeitplanersteller</string>
     <string name="charging_switch_label">Ladeschalter:</string>
+    <string name="script_description">Beschreibung:</string>
+    <string name="script_body_text">Shell-Text:</string>
     <string name="title_on_plugged">Beim Einstecken anwenden</string>
     <string name="edit_on_plugged">Einsteck-Einstellungen bearbeiten:</string>
+    <string name="edit_on_plugged_dialog_message">Beispiel: Wireless/voltage_max::9000000 erzwingt eine schnelle kabellose Ladungen auf einigen Pixel-Geräten.</string>
     <string name="template_capacity_profile">Herunterfahren: %1$d%% - Fortsetzen: %2$d%% - Anhalten: %3$d%%</string>
     <string name="template_temperature_profile">Temperatur: %1$d&#176;C - Max: %2$d&#176;C - Pause: %3$ds</string>
     <string name="template_cool_down_profile">Beginnen bei: %1$d%% - Laden für %2$d Sek - Pausieren für %3$d Sek</string>
     <!--Menus Options-->
+    <string name="menu_option_run">Ausführen</string>
+    <string name="menu_option_edit">Bearbeiten</string>
+    <string name="menu_option_copy">Kopieren</string>
+    <string name="menu_option_rename">Umbenennen</string>
+    <string name="menu_option_delete">Löschen</string>
     <string name="selecting_profile_toast">Profil %1$s wird ausgewählt.</string>
     <string name="installation_failed_busybox_title">Busybox ist nicht installiert</string>
     <string name="installation_failed_busybox">Installiere zuerst Busybox oder lege einfach die Binärdatei in /data/adb/bin/</string>
@@ -230,6 +239,7 @@
     <string name="schedule_profile_keep_current">Aktuelle Konfiguration beibehalten</string>
     <string name="schedule_type">Zeitplantyp</string>
     <string name="schedule_name">Name des Zeitplans</string>
+    <string name="experimental_pref_title">Experimentelle Werkzeuge</string>
     <string-array name="theme_option_options">
         <item>Hell</item>
         <item>Dunkel</item>
