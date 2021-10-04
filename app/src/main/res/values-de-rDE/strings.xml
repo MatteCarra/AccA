@@ -110,6 +110,7 @@
     <string name="new_config">Neue benutzerdefinierte Konfiguration</string>
     <string name="new_script">Neues Skript</string>
     <string name="enable_voltage_limit">Benutzerdefiniertes Ladespannungslimit</string>
+    <string name="enable_current_limit">Benutzerdefiniertes Ladestromlimit</string>
     <string name="voltage_control_file">Spannungs-Kontrolldatei:</string>
     <string name="edit_power_limit">Strom- und Spannungslimit bearbeiten</string>
     <string name="voltage_max">Max. Spannung (Millivolt):</string>
@@ -122,6 +123,7 @@
     <string name="delete">Löschen</string>
     <string name="no_schedules">Keine Zeitpläne gesetzt</string>
     <string name="wrong_volt_file">Entweder funktioniert die ausgewählte Datei nicht oder Dein Kernel unterstützt diese Funktion nicht.</string>
+    <string name="invalid_voltage_max">Der Wert muss einen Zahlenwert zwischen 3700 und 4300 (Millivolt) sein</string>
     <string name="edit_charging_switch">Ladeschalter bearbeiten</string>
     <string name="test_switch">Ladeschalter testen</string>
     <string name="no_option_selected">Keine Option ausgewählt; bitte eine auswählen!</string>
@@ -157,6 +159,7 @@
     <string name="profile_creator">Profilersteller</string>
     <string name="schedule_creator">Zeitplanersteller</string>
     <string name="charging_switch_label">Ladeschalter:</string>
+    <string name="script_label">Skriptname:</string>
     <string name="script_description">Beschreibung:</string>
     <string name="script_body_text">Shell-Text:</string>
     <string name="title_on_plugged">Beim Einstecken anwenden</string>
@@ -167,6 +170,7 @@
     <string name="template_cool_down_profile">Beginnen bei: %1$d%% - Laden für %2$d Sek - Pausieren für %3$d Sek</string>
     <!--Menus Options-->
     <string name="menu_option_run">Ausführen</string>
+    <string name="menu_option_run_silent">Ausführen (still)</string>
     <string name="menu_option_edit">Bearbeiten</string>
     <string name="menu_option_copy">Kopieren</string>
     <string name="menu_option_rename">Umbenennen</string>
@@ -240,10 +244,37 @@
     <string name="schedule_type">Zeitplantyp</string>
     <string name="schedule_name">Name des Zeitplans</string>
     <string name="experimental_pref_title">Experimentelle Werkzeuge</string>
+    <string name="experimental_pref_summary">Hier kannst du das Senden von Befehle an den ACC-Dienst deaktivieren, welche nach der Ausführung das Gerät einfrieren\\aufhängen\\neustarten. Das betrifft einige MediaTek Geräte.</string>
+    <string name="cue_AccCurrentMax_pref_summary">Aktiviere das Senden des \"acca —set —current\" Befehls</string>
+    <string name="cue_AccVoltControl_pref_summary">Aktiviere das Senden des \"acca —set —current\" Befehls</string>
     <string-array name="theme_option_options">
         <item>Hell</item>
         <item>Dunkel</item>
         <item>Systemvorgabe</item>
+    </string-array>
+    <string name="lang_pref_title">Sprache</string>
+    <string name="lang_pref_summary">Wähle die Sprache der Anwendung aus. Nach der Auswahl muss die App neu gestartet werden.</string>
+    <string-array name="lang_pref_entries">
+        <item>@string/lang_default</item>
+        <item>@string/lang_en</item>
+        <item>@string/lang_ar</item>
+        <item>@string/lang_nl</item>
+        <item>@string/lang_fr</item>
+        <item>@string/lang_de</item>
+        <item>@string/lang_gr</item>
+        <item>@string/lang_hu</item>
+        <item>@string/lang_in</item>
+        <item>@string/lang_it</item>
+        <item>@string/lang_ja</item>
+        <item>@string/lang_ko</item>
+        <item>@string/lang_pl</item>
+        <item>@string/lang_pt</item>
+        <item>@string/lang_ru</item>
+        <item>@string/lang_es</item>
+        <item>@string/lang_tr</item>
+        <item>@string/lang_uk</item>
+        <item>@string/lang_vi</item>
+        <item>@string/lang_zh</item>
     </string-array>
     <string-array name="schedule_type_entries">
         <item>Wiederkehrend</item>
@@ -262,6 +293,9 @@
     </string>
     <string name="about_attributes">Eigenschaften</string>
     <string name="about_attrib_telegram_icon">Das Telegram-Symbol wurde von Pixel perfekt auf www.flaticon.com gemacht</string>
+    <string name="about_acca_version_label">ACCA-Version:</string>
+    <string name="about_acc_daemon_version_label">ACC-Daemon-Version:</string>
+    <string name="about_acc_api_version_label">ACCA⇄ACC API-Version:</string>
     <string name="about_project_github">AccA-GitHub</string>
     <string name="about_project_telegram">AccA-Telegram</string>
     <string name="about_github">GitHub</string>
@@ -294,4 +328,5 @@
     <string name="parse_failed_body">Du kannst versuchen, die Standardkonfiguration zu laden, indem Du „Standard laden“ drückst. Bitte beachte, dass AccA nicht funktionsfähig ist.
         \n\nWenn der Fehler weiterhin besteht, teile bitte den Stack-Trace unten zusammen mit der ACC &amp; AccA-Version (über das 3-Punkt-Menü &gt; „Über“) mit den Entwicklern via Telegram.\n\n%s</string>
     <string name="automatic_switch_eanbled">Automatisch durch die Schalter wechseln</string>
+    <string name="info_voltage">Spannung</string>
 </resources>
