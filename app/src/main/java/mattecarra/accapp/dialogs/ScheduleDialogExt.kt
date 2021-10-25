@@ -119,11 +119,7 @@ fun MaterialDialog.addScheduleDialog(
             }
         )
 
-        schedule.getTime()?.let { (hour, minute) ->
-            timePicker.currentHour = hour
-            timePicker.currentMinute = minute
-        }
-
+        schedule.getTime()?.let { (hour, minute) -> timePicker.currentHour = hour ; timePicker.currentMinute = minute }
         scheduleName.setText(schedule.profile.scheduleName)
         executeOnBootCheckBox.isChecked = schedule.executeOnBoot
     }
@@ -144,25 +140,9 @@ fun MaterialDialog.editScheduleDialog(
         profilesLiveData,
         runBlocking { Acc.instance.readDefaultConfig() }.let { defaultConfig ->
             mutableListOf(
-                AccaProfile(
-                    -1,
-                    context.getString(R.string.schedule_profile_keep_current),
-                    defaultConfig,
-                    ProfileEnables()
-                ),
-                AccaProfile(
-                    -2,
-                    context.getString(R.string.schedule_profile_edit_current),
-                    defaultConfig,
-                    ProfileEnables()
-                ),
-                AccaProfile(
-                    -3,
-                    context.getString(R.string.new_config),
-                    defaultConfig,
-                    ProfileEnables()
-                )
-            )
+                AccaProfile(-1, context.getString(R.string.schedule_profile_keep_current), defaultConfig, ProfileEnables()),
+                AccaProfile(-2, context.getString(R.string.schedule_profile_edit_current), defaultConfig, ProfileEnables()),
+                AccaProfile(-3, context.getString(R.string.new_config), defaultConfig, ProfileEnables()))
         },
         schedule,
         listener

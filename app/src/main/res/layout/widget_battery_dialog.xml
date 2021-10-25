@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activityRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <mattecarra.accapp.widget.BoundedFrameLayout
+            android:id="@+id/cardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:bounded_width="280dp"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="0dp"
+            app:contentPadding="20dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/wdt_open_acca_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qwa_open_acc"
+                    android:textColor="@color/color_surface" />
+
+                <Button
+                    android:id="@+id/wdt_daemon_acc_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/acc_daemon_status_reading_status"
+                    android:textColor="@color/color_surface" />
+
+                <Button
+                    android:id="@+id/wdt_config_acc_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="curr setting АСС"
+                    android:textColor="@color/color_surface"
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/wdt_start_widget_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qwa_start"
+                    android:textColor="@color/color_surface" />
+
+                <Button
+                    android:id="@+id/wdt_setting_widget_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qwa_setting"
+                    android:textColor="@color/color_surface" />
+
+                <Button
+                    android:id="@+id/wdt_profile_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qwa_profile"
+                    android:textColor="@color/color_surface" />
+
+            </LinearLayout>
+
+        </mattecarra.accapp.widget.BoundedFrameLayout>
+
+        <TextView
+            android:id="@+id/btnDismiss"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@null"
+            android:gravity="center"
+            android:text="@string/qwa_exit_label"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="normal"
+            android:visibility="visible" />
+    </LinearLayout>
+
+</FrameLayout>

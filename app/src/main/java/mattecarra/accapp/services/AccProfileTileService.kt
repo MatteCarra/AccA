@@ -18,27 +18,30 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 @TargetApi(Build.VERSION_CODES.N)
-class AccProfileTileService: TileService() {
+class AccProfileTileService: TileService()
+{
     private val LOG_TAG = "AccProfileTileService"
     private lateinit var profilesViewModel: ProfilesViewModel
 
-    override fun onCreate() {
+    override fun onCreate()
+    {
         super.onCreate()
-
         profilesViewModel = ProfilesViewModel(application)
-        profilesViewModel.getLiveData().observeForever(Observer {
-            updateTile()
-        })
+        profilesViewModel.getLiveData().observeForever(Observer { updateTile() })
     }
 
-    private fun updateTile() {
+    private fun updateTile()
+    {
         val tile = qsTile
-
         val profiles = profilesViewModel.getLiveData().value
-        if(profiles?.isNotEmpty() == true) {
+
+        if(profiles?.isNotEmpty() == true)
+        {
             val profileId = ProfileUtils.getCurrentProfile(PreferenceManager.getDefaultSharedPreferences(this))
             val currProfile = if(profileId != -1) profiles.find { it.uid == profileId } else null
-            if(currProfile != null) {
+
+            if(currProfile != null)
+            {
                 tile.label =  getString(R.string.profile_tile_label, currProfile.profileName)
                 tile.state =  Tile.STATE_ACTIVE
             } else {
@@ -46,6 +49,7 @@ class AccProfileTileService: TileService() {
                 tile.state =  Tile.STATE_INACTIVE
             }
             tile.icon = Icon.createWithResource(this, R.drawable.ic_battery_charging_80) //use acc icon once ready
+
         } else {
             tile.label = getString(R.string.no_profiles)
             tile.state =  Tile.STATE_UNAVAILABLE
@@ -55,18 +59,21 @@ class AccProfileTileService: TileService() {
         tile.updateTile()
     }
 
-    override fun onTileAdded() {
+    override fun onTileAdded()
+    {
         super.onTileAdded()
         updateTile()
     }
 
-    override fun onStartListening() {
+    override fun onStartListening()
+    {
         super.onStartListening()
         updateTile()
     }
 
     //Get profiles list and increment current profile of one unit.
-    override fun onClick() {
+    override fun onClick()
+    {
         super.onClick()
 
         val mSharedPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -75,8 +82,7 @@ class AccProfileTileService: TileService() {
             val currentProfile = ProfileUtils.getCurrentProfile(mSharedPrefs)
 
             var index = profileList.indexOfFirst { it.uid ==  currentProfile} + 1
-            if(index >= profileList.size)
-                index = 0
+            if(index >= profileList.size) index = 0
 
             val profile = profileList[index]
 
@@ -84,7 +90,8 @@ class AccProfileTileService: TileService() {
             doAsync {
                 val res = runBlocking { Acc.instance.updateAccConfig(profile.accConfig, ConfigUpdaterEnable(mSharedPrefs)) }
 
-                if(!res.isSuccessful()) {
+                if(!res.isSuccessful())
+                {
                     res.debug()
 
                     uiThread {

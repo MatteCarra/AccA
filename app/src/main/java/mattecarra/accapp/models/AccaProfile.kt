@@ -17,13 +17,12 @@ import java.io.Serializable
 
     //----------------------------------------------------------------------
     // Enable\disable options in profile for greater flexibility !)
-    // Primary constructor, All values FALSE except ONE
 
     data class ProfileEnables(
-        var eCapacity: Boolean = false,
+        var eCapacity: Boolean = true,
         var eVoltage: Boolean = false,
         var eCurrMax: Boolean = false,
-        var eTemperature: Boolean = false,
+        var eTemperature: Boolean = true,
         var eCoolDown: Boolean = false,
         var eScripts: Boolean = false,
         var eRunOnBoot: Boolean = false,

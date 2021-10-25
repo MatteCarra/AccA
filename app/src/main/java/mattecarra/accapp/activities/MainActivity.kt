@@ -14,6 +14,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
+import androidx.room.Query
+import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.sqlite.db.SupportSQLiteProgram
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
@@ -26,6 +30,8 @@ import kotlinx.coroutines.launch
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
+import mattecarra.accapp.database.AccaRoomDatabase
+import mattecarra.accapp.database.ConfigConverter
 import mattecarra.accapp.databinding.ActivityMainBinding
 import mattecarra.accapp.dialogs.*
 import mattecarra.accapp.djs.Djs
@@ -35,14 +41,15 @@ import mattecarra.accapp.utils.*
 import mattecarra.accapp.viewmodel.ProfilesViewModel
 import mattecarra.accapp.viewmodel.SchedulesViewModel
 import mattecarra.accapp.viewmodel.SharedViewModel
+import xml.BatteryInfoWidget
+import xml.WIDGET_ACTION_REVERSE
+import xml.WIDGET_AUTO_UPDATE
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainActivity : ScopedAppActivity(),
-    BottomNavigationView.OnNavigationItemSelectedListener
+class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemSelectedListener
 {
-
     private val LOG_TAG = "MainActivity"
     val ACC_CONFIG_EDITOR_REQUEST = 1
     val ACC_PROFILE_CREATOR_REQUEST = 2
@@ -132,7 +139,8 @@ class MainActivity : ScopedAppActivity(),
                     djsInstallationDialog()
                     false
                 } else {
-                    if (!Djs.initDjs(filesDir) || Djs.isInstalledDjsOutdated()) {
+                    if (!Djs.initDjs(filesDir) || Djs.isInstalledDjsOutdated())
+                    {
                         installDjs()
                         false
                     } else {
@@ -146,59 +154,50 @@ class MainActivity : ScopedAppActivity(),
         return false
     }
 
-    fun djsInstallationDialog() {
+    fun djsInstallationDialog()
+    {
         MaterialDialog(this).show {
             title(R.string.install_djs_title)
             message(R.string.install_djs_description)
-            positiveButton(R.string.install) {
-                installDjs()
-            }
+            positiveButton(R.string.install) { installDjs() }
             negativeButton(android.R.string.no)
         }
     }
 
-    fun installDjs() {
+    fun installDjs()
+    {
         MaterialDialog(this@MainActivity).show {
+
             title(R.string.installing_djs)
             cancelOnTouchOutside(false)
             onKeyCodeBackPressed { false }
-            djsInstallation(this@MainActivity, object : DjsInstallationListener {
-                override fun onInstallationFailed(result: Shell.Result?) {
+
+            djsInstallation(this@MainActivity, object : DjsInstallationListener
+            {
+                override fun onInstallationFailed(result: Shell.Result?)
+                {
                     MaterialDialog(this@MainActivity)
                         .show {
                             title(R.string.djs_installation_failed_title)
                             message(R.string.djs_installation_failed)
-                            positiveButton(R.string.retry) {
-                                installDjs()
-                            }
-                            negativeButton(android.R.string.cancel) {
-                                binding.mainBottomNav.selectedItemId = R.id.botNav_schedules
-                            }
-                            if (result != null)
-                                shareLogsNeutralButton(
-                                    File(
-                                        filesDir,
-                                        "logs/djs-install.log"
-                                    ), R.string.djs_installation_failed_log
-                                )
+                            positiveButton(R.string.retry) { installDjs() }
+                            negativeButton(android.R.string.cancel) { binding.mainBottomNav.selectedItemId = R.id.botNav_schedules }
+                            if (result != null) shareLogsNeutralButton(File(filesDir, "logs/djs-install.log"), R.string.djs_installation_failed_log)
                         }
                 }
 
-                override fun onBusyboxMissing() {
-                    MaterialDialog(this@MainActivity)
-                        .show {
+                override fun onBusyboxMissing()
+                {
+                    MaterialDialog(this@MainActivity).show {
                             busyBoxError()
-                            positiveButton(R.string.retry) {
-                                installDjs()
-                            }
-                            negativeButton(android.R.string.cancel) {
-                                binding.mainBottomNav.selectedItemId = R.id.botNav_schedules
-                            }
+                            positiveButton(R.string.retry) { installDjs() }
+                            negativeButton(android.R.string.cancel) { binding.mainBottomNav.selectedItemId = R.id.botNav_schedules }
                             cancelOnTouchOutside(false)
                         }
                 }
 
-                override fun onSuccess() {
+                override fun onSuccess()
+                {
                     _preferences.djsEnabled = true
                     initUi()
                 }
@@ -206,7 +205,8 @@ class MainActivity : ScopedAppActivity(),
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item!!.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId)
+    {
         R.id.menu_appbar_logs -> {
             startActivity(Intent(this, LogViewerActivity::class.java))
             true
@@ -220,13 +220,12 @@ class MainActivity : ScopedAppActivity(),
             true
         }
         R.id.menu_appbar_import -> {
-            startActivityForResult(
-                Intent(this, ImportProfilesActivity::class.java),
-                ACC_IMPORT_PROFILE_REQUEST
-            )
+            startActivityForResult(Intent(this, ImportProfilesActivity::class.java), ACC_IMPORT_PROFILE_REQUEST)
             true
         }
-        R.id.menu_appbar_export -> {
+
+        R.id.menu_appbar_export ->
+        {
             // Generate list of ExportEntries TODO: maybe move this to the actual activity to make new ProfileEntries from AccaProfiles
             var profileList: ArrayList<ProfileEntry> = ArrayList()
             launch {
@@ -234,8 +233,7 @@ class MainActivity : ScopedAppActivity(),
                     profileList.add(ProfileEntry(profile))
                 }
             }.invokeOnCompletion {
-                var intent = Intent(this, ExportProfilesActivity::class.java)
-                    .putExtra("list", profileList)
+                var intent = Intent(this, ExportProfilesActivity::class.java).putExtra("list", profileList)
                 startActivity(intent)
             }
             true
@@ -243,7 +241,8 @@ class MainActivity : ScopedAppActivity(),
         else -> super.onOptionsItemSelected(item)
     }
 
-    private fun loadFragment(fragment: Fragment) {
+    private fun loadFragment(fragment: Fragment)
+    {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.main_framelayout, fragment)
         transaction.commit()
@@ -252,22 +251,20 @@ class MainActivity : ScopedAppActivity(),
     /**
      * Function for Status Card Settings OnClick (Configuration)
      */
-    fun batteryConfigOnClick(view: View) {
+    fun batteryConfigOnClick(view: View)
+    {
         Intent(view.context, AccConfigEditorActivity::class.java).also { intent ->
-            startActivityForResult(intent, ACC_CONFIG_EDITOR_REQUEST)
-        }
+            startActivityForResult(intent, ACC_CONFIG_EDITOR_REQUEST) }
     }
 
     /**
      * Function for launching the profile creation Activity
      */
-    fun accProfilesFabOnClick(view: View) {
+    fun accProfilesFabOnClick(view: View)
+    {
         launch {
             Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-                intent.putExtra(
-                    Constants.TITLE_KEY,
-                    this@MainActivity.getString(R.string.profile_creator)
-                )
+                intent.putExtra(Constants.TITLE_KEY, this@MainActivity.getString(R.string.profile_creator))
                 intent.putExtra(Constants.ACC_CONFIG_KEY, Acc.instance.readDefaultConfig())
                 startActivityForResult(intent, ACC_PROFILE_CREATOR_REQUEST)
             }
@@ -277,7 +274,8 @@ class MainActivity : ScopedAppActivity(),
     private fun checkAccInstalled(): Boolean {
         val version = _preferences.accVersion
 
-        if (!Acc.isAccInstalled(filesDir) || (version == "bundled" && Acc.isInstalledAccOutdated())) {
+        if (!Acc.isAccInstalled(filesDir) || (version == "bundled" && Acc.isInstalledAccOutdated()))
+        {
             val dialog = MaterialDialog(this).show {
                 title(R.string.installing_acc)
                 progress(R.string.wait)
@@ -286,17 +284,16 @@ class MainActivity : ScopedAppActivity(),
             }
 
             launch {
-                val res =
-                    when (version) {
-                        "bundled" ->
-                            Acc.installBundledAccModule(this@MainActivity)
-                        else ->
-                            Acc.installAccModuleVersion(this@MainActivity, version)
-                    }
+                val res = when (version)
+                {
+                    "bundled" -> Acc.installBundledAccModule(this@MainActivity)
+                    else -> Acc.installAccModuleVersion(this@MainActivity, version)
+                }
 
                 dialog.cancel()
 
-                if (res?.isSuccess != true) {
+                if (res?.isSuccess != true)
+                {
                     when {
                         version != "bundled" -> //custom version installation had an error -> ask the user to select a different version
                             MaterialDialog(this@MainActivity) //Dialog to tell the user that installation failed
@@ -488,6 +485,11 @@ class MainActivity : ScopedAppActivity(),
         resources.updateConfiguration(config, resources.displayMetrics)
 
         //--------------------------------------------------
+
+        sendBroadcast(Intent(this, BatteryInfoWidget::class.java).setAction(WIDGET_AUTO_UPDATE))
+
+        //--------------------------------------------------
+
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)

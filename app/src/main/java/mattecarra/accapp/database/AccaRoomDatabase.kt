@@ -98,8 +98,9 @@ abstract class AccaRoomDatabase : RoomDatabase()
         {
             override fun migrate(database: SupportSQLiteDatabase)
             {
-                database.execSQL("ALTER TABLE profiles_table ADD COLUMN `pEnables` TEXT NOT NULL");
-                database.execSQL("ALTER TABLE profiles_table ADD COLUMN `pScripts` TEXT");
+              //database.execSQL("ALTER TABLE profiles_table ADD COLUMN `pEnables` TEXT NOT NULL DEFAULT '"+fromEnables(ProfileEnables())+"'");
+                database.execSQL("ALTER TABLE profiles_table ADD COLUMN `pEnables` TEXT NOT NULL DEFAULT '{}'")
+                database.execSQL("ALTER TABLE profiles_table ADD COLUMN `pScripts` TEXT")
             }
         }
 
@@ -132,7 +133,7 @@ abstract class AccaRoomDatabase : RoomDatabase()
                         configCapacity = AccConfig.ConfigCapacity(5, 70, 80),
                         configTemperature = AccConfig.ConfigTemperature(40, 45, 90)
                     ),
-                    ProfileEnables(eCapacity = true, eVoltage = true, eTemperature = true),
+                    ProfileEnables(),
                 )
             )
 
@@ -142,7 +143,7 @@ abstract class AccaRoomDatabase : RoomDatabase()
                         configCapacity = AccConfig.ConfigCapacity(5, 85, 90),
                         configTemperature = AccConfig.ConfigTemperature(40, 45, 90)
                     ),
-                    ProfileEnables(eCapacity = true, eTemperature = true)
+                    ProfileEnables()
                 )
             )
 
@@ -153,7 +154,7 @@ abstract class AccaRoomDatabase : RoomDatabase()
                         configTemperature = AccConfig.ConfigTemperature(40, 45, 90),
                         configCoolDown = AccConfig.ConfigCoolDown(60, 50, 10)
                     ),
-                    ProfileEnables(eCapacity = true, eTemperature = true, eCoolDown = true)
+                    ProfileEnables(eCoolDown = true)
                 )
             )
 

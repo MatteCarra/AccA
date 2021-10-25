@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="current_measure_units_option_values">
+        <item>A</item>
         <item>mA</item>
         <item>uA</item>
     </string-array>
     <string-array name="voltage_measure_units_option_values">
+        <item>V</item>
         <item>mV</item>
         <item>uV</item>
     </string-array>

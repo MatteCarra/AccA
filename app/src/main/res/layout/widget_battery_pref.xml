@@ -1,0 +1,235 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wdt_interface_Ll"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/card_margindiv2"
+    android:orientation="vertical"
+    android:padding="@dimen/bot_fab">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:background="@drawable/checker">
+
+        <include
+            android:id="@+id/sample_wdt"
+            layout="@layout/widget_battery_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/card_corner_radius" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_margin="@dimen/card_content_margin"
+        android:background="@color/browser_actions_bg_grey" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/textMainBtn"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/swd_main" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/textColorBtn"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/swd_text" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/backgroundColorBtn"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/swd_background" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_margin="@dimen/card_content_margin"
+        android:background="@color/browser_actions_bg_grey" />
+
+    <!-- ........................................... -->
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/settings_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/text_size_Ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/card_margin"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="S" />
+
+            <androidx.appcompat.widget.AppCompatSeekBar
+                android:id="@+id/text_size_seek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:max="50"
+                android:min="10"
+                android:progress="14" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_size_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="14" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <mattecarra.accapp.models.scolorview.ColorPickerView
+            android:id="@+id/colorPickerText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:enableAlpha="false" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <!-- ........................................... -->
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/settings_Background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/Background_size_Ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/card_margin"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R" />
+
+            <androidx.appcompat.widget.AppCompatSeekBar
+                android:id="@+id/round_size_seek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:max="50"
+                android:min="0"
+                android:progress="8" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/round_size_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <mattecarra.accapp.models.scolorview.ColorPickerView
+            android:id="@+id/colorPickerBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:enableAlpha="true" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <!-- ........................................... -->
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/settings_check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"
+        tools:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/show_label_chk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/swd_show_field_names" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/replace_label_chk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/swd_replace_to_symbols" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/show_endvalue_chk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:enabled="false"
+            android:text="@string/swd_show_field_values" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_margin="@dimen/card_content_margin"
+            android:background="@color/browser_actions_bg_grey" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/show_status_chk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/swd_show_status" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/show_current_chk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/swd_show_curr" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/show_temperature_chk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/swd_show_temp" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/show_voltage_chk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/swd_show_volt" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/show_profile_chk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/swd_show_profile" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</LinearLayout>

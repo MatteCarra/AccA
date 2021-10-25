@@ -34,8 +34,7 @@ object ConfigConverter
     @JvmStatic
     fun toScripts(scripts: String?): List<Int>?
     {
-        return Gson().fromJson(scripts, object : TypeToken<List<Int>>()
-        {}.type)
+        return Gson().fromJson(scripts, object : TypeToken<List<Int>>() {}.type)
     }
 
     @TypeConverter
@@ -54,37 +53,43 @@ object ConfigConverter
 
     @TypeConverter
     @JvmStatic
-    fun fromConfigVoltage(configVoltage: AccConfig.ConfigVoltage) : String {
+    fun fromConfigVoltage(configVoltage: AccConfig.ConfigVoltage) : String
+    {
         return Gson().toJson(configVoltage)
     }
 
     @TypeConverter
     @JvmStatic
-    fun toConfigVoltage(configVoltage: String) : AccConfig.ConfigVoltage {
+    fun toConfigVoltage(configVoltage: String) : AccConfig.ConfigVoltage
+    {
         return Gson().fromJson(configVoltage, AccConfig.ConfigVoltage::class.java)
     }
 
     @TypeConverter
     @JvmStatic
-    fun fromConfigTemperature(configTemperature: AccConfig.ConfigTemperature) : String {
+    fun fromConfigTemperature(configTemperature: AccConfig.ConfigTemperature) : String
+    {
         return Gson().toJson(configTemperature)
     }
 
     @TypeConverter
     @JvmStatic
-    fun toConfigTemperature(configTemperature: String) : AccConfig.ConfigTemperature {
+    fun toConfigTemperature(configTemperature: String) : AccConfig.ConfigTemperature
+    {
         return Gson().fromJson(configTemperature, AccConfig.ConfigTemperature::class.java)
     }
 
     @TypeConverter
     @JvmStatic
-    fun fromConfigCoolDown(configCoolDown: AccConfig.ConfigCoolDown?) : String {
+    fun fromConfigCoolDown(configCoolDown: AccConfig.ConfigCoolDown?) : String
+    {
         return Gson().toJson(configCoolDown)
     }
 
     @TypeConverter
     @JvmStatic
-    fun toConfigCoolDown(configCoolDown: String) : AccConfig.ConfigCoolDown? {
+    fun toConfigCoolDown(configCoolDown: String) : AccConfig.ConfigCoolDown?
+    {
         return Gson().fromJson(configCoolDown, AccConfig.ConfigCoolDown::class.java)
     }
 }

@@ -22,15 +22,19 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
         mProfilesListLiveData = mProfileDao.getAllProfiles()
     }
 
-    suspend fun getProfiles(): List<AccaProfile> {
+    suspend fun getProfiles(): List<AccaProfile>
+    {
         return mProfileDao.getProfiles()
     }
 
-    suspend fun getProfileById(id: Int): AccaProfile? {
+    suspend fun getProfileById(id: Int): AccaProfile?
+    {
         return mProfileDao.getProfileById(id)
+        //return if (id>0) mProfileDao.getProfileById(id) else null
     }
 
-    fun getLiveData(): LiveData<List<AccaProfile>> {
+    fun getLiveData(): LiveData<List<AccaProfile>>
+    {
         return mProfilesListLiveData
     }
 
