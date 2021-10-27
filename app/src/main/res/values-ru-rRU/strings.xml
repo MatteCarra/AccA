@@ -167,17 +167,27 @@
     <string name="share">Поделиться</string>
     <string name="logs_not_found">Файл отчёта не найден.</string>
     <string name="acc_telegram">За дополнительной поддержкой присоединяйтесь к группе ACC Telegram (t.me/acc_group)!</string>
-    <string name="current_measure_unit_preference_title">Текущая единица измерения</string>
+
+    <string name="current_measure_unit_preference_title">Входная единица измерения тока</string>
     <string name="current_measure_unit_preference_description">ACC получает информацию о зарядке из системного интерфейса.
         Некоторые системы выражают ток в μA (микроамперах), другие в mA (миллиамперах).
         Если обнаруженное значение неправильно, вы можете установить его вручную.
     </string>
-    <string name="voltage_measure_unit_preference_title">Единица измерения напряжения</string>
+    <string name="voltage_measure_unit_preference_title">Входная единица измерения напряжения</string>
     <string name="voltage_measure_unit_preference_title_description">ACC получает информацию о зарядке из системного интерфейса.
         Некоторые системы выражают ток в µV (микровольтах), другие в mV (милливольтах).
         Если обнаруженное значение неправильно, вы можете установить его вручную.
     </string>
+
+    <string name="current_measure_output_preference_title">Выходная единица измерения тока</string>
+    <string name="current_measure_output_preference_description">Текущее значение Тока в 0.412 А (ампер) или 412 мА (миллиампер).</string>
+    <string name="voltage_measure_output_preference_title">Выходная единица измерения напряжения</string>
+    <string name="voltage_measure_output_preference_title_description">Текущее значение напряжения в 4.123 В (вольт) или 4123 мВ (милливольт).</string>
+    <string name="temperature_measure_output_preference_title">Выходная единица измерения Температуры</string>
+    <string name="temperature_measure_output_preference_title_description">Выберите из трех значений: -1C/30F (Цельсий/Фаренгейт), -1C (Цельсий), 30C (Фаренгейт).</string>
+
     <string name="units_of_measure">Единицы измерения</string>
+
     <string name="acc_version_preference_title">Версия ACC</string>
     <string name="acc_version_preference_description">Вы можете выбрать вариант ACC: bundled (стабильный, рекомендованный для большинства пользователей), master (стабильный), develop (последние обновления, возможно нестабильные) или любую из отмеченных версий.
         Bundled является наиболее тщательно протестированной версией для AccA - поэтому это рекомендуемый вариант.
@@ -186,19 +196,40 @@
     <string name="install_bundled_version">"        Bundled версия гарантированно всегда будет работать с AccA - таким образом, это рекомендуемый выбор."</string>
     <string name="acc_version_picker_title">Версия ACC</string>
     <string name="acc_version_picker_message">Выберите желаемую версию ACC</string>
+
     <string-array name="current_measure_units_options">
-        <item>миллиампер (10^-3)</item>
-        <item>микроампер (10^-6)</item>
+        <item>амперы</item>
+        <item>миллиамперы (10^-3)</item>
+        <item>микроамперы (10^-6)</item>
     </string-array>
     <string-array name="voltage_measure_units_options">
-        <item>милливольт (10^-3)</item>
-        <item>микровольт (10^-6)</item>
+        <item>вольты</item>
+        <item>милливольты (10^-3)</item>
+        <item>микровольты (10^-6)</item>
     </string-array>
+
+    <string-array name="current_measure_output_options">
+        <item>Амперы (A)</item>
+        <item>МиллиАмперы (мА)</item>
+    </string-array>
+
+    <string-array name="voltage_measure_output_options">
+        <item>Вольты (В)</item>
+        <item>МиллиВольты (мВ)</item>
+    </string-array>
+
+    <string-array name="temperature_measure_output_options">
+        <item>Цельсий/Фаренгейт (°Вместе)</item>
+        <item>Цельсий (°C)</item>
+        <item>Фаренгейт (°F)</item>
+    </string-array>
+
     <string-array name="acc_version_options">
         <item>Bundled</item>
         <item>Master</item>
         <item>Develop</item>
     </string-array>
+
     <string name="ui_options">Пользовательский интерфейс</string>
     <string name="theme_option_setting">Тема</string>
     <string name="theme_option_summary">Установите тему приложения.</string>

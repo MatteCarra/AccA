@@ -1,13 +1,11 @@
 package xml
 
-import android.Manifest
 import android.app.PendingIntent
 import android.appwidget.*
 import android.appwidget.AppWidgetManager.*
 import android.appwidget.AppWidgetProvider
 import android.content.*
 import android.content.Context.MODE_PRIVATE
-import android.content.Intent.ACTION_CALL
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
@@ -19,7 +17,6 @@ import android.util.TypedValue.COMPLEX_UNIT_SP
 import android.view.View.*
 import android.widget.RemoteViews
 import android.widget.Toast
-import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.os.HandlerCompat
@@ -27,7 +24,6 @@ import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.runBlocking
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
-import mattecarra.accapp.VoltageUnit
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.activities.BatteryDialogActivity
 import mattecarra.accapp.database.AccaRoomDatabase
@@ -223,9 +219,9 @@ class BatteryInfoWidget : AppWidgetProvider()
 
                 val prefc = Preferences(context)
 
-                var chSpeed = batteryInfo.getCurrentNow(prefc.currentUnitOfMeasure)
-                if (Acc.instance.version < 202107280) chSpeed *= (if (batteryInfo.isCharging()) 1 else -1)
-                widgetView.setTextViewText(R.id.charging_out, context.getString(R.string.info_discharging_speed_extended, chSpeed))
+                val plus = if (Acc.instance.version < 202107280) batteryInfo.isCharging() else true
+                widgetView.setTextViewText(R.id.charging_out, batteryInfo.getCurrentNow(prefc.currentInputUnitOfMeasure,
+                prefc.currentOutputUnitOfMeasure, plus, showEndvalue))
 
                 widgetView.setTextViewTextSize(R.id.charging_label, COMPLEX_UNIT_SP, textSize.toFloat())
                 widgetView.setTextViewTextSize(R.id.charging_out, COMPLEX_UNIT_SP, textSize.toFloat())
@@ -233,18 +229,14 @@ class BatteryInfoWidget : AppWidgetProvider()
                 widgetView.setTextColor(R.id.charging_out, textColor)
 
                 widgetView.setTextViewText(R.id.temper_label, if (replaceLabel) "Ⓣ:" else context.getString(R.string.info_temperature))
-
-                widgetView.setTextViewText(R.id.temper_out,
-                    batteryInfo.temperature.toString() + Typography.degree + "C/"
-                       + batteryInfo.getTempFahrenheit() + Typography.degree + "F")
-
+                widgetView.setTextViewText(R.id.temper_out, batteryInfo.getTemperature(prefc.temperatureOutputUnitOfMeasure, showEndvalue))
                 widgetView.setTextViewTextSize(R.id.temper_label, COMPLEX_UNIT_SP, textSize.toFloat())
                 widgetView.setTextViewTextSize(R.id.temper_out, COMPLEX_UNIT_SP, textSize.toFloat())
                 widgetView.setTextColor(R.id.temper_label, textColor)
                 widgetView.setTextColor(R.id.temper_out, textColor)
 
                 widgetView.setTextViewText(R.id.voltage_label, if (replaceLabel) "Ⓥ:" else context.getString(R.string.info_voltage))
-                widgetView.setTextViewText(R.id.voltage_out, batteryInfo.getVoltageNow(prefc.voltageUnitOfMeasure)+ " V")
+                widgetView.setTextViewText(R.id.voltage_out, batteryInfo.getVoltageNow(prefc.voltageInputUnitOfMeasure, prefc.voltageOutputUnitOfMeasure, showEndvalue))
                 widgetView.setTextViewTextSize(R.id.voltage_label, COMPLEX_UNIT_SP, textSize.toFloat())
                 widgetView.setTextViewTextSize(R.id.voltage_out, COMPLEX_UNIT_SP, textSize.toFloat())
                 widgetView.setTextColor(R.id.voltage_label, textColor)

@@ -265,21 +265,28 @@
     <string name="share">Share</string>
     <string name="logs_not_found">Log file not found.</string>
     <string name="acc_telegram">For additional support, join ACC Telegram group (t.me/acc_group)!</string>
-    <string name="current_measure_unit_preference_title">Current unit of measure</string>
 
+    <string name="current_measure_unit_preference_title">Input Current unit of measure</string>
     <string name="current_measure_unit_preference_description">ACC retrieves charging information from the sys interface.
         Some systems express current in µA (microamps), others in mA (milliamps).
         If the detected unit is incorrect, you can set it manually.
     </string>
 
-    <string name="voltage_measure_unit_preference_title">Voltage unit of measure</string>
-
+    <string name="voltage_measure_unit_preference_title">Input Voltage unit of measure</string>
     <string name="voltage_measure_unit_preference_title_description">ACC retrieves charging information from the sys interface.
         Some systems express voltage in µV (microvolts), others in mV (millivolts).
         If the detected unit is incorrect, you can set it manually.
     </string>
 
     <string name="units_of_measure">Units of measure</string>
+
+    <string name="current_measure_output_preference_title">Output Current unit of measure</string>
+    <string name="current_measure_output_preference_description">The output of current, 0.412 A (amp) or 412 mA (milliamper).</string>
+    <string name="voltage_measure_output_preference_title">Output Voltage unit of measure</string>
+    <string name="voltage_measure_output_preference_title_description">The output of voltage, 4.123 V (Volt) or 4123 mV (Milvolt).</string>
+    <string name="temperature_measure_output_preference_title">Output Temperature unit of measure</string>
+    <string name="temperature_measure_output_preference_title_description">The output of temperature: -1C/30F (Celsius/Fahrenheit) or -1C (Celsius) or 30C (Fahrenheit).</string>
+
     <string name="acc_version_preference_title">ACC version</string>
 
     <string name="acc_version_preference_description">You can choose the ACC variant to use: bundled (stable, recommended for most users), master (stable), develop (bleeding edge but not necessarily unstable) or any of the tagged versions.
@@ -302,6 +309,22 @@
         <item>Voltage</item>
         <item>mV (1E-03)</item>
         <item>μV (1E-06)</item>
+    </string-array>
+
+    <string-array name="temperature_measure_output_options">
+        <item>Celsius/Fahrenheit (°Both)</item>
+        <item>Celsius (°C)</item>
+        <item>Fahrenheit (°F)</item>
+    </string-array>
+
+    <string-array name="current_measure_output_options">
+        <item>Ampere (A)</item>
+        <item>mAmpere (mA)</item>
+    </string-array>
+
+    <string-array name="voltage_measure_output_options">
+        <item>Voltage (V)</item>
+        <item>mVoltage (mV)</item>
     </string-array>
 
     <string-array name="acc_version_options">

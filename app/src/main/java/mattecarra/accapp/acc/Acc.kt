@@ -140,12 +140,12 @@ object Acc {
 
             if(version >= 202002292) {
                 val preferences = Preferences(context)
-                preferences.currentUnitOfMeasure = CurrentUnit.A
-                preferences.voltageUnitOfMeasure = VoltageUnit.V
+                preferences.currentInputUnitOfMeasure = CurrentUnit.A
+                preferences.voltageInputUnitOfMeasure = VoltageUnit.V
             } else if(version >= 202002290) {
                 val preferences = Preferences(context)
-                preferences.currentUnitOfMeasure = CurrentUnit.mA
-                preferences.voltageUnitOfMeasure = VoltageUnit.V
+                preferences.currentInputUnitOfMeasure = CurrentUnit.mA
+                preferences.voltageInputUnitOfMeasure = VoltageUnit.V
             } else {
                 calibrateMeasurements(context)
             }
@@ -158,22 +158,20 @@ object Acc {
     }
 
     private suspend fun calibrateMeasurements(context: Context) = withContext(Dispatchers.IO) {
+
         var microVolts = 0
         var microAmpere = 0
 
         for (i in 0..10) {
             val batteryInfo = Acc.instance.getBatteryInfo()
-            if(batteryInfo.getRawVoltageNow() > 1000000)
-                microVolts++
-            if(abs(batteryInfo.getRawCurrentNow()) > 10000)
-                microAmpere++
-
+            if(batteryInfo.getRawVoltageNow() > 1000000) microVolts++
+            if(abs(batteryInfo.getRawCurrentNow()) > 10000) microAmpere++
             delay(250)
         }
 
         val preferences = Preferences(context)
-        preferences.currentUnitOfMeasure = if(microAmpere >= 6) CurrentUnit.uA else CurrentUnit.mA
-        preferences.voltageUnitOfMeasure = if(microVolts >= 6)  VoltageUnit.uV else VoltageUnit.mV
+        preferences.currentInputUnitOfMeasure = if(microAmpere >= 6) CurrentUnit.uA else CurrentUnit.mA
+        preferences.voltageInputUnitOfMeasure = if(microVolts >= 6)  VoltageUnit.uV else VoltageUnit.mV
     }
 
     private fun getAccVersion(): Int? {

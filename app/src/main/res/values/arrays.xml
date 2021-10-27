@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string-array name="current_measure_units_option_values">
         <item>A</item>
         <item>mA</item>
@@ -10,6 +11,21 @@
         <item>mV</item>
         <item>uV</item>
     </string-array>
+
+    <string-array name="current_measure_output_option_values">
+        <item>A</item>
+        <item>mA</item>
+    </string-array>
+    <string-array name="voltage_measure_output_option_values">
+        <item>V</item>
+        <item>mV</item>
+    </string-array>
+    <string-array name="temperature_measure_output_option_values">
+        <item>CF</item>
+        <item>C</item>
+        <item>F</item>
+    </string-array>
+
     <string-array name="acc_version_option_values">
         <item>bundled</item>
         <item>master</item>
