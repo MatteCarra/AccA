@@ -125,9 +125,9 @@
     <string name="automatic">Автоматически</string>
     <string name="error_occurred">Произошла ошибка</string>
     <string name="retry">Повторить</string>
-    <string name="edit_charging_limit_once_button">Зарядить до %, без ограничений</string>
-    <string name="done_applied_charge_limit">Заряжено на %1$d%%</string>
-    <string name="charge_limit_not_applied">Ограничение зарядки не установлено</string>
+    <string name="edit_charging_limit_once_button">Однократная зарядка без ограничений</string>
+    <string name="done_applied_charge_limit">Установлена зарядка до %1$d%%</string>
+    <string name="charge_limit_not_applied">Однократная зарядка отменена</string>
     <string name="apply">Применить</string>
     <string name="done">Готово</string>
     <string name="edit_charging_limit_once_dialog_msg">Ваши текущие настройки будут автоматически восстановлены после достижения выбранного уровня заряда батареи.</string>
@@ -345,6 +345,8 @@
     <string name="cue_AccVoltControl_pref_summary">Разрешить команду: \"acca -set —voltage\"</string>
 
     <!-- Widget Label and Activity -->
+    <string name="qwa_dis_opt_battery">Отключить оптимизацию батареи</string>
+    <string name="battery_optimization_fail">Не удалось открыть настройки оптимизации батареи</string>
     <string name="qwa_open_acc">Открыть АССА ..</string>
     <string name="qwa_stop">Остановить виджеты</string>
     <string name="qwa_start">Запустить виджеты</string>

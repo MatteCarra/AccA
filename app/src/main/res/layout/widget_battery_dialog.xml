@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
     android:id="@+id/activityRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -30,6 +31,15 @@
                 android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/wdt_disable_optimization_battery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qwa_dis_opt_battery"
+                    android:textColor="@color/color_surface"
+                    android:visibility="gone"
+                    tool:visibility="visible" />
+
+                <Button
                     android:id="@+id/wdt_open_acca_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -49,7 +59,8 @@
                     android:layout_height="wrap_content"
                     android:text="curr setting АСС"
                     android:textColor="@color/color_surface"
-                    android:visibility="gone"/>
+                    android:visibility="gone"
+                    tool:visibility="visible" />
 
                 <Button
                     android:id="@+id/wdt_start_widget_btn"
@@ -70,6 +81,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/qwa_profile"
+                    android:textColor="@color/color_surface" />
+
+                <Button
+                    android:id="@+id/wdt_charge_once_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit_charging_limit_once_button"
                     android:textColor="@color/color_surface" />
 
             </LinearLayout>

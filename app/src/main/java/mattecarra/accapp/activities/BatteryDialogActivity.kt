@@ -1,11 +1,15 @@
 package mattecarra.accapp.activities
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.NumberPicker
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.Toast
@@ -13,10 +17,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.list.ItemListener
 import com.afollestad.materialdialogs.list.listItems
 import kotlinx.coroutines.GlobalScope
@@ -32,6 +38,8 @@ import mattecarra.accapp.viewmodel.SharedViewModel
 import xml.*
 import com.topjohnwu.superuser.internal.Utils.context
 import mattecarra.accapp.Preferences
+import mattecarra.accapp.databinding.EditChargingLimitOnceDialogBinding
+import java.lang.Exception
 import java.util.*
 
 class BatteryDialogActivity : AppCompatActivity()
@@ -76,6 +84,7 @@ class BatteryDialogActivity : AppCompatActivity()
         val content = WidgetBatteryDialogBinding.inflate(layoutInflater)
         content.wdtSettingWidgetBtn.isVisible = widgetId > -1
         content.wdtSettingWidgetBtn.text = getString(R.string.qwa_setting)+" "+ widgetId.toString()
+        content.wdtDisableOptimizationBattery.isGone = isBatteryOptimizationDisabled(this)
 
         setContentView(content.root)
 
@@ -107,6 +116,26 @@ class BatteryDialogActivity : AppCompatActivity()
 
         content.activityRoot.setOnClickListener { finish() }
         content.btnDismiss.setOnClickListener { finish() }
+
+        //---------------------------------------------------------------------------------
+        // android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS
+
+        content.wdtDisableOptimizationBattery.setOnClickListener {
+            try
+            {
+                val intent = Intent()
+                intent.action = "android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+                intent.data = Uri.parse("package:" + context.packageName)
+                startActivity(intent)
+                finish()
+            }
+            catch (e: Exception)
+            {
+                Toast.makeText(context, getString(R.string.battery_optimization_fail), Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        //---------------------------------------------------------------------------------
 
         content.wdtOpenAccaBtn.setOnClickListener {
 
@@ -168,6 +197,38 @@ class BatteryDialogActivity : AppCompatActivity()
                     negativeButton(text = "cancel", click = { dismiss() })
                 }
             }
+        }
+
+        //---------------------------------------------------------------------------------
+
+        content.wdtChargeOnceBtn.setOnClickListener {
+
+            val dialog = EditChargingLimitOnceDialogBinding.inflate(layoutInflater)
+
+            MaterialDialog(it.context).show {
+                title(R.string.edit_charging_limit_once_button)
+                message(R.string.edit_charging_limit_once_dialog_msg)
+                cancelOnTouchOutside(false)
+                customView(view=dialog.root)
+
+                positiveButton(R.string.apply) {
+                    runBlocking {
+                        val limit = getCustomView().findViewById<NumberPicker>(R.id.charging_limit).value
+                        Acc.instance.setChargingLimitForOneCharge(limit)
+                        Toast.makeText(context, getString(R.string.done_applied_charge_limit, limit), Toast.LENGTH_LONG).show()
+                        finish()
+                    }
+                }
+                negativeButton(android.R.string.cancel) {
+                    Toast.makeText(context, R.string.charge_limit_not_applied, Toast.LENGTH_LONG).show()
+                    finish()
+                }
+            }
+
+            val picker = dialog.chargingLimit
+            picker.maxValue = 100
+            picker.minValue = 20
+            picker.value = 100
         }
 
         //---------------------------------------------------------------------------------
@@ -362,5 +423,9 @@ class BatteryDialogActivity : AppCompatActivity()
         //---------------------------------------------------------------------------------
     }
 
+    fun isBatteryOptimizationDisabled(context: Context): Boolean
+    {
+        return Build.VERSION.SDK_INT < 23 || (context.getSystemService(POWER_SERVICE) as PowerManager).isIgnoringBatteryOptimizations(context.packageName)
+    }
 
 }

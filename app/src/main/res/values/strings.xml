@@ -447,6 +447,8 @@
     <string name="profile_option_delete">Delete</string>
 
     <!-- Widget Label and Activity -->
+    <string name="qwa_dis_opt_battery">Disable battery optimization</string>
+    <string name="battery_optimization_fail">Fail to open battery optimization setting</string>
     <string name="qwa_open_acc">Open ACCA</string>
     <string name="qwa_stop">Stop Widgets</string>
     <string name="qwa_start">Start Widgets</string>
