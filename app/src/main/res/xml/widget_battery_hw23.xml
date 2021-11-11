@@ -3,5 +3,5 @@
     android:initialLayout="@layout/widget_battery_info"
     android:minHeight="100dp"
     android:minWidth="200dp"
-    android:updatePeriodMillis="600000">
+    android:updatePeriodMillis="3600000">
 </appwidget-provider>

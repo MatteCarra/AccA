@@ -14,10 +14,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
-import androidx.room.Query
-import androidx.sqlite.db.SupportSQLiteDatabase
-import androidx.sqlite.db.SupportSQLiteProgram
-import androidx.sqlite.db.SupportSQLiteQuery
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
@@ -30,8 +26,6 @@ import kotlinx.coroutines.launch
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
-import mattecarra.accapp.database.AccaRoomDatabase
-import mattecarra.accapp.database.ConfigConverter
 import mattecarra.accapp.databinding.ActivityMainBinding
 import mattecarra.accapp.dialogs.*
 import mattecarra.accapp.djs.Djs
@@ -42,8 +36,7 @@ import mattecarra.accapp.viewmodel.ProfilesViewModel
 import mattecarra.accapp.viewmodel.SchedulesViewModel
 import mattecarra.accapp.viewmodel.SharedViewModel
 import xml.BatteryInfoWidget
-import xml.WIDGET_ACTION_REVERSE
-import xml.WIDGET_AUTO_UPDATE
+import xml.WIDGET_ALL_UPDATE
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -486,7 +479,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 
         //--------------------------------------------------
 
-        sendBroadcast(Intent(this, BatteryInfoWidget::class.java).setAction(WIDGET_AUTO_UPDATE))
+        sendBroadcast(Intent(this, BatteryInfoWidget::class.java).setAction(WIDGET_ALL_UPDATE))
 
         //--------------------------------------------------
 

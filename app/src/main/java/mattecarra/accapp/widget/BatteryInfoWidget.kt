@@ -9,9 +9,7 @@ import android.content.Context.MODE_PRIVATE
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.os.Build
-import android.os.Bundle
-import android.os.Looper
+import android.os.*
 import android.preference.PreferenceManager
 import android.util.TypedValue.COMPLEX_UNIT_SP
 import android.view.View.*
@@ -19,8 +17,8 @@ import android.widget.RemoteViews
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.graphics.drawable.toBitmap
-import androidx.core.os.HandlerCompat
-import kotlinx.coroutines.Runnable
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
@@ -28,14 +26,19 @@ import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.activities.BatteryDialogActivity
 import mattecarra.accapp.database.AccaRoomDatabase
 import mattecarra.accapp.models.DashboardValues
+import mattecarra.accapp.services.WidgetService
+import mattecarra.accapp.utils.Constants
+import mattecarra.accapp.utils.Logs
 import mattecarra.accapp.utils.ProfileUtils
 import mattecarra.accapp.widget.AppWidgetAlarm
 import java.util.*
 
-
-const val WIDGET_AUTO_UPDATE = "acca.intent.action.WIDGET_AUTO_UPDATE"
-const val WIDGET_ACTION_CLICK = "acca.intent.action.WIDGET_CLICK_BATTERY"
-const val WIDGET_ACTION_REVERSE = "acca.intent.action.WIDGET_CLICK_REVERSE"
+const val WIDGET_ACTION_CLICK = "acca.action.WIDGET_CLICK_BATTERY"
+const val WIDGET_ACTION_REVERSE = "acca.action.WIDGET_CLICK_REVERSE"
+const val WIDGET_ALL_ENABLED = "acca.event.WIDGET_ALL_ENABLE"
+const val WIDGET_ONE_UPDATE = "acca.action.WIDGET_ONE_UPDATE"
+const val WIDGET_ALL_UPDATE = "acca.action.WIDGET_ALL_UPDATE"
+const val WIDGET_ALL_DISABLED = "acca.event.WIDGET_ALL_DISABLE"
 
 const val WIDGET_ID_NAME = "widget_id"
 const val WIDGET_PREF_NAME = "widget_pref"
@@ -81,8 +84,9 @@ class BatteryInfoWidget : AppWidgetProvider()
 
         //--------------------------------------------------
 
-        AppWidgetAlarm(context).startAlarm()  // start long alarm with pendingIntent, RTC
-        //Toast.makeText(context, intent?.action.toString(), Toast.LENGTH_LONG).show()
+        //AppWidgetAlarm(context).startLongUpdateAlarm()  // start long alarm with pendingIntent, RTC
+
+        Logs().d(javaClass.simpleName, ".onReceive(): " + intent?.action)
 
         when(intent?.action)
         {
@@ -91,19 +95,29 @@ class BatteryInfoWidget : AppWidgetProvider()
                 // delete setting for current widget
             }
 
-            ACTION_APPWIDGET_DISABLED ->
+            ACTION_APPWIDGET_ENABLED ->
             {
-                AppWidgetAlarm(context).stopAlarm()  // stop long alarm
+                // register widget receivers - send only no protected intent !!!
+                WidgetService().runSelfIntent(context, Intent().setAction(WIDGET_ALL_ENABLED))
             }
 
-            WIDGET_AUTO_UPDATE ->
+            ACTION_APPWIDGET_DISABLED ->
+            {
+                //AppWidgetAlarm(context).stopLongUpdateAlarm()  // stop long alarm
+                WidgetService().runSelfIntent(context, Intent().setAction(WIDGET_ALL_DISABLED))
+            }
+
+            WIDGET_ALL_UPDATE,
+            ACTION_APPWIDGET_UPDATE ->
             {
                 updateAllWidget(context, getAppWidgetIds(context))
             }
 
+            WIDGET_ONE_UPDATE,
             ACTION_APPWIDGET_OPTIONS_CHANGED ->
             {
-                val widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
+                var widgetId = intent.getIntExtra(EXTRA_APPWIDGET_ID, -1)
+                if (widgetId == -1) widgetId = intent.getIntExtra(WIDGET_ID_NAME, -1)
                 if (widgetId > -1) updateOneWidget(context, widgetId)
             }
 
@@ -122,12 +136,6 @@ class BatteryInfoWidget : AppWidgetProvider()
                 startActivity(context.applicationContext, Intent(context.applicationContext, BatteryDialogActivity::class.java)
                     .addFlags(FLAG_ACTIVITY_NEW_TASK).putExtras(intent), null)
             }
-
-            else -> // for OTHERs
-            {
-                updateAllWidget(context, getAppWidgetIds(context))
-            }
-
         }
     }
 
@@ -159,8 +167,7 @@ class BatteryInfoWidget : AppWidgetProvider()
 
             widgetView.setOnClickPendingIntent(R.id.dash_click_zone, // click
                 PendingIntent.getBroadcast(context, widgetId,
-                Intent(context, BatteryInfoWidget::class.java).setAction(WIDGET_ACTION_CLICK)
-                .addFlags(FLAG_ACTIVITY_NEW_TASK).putExtra(WIDGET_ID_NAME, widgetId),
+                Intent(context, BatteryInfoWidget::class.java).setAction(WIDGET_ACTION_CLICK).putExtra(WIDGET_ID_NAME, widgetId),
                 PendingIntent.FLAG_CANCEL_CURRENT))
 
             getInstance(context).updateAppWidget(widgetId, widgetView) // update
@@ -169,7 +176,7 @@ class BatteryInfoWidget : AppWidgetProvider()
 
         //----------------------------------------------------------------------------------
 
-        runBlocking {
+        GlobalScope.launch {
 
             with(DashboardValues(Acc.instance.getBatteryInfo(), Acc.instance.isAccdRunning())) {
 
@@ -251,15 +258,17 @@ class BatteryInfoWidget : AppWidgetProvider()
 
                 widgetView.setOnClickPendingIntent(R.id.dash_click_zone,
                     PendingIntent.getBroadcast(context, widgetId,
-                        Intent(context, BatteryInfoWidget::class.java).setAction(WIDGET_ACTION_CLICK)
-                       .addFlags(FLAG_ACTIVITY_NEW_TASK).putExtra(WIDGET_ID_NAME, widgetId), PendingIntent.FLAG_CANCEL_CURRENT))
+                    Intent(context, BatteryInfoWidget::class.java).setAction(WIDGET_ACTION_CLICK)
+                    .putExtra(WIDGET_ID_NAME, widgetId), PendingIntent.FLAG_CANCEL_CURRENT))
 
                 getInstance(context).updateAppWidget(widgetId, widgetView)
 
-                if (batteryInfo.isCharging() && !manualStop)
-                    HandlerCompat.postDelayed(HandlerCompat.createAsync(Looper.getMainLooper()),
-                    Runnable { updateOneWidget(context, widgetId) }, null, 2000)
-
+                if (batteryInfo.isCharging())
+                {
+                    Logs().d(javaClass.simpleName, "isCharging(): true, Send SelfUpdate $swidgetId")
+                    val intent = Intent().setAction(WIDGET_ONE_UPDATE).putExtra(WIDGET_ID_NAME, widgetId).putExtra("isCharging", true)
+                    WidgetService().runSelfIntent(context, intent)
+                }
             }
         }
     }

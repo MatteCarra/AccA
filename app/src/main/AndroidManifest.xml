@@ -54,6 +54,7 @@
 
         <service
             android:name=".services.AccProfileTileService"
+            android:exported="false"
             android:icon="@drawable/ic_battery_charging_80"
             android:label="Acc profile editor"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
@@ -64,6 +65,7 @@
 
         <service
             android:name=".services.AccdTileService"
+            android:exported="false"
             android:icon="@drawable/ic_battery_charging_80"
             android:label="Accd manager"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
@@ -82,18 +84,21 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
+        <service
+            android:name=".services.WidgetService"
+            android:exported="false">
+        </service>
+
         <receiver
             android:name="xml.BatteryInfoWidget"
+            android:exported="true"
             android:icon="@drawable/ic_launcher_foreground"
-            android:label="@string/widget_batteryInfo_name"
-            android:permission="android.permission.RECEIVE_BOOT_COMPLETED"
-            android:exported="true">
+            android:label="@string/widget_batteryInfo_name">
             <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.PACKAGE_RESTARTED" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE_OPTIONS" />
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"

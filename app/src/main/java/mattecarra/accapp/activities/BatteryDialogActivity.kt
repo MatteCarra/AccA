@@ -160,7 +160,7 @@ class BatteryDialogActivity : AppCompatActivity()
                             mSharedViewModel.updateAccConfig(temp[index].accConfig)
                             mSharedViewModel.setCurrentSelectedProfile(temp[index].uid)
                             Toast.makeText(this@BatteryDialogActivity, getString(R.string.selecting_profile_toast, temp[index].profileName), Toast.LENGTH_SHORT).show()
-                            sendBroadcast(Intent(this@BatteryDialogActivity, BatteryInfoWidget::class.java).setAction(WIDGET_AUTO_UPDATE))
+                            sendBroadcast(Intent(this@BatteryDialogActivity, BatteryInfoWidget::class.java).setAction(WIDGET_ALL_UPDATE))
                             finish()
                         }})
                     }
@@ -214,7 +214,7 @@ class BatteryDialogActivity : AppCompatActivity()
                     .putBoolean(swidgetId + WIDGET_SPROFILE, bind.showProfileChk.isChecked)
                     .apply()
 
-                    sendBroadcast(Intent(context, BatteryInfoWidget::class.java).setAction(WIDGET_AUTO_UPDATE))
+                    sendBroadcast(Intent(context, BatteryInfoWidget::class.java).setAction(WIDGET_ALL_UPDATE))
                     finish()
                 })
 
