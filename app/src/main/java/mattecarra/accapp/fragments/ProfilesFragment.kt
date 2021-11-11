@@ -40,6 +40,8 @@ import mattecarra.accapp.utils.ProfileUtils
 import mattecarra.accapp.utils.ScopedFragment
 import mattecarra.accapp.viewmodel.ProfilesViewModel
 import mattecarra.accapp.viewmodel.SharedViewModel
+import xml.BatteryInfoWidget
+import xml.WIDGET_ALL_UPDATE
 
 // Fragments from: https://codeburst.io/android-swipe-menu-with-recyclerview-8f28a235ff28
 
@@ -70,7 +72,6 @@ class ProfilesFragment : ScopedFragment(),
                 val newProfile = data.getSerializableExtra(Constants.PROFILE_CONFIG_KEY) as AccaProfile
 
                 mProfilesViewModel.updateProfile(newProfile)
-
                 Toast.makeText(mContext, mContext.getString(R.string.profile_tile_label, newProfile.profileName) + '\n' + mContext.getString(R.string.update_completed), Toast.LENGTH_SHORT).show()
             }
         }
@@ -247,22 +248,19 @@ class ProfilesFragment : ScopedFragment(),
 
     /**
      * Override function for handling ProfileOnClicks
+     * Applies the selected profile as CURRENT!
      */
-    override fun onProfileClick(profile: AccaProfile) {
-        // Applies the selected profile as CURRENT!
-
+    override fun onProfileClick(profile: AccaProfile)
+    {
         launch {
             mSharedViewModel.updateAccConfig(profile.accConfig)
             mSharedViewModel.setCurrentSelectedProfile(profile.uid)
+            mContext.sendBroadcast(Intent(mContext, BatteryInfoWidget::class.java)
+                .setAction(WIDGET_ALL_UPDATE).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }
 
         // Display Toast for the user.
-        Toast.makeText(
-            mContext,
-            getString(R.string.selecting_profile_toast, profile.profileName),
-            Toast.LENGTH_LONG
-        ).show()
-
+        Toast.makeText(mContext, getString(R.string.selecting_profile_toast, profile.profileName), Toast.LENGTH_LONG).show()
     }
 
     override fun onProfileLongClick(profile: AccaProfile)
@@ -272,13 +270,10 @@ class ProfilesFragment : ScopedFragment(),
     override fun editProfile(profile: AccaProfile)
     {
         // Edit the configuration of the selected profile.
-        startActivityForResult(
-            Intent(mContext, AccConfigEditorActivity::class.java).putExtra(
-                    Constants.PROFILE_ID_KEY,
-                    profile.uid
-                ).putExtra(Constants.PROFILE_CONFIG_KEY, profile)
-                .putExtra(Constants.TITLE_KEY, profile.profileName), 7
-        )
+        startActivityForResult(Intent(mContext, AccConfigEditorActivity::class.java)
+            .putExtra(Constants.PROFILE_ID_KEY, profile.uid)
+            .putExtra(Constants.PROFILE_CONFIG_KEY, profile)
+            .putExtra(Constants.TITLE_KEY, profile.profileName), 7)
     }
 
     override fun renameProfile(profile: AccaProfile)

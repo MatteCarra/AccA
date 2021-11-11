@@ -176,7 +176,7 @@ class BatteryDialogActivity : AppCompatActivity()
 
             MaterialDialog(this).show {
 
-                runBlocking {
+                 GlobalScope.launch {
 
                     title(R.string.title_profiles)
                     val temp = profilesViewModel.getProfiles()
