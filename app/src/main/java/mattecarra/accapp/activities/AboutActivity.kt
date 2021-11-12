@@ -13,10 +13,14 @@ import androidx.browser.customtabs.CustomTabsIntent
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.databinding.ActivityAboutBinding
+import mattecarra.accapp.utils.LogExt
 
 class AboutActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        LogExt().d(javaClass.simpleName, "onCreate()")
+
         super.onCreate(savedInstanceState)
 
         val binding=ActivityAboutBinding.inflate(layoutInflater)

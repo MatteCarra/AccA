@@ -94,4 +94,10 @@
         <item>Run on boot</item>
     </string-array>
 
+    <string-array name="acca_debug_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
 </resources>

@@ -5,6 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.acc._interface.AccInterface
 import mattecarra.accapp.models.AccConfig
+import mattecarra.accapp.utils.LogExt
 
 //----------------------------------------------------------------------
 // Class to enable\disable Shell commands for greater flexibility
@@ -41,6 +42,9 @@ data class ConfigUpdaterEnable(  // primary constructor, all values as TRUE
 
 data class ConfigUpdater(val accConfig: AccConfig, val cue: ConfigUpdaterEnable) {
     suspend fun execute(acc: AccInterface): ConfigUpdateResult = withContext(Dispatchers.IO) {
+
+        LogExt().d("ConfigUpdater()", accConfig.toString())
+
         ConfigUpdateResult(
 
             cue.sendCapacity && acc.updateAccCapacity(

@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import mattecarra.accapp.services.OnAdvWidgetInterface
-import mattecarra.accapp.utils.Logs
+import mattecarra.accapp.utils.LogExt
 
 class AdvWidgetReceiver : BroadcastReceiver()
 {
@@ -12,7 +12,7 @@ class AdvWidgetReceiver : BroadcastReceiver()
 
     override fun onReceive(context: Context, intent: Intent)
     {
-        Logs().d(javaClass.simpleName,".onReceive(): "+intent.action)
+        LogExt().d(javaClass.simpleName,".onReceive(): "+intent.action)
 
         when(intent.action)
         {

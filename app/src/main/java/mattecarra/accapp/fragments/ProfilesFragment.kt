@@ -36,6 +36,7 @@ import mattecarra.accapp.databinding.ProfilesFragmentBinding
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.utils.Constants
+import mattecarra.accapp.utils.LogExt
 import mattecarra.accapp.utils.ProfileUtils
 import mattecarra.accapp.utils.ScopedFragment
 import mattecarra.accapp.viewmodel.ProfilesViewModel
@@ -84,6 +85,8 @@ class ProfilesFragment : ScopedFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
+        LogExt().d(javaClass.simpleName, "onViewCreated()")
+
         val binding = ProfilesFragmentBinding.bind(view)
         val profilesRecycler = binding.profileRecyclerView
 
@@ -252,9 +255,11 @@ class ProfilesFragment : ScopedFragment(),
      */
     override fun onProfileClick(profile: AccaProfile)
     {
+        LogExt().d(javaClass.simpleName, "onProfileClick(${profile.uid}): "+ profile.profileName)
+
         launch {
-            mSharedViewModel.updateAccConfig(profile.accConfig)
             mSharedViewModel.setCurrentSelectedProfile(profile.uid)
+            mSharedViewModel.updateAccConfig(profile.accConfig)
             mContext.sendBroadcast(Intent(mContext, BatteryInfoWidget::class.java)
                 .setAction(WIDGET_ALL_UPDATE).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }

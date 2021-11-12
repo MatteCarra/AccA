@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.NumberPicker
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
@@ -23,7 +22,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
-import com.afollestad.materialdialogs.list.ItemListener
 import com.afollestad.materialdialogs.list.listItems
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Runnable
@@ -39,6 +37,7 @@ import xml.*
 import com.topjohnwu.superuser.internal.Utils.context
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.databinding.EditChargingLimitOnceDialogBinding
+import mattecarra.accapp.utils.LogExt
 import java.lang.Exception
 import java.util.*
 
@@ -51,6 +50,7 @@ class BatteryDialogActivity : AppCompatActivity()
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
+        LogExt().d(javaClass.simpleName, "onCreate()")
 
         //--------------------------------------------------
         // select locale and theme day\night

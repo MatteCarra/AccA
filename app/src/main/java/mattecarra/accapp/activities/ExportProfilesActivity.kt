@@ -16,12 +16,15 @@ import mattecarra.accapp.R
 import mattecarra.accapp.adapters.ProfileEntriesAdapter
 import mattecarra.accapp.databinding.ActivityExportBinding
 import mattecarra.accapp.models.ProfileEntry
+import mattecarra.accapp.utils.LogExt
 
 class ExportProfilesActivity: AppCompatActivity() {
     private lateinit var mAdapter: ProfileEntriesAdapter
     private lateinit var mEntries: List<ProfileEntry>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
+        LogExt().d(javaClass.simpleName, "onCreate()")
         super.onCreate(savedInstanceState)
         val binding = ActivityExportBinding.inflate(layoutInflater)
         setContentView(binding.root)

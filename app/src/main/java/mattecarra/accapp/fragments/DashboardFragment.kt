@@ -24,6 +24,7 @@ import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.databinding.DashboardFragmentBinding
 import mattecarra.accapp.databinding.EditChargingLimitOnceDialogBinding
 import mattecarra.accapp.models.DashboardValues
+import mattecarra.accapp.utils.LogExt
 import mattecarra.accapp.utils.ScopedFragment
 import mattecarra.accapp.viewmodel.DashboardViewModel
 import mattecarra.accapp.viewmodel.SharedViewModel
@@ -61,6 +62,8 @@ class DashboardFragment : ScopedFragment()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
+        LogExt().d(javaClass.simpleName, "onViewCreated()")
+
         super.onViewCreated(view, savedInstanceState)
 
         //-----------------------------------------------------------------

@@ -35,6 +35,7 @@ import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.models.ProfileEnables
 import mattecarra.accapp.utils.Constants
+import mattecarra.accapp.utils.LogExt
 import mattecarra.accapp.utils.ScopedAppActivity
 import mattecarra.accapp.viewmodel.AccConfigEditorViewModel
 import mattecarra.accapp.viewmodel.AccConfigEditorViewModelFactory
@@ -128,6 +129,8 @@ class AccConfigEditorActivity : ScopedAppActivity(),
         initUi()
 
         viewModel.clearHistory()
+
+        LogExt().d(javaClass.simpleName, "onCreate(): accConfigOnly=$accConfigOnly, profile=$profile")
     }
 
     private fun initUi()

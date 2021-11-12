@@ -1,7 +1,10 @@
 package mattecarra.accapp.activities
 
+import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +13,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate.*
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -462,6 +467,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     {
         setTheme(R.style.AccaTheme_DayNight)
         super.onCreate(savedInstanceState)
+        LogExt().d(javaClass.simpleName, "onCreate()")
 
         //--------------------------------------------------
 
@@ -495,13 +501,12 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
         // Set theme
         setTheme()
 
-        if (!Shell.rootAccess()) {
+        if (!Shell.rootAccess())
+        {
             MaterialDialog(this).show {
                 title(R.string.tile_acc_no_root)
                 message(R.string.no_root_message)
-                positiveButton(android.R.string.ok) {
-                    finish()
-                }
+                positiveButton(android.R.string.ok) { finish() }
                 cancelOnTouchOutside(false)
                 onKeyCodeBackPressed {
                     dismiss()
@@ -509,9 +514,19 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                     false
                 }
             }
-        } else if (checkAccInstalled()) {
+        }
+        else if (checkAccInstalled())
+        {
+            checkWritePermission(this)
             initUi()
         }
+    }
+
+    fun checkWritePermission(context: Context)
+    {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+                ActivityCompat.requestPermissions(this, Array(1){ Manifest.permission.WRITE_EXTERNAL_STORAGE }, 1);
     }
 
     /**

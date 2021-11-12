@@ -19,7 +19,6 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.core.graphics.drawable.toBitmap
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
@@ -27,10 +26,8 @@ import mattecarra.accapp.activities.BatteryDialogActivity
 import mattecarra.accapp.database.AccaRoomDatabase
 import mattecarra.accapp.models.DashboardValues
 import mattecarra.accapp.services.WidgetService
-import mattecarra.accapp.utils.Constants
-import mattecarra.accapp.utils.Logs
+import mattecarra.accapp.utils.LogExt
 import mattecarra.accapp.utils.ProfileUtils
-import mattecarra.accapp.widget.AppWidgetAlarm
 import java.util.*
 
 const val WIDGET_ACTION_CLICK = "acca.action.WIDGET_CLICK_BATTERY"
@@ -86,7 +83,7 @@ class BatteryInfoWidget : AppWidgetProvider()
 
         //AppWidgetAlarm(context).startLongUpdateAlarm()  // start long alarm with pendingIntent, RTC
 
-        Logs().d(javaClass.simpleName, ".onReceive(): " + intent?.action)
+        LogExt().d(javaClass.simpleName, ".onReceive(): " + intent?.action)
 
         when(intent?.action)
         {
@@ -275,7 +272,7 @@ class BatteryInfoWidget : AppWidgetProvider()
 
                 if (batteryInfo.isCharging())
                 {
-                    Logs().d(javaClass.simpleName, "isCharging(): true, Send SelfUpdate $swidgetId")
+                    LogExt().d(javaClass.simpleName, "isCharging(): true, Send SelfUpdate $swidgetId")
                     val intent = Intent().setAction(WIDGET_ONE_UPDATE).putExtra(WIDGET_ID_NAME, widgetId).putExtra("isCharging", true)
                     WidgetService().runSelfIntent(context, intent)
                 }

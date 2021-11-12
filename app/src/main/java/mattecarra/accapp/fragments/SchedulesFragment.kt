@@ -12,6 +12,7 @@ import mattecarra.accapp.adapters.OnScheduleClickListener
 import mattecarra.accapp.adapters.ScheduleProfileListAdapter
 import mattecarra.accapp.databinding.SchedulesFragmentBinding
 import mattecarra.accapp.models.Schedule
+import mattecarra.accapp.utils.LogExt
 import mattecarra.accapp.utils.ScopedFragment
 import mattecarra.accapp.viewmodel.SchedulesViewModel
 
@@ -32,7 +33,10 @@ class SchedulesFragment : ScopedFragment(), OnScheduleClickListener {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
+    override fun onActivityCreated(savedInstanceState: Bundle?)
+    {
+        LogExt().d(javaClass.simpleName, "onActivityCreated()")
+
         super.onActivityCreated(savedInstanceState)
 
 

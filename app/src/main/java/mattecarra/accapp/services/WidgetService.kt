@@ -8,7 +8,7 @@ import android.os.*
 import androidx.core.content.ContextCompat
 import androidx.core.os.HandlerCompat
 import mattecarra.accapp.receivers.AdvWidgetReceiver
-import mattecarra.accapp.utils.Logs
+import mattecarra.accapp.utils.LogExt
 import xml.*
 
 interface OnAdvWidgetInterface
@@ -34,7 +34,7 @@ class WidgetService : Service(), OnAdvWidgetInterface
     {
         super.onCreate()
 
-        Logs().d(javaClass.simpleName, ".onCreate()")
+        LogExt().d(javaClass.simpleName, ".onCreate()")
         mScreenService = getSystemService(POWER_SERVICE) as PowerManager
         mWidgetHandler = HandlerCompat.createAsync(Looper.getMainLooper())
         isScreenOn = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) mScreenService.isInteractive else mScreenService.isScreenOn
@@ -44,7 +44,7 @@ class WidgetService : Service(), OnAdvWidgetInterface
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int
     {
         super.onStartCommand(intent, flags, startId)
-        Logs().d(javaClass.simpleName, ".onStartCommand(): "+intent?.action)
+        LogExt().d(javaClass.simpleName, ".onStartCommand(): "+intent?.action)
 
         when(intent?.action)
         {
@@ -61,16 +61,16 @@ class WidgetService : Service(), OnAdvWidgetInterface
 
                     if (isPowerConnected) // power connected
                     {
-                        Logs().d(javaClass.simpleName, ".onStartCommand(): Screen+Power=True, send MSG with 2000 ms delay ")
+                        LogExt().d(javaClass.simpleName, ".onStartCommand(): Screen+Power=True, send MSG with 2000 ms delay ")
                         mWidgetHandler.sendMessageDelayed(Message.obtain(mWidgetHandler, Runnable {
                             mWidgetHandler.removeCallbacksAndMessages(null)
-                            Logs().d(javaClass.simpleName, "MainLooperRunnable(): Clear all MSG, send WIDGET_ONE_UPDATE")
+                            LogExt().d(javaClass.simpleName, "MainLooperRunnable(): Clear all MSG, send WIDGET_ONE_UPDATE")
                             sendBroadcast(Intent(this, BatteryInfoWidget::class.java).setAction(WIDGET_ONE_UPDATE).putExtras(intent))
                         }), 2500)
                     }
                     else // NO connected
                     {
-                        Logs().d(javaClass.simpleName, ".onStartCommand(): Power=False, send WIDGET_ONE_UPDATE")
+                        LogExt().d(javaClass.simpleName, ".onStartCommand(): Power=False, send WIDGET_ONE_UPDATE")
                         sendBroadcast(Intent(this, BatteryInfoWidget::class.java).setAction(WIDGET_ONE_UPDATE).putExtras(intent))
                     }
                 }
@@ -89,7 +89,7 @@ class WidgetService : Service(), OnAdvWidgetInterface
     {
         super.onDestroy()
 
-        Logs().d(javaClass.simpleName, ".onDestroy()")
+        LogExt().d(javaClass.simpleName, ".onDestroy()")
         unregisterWidgetReceiver()
         mWidgetHandler.removeCallbacksAndMessages(null)
     }
@@ -100,7 +100,7 @@ class WidgetService : Service(), OnAdvWidgetInterface
     {
         if (mAdvWidgetReceiver == null && BatteryInfoWidget().getAppWidgetIds(this).isNotEmpty())
         {
-            Logs().d(javaClass.simpleName, ".registerWidgetReceiver()")
+            LogExt().d(javaClass.simpleName, ".registerWidgetReceiver()")
             mAdvWidgetReceiver = AdvWidgetReceiver()
             val widgetFilter = IntentFilter()
             widgetFilter.addAction(Intent.ACTION_BOOT_COMPLETED)
@@ -116,7 +116,7 @@ class WidgetService : Service(), OnAdvWidgetInterface
 
     private fun unregisterWidgetReceiver()
     {
-        Logs().d(javaClass.simpleName, ".unregisterWidgetReceiver()")
+        LogExt().d(javaClass.simpleName, ".unregisterWidgetReceiver()")
         if (mAdvWidgetReceiver != null) unregisterReceiver(mAdvWidgetReceiver)
         mAdvWidgetReceiver?.setEventInterface(null)
         mAdvWidgetReceiver = null
@@ -148,12 +148,12 @@ class WidgetService : Service(), OnAdvWidgetInterface
         {
             try
             {
-                Logs().w(javaClass.simpleName, "Error startService() .. test startForegroundService()")
+                LogExt().w(javaClass.simpleName, "Error startService() .. test startForegroundService()")
                 ContextCompat.startForegroundService(context, intent.setClass(context, WidgetService::class.java))
             }
             catch (ignored: Exception)
             {
-                Logs().e(javaClass.simpleName, "Error startForegroundService() .. goodbye!")
+                LogExt().e(javaClass.simpleName, "Error startForegroundService() .. goodbye!")
             }
         }
 

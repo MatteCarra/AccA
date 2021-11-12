@@ -333,6 +333,15 @@
         <item>Develop</item>
     </string-array>
 
+    <string-array name="acca_debug_options">
+        <item>Disable</item>
+        <item>Output to the console</item>
+        <item>Output to file and console</item>
+    </string-array>
+
+    <string name="app_debug_title">Debugging Log</string>
+    <string name="app_debug_summary">Debugging the application. After selecting you need to restart the application</string>
+
     <string name="ui_options">User Interface</string>
     <string name="theme_option_setting">Theme</string>
     <string name="theme_option_summary">Set the apps\'s theme.</string>

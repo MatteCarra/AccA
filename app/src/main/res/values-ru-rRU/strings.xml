@@ -230,6 +230,15 @@
         <item>Develop</item>
     </string-array>
 
+    <string-array name="acca_debug_options">
+        <item>Отключено</item>
+        <item>Вывод в консоль</item>
+        <item>Вывод в файл и консоль</item>
+    </string-array>
+
+    <string name="app_debug_title">Отладка приложения</string>
+    <string name="app_debug_summary">Вывод данных в консоль или файл. После выбора необходимо перезапустить приложение</string>
+
     <string name="ui_options">Пользовательский интерфейс</string>
     <string name="theme_option_setting">Тема</string>
     <string name="theme_option_summary">Установите тему приложения.</string>

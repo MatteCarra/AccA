@@ -23,13 +23,16 @@ import mattecarra.accapp.adapters.ProfileEntriesAdapter
 import mattecarra.accapp.databinding.ActivityImportBinding
 import mattecarra.accapp.models.ProfileEntry
 import mattecarra.accapp.utils.Constants
+import mattecarra.accapp.utils.LogExt
 import java.io.Serializable
 
 class ImportProfilesActivity : AppCompatActivity() {
     private lateinit var binding : ActivityImportBinding
     private lateinit var mAdapter: ProfileEntriesAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
+        LogExt().d(javaClass.simpleName, "onCreate()")
         super.onCreate(savedInstanceState)
         binding = ActivityImportBinding.inflate(layoutInflater)
         setContentView(binding.root)

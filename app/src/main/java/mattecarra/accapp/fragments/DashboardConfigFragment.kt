@@ -19,6 +19,7 @@ import mattecarra.accapp.activities.AccConfigEditorActivity
 import mattecarra.accapp.databinding.ProfilesItemBinding
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.utils.Constants
+import mattecarra.accapp.utils.LogExt
 import mattecarra.accapp.utils.ProfileUtils
 import mattecarra.accapp.utils.ScopedFragment
 import mattecarra.accapp.viewmodel.ProfilesViewModel
@@ -41,6 +42,8 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
 
         if (requestCode == 7 && resultCode == Activity.RESULT_OK && data?.getBooleanExtra(Constants.ACC_HAS_CHANGES, false) == true)
         {
+            LogExt().d(javaClass.simpleName,"onActivityResult(): ACC_HAS_CHANGES=true")
+
             launch {
                 mSharedViewModel.updateAccConfig(data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig) //TODO: Check assertion
                 // Remove the current selected profile
@@ -62,7 +65,9 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
+    {
+        LogExt().d(javaClass.simpleName,"onViewCreated()")
         super.onViewCreated(view, savedInstanceState)
 
         binding.itemProfileLoadImage.visibility = View.VISIBLE;
@@ -98,10 +103,10 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
 
             val profileId = ProfileUtils.getCurrentProfile(mPrefs)
             val currentConfig = Acc.instance.readConfig()
-            val selectedProfileConfig = mViewModel.getProfileById(profileId)?.accConfig
+            val selProfile = mViewModel.getProfileById(profileId)
 
-            val name = if (profileId == -1 || currentConfig != selectedProfileConfig) getString(R.string.profile_not_selected)
-            else mViewModel.getProfileById(profileId)?.profileName.toString()
+            var name = getString(R.string.profile_not_selected)
+            if (selProfile != null && currentConfig == selProfile.accConfig) name = selProfile.profileName
 
             updateInfo(name, currentConfig)
         }
@@ -109,6 +114,8 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
 
     fun updateInfo(nameTitle: String, accConfig: AccConfig)
     {
+        LogExt().d(javaClass.simpleName, "updateInfo(): name=$nameTitle , accConfig=$accConfig")
+
         binding.itemProfileTitleTextView.text = nameTitle
         binding.itemProfileCapacityTv.text = accConfig.configCapacity.toString(mContext)
 

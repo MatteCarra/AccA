@@ -8,10 +8,12 @@ import kotlinx.coroutines.launch
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.acc.ConfigUpdaterEnable
 import mattecarra.accapp.models.AccConfig
+import mattecarra.accapp.utils.LogExt
 import mattecarra.accapp.utils.ProfileUtils
 import org.jetbrains.anko.getStackTraceString
 
-class SharedViewModel(application: Application) : AndroidViewModel(application) {
+class SharedViewModel(application: Application) : AndroidViewModel(application)
+{
     private val mSharedPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
     private val config: MutableLiveData<Pair<AccConfig?, String?>> = MutableLiveData()
 
@@ -26,7 +28,10 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun loadDefaultConfig() {
+    fun loadDefaultConfig()
+    {
+        LogExt().d(javaClass.simpleName,"loadDefaultConfig()")
+
         viewModelScope.launch {
             try {
                 config.postValue(Pair(Acc.instance.readDefaultConfig(), null))
@@ -71,7 +76,9 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     /*
     * Updates the AccConfig and write on file
     * */
-    suspend fun updateAccConfig(value: AccConfig) {
+    suspend fun updateAccConfig(value: AccConfig)
+    {
+        LogExt().d(javaClass.simpleName,"updateAccConfig()")
         config.postValue(Pair(value, null))
         saveAccConfig(value)
     }
