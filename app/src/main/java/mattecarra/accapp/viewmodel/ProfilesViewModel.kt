@@ -26,14 +26,18 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
 
     suspend fun getProfiles(): List<AccaProfile>
     {
-        LogExt().d(TAG,"getProfiles()")
-        return mProfileDao.getProfiles()
+        mProfileDao.getProfiles().also {
+            LogExt().d(TAG, "getProfiles()="+ if (it.isNullOrEmpty()) "Empty!" else it.count())
+            return it
+        }
     }
 
     suspend fun getProfileById(id: Int): AccaProfile?
     {
-        LogExt().d(TAG,"getProfileById($id)")
-        return mProfileDao.getProfileById(id)
+        mProfileDao.getProfileById(id).also {
+            LogExt().d(TAG, "getProfileById($id)="+(it?.profileName ?: "null"))
+            return it
+        }
     }
 
     fun getLiveData(): LiveData<List<AccaProfile>>
@@ -42,17 +46,17 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun insertProfile(profile: AccaProfile) = viewModelScope.launch {
-        LogExt().d(TAG,"insertProfile(): "+profile.profileName)
+        LogExt().d(TAG,"insertProfile(): ${profile.profileName}")
         mProfileDao.insert(profile)
     }
 
     fun deleteProfile(profile: AccaProfile) = viewModelScope.launch {
-        LogExt().d(TAG,"deleteProfile(): "+profile.profileName)
+        LogExt().d(TAG,"deleteProfile(): ${profile.profileName}")
         mProfileDao.delete(profile)
     }
 
     fun updateProfile(profile: AccaProfile) = viewModelScope.launch {
-        LogExt().d(TAG,"updateProfile(): "+profile.profileName)
+        LogExt().d(TAG,"updateProfile(): ${profile.profileName}")
         mProfileDao.update(profile)
     }
 }

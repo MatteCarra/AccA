@@ -1,5 +1,6 @@
 package mattecarra.accapp.activities
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -121,6 +122,9 @@ class BatteryDialogActivity : AppCompatActivity()
         // android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS
 
         content.wdtDisableOptimizationBattery.setOnClickListener {
+
+            LogExt().d(javaClass.simpleName, "onClick_DisableOptimizationBattery")
+
             try
             {
                 val intent = Intent()
@@ -139,6 +143,7 @@ class BatteryDialogActivity : AppCompatActivity()
 
         content.wdtOpenAccaBtn.setOnClickListener {
 
+            LogExt().d(javaClass.simpleName, "onClick_OpenAccA")
             finish()
 
             ContextCompat.startActivity(context.applicationContext,
@@ -152,10 +157,12 @@ class BatteryDialogActivity : AppCompatActivity()
         //---------------------------------------------------------------------------------
 
         content.wdtDaemonAccBtn.setOnClickListener {
-            runBlocking {
-                if (isAccdRunning) Acc.instance.abcStopDaemon()
-                else Acc.instance.abcStartDaemon()
-                updateTextStatusACC()
+            LogExt().d(javaClass.simpleName, "onClick_ReverseDaemonAcc")
+
+            GlobalScope.launch {
+                //isAccdRunning = Acc.instance.isAccdRunning()
+                if (isAccdRunning) Acc.instance.abcStopDaemon() else Acc.instance.abcStartDaemon()
+                //runOnUiThread( Runnable { updateTextStatusACC() })  // there is no synchronization
                 finish()
             }
         }
@@ -163,6 +170,7 @@ class BatteryDialogActivity : AppCompatActivity()
         //---------------------------------------------------------------------------------
 
         content.wdtStartWidgetBtn.setOnClickListener {
+            LogExt().d(javaClass.simpleName, "onClick_ReverseWidgetBtn")
             sendBroadcast(Intent(this, BatteryInfoWidget::class.java).setAction(WIDGET_ACTION_REVERSE))
             finish()
         }
@@ -171,27 +179,30 @@ class BatteryDialogActivity : AppCompatActivity()
 
         content.wdtProfileBtn.setOnClickListener {
 
+            LogExt().d(javaClass.simpleName, "onClick_ProfileBtn")
+
             val profilesViewModel = ProfilesViewModel(application)
             val mSharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
 
             MaterialDialog(this).show {
 
-                 GlobalScope.launch {
+                title(R.string.title_profiles)
 
-                    title(R.string.title_profiles)
+                runBlocking {
+
                     val temp = profilesViewModel.getProfiles()
 
                     if (temp.isEmpty()) message(R.string.no_profiles)
                     else
                     {
-                        listItems(items = temp.map { b -> b.profileName },
-                        selection = { _, index, _ -> runBlocking {
-                            mSharedViewModel.updateAccConfig(temp[index].accConfig)
+                        listItems( items = temp.map { b -> b.profileName },
+                        selection = { _, index, _ ->
+                            GlobalScope.launch { mSharedViewModel.updateAccConfig(temp[index].accConfig) }
                             mSharedViewModel.setCurrentSelectedProfile(temp[index].uid)
                             Toast.makeText(this@BatteryDialogActivity, getString(R.string.selecting_profile_toast, temp[index].profileName), Toast.LENGTH_SHORT).show()
                             sendBroadcast(Intent(this@BatteryDialogActivity, BatteryInfoWidget::class.java).setAction(WIDGET_ALL_UPDATE))
                             finish()
-                        }})
+                        })
                     }
 
                     negativeButton(text = "cancel", click = { dismiss() })
@@ -203,6 +214,7 @@ class BatteryDialogActivity : AppCompatActivity()
 
         content.wdtChargeOnceBtn.setOnClickListener {
 
+            LogExt().d(javaClass.simpleName, "onClick_ChargeOnceBtn")
             val dialog = EditChargingLimitOnceDialogBinding.inflate(layoutInflater)
 
             MaterialDialog(it.context).show {
@@ -212,12 +224,10 @@ class BatteryDialogActivity : AppCompatActivity()
                 customView(view=dialog.root)
 
                 positiveButton(R.string.apply) {
-                    runBlocking {
-                        val limit = getCustomView().findViewById<NumberPicker>(R.id.charging_limit).value
-                        Acc.instance.setChargingLimitForOneCharge(limit)
-                        Toast.makeText(context, getString(R.string.done_applied_charge_limit, limit), Toast.LENGTH_LONG).show()
-                        finish()
-                    }
+                    val limit = getCustomView().findViewById<NumberPicker>(R.id.charging_limit).value
+                    Toast.makeText(context, getString(R.string.done_applied_charge_limit, limit), Toast.LENGTH_LONG).show()
+                    GlobalScope.launch { Acc.instance.setChargingLimitForOneCharge(limit) }
+                    finish()
                 }
                 negativeButton(android.R.string.cancel) {
                     Toast.makeText(context, R.string.charge_limit_not_applied, Toast.LENGTH_LONG).show()
@@ -234,6 +244,8 @@ class BatteryDialogActivity : AppCompatActivity()
         //---------------------------------------------------------------------------------
 
         content.wdtSettingWidgetBtn.setOnClickListener{
+
+            LogExt().d(javaClass.simpleName, "onClick_SettingWidgetBtn_$widgetId")
 
             MaterialDialog(this).apply {
 

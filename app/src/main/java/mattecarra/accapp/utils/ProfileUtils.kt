@@ -7,9 +7,10 @@ object ProfileUtils {
 
     fun getCurrentProfile(sharedPrefs: SharedPreferences): Int
     {
-        val cc = sharedPrefs.getInt(PROFILE_KEY, -1)
-        LogExt().d(javaClass.simpleName,"getCurrentProfile() -> $cc")
-        return cc
+        sharedPrefs.getInt(PROFILE_KEY, -1).also {
+            LogExt().d(javaClass.simpleName, "getCurrentProfile()=$it")
+            return it
+        }
     }
 
     fun saveCurrentProfile(profileId: Int, sharedPrefs: SharedPreferences)
