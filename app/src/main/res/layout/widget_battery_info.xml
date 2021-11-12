@@ -18,8 +18,8 @@
         android:layout_height="match_parent"
         android:scaleType="center"
         android:src="@mipmap/ic_launcher_round"
-        app:srcCompat="@drawable/ic_launcher_foreground"
-        android:visibility="visible"/>
+        android:visibility="visible"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
 
     <LinearLayout
         android:id="@+id/battery_info_ll"
@@ -170,16 +170,24 @@
 
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/dash_click_top_zone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="fill_vertical|center_horizontal" />
-
-    <FrameLayout
-        android:id="@+id/dash_click_zone"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="bottom" />
+        android:orientation="horizontal"
+        android:baselineAligned="true">
+
+        <FrameLayout
+            android:id="@+id/dash_click_left_zone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <FrameLayout
+            android:id="@+id/dash_click_right_zone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+    </LinearLayout>
 
 </FrameLayout>

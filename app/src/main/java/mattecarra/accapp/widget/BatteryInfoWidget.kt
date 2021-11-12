@@ -165,10 +165,15 @@ class BatteryInfoWidget : AppWidgetProvider()
             widgetView.setViewVisibility(R.id.battery_info_ll, INVISIBLE) // foreground
             widgetView.setViewVisibility(R.id.battery_icon, VISIBLE)
 
-            widgetView.setOnClickPendingIntent(R.id.dash_click_zone, // click
+            widgetView.setOnClickPendingIntent(R.id.dash_click_left_zone, // click
                 PendingIntent.getBroadcast(context, widgetId,
                 Intent(context, BatteryInfoWidget::class.java).setAction(WIDGET_ACTION_CLICK).putExtra(WIDGET_ID_NAME, widgetId),
                 PendingIntent.FLAG_CANCEL_CURRENT))
+
+            widgetView.setOnClickPendingIntent(R.id.dash_click_right_zone, // click
+                PendingIntent.getBroadcast(context, widgetId,
+                    Intent(context, BatteryInfoWidget::class.java).setAction(WIDGET_ACTION_REVERSE),
+                    PendingIntent.FLAG_CANCEL_CURRENT))
 
             getInstance(context).updateAppWidget(widgetId, widgetView) // update
             return
@@ -256,10 +261,15 @@ class BatteryInfoWidget : AppWidgetProvider()
                 widgetView.setTextColor(R.id.profile_label, textColor)
                 widgetView.setTextColor(R.id.profile_out, textColor)
 
-                widgetView.setOnClickPendingIntent(R.id.dash_click_zone,
+                widgetView.setOnClickPendingIntent(R.id.dash_click_left_zone,
                     PendingIntent.getBroadcast(context, widgetId,
                     Intent(context, BatteryInfoWidget::class.java).setAction(WIDGET_ACTION_CLICK)
                     .putExtra(WIDGET_ID_NAME, widgetId), PendingIntent.FLAG_CANCEL_CURRENT))
+
+                widgetView.setOnClickPendingIntent(R.id.dash_click_right_zone, // click
+                    PendingIntent.getBroadcast(context, widgetId,
+                        Intent(context, BatteryInfoWidget::class.java).setAction(WIDGET_ACTION_REVERSE),
+                        PendingIntent.FLAG_CANCEL_CURRENT))
 
                 getInstance(context).updateAppWidget(widgetId, widgetView)
 
