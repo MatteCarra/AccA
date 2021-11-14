@@ -5,11 +5,8 @@ import android.annotation.TargetApi
 import android.content.pm.PackageManager
 import android.graphics.drawable.Icon
 import android.os.Build
-import android.os.Bundle
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
-import android.util.Log
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.CoroutineScope
@@ -18,8 +15,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import mattecarra.accapp.utils.LogExt
 import kotlin.coroutines.CoroutineContext
 
 @TargetApi(Build.VERSION_CODES.N)
@@ -121,7 +117,7 @@ class AccdTileService: TileService(), CoroutineScope
             val mAccdRunning = accdRunning?: Acc.instance.isAccdRunning()
             val mCharging = charging ?: Acc.instance.isBatteryCharging()
 
-            Log.d(LOG_TAG, "_updateTile $mAccdRunning $mCharging")
+            LogExt().d(LOG_TAG, "_updateTile $mAccdRunning $mCharging")
 
             val tile = qsTile
             tile.label = getString(if(mAccdRunning) R.string.tile_acc_enabled else R.string.tile_acc_disabled)

@@ -4,16 +4,15 @@ import android.annotation.TargetApi
 import android.content.SharedPreferences
 import android.graphics.drawable.Icon
 import android.os.Build
-import android.preference.PreferenceManager
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
-import androidx.lifecycle.Observer
+import androidx.preference.PreferenceManager
 import kotlinx.coroutines.runBlocking
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.acc.ConfigUpdaterEnable
-import mattecarra.accapp.viewmodel.ProfilesViewModel
 import mattecarra.accapp.utils.ProfileUtils
+import mattecarra.accapp.viewmodel.ProfilesViewModel
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
@@ -27,7 +26,7 @@ class AccProfileTileService: TileService()
     {
         super.onCreate()
         profilesViewModel = ProfilesViewModel(application)
-        profilesViewModel.getLiveData().observeForever(Observer { updateTile() })
+        profilesViewModel.getLiveData().observeForever { updateTile() }
     }
 
     private fun updateTile()
@@ -90,23 +89,11 @@ class AccProfileTileService: TileService()
             doAsync {
                 val res = runBlocking { Acc.instance.updateAccConfig(profile.accConfig, ConfigUpdaterEnable(mSharedPrefs)) }
 
-                if(!res.isSuccessful())
-                {
-                    res.debug()
-
-                    uiThread {
-                        //Update tile infos
-                        qsTile.state =  Tile.STATE_ACTIVE
-                        qsTile.label =  getString(R.string.error_occurred)
-                        qsTile.updateTile()
-                    }
-                } else {
-                    uiThread {
-                        //Update tile infos
-                        qsTile.state =  Tile.STATE_ACTIVE
-                        qsTile.label =  getString(R.string.profile_tile_label, profile.profileName)
-                        qsTile.updateTile()
-                    }
+                uiThread {
+                    //Update tile infos
+                    qsTile.state =  Tile.STATE_ACTIVE
+                    qsTile.label =  if(res.isSuccessful()) getString(R.string.profile_tile_label, profile.profileName) else getString(R.string.error_occurred)
+                    qsTile.updateTile()
                 }
 
                 ProfileUtils.saveCurrentProfile(profile.uid, mSharedPrefs)

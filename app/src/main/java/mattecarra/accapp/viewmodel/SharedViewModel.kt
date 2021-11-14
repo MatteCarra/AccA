@@ -75,7 +75,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application)
 
     /*
     * Updates the AccConfig and write on file
-    * */
+    */
     suspend fun updateAccConfig(value: AccConfig)
     {
         LogExt().d(javaClass.simpleName,"updateAccConfig()")
@@ -86,25 +86,29 @@ class SharedViewModel(application: Application) : AndroidViewModel(application)
     /*
     * Saves config on file. It's run in an async thread every time config is updated.
     */
-    private suspend fun saveAccConfig(value: AccConfig) {
+    private suspend fun saveAccConfig(value: AccConfig)
+    {
+        Acc.instance.updateAccConfig(value, ConfigUpdaterEnable(mSharedPrefs)).also {
 
-        val res = Acc.instance.updateAccConfig(value, ConfigUpdaterEnable(mSharedPrefs))
-        if(!res.isSuccessful()) {
-            res.debug()
+            if (!it.isSuccessful())
+            {
+                // TODO show a toast that tells users there was an error
+                // if (!result.voltControlUpdateSuccessful)
+                // Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
 
-            //TODO show a toast that tells users there was an error
-            /*if (!result.voltControlUpdateSuccessful) {
-                Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
-            }*/
+                val currentConfigVal = try
+                {
+                    LogExt().w("saveAccConfig()","Error in updateAccConfig() -> readConfig()")
+                    Acc.instance.readConfig()
+                }
+                catch (ex: Exception)
+                {
+                    LogExt().e("saveAccConfig()","Error in readConfig() -> readDefaultConfig()")
+                    Acc.instance.readDefaultConfig()
+                }
 
-            val currentConfigVal = try {
-                Acc.instance.readConfig()
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-                Acc.instance.readDefaultConfig()
+                config.postValue(Pair(currentConfigVal, null))
             }
-
-            config.postValue(Pair(currentConfigVal, null))
         }
     }
 
