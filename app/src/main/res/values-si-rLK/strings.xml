@@ -12,11 +12,6 @@
     <string name="stop">නවත්වන්න</string>
     <!-- Battery Card Strings -->
     <string name="title_battery">විදුලිකෝෂය</string>
-    <string name="info_status">තත්වය</string>
-    <string name="info_charging_speed">ආරෝපණ වේගය</string>
-    <string name="info_capacity">ධාරිතාව</string>
-    <string name="info_temperature">උෂ්ණත්වය</string>
-    <string name="info_health">සෞඛ්‍යය</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
     <!-- Profiles Item Labels -->
@@ -76,28 +71,6 @@
         <item>System default</item>
     </string-array>
     <string name="lang_pref_title">භාෂාව</string>
-    <string-array name="lang_pref_entries">
-        <item>@string/lang_default</item>
-        <item>@string/lang_en</item>
-        <item>@string/lang_ar</item>
-        <item>@string/lang_nl</item>
-        <item>@string/lang_fr</item>
-        <item>@string/lang_de</item>
-        <item>@string/lang_gr</item>
-        <item>@string/lang_hu</item>
-        <item>@string/lang_in</item>
-        <item>@string/lang_it</item>
-        <item>@string/lang_ja</item>
-        <item>@string/lang_ko</item>
-        <item>@string/lang_pl</item>
-        <item>@string/lang_pt</item>
-        <item>@string/lang_ru</item>
-        <item>@string/lang_es</item>
-        <item>@string/lang_tr</item>
-        <item>@string/lang_uk</item>
-        <item>@string/lang_vi</item>
-        <item>@string/lang_zh</item>
-    </string-array>
     <string name="menu_import_export">ආයාත &amp; නිර්යාත</string>
     <!-- About Activity -->
     <string name="about_project_github">AccA ගිට්හබ්</string>
@@ -111,4 +84,5 @@
     <string name="menu_export">නිර්යාත</string>
     <string name="menu_title_load_clipboard">පසුරුපුවරුවෙන් පූරණයකරන්න</string>
     <!-- Config Parse Error -->
+    <!-- Widget Label and Activity -->
 </resources>
