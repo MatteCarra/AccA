@@ -26,16 +26,8 @@
     <string name="stop">Stop</string>
     <!-- Battery Card Strings -->
     <string name="title_battery">Batterij</string>
-    <string name="info_status">Status</string>
-    <string name="info_charging_speed">Oplaadsnelheid</string>
-    <string name="info_discharging_speed">Stroomontlading</string>
-    <string name="info_capacity">Capaciteit</string>
-    <string name="info_temperature">Temperatuur</string>
-    <string name="info_health">Gezondheid</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
-    <string name="info_charging_speed_extended">%1$dmA om %2$.2fV</string>
-    <string name="info_discharging_speed_extended">%1$dmA</string>
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">Capaciteit:</string>
     <string name="item_profile_temperature_label">Temperatuur:</string>
@@ -154,6 +146,7 @@
     <string name="schedule_creator">Aanmaken schema</string>
     <string name="charging_switch_label">Oplaadschakelaar:</string>
     <string name="title_on_plugged">Bij aansluiten toepassen</string>
+    <string name="label_on_plugged">Bij aansluiten toepassen:</string>
     <string name="edit_on_plugged">Wijzig de aansluittoepassingsinstellingen:</string>
     <string name="edit_on_plugged_dialog_message">Voorbeeld: draadloos/voltage_max:9000000 forceert snel draadloos opladen op sommige Pixel apparaten.</string>
     <string name="template_capacity_profile">Afsluiten: %1$d%% - Hervatten: %2$d%% - Stop: %3$d%%</string>
@@ -166,12 +159,10 @@
     <string name="share">Delen</string>
     <string name="logs_not_found">Logbestand niet gevonden.</string>
     <string name="acc_telegram">Voor extra ondersteuning, neem deel aan ACC Telegram groep (t.me/acc_group)!</string>
-    <string name="current_measure_unit_preference_title">Huidige eenheid van meting</string>
     <string name="current_measure_unit_preference_description">ACC haalt oplaadinformatie uit de sys interface.
         Sommige systemen geven huidige uitdrukking in µA (microamps), andere in mA (milliamps).
         Als de gedetecteerde eenheid onjuist is, kunt u deze handmatig instellen.
     </string>
-    <string name="voltage_measure_unit_preference_title">Voltage eenheid van meting</string>
     <string name="voltage_measure_unit_preference_title_description">ACC haalt oplaadinformatie uit de sys interface.
         Sommige systemen geven huidige uitdrukking in µA (microamps), andere in mA (milliamps).
         Als de gedetecteerde eenheid onjuist is, kunt u deze handmatig instellen.
@@ -185,14 +176,6 @@
     <string name="install_bundled_version">Installeer gebundelde variant</string>
     <string name="acc_version_picker_title">ACC versie</string>
     <string name="acc_version_picker_message">Selecteer de gewenste ACC variant</string>
-    <string-array name="current_measure_units_options">
-        <item>mAmpere (1E-03)</item>
-        <item>mAmpere (1E-06)</item>
-    </string-array>
-    <string-array name="voltage_measure_units_options">
-        <item>mV (1E-03)</item>
-        <item>mV (1E-06)</item>
-    </string-array>
     <string-array name="acc_version_options">
         <item>Gebundeld</item>
         <item>Master</item>
@@ -234,33 +217,6 @@
         <item>Systeem standaard</item>
     </string-array>
     <string name="lang_pref_title">Taal</string>
-    <string-array name="lang_pref_entries">
-        <item>@string/lang_default</item>
-        <item>@string/lang_en</item>
-        <item>@string/lang_ar</item>
-        <item>@string/lang_nl</item>
-        <item>@string/lang_fr</item>
-        <item>@string/lang_de</item>
-        <item>@string/lang_gr</item>
-        <item>@string/lang_hu</item>
-        <item>@string/lang_in</item>
-        <item>@string/lang_it</item>
-        <item>@string/lang_ja</item>
-        <item>@string/lang_ko</item>
-        <item>@string/lang_pl</item>
-        <item>@string/lang_pt</item>
-        <item>@string/lang_ru</item>
-        <item>@string/lang_es</item>
-        <item>@string/lang_tr</item>
-        <item>@string/lang_uk</item>
-        <item>@string/lang_vi</item>
-        <item>@string/lang_zh</item>
-    </string-array>
-    <string-array name="schedule_type_entries">
-        <item>Terugkerend</item>
-        <item>Start eenmalig</item>
-        <item>Uitvoeren bij opstarten</item>
-    </string-array>
     <string name="menu_import_export">Import &amp; Export</string>
     <string name="execute_on_boot_schedule">Uitvoeren bij opstarten</string>
     <string name="edit_schedule">Bewerk schema</string>
@@ -309,4 +265,5 @@
         \n\nAls de fout aanhoudt, deel de stack trace hieronder samen met ACC &amp; AccA versie (via het 3-punt menu &gt; About) met de ontwikkelaars via Telegram.\n\n%s</string>
     <string name="automatic_switch_eanbled">Wissel automatisch door schakelaars</string>
     <string name="info_voltage">Spanning</string>
+    <!-- Widget Label and Activity -->
 </resources>
