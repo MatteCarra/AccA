@@ -27,16 +27,8 @@
     <string name="stop">Stopp</string>
     <!-- Battery Card Strings -->
     <string name="title_battery">Akku</string>
-    <string name="info_status">Status</string>
-    <string name="info_charging_speed">Ladegeschwindigkeit</string>
-    <string name="info_discharging_speed">Aktueller Stromfluss</string>
-    <string name="info_capacity">Kapazität</string>
-    <string name="info_temperature">Temperatur</string>
-    <string name="info_health">Zustand</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
-    <string name="info_charging_speed_extended">%1$dmA bei %2$.2fV</string>
-    <string name="info_discharging_speed_extended">%1$dmA</string>
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">Kapazität:</string>
     <string name="item_profile_temperature_label">Temperatur:</string>
@@ -163,6 +155,7 @@
     <string name="script_description">Beschreibung:</string>
     <string name="script_body_text">Shell-Text:</string>
     <string name="title_on_plugged">Beim Einstecken anwenden</string>
+    <string name="label_on_plugged">Eingesteckt:</string>
     <string name="edit_on_plugged">Einsteck-Einstellungen bearbeiten:</string>
     <string name="edit_on_plugged_dialog_message">Beispiel: Wireless/voltage_max::9000000 erzwingt eine schnelle kabellose Ladungen auf einigen Pixel-Geräten.</string>
     <string name="template_capacity_profile">Herunterfahren: %1$d%% - Fortsetzen: %2$d%% - Anhalten: %3$d%%</string>
@@ -181,12 +174,10 @@
     <string name="share">Empfehlen</string>
     <string name="logs_not_found">Log-Datei nicht gefunden.</string>
     <string name="acc_telegram">Für weitere Unterstützung trete der AC-Telegramgruppe (t.me/acc_group) bei!</string>
-    <string name="current_measure_unit_preference_title">Strom-Maßeinheit</string>
     <string name="current_measure_unit_preference_description">ACC ruft Ladeinformationen von der Sys-Schnittstelle ab.
         Einige Systeme zeigen Strom in µA (Mikroampere), andere in mA (Milliampere).
         Wenn die erkannte Einheit falsch ist, kann sie manuell festgelegt werden.
     </string>
-    <string name="voltage_measure_unit_preference_title">Spannungs-Maßeinheit</string>
     <string name="voltage_measure_unit_preference_title_description">ACC ruft Ladeinformationen von der Sys-Schnittstelle ab.
         Einige Systeme zeigen Strom in µV (Mikrovolt), andere in mA (Millivolt).
         Wenn die erkannte Einheit falsch ist, kann sie manuell festgelegt werden.
@@ -200,14 +191,6 @@
     <string name="install_bundled_version">Paket-Variante installieren</string>
     <string name="acc_version_picker_title">ACC-Version</string>
     <string name="acc_version_picker_message">Wählen Sie die gewünschte ACC-Variante aus</string>
-    <string-array name="current_measure_units_options">
-        <item>mAmpere (1E-03)</item>
-        <item>μAmpere (1E-06)</item>
-    </string-array>
-    <string-array name="voltage_measure_units_options">
-        <item>mV (1E-03)</item>
-        <item>μV (1E-06)</item>
-    </string-array>
     <string-array name="acc_version_options">
         <item>Paket</item>
         <item>Master</item>
@@ -254,33 +237,6 @@
     </string-array>
     <string name="lang_pref_title">Sprache</string>
     <string name="lang_pref_summary">Wähle die Sprache der Anwendung aus. Nach der Auswahl muss die App neu gestartet werden.</string>
-    <string-array name="lang_pref_entries">
-        <item>@string/lang_default</item>
-        <item>@string/lang_en</item>
-        <item>@string/lang_ar</item>
-        <item>@string/lang_nl</item>
-        <item>@string/lang_fr</item>
-        <item>@string/lang_de</item>
-        <item>@string/lang_gr</item>
-        <item>@string/lang_hu</item>
-        <item>@string/lang_in</item>
-        <item>@string/lang_it</item>
-        <item>@string/lang_ja</item>
-        <item>@string/lang_ko</item>
-        <item>@string/lang_pl</item>
-        <item>@string/lang_pt</item>
-        <item>@string/lang_ru</item>
-        <item>@string/lang_es</item>
-        <item>@string/lang_tr</item>
-        <item>@string/lang_uk</item>
-        <item>@string/lang_vi</item>
-        <item>@string/lang_zh</item>
-    </string-array>
-    <string-array name="schedule_type_entries">
-        <item>Wiederkehrend</item>
-        <item>Einmal ausführen</item>
-        <item>Beim Hochfahren ausführen</item>
-    </string-array>
     <string name="menu_import_export">Importieren &amp; Exportieren</string>
     <string name="execute_on_boot_schedule">Beim Hochfahren ausführen</string>
     <string name="edit_schedule">Zeitplan bearbeiten</string>
@@ -329,4 +285,5 @@
         \n\nWenn der Fehler weiterhin besteht, teile bitte den Stack-Trace unten zusammen mit der ACC &amp; AccA-Version (über das 3-Punkt-Menü &gt; „Über“) mit den Entwicklern via Telegram.\n\n%s</string>
     <string name="automatic_switch_eanbled">Automatisch durch die Schalter wechseln</string>
     <string name="info_voltage">Spannung</string>
+    <!-- Widget Label and Activity -->
 </resources>
