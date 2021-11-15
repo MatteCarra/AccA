@@ -23,16 +23,8 @@
     <string name="stop">Διακοπή</string>
     <!-- Battery Card Strings -->
     <string name="title_battery">Μπαταρία</string>
-    <string name="info_status">Κατάσταση</string>
-    <string name="info_charging_speed">Ταχύτητα φόρτισης</string>
-    <string name="info_discharging_speed">Φορτίο τώρα</string>
-    <string name="info_capacity">Χωρητικότητα</string>
-    <string name="info_temperature">Θερμοκρασία</string>
-    <string name="info_health">Υγεία</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
-    <string name="info_charging_speed_extended">%1$dmA στα %2$.2fV</string>
-    <string name="info_discharging_speed_extended">%1$dmA</string>
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">Χωρητικότητα:</string>
     <string name="item_profile_temperature_label">Θερμοκρασία:</string>
@@ -132,12 +124,10 @@
     <string name="share">Κοινοποίηση</string>
     <string name="logs_not_found">Δε βρέθηκε το αρχείο καταγραφής.</string>
     <string name="acc_telegram">Για περισσότερη υποστήριξη, επισκεφθείτε την ομάδα ACC στο Telegram (t.me/acc_group)!</string>
-    <string name="current_measure_unit_preference_title">Τρέχουσα μονάδα μέτρησης</string>
     <string name="current_measure_unit_preference_description">Το ACC ανακτά πληροφορίες φόρτισης από το περιβάλλον συστήματος.
         Κάποια συστήματα εκφράζουν την ένταση µA (μικροαμπέρ), άλλα σε mA (μιλιαμπέρ).
         Εάν η εντοπισμένη μονάδα είναι λανθασμένη, μπορείτε να την ορίσετε χειροκίνητα.
     </string>
-    <string name="voltage_measure_unit_preference_title">Μονάδα μέτρησης τάσης</string>
     <string name="voltage_measure_unit_preference_title_description">Το ACC ανακτά πληροφορίες φόρτισης από το περιβάλλον συστήματος.
         Κάποια συστήματα εκφράζουν την τάση σε µV (μικροβόλτ), άλλα σε mV (μιλιβόλτ).
         Εάν η εντοπισμένη μονάδα είναι λανθασμένη, μπορείτε να την ορίσετε χειροκίνητα.
@@ -147,14 +137,6 @@
     <string name="install_bundled_version">Εγκατάσταση συνημμένης εκδοχής</string>
     <string name="acc_version_picker_title">Έκδοση ACC</string>
     <string name="acc_version_picker_message">Επιλέξτε την εκδοχή του ACC που επιθυμείτε</string>
-    <string-array name="current_measure_units_options">
-        <item>mAmpere (1E-03)</item>
-        <item>μAmpere (1E-06)</item>
-    </string-array>
-    <string-array name="voltage_measure_units_options">
-        <item>mV (1E-03)</item>
-        <item>μV (1E-06)</item>
-    </string-array>
     <string-array name="acc_version_options">
         <item>Συνημμένο</item>
         <item>Master</item>
@@ -184,11 +166,6 @@
         <item>Φωτεινό</item>
         <item>Σκούρο</item>
         <item>Προεπιλογή συστήματος</item>
-    </string-array>
-    <string-array name="schedule_type_entries">
-        <item>Επανάληψη</item>
-        <item>Εκτέλεση μία φορά</item>
-        <item>Εκτέλεση κατά την εκκίνηση</item>
     </string-array>
     <string name="menu_import_export">Εισαγωγή &amp; Εξαγωγή</string>
     <string name="execute_on_boot_schedule">Εκτέλεση κατά την εκκίνηση</string>
@@ -224,4 +201,5 @@
     <string name="parse_failed_body">Δοκιμάστε ίσως να φορτώσετε το προεπιλεγμένο προφίλ ρυθμίσεων πατώντας \'Φόρτωση Προεπιλογής\'. Παρακαλούμε να σημειωθεί ότι το AccA δε θα είναι λειτουργικό.
         \n\nΕάν το σφάλμα παραμένει, παρακαλούμε να κοινοποιήσετε το stack trace πιο κάτω μαζί με την ACC &amp; AccA έκδοση (μέσω του μενού 3-κουκκίδων &gt; Σχετικά με) στους προγραμματιστές μέσω του Telegram.\n\n%s</string>
     <string name="automatic_switch_eanbled">Αυτόματη περιήγηση των διακοπτών</string>
+    <!-- Widget Label and Activity -->
 </resources>
