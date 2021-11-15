@@ -39,10 +39,11 @@ import com.topjohnwu.superuser.internal.Utils.context
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.databinding.EditChargingLimitOnceDialogBinding
 import mattecarra.accapp.utils.LogExt
+import mattecarra.accapp.utils.ScopedAppActivity
 import java.lang.Exception
 import java.util.*
 
-class BatteryDialogActivity : AppCompatActivity()
+class BatteryDialogActivity : ScopedAppActivity()
 {
     private var widgetId: Int = -1;
     private var isAccdRunning: Boolean = false
@@ -105,10 +106,10 @@ class BatteryDialogActivity : AppCompatActivity()
             //else getString(R.string.acc_daemon_status_not_running)
         }
 
-        GlobalScope.launch {
+        launch {
             isAccdRunning = Acc.instance.isAccdRunning()
             isAccdInstalled = Acc.instance.getAccVersion() != null
-            runOnUiThread( Runnable { updateTextStatusACC() } )
+            updateTextStatusACC()
         }
 
         updateTextStartWidget()
@@ -159,7 +160,7 @@ class BatteryDialogActivity : AppCompatActivity()
         content.wdtDaemonAccBtn.setOnClickListener {
             LogExt().d(javaClass.simpleName, "onClick_ReverseDaemonAcc")
 
-            GlobalScope.launch {
+            launch {
                 //isAccdRunning = Acc.instance.isAccdRunning()
                 if (isAccdRunning) Acc.instance.abcStopDaemon() else Acc.instance.abcStartDaemon()
                 //runOnUiThread( Runnable { updateTextStatusACC() })  // there is no synchronization
@@ -188,22 +189,24 @@ class BatteryDialogActivity : AppCompatActivity()
 
                 title(R.string.title_profiles)
 
-                runBlocking {
-
+                launch {
                     val temp = profilesViewModel.getProfiles()
 
-                    if (temp.isEmpty()) message(R.string.no_profiles)
+                    if (temp.isEmpty())
+                        message(R.string.no_profiles)
                     else
-                    {
-                        listItems( items = temp.map { b -> b.profileName },
-                        selection = { _, index, _ ->
-                            GlobalScope.launch { mSharedViewModel.updateAccConfig(temp[index].accConfig) }
-                            mSharedViewModel.setCurrentSelectedProfile(temp[index].uid)
-                            Toast.makeText(this@BatteryDialogActivity, getString(R.string.selecting_profile_toast, temp[index].profileName), Toast.LENGTH_SHORT).show()
-                            sendBroadcast(Intent(this@BatteryDialogActivity, BatteryInfoWidget::class.java).setAction(WIDGET_ALL_UPDATE))
-                            finish()
-                        })
-                    }
+                        listItems(
+                            items = temp.map { b -> b.profileName },
+                            selection = { _, index, _ ->
+                                launch {
+                                    mSharedViewModel.updateAccConfig(temp[index].accConfig)
+                                    mSharedViewModel.setCurrentSelectedProfile(temp[index].uid)
+                                    Toast.makeText(this@BatteryDialogActivity, getString(R.string.selecting_profile_toast, temp[index].profileName), Toast.LENGTH_SHORT).show()
+                                    sendBroadcast(Intent(this@BatteryDialogActivity, BatteryInfoWidget::class.java).setAction(WIDGET_ALL_UPDATE))
+                                    finish()
+                                }
+                            }
+                        )
 
                     negativeButton(text = "cancel", click = { dismiss() })
                 }
@@ -224,10 +227,12 @@ class BatteryDialogActivity : AppCompatActivity()
                 customView(view=dialog.root)
 
                 positiveButton(R.string.apply) {
-                    val limit = getCustomView().findViewById<NumberPicker>(R.id.charging_limit).value
-                    Toast.makeText(context, getString(R.string.done_applied_charge_limit, limit), Toast.LENGTH_LONG).show()
-                    GlobalScope.launch { Acc.instance.setChargingLimitForOneCharge(limit) }
-                    finish()
+                    launch {
+                        val limit = getCustomView().findViewById<NumberPicker>(R.id.charging_limit).value
+                        Toast.makeText(context, getString(R.string.done_applied_charge_limit, limit), Toast.LENGTH_LONG).show()
+                        Acc.instance.setChargingLimitForOneCharge(limit)
+                        finish()
+                    }
                 }
                 negativeButton(android.R.string.cancel) {
                     Toast.makeText(context, R.string.charge_limit_not_applied, Toast.LENGTH_LONG).show()

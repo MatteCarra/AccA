@@ -4,6 +4,7 @@ import android.annotation.TargetApi
 import android.content.SharedPreferences
 import android.graphics.drawable.Icon
 import android.os.Build
+import android.os.Bundle
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import androidx.preference.PreferenceManager
@@ -27,8 +28,14 @@ class AccProfileTileService: TileService(), CoroutineScope {
     override fun onCreate()
     {
         super.onCreate()
+        job = Job()
         profilesViewModel = ProfilesViewModel(application)
         profilesViewModel.getLiveData().observeForever { updateTile() }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
     }
 
     private fun updateTile()
