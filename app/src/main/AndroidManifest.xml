@@ -19,7 +19,8 @@
         <activity
             android:name=".activities.MainActivity"
             android:launchMode="singleTop"
-            android:theme="@style/AccaTheme.DayNight.Launcher">
+            android:theme="@style/AccaTheme.DayNight.Launcher"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />

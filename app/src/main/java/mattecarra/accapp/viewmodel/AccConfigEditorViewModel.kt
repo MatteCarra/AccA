@@ -9,8 +9,7 @@ import org.apache.commons.collections4.queue.CircularFifoQueue
 
 class AccConfigEditorViewModelFactory(val application: Application, val accaProfile: AccaProfile) : ViewModelProvider.Factory
 {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T
-    {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return AccConfigEditorViewModel(application, accaProfile) as T
     }
 }

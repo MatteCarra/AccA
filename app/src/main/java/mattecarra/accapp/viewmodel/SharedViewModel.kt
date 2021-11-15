@@ -10,7 +10,6 @@ import mattecarra.accapp.acc.ConfigUpdaterEnable
 import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.utils.LogExt
 import mattecarra.accapp.utils.ProfileUtils
-import org.jetbrains.anko.getStackTraceString
 
 class SharedViewModel(application: Application) : AndroidViewModel(application)
 {
@@ -23,7 +22,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application)
                 config.postValue(Pair(Acc.instance.readConfig(), null))
             } catch (ex: Exception) {
                 // Return null config and exception
-                config.postValue(Pair(null, ex.getStackTraceString()))
+                config.postValue(Pair(null, ex.stackTraceToString()))
             }
         }
     }
@@ -36,7 +35,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application)
             try {
                 config.postValue(Pair(Acc.instance.readDefaultConfig(), null))
             } catch (ex: Exception) {
-                config.postValue(Pair(null, ex.getStackTraceString()))
+                config.postValue(Pair(null, ex.stackTraceToString()))
             }
         }
     }

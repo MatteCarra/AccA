@@ -7,18 +7,20 @@ import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import androidx.preference.PreferenceManager
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.acc.ConfigUpdaterEnable
 import mattecarra.accapp.utils.ProfileUtils
 import mattecarra.accapp.viewmodel.ProfilesViewModel
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import kotlin.coroutines.CoroutineContext
 
 @TargetApi(Build.VERSION_CODES.N)
-class AccProfileTileService: TileService()
-{
+class AccProfileTileService: TileService(), CoroutineScope {
+    protected lateinit var job: Job
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
+
     private val LOG_TAG = "AccProfileTileService"
     private lateinit var profilesViewModel: ProfilesViewModel
 
@@ -86,15 +88,13 @@ class AccProfileTileService: TileService()
             val profile = profileList[index]
 
             //apply profile
-            doAsync {
-                val res = runBlocking { Acc.instance.updateAccConfig(profile.accConfig, ConfigUpdaterEnable(mSharedPrefs)) }
+            launch {
+                val res = Acc.instance.updateAccConfig(profile.accConfig, ConfigUpdaterEnable(mSharedPrefs))
 
-                uiThread {
-                    //Update tile infos
-                    qsTile.state =  Tile.STATE_ACTIVE
-                    qsTile.label =  if(res.isSuccessful()) getString(R.string.profile_tile_label, profile.profileName) else getString(R.string.error_occurred)
-                    qsTile.updateTile()
-                }
+                //Update tile infos
+                qsTile.state =  Tile.STATE_ACTIVE
+                qsTile.label =  if(res.isSuccessful()) getString(R.string.profile_tile_label, profile.profileName) else getString(R.string.error_occurred)
+                qsTile.updateTile()
 
                 ProfileUtils.saveCurrentProfile(profile.uid, mSharedPrefs)
             }
