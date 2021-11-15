@@ -26,16 +26,8 @@
     <string name="stop">Zastavit</string>
     <!-- Battery Card Strings -->
     <string name="title_battery">Baterie</string>
-    <string name="info_status">Stav</string>
-    <string name="info_charging_speed">Rychlost nabíjení</string>
-    <string name="info_discharging_speed">Aktuální</string>
-    <string name="info_capacity">Kapacita</string>
-    <string name="info_temperature">Teplota</string>
-    <string name="info_health">Zdraví</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
-    <string name="info_charging_speed_extended">%1$dmA při %2$.2fV</string>
-    <string name="info_discharging_speed_extended">%1$dmA</string>
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">Kapacita:</string>
     <string name="item_profile_temperature_label">Teplota:</string>
@@ -74,4 +66,5 @@
     <!-- About Activity -->
     <!-- Import and Export -->
     <!-- Config Parse Error -->
+    <!-- Widget Label and Activity -->
 </resources>
