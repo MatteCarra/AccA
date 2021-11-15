@@ -26,16 +26,8 @@
     <string name="stop">Leállítás</string>
     <!-- Battery Card Strings -->
     <string name="title_battery">Akku</string>
-    <string name="info_status">Állapot</string>
-    <string name="info_charging_speed">Töltési sebesség</string>
-    <string name="info_discharging_speed">Pillanatnyi fogyasztás</string>
-    <string name="info_capacity">Kapacitás</string>
-    <string name="info_temperature">Hőmérséklet</string>
-    <string name="info_health">Akku státusz</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
-    <string name="info_charging_speed_extended">%1$dmA %2$.2fV-on</string>
-    <string name="info_discharging_speed_extended">%1$dmA</string>
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">Kapacitás:</string>
     <string name="item_profile_temperature_label">Hőmérséklet:</string>
@@ -116,7 +108,6 @@
     <string name="installation_failed_busybox_title">A Busybox nincs telepítve</string>
     <string name="share">Megosztás</string>
     <string name="logs_not_found">Naplófájl nem található.</string>
-    <string name="current_measure_unit_preference_title">Mértékegység</string>
     <string name="units_of_measure">Mértékegység</string>
     <string name="acc_version_preference_title">ETK verzió</string>
     <string name="acc_version_picker_title">ACC verzió</string>
@@ -139,11 +130,6 @@
         <item>Világos</item>
         <item>Sötét</item>
         <item>Rendszer alapértelmezett</item>
-    </string-array>
-    <string-array name="schedule_type_entries">
-        <item>Ismétlődő</item>
-        <item>Egyszeri</item>
-        <item>Futtatás rendszerindításkor</item>
     </string-array>
     <string name="menu_import_export">Importálás &amp; exportálás</string>
     <string name="execute_on_boot_schedule">Végrehajtás rendszerindításkor</string>
@@ -169,4 +155,5 @@
     <string name="import_toast_no_selected_profiles">Válassza ki az importálni kívánt profilt</string>
     <string name="import_profile_success">A %d profil importálása sikerült</string>
     <!-- Config Parse Error -->
+    <!-- Widget Label and Activity -->
 </resources>
