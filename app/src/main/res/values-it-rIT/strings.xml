@@ -26,16 +26,8 @@
     <string name="stop">Ferma</string>
     <!-- Battery Card Strings -->
     <string name="title_battery">Batteria</string>
-    <string name="info_status">Stato</string>
-    <string name="info_charging_speed">Velocità di ricarica</string>
-    <string name="info_discharging_speed">Corrente Ora</string>
-    <string name="info_capacity">Capacità</string>
-    <string name="info_temperature">Temperatura</string>
-    <string name="info_health">Salute</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
-    <string name="info_charging_speed_extended">%1$dmA a %2$.2fV</string>
-    <string name="info_discharging_speed_extended">%1$dmA</string>
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">Capacità:</string>
     <string name="item_profile_temperature_label">Temperatura:</string>
@@ -148,6 +140,7 @@
     <string name="schedule_creator">Creatore di pianificazione</string>
     <string name="charging_switch_label">Interruttore di ricarica:</string>
     <string name="title_on_plugged">Applica al collegamento</string>
+    <string name="label_on_plugged">applyOnPlug:</string>
     <string name="edit_on_plugged">Cambia le impostazioni di apply_on_plug:</string>
     <string name="edit_on_plugged_dialog_message">Esempio: wireless/voltage_max::90000000 forza la ricarica wireless rapida in alcuni dispositivi Pixel.</string>
     <string name="template_capacity_profile">Spegnimento: %1$d%% - Riprendi: %2$d%% - Stop: %3$d%%</string>
@@ -160,12 +153,10 @@
     <string name="share">Condividi</string>
     <string name="logs_not_found">File di log non trovato.</string>
     <string name="acc_telegram">Per support aggiuntivo, unisciti al canale Telegram di ACC (t.me/acc_group)!</string>
-    <string name="current_measure_unit_preference_title">Unità di misura corrente</string>
     <string name="current_measure_unit_preference_description">ACC ottiene le informazioni di carica dall\'interfaccia sys.
         Alcuni sistemi esprimono la corrente in μA (microampere), altri in mA (milliampere).
         Se l\'unità rilevata non è corretta, puoi impostarla manualmente.
     </string>
-    <string name="voltage_measure_unit_preference_title">Unità di misura del voltaggio</string>
     <string name="voltage_measure_unit_preference_title_description">ACC ottiene le informazioni di ricarica dall\'interfaccia sys.
         Alcuni sistemi esprimono la tensione in μV (microvolt), altri in mV (millivolt).
         Se l\'unità rilevata non è corretta, puoi impostarla manualmente.
@@ -179,14 +170,6 @@
     <string name="install_bundled_version">Installa la versione di default</string>
     <string name="acc_version_picker_title">Versione di ACC</string>
     <string name="acc_version_picker_message">Selezione la variante di ACC desiderata</string>
-    <string-array name="current_measure_units_options">
-        <item>mAmpere (1E-03)</item>
-        <item>μAmpere (1E-06)</item>
-    </string-array>
-    <string-array name="voltage_measure_units_options">
-        <item>mV (1E-03)</item>
-        <item>μV (1E-06)</item>
-    </string-array>
     <string-array name="acc_version_options">
         <item>Bundled</item>
         <item>Master</item>
@@ -228,33 +211,6 @@
     </string-array>
     <string name="lang_pref_title">Lingua</string>
     <string name="lang_pref_summary">Selezionare la lingua dell\'applicazione. Dopo aver selezionato è necessario riavviare l\'applicazione</string>
-    <string-array name="lang_pref_entries">
-        <item>@string/lang_default</item>
-        <item>@string/lang_en</item>
-        <item>@string/lang_ar</item>
-        <item>@string/lang_nl</item>
-        <item>@string/lang_fr</item>
-        <item>@string/lang_de</item>
-        <item>@string/lang_gr</item>
-        <item>@string/lang_hu</item>
-        <item>@string/lang_in</item>
-        <item>@string/lang_it</item>
-        <item>@string/lang_ja</item>
-        <item>@string/lang_ko</item>
-        <item>@string/lang_pl</item>
-        <item>@string/lang_pt</item>
-        <item>@string/lang_ru</item>
-        <item>@string/lang_es</item>
-        <item>@string/lang_tr</item>
-        <item>@string/lang_uk</item>
-        <item>@string/lang_vi</item>
-        <item>@string/lang_zh</item>
-    </string-array>
-    <string-array name="schedule_type_entries">
-        <item>Ricorrente</item>
-        <item>Esegui una volta</item>
-        <item>Esegui all\'avvio</item>
-    </string-array>
     <string name="menu_import_export">Importa &amp; Esporta</string>
     <string name="execute_on_boot_schedule">Esegui all\'avvio</string>
     <string name="edit_schedule">Modifica pianificazione</string>
@@ -291,4 +247,5 @@
     <string name="parse_failed_body">Puoi provare a caricare la configurazione predefinita premendo \'Carica predefinita\'. Si prega di notare che AccA non sarà funzionante.
         \n\nSe l\'errore persiste, si prega di condividere la stack trace qui sotto insieme alle versioni di ACC e AccA (tramite il menu a 3 punti &gt; About) con gli sviluppatori via Telegram.\n\n%s&amp;</string>
     <string name="automatic_switch_eanbled">Scorri automaticamente gli interruttori</string>
+    <!-- Widget Label and Activity -->
 </resources>
