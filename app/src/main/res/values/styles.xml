@@ -1,4 +1,12 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
+
+    <style name="text_item_row" parent="@android:style/TextAppearance.Small">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">#ff6f6f6f</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
     <style name="ToolTipAltStyle" parent="ToolTipLayoutDefaultStyle">
         <item name="ttlm_backgroundColor">@color/color_primary_variant</item>
         <item name="ttlm_textStyle">@style/ToolTipAltTextStyle</item>
@@ -7,4 +15,27 @@
     <style name="ToolTipAltTextStyle" parent="ToolTipTextStyle">
         <item name="android:textColor">@color/white</item>
     </style>
+
+    <style name="NumberPickerText">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="StyleWidgetDialogActivity" parent="AccaTheme.DayNight">
+        <item name="android:backgroundDimAmount">0.5</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowSoftInputMode">adjustUnspecified|stateHidden|stateVisible|adjustResize</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
 </resources>

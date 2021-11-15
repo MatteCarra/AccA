@@ -36,11 +36,12 @@ class ScriptsViewModel(application: Application) : AndroidViewModel(application)
 
     suspend fun getScripts(): List<AccaScript>
     {
-        return mScriptDao.getScript()
+        return mScriptDao.getScripts()
     }
 
     suspend fun getScriptById(id: Int): AccaScript?
     {
+        //return if (id>0) mScriptDao.getScriptById(id) else null
         return mScriptDao.getScriptById(id)
     }
 

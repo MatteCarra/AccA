@@ -77,28 +77,6 @@
         <item>System default</item>
     </string-array>
     <string name="lang_pref_title">භාෂාව</string>
-    <string-array name="lang_pref_entries">
-        <item>@string/lang_default</item>
-        <item>@string/lang_en</item>
-        <item>@string/lang_ar</item>
-        <item>@string/lang_nl</item>
-        <item>@string/lang_fr</item>
-        <item>@string/lang_de</item>
-        <item>@string/lang_gr</item>
-        <item>@string/lang_hu</item>
-        <item>@string/lang_in</item>
-        <item>@string/lang_it</item>
-        <item>@string/lang_ja</item>
-        <item>@string/lang_ko</item>
-        <item>@string/lang_pl</item>
-        <item>@string/lang_pt</item>
-        <item>@string/lang_ru</item>
-        <item>@string/lang_es</item>
-        <item>@string/lang_tr</item>
-        <item>@string/lang_uk</item>
-        <item>@string/lang_vi</item>
-        <item>@string/lang_zh</item>
-    </string-array>
     <string name="menu_import_export">ආයාත &amp; නිර්යාත</string>
     <!-- About Activity -->
     <string name="about_project_github">AccA ගිට්හබ්</string>

@@ -32,9 +32,9 @@ import mattecarra.accapp._interface.OnScriptClickListener
 import mattecarra.accapp.adapters.ScriptListAdapter
 import mattecarra.accapp.databinding.*
 import mattecarra.accapp.models.AccaScript
+import mattecarra.accapp.utils.LogExt
 import mattecarra.accapp.utils.ScopedFragment
 import mattecarra.accapp.viewmodel.ScriptsViewModel
-import kotlin.math.absoluteValue
 
 class ScriptesFragment : ScopedFragment(), OnScriptClickListener
 {
@@ -54,6 +54,8 @@ class ScriptesFragment : ScopedFragment(), OnScriptClickListener
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
+        LogExt().d(javaClass.simpleName, "onViewCreated()")
+
         val binding = ScriptsFragmentBinding.bind(view)
 
         mContext = requireContext()

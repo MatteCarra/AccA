@@ -3,6 +3,7 @@ package mattecarra.accapp.models
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import mattecarra.accapp.CurrentUnit
+import mattecarra.accapp.TemperatureUnit
 import mattecarra.accapp.VoltageUnit
 
 /**
@@ -74,58 +75,68 @@ class BatteryInfo(val name: String,
                   val chargeControlLimit: Int,
                   val inputCurrentMax: Int,
                   val cycleCount: Int,
-                  val powerNow: Float = 0.0f): Parcelable {
+                  val powerNow: Float = 0.0f): Parcelable
+{
+    /**
+     * Returns whether the battery is charging or not.
+     * @return if battery is charging.
+     */
+    fun isCharging(): Boolean = status == "Charging"
 
-    fun getRawVoltageNow(): Float {
-        return voltageNow
-    }
-
-    fun getRawCurrentNow(): Float {
-        return currentNow
-    }
+    fun getRawVoltageNow(): Float = voltageNow
+    fun getRawCurrentNow(): Float = currentNow
 
     /**
      * Returns voltage now as float.
      * @return current battery operating voltage in V.
      */
-    fun getVoltageNow(unit: VoltageUnit): Float {
-        return if (unit == VoltageUnit.uV) {
-            voltageNow / 1000000f
-        } else if (unit == VoltageUnit.mV) {
-            voltageNow / 1000f
-        } else {
-            voltageNow
-        }
+    fun getVoltageNow(unit: VoltageUnit): Float
+    {
+        return if (voltageNow <= 0f) voltageNow
+        else if (unit == VoltageUnit.uV) String.format("%.3f", voltageNow / 1000000f).toFloat()
+        else if (unit == VoltageUnit.V) String.format("%.3f", voltageNow / 1000f).toFloat()
+        else voltageNow // mV without '.'
+    }
+
+    fun getVoltageNow(input: VoltageUnit, output: VoltageUnit, withMeaUnit: Boolean): String
+    {
+        return if (output == VoltageUnit.V) { String.format("%.3f",getVoltageNow(input)) + if (withMeaUnit) " V" else "" }
+        else (getVoltageNow(input) * 1000f).toInt().toString() + if (withMeaUnit) " mV" else ""
     }
 
     /**
      * Returns inverted, friendly value for CURRENT_NOW expressed in mAh
      * @return current mAh draw.
      */
-    fun getCurrentNow(unit: CurrentUnit): Int {
-        return if (unit == CurrentUnit.uA) {
-            (currentNow / 1000f).toInt()
-        } else if(unit == CurrentUnit.mA) {
-            currentNow.toInt()
-        } else {
-            (currentNow * 1000).toInt()
-        }
+    fun getCurrentNow(unit: CurrentUnit): Float
+    {
+        return if (unit == CurrentUnit.uA) (currentNow / 1000f)
+        else if(unit == CurrentUnit.mA) currentNow
+        else (currentNow * 1000) // CurrentUnit.A --> mA !!
     }
 
-    /**
-     * Returns whether the battery is charging or not.
-     * @return if battery is charging.
-     */
-    fun isCharging(): Boolean {
-        return status == "Charging"
+    fun getCurrentNow(input: CurrentUnit, output: CurrentUnit, positive: Boolean, withMeaUnit: Boolean): String
+    {
+        val rmd = if (positive) 1 else -1
+        return if (output == CurrentUnit.A) { String.format("%.3f", getCurrentNow(input) / 1000f * rmd) + if (withMeaUnit) " A" else "" }
+        else (getCurrentNow(input) * rmd).toInt().toString() + if (withMeaUnit) " mA" else ""
     }
 
     //------------------------------------------------------
     // with Round to one decimal places
 
-    fun getTempFahrenheit(): String
+    fun getTemperature(unit: TemperatureUnit): Float
     {
-        return String.format("%.1f", temperature * 1.8 + 32)
+        val temp = String.format("%.1f", temperature * 1.8 + 32).replace(",",".", true)
+        return if (unit == TemperatureUnit.C) temperature.toFloat() // BAG IN FORMAT() ",." !!
+        else temp.toFloat() // TemperatureUnit.F
+    }
+
+    fun getTemperature(unit: TemperatureUnit, withMeaUnit: Boolean): String
+    {
+        return if (unit == TemperatureUnit.C) { getTemperature(unit).toInt().toString() + if (withMeaUnit) " "+Typography.degree+"C" else "" }
+        else if (unit == TemperatureUnit.F) { getTemperature(unit).toString() + if (withMeaUnit) " "+Typography.degree+"F" else "" }
+        else { getTemperature(TemperatureUnit.C, withMeaUnit) +"/"+ getTemperature(TemperatureUnit.F, withMeaUnit) }
     }
 
     //------------------------------------------------------

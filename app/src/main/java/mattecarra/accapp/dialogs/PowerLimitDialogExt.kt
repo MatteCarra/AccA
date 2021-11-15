@@ -1,5 +1,6 @@
 package mattecarra.accapp.dialogs
 
+import android.renderscript.ScriptGroup
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -13,10 +14,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
+import mattecarra.accapp.databinding.VoltageControlEditorDialogBinding
 import mattecarra.accapp.models.AccConfig
 
-typealias PowerLimitSelectionListener =
-        ((voltageControlFile: String?, voltageLimitEnabled: Boolean, voltageMax: Int?, currentLimitEnabled: Boolean, currentMax: Int?) -> Unit)
+typealias PowerLimitSelectionListener = ((voltageControlFile: String?, voltageLimitEnabled: Boolean,
+                                          voltageMax: Int?, currentLimitEnabled: Boolean,
+                                          currentMax: Int?) -> Unit)
 
 fun MaterialDialog.powerLimitDialog(
     configVoltage: AccConfig.ConfigVoltage,
@@ -24,106 +27,114 @@ fun MaterialDialog.powerLimitDialog(
     coroutineScope: CoroutineScope,
     listener: PowerLimitSelectionListener
 ): MaterialDialog {
-    val dialog = customView(R.layout.voltage_control_editor_dialog)
-        .title(R.string.edit_power_limit)
-        .positiveButton(android.R.string.ok) { dialog ->
-            val view = dialog.getCustomView()
-            val voltageControl = view.findViewById<Spinner>(R.id.voltage_control_file_spinner)
 
-            val voltageMax = view.findViewById<EditText>(R.id.voltage_max_edit_text)
-            val voltageMaxCheckBox = dialog.findViewById<CheckBox>(R.id.enable_voltage_max_check_box)
-
-            val currentMax = view.findViewById<EditText>(R.id.current_max_edit_text)
-            val currentMaxCheckBox = dialog.findViewById<CheckBox>(R.id.enable_current_max_check_box)
-
-            val voltageMaxInt = voltageMax.text.toString().toIntOrNull()
-            val currentMaxInt = currentMax.text.toString().toIntOrNull()
-
-            listener(voltageControl.selectedItem as String?, voltageMaxCheckBox.isChecked, voltageMaxInt, currentMaxCheckBox.isChecked, currentMaxInt)
-        }
-
-    //initialize dialog custom view:
-    val view = dialog.getCustomView()
+    val binding = VoltageControlEditorDialogBinding.inflate(layoutInflater)
+    customView(view = binding.root, scrollable = true)
+    title(R.string.edit_power_limit)
 
     var inputVoltageMaxOk = true
     var inputCurrentMaxOK = true
     var inputVoltageControlFileOk = true
 
-    val voltageControlFileLayout = view.findViewById<LinearLayout>(R.id.voltage_control_file_dialog_ll)
-    val voltageControlSpinner = view.findViewById<Spinner>(R.id.voltage_control_file_spinner)
+    val voltageControlFileLayout = binding.voltageControlFileDialogLl
+    val voltageControlSpinner = binding.voltageControlFileSpinner
 
-    val enableVoltageLimitCheckBox = dialog.findViewById<CheckBox>(R.id.enable_voltage_max_check_box)
-    val voltageMaxEditText = view.findViewById<EditText>(R.id.voltage_max_edit_text)
+    val enableVoltageLimitCheckBox = binding.enableVoltageMaxCheckBox
+    val voltageMaxEditText = binding.voltageMaxEditText
 
-    val currentMaxLayout = view.findViewById<LinearLayout>(R.id.current_max_dialog_ll)
-    val enableCurrentLimitCheckBox = dialog.findViewById<CheckBox>(R.id.enable_current_max_check_box)
-    val currentMaxEditText = view.findViewById<EditText>(R.id.current_max_edit_text)
+    val currentMaxLayout = binding.currentMaxDialogLl
+    val enableCurrentLimitCheckBox = binding.enableCurrentMaxCheckBox
+    val currentMaxEditText = binding.currentMaxEditText
 
-    //VOLTAGE MAX SELECTION
+    positiveButton(android.R.string.ok) { dialog ->
+
+        val voltageMaxInt = voltageMaxEditText.text.toString().toIntOrNull()
+        val currentMaxInt = currentMaxEditText.text.toString().toIntOrNull()
+
+        listener(voltageControlSpinner.selectedItem as String?, enableVoltageLimitCheckBox.isChecked,
+            voltageMaxInt, enableCurrentLimitCheckBox.isChecked, currentMaxInt)
+    }
+
+    // VOLTAGE MAX SELECTION --------------------------------------------------------------------
+
+    fun hideHintErrVolt(hide: Boolean)
+    {
+        voltageMaxEditText.error = if (hide) null else context.getString(R.string.invalid_voltage_max)
+    }
+
+    fun checkVolt(value: String?)
+    {
+        inputVoltageMaxOk = !value.isNullOrEmpty() && value.toInt() in 3700..4300
+        hideHintErrVolt(inputVoltageMaxOk)
+        setActionButtonEnabled(WhichButton.POSITIVE, inputCurrentMaxOK && inputVoltageMaxOk && inputVoltageControlFileOk)
+    }
+
     voltageMaxEditText.setText(configVoltage.max?.toString() ?: "", TextView.BufferType.EDITABLE) //Initial value
 
     enableVoltageLimitCheckBox.setOnCheckedChangeListener { _, isChecked ->
-        voltageMaxEditText.isEnabled = isChecked
 
-        val voltageMaxVal = voltageMaxEditText.text?.toString()?.toIntOrNull()
-        inputVoltageMaxOk = voltageMaxVal != null && voltageMaxVal >= 3700 && voltageMaxVal <= 4300
-        voltageMaxEditText.error = if (inputVoltageMaxOk) null else context.getString(R.string.invalid_voltage_max)
-        dialog.setActionButtonEnabled(WhichButton.POSITIVE, inputCurrentMaxOK && inputVoltageMaxOk && inputVoltageControlFileOk)
+        if (isChecked.also { voltageMaxEditText.isEnabled = it })
+        {
+            if (!voltageMaxEditText.text.isNullOrEmpty()) checkVolt(voltageMaxEditText.text?.toString())
+            voltageMaxEditText.hasFocusable()
+        }
+        else { hideHintErrVolt(true) ;  }
     }
 
     enableVoltageLimitCheckBox.isChecked = configVoltage.max != null
+    voltageMaxEditText.isEnabled = configVoltage.max != null
 
-    voltageMaxEditText.isEnabled = enableVoltageLimitCheckBox.isChecked
-
-    voltageMaxEditText.addTextChangedListener(object : TextWatcher {
+    voltageMaxEditText.addTextChangedListener(object : TextWatcher
+    {
         override fun afterTextChanged(s: Editable?) {}
-
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            val voltageMaxVal = s?.toString()?.toIntOrNull()
-            val isValid =
-                voltageMaxVal != null && voltageMaxVal >= 3700 && voltageMaxVal <= 4300
-            voltageMaxEditText.error =
-                if (isValid) null else context.getString(R.string.invalid_voltage_max)
-
-            inputVoltageMaxOk = isValid
-            dialog.setActionButtonEnabled(WhichButton.POSITIVE, inputCurrentMaxOK && inputVoltageMaxOk && inputVoltageControlFileOk)
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int)
+        {
+            checkVolt(s.toString())
         }
     })
-    //END
 
-    if(Acc.instance.version >= 202002170) {
+    //END -----------------------------------------------------------------------------------
+
+    fun hideHintErrCurrent(hide: Boolean)
+    {
+        currentMaxEditText.error = if (hide) null else context.getString(R.string.invalid_current_max)
+    }
+
+    fun checkCurrent(value: String?)
+    {
+        inputCurrentMaxOK = !value.isNullOrEmpty() && value.toInt() > 0
+        hideHintErrCurrent(inputCurrentMaxOK)
+        setActionButtonEnabled(WhichButton.POSITIVE, inputCurrentMaxOK && inputVoltageMaxOk && inputVoltageControlFileOk)
+    }
+
+    if(Acc.instance.version >= 202002170)
+    {
         voltageControlFileLayout.visibility = View.GONE
 
         //CURRENT MAX SELECTION
         currentMaxEditText.setText(configCurrentMax?.toString() ?: "", TextView.BufferType.EDITABLE)
 
         enableCurrentLimitCheckBox.setOnCheckedChangeListener { _, isChecked ->
-            currentMaxEditText.isEnabled = isChecked
 
-            val currentMaxVal = currentMaxEditText.text?.toString()?.toIntOrNull()
-            inputCurrentMaxOK = currentMaxVal != null && currentMaxVal > 0
-            currentMaxEditText.error = if (inputCurrentMaxOK) null else context.getString(R.string.invalid_current_max)
-            dialog.setActionButtonEnabled(WhichButton.POSITIVE, inputCurrentMaxOK && inputVoltageMaxOk && inputVoltageControlFileOk)
+            if (isChecked.also { currentMaxEditText.isEnabled = it })
+            {
+                if (!currentMaxEditText.text.isNullOrEmpty()) checkCurrent(currentMaxEditText.text?.toString())
+                currentMaxEditText.hasFocusable()
+            }
+            else hideHintErrCurrent(true)
         }
 
         enableCurrentLimitCheckBox.isChecked = configCurrentMax != null
+        currentMaxEditText.isEnabled = configCurrentMax != null
 
-        currentMaxEditText.isEnabled = enableCurrentLimitCheckBox.isChecked
-
-        currentMaxEditText.addTextChangedListener(object : TextWatcher {
+        currentMaxEditText.addTextChangedListener(object : TextWatcher
+        {
             override fun afterTextChanged(s: Editable?) {}
-
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val currentMaxVal = s?.toString()?.toIntOrNull()
-
-                inputCurrentMaxOK = currentMaxVal != null && currentMaxVal > 0
-                currentMaxEditText.error = if (inputCurrentMaxOK) null else context.getString(R.string.invalid_current_max)
-
-                dialog.setActionButtonEnabled(WhichButton.POSITIVE, inputCurrentMaxOK && inputVoltageMaxOk && inputVoltageControlFileOk)
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int)
+            {
+                checkCurrent(s.toString())
             }
         })
         //END
@@ -133,8 +144,8 @@ fun MaterialDialog.powerLimitDialog(
 
         //Voltage control files are loaded asynchronously, do it now
         coroutineScope.launch {
-            val supportedVoltageControlFiles = ArrayList(Acc.instance.listVoltageSupportedControlFiles())
 
+            val supportedVoltageControlFiles = ArrayList(Acc.instance.listVoltageSupportedControlFiles())
             val adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, supportedVoltageControlFiles)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             voltageControlSpinner.adapter = adapter
@@ -146,38 +157,39 @@ fun MaterialDialog.powerLimitDialog(
                 if(match == null) {
                     supportedVoltageControlFiles.add(currentVoltFile)
                     currentVoltFile
-                } else {
-                    match
-                }
+                } else match
+
             }?.let {
                 voltageControlSpinner.setSelection(supportedVoltageControlFiles.indexOf(it))
             }
 
             //if no item is selected disable the button
-            if(voltageControlSpinner.selectedItemPosition == -1) {
+            if(voltageControlSpinner.selectedItemPosition == -1)
+            {
                 inputVoltageControlFileOk = false
-                dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
-            } else {
+                setActionButtonEnabled(WhichButton.POSITIVE, false)
+            }
+            else {
                 inputVoltageControlFileOk = true
-                dialog.setActionButtonEnabled(WhichButton.POSITIVE, inputCurrentMaxOK && inputVoltageMaxOk && inputVoltageControlFileOk)
+                setActionButtonEnabled(WhichButton.POSITIVE, inputCurrentMaxOK && inputVoltageMaxOk && inputVoltageControlFileOk)
             }
 
-            voltageControlSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            voltageControlSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener
+            {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                     inputVoltageControlFileOk = false
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
+                    setActionButtonEnabled(WhichButton.POSITIVE, false)
                 }
 
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long)
+                {
                     val voltageMaxVal = voltageMaxEditText.text?.toString()?.toIntOrNull()
-                    val isValid = voltageMaxVal != null && voltageMaxVal >= 3700 && voltageMaxVal <= 4300
-
-                    inputVoltageControlFileOk = isValid
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, inputCurrentMaxOK && inputVoltageMaxOk && inputVoltageControlFileOk)
+                    inputVoltageControlFileOk = voltageMaxVal != null && voltageMaxVal in 3700..4300
+                    setActionButtonEnabled(WhichButton.POSITIVE, inputCurrentMaxOK && inputVoltageMaxOk && inputVoltageControlFileOk)
                 }
             }
         }
     }
 
-    return dialog
+    return this
 }

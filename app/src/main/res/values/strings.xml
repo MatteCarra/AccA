@@ -32,17 +32,18 @@
 
     <!-- Battery Card Strings -->
     <string name="title_battery">Battery</string>
-    <string name="info_status">Status</string>
-    <string name="info_charging_speed">Charging Speed</string>
-    <string name="info_discharging_speed">Current Now</string>
-    <string name="info_capacity">Capacity</string>
-    <string name="info_temperature">Temperature</string>
-    <string name="info_health">Health</string>
+    <string name="info_status">Status:</string>
+    <string name="info_charging_speed">Charging Speed:</string>
+    <string name="info_discharging_speed">Current Now:</string>
+    <string name="info_capacity">Capacity:</string>
+    <string name="info_temperature">Temperature:</string>
+    <string name="info_health">Health:</string>
+    <string name="info_profile">Profile:</string>
 
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
-    <string name="info_charging_speed_extended">%1$dmA at %2$.2fV</string>
-    <string name="info_discharging_speed_extended">%1$dmA</string>
+    <string name="info_charging_speed_extended">%1$d mA at %2$.2fV</string>
+    <string name="info_discharging_speed_extended">%1$d mA</string>
 
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">Capacity:</string>
@@ -71,7 +72,7 @@
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Stop daemon after applying settings</string>
     <string name="description_exit_on_boot">This is used for writing to control files on boot.</string>
-    <string name="label_on_boot" translatable="false">apply_on_boot:</string>
+    <string name="label_on_boot">apply_on_boot:</string>
 
     <!-- ACC installation -->
     <string name="installing_acc">Installing ACC</string>
@@ -110,6 +111,7 @@
     <string name="edit_config">Edit config</string>
     <string name="unsaved_changes_message">Save changes?</string>
     <string name="create_acc_profile">Create config profile</string>
+    <string name="profile_label">Profile</string>
     <string name="profile_name">Profile name</string>
     <string name="script_name">Script name</string>
     <string name="dialog_profile_name_message">Enter the name you want assigned to this profile:</string>
@@ -118,6 +120,7 @@
     <string name="no_scripts">No Scripts</string>
     <string name="profile_not_selected">Custom settings</string>
     <string name="profile_tile_label">Profile: %1$s</string>
+    <string name="profile_update">Profile update</string>
     <string name="profiles_text_view">Profiles (long press to edit/delete):</string>
     <string name="restart">Restart</string>
     <string name="invalid_chars">The profile name contains invalid characters</string>
@@ -182,7 +185,7 @@
     <string name="script_body_text">Shell text:</string>
 
     <string name="title_on_plugged">Apply on Plug</string>
-    <string name="label_on_plugged" translatable="false">applyOnPlug:</string>
+    <string name="label_on_plugged">applyOnPlug:</string>
     <string name="edit_on_plugged">Edit apply_on_plug settings:</string>
 
     <string name="edit_on_plugged_dialog_message">Example: wireless/voltage_max::9000000 forces fast wireless charging on some Pixel devices.</string>
@@ -262,21 +265,28 @@
     <string name="share">Share</string>
     <string name="logs_not_found">Log file not found.</string>
     <string name="acc_telegram">For additional support, join ACC Telegram group (t.me/acc_group)!</string>
-    <string name="current_measure_unit_preference_title">Current unit of measure</string>
 
+    <string name="current_measure_unit_preference_title">Input Current unit of measure</string>
     <string name="current_measure_unit_preference_description">ACC retrieves charging information from the sys interface.
         Some systems express current in µA (microamps), others in mA (milliamps).
         If the detected unit is incorrect, you can set it manually.
     </string>
 
-    <string name="voltage_measure_unit_preference_title">Voltage unit of measure</string>
-
+    <string name="voltage_measure_unit_preference_title">Input Voltage unit of measure</string>
     <string name="voltage_measure_unit_preference_title_description">ACC retrieves charging information from the sys interface.
         Some systems express voltage in µV (microvolts), others in mV (millivolts).
         If the detected unit is incorrect, you can set it manually.
     </string>
 
     <string name="units_of_measure">Units of measure</string>
+
+    <string name="current_measure_output_preference_title">Output Current unit of measure</string>
+    <string name="current_measure_output_preference_description">The output of current, 0.412 A (amp) or 412 mA (milliamper).</string>
+    <string name="voltage_measure_output_preference_title">Output Voltage unit of measure</string>
+    <string name="voltage_measure_output_preference_title_description">The output of voltage, 4.123 V (Volt) or 4123 mV (Milvolt).</string>
+    <string name="temperature_measure_output_preference_title">Output Temperature unit of measure</string>
+    <string name="temperature_measure_output_preference_title_description">The output of temperature: -1C/30F (Celsius/Fahrenheit) or -1C (Celsius) or 30C (Fahrenheit).</string>
+
     <string name="acc_version_preference_title">ACC version</string>
 
     <string name="acc_version_preference_description">You can choose the ACC variant to use: bundled (stable, recommended for most users), master (stable), develop (bleeding edge but not necessarily unstable) or any of the tagged versions.
@@ -290,13 +300,31 @@
     <string name="acc_version_picker_message">Select the desired ACC variant</string>
 
     <string-array name="current_measure_units_options">
+        <item>Ampere</item>
         <item>mAmpere (1E-03)</item>
         <item>μAmpere (1E-06)</item>
     </string-array>
 
     <string-array name="voltage_measure_units_options">
+        <item>Voltage</item>
         <item>mV (1E-03)</item>
         <item>μV (1E-06)</item>
+    </string-array>
+
+    <string-array name="temperature_measure_output_options">
+        <item>Celsius/Fahrenheit (°Both)</item>
+        <item>Celsius (°C)</item>
+        <item>Fahrenheit (°F)</item>
+    </string-array>
+
+    <string-array name="current_measure_output_options">
+        <item>Ampere (A)</item>
+        <item>mAmpere (mA)</item>
+    </string-array>
+
+    <string-array name="voltage_measure_output_options">
+        <item>Voltage (V)</item>
+        <item>mVoltage (mV)</item>
     </string-array>
 
     <string-array name="acc_version_options">
@@ -304,6 +332,15 @@
         <item>Master</item>
         <item>Develop</item>
     </string-array>
+
+    <string-array name="acca_debug_options">
+        <item>Disable</item>
+        <item>Output to the console</item>
+        <item>Output to file and console</item>
+    </string-array>
+
+    <string name="app_debug_title">Debugging Log</string>
+    <string name="app_debug_summary">Debugging the application. After selecting you need to restart the application</string>
 
     <string name="ui_options">User Interface</string>
     <string name="theme_option_setting">Theme</string>
@@ -359,58 +396,6 @@
     <string name="lang_pref_title">Language</string>
     <string name="lang_pref_summary">Select the application language. After selecting you need to restart the application</string>
 
-    <string-array name="lang_pref_entries">
-        <item>@string/lang_default</item>
-        <item>@string/lang_en</item>
-        <item>@string/lang_ar</item>
-        <item>@string/lang_nl</item>
-        <item>@string/lang_fr</item>
-        <item>@string/lang_de</item>
-        <item>@string/lang_gr</item>
-        <item>@string/lang_hu</item>
-        <item>@string/lang_in</item>
-        <item>@string/lang_it</item>
-        <item>@string/lang_ja</item>
-        <item>@string/lang_ko</item>
-        <item>@string/lang_pl</item>
-        <item>@string/lang_pt</item>
-        <item>@string/lang_ru</item>
-        <item>@string/lang_es</item>
-        <item>@string/lang_tr</item>
-        <item>@string/lang_uk</item>
-        <item>@string/lang_vi</item>
-        <item>@string/lang_zh</item>
-    </string-array>
-
-    <string-array name="lang_pref_value" translatable="false">
-        <item>def</item>
-        <item>en</item>
-        <item>ar</item>
-        <item>nl</item>
-        <item>fr</item>
-        <item>de</item>
-        <item>gr</item>
-        <item>hu</item>
-        <item>in</item>
-        <item>it</item>
-        <item>ja</item>
-        <item>ko</item>
-        <item>pl</item>
-        <item>pt</item>
-        <item>ru</item>
-        <item>es</item>
-        <item>tr</item>
-        <item>uk</item>
-        <item>vi</item>
-        <item>zh</item>
-    </string-array>
-
-    <string-array name="schedule_type_entries">
-        <item>Recurrent</item>
-        <item>Run once</item>
-        <item>Run on boot</item>
-    </string-array>
-
     <string name="menu_import_export">Import &amp; Export</string>
     <string name="execute_on_boot_schedule">Execute on boot</string>
     <string name="edit_schedule">Edit schedule</string>
@@ -464,5 +449,37 @@
     <string name="parse_failed_body">You may try to load the default configuration by pressing \'Load Default\'. Please note that AccA will not be functional.
         \n\nIf the error persists, please share the stack trace below along with ACC &amp; AccA version (via the 3-dot menu &gt; About) with the developers via Telegram.\n\n%s</string>
     <string name="automatic_switch_eanbled">Automatically cycle through switches</string>
+
     <string name="info_voltage">Voltage</string>
+    <string name="profile_option_edit">Edit</string>
+    <string name="profile_option_rename">Rename</string>
+    <string name="profile_option_delete">Delete</string>
+
+    <!-- Widget Label and Activity -->
+    <string name="qwa_dis_opt_battery">Disable battery optimization</string>
+    <string name="battery_optimization_fail">Fail to open battery optimization setting</string>
+    <string name="qwa_open_acc">Open ACCA</string>
+    <string name="qwa_stop">Stop Widgets</string>
+    <string name="qwa_start">Start Widgets</string>
+    <string name="qwa_setting">Setting Widget</string>
+    <string name="qwa_toast_sleep">Sleep mode</string>
+    <string name="qwa_toast_start">Work mode</string>
+    <string name="qwa_profile">Select profile</string>
+    <string name="qwa_exit_label">Click Outside to Exit</string>
+
+    <string name="widget_batteryInfo_name">BatteryInfo</string>
+
+    <string name="swd_title">Setting Widget</string>
+    <string name="swd_main">Main</string>
+    <string name="swd_text">Text</string>
+    <string name="swd_background">Background</string>
+    <string name="swd_show_field_names">Show field names</string>
+    <string name="swd_replace_to_symbols">Replace names symbols</string>
+    <string name="swd_show_field_values">Show units of measure</string>
+    <string name="swd_show_status">Show status</string>
+    <string name="swd_show_curr">Show current</string>
+    <string name="swd_show_temp">Show temperature</string>
+    <string name="swd_show_volt">Show Voltage</string>
+    <string name="swd_show_profile">Show profile</string>
+
 </resources>

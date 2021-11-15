@@ -8,10 +8,11 @@ import kotlinx.coroutines.launch
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.acc.ConfigUpdaterEnable
 import mattecarra.accapp.models.AccConfig
+import mattecarra.accapp.utils.LogExt
 import mattecarra.accapp.utils.ProfileUtils
-import org.jetbrains.anko.getStackTraceString
 
-class SharedViewModel(application: Application) : AndroidViewModel(application) {
+class SharedViewModel(application: Application) : AndroidViewModel(application)
+{
     private val mSharedPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
     private val config: MutableLiveData<Pair<AccConfig?, String?>> = MutableLiveData()
 
@@ -21,17 +22,20 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 config.postValue(Pair(Acc.instance.readConfig(), null))
             } catch (ex: Exception) {
                 // Return null config and exception
-                config.postValue(Pair(null, ex.getStackTraceString()))
+                config.postValue(Pair(null, ex.stackTraceToString()))
             }
         }
     }
 
-    fun loadDefaultConfig() {
+    fun loadDefaultConfig()
+    {
+        LogExt().d(javaClass.simpleName,"loadDefaultConfig()")
+
         viewModelScope.launch {
             try {
                 config.postValue(Pair(Acc.instance.readDefaultConfig(), null))
             } catch (ex: Exception) {
-                config.postValue(Pair(null, ex.getStackTraceString()))
+                config.postValue(Pair(null, ex.stackTraceToString()))
             }
         }
     }
@@ -70,8 +74,10 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
     /*
     * Updates the AccConfig and write on file
-    * */
-    suspend fun updateAccConfig(value: AccConfig) {
+    */
+    suspend fun updateAccConfig(value: AccConfig)
+    {
+        LogExt().d(javaClass.simpleName,"updateAccConfig()")
         config.postValue(Pair(value, null))
         saveAccConfig(value)
     }
@@ -79,25 +85,29 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     /*
     * Saves config on file. It's run in an async thread every time config is updated.
     */
-    private suspend fun saveAccConfig(value: AccConfig) {
+    private suspend fun saveAccConfig(value: AccConfig)
+    {
+        Acc.instance.updateAccConfig(value, ConfigUpdaterEnable(mSharedPrefs)).also {
 
-        val res = Acc.instance.updateAccConfig(value, ConfigUpdaterEnable(mSharedPrefs))
-        if(!res.isSuccessful()) {
-            res.debug()
+            if (!it.isSuccessful())
+            {
+                // TODO show a toast that tells users there was an error
+                // if (!result.voltControlUpdateSuccessful)
+                // Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
 
-            //TODO show a toast that tells users there was an error
-            /*if (!result.voltControlUpdateSuccessful) {
-                Toast.makeText(this@MainActivity, R.string.wrong_volt_file, Toast.LENGTH_LONG).show()
-            }*/
+                val currentConfigVal = try
+                {
+                    LogExt().w("saveAccConfig()","Error in updateAccConfig() -> readConfig()")
+                    Acc.instance.readConfig()
+                }
+                catch (ex: Exception)
+                {
+                    LogExt().e("saveAccConfig()","Error in readConfig() -> readDefaultConfig()")
+                    Acc.instance.readDefaultConfig()
+                }
 
-            val currentConfigVal = try {
-                Acc.instance.readConfig()
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-                Acc.instance.readDefaultConfig()
+                config.postValue(Pair(currentConfigVal, null))
             }
-
-            config.postValue(Pair(currentConfigVal, null))
         }
     }
 

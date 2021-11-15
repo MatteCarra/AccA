@@ -26,7 +26,7 @@ interface ScriptDao
     suspend fun deleteAll()
 
     @Query("SELECT * FROM scripts_table ORDER BY uid DESC")
-    suspend fun getScript(): List<AccaScript>
+    suspend fun getScripts(): List<AccaScript>
 
     @Query("SELECT * FROM scripts_table ORDER BY uid DESC")
     fun getAllScripts(): LiveData<List<AccaScript>>

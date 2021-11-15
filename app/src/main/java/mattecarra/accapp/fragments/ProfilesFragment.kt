@@ -1,6 +1,7 @@
 package mattecarra.accapp.fragments
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -27,17 +28,21 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
 import kotlinx.coroutines.launch
 import mattecarra.accapp.R
-import mattecarra.accapp.viewmodel.SharedViewModel
 import mattecarra.accapp._interface.OnProfileClickListener
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.activities.AccConfigEditorActivity
 import mattecarra.accapp.adapters.ProfileListAdapter
 import mattecarra.accapp.databinding.ProfilesFragmentBinding
+import mattecarra.accapp.models.AccConfig
 import mattecarra.accapp.models.AccaProfile
 import mattecarra.accapp.utils.Constants
+import mattecarra.accapp.utils.LogExt
 import mattecarra.accapp.utils.ProfileUtils
 import mattecarra.accapp.utils.ScopedFragment
 import mattecarra.accapp.viewmodel.ProfilesViewModel
+import mattecarra.accapp.viewmodel.SharedViewModel
+import xml.BatteryInfoWidget
+import xml.WIDGET_ALL_UPDATE
 
 // Fragments from: https://codeburst.io/android-swipe-menu-with-recyclerview-8f28a235ff28
 
@@ -55,6 +60,24 @@ class ProfilesFragment : ScopedFragment(),
     private lateinit var mProfilesAdapter: ProfileListAdapter
     private lateinit var mContext: Context
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+    {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 7 && resultCode == Activity.RESULT_OK && data?.getBooleanExtra(Constants.ACC_HAS_CHANGES, false) == true)
+        {
+            launch {
+
+                val uid = data.getIntExtra(Constants.PROFILE_ID_KEY, -1) as Int
+                val newConfig = data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig
+                val newProfile = data.getSerializableExtra(Constants.PROFILE_CONFIG_KEY) as AccaProfile
+
+                mProfilesViewModel.updateProfile(newProfile)
+                Toast.makeText(mContext, mContext.getString(R.string.profile_tile_label, newProfile.profileName) + '\n' + mContext.getString(R.string.update_completed), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         return ProfilesFragmentBinding.inflate(inflater, container, false).root
@@ -62,6 +85,8 @@ class ProfilesFragment : ScopedFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
+        LogExt().d(javaClass.simpleName, "onViewCreated()")
+
         val binding = ProfilesFragmentBinding.bind(view)
         val profilesRecycler = binding.profileRecyclerView
 
@@ -92,10 +117,7 @@ class ProfilesFragment : ScopedFragment(),
 
         prefs.registerOnSharedPreferenceChangeListener(this)
 
-        val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(
-            0,
-            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-        ) {
+        val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 
             private var swipeBack: Boolean = true
             private val background = ColorDrawable()
@@ -213,59 +235,54 @@ class ProfilesFragment : ScopedFragment(),
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String)
     {
-        if (key == Constants.PROFILE_KEY) {
+        if (key == Constants.PROFILE_KEY)
+        {
             launch {
                 val profileId = ProfileUtils.getCurrentProfile(sharedPreferences)
-
                 val currentConfig = Acc.instance.readConfig()
                 val selectedProfileConfig = mProfilesViewModel.getProfileById(profileId)?.accConfig
 
-                if (profileId != -1 && currentConfig != selectedProfileConfig) {
-                    ProfileUtils.clearCurrentSelectedProfile(sharedPreferences) //if current profile and current config do not match -> the profile is no longer applied
-                } else {
-                    mProfilesAdapter.setActiveProfile(profileId)
-                }
+                if (profileId != -1 && currentConfig != selectedProfileConfig)
+                    ProfileUtils.clearCurrentSelectedProfile(sharedPreferences)
+                else mProfilesAdapter.setActiveProfile(profileId)
             }
         }
     }
 
     /**
      * Override function for handling ProfileOnClicks
+     * Applies the selected profile as CURRENT!
      */
-    override fun onProfileClick(profile: AccaProfile) {
-        // Applies the selected profile
+    override fun onProfileClick(profile: AccaProfile)
+    {
+        LogExt().d(javaClass.simpleName, "onProfileClick(${profile.uid}): "+ profile.profileName)
 
         launch {
-            mSharedViewModel.updateAccConfig(profile.accConfig)
             mSharedViewModel.setCurrentSelectedProfile(profile.uid)
+            mSharedViewModel.updateAccConfig(profile.accConfig)
+            mContext.sendBroadcast(Intent(mContext, BatteryInfoWidget::class.java)
+                .setAction(WIDGET_ALL_UPDATE).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }
 
         // Display Toast for the user.
-        Toast.makeText(mContext,
-            getString(R.string.selecting_profile_toast, profile.profileName),
-            Toast.LENGTH_LONG).show()
-
+        Toast.makeText(mContext, getString(R.string.selecting_profile_toast, profile.profileName), Toast.LENGTH_LONG).show()
     }
 
     override fun onProfileLongClick(profile: AccaProfile)
-    {}
-
-    override fun editProfile(profile: AccaProfile) {
-        // Edit the configuration of the selected profile.
-        Intent(mContext, AccConfigEditorActivity::class.java).also { intent ->
-
-            val dataBundle = Bundle()
-            dataBundle.putInt(Constants.PROFILE_ID_KEY, profile.uid)
-
-            // Insert the databundle into the intent.
-            intent.putExtra(Constants.DATA_KEY, dataBundle)
-            intent.putExtra(Constants.ACC_CONFIG_KEY, profile.accConfig)
-            intent.putExtra(Constants.TITLE_KEY, profile.profileName)
-            startActivityForResult(intent, 3 /*ACC_PROFILE_EDITOR_REQUEST*/)
-        }
+    {
     }
 
-    override fun renameProfile(profile: AccaProfile) {
+    override fun editProfile(profile: AccaProfile)
+    {
+        // Edit the configuration of the selected profile.
+        startActivityForResult(Intent(mContext, AccConfigEditorActivity::class.java)
+            .putExtra(Constants.PROFILE_ID_KEY, profile.uid)
+            .putExtra(Constants.PROFILE_CONFIG_KEY, profile)
+            .putExtra(Constants.TITLE_KEY, profile.profileName), 7)
+    }
+
+    override fun renameProfile(profile: AccaProfile)
+    {
         // Rename the selected profile (2nd option).
         MaterialDialog(mContext).show {
                 title(R.string.profile_name)

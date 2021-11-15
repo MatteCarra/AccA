@@ -15,12 +15,11 @@ import com.topjohnwu.superuser.Shell
 import mattecarra.accapp.R
 import mattecarra.accapp.adapters.LogRecyclerViewAdapter
 import mattecarra.accapp.databinding.ActivityLogViewerBinding
+import mattecarra.accapp.utils.LogExt
 import java.util.*
 
 class LogViewerActivity : AppCompatActivity()
 {
-    private val LOG_TAG = "LogViewerActivity"
-
     private lateinit var binding: ActivityLogViewerBinding
     private lateinit var adapter: LogRecyclerViewAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -65,7 +64,9 @@ class LogViewerActivity : AppCompatActivity()
         outState.putBoolean("onBottom", onBottom)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
+        LogExt().d(javaClass.simpleName, "onCreate()")
         super.onCreate(savedInstanceState)
         binding = ActivityLogViewerBinding.inflate(layoutInflater)
         setContentView(binding.root)

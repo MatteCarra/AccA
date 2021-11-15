@@ -20,13 +20,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mattecarra.accapp.Preferences
 import mattecarra.accapp.R
-import mattecarra.accapp.viewmodel.SharedViewModel
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.databinding.DashboardFragmentBinding
 import mattecarra.accapp.databinding.EditChargingLimitOnceDialogBinding
 import mattecarra.accapp.models.DashboardValues
+import mattecarra.accapp.utils.LogExt
 import mattecarra.accapp.utils.ScopedFragment
 import mattecarra.accapp.viewmodel.DashboardViewModel
+import mattecarra.accapp.viewmodel.SharedViewModel
 import java.util.concurrent.atomic.AtomicBoolean
 
 class DashboardFragment : ScopedFragment()
@@ -53,9 +54,7 @@ class DashboardFragment : ScopedFragment()
     private lateinit var preferences: Preferences
     private var mIsDaemonRunning: Boolean? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View?
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         binding = DashboardFragmentBinding.inflate(inflater, container, false)
         return binding.root
@@ -63,6 +62,8 @@ class DashboardFragment : ScopedFragment()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
+        LogExt().d(javaClass.simpleName, "onViewCreated()")
+
         super.onViewCreated(view, savedInstanceState)
 
         //-----------------------------------------------------------------
@@ -76,9 +77,7 @@ class DashboardFragment : ScopedFragment()
 
         mViewModel.getDashboardValues().observe(viewLifecycleOwner) { dash ->
             // Set Status Card text
-            dash.daemon?.let { daemon ->
-                setAccdStatusUi(daemon)
-            }
+            dash.daemon?.let { daemon -> setAccdStatusUi(daemon) }
 
             // Battery/Charge details
             binding.dashBatteryCapacityPBar.progress = dash.batteryInfo.capacity
@@ -86,14 +85,12 @@ class DashboardFragment : ScopedFragment()
 
             binding.dashBatteryChargingSpeedTextView.text = if (dash.batteryInfo.isCharging()) getString(R.string.info_charging_speed) else getString(R.string.info_discharging_speed)
 
-            var chSpeed = dash.batteryInfo.getCurrentNow(preferences.currentUnitOfMeasure)
-            if (Acc.instance.version < 202107280) chSpeed *= (if (dash.batteryInfo.isCharging()) 1 else -1)
-            binding.dashChargingSpeedTextView.text = getString(R.string.info_discharging_speed_extended, chSpeed)
+            val plus = if (Acc.instance.version < 202107280) dash.batteryInfo.isCharging() else true
+            binding.dashChargingSpeedTextView.text = dash.batteryInfo.getCurrentNow(preferences.currentInputUnitOfMeasure, preferences.currentOutputUnitOfMeasure, plus, true)
 
-            binding.dashBatteryTemperatureTextView.text = dash.batteryInfo.temperature.toString() + Typography.degree + "C/" + dash.batteryInfo.getTempFahrenheit() + Typography.degree + "F"
+            binding.dashBatteryTemperatureTextView.text = dash.batteryInfo.getTemperature(preferences.temperatureOutputUnitOfMeasure, true)
             binding.dashBatteryHealthTextView.text = dash.batteryInfo.health
-            binding.dashBatteryVoltageTextView.text = dash.batteryInfo.getVoltageNow(preferences.voltageUnitOfMeasure).toString()
-
+            binding.dashBatteryVoltageTextView.text = dash.batteryInfo.getVoltageNow(preferences.voltageInputUnitOfMeasure, preferences.voltageOutputUnitOfMeasure, true)
         }
 
         activity?.let { it ->
@@ -102,9 +99,7 @@ class DashboardFragment : ScopedFragment()
             configViewModel = ViewModelProvider(it).get(SharedViewModel::class.java)
 
             binding.dashResetBatteryStatsButton.setOnClickListener {
-                launch {
-                    Acc.instance.resetBatteryStats()
-                }
+                launch { Acc.instance.resetBatteryStats() }
             }
 
             binding.dashEditCargingLimitOnceButton.setOnClickListener {
