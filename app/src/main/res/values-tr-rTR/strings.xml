@@ -26,16 +26,8 @@
     <string name="stop">Durdur</string>
     <!-- Battery Card Strings -->
     <string name="title_battery">Pil</string>
-    <string name="info_status">Durum</string>
-    <string name="info_charging_speed">Şarj Etme Hızı</string>
-    <string name="info_discharging_speed">Şu Anki Akım</string>
-    <string name="info_capacity">Kapasite</string>
-    <string name="info_temperature">Sıcaklık</string>
-    <string name="info_health">Sağlık</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
-    <string name="info_charging_speed_extended">%2$.2fV\'da %1$dmA</string>
-    <string name="info_discharging_speed_extended">%1$dmA</string>
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">Kapasite:</string>
     <string name="item_profile_temperature_label">Sıcaklık:</string>
@@ -150,6 +142,7 @@
     <string name="schedule_creator">Zamanlanmış görev oluşturucu</string>
     <string name="charging_switch_label">Şarj etme geçişi:</string>
     <string name="title_on_plugged">Şarjdan Çıkarınca Uygula</string>
+    <string name="label_on_plugged">applyOnPlug:</string>
     <string name="edit_on_plugged">ApplyOnPlug ayarlarını düzenle:</string>
     <string name="template_capacity_profile">Kapat: %1$d%% - Devam Et: %2$d%% - Durdur: %3$d%%</string>
     <string name="template_temperature_profile">Sıcaklık: %1$d&#176;C - Maks: %2$d&#176;C - Duraklat: %3$ds</string>
@@ -161,12 +154,10 @@
     <string name="share">Paylaş</string>
     <string name="logs_not_found">Günlük (Log) dosyası bulunamadı.</string>
     <string name="acc_telegram">Ek destek için ACC Telegram grubuna katılın (t.me/acc_group)!</string>
-    <string name="current_measure_unit_preference_title">Mevcut ölçü birimi</string>
     <string name="current_measure_unit_preference_description">ACC, sys arayüzünden şarj durumu bilgisini alır.
         Bazı sistemler akımı µA (mikroamper) veya mA (miliamper) şeklinde gösterir.
         Öngörülen birim yanlış ise, el ile değiştirebilirsiniz.
     </string>
-    <string name="voltage_measure_unit_preference_title">Voltaj ölçü birimi</string>
     <string name="voltage_measure_unit_preference_title_description">ACC, sys arayüzünden şarj durumu bilgisini alır.
         Bazı sistemler voltajı µV (mikrovolt) veya mV (milivolt) şeklinde gösterir.
         Öngörülen birim yanlış ise, el ile değiştirebilirsiniz.
@@ -180,14 +171,6 @@
     <string name="install_bundled_version">Paketlenmiş varyantı yükle</string>
     <string name="acc_version_picker_title">ACC Versiyonu</string>
     <string name="acc_version_picker_message">İstediğiniz ACC varyantını seçin</string>
-    <string-array name="current_measure_units_options">
-        <item>mAmper (1E-03)</item>
-        <item>μAmper (1E-06)</item>
-    </string-array>
-    <string-array name="voltage_measure_units_options">
-        <item>mV (1E-03)</item>
-        <item>μV (1E-06)</item>
-    </string-array>
     <string-array name="acc_version_options">
         <item>Paketlennmiş</item>
         <item>Sade</item>
@@ -227,11 +210,6 @@
         <item>Aydınlık</item>
         <item>Karanlık</item>
         <item>Sistem varsayılanı</item>
-    </string-array>
-    <string-array name="schedule_type_entries">
-        <item>Tekrarlanan</item>
-        <item>Bir kere çalıştır</item>
-        <item>Başlangıçta çalıştır</item>
     </string-array>
     <string name="menu_import_export">&amp; Al &amp; Ver</string>
     <string name="execute_on_boot_schedule">Başlangıçta çalıştır</string>
@@ -277,4 +255,5 @@
     <string name="parse_failed_body">Varsayılan yapılandırmayı \'Varsayılanı Yükle\'ye basarak yüklemeyi deneyebilirsiniz.  AccA\'nın işlevsel olmayacağını lütfen unutmayın.
         \n\nEğer hata almaya devam ederseniz, lütfen aşağıdaki bilgileri ACC yardımıyla &amp; AccA versiyonu(3 noktalı menü ile &gt; Hakkında) Telegram ile geliştiricilerle paylaşın.\n\n%s</string>
     <string name="automatic_switch_eanbled">Anahtarlar arasında otomatik olarak geçiş yap</string>
+    <!-- Widget Label and Activity -->
 </resources>
