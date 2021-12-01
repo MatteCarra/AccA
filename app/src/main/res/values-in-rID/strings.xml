@@ -21,7 +21,7 @@
     <string name="acc_daemon_status_reading_status">Sedang membaca status aplikasi ACC dibalik layar...</string>
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">Hentikan Layanan Daemon ACC</string>
-    <string name="menu_start_accd">Mulai ACC Daemon</string>
+    <string name="menu_start_accd">Mulai Daemon ACC</string>
     <string name="start">Mulailah</string>
     <string name="stop">Berhenti</string>
     <!-- Battery Card Strings -->
