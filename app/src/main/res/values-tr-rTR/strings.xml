@@ -37,8 +37,8 @@
     <string name="reset_stats">Pil istatistiklerini sıfırla</string>
     <string name="enable_cooldown">Soğuma döngüsünü etkinleştir:</string>
     <string name="cooldown_capacity">Soğutmayı %%\'de/da başlat:</string>
-    <string name="resume_charge">Şarj etmeye devam etme sıcaklığı:</string>
-    <string name="stop_charge">Şarj etmeyi durdurma sıcaklığı:</string>
+    <string name="resume_charge">Şarj etmeye devam etme yüzdesi:</string>
+    <string name="stop_charge">Şarj etmeyi durdurma yüzdesi:</string>
     <string name="enable_temp_check">Sıcaklık kontrolünü etkinleştirin (° C)</string>
     <string name="cooldown_temp">Soğuma sıcaklığı:</string>
     <string name="max_temp">Maks. sıcaklık:</string>
