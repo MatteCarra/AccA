@@ -6,7 +6,7 @@
     <string name="title_activity_log_view_file_name">Logi</string>
     <!-- ACC Tile Strings -->
     <string name="tile_acc_no_root">Brak root-a</string>
-    <string name="tile_acc_enabled">Uruchomiono demon</string>
+    <string name="tile_acc_enabled">Demon uruchomiony</string>
     <string name="tile_acc_disabled">Demon zatrzymany</string>
     <!-- Navigation Strings -->
     <string name="title_dashboard">Pulpit</string>
@@ -15,10 +15,10 @@
     <string name="title_settings">Ustawienia</string>
     <!-- ACC Daemon Status -->
     <string name="title_acc">ACC</string>
-    <string name="title_acc_daemon">ACC Daemon</string>
+    <string name="title_acc_daemon">Demon ACC</string>
     <string name="acc_daemon_status_running">Demon ACC jest uruchomiony</string>
     <string name="acc_daemon_status_not_running">Demon ACC nie jest uruchomiony</string>
-    <string name="acc_daemon_status_reading_status">Czytanie statusu Daemon ACC...</string>
+    <string name="acc_daemon_status_reading_status">Sprawdzanie statusu demona ACC...</string>
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">Zatrzymaj demon ACC</string>
     <string name="menu_start_accd">Uruchom demon ACC</string>
@@ -31,7 +31,7 @@
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">Pojemność:</string>
     <string name="item_profile_temperature_label">Temperatura:</string>
-    <string name="status_label">Status:</string>
+    <string name="status_label">Stan:</string>
     <string name="battery_info_label">Info:</string>
     <string name="reset_unplugged">Zresetuj statystyki baterii przy odłączeniu</string>
     <string name="reset_stats">Zresetuj statystyki baterii</string>
@@ -45,8 +45,7 @@
     <string name="pause_seconds">Wstrzymaj sekund:</string>
     <string name="charge_seconds">Ładuj sekund:</string>
     <string name="shutdown_capacity">Wyłącz (jeśli nie ładuje) przy:</string>
-    <string name="no_root_message">AccA wymaga Root\'a.
-***** ***.</string>
+    <string name="no_root_message">AccA wymaga uprawnień root.</string>
     <string name="config_error_title">Błąd przetwarzania konfiguracji</string>
     <string name="config_error_dialog">Nie udało się przetworzyć konfiguracji ACC!\nSprawdź, czy \"su -c acc --set --print\" działa.</string>
     <string name="wait">Proszę czekać...\nTo zajmie kilka sekund.</string>
@@ -84,8 +83,7 @@
     <string name="unsaved_changes">Posiadasz niezapisane zmiany</string>
     <string name="close_without_saving">Odrzuć</string>
     <string name="edit_config">Edytuj konfigurację</string>
-    <string name="unsaved_changes_message">Zapisać zmiany?
-Jebac pis?</string>
+    <string name="unsaved_changes_message">Zapisać zmiany?</string>
     <string name="create_acc_profile">Utwórz profil konfiguracji</string>
     <string name="profile_name">Nazwa profilu</string>
     <string name="dialog_profile_name_message">Wprowadź nazwę, którą chcesz przypisać do tego profilu:</string>
@@ -113,7 +111,7 @@ Jebac pis?</string>
     <string name="wrong_volt_file">Wybrany plik nie działa, albo Twój kernel nie obsługuje tej funkcji.</string>
     <string name="edit_charging_switch">Edytuj przełącznik ładowania</string>
     <string name="test_switch">Przetestuj przełącznik ładowania</string>
-    <string name="no_option_selected">Nie wybrano żadnej opcji; proszę coś wybrać!</string>
+    <string name="no_option_selected">Nie wybrano żadnej opcji, proszę coś wybrać!</string>
     <string name="charging_switch_works">Wybrany przełącznik ładowania działa!</string>
     <string name="charging_switch_does_not_work">Wybrany przełącznik ładowania nie działa!</string>
     <string name="plug_battery_to_test">Podłącz ładowarkę i spróbuj ponownie!</string>
@@ -239,7 +237,7 @@ Wersja Bundled jest testowana pod kątem działania z aplikacją AccA, dlatego j
     <string name="charging_switch_off_value_label">WARTOŚĆ OFF przełącznika ładowania</string>
     <string name="reset_bs_on_pause">Zresetuj statystyki baterii przy wstrzymaniu \%</string>
     <string name="current_max">Maksymalny prąd (mA):</string>
-    <string name="invalid_current_max">Nieprawidłowa maksymalna wartość bieżąca</string>
+    <string name="invalid_current_max">Nieprawidłowa maksymalna wartość natężenia</string>
     <!-- Import and Export -->
     <string name="import_title">Importuj</string>
     <string name="import_load_from_clipboard">Naciśnij ikonę \'Schowek\' na pasku narzędzi!</string>
@@ -248,8 +246,7 @@ Wersja Bundled jest testowana pod kątem działania z aplikacją AccA, dlatego j
     <string name="menu_import">Importuj</string>
     <string name="menu_export">Eksportuj</string>
     <string name="menu_title_load_clipboard">Załaduj ze schowka</string>
-    <string name="menu_title_clear_entries">Wyczyść wpisy
-***** ***</string>
+    <string name="menu_title_clear_entries">Wyczyść wpisy</string>
     <string name="import_toast_no_valid_profile_json_clipboard">Nie ma prawidłowego profilu ACCA JSON w schowku</string>
     <string name="import_toast_no_selected_profiles">Wybierz profile do zaimportowania</string>
     <string name="import_profile_success">Pomyślnie zaimportowano %d profili</string>
