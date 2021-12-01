@@ -40,7 +40,7 @@
     <string name="resume_charge">Continuar carregamento em:</string>
     <string name="stop_charge">Parar carregamento em:</string>
     <string name="enable_temp_check">Ativar controle de temperatura (°C)</string>
-    <string name="cooldown_temp">Cooldown temp:</string>
+    <string name="cooldown_temp">Temperatura de resfriamento:</string>
     <string name="max_temp">Temperatura máxima:</string>
     <string name="pause_seconds">Pausa em segundos:</string>
     <string name="charge_seconds">Carregamento em segundos:</string>
@@ -59,7 +59,7 @@
     <string name="install_djs_title">DJS é necessário</string>
     <string name="installing_djs">Instalando DJS</string>
     <string name="djs_installation_failed_title">A instalação do DJS falhou!</string>
-    <string name="voltage_control_file_not_set">Não definido</string>
+    <string name="voltage_control_file_not_set">Não definido.</string>
     <string name="edit_on_boot_dialog_hint">Deixe em branco para desativar</string>
     <string name="save">Salvar</string>
     <string name="logs">Registros</string>
