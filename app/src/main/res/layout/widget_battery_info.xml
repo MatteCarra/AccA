@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imbkgfck"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/widget_bgd" />
+
+    <ImageView
+        android:id="@+id/battery_icon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="center"
+        android:src="@mipmap/ic_launcher_round"
+        android:visibility="visible"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <LinearLayout
+        android:id="@+id/battery_info_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/card_margin"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <!-- Battery Charging Status -->
+        <LinearLayout
+            android:id="@+id/status_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/status_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:paddingEnd="@dimen/card_margindiv2"
+                android:paddingRight="@dimen/card_margindiv2"
+                android:singleLine="true"
+                android:text="@string/info_status" />
+
+            <TextView
+                android:id="@+id/status_out"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:singleLine="true"
+                android:text="..."
+                tools:text="@tools:sample/cities" />
+
+        </LinearLayout>
+
+        <!-- Battery Charging Speed -->
+        <LinearLayout
+            android:id="@+id/charging_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/charging_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:paddingEnd="@dimen/card_margindiv2"
+                android:paddingRight="@dimen/card_margindiv2"
+                android:singleLine="true"
+                android:text="@string/info_charging_speed" />
+
+            <TextView
+                android:id="@+id/charging_out"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:singleLine="true"
+                android:text="..."
+                tools:text="@tools:sample/cities" />
+
+        </LinearLayout>
+
+        <!-- Battery Temperature -->
+        <LinearLayout
+            android:id="@+id/temper_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/temper_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:paddingEnd="@dimen/card_margindiv2"
+                android:paddingRight="@dimen/card_margindiv2"
+                android:singleLine="true"
+                android:text="@string/info_temperature" />
+
+            <TextView
+                android:id="@+id/temper_out"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:singleLine="true"
+                android:text="..."
+                tools:text="@tools:sample/lorem" />
+
+        </LinearLayout>
+
+        <!-- Battery Voltage -->
+        <LinearLayout
+            android:id="@+id/voltage_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/voltage_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:paddingEnd="@dimen/card_margindiv2"
+                android:paddingRight="@dimen/card_margindiv2"
+                android:singleLine="true"
+                android:text="@string/info_voltage" />
+
+            <TextView
+                android:id="@+id/voltage_out"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:singleLine="true"
+                android:text="..."
+                tools:text="@tools:sample/cities" />
+
+        </LinearLayout>
+
+        <!-- Profile current -->
+        <LinearLayout
+            android:id="@+id/profile_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/profile_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:paddingEnd="@dimen/card_margindiv2"
+                android:paddingRight="@dimen/card_margindiv2"
+                android:singleLine="true"
+                android:text="@string/profile_label" />
+
+            <TextView
+                android:id="@+id/profile_out"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:singleLine="true"
+                android:text="..."
+                tools:text="@tools:sample/cities" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:baselineAligned="true">
+
+        <FrameLayout
+            android:id="@+id/dash_click_left_zone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <FrameLayout
+            android:id="@+id/dash_click_right_zone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+</FrameLayout>

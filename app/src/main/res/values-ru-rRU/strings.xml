@@ -11,6 +11,7 @@
     <!-- Navigation Strings -->
     <string name="title_dashboard">Мониторинг</string>
     <string name="title_profiles">Профили</string>
+    <string name="title_scripts">Скрипты</string>
     <string name="title_schedules">Расписания</string>
     <string name="title_settings">Настройки</string>
     <!-- ACC Daemon Status -->
@@ -26,8 +27,17 @@
     <string name="stop">Стоп</string>
     <!-- Battery Card Strings -->
     <string name="title_battery">Батарея</string>
+    <string name="info_status">Status:</string>
+    <string name="info_charging_speed">Charging Speed:</string>
+    <string name="info_discharging_speed">Current Now:</string>
+    <string name="info_capacity">Capacity:</string>
+    <string name="info_temperature">Temperature:</string>
+    <string name="info_health">Health:</string>
+    <string name="info_profile">Profile:</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
+    <string name="info_charging_speed_extended">%1$d mA at %2$.2fV</string>
+    <string name="info_discharging_speed_extended">%1$d mA</string>
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">Ёмкость:</string>
     <string name="item_profile_temperature_label">Температура:</string>
@@ -52,6 +62,7 @@
     <!-- Exit On Boot Card Strings -->
     <string name="title_exit_on_boot">Остановить службу после применения настроек</string>
     <string name="description_exit_on_boot">Используется для записи файлов при загрузке.</string>
+    <string name="label_on_boot">apply_on_boot:</string>
     <!-- ACC installation -->
     <string name="installing_acc">Установка ACC</string>
     <string name="reboot">Перезапустить</string>
@@ -81,17 +92,23 @@
     <string name="edit_config">Изменить конфигурацию</string>
     <string name="unsaved_changes_message">Сохранить изменения?</string>
     <string name="create_acc_profile">Создать профиль конфигурации</string>
+    <string name="profile_label">Profile</string>
     <string name="profile_name">Название профиля</string>
+    <string name="script_name">Название скрипта</string>
     <string name="dialog_profile_name_message">Введите название, которое вы хотите назначить этому профилю:</string>
+    <string name="dialog_script_name_message">Введите имя, которое вы хотите назначить этому скрипту:</string>
     <string name="no_profiles">Нет профилей</string>
+    <string name="no_scripts">Нет скриптов</string>
     <string name="profile_not_selected">Пользовательские настройки</string>
     <string name="profile_tile_label">Профиль: %1$s</string>
+    <string name="profile_update">Profile update</string>
     <string name="profiles_text_view">Профили (удерживайте для редактирования/удаления):</string>
     <string name="restart">Перезапустить</string>
     <string name="invalid_chars">Название профиля содержит недопустимые символы</string>
     <string name="recurrent_schedule">Запустить только один раз</string>
     <string name="execution_time">Время выполнения</string>
     <string name="new_config">Новая пользовательская конфигурация</string>
+    <string name="new_script">Новый скрипт</string>
     <string name="enable_voltage_limit">Ограничение напряжения зарядки</string>
     <string name="enable_current_limit">Ограничение силы тока зарядки</string>
     <string name="voltage_control_file">Файл управления напряжением:</string>
@@ -142,28 +159,46 @@
     <string name="profile_creator">Создать профиль</string>
     <string name="schedule_creator">Создать расписание</string>
     <string name="charging_switch_label">Переключатель зарядки:</string>
+    <string name="script_label">Название скрипта:</string>
+    <string name="script_description">Описание:</string>
+    <string name="script_body_text">Код Shell:</string>
     <string name="title_on_plugged">Вставьте в розетку</string>
+    <string name="label_on_plugged">applyOnPlug:</string>
     <string name="edit_on_plugged">Изменить настройки подключения:</string>
     <string name="edit_on_plugged_dialog_message">Пример: wireless/voltage_max::9000000 принудительно включает быструю беспроводную зарядку на некоторых устройствах Pixel.</string>
     <string name="template_capacity_profile">Выключение устройства при: %1$d%% - Зарядка при: %2$d%% - Остановка при: %3$d%%</string>
     <string name="template_temperature_profile">Температура: %1$d&#176;C - Макс.: %2$d&#176;C - Пауза: %3$dс</string>
     <string name="template_cool_down_profile">Начинать с: %1$d%% - Заряжать: %2$dс - Пауза на: %3$dс</string>
     <!--Menus Options-->
+    <string name="menu_option_run">Запустить</string>
+    <string name="menu_option_run_silent">Запустить (быстро)</string>
+    <string name="menu_option_edit">Изменить</string>
+    <string name="menu_option_copy">Копировать</string>
+    <string name="menu_option_rename">Переименовать</string>
+    <string name="menu_option_delete">Удалить</string>
     <string name="selecting_profile_toast">Выбор профиля %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox не установлен</string>
     <string name="installation_failed_busybox">Сначала установите busybox или просто поместите двоичный файл в /data/adb/bin/</string>
     <string name="share">Поделиться</string>
     <string name="logs_not_found">Файл отчёта не найден.</string>
     <string name="acc_telegram">За дополнительной поддержкой присоединяйтесь к группе ACC Telegram (t.me/acc_group)!</string>
+    <string name="current_measure_unit_preference_title">Input Current unit of measure</string>
     <string name="current_measure_unit_preference_description">ACC получает информацию о зарядке из системного интерфейса.
         Некоторые системы выражают ток в μA (микроамперах), другие в mA (миллиамперах).
         Если обнаруженное значение неправильно, вы можете установить его вручную.
     </string>
+    <string name="voltage_measure_unit_preference_title">Input Voltage unit of measure</string>
     <string name="voltage_measure_unit_preference_title_description">ACC получает информацию о зарядке из системного интерфейса.
         Некоторые системы выражают ток в µV (микровольтах), другие в mV (милливольтах).
         Если обнаруженное значение неправильно, вы можете установить его вручную.
     </string>
     <string name="units_of_measure">Единицы измерения</string>
+    <string name="current_measure_output_preference_title">Output Current unit of measure</string>
+    <string name="current_measure_output_preference_description">The output of current, 0.412 A (amp) or 412 mA (milliamper).</string>
+    <string name="voltage_measure_output_preference_title">Output Voltage unit of measure</string>
+    <string name="voltage_measure_output_preference_title_description">The output of voltage, 4.123 V (Volt) or 4123 mV (Milvolt).</string>
+    <string name="temperature_measure_output_preference_title">Output Temperature unit of measure</string>
+    <string name="temperature_measure_output_preference_title_description">The output of temperature: -1C/30F (Celsius/Fahrenheit) or -1C (Celsius) or 30C (Fahrenheit).</string>
     <string name="acc_version_preference_title">Версия ACC</string>
     <string name="acc_version_preference_description">Вы можете выбрать вариант ACC: bundled (стабильный, рекомендованный для большинства пользователей), master (стабильный), develop (последние обновления, возможно нестабильные) или любую из отмеченных версий.
         Bundled является наиболее тщательно протестированной версией для AccA - поэтому это рекомендуемый вариант.
@@ -172,11 +207,41 @@
     <string name="install_bundled_version">Установить bundled вариант</string>
     <string name="acc_version_picker_title">Версия ACC</string>
     <string name="acc_version_picker_message">Выберите желаемую версию ACC</string>
+    <string-array name="current_measure_units_options">
+        <item>Ampere</item>
+        <item>mAmpere (1E-03)</item>
+        <item>μAmpere (1E-06)</item>
+    </string-array>
+    <string-array name="voltage_measure_units_options">
+        <item>Voltage</item>
+        <item>mV (1E-03)</item>
+        <item>μV (1E-06)</item>
+    </string-array>
+    <string-array name="temperature_measure_output_options">
+        <item>Celsius/Fahrenheit (°Both)</item>
+        <item>Celsius (°C)</item>
+        <item>Fahrenheit (°F)</item>
+    </string-array>
+    <string-array name="current_measure_output_options">
+        <item>Ampere (A)</item>
+        <item>mAmpere (mA)</item>
+    </string-array>
+    <string-array name="voltage_measure_output_options">
+        <item>Voltage (V)</item>
+        <item>mVoltage (mV)</item>
+    </string-array>
     <string-array name="acc_version_options">
         <item>Bundled</item>
         <item>Master</item>
         <item>Develop</item>
     </string-array>
+    <string-array name="acca_debug_options">
+        <item>Disable</item>
+        <item>Output to the console</item>
+        <item>Output to file and console</item>
+    </string-array>
+    <string name="app_debug_title">Debugging Log</string>
+    <string name="app_debug_summary">Debugging the application. After selecting you need to restart the application</string>
     <string name="ui_options">Интерфейс</string>
     <string name="theme_option_setting">Тема</string>
     <string name="theme_option_summary">Установите тему приложения.</string>
@@ -207,6 +272,12 @@
     <string name="schedule_profile_keep_current">Оставить текущий файл настроек</string>
     <string name="schedule_type">Тип расписания</string>
     <string name="schedule_name">Имя расписания</string>
+    <string name="experimental_pref_title">Экспериментальные настройки</string>
+    <string name="experimental_pref_summary">Здесь вы можете отключить команды ACC, которые после выполнения дают замораживание\\сбой\\перезапуск устройства. Некоторые устройства на MediaTek.</string>
+    <string name="cue_AccCurrentMax_pref_title">Ограничение тока зарядки</string>
+    <string name="cue_AccCurrentMax_pref_summary">Разрешить команду: \"acca —set —current\"</string>
+    <string name="cue_AccVoltControl_pref_title">Управление напряжением</string>
+    <string name="cue_AccVoltControl_pref_summary">Разрешить команду: \"acca -set —voltage\"</string>
     <string-array name="theme_option_options">
         <item>Светлая</item>
         <item>Тёмная</item>
@@ -262,5 +333,31 @@
         \n\nЕсли ошибка повторяется, пожалуйста, поделитесь трассировкой ниже вместе с ACC и AccA версией (через меню &gt; О программе) с разработчиками через Telegram.\n\n%s</string>
     <string name="automatic_switch_eanbled">Автоматические циклы переключения</string>
     <string name="info_voltage">Напряжение</string>
+    <string name="profile_option_edit">Edit</string>
+    <string name="profile_option_rename">Rename</string>
+    <string name="profile_option_delete">Delete</string>
     <!-- Widget Label and Activity -->
+    <string name="qwa_dis_opt_battery">Disable battery optimization</string>
+    <string name="battery_optimization_fail">Fail to open battery optimization setting</string>
+    <string name="qwa_open_acc">Open ACCA</string>
+    <string name="qwa_stop">Stop Widgets</string>
+    <string name="qwa_start">Start Widgets</string>
+    <string name="qwa_setting">Setting Widget</string>
+    <string name="qwa_toast_sleep">Sleep mode</string>
+    <string name="qwa_toast_start">Work mode</string>
+    <string name="qwa_profile">Select profile</string>
+    <string name="qwa_exit_label">Click Outside to Exit</string>
+    <string name="widget_batteryInfo_name">BatteryInfo</string>
+    <string name="swd_title">Setting Widget</string>
+    <string name="swd_main">Main</string>
+    <string name="swd_text">Text</string>
+    <string name="swd_background">Background</string>
+    <string name="swd_show_field_names">Show field names</string>
+    <string name="swd_replace_to_symbols">Replace names symbols</string>
+    <string name="swd_show_field_values">Show units of measure</string>
+    <string name="swd_show_status">Show status</string>
+    <string name="swd_show_curr">Show current</string>
+    <string name="swd_show_temp">Show temperature</string>
+    <string name="swd_show_volt">Show Voltage</string>
+    <string name="swd_show_profile">Show profile</string>
 </resources>

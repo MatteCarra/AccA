@@ -1,7 +1,10 @@
 package mattecarra.accapp.activities
 
+import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +13,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate.*
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -30,22 +35,19 @@ import mattecarra.accapp.databinding.ActivityMainBinding
 import mattecarra.accapp.dialogs.*
 import mattecarra.accapp.djs.Djs
 import mattecarra.accapp.fragments.*
-import mattecarra.accapp.models.AccConfig
-import mattecarra.accapp.models.AccaProfile
-import mattecarra.accapp.models.ProfileEntry
-import mattecarra.accapp.models.Schedule
+import mattecarra.accapp.models.*
 import mattecarra.accapp.utils.*
 import mattecarra.accapp.viewmodel.ProfilesViewModel
 import mattecarra.accapp.viewmodel.SchedulesViewModel
 import mattecarra.accapp.viewmodel.SharedViewModel
+import xml.BatteryInfoWidget
+import xml.WIDGET_ALL_UPDATE
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainActivity : ScopedAppActivity(),
-    BottomNavigationView.OnNavigationItemSelectedListener
+class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemSelectedListener
 {
-
     private val LOG_TAG = "MainActivity"
     val ACC_CONFIG_EDITOR_REQUEST = 1
     val ACC_PROFILE_CREATOR_REQUEST = 2
@@ -135,7 +137,8 @@ class MainActivity : ScopedAppActivity(),
                     djsInstallationDialog()
                     false
                 } else {
-                    if (!Djs.initDjs(filesDir) || Djs.isInstalledDjsOutdated()) {
+                    if (!Djs.initDjs(filesDir) || Djs.isInstalledDjsOutdated())
+                    {
                         installDjs()
                         false
                     } else {
@@ -149,59 +152,50 @@ class MainActivity : ScopedAppActivity(),
         return false
     }
 
-    fun djsInstallationDialog() {
+    fun djsInstallationDialog()
+    {
         MaterialDialog(this).show {
             title(R.string.install_djs_title)
             message(R.string.install_djs_description)
-            positiveButton(R.string.install) {
-                installDjs()
-            }
+            positiveButton(R.string.install) { installDjs() }
             negativeButton(android.R.string.no)
         }
     }
 
-    fun installDjs() {
+    fun installDjs()
+    {
         MaterialDialog(this@MainActivity).show {
+
             title(R.string.installing_djs)
             cancelOnTouchOutside(false)
             onKeyCodeBackPressed { false }
-            djsInstallation(this@MainActivity, object : DjsInstallationListener {
-                override fun onInstallationFailed(result: Shell.Result?) {
+
+            djsInstallation(this@MainActivity, object : DjsInstallationListener
+            {
+                override fun onInstallationFailed(result: Shell.Result?)
+                {
                     MaterialDialog(this@MainActivity)
                         .show {
                             title(R.string.djs_installation_failed_title)
                             message(R.string.djs_installation_failed)
-                            positiveButton(R.string.retry) {
-                                installDjs()
-                            }
-                            negativeButton(android.R.string.cancel) {
-                                binding.mainBottomNav.selectedItemId = R.id.botNav_schedules
-                            }
-                            if (result != null)
-                                shareLogsNeutralButton(
-                                    File(
-                                        filesDir,
-                                        "logs/djs-install.log"
-                                    ), R.string.djs_installation_failed_log
-                                )
+                            positiveButton(R.string.retry) { installDjs() }
+                            negativeButton(android.R.string.cancel) { binding.mainBottomNav.selectedItemId = R.id.botNav_schedules }
+                            if (result != null) shareLogsNeutralButton(File(filesDir, "logs/djs-install.log"), R.string.djs_installation_failed_log)
                         }
                 }
 
-                override fun onBusyboxMissing() {
-                    MaterialDialog(this@MainActivity)
-                        .show {
+                override fun onBusyboxMissing()
+                {
+                    MaterialDialog(this@MainActivity).show {
                             busyBoxError()
-                            positiveButton(R.string.retry) {
-                                installDjs()
-                            }
-                            negativeButton(android.R.string.cancel) {
-                                binding.mainBottomNav.selectedItemId = R.id.botNav_schedules
-                            }
+                            positiveButton(R.string.retry) { installDjs() }
+                            negativeButton(android.R.string.cancel) { binding.mainBottomNav.selectedItemId = R.id.botNav_schedules }
                             cancelOnTouchOutside(false)
                         }
                 }
 
-                override fun onSuccess() {
+                override fun onSuccess()
+                {
                     _preferences.djsEnabled = true
                     initUi()
                 }
@@ -209,7 +203,8 @@ class MainActivity : ScopedAppActivity(),
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item!!.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId)
+    {
         R.id.menu_appbar_logs -> {
             startActivity(Intent(this, LogViewerActivity::class.java))
             true
@@ -223,13 +218,12 @@ class MainActivity : ScopedAppActivity(),
             true
         }
         R.id.menu_appbar_import -> {
-            startActivityForResult(
-                Intent(this, ImportProfilesActivity::class.java),
-                ACC_IMPORT_PROFILE_REQUEST
-            )
+            startActivityForResult(Intent(this, ImportProfilesActivity::class.java), ACC_IMPORT_PROFILE_REQUEST)
             true
         }
-        R.id.menu_appbar_export -> {
+
+        R.id.menu_appbar_export ->
+        {
             // Generate list of ExportEntries TODO: maybe move this to the actual activity to make new ProfileEntries from AccaProfiles
             var profileList: ArrayList<ProfileEntry> = ArrayList()
             launch {
@@ -237,8 +231,7 @@ class MainActivity : ScopedAppActivity(),
                     profileList.add(ProfileEntry(profile))
                 }
             }.invokeOnCompletion {
-                var intent = Intent(this, ExportProfilesActivity::class.java)
-                    .putExtra("list", profileList)
+                var intent = Intent(this, ExportProfilesActivity::class.java).putExtra("list", profileList)
                 startActivity(intent)
             }
             true
@@ -246,7 +239,8 @@ class MainActivity : ScopedAppActivity(),
         else -> super.onOptionsItemSelected(item)
     }
 
-    private fun loadFragment(fragment: Fragment) {
+    private fun loadFragment(fragment: Fragment)
+    {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.main_framelayout, fragment)
         transaction.commit()
@@ -255,22 +249,20 @@ class MainActivity : ScopedAppActivity(),
     /**
      * Function for Status Card Settings OnClick (Configuration)
      */
-    fun batteryConfigOnClick(view: View) {
+    fun batteryConfigOnClick(view: View)
+    {
         Intent(view.context, AccConfigEditorActivity::class.java).also { intent ->
-            startActivityForResult(intent, ACC_CONFIG_EDITOR_REQUEST)
-        }
+            startActivityForResult(intent, ACC_CONFIG_EDITOR_REQUEST) }
     }
 
     /**
      * Function for launching the profile creation Activity
      */
-    fun accProfilesFabOnClick(view: View) {
+    fun accProfilesFabOnClick(view: View)
+    {
         launch {
             Intent(this@MainActivity, AccConfigEditorActivity::class.java).also { intent ->
-                intent.putExtra(
-                    Constants.TITLE_KEY,
-                    this@MainActivity.getString(R.string.profile_creator)
-                )
+                intent.putExtra(Constants.TITLE_KEY, this@MainActivity.getString(R.string.profile_creator))
                 intent.putExtra(Constants.ACC_CONFIG_KEY, Acc.instance.readDefaultConfig())
                 startActivityForResult(intent, ACC_PROFILE_CREATOR_REQUEST)
             }
@@ -280,7 +272,8 @@ class MainActivity : ScopedAppActivity(),
     private fun checkAccInstalled(): Boolean {
         val version = _preferences.accVersion
 
-        if (!Acc.isAccInstalled(filesDir) || (version == "bundled" && Acc.isInstalledAccOutdated())) {
+        if (!Acc.isAccInstalled(filesDir) || (version == "bundled" && Acc.isInstalledAccOutdated()))
+        {
             val dialog = MaterialDialog(this).show {
                 title(R.string.installing_acc)
                 progress(R.string.wait)
@@ -289,17 +282,16 @@ class MainActivity : ScopedAppActivity(),
             }
 
             launch {
-                val res =
-                    when (version) {
-                        "bundled" ->
-                            Acc.installBundledAccModule(this@MainActivity)
-                        else ->
-                            Acc.installAccModuleVersion(this@MainActivity, version)
-                    }
+                val res = when (version)
+                {
+                    "bundled" -> Acc.installBundledAccModule(this@MainActivity)
+                    else -> Acc.installAccModuleVersion(this@MainActivity, version)
+                }
 
                 dialog.cancel()
 
-                if (res?.isSuccess != true) {
+                if (res?.isSuccess != true)
+                {
                     when {
                         version != "bundled" -> //custom version installation had an error -> ask the user to select a different version
                             MaterialDialog(this@MainActivity) //Dialog to tell the user that installation failed
@@ -475,6 +467,7 @@ class MainActivity : ScopedAppActivity(),
     {
         setTheme(R.style.AccaTheme_DayNight)
         super.onCreate(savedInstanceState)
+        LogExt().d(javaClass.simpleName, "onCreate()")
 
         //--------------------------------------------------
 
@@ -491,6 +484,11 @@ class MainActivity : ScopedAppActivity(),
         resources.updateConfiguration(config, resources.displayMetrics)
 
         //--------------------------------------------------
+
+        sendBroadcast(Intent(this, BatteryInfoWidget::class.java).setAction(WIDGET_ALL_UPDATE))
+
+        //--------------------------------------------------
+
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
@@ -503,13 +501,12 @@ class MainActivity : ScopedAppActivity(),
         // Set theme
         setTheme()
 
-        if (!Shell.rootAccess()) {
+        if (!Shell.rootAccess())
+        {
             MaterialDialog(this).show {
                 title(R.string.tile_acc_no_root)
                 message(R.string.no_root_message)
-                positiveButton(android.R.string.ok) {
-                    finish()
-                }
+                positiveButton(android.R.string.ok) { finish() }
                 cancelOnTouchOutside(false)
                 onKeyCodeBackPressed {
                     dismiss()
@@ -517,9 +514,19 @@ class MainActivity : ScopedAppActivity(),
                     false
                 }
             }
-        } else if (checkAccInstalled()) {
+        }
+        else if (checkAccInstalled())
+        {
+            checkWritePermission(this)
             initUi()
         }
+    }
+
+    fun checkWritePermission(context: Context)
+    {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+                ActivityCompat.requestPermissions(this, Array(1){ Manifest.permission.WRITE_EXTERNAL_STORAGE }, 1);
     }
 
     /**
@@ -562,6 +569,7 @@ class MainActivity : ScopedAppActivity(),
                     }
                 }
             }
+
             ACC_PROFILE_CREATOR_REQUEST -> {
                 if (resultCode == Activity.RESULT_OK) {
                     if (data != null) {
@@ -583,7 +591,8 @@ class MainActivity : ScopedAppActivity(),
                                 positiveButton(R.string.save) { dialog ->
                                     val profileName = dialog.getInputField().text.toString()
                                     // Add Profile to Database via ViewModel function
-                                    val profile = AccaProfile(0, profileName, accConfig)
+                                    val profile =
+                                        AccaProfile(0, profileName, accConfig, ProfileEnables())
                                     _profilesViewModel.insertProfile(profile)
                                 }
                                 negativeButton(android.R.string.cancel)
@@ -591,33 +600,31 @@ class MainActivity : ScopedAppActivity(),
                     }
                 }
             }
-            ACC_PROFILE_EDITOR_REQUEST -> {
-                if (resultCode == Activity.RESULT_OK) {
+
+            ACC_PROFILE_EDITOR_REQUEST -> // SQl DAO
+            {
+                if (resultCode == Activity.RESULT_OK)
+                {
                     if (data?.getBooleanExtra(
-                            Constants.ACC_HAS_CHANGES,
-                            false
-                        ) == true && data.hasExtra(Constants.DATA_KEY)
-                    ) {
+                            Constants.ACC_HAS_CHANGES, false
+                        ) == true && data.hasExtra(Constants.DATA_KEY))
+                    {
+
                         val accConfig: AccConfig =
                             data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig
-                                ?: return
-
-                        // Extract the data
                         val editorData = data.getBundleExtra(Constants.DATA_KEY) ?: return
                         val profileId = editorData.getInt(Constants.PROFILE_ID_KEY)
-                        launch {
-                            _profilesViewModel.getProfileById(profileId)
-                                ?.let { selectedProfile ->
-                                    // Update the selected Profile
-                                    selectedProfile.accConfig = accConfig
 
-                                    // Update the profile
-                                    _profilesViewModel.updateProfile(selectedProfile)
-                                }
+                        launch {
+                            _profilesViewModel.getProfileById(profileId)?.let { selectedProfile ->
+                                // Update the profile with new accConfig
+                                _profilesViewModel.updateProfile(selectedProfile.copy(accConfig = accConfig))
+                            }
                         }
                     }
                 }
             }
+
             ACC_ADD_PROFILE_SCHEDULER_REQUEST -> {
                 if (resultCode == Activity.RESULT_OK) {
                     if (data?.hasExtra(Constants.DATA_KEY) == true) {
@@ -679,7 +686,14 @@ class MainActivity : ScopedAppActivity(),
                         data?.getSerializableExtra(Constants.DATA_KEY) as List<ProfileEntry>
                     if (!imports.isNullOrEmpty()) {
                         for (entry: ProfileEntry in imports) {
-                            _profilesViewModel.insertProfile(AccaProfile(0, entry.getName(), entry.getConfig()))
+                            _profilesViewModel.insertProfile(
+                                AccaProfile(
+                                    0,
+                                    entry.getName(),
+                                    entry.getConfig(),
+                                    ProfileEnables()
+                                )
+                            )
                         }
                     }
                     Toast.makeText(

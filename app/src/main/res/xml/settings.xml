@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         android:title="Acc"
         app:iconSpaceReserved="false">
         <Preference
-            android:title="@string/acc_version_preference_title"
             android:key="acc_version"
             android:summary="@string/acc_version_preference_description"
-            app:iconSpaceReserved="false">
-        </Preference>
+            android:title="@string/acc_version_preference_title"
+            app:iconSpaceReserved="false"></Preference>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -18,33 +17,63 @@
         app:iconSpaceReserved="false">
 
         <ListPreference
-                android:title="@string/current_measure_unit_preference_title"
-                android:key="current_measure_unit"
-                android:summary="@string/current_measure_unit_preference_description"
-                android:dialogTitle="@string/current_measure_unit_preference_title"
-                android:entries="@array/current_measure_units_options"
-                android:entryValues="@array/current_measure_units_option_values"
-                app:iconSpaceReserved="false"/>
+            android:dialogTitle="@string/current_measure_unit_preference_title"
+            android:entries="@array/current_measure_units_options"
+            android:entryValues="@array/current_measure_units_option_values"
+            android:key="current_measure_unit"
+            android:summary="@string/current_measure_unit_preference_description"
+            android:title="@string/current_measure_unit_preference_title"
+            app:iconSpaceReserved="false" />
 
         <ListPreference
-                android:title="@string/voltage_measure_unit_preference_title"
-                android:key="voltage_measure_unit"
-                android:summary="@string/voltage_measure_unit_preference_title_description"
-                android:dialogTitle="@string/voltage_measure_unit_preference_title"
-                android:entries="@array/voltage_measure_units_options"
-                android:entryValues="@array/voltage_measure_units_option_values"
-                app:iconSpaceReserved="false"/>
+            android:dialogTitle="@string/voltage_measure_unit_preference_title"
+            android:entries="@array/voltage_measure_units_options"
+            android:entryValues="@array/voltage_measure_units_option_values"
+            android:key="voltage_measure_unit"
+            android:summary="@string/voltage_measure_unit_preference_title_description"
+            android:title="@string/voltage_measure_unit_preference_title"
+            app:iconSpaceReserved="false" />
+
+        <ListPreference
+            android:defaultValue="mA"
+            android:dialogTitle="@string/current_measure_output_preference_title"
+            android:entries="@array/current_measure_output_options"
+            android:entryValues="@array/current_measure_output_option_values"
+            android:key="current_measure_output"
+            android:summary="@string/current_measure_output_preference_description"
+            android:title="@string/current_measure_output_preference_title"
+            app:iconSpaceReserved="false" />
+
+        <ListPreference
+            android:defaultValue="V"
+            android:dialogTitle="@string/voltage_measure_output_preference_title"
+            android:entries="@array/voltage_measure_output_options"
+            android:entryValues="@array/voltage_measure_output_option_values"
+            android:key="voltage_measure_output"
+            android:summary="@string/voltage_measure_output_preference_title_description"
+            android:title="@string/voltage_measure_output_preference_title"
+            app:iconSpaceReserved="false" />
+
+        <ListPreference
+            android:defaultValue="CF"
+            android:dialogTitle="@string/temperature_measure_output_preference_title"
+            android:entries="@array/temperature_measure_output_options"
+            android:entryValues="@array/temperature_measure_output_option_values"
+            android:key="temperature_measure_output"
+            android:summary="@string/temperature_measure_output_preference_title_description"
+            android:title="@string/temperature_measure_output_preference_title"
+            app:iconSpaceReserved="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
         android:title="Djs"
         app:iconSpaceReserved="false">
         <CheckBoxPreference
-            android:title="Djs"
             android:key="djs_enabled"
             android:summary="@string/install_djs_description"
-            app:iconSpaceReserved="false">
-        </CheckBoxPreference>
+            android:title="Djs"
+            app:iconSpaceReserved="false"></CheckBoxPreference>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -53,49 +82,57 @@
 
         <Preference
             android:summary="@string/experimental_pref_summary"
-            app:iconSpaceReserved="false"/>
+            app:iconSpaceReserved="false" />
 
         <CheckBoxPreference
-            android:title="@string/cue_AccCurrentMax_pref_title"
-            android:summary="@string/cue_AccCurrentMax_pref_summary"
             android:defaultValue="true"
             android:key="cueCurrMax"
-            app:iconSpaceReserved="false">
-        </CheckBoxPreference>
+            android:summary="@string/cue_AccCurrentMax_pref_summary"
+            android:title="@string/cue_AccCurrentMax_pref_title"
+            app:iconSpaceReserved="false"></CheckBoxPreference>
 
         <CheckBoxPreference
-            android:title="@string/cue_AccVoltControl_pref_title"
-            android:summary="@string/cue_AccVoltControl_pref_summary"
             android:defaultValue="true"
             android:key="cueVoltage"
-            app:iconSpaceReserved="false">
-        </CheckBoxPreference>
+            android:summary="@string/cue_AccVoltControl_pref_summary"
+            android:title="@string/cue_AccVoltControl_pref_title"
+            app:iconSpaceReserved="false"></CheckBoxPreference>
 
     </PreferenceCategory>
 
     <PreferenceCategory
-            android:title="@string/ui_options"
-            app:iconSpaceReserved="false">
+        android:title="@string/ui_options"
+        app:iconSpaceReserved="false">
 
         <ListPreference
-            android:title="@string/theme_option_setting"
-            android:key="theme"
-            android:summary="@string/theme_option_summary"
+            android:defaultValue="2"
             android:dialogTitle="@string/theme_option_setting"
             android:entries="@array/theme_option_options"
             android:entryValues="@array/theme_option_values"
-            android:defaultValue="2"
-            android:icon="@drawable/ic_round_format_paint_24px"/>
+            android:icon="@drawable/ic_round_format_paint_24px"
+            android:key="theme"
+            android:summary="@string/theme_option_summary"
+            android:title="@string/theme_option_setting" />
 
         <ListPreference
-            android:title="@string/lang_pref_title"
-            android:key="language"
-            android:summary="@string/lang_pref_summary"
+            android:defaultValue="def"
             android:dialogTitle="@string/lang_pref_title"
             android:entries="@array/lang_pref_entries"
             android:entryValues="@array/lang_pref_value"
-            android:defaultValue="def"
-            android:icon="@drawable/ic_outline_check_circle_24px"/>
+            android:icon="@drawable/ic_outline_check_circle_24px"
+            android:key="language"
+            android:summary="@string/lang_pref_summary"
+            android:title="@string/lang_pref_title" />
+
+        <ListPreference
+            android:defaultValue="0"
+            android:dialogTitle="@string/app_debug_title"
+            android:entries="@array/acca_debug_options"
+            android:entryValues="@array/acca_debug_values"
+            android:icon="@drawable/ic_outline_error_outline_24px"
+            android:key="appdebug"
+            android:summary="@string/app_debug_summary"
+            android:title="@string/app_debug_title" />
 
     </PreferenceCategory>
 </PreferenceScreen>

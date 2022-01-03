@@ -10,11 +10,14 @@ import androidx.fragment.app.FragmentManager
 import mattecarra.accapp.R
 import mattecarra.accapp.databinding.ActivitySettingsBinding
 import mattecarra.accapp.fragments.SettingsFragment
+import mattecarra.accapp.utils.LogExt
 
 class SettingsActivity: AppCompatActivity(), FragmentManager.OnBackStackChangedListener {
     private lateinit var mSettingsFragment: SettingsFragment
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
+    public override fun onCreate(savedInstanceState: Bundle?)
+    {
+        LogExt().d(javaClass.simpleName, "onCreate()")
         super.onCreate(savedInstanceState)
         val binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)

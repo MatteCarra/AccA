@@ -20,6 +20,7 @@ import mattecarra.accapp.utils.Constants.ACC_VERSION
 import mattecarra.accapp.djs.Djs
 import mattecarra.accapp.utils.Constants.DJS_ENABLED
 import mattecarra.accapp.utils.GithubUtils
+import mattecarra.accapp.utils.LogExt
 import java.io.File
 import kotlin.coroutines.CoroutineContext
 
@@ -43,7 +44,10 @@ class SettingsFragment : PreferenceFragmentCompat(), CoroutineScope {
     }
 
     @SuppressLint("DefaultLocale")
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?)
+    {
+        LogExt().d(javaClass.simpleName, "onCreatePreferences()")
+
         setPreferencesFromResource(R.xml.settings, rootKey)
 
         val telegram = findPreference<Preference>("acc_telegram")
@@ -199,7 +203,6 @@ class SettingsFragment : PreferenceFragmentCompat(), CoroutineScope {
                 }
             } ?: false
         }
-
 
         if(Acc.instance.version >= 202002290) {
             findPreference<Preference>("current_measure_unit")?.isEnabled = false

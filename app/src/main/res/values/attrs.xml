@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ColorPickerView">
+        <attr name="startColor" format="color"/>
+        <attr name="enableAlpha" format="boolean"/>
+        <attr name="enableBrightness" format="boolean"/>
+        <attr name="onlyUpdateOnTouchEventUp" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="BoundedView">
+        <attr name="bounded_height" format="dimension"/>
+        <attr name="bounded_width" format="dimension"/>
+    </declare-styleable>
+
+</resources>
