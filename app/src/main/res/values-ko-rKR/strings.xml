@@ -17,16 +17,8 @@
     <string name="stop">중지</string>
     <!-- Battery Card Strings -->
     <string name="title_battery">배터리</string>
-    <string name="info_status">상태</string>
-    <string name="info_charging_speed">충전 속도</string>
-    <string name="info_discharging_speed">현재 전류</string>
-    <string name="info_capacity">용량</string>
-    <string name="info_temperature">온도</string>
-    <string name="info_health">수명</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
-    <string name="info_charging_speed_extended">%1$dmA / %2$.2fV</string>
-    <string name="info_discharging_speed_extended">%1$dmA</string>
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">용량:</string>
     <string name="item_profile_temperature_label">온도:</string>
@@ -52,8 +44,9 @@
     <string name="apply">적용</string>
     <string name="done">완료</string>
     <!-- ACC Config Tooltips -->
-    <!--Profiles Options-->
+    <!--Menus Options-->
     <!-- About Activity -->
     <!-- Import and Export -->
     <!-- Config Parse Error -->
+    <!-- Widget Label and Activity -->
 </resources>

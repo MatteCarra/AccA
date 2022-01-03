@@ -9,11 +9,6 @@
     <string name="stop">إيقاف</string>
     <!-- Battery Card Strings -->
     <string name="title_battery">البطارية</string>
-    <string name="info_status">الحالة</string>
-    <string name="info_charging_speed">سرعة الشحن</string>
-    <string name="info_capacity">السعة</string>
-    <string name="info_temperature">درجة الحرارة</string>
-    <string name="info_health">الصحة</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <!-- Profiles Item Labels -->
     <string name="status_label">الحالة:</string>
@@ -39,8 +34,9 @@
     <string name="delete">حذف</string>
     <string name="no_schedules">لم يتم تعيين جداول الزمنية</string>
     <!-- ACC Config Tooltips -->
-    <!--Profiles Options-->
+    <!--Menus Options-->
     <!-- About Activity -->
     <!-- Import and Export -->
     <!-- Config Parse Error -->
+    <!-- Widget Label and Activity -->
 </resources>

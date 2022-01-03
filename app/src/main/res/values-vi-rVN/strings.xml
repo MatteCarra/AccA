@@ -26,16 +26,8 @@
     <string name="stop">Dừng</string>
     <!-- Battery Card Strings -->
     <string name="title_battery">Pin</string>
-    <string name="info_status">Trạng thái</string>
-    <string name="info_charging_speed">Tốc độ sạc</string>
-    <string name="info_discharging_speed">Dòng sạc hiện tại</string>
-    <string name="info_capacity">Dung lượng</string>
-    <string name="info_temperature">Nhiệt độ</string>
-    <string name="info_health">Sức khỏe</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
-    <string name="info_charging_speed_extended">%1$dmA - %2$.2fV</string>
-    <string name="info_discharging_speed_extended">%1$dmA</string>
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">Dung lượng:</string>
     <string name="item_profile_temperature_label">Nhiệt độ:</string>
@@ -111,7 +103,6 @@ Tiến trình nền DJS sẽ được bắt đầu khi khởi động cùng vớ
     <string name="delete">Xóa</string>
     <string name="no_schedules">Không có lịch trình được thiết lập</string>
     <string name="wrong_volt_file">Tệp đã chọn không hoạt động hoặc kernel của bạn không hỗ trợ tính năng này.</string>
-    <string name="invalid_voltage_max">Giá trị phải là một số trong khoảng từ 3700 đến 4300 (millivolts)</string>
     <string name="edit_charging_switch">Chỉnh sửa công tắc sạc</string>
     <string name="test_switch">Thử công tắc sạc</string>
     <string name="no_option_selected">Không có tùy chọn nào được chọn; vui lòng chọn một!</string>
@@ -121,7 +112,6 @@ Tiến trình nền DJS sẽ được bắt đầu khi khởi động cùng vớ
     <string name="automatic">Tự động</string>
     <string name="error_occurred">Có lỗi xảy ra</string>
     <string name="retry">Thử lại</string>
-    <string name="edit_charging_limit_once_button">Sạc đến #\%, bỏ qua các giới hạn</string>
     <string name="done_applied_charge_limit">Sạc đến %1$d%%</string>
     <string name="charge_limit_not_applied">Đã hủy áp dụng mức sạc</string>
     <string name="apply">Áp dụng</string>
@@ -152,21 +142,16 @@ Tiến trình nền DJS sẽ được bắt đầu khi khởi động cùng vớ
     <string name="template_capacity_profile">Tắt nguồn: %1$d%% - Tiếp tục: %2$d%% - Dừng lại: %3$d%%</string>
     <string name="template_temperature_profile">Nhiệt độ:%1$d&#176;C - Tối đa: %2$d&#176;C - Dừng: %3$ds</string>
     <string name="template_cool_down_profile">Bắt đầu lúc: %1$d%% - Sạc trong %2$ds - Tạm dừng trong %3$ds</string>
-    <!--Profiles Options-->
-    <string name="menu_option_edit">Sửa</string>
-    <string name="menu_option_rename">Đổi tên</string>
-    <string name="menu_option_delete">Xóa</string>
+    <!--Menus Options-->
     <string name="selecting_profile_toast">Đang chọn hồ sơ %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox chưa được cài đặt</string>
     <string name="installation_failed_busybox">Cài đặt busybox trước hoặc cài đặt mã nhị phân vào /data/adb/bin/</string>
     <string name="share">Chia sẻ</string>
     <string name="logs_not_found">Không tìm thấy tập tin Log.</string>
     <string name="acc_telegram">Để được hỗ trợ thêm, hãy tham gia nhóm ACC Telegram (t.me/acc_group)!</string>
-    <string name="current_measure_unit_preference_title">Đơn vị đo lường hiện tại</string>
     <string name="current_measure_unit_preference_description">ACC lấy thông tin sạc từ giao diện hệ thống.
 Một số hệ thống thể hiện dòng điện trong dòngA (microamps), số khác trong mA (milliamps).
 If the detected unit is incorrect, you can set it manually.    </string>
-    <string name="voltage_measure_unit_preference_title">Đơn vị đo điện áp</string>
     <string name="voltage_measure_unit_preference_title_description">ACC lấy thông tin sạc từ giao diện hệ thống.
 Một số hệ thống thể hiện dòng điện trong dòngV (microvolts), số khác trong mA (millivolts).
 Nếu đơn vị được phát hiện không chính xác, bạn có thể đặt thủ công.</string>
@@ -178,14 +163,6 @@ Nếu đơn vị được phát hiện không chính xác, bạn có thể đặ
     <string name="install_bundled_version">Cài đặt phiên bản tích hợp</string>
     <string name="acc_version_picker_title">Phiên bản ACC</string>
     <string name="acc_version_picker_message">Chọn biến thể ACC mong muốn</string>
-    <string-array name="current_measure_units_options">
-        <item>mAmpere (1E-03)</item>
-        <item>μAmpere (1E-06)</item>
-    </string-array>
-    <string-array name="voltage_measure_units_options">
-        <item>mV (1E-03)</item>
-        <item>μV (1E-06)</item>
-    </string-array>
     <string-array name="acc_version_options">
         <item>Tích hợp sẵn</item>
         <item>Dòng chính</item>
@@ -224,11 +201,6 @@ Nếu đơn vị được phát hiện không chính xác, bạn có thể đặ
         <item>Tối</item>
         <item>Mặc định hệ thống</item>
     </string-array>
-    <string-array name="schedule_type_entries">
-        <item>Lặp lại</item>
-        <item>Chạy một lần</item>
-        <item>Đặt khi khởi động</item>
-    </string-array>
     <string name="menu_import_export">Nhập &amp; Xuất</string>
     <string name="execute_on_boot_schedule">Thực thi khi khởi động</string>
     <string name="edit_schedule">Chỉnh sửa lịch biểu</string>
@@ -240,8 +212,6 @@ Nếu đơn vị được phát hiện không chính xác, bạn có thể đặ
         \n\nĐặc biệt cảm ơn những người đã đóng góp bằng mọi cách cho các dự án của ACC &amp; AccA!    </string>
     <string name="about_attributes">Thuộc Tính</string>
     <string name="about_attrib_telegram_icon">Biểu tượng Telegram do Pixel hoàn thiện từ www.flaticon.com</string>
-    <string name="about_acca_version_label">Phiên bản AccA:</string>
-    <string name="about_acc_api_version_label">Phiên bản ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
@@ -274,4 +244,5 @@ Nếu đơn vị được phát hiện không chính xác, bạn có thể đặ
     <string name="parse_failed_body">Bạn có thể thử tải cấu hình mặc định bằng cách nhấn \'Tải mặc định\'. Xin lưu ý rằng AccA sẽ không hoạt động.
         \n\nIf lỗi vẫn còn, vui lòng chia sẻ dấu vết ngăn xếp bên dưới cùng với phiên bản của ACC &amp; AccA (qua menu 3 chấm &gt; Giới thiệu) với các nhà phát triển qua Telegram.\n\n%s</string>
     <string name="automatic_switch_eanbled">Tự động xoay vòng qua các bộ chuyển</string>
+    <!-- Widget Label and Activity -->
 </resources>

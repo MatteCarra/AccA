@@ -21,21 +21,13 @@
     <string name="acc_daemon_status_reading_status">Sedang membaca status aplikasi ACC dibalik layar...</string>
     <!-- ACC Daemon Toggle -->
     <string name="menu_stop_accd">Hentikan Layanan Daemon ACC</string>
-    <string name="menu_start_accd">Mulai ACC Daemon</string>
+    <string name="menu_start_accd">Mulai Daemon ACC</string>
     <string name="start">Mulailah</string>
     <string name="stop">Berhenti</string>
     <!-- Battery Card Strings -->
     <string name="title_battery">Baterai</string>
-    <string name="info_status">Status</string>
-    <string name="info_charging_speed">Kecepatan Pengisian</string>
-    <string name="info_discharging_speed">Arus baterai</string>
-    <string name="info_capacity">Kapasitas</string>
-    <string name="info_temperature">Suhu</string>
-    <string name="info_health">Kesehatan</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
-    <string name="info_charging_speed_extended">%1$dmA di %2$.2fV</string>
-    <string name="info_discharging_speed_extended">%1$dmA</string>
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">Kapasitas:</string>
     <string name="item_profile_temperature_label">Suhu:</string>
@@ -118,7 +110,6 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="delete">Menghapus</string>
     <string name="no_schedules">Tidak ada jadwal yang ditetapkan</string>
     <string name="wrong_volt_file">File yang dipilih tidak berfungsi, atau kernel Anda tidak mendukung fitur ini.</string>
-    <string name="invalid_voltage_max">Nilai harus berupa angka antara 3700 dan 4300 (milivolt/mV)</string>
     <string name="edit_charging_switch">Edit saklar pengisian daya</string>
     <string name="test_switch">Uji sakelar pengisian daya</string>
     <string name="no_option_selected">Tidak ada opsi yang dipilih; tolong pilih satu!</string>
@@ -128,7 +119,6 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="automatic">Otomatis</string>
     <string name="error_occurred">Sebuah kesalahan telah terjadi</string>
     <string name="retry">Mencoba kembali</string>
-    <string name="edit_charging_limit_once_button">Pengisian daya sekali untuk #\%, tanpa dibatasi</string>
     <string name="done_applied_charge_limit">Mengisi daya sampai %1$d%%</string>
     <string name="charge_limit_not_applied">Penerapan pengisi daya terbatas dibatalkan</string>
     <string name="apply">Menerapkan</string>
@@ -155,26 +145,22 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="schedule_creator">Jadwalkan pembuat</string>
     <string name="charging_switch_label">Saklar pengisian:</string>
     <string name="title_on_plugged">Terapkan pada Plug</string>
+    <string name="label_on_plugged">applyOnPlug:</string>
     <string name="edit_on_plugged">Ubah pengaturan apply_on_plug:</string>
     <string name="template_capacity_profile">Shutdown: %1$d%% - Lanjutkan: %2$d%% - Stop: %3$d%%</string>
     <string name="template_temperature_profile">Suhu: %1$d&#176;C - Maks: %2$d&#176;C - Jeda: %3$ds</string>
     <string name="template_cool_down_profile">Mulai di: %1$d%% - Biaya untuk %2$ds - Jeda untuk %3$ds</string>
-    <!--Profiles Options-->
-    <string name="menu_option_edit">Edit</string>
-    <string name="menu_option_rename">Ganti nama</string>
-    <string name="menu_option_delete">Menghapus</string>
+    <!--Menus Options-->
     <string name="selecting_profile_toast">Memilih profil %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox tidak diinstal</string>
     <string name="installation_failed_busybox">Pasang busybox terlebih dahulu atau letakkan binari di /data/adb/bin/</string>
     <string name="share">Bagikan</string>
     <string name="logs_not_found">File log tidak ditemukan.</string>
     <string name="acc_telegram">Untuk dukungan tambahan, bergabunglah dengan grup ACC Telegram (t.me/acc_group)!</string>
-    <string name="current_measure_unit_preference_title">Unit pengukuran saat ini</string>
     <string name="current_measure_unit_preference_description">ACC mengambil informasi pengisian dari antarmuka sys.
          Beberapa sistem mengekspresikan arus dalam μA (microamps), yang lain dalam mA (milliamps).
          Jika unit yang terdeteksi salah, Anda dapat mengaturnya secara manual.
     </string>
-    <string name="voltage_measure_unit_preference_title">Tegangan satuan ukuran</string>
     <string name="voltage_measure_unit_preference_title_description">ACC mengambil informasi pengisian dari antarmuka sys.
          Beberapa sistem mengekspresikan tegangan dalam μV (microvolts), yang lain dalam mV (milivolt).
          Jika unit yang terdeteksi salah, Anda dapat mengaturnya secara manual.
@@ -188,14 +174,6 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="install_bundled_version">Pasang varian yang dibundel</string>
     <string name="acc_version_picker_title">Versi ACC</string>
     <string name="acc_version_picker_message">Pilih varian ACC yang diinginkan</string>
-    <string-array name="current_measure_units_options">
-        <item>mAmpere (1E-03)</item>
-        <item>μAmpere (1E-06)</item>
-    </string-array>
-    <string-array name="voltage_measure_units_options">
-        <item>mV (1E-03)</item>
-        <item>μV (1E-06)</item>
-    </string-array>
     <string-array name="acc_version_options">
         <item>Dibundel</item>
         <item>Master</item>
@@ -236,11 +214,6 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
         <item>Gelap</item>
         <item>Sistem standar</item>
     </string-array>
-    <string-array name="schedule_type_entries">
-        <item>Berulang</item>
-        <item>Jalankan sekali</item>
-        <item>Jalankan saat boot</item>
-    </string-array>
     <string name="menu_import_export">Ekspor &amp; Impor</string>
     <string name="execute_on_boot_schedule">Jalankan saat boot</string>
     <string name="edit_schedule">Edit jadwal</string>
@@ -253,8 +226,6 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     </string>
     <string name="about_attributes">Atribut</string>
     <string name="about_attrib_telegram_icon">Avatar Telegram digambar oleh Pixel perfect dari www.flaticon.com</string>
-    <string name="about_acca_version_label">Versi AccA:</string>
-    <string name="about_acc_api_version_label">Versi ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
@@ -287,4 +258,5 @@ atau --> github.com/MatteCarra/AccA/issues.    </string>
     <string name="parse_failed_body">Anda dapat mencoba memuat konfigurasi default dengan menekan \'Muat Default\'. Harap dicatat bahwa AccA tidak akan berfungsi.
          \n\nJika kesalahan berlanjut, silakan bagikan jejak tumpukan di bawah ini bersama dengan versi ACC&amp; AccA (melalui menu 3-titik &gt; Tentang) dengan pengembang melalui Telegram.\n\n%s</string>
     <string name="automatic_switch_eanbled">Secara otomatis beralih melalui sakelar</string>
+    <!-- Widget Label and Activity -->
 </resources>

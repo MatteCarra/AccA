@@ -26,16 +26,8 @@
     <string name="stop">Ferma</string>
     <!-- Battery Card Strings -->
     <string name="title_battery">Batteria</string>
-    <string name="info_status">Stato</string>
-    <string name="info_charging_speed">Velocità di ricarica</string>
-    <string name="info_discharging_speed">Corrente Ora</string>
-    <string name="info_capacity">Capacità</string>
-    <string name="info_temperature">Temperatura</string>
-    <string name="info_health">Salute</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
-    <string name="info_charging_speed_extended">%1$dmA a %2$.2fV</string>
-    <string name="info_discharging_speed_extended">%1$dmA</string>
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">Capacità:</string>
     <string name="item_profile_temperature_label">Temperatura:</string>
@@ -112,7 +104,6 @@
     <string name="delete">Elimina</string>
     <string name="no_schedules">Nessuna pianificazione</string>
     <string name="wrong_volt_file">Il file selezionato non funziona, oppure il kernel non supporta questa funzione.</string>
-    <string name="invalid_voltage_max">Il valore deve essere un numero compreso tra 3700 e 4300 (millivolt)</string>
     <string name="edit_charging_switch">Modifica interruttore di ricarica</string>
     <string name="test_switch">Test interruttore di ricarica</string>
     <string name="no_option_selected">Nessuna opzione selezionata; selezionane una!</string>
@@ -149,27 +140,23 @@
     <string name="schedule_creator">Creatore di pianificazione</string>
     <string name="charging_switch_label">Interruttore di ricarica:</string>
     <string name="title_on_plugged">Applica al collegamento</string>
+    <string name="label_on_plugged">applyOnPlug:</string>
     <string name="edit_on_plugged">Cambia le impostazioni di apply_on_plug:</string>
     <string name="edit_on_plugged_dialog_message">Esempio: wireless/voltage_max::90000000 forza la ricarica wireless rapida in alcuni dispositivi Pixel.</string>
     <string name="template_capacity_profile">Spegnimento: %1$d%% - Riprendi: %2$d%% - Stop: %3$d%%</string>
     <string name="template_temperature_profile">Temperatura: %1$d&#176;C - Max: %2$d&#176;C - Pausa: %3$ds</string>
     <string name="template_cool_down_profile">Inizia a: %1$d%% - Carica per %2$ds - Pausa per %3$ds</string>
-    <!--Profiles Options-->
-    <string name="menu_option_edit">Modifica</string>
-    <string name="menu_option_rename">Rinomina</string>
-    <string name="menu_option_delete">Elimina</string>
+    <!--Menus Options-->
     <string name="selecting_profile_toast">Selezione del profilo %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox non è installato</string>
     <string name="installation_failed_busybox">Installare prima busybox o semplicemente posizionare il binario in /data/adb/bin/</string>
     <string name="share">Condividi</string>
     <string name="logs_not_found">File di log non trovato.</string>
     <string name="acc_telegram">Per support aggiuntivo, unisciti al canale Telegram di ACC (t.me/acc_group)!</string>
-    <string name="current_measure_unit_preference_title">Unità di misura corrente</string>
     <string name="current_measure_unit_preference_description">ACC ottiene le informazioni di carica dall\'interfaccia sys.
         Alcuni sistemi esprimono la corrente in μA (microampere), altri in mA (milliampere).
         Se l\'unità rilevata non è corretta, puoi impostarla manualmente.
     </string>
-    <string name="voltage_measure_unit_preference_title">Unità di misura del voltaggio</string>
     <string name="voltage_measure_unit_preference_title_description">ACC ottiene le informazioni di ricarica dall\'interfaccia sys.
         Alcuni sistemi esprimono la tensione in μV (microvolt), altri in mV (millivolt).
         Se l\'unità rilevata non è corretta, puoi impostarla manualmente.
@@ -183,14 +170,6 @@
     <string name="install_bundled_version">Installa la versione di default</string>
     <string name="acc_version_picker_title">Versione di ACC</string>
     <string name="acc_version_picker_message">Selezione la variante di ACC desiderata</string>
-    <string-array name="current_measure_units_options">
-        <item>mAmpere (1E-03)</item>
-        <item>μAmpere (1E-06)</item>
-    </string-array>
-    <string-array name="voltage_measure_units_options">
-        <item>mV (1E-03)</item>
-        <item>μV (1E-06)</item>
-    </string-array>
     <string-array name="acc_version_options">
         <item>Bundled</item>
         <item>Master</item>
@@ -232,11 +211,6 @@
     </string-array>
     <string name="lang_pref_title">Lingua</string>
     <string name="lang_pref_summary">Selezionare la lingua dell\'applicazione. Dopo aver selezionato è necessario riavviare l\'applicazione</string>
-    <string-array name="schedule_type_entries">
-        <item>Ricorrente</item>
-        <item>Esegui una volta</item>
-        <item>Esegui all\'avvio</item>
-    </string-array>
     <string name="menu_import_export">Importa &amp; Esporta</string>
     <string name="execute_on_boot_schedule">Esegui all\'avvio</string>
     <string name="edit_schedule">Modifica pianificazione</string>
@@ -250,7 +224,6 @@
     <string name="about_attributes">Attributi</string>
     <string name="about_attrib_telegram_icon">Icona Telegram realizzata da Pixel perfezionata da www.flaticon.com</string>
     <string name="about_acca_version_label">Versione di AccA:</string>
-    <string name="about_acc_api_version_label">Versione ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
@@ -274,4 +247,5 @@
     <string name="parse_failed_body">Puoi provare a caricare la configurazione predefinita premendo \'Carica predefinita\'. Si prega di notare che AccA non sarà funzionante.
         \n\nSe l\'errore persiste, si prega di condividere la stack trace qui sotto insieme alle versioni di ACC e AccA (tramite il menu a 3 punti &gt; About) con gli sviluppatori via Telegram.\n\n%s&amp;</string>
     <string name="automatic_switch_eanbled">Scorri automaticamente gli interruttori</string>
+    <!-- Widget Label and Activity -->
 </resources>

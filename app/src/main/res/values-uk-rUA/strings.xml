@@ -26,16 +26,8 @@
     <string name="stop">Стоп</string>
     <!-- Battery Card Strings -->
     <string name="title_battery">Запас в Батареї</string>
-    <string name="info_status">Стан ресурсу</string>
-    <string name="info_charging_speed">Швидкість заряджання</string>
-    <string name="info_discharging_speed">Поточний</string>
-    <string name="info_capacity">Ємність</string>
-    <string name="info_temperature">Температура</string>
-    <string name="info_health">Здоров\'я</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
-    <string name="info_charging_speed_extended">%1$dмА в %2$.2fВ</string>
-    <string name="info_discharging_speed_extended">%1$dмА</string>
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">Ємність:</string>
     <string name="item_profile_temperature_label">Температура:</string>
@@ -114,7 +106,6 @@
     <string name="delete">Видалити</string>
     <string name="no_schedules">Немає запланованих завдань</string>
     <string name="wrong_volt_file">Обраний файл не працює, або ваше ядро не підтримує цю функцію.</string>
-    <string name="invalid_voltage_max">Значення має бути числом від 3700 до 4300 (мілівольт)</string>
     <string name="edit_charging_switch">Редагувати перемикач зарядки</string>
     <string name="test_switch">Перевірити перемикач зарядки</string>
     <string name="no_option_selected">Жодної опції не вибрано; будь ласка, оберіть одну!</string>
@@ -124,7 +115,6 @@
     <string name="automatic">Автоматично</string>
     <string name="error_occurred">Сталася помилка</string>
     <string name="retry">Повтор</string>
-    <string name="edit_charging_limit_once_button">Зарядити один раз до #\%, без обмежень</string>
     <string name="done_applied_charge_limit">Заряджається до %1$d%%</string>
     <string name="charge_limit_not_applied">Застосування ліміту заряду скасовано</string>
     <string name="apply">Застосувати</string>
@@ -153,17 +143,13 @@
     <string name="template_capacity_profile">Завершення: %1$d%% - Продовжити: %2$d%% - Зупинити: %3$d%%</string>
     <string name="template_temperature_profile">Температура: %1$d&#176;C - Макс.: %2$d&#176;C - Пауза: %3$dс</string>
     <string name="template_cool_down_profile">Старт в: %1$d%% - Заряд за %2$ds - Призупинення на %3$dсек</string>
-    <!--Profiles Options-->
-    <string name="menu_option_edit">Редагувати</string>
-    <string name="menu_option_delete">Видалити</string>
+    <!--Menus Options-->
     <string name="selecting_profile_toast">Вибір профілю %1$s.</string>
     <string name="installation_failed_busybox_title">Busybox не встановлено</string>
     <string name="installation_failed_busybox">Спочатку встановіть busybox або просто помістіть бінарний файл в /data/adb/bin/</string>
     <string name="share">Поділитися</string>
     <string name="logs_not_found">Файл звіту не знайдено.</string>
     <string name="acc_telegram">Для отримання додаткової підтримки приєднуйтесь до групи ACC в Telegram (t.me/acc_group)!</string>
-    <string name="current_measure_unit_preference_title">Поточна одиниця виміру</string>
-    <string name="voltage_measure_unit_preference_title">Одиниця виміру напруги</string>
     <string name="voltage_measure_unit_preference_title_description">ACC отримує інформацію про зарядку з системного інтерфейсу.
         Деякі системи показують напругу в мкВ (мікровольт), інші в мВ (мілівольт).
         Якщо виявлена одиниця виміру невірна, ви можете встановити її вручну.
@@ -177,10 +163,6 @@
     <string name="install_bundled_version">Встановити bundled варіант</string>
     <string name="acc_version_picker_title">Версія ACC</string>
     <string name="acc_version_picker_message">Виберіть бажаний варіант ACC</string>
-    <string-array name="voltage_measure_units_options">
-        <item>мВ (1E-03)</item>
-        <item>мкВ (1E-06)</item>
-    </string-array>
     <string-array name="acc_version_options">
         <item>Bundled</item>
         <item>Master</item>
@@ -221,11 +203,6 @@
         <item>Темний</item>
         <item>Налаштування за замовчуванням</item>
     </string-array>
-    <string-array name="schedule_type_entries">
-        <item>Повторний</item>
-        <item>Запустити один раз</item>
-        <item>Запустити при завантаженні</item>
-    </string-array>
     <string name="menu_import_export">Імпорт &amp; Експорт</string>
     <string name="execute_on_boot_schedule">Виконати при завантаженні</string>
     <string name="edit_schedule">Змінити розклад</string>
@@ -238,8 +215,6 @@
     </string>
     <string name="about_attributes">Атрибути</string>
     <string name="about_attrib_telegram_icon">Значок Telegram, зроблений Pixel perfect з www.flaticon.com</string>
-    <string name="about_acca_version_label">Версія AccA:</string>
-    <string name="about_acc_api_version_label">Версія ACC:</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
@@ -269,4 +244,5 @@
     <string name="parse_failed_body">Ви можете спробувати завантажити конфігурацію за замовчуванням, натиснувши \'Load Default\'. Зверніть увагу, що AccA не працюватиме.
         \n\nЯкщо помилка не зникає, поділіться наведеним нижче стеком разом із ACC &amp; AccA версіями (через меню з трьома крапками &gt; Про додаток) з розробниками через Telegram.\n\n%s</string>
     <string name="automatic_switch_eanbled">Автоматичний цикл при перемиканні</string>
+    <!-- Widget Label and Activity -->
 </resources>

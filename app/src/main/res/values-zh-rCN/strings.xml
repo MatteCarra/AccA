@@ -26,16 +26,8 @@
     <string name="stop">停止</string>
     <!-- Battery Card Strings -->
     <string name="title_battery">电池</string>
-    <string name="info_status">状态</string>
-    <string name="info_charging_speed">充电速度</string>
-    <string name="info_discharging_speed">当前电流</string>
-    <string name="info_capacity">容量</string>
-    <string name="info_temperature">温度</string>
-    <string name="info_health">健康状况</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
-    <string name="info_charging_speed_extended">%1$dmA at %2$.2fV</string>
-    <string name="info_discharging_speed_extended">%1$dmA</string>
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">容量:</string>
     <string name="item_profile_temperature_label">温度:</string>
@@ -155,27 +147,23 @@
     <string name="schedule_creator">创建任务</string>
     <string name="charging_switch_label">充电开关:</string>
     <string name="title_on_plugged">充电时应用</string>
+    <string name="label_on_plugged">applyOnPlug:</string>
     <string name="edit_on_plugged">编辑应用于插入电源时（apply_on_plug）的设置：</string>
     <string name="edit_on_plugged_dialog_message">示例： wireless/voltage_max::9000000，强制在一些 Pixel 设备上快速充电。</string>
     <string name="template_capacity_profile">关机: %1$d%% - 恢复充电: %2$d%% - 停止充电: %3$d%%</string>
     <string name="template_temperature_profile">温度： %1$d&#176;C - 最大： %2$d&#176;C - 暂停： %3$d秒</string>
     <string name="template_cool_down_profile">开始于： %1$d%% - 充电 %2$d秒 - 暂停 %3$d秒</string>
-    <!--Profiles Options-->
-    <string name="menu_option_edit">编辑</string>
-    <string name="menu_option_rename">重命名</string>
-    <string name="menu_option_delete">删除</string>
+    <!--Menus Options-->
     <string name="selecting_profile_toast">选择配置文件 %1$s。</string>
     <string name="installation_failed_busybox_title">Busybox 未安装</string>
     <string name="installation_failed_busybox">请先安装 busybox，或直接把二进制文件放入 /data/adb/bin/</string>
     <string name="share">分享</string>
     <string name="logs_not_found">找不到日志文件。</string>
     <string name="acc_telegram">加入 ACC Telegram 群 (t.me/acc_group) 以获得更多额外支援。</string>
-    <string name="current_measure_unit_preference_title">电流计量单位</string>
     <string name="current_measure_unit_preference_description">ACC 从系统接口获取充电信息。
         有些系统以 µA(微安培) 表示电流，有些以 mA (毫安培).
         如果检测单位不正确，您可以手动设置。
     </string>
-    <string name="voltage_measure_unit_preference_title">电压计量单位</string>
     <string name="voltage_measure_unit_preference_title_description">ACC 从系统接口获取充电信息。
         有些系统以 µV(微伏特) 表示电压，有些以 mV (毫伏特).
         如果检测单位不正确，您可以手动设置。
@@ -189,14 +177,6 @@
     <string name="install_bundled_version">安装 bundled 版本</string>
     <string name="acc_version_picker_title">ACC 版本</string>
     <string name="acc_version_picker_message">选择所需要的 ACC 版本</string>
-    <string-array name="current_measure_units_options">
-        <item>毫安</item>
-        <item>微安</item>
-    </string-array>
-    <string-array name="voltage_measure_units_options">
-        <item>毫伏</item>
-        <item>微伏</item>
-    </string-array>
     <string-array name="acc_version_options">
         <item>Bundled</item>
         <item>Master</item>
@@ -239,11 +219,6 @@
     </string-array>
     <string name="lang_pref_title">语言</string>
     <string name="lang_pref_summary">选择应用程序语言。选择后需要重启应用程序</string>
-    <string-array name="schedule_type_entries">
-        <item>重复</item>
-        <item>运行一次</item>
-        <item>开机时运行</item>
-    </string-array>
     <string name="menu_import_export">导入 &amp; 导出</string>
     <string name="execute_on_boot_schedule">开机时执行</string>
     <string name="edit_schedule">编辑计划</string>
@@ -293,4 +268,5 @@
         \n\n如果仍然出现错误， 请通过 Telegram 与开发者分享下面的日志以及ACC 和 AccA 版本 (通过3点菜单 &gt; 关于)。\n\n%s</string>
     <string name="automatic_switch_eanbled">自动循环切换开关</string>
     <string name="info_voltage">电压</string>
+    <!-- Widget Label and Activity -->
 </resources>

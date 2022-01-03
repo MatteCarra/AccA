@@ -26,16 +26,8 @@
     <string name="stop">Arrêter</string>
     <!-- Battery Card Strings -->
     <string name="title_battery">Batterie</string>
-    <string name="info_status">État</string>
-    <string name="info_charging_speed">Vitesse de chargement</string>
-    <string name="info_discharging_speed">Courant</string>
-    <string name="info_capacity">Capacité</string>
-    <string name="info_temperature">Température</string>
-    <string name="info_health">Santé</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
-    <string name="info_charging_speed_extended">%1$dmA à %2$.2fV</string>
-    <string name="info_discharging_speed_extended">%1$dmA</string>
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">Capacité :</string>
     <string name="item_profile_temperature_label">Température :</string>
@@ -116,7 +108,6 @@
     <string name="delete">Supprimer</string>
     <string name="no_schedules">Aucune planification définie</string>
     <string name="wrong_volt_file">Soit le fichier choisi ne fonctionne pas, soit votre noyau ne supporte pas cette fonctionnalité.</string>
-    <string name="invalid_voltage_max">La valeur doit être un nombre compris entre 3700 et 4300 (millivolts)</string>
     <string name="edit_charging_switch">Modifier l\'interrupteur de charge</string>
     <string name="test_switch">Tester l\'interrupteur de charge</string>
     <string name="no_option_selected">Aucune option sélectionnée ; veuillez en sélectionner une !</string>
@@ -126,7 +117,6 @@
     <string name="automatic">Automatique</string>
     <string name="error_occurred">Une erreur est survenue </string>
     <string name="retry">Réessayer</string>
-    <string name="edit_charging_limit_once_button">Charger une fois à #\%, sans restrictions</string>
     <string name="done_applied_charge_limit">Chargement jusqu\'à %1$d%%</string>
     <string name="charge_limit_not_applied">Appliquer la limite de charge est annulée</string>
     <string name="apply">Appliquer</string>
@@ -148,25 +138,21 @@
     <string name="schedule_creator">Créateur de la planification</string>
     <string name="charging_switch_label">Commutateur de charge :</string>
     <string name="title_on_plugged">Appliquer au branchement</string>
+    <string name="label_on_plugged">applyOnPlug:</string>
     <string name="edit_on_plugged">Modifier les paramètres qui sont appliqués au démarrage :</string>
     <string name="template_capacity_profile">Extinction : %1$d%% - Reprise : %2$d%% - Arrêt : %3$d%%</string>
     <string name="template_temperature_profile">Température : %1$d&#176;C - Max: %2$d&#176;C - Pause : %3$ds</string>
     <string name="template_cool_down_profile">Commencer à : %1$d%% - Charge pendant %2$ds - Pause pendant %3$ds</string>
-    <!--Profiles Options-->
-    <string name="menu_option_edit">Modifier</string>
-    <string name="menu_option_rename">Renommer</string>
-    <string name="menu_option_delete">Supprimer</string>
+    <!--Menus Options-->
     <string name="selecting_profile_toast">Sélection du profil %1$s.</string>
     <string name="installation_failed_busybox_title">BusyBox n\'est pas installé</string>
     <string name="share">Partager</string>
     <string name="logs_not_found">Fichier journal introuvable.</string>
     <string name="acc_telegram">Pour un support supplémentaire, rejoignez le groupe ACC Telegram (t.me/acc_group)!</string>
-    <string name="current_measure_unit_preference_title">Unité de mesure du courant</string>
     <string name="current_measure_unit_preference_description">ACC récupère les informations de chargement depuis l\'interface système.
         Certains systèmes expriment le courant en μA (microampères), d\'autres en mA (milliampères).
         Si l\'unité détectée est incorrecte, vous pouvez la définir manuellement.
     </string>
-    <string name="voltage_measure_unit_preference_title">Unité de mesure de tension</string>
     <string name="voltage_measure_unit_preference_title_description">ACC récupère les informations de chargement depuis l\'interface système.
         Certains systèmes expriment la tension en μV (microvolts), d\'autres en mV (millivolts).
         Si l\'unité détectée est incorrecte, vous pouvez la définir manuellement.
@@ -176,14 +162,6 @@
     <string name="install_bundled_version">Installer la variante regroupée</string>
     <string name="acc_version_picker_title">Version ACC</string>
     <string name="acc_version_picker_message">Sélectionnez la variante ACC désirée</string>
-    <string-array name="current_measure_units_options">
-        <item>mAmpère (1E-03)</item>
-        <item>μAmpère (1E-06)</item>
-    </string-array>
-    <string-array name="voltage_measure_units_options">
-        <item>mV (1E-03)</item>
-        <item>μV (1E-06)</item>
-    </string-array>
     <string-array name="acc_version_options">
         <item>Regroupé</item>
         <item>Master</item>
@@ -214,11 +192,6 @@
         <item>Sombre</item>
         <item>Valeurs par défaut du système</item>
     </string-array>
-    <string-array name="schedule_type_entries">
-        <item>Récurrent</item>
-        <item>Exécuter une fois</item>
-        <item>Exécuter au démarrage</item>
-    </string-array>
     <string name="menu_import_export">Importation &amp; Exportation</string>
     <string name="execute_on_boot_schedule">Exécuter au démarrage</string>
     <string name="edit_schedule">Modifier la planification</string>
@@ -227,8 +200,6 @@
     <string name="about_team_title">Rencontrer l\'équipe</string>
     <string name="about_attributes">Attributs</string>
     <string name="about_attrib_telegram_icon">Icône de télégramme réalisée par Pixel perfect à partir de www.flaticon.com</string>
-    <string name="about_acca_version_label">Version AccA :</string>
-    <string name="about_acc_api_version_label">Version ACC :</string>
     <string name="about_project_github">AccA GitHub</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">Github</string>
@@ -258,4 +229,5 @@
     <string name="import_profile_success">%d profils importés avec succès</string>
     <!-- Config Parse Error -->
     <string name="parse_failed_title">Échec de l\'analyse de la configuration ACC</string>
+    <!-- Widget Label and Activity -->
 </resources>

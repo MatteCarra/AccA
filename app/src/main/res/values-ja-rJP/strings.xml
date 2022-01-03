@@ -22,16 +22,8 @@
     <string name="stop">停止</string>
     <!-- Battery Card Strings -->
     <string name="title_battery">バッテリー</string>
-    <string name="info_status">状態</string>
-    <string name="info_charging_speed">充電速度</string>
-    <string name="info_discharging_speed">電流</string>
-    <string name="info_capacity">容量</string>
-    <string name="info_temperature">温度</string>
-    <string name="info_health">健康状態</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
-    <string name="info_charging_speed_extended">%1$dmA at %2$.2fV</string>
-    <string name="info_discharging_speed_extended">%1$dmA</string>
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">容量:</string>
     <string name="item_profile_temperature_label">温度:</string>
@@ -115,7 +107,6 @@
     <string name="automatic">自動</string>
     <string name="error_occurred">エラーが発生しました</string>
     <string name="retry">リトライ</string>
-    <string name="edit_charging_limit_once_button">制限なしで, 一度 #\%, まで充電する</string>
     <string name="apply">適用</string>
     <string name="done">完了</string>
     <string name="edit_charging_limit_once_dialog_msg">選択したバッテリー残量に達すると、通常の設定が自動的に復元されます.</string>
@@ -143,21 +134,16 @@
     <string name="template_capacity_profile">シャットダウン: %1$d%% - 再開: %2$d%% - 停止: %3$d%%</string>
     <string name="template_temperature_profile">温度: %1$d&#176;C - 最大: %2$d&#176;C - 停止: %3$ds</string>
     <string name="template_cool_down_profile">開始: %1$d%% - 充電 %2$ds - 停止 %3$ds</string>
-    <!--Profiles Options-->
-    <string name="menu_option_edit">編集</string>
-    <string name="menu_option_rename">名前を変更</string>
-    <string name="menu_option_delete">削除</string>
+    <!--Menus Options-->
     <string name="installation_failed_busybox_title">Busybox がインストールされていません。</string>
     <string name="installation_failed_busybox">busybox を最初にインストールするか, バイナリを /data/adb/bin/ に配置せよ</string>
     <string name="share">共有</string>
     <string name="logs_not_found">ログファイルが見つかりません.</string>
     <string name="acc_telegram">追加のサポートのために, ACC Telegram group (t.me/acc_group) に参加して！</string>
-    <string name="current_measure_unit_preference_title">電流計測単位</string>
     <string name="current_measure_unit_preference_description">ACC は sys インターフェースから充電情報を読み出します.
         いくつかのシステムではµA (マイクロアンペア) で表現され, 他のシステムでは mA (ミリアンペア) で表現されます.
         検出された単位が正しくない場合, 手動で設定できます.
     </string>
-    <string name="voltage_measure_unit_preference_title">電圧測定単位</string>
     <string name="voltage_measure_unit_preference_title_description">ACC は sys インターフェースから充電情報を読み出します.
         いくつかのシステムではµA (マイクロアンペア) で表現され, 他のシステムでは mA (ミリアンペア) で表現されます.
         検出された単位が正しくない場合, 手動で設定できます.
@@ -171,14 +157,6 @@
     <string name="install_bundled_version">同梱版をインストール</string>
     <string name="acc_version_picker_title">ACCバージョン</string>
     <string name="acc_version_picker_message">希望する ACC の選択</string>
-    <string-array name="current_measure_units_options">
-        <item>mA (1E-03)</item>
-        <item>μA (1E-06)</item>
-    </string-array>
-    <string-array name="voltage_measure_units_options">
-        <item>mV (1E-03)</item>
-        <item>μV (1E-06)</item>
-    </string-array>
     <string-array name="acc_version_options">
         <item>同梱</item>
         <item>Master</item>
@@ -219,17 +197,11 @@
         <item>Dark</item>
         <item>システムの既定値</item>
     </string-array>
-    <string-array name="schedule_type_entries">
-        <item>繰り返し</item>
-        <item>一度だけ実行</item>
-        <item>起動時実行</item>
-    </string-array>
     <string name="menu_import_export">インポート &amp; エクスポート</string>
     <string name="execute_on_boot_schedule">起動時実行</string>
     <string name="edit_schedule">スケジュール編集</string>
     <string name="create_schedule">スケジュール作成</string>
     <!-- About Activity -->
-    <string name="about_acc_api_version_label">ACCバージョン:</string>
     <string name="about_project_telegram">AccA Telegram</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">ウェブサイト</string>
@@ -260,4 +232,5 @@
     <string name="parse_failed_title">ACC 設定の解析に失敗しました</string>
     <string name="parse_failed_body">\'デフォルト読込み\' を押すことでデフォルト設定の読み込むことができます. AccA が動作しないとき留意してください.
         \n\nもしエラーが継続する場合, Telegram を通して開発者に以下の ACC &amp; AccA バージョン (the 3-dot menu &gt; About から)と一緒に stack trace を共有してください \n\n%s</string>
+    <!-- Widget Label and Activity -->
 </resources>
