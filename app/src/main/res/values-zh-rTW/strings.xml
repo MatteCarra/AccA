@@ -109,7 +109,6 @@
     <string name="delete">刪除</string>
     <string name="no_schedules">未安排排程</string>
     <string name="wrong_volt_file">所選文件無效，或您的內核不支持此功能。</string>
-    <string name="invalid_voltage_max">這個數值需要在 3700 ~ 4300（millivolts）之間</string>
     <string name="edit_charging_switch">編輯充電開關</string>
     <string name="test_switch">測試充電開關</string>
     <string name="no_option_selected">未選擇任何選項，請選擇一個!</string>
@@ -137,8 +136,6 @@
     <string name="capacity_control_info">- 關機：當未充電時，在小於或等於此電量時自動關閉裝置。&lt;br /&gt;- 重新開始與停止充電：設定充電的上限以及之後繼續充電的電量。&lt;br /&gt;- 充電開關： 控製文件，加上用於打開/關閉充電的 ON 和 OFF 值。 默認情況下，ACC 使用任何有效的方法。</string>
     <string name="power_control_info">- 充電電壓峰值每下降 0.10V, 據說就能讓電池壽命翻倍。&lt;br /&gt; - 不幸的是，並非所有機型/內核都支持此功能。</string>
     <string name="temperature_control_info">- 此選項將按設定的秒數暫停充電，以冷卻電池。&lt;br /&gt; - 冷卻溫度取決於冷卻比率。&lt;br /&gt;　－達到最高溫度後充電將按暫停秒數暫停。</string>
-    <string name="cooldown_info">- 充電開/關比例，（例如充電50秒後，暫停10秒）- 通過定期暫停充電，減少因長時間的高溫高電壓，對電池造成的壓力。 &lt;br /&gt;- 如果充電太慢，請關閉此功能或改變比例。 &lt;br /&gt;- 當關閉時，冷卻電量值和冷卻溫度值將不會生效。 &lt;br /&gt;- 此功能是充電電壓限制功能的一種可行替代。</string>
-    <string name="on_plugged_info">一些控制文件的內容會隨特定電源事件變化（例如插/拔電源）。此項設置用於更新這些文件，在為USB/無線充電強行設定最大充電電壓/電流時特別有用。</string>
     <string name="battery_idle_info_label">這允許支持的裝置在暫停充電時直接從外部供電。</string>
     <string name="miscellaneous_info_label">不適合其他定義類別的各種ACC設定</string>
     <string name="acc_config_editor">ACC 設定檔編輯</string>
@@ -148,14 +145,12 @@
     <string name="title_on_plugged">Apply on Plug</string>
     <string name="label_on_plugged">applyOnPlug:</string>
     <string name="edit_on_plugged">編輯（apply_on_plug）設置：</string>
-    <string name="edit_on_plugged_dialog_message">Example: wireless/voltage_max::9000000 強制在某些 Pixel 設備上使用快速無線充電。</string>
     <string name="template_capacity_profile">關機: %1$d%% - 重新開始充電: %2$d%% - 停止充電: %3$d%%</string>
     <string name="template_temperature_profile">溫度: %1$d&#176;C - 最大:%2$d&#176;C -暫停: %3$d秒</string>
     <string name="template_cool_down_profile">開始於: %1$d%% - 充電 %2$d 秒 - 暫停 %3$d 秒</string>
     <!--Menus Options-->
     <string name="selecting_profile_toast">選擇設定檔案 %1$s</string>
     <string name="installation_failed_busybox_title">未安裝 Busybox</string>
-    <string name="installation_failed_busybox">請先安裝 busybox，或直接把二進製文件放入 /data/adb/bin/</string>
     <string name="share">分享</string>
     <string name="logs_not_found">找不到 Log 文件。</string>
     <string name="acc_telegram">歡迎加入 ACC Telegram 群組 ，可以瞭解更多的使用方法, (t.me/acc_group)!</string>
@@ -168,9 +163,6 @@
         如果取得的單位不正確，您可以手動選擇。</string>
     <string name="units_of_measure">計量單位</string>
     <string name="acc_version_preference_title">ACC 版本</string>
-    <string name="acc_version_preference_description">您可以選擇要使用的 ACC 版本：AccA內置版（穩定，推薦使用）、主要版（穩定）、開發版（最新，但可能不穩定）或任何下列版本。
-        內置版經過大量測試，因此是推薦的選擇。
-        雖然並不能保證，但其他版本通常也是安全的。</string>
     <string name="install_bundled_version">安裝 bundled 版本</string>
     <string name="acc_version_picker_title">ACC 版本</string>
     <string name="acc_version_picker_message">選擇 ACC 版本</string>
@@ -198,9 +190,6 @@
     <string name="acc_installation_failed_log">ACC 安裝失敗記錄檔</string>
     <string name="djs_installation_failed_log">DJS 安裝失敗記錄檔</string>
     <string name="select_different_version">切換 ACC 版本</string>
-    <string name="installation_failed_non_bundled">安裝其他 ACC 版本失敗。
-        \n請考慮將 /data/adb/acc-data/logs/ 壓縮為一個檔案後傳送給開發者。
-    </string>
     <string name="prioritize_battery_idle">優先使用電池 idle mode</string>
     <string name="test_battery_idle">測試電池 idle mode</string>
     <string name="test_battery_idle_supported_result">手機內核支援電池 idle mode。</string>
@@ -227,7 +216,6 @@
         \n\n特別感謝以各種方式向 ACC 或 AccA項目做出貢獻的人們！
     </string>
     <string name="about_attributes">屬性</string>
-    <string name="about_attrib_telegram_icon">Telegram頻道圖案由Pixel perfect(www.flaticon.com)提供</string>
     <string name="about_acca_version_label">ACCA 版本：</string>
     <string name="about_acc_daemon_version_label">ACC 守護行程版本：</string>
     <string name="about_acc_api_version_label">ACCA⇄ACC API 版本：</string>
@@ -260,8 +248,6 @@
     <string name="import_profile_success">成功導入 %d 個配置文件</string>
     <!-- Config Parse Error -->
     <string name="parse_failed_title">解析 ACC 配置失敗</string>
-    <string name="parse_failed_body">您可以嘗試通過點按“加載設定值”來加載預設設定。請注意，AccA 將不會起作用。
-        \n\n如果仍然出現錯誤， 請通過 Telegram 與開發者分享下面的日誌文件以及ACC 和 AccA 版本 (通過3點菜單按鈕 &gt; 關於)。 \n\n%s</string>
     <string name="automatic_switch_eanbled">自動循環切換開關</string>
     <string name="info_voltage">電壓</string>
     <!-- Widget Label and Activity -->
