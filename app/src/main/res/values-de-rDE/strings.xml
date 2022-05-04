@@ -216,6 +216,10 @@
         <item>Celsius (°C)</item>
         <item>Fahrenheit (°F)</item>
     </string-array>
+    <string-array name="current_measure_output_options">
+        <item>Ampere (A)</item>
+        <item>mAmpere (mA)</item>
+    </string-array>
     <string-array name="acc_version_options">
         <item>Paket</item>
         <item>Master</item>
