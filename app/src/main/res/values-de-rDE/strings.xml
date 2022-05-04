@@ -225,6 +225,11 @@
         <item>Master</item>
         <item>Entwicklung</item>
     </string-array>
+    <string-array name="acca_debug_options">
+        <item>Deaktivieren</item>
+        <item>Ausgabe auf Konsole</item>
+        <item>Ausgabe in Datei und auf Konsole</item>
+    </string-array>
     <string name="ui_options">Benutzeroberfläche</string>
     <string name="theme_option_setting">Design</string>
     <string name="theme_option_summary">Das App-Design festlegen.</string>
@@ -314,5 +319,15 @@
         \n\nWenn der Fehler weiterhin besteht, teile bitte den Stack-Trace unten zusammen mit der ACC &amp; AccA-Version (über das 3-Punkt-Menü &gt; „Über“) mit den Entwicklern via Telegram.\n\n%s</string>
     <string name="automatic_switch_eanbled">Automatisch durch die Schalter wechseln</string>
     <string name="info_voltage">Spannung</string>
+    <string name="profile_option_edit">Bearbeiten</string>
+    <string name="profile_option_rename">Umbenennen</string>
+    <string name="profile_option_delete">Löschen</string>
     <!-- Widget Label and Activity -->
+    <string name="qwa_dis_opt_battery">Akku-Leistungsoptimierung deaktivieren</string>
+    <string name="qwa_open_acc">ACCA öffnen</string>
+    <string name="qwa_stop">Widgets anhalten</string>
+    <string name="qwa_start">Widgets starten</string>
+    <string name="qwa_setting">Widget anpassen</string>
+    <string name="qwa_toast_sleep">Schlafmodus</string>
+    <string name="qwa_toast_start">Arbeitsmodus</string>
 </resources>
