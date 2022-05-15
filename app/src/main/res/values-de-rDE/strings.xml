@@ -27,8 +27,15 @@
     <string name="stop">Stopp</string>
     <!-- Battery Card Strings -->
     <string name="title_battery">Akku</string>
+    <string name="info_charging_speed">Ladegeschwindigkeit:</string>
+    <string name="info_discharging_speed">Aktueller Stromfluss:</string>
+    <string name="info_capacity">Kapazität:</string>
+    <string name="info_temperature">Temperatur:</string>
+    <string name="info_health">Zustand:</string>
+    <string name="info_profile">Profil:</string>
     <!-- Status string: e.g. Charging (Fast), Discharging (N/A) -->
     <string name="info_status_extended">%1$s (%2$s)</string>
+    <string name="info_discharging_speed_extended">%1$d mA</string>
     <!-- Profiles Item Labels -->
     <string name="item_profile_capacity_label">Kapazität:</string>
     <string name="item_profile_temperature_label">Temperatur:</string>
@@ -86,6 +93,7 @@
     <string name="edit_config">Konfiguration bearbeiten</string>
     <string name="unsaved_changes_message">Änderungen speichern?</string>
     <string name="create_acc_profile">Konfigurationsprofil erstellen</string>
+    <string name="profile_label">Profil</string>
     <string name="profile_name">Profilname</string>
     <string name="script_name">Skriptname</string>
     <string name="dialog_profile_name_message">Gebe den Namen ein, der diesem Profil zugewiesen werden soll:</string>
@@ -94,6 +102,7 @@
     <string name="no_scripts">Keine Skripte</string>
     <string name="profile_not_selected">Benutzerdefinierte Einstellungen</string>
     <string name="profile_tile_label">Profil: %1$s</string>
+    <string name="profile_update">Profilaktualisierung</string>
     <string name="profiles_text_view">Profile (lange drücken zum Bearbeiten/Löschen):</string>
     <string name="restart">Neustart</string>
     <string name="invalid_chars">Der Profilname enthält ungültige Zeichen</string>
@@ -183,6 +192,7 @@
         Wenn die erkannte Einheit falsch ist, kann sie manuell festgelegt werden.
     </string>
     <string name="units_of_measure">Maßeinheiten</string>
+    <string name="current_measure_output_preference_description">Ausgabe des Stromflusses, 0.412 A (Ampere) oder 412 mA (Milliampere).</string>
     <string name="acc_version_preference_title">ACC-Version</string>
     <string name="acc_version_preference_description">Du kannst eine ACC-Variante auswählen: Paket (stabil, für die meisten Nutzer empfohlen), Master (stabil), Entwicklung (auf dem neuesten Stand un nicht unbedingt unstabil) oder irgendeine der freigegebenen Versionen.
         Die Paket-Version wird garantiert immer mit AccA funktionieren - daher ist sie die empfohlene Wahl.
@@ -191,10 +201,34 @@
     <string name="install_bundled_version">Paket-Variante installieren</string>
     <string name="acc_version_picker_title">ACC-Version</string>
     <string name="acc_version_picker_message">Wählen Sie die gewünschte ACC-Variante aus</string>
+    <string-array name="current_measure_units_options">
+        <item>Ampere</item>
+        <item>mAmpere (1E-03)</item>
+        <item>μAmpere (1E-06)</item>
+    </string-array>
+    <string-array name="voltage_measure_units_options">
+        <item>Voltage</item>
+        <item>mV (1E-03)</item>
+        <item>μV (1E-06)</item>
+    </string-array>
+    <string-array name="temperature_measure_output_options">
+        <item>Celsius/Fahrenheit (°Beides)</item>
+        <item>Celsius (°C)</item>
+        <item>Fahrenheit (°F)</item>
+    </string-array>
+    <string-array name="current_measure_output_options">
+        <item>Ampere (A)</item>
+        <item>mAmpere (mA)</item>
+    </string-array>
     <string-array name="acc_version_options">
         <item>Paket</item>
         <item>Master</item>
         <item>Entwicklung</item>
+    </string-array>
+    <string-array name="acca_debug_options">
+        <item>Deaktivieren</item>
+        <item>Ausgabe auf Konsole</item>
+        <item>Ausgabe in Datei und auf Konsole</item>
     </string-array>
     <string name="ui_options">Benutzeroberfläche</string>
     <string name="theme_option_setting">Design</string>
@@ -285,5 +319,15 @@
         \n\nWenn der Fehler weiterhin besteht, teile bitte den Stack-Trace unten zusammen mit der ACC &amp; AccA-Version (über das 3-Punkt-Menü &gt; „Über“) mit den Entwicklern via Telegram.\n\n%s</string>
     <string name="automatic_switch_eanbled">Automatisch durch die Schalter wechseln</string>
     <string name="info_voltage">Spannung</string>
+    <string name="profile_option_edit">Bearbeiten</string>
+    <string name="profile_option_rename">Umbenennen</string>
+    <string name="profile_option_delete">Löschen</string>
     <!-- Widget Label and Activity -->
+    <string name="qwa_dis_opt_battery">Akku-Leistungsoptimierung deaktivieren</string>
+    <string name="qwa_open_acc">ACCA öffnen</string>
+    <string name="qwa_stop">Widgets anhalten</string>
+    <string name="qwa_start">Widgets starten</string>
+    <string name="qwa_setting">Widget anpassen</string>
+    <string name="qwa_toast_sleep">Schlafmodus</string>
+    <string name="qwa_toast_start">Arbeitsmodus</string>
 </resources>
