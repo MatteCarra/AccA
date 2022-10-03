@@ -4,20 +4,35 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:layout_gravity="top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hapticFeedbackEnabled="true"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            style="?attr/collapsingToolbarLayoutLargeStyle"
+            app:expandedTitleTextAppearance="@style/TextAppearance.Material3.HeadlineLarge"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:elevation="0dp">
+            android:layout_height="?attr/collapsingToolbarLayoutLargeSize"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:titleCollapseMode="fade">
 
-        <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/main_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                style="?toolbarStyle"/>
+                <com.google.android.material.appbar.MaterialToolbar
+                        android:id="@+id/main_toolbar"
+                        android:layout_width="match_parent"
+                        android:hapticFeedbackEnabled="true"
+                        app:layout_collapseParallaxMultiplier="@integer/material_motion_duration_short_2"
+                        android:layout_height="?attr/actionBarSize"
+                        app:layout_collapseMode="pin"/>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
-
 
     <FrameLayout
             android:id="@+id/main_framelayout"
@@ -25,13 +40,6 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="?attr/actionBarSize"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-      <View
-        android:layout_width="match_parent"
-        android:layout_height="12dp"
-        android:background="@drawable/shadow"
-        app:layout_anchor="@+id/main_bottom_nav"
-        app:layout_anchorGravity="top"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/main_bottom_nav"
