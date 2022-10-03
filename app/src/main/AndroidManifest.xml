@@ -14,12 +14,11 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AccaTheme.DayNight">
-
+        android:theme="@style/Material3">
         <activity
             android:name=".activities.MainActivity"
             android:launchMode="singleTop"
-            android:theme="@style/AccaTheme.DayNight.Launcher"
+            android:theme="@style/Material3"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
