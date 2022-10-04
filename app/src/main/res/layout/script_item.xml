@@ -2,20 +2,21 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Widget.MaterialComponents.CardView"
+    style="@style/M3Card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/card_margin"
     android:layout_marginTop="@dimen/card_margin"
     android:layout_marginRight="@dimen/card_margin"
     android:layout_marginBottom="@dimen/card_margindiv2"
-    app:cardCornerRadius="@dimen/card_corner_radius"
-    app:cardElevation="3dp">
+    app:cardBackgroundColor="@color/colorCard"
+    app:cardCornerRadius="30dp">
 
     <LinearLayout
         android:id="@+id/item_profile_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="10dp"
         android:orientation="horizontal"
         android:visibility="visible">
 
@@ -41,7 +42,10 @@
                         android:id="@+id/item_script_title_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:layout_margin="8dp"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceTitleLarge"
+                        android:textSize="24sp"
                         tools:text="@tools:sample/full_names" />
 
                     <TextView
@@ -49,6 +53,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:layout_margin="8dp"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="@dimen/label_text"
                         tools:text="@tools:sample/full_names" />
 
                 </LinearLayout>
@@ -75,7 +84,11 @@
                 android:id="@+id/item_script_body_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/card_margin"
+                android:layout_margin="8dp"
+                android:fontFamily="@font/google_sans"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="@dimen/label_text"
                 tools:text="@tools:sample/full_names" />
 
     </LinearLayout>
