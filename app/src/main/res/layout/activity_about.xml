@@ -52,7 +52,7 @@
                 style="@style/M3Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/card_bg"
+                app:cardBackgroundColor="@color/colorCard"
                 app:cardCornerRadius="30dp">
 
                 <LinearLayout
@@ -138,7 +138,7 @@
                 style="@style/M3Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/card_bg"
+                app:cardBackgroundColor="@color/colorCard"
                 app:cardCornerRadius="30dp">
 
                 <LinearLayout
@@ -345,7 +345,7 @@
                 style="@style/M3Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/card_bg"
+                app:cardBackgroundColor="@color/colorCard"
                 app:cardCornerRadius="30dp">
 
                 <LinearLayout
@@ -380,7 +380,7 @@
                 style="@style/M3Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/card_bg"
+                app:cardBackgroundColor="@color/colorCard"
                 app:cardCornerRadius="30dp">
 
                 <LinearLayout
