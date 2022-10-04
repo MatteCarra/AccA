@@ -121,7 +121,7 @@ class ProfilesFragment : ScopedFragment(),
 
             private var swipeBack: Boolean = true
             private val background = ColorDrawable()
-            private val backgroundColour = ContextCompat.getColor(mContext, R.color.colorSuccessful)
+            private val backgroundColour = ContextCompat.getColor(mContext, R.color.colorTransparent)
             private val applyIcon = ContextCompat.getDrawable(mContext, R.drawable.ic_outline_check_circle_24px
             )
             private val intrinsicWidth = applyIcon!!.intrinsicWidth
