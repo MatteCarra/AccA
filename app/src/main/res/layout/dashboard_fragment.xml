@@ -17,28 +17,27 @@
         <!-- ACCd Status Card -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/status_card_view"
-            style="@style/Widget.MaterialComponents.CardView"
+            style="@style/M3Card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/card_margin"
-            android:layout_marginBottom="@dimen/card_margindiv2"
-            android:layout_marginTop="@dimen/card_margin"
-            android:layout_marginRight="@dimen/card_margin"
-            app:cardCornerRadius="@dimen/card_corner_radius"
-            app:cardElevation="3dp"
-            app:contentPadding="@dimen/card_content_padding">
+            app:cardBackgroundColor="@color/colorCard"
+            app:cardCornerRadius="30dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/dash_title_accdStatus_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:fontFamily="@font/google_sans"
                     android:text="@string/title_acc"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+                    android:textAppearance="?attr/textAppearanceTitleLarge"
+                    android:textSize="24sp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -49,14 +48,12 @@
                     <RelativeLayout
                         android:id="@+id/dash_accdStatus_frameLay"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/color_warning">
+                        android:layout_height="wrap_content">
 
                         <ImageView
                             android:id="@+id/dash_accdStatus_imageView"
                             android:layout_width="@dimen/acc_status_icon"
-                            android:layout_height="@dimen/acc_status_icon"
-                            app:tint="@color/white" />
+                            android:layout_height="@dimen/acc_status_icon" />
 
                         <ProgressBar
                             android:id="@+id/dash_accdStatus_pb"
@@ -74,7 +71,7 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/dash_daemonToggle_button"
-                            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                            style="@style/M3Button"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:enabled="false"
@@ -83,7 +80,7 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/dash_daemonRestart_button"
-                            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                            style="@style/M3Button"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:enabled="false"
@@ -97,7 +94,9 @@
                     android:id="@+id/dash_accdStatus_textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/google_sans_bold"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:padding="10dp"
                     android:text="@string/acc_daemon_status_reading_status"
                     android:gravity="center"/>
@@ -111,29 +110,27 @@
             android:layout_width="match_parent" />
 
         <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.MaterialComponents.CardView"
+            style="@style/M3Card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/card_margin"
-            android:layout_marginBottom="@dimen/card_margin"
-            android:layout_marginTop="@dimen/card_margindiv2"
-            android:layout_marginRight="@dimen/card_margin"
-            android:foreground="?selectableItemBackground"
-            app:cardCornerRadius="@dimen/card_corner_radius"
-            app:cardElevation="3dp"
-            app:contentPadding="@dimen/card_content_padding">
+            app:cardBackgroundColor="@color/colorCard"
+            app:cardCornerRadius="30dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:orientation="vertical">
 
                 <!-- Title: Battery -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/title_battery"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+                    android:layout_margin="8dp"
+                    android:fontFamily="@font/google_sans"
+                    android:textAppearance="?attr/textAppearanceTitleLarge"
+                    android:textSize="24sp"
+                    android:text="@string/title_battery" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -146,9 +143,9 @@
                         android:layout_height="70dp"
                         android:layout_gravity="center"
                         android:progress="0"
-                        app:progress_end_color="@color/color_primary"
+                        app:progress_end_color="@color/colorAccent"
                         app:progress_shader="sweep"
-                        app:progress_start_color="@color/color_secondary"
+                        app:progress_start_color="@color/colorAccent"
                         app:progress_stroke_cap="round"
                         app:progress_stroke_width="5dp"
                         app:progress_text_color="?android:attr/textColorPrimary"
@@ -171,6 +168,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
+                                android:fontFamily="@font/google_sans"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:textColor="?android:attr/textColorSecondary"
                                 android:text="@string/info_status"
                                 android:textSize="@dimen/label_text"
                                 android:layout_weight="1"/>
@@ -179,6 +179,9 @@
                                 android:id="@+id/dash_batteryStatus_textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/google_sans"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:textColor="?android:attr/textColorSecondary"
                                 android:gravity="end"
                                 android:text="..." />
                         </LinearLayout>
@@ -194,6 +197,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
+                                android:fontFamily="@font/google_sans"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:textColor="?android:attr/textColorSecondary"
                                 android:text="@string/info_charging_speed"
                                 android:textSize="@dimen/label_text"
                                 android:layout_weight="1"/>
@@ -202,6 +208,9 @@
                                 android:id="@+id/dash_chargingSpeed_textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/google_sans"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:textColor="?android:attr/textColorSecondary"
                                 android:gravity="end"
                                 android:text="..." />
                         </LinearLayout>
@@ -216,6 +225,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
+                                android:fontFamily="@font/google_sans"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:textColor="?android:attr/textColorSecondary"
                                 android:text="@string/info_temperature"
                                 android:textSize="@dimen/label_text"
                                 android:layout_weight="1"/>
@@ -224,6 +236,9 @@
                                 android:id="@+id/dash_batteryTemperature_textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/google_sans"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:textColor="?android:attr/textColorSecondary"
                                 android:gravity="end"
                                 android:text="..." />
                         </LinearLayout>
@@ -238,6 +253,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
+                                android:fontFamily="@font/google_sans"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:textColor="?android:attr/textColorSecondary"
                                 android:text="@string/info_voltage"
                                 android:textSize="@dimen/label_text"
                                 android:layout_weight="1"/>
@@ -246,6 +264,9 @@
                                 android:id="@+id/dash_batteryVoltage_textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/google_sans"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:textColor="?android:attr/textColorSecondary"
                                 android:gravity="end"
                                 android:text="..." />
                         </LinearLayout>
@@ -260,6 +281,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
+                                android:fontFamily="@font/google_sans"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:textColor="?android:attr/textColorSecondary"
                                 android:text="@string/info_health"
                                 android:textSize="@dimen/label_text"
                                 android:layout_weight="1"/>
@@ -268,6 +292,9 @@
                                 android:id="@+id/dash_batteryHealth_textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/google_sans"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:textColor="?android:attr/textColorSecondary"
                                 android:gravity="end"
                                 android:text="..." />
                         </LinearLayout>
@@ -284,7 +311,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/dash_editCargingLimitOnce_button"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        style="@style/M3Button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_outline_edit_24px"
@@ -293,7 +320,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/dash_resetBatteryStats_button"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        style="@style/M3Button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/reset_stats" />

@@ -4,23 +4,24 @@
     <color name="color_primary_variant">#0049b5</color>
     <color name="color_secondary">@color/color_primary</color>
     <color name="color_secondary_variant">@color/color_primary_variant</color>
-
     <color name="color_surface">#ffffff</color>
     <color name="color_background">@color/color_surface</color>
     <color name="color_error">#b00020</color>
-
     <color name="color_warning">@color/color_surface</color>
-
     <color name="color_shadow">#4D000000</color>
-
     <color name="color_on_primary">#000000</color>
     <color name="color_on_secondary">@color/color_surface</color>
     <color name="color_on_background">#000000</color>
     <color name="color_on_surface">#000000</color>
     <color name="color_on_error">#ffffff</color>
-
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorCard">@android:color/system_neutral2_50</color>
+    <color name="colorAccent">@android:color/system_accent1_600</color>
+    <color name="colorTransparent">@android:color/transparent</color>
+
+    <color name="colorToolbar">@android:color/system_neutral1_10</color>
+    <color name="colorNavBar">@android:color/system_neutral1_50</color>
 
 </resources>

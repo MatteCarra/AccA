@@ -26,8 +26,7 @@ class AboutActivity : AppCompatActivity() {
         val binding=ActivityAboutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.aboutToolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+       supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Set appropriate version numbers
         val app = applicationContext.packageManager.getPackageInfo(packageName, 0)

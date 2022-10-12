@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".activities.AboutActivity">
 
@@ -34,19 +35,16 @@
             android:orientation="vertical">
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.MaterialComponents.CardView"
+                style="@style/M3Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/card_margin"
-                android:layout_marginTop="@dimen/card_margin"
-                android:layout_marginRight="@dimen/card_margin"
-                app:cardCornerRadius="@dimen/card_corner_radius"
-                app:cardElevation="3dp"
-                app:contentPadding="@dimen/card_content_padding">
+                app:cardBackgroundColor="@color/colorCard"
+                app:cardCornerRadius="30dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:orientation="vertical">
 
                     <RelativeLayout
@@ -74,129 +72,84 @@
                                 android:id="@+id/about_app_name_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:fontFamily="@font/google_sans"
                                 android:text="@string/app_name"
-                                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
+                                android:textAppearance="?attr/textAppearanceTitleLarge"
+                                android:textSize="34sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/app_name_full" />
+                                android:layout_margin="5dp"
+                                android:fontFamily="@font/google_sans"
+                                android:text="@string/app_name_full"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:textColor="?android:attr/textColorSecondary" />
                         </LinearLayout>
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/card_margin">
-
-                        <TextView
-                            android:id="@+id/about_acca_version_label_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/card_margin"
-                            android:layout_marginRight="@dimen/card_margin"
-                            android:text="@string/about_acca_version_label" />
-
-                        <TextView
-                            android:id="@+id/about_acca_version_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toEndOf="@+id/about_acca_version_label_tv"
-                            android:layout_toRightOf="@+id/about_acca_version_label_tv"
-                            android:text="1.9.10" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/card_margin">
-
-                        <TextView
-                            android:id="@+id/about_acc_daemon_version_label_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/card_margin"
-                            android:layout_marginRight="@dimen/card_margin"
-                            android:text="@string/about_acc_daemon_version_label" />
-
-                        <TextView
-                            android:id="@+id/about_acc_daemon_version_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toEndOf="@+id/about_acc_daemon_version_label_tv"
-                            android:layout_toRightOf="@+id/about_acc_daemon_version_label_tv"
-                            android:text="202107281" />
 
                     </RelativeLayout>
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/card_margin">
+                        android:orientation="horizontal"
+                        android:gravity="center">
 
-                        <TextView
-                            android:id="@+id/about_acc_api_version_label_tv"
+                        <Button
+                            style="@style/M3Button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/card_margin"
-                            android:layout_marginRight="@dimen/card_margin"
-                            android:text="@string/about_acc_api_version_label" />
+                            android:layout_margin="8dp"
+                            android:onClick="accaGitHubOnClick"
+                            android:text="@string/about_project_github"
+                            app:icon="@drawable/ic_github_mark" />
 
-                        <TextView
-                            android:id="@+id/about_acc_api_version_tv"
+                        <Button
+                            style="@style/M3Button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toEndOf="@+id/about_acc_api_version_label_tv"
-                            android:layout_toRightOf="@+id/about_acc_api_version_label_tv"
-                            android:text="20190801" />
-                    </RelativeLayout>
+                            android:layout_margin="8dp"
+                            android:onClick="accaTelegramOnClick"
+                            android:text="@string/about_project_telegram"
+                            app:icon="@drawable/ic_telegram" />
 
-                    <com.google.android.material.button.MaterialButton
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/card_margin"
-                        android:ellipsize="end"
-                        android:onClick="accaGitHubOnClick"
-                        android:text="@string/about_project_github"
-                        app:icon="@drawable/ic_github_mark" />
+                    </LinearLayout>
 
-                    <com.google.android.material.button.MaterialButton
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/card_margin"
-                        android:ellipsize="end"
-                        android:onClick="accaTelegramOnClick"
-                        android:text="@string/about_project_telegram"
-                        app:icon="@drawable/ic_telegram" />
                 </LinearLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                style="@style/M3Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/card_margin"
-                android:layout_marginTop="@dimen/card_margin"
-                android:layout_marginRight="@dimen/card_margin"
-                app:cardCornerRadius="@dimen/card_corner_radius"
-                app:cardElevation="3dp"
-                app:contentPadding="@dimen/card_content_padding">
+                app:cardBackgroundColor="@color/colorCard"
+                app:cardCornerRadius="30dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_team_title"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+                        android:layout_margin="8dp"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceTitleLarge"
+                        android:textSize="24sp"/>
+
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
                         android:text="@string/about_team_blurb" />
 
                     <RelativeLayout
@@ -216,6 +169,7 @@
                             android:id="@+id/about_vr25_name_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/google_sans"
                             android:layout_toEndOf="@id/about_vr25_profile_iv"
                             android:layout_toRightOf="@id/about_vr25_profile_iv"
                             android:text="VR-25"
@@ -234,27 +188,25 @@
                             android:orientation="horizontal"
                             android:weightSum="2">
 
-                            <com.google.android.material.button.MaterialButton
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                                android:layout_width="0dp"
+                            <Button
+                                style="@style/M3Button"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/card_margin"
-                                android:layout_marginRight="@dimen/card_margin"
-                                android:layout_weight="1"
-                                android:ellipsize="end"
+                                android:layout_margin="4dp"
                                 android:onClick="vr25GitHubOnClick"
                                 android:text="@string/about_github"
                                 app:icon="@drawable/ic_github_mark" />
 
-                            <com.google.android.material.button.MaterialButton
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                                android:layout_width="0dp"
+                            <Button
+                                style="@style/M3Button"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:ellipsize="end"
+                                android:layout_margin="4dp"
                                 android:onClick="vr25WebsiteOnClick"
                                 android:text="@string/about_website" />
+
                         </LinearLayout>
+
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -274,6 +226,7 @@
                             android:id="@+id/about_mattecarra_name_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/google_sans"
                             android:layout_toEndOf="@id/about_mattecarra_profile_iv"
                             android:layout_toRightOf="@id/about_mattecarra_profile_iv"
                             android:text="Matteo Carrara"
@@ -292,27 +245,25 @@
                             android:orientation="horizontal"
                             android:weightSum="2">
 
-                            <com.google.android.material.button.MaterialButton
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                                android:layout_width="0dp"
+                            <Button
+                                style="@style/M3Button"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/card_margin"
-                                android:layout_marginRight="@dimen/card_margin"
-                                android:layout_weight="1"
-                                android:ellipsize="end"
+                                android:layout_margin="4dp"
                                 android:onClick="matteGitHubOnClick"
                                 android:text="@string/about_github"
                                 app:icon="@drawable/ic_github_mark" />
 
-                            <com.google.android.material.button.MaterialButton
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                                android:layout_width="0dp"
+                            <Button
+                                style="@style/M3Button"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:ellipsize="end"
+                                android:layout_margin="4dp"
                                 android:onClick="matteWebsiteOnClick"
                                 android:text="@string/about_website" />
+
                         </LinearLayout>
+
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -332,6 +283,7 @@
                             android:id="@+id/about_squabbi_name_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/google_sans"
                             android:layout_toEndOf="@id/about_squabbi_profile_iv"
                             android:layout_toRightOf="@id/about_squabbi_profile_iv"
                             android:text="Squabbi"
@@ -350,61 +302,174 @@
                             android:orientation="horizontal"
                             android:weightSum="2">
 
-                            <com.google.android.material.button.MaterialButton
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                                android:layout_width="0dp"
+                            <Button
+                                style="@style/M3Button"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/card_margin"
-                                android:layout_marginRight="@dimen/card_margin"
-                                android:layout_weight="1"
-                                android:ellipsize="end"
+                                android:layout_margin="4dp"
                                 android:onClick="squabbiGitHubOnClick"
                                 android:text="@string/about_github"
                                 app:icon="@drawable/ic_github_mark" />
 
-                            <com.google.android.material.button.MaterialButton
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                                android:layout_width="0dp"
+                            <Button
+                                style="@style/M3Button"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:ellipsize="end"
+                                android:layout_margin="4dp"
                                 android:onClick="squabbiWebsiteOnClick"
                                 android:text="@string/about_website" />
+
                         </LinearLayout>
+
                     </RelativeLayout>
 
                 </LinearLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                style="@style/M3Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/card_margin"
-                android:layout_marginTop="@dimen/card_margin"
-                android:layout_marginRight="@dimen/card_margin"
-                android:layout_marginBottom="@dimen/card_bottom_margin"
-                app:cardCornerRadius="@dimen/card_corner_radius"
-                app:cardElevation="3dp"
-                app:contentPadding="@dimen/card_content_padding">
+                app:cardBackgroundColor="@color/colorCard"
+                app:cardCornerRadius="30dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_attributes"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+                        android:layout_margin="8dp"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceTitleLarge"
+                        android:textSize="24sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
                         android:text="@string/about_attrib_telegram_icon" />
+
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/M3Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/colorCard"
+                app:cardCornerRadius="30dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_marginTop="@dimen/card_margin">
+
+                    <TextView
+                        android:id="@+id/about_acca_version_label_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/card_margin"
+                        android:layout_marginRight="@dimen/card_margin"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:text="@string/about_acca_version_label" />
+
+                    <TextView
+                        android:id="@+id/about_acca_version_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/about_acca_version_label_tv"
+                        android:layout_toRightOf="@+id/about_acca_version_label_tv"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:text="1.9.10" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_marginTop="@dimen/card_margin">
+
+                    <TextView
+                        android:id="@+id/about_acc_daemon_version_label_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/card_margin"
+                        android:layout_marginRight="@dimen/card_margin"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:text="@string/about_acc_daemon_version_label" />
+
+                    <TextView
+                        android:id="@+id/about_acc_daemon_version_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/about_acc_daemon_version_label_tv"
+                        android:layout_toRightOf="@+id/about_acc_daemon_version_label_tv"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:text="202107281" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_marginTop="@dimen/card_margin">
+
+                    <TextView
+                        android:id="@+id/about_acc_api_version_label_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/card_margin"
+                        android:layout_marginRight="@dimen/card_margin"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:text="@string/about_acc_api_version_label" />
+
+                    <TextView
+                        android:id="@+id/about_acc_api_version_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/about_acc_api_version_label_tv"
+                        android:layout_toRightOf="@+id/about_acc_api_version_label_tv"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:text="20190801" />
+
+                </RelativeLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+         </LinearLayout>
+
     </ScrollView>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,10 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
-
-    <!--Top level DayNight theme to be used in AndroidManifest.xml-->
-    <style name="AccaTheme.DayNight" parent="Base.AccaTheme">
-        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
-        <item name="android:navigationBarColor" tools:targetApi="21">#3a3b3d</item>
+<resources>
+    <!-- Base application theme. -->
+    <style name="Material3" parent="M3DayNight">
+        <item name="android:navigationBarColor">@color/colorNavBar</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
     </style>
+
+    <style name="M3DayNight" parent="Theme.Material3.DynamicColors.DayNight">
+        <item name="android:statusBarColor" >@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="switchStyle">@style/M3Switch</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
 </resources>

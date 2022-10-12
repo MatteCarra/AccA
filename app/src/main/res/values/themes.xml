@@ -1,68 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!--Top level DayNight theme to be used in AndroidManifest.xml-->
-    <style name="AccaTheme.DayNight" parent="Base.AccaTheme"/>
-
-    <style name="AccaTheme.DayNight.Launcher" parent="AccaTheme.DayNight">
-        <item name="android:windowBackground">@drawable/launch_screen</item>
+    <!-- Base application theme. -->
+    <style name="Material3" parent="M3DayNight">
+        <item name="android:navigationBarColor">@color/colorNavBar</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="switchStyle">@style/M3Switch</item>
     </style>
 
-    <!--Base custom theme which will be shared between both light and dark theme variants-->
-    <style name="Base.AccaTheme" parent="Base.MaterialThemeBuilder">
-        <!--Material color attributes -->
-        <item name="colorPrimary">@color/color_primary</item>
-        <item name="colorPrimaryVariant">@color/color_primary_variant</item>
-        <item name="colorSecondary">@color/color_secondary</item>
-        <item name="colorSecondaryVariant">@color/color_secondary_variant</item>
-
-        <item name="android:colorBackground">@color/color_background</item>
-        <item name="colorSurface">@color/color_surface</item>
-        <item name="colorError">@color/color_error</item>
-
-        <item name="colorOnPrimary">@color/color_on_primary</item>
-        <item name="colorOnSecondary">@color/color_on_secondary</item>
-        <item name="colorOnBackground">@color/color_on_background</item>
-        <item name="colorOnSurface">@color/color_on_surface</item>
-        <item name="colorOnError">@color/color_on_error</item>
-
-        <!--Material type attributes-->
-        <!--<item name="textAppearanceHeadline1">@style/TextAppearance.AccaTheme.Headline1</item>-->
-        <!--<item name="textAppearanceHeadline2">@style/TextAppearance.AccaTheme.Headline2</item>-->
-        <!--<item name="textAppearanceHeadline3">@style/TextAppearance.AccaTheme.Headline3</item>-->
-        <!--<item name="textAppearanceHeadline4">@style/TextAppearance.AccaTheme.Headline4</item>-->
-        <!--<item name="textAppearanceHeadline5">@style/TextAppearance.AccaTheme.Headline5</item>-->
-        <!--<item name="textAppearanceHeadline6">@style/TextAppearance.AccaTheme.Headline6</item>-->
-        <!--<item name="textAppearanceSubtitle1">@style/TextAppearance.AccaTheme.Subtitle1</item>-->
-        <!--<item name="textAppearanceSubtitle2">@style/TextAppearance.AccaTheme.Subtitle2</item>-->
-        <!--<item name="textAppearanceBody1">@style/TextAppearance.AccaTheme.Body1</item>-->
-        <!--<item name="textAppearanceBody2">@style/TextAppearance.AccaTheme.Body2</item>-->
-        <!--<item name="textAppearanceButton">@style/TextAppearance.AccaTheme.Button</item>-->
-        <!--<item name="textAppearanceCaption">@style/TextAppearance.AccaTheme.Caption</item>-->
-        <!--<item name="textAppearanceOverline">@style/TextAppearance.AccaTheme.Overline</item>-->
-
-        <!--Material shape attributes-->
-        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.AccaTheme.SmallComponent</item>
-        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.AccaTheme.MediumComponent</item>
-        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.AccaTheme.LargeComponent</item>
-
-        <!--Component styles-->
-        <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog.Alert</item>
-        <!--<item name="navigationViewStyle">@style/Widget.AccaTheme.NavigationView</item>-->
-        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Surface</item>
+    <style name="M3DayNight" parent="Theme.Material3.DynamicColors.DayNight">
+        <item name="android:statusBarColor" >@color/colorTransparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@color/colorTransparent</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="switchStyle">@style/M3Switch</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
     </style>
 
-    <style name="Base.MaterialThemeBuilder" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="M3Toolbar" parent="@style/Widget.Material3.CollapsingToolbar.Large">
+        <item name="fontFamily">@font/google_sans_medium</item>
+    </style>
 
-<!--        Investigate M/N Light Theme issues -->
-        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/color_surface</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">?android:colorBackground</item>
-        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
+    <style name="M3Card" parent="Widget.Material3.CardView.Filled">
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
 
-        <!--Remap legacy AppCompat attributes to MaterialComponent attributes-->
-        <item name="colorPrimaryDark">?colorPrimaryVariant</item>
-        <item name="colorAccent">?colorSecondary</item>
+    <style name="M3Button" parent="@style/Widget.Material3.Button">
+        <item name="fontFamily">@font/google_sans_medium</item>
+    </style>
+
+    <style name="M3Switch" parent="Widget.Material3.CompoundButton.Switch">
+        <item name="android:switchMinWidth">52dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="track">@drawable/switch_track</item>
+        <item name="android:thumb">@drawable/switch_thumb</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Small.Acca" parent="TextAppearance.AppCompat.Small">
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="android:textFontWeight">500</item>
     </style>
 
 </resources>

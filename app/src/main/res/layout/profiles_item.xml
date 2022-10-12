@@ -2,15 +2,11 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Widget.MaterialComponents.CardView"
+    style="@style/M3Card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/card_margin"
-    android:layout_marginTop="@dimen/card_margin"
-    android:layout_marginRight="@dimen/card_margin"
-    android:layout_marginBottom="@dimen/card_margindiv2"
-    app:cardCornerRadius="@dimen/card_corner_radius"
-    app:cardElevation="3dp">
+    app:cardBackgroundColor="@color/colorCard"
+    app:cardCornerRadius="30dp">
 
     <ImageView
         android:id="@+id/item_profile_load_image"
@@ -32,7 +28,7 @@
             android:id="@+id/item_profile_selectedIndicator_view"
             android:layout_width="10dp"
             android:layout_height="match_parent"
-            android:background="@color/colorSelectedProfile"
+            android:background="@color/colorAccent"
             android:visibility="gone"
             tools:visibility="visible" />
 
@@ -52,7 +48,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                    android:fontFamily="@font/google_sans"
+                    android:textAppearance="?attr/textAppearanceTitleLarge"
+                    android:textSize="24sp"
                     tools:text="@tools:sample/full_names" />
 
                 <ImageView
@@ -100,6 +98,10 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text"
                             android:text="@string/charging_switch_label" />
 
                     </LinearLayout>
@@ -109,6 +111,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="@dimen/label_text"
                         android:paddingStart="@dimen/item_profile_info_two_lp"
                         android:paddingLeft="@dimen/item_profile_info_two_lp"
                         tools:text="Use Global Setting" />
@@ -124,11 +130,16 @@
 
                         <ImageView
                             style="@style/IndexIcon"
-                            app:srcCompat="@drawable/ic_outline_error_outline_24px" />
+                            app:srcCompat="@drawable/ic_outline_error_outline_24px"
+                            app:tint="?colorControlNormal" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text"
                             android:text="@string/automatic_switch_eanbled" />
 
                     </LinearLayout>
@@ -155,6 +166,10 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text"
                             android:text="@string/title_capacity_control" />
 
                     </LinearLayout>
@@ -164,6 +179,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="@dimen/label_text"
                         android:paddingStart="@dimen/item_profile_info_two_lp"
                         android:paddingLeft="@dimen/item_profile_info_two_lp"
                         tools:text="@string/template_capacity_profile" />
@@ -189,6 +208,10 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text"
                             android:text="@string/title_power_control" />
 
                     </LinearLayout>
@@ -198,6 +221,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="@dimen/label_text"
                         android:paddingStart="@dimen/item_profile_info_two_lp"
                         android:paddingLeft="@dimen/item_profile_info_two_lp"
                         tools:text="@tools:sample/full_names" />
@@ -207,6 +234,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="@dimen/label_text"
                         android:paddingStart="@dimen/item_profile_info_two_lp"
                         android:paddingLeft="@dimen/item_profile_info_two_lp"
                         tools:text="@tools:sample/full_names" />
@@ -233,6 +264,10 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text"
                             android:text="@string/title_temperature_control" />
 
                     </LinearLayout>
@@ -242,6 +277,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="@dimen/label_text"
                         android:paddingStart="@dimen/item_profile_info_two_lp"
                         android:paddingLeft="@dimen/item_profile_info_two_lp"
                         tools:text="@string/template_temperature_profile" />
@@ -267,6 +306,10 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text"
                             android:text="@string/title_cooldown_control" />
 
                     </LinearLayout>
@@ -276,6 +319,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="@dimen/label_text"
                         android:paddingStart="@dimen/item_profile_info_two_lp"
                         android:paddingLeft="@dimen/item_profile_info_two_lp"
                         tools:text="@string/template_cool_down_profile" />
@@ -301,6 +348,10 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text"
                             android:text="applyOnBoot" />
 
                     </LinearLayout>
@@ -310,6 +361,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="@dimen/label_text"
                         android:paddingStart="@dimen/item_profile_info_two_lp"
                         android:paddingLeft="@dimen/item_profile_info_two_lp"
                         tools:text="@tools:sample/full_names" />
@@ -335,6 +390,10 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text"
                             android:text="applyOnPlug" />
 
                     </LinearLayout>
@@ -344,6 +403,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="@dimen/label_text"
                         android:paddingStart="@dimen/item_profile_info_two_lp"
                         android:paddingLeft="@dimen/item_profile_info_two_lp"
                         tools:text="@tools:sample/full_names" />
@@ -359,11 +422,16 @@
 
                     <ImageView
                         style="@style/IndexIcon"
-                        app:srcCompat="@drawable/ic_outline_error_outline_24px" />
+                        app:srcCompat="@drawable/ic_outline_error_outline_24px"
+                        app:tint="?colorControlNormal"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="@dimen/label_text"
                         android:text="@string/prioritize_battery_idle" />
 
                 </LinearLayout>
@@ -377,11 +445,16 @@
 
                     <ImageView
                         style="@style/IndexIcon"
-                        app:srcCompat="@drawable/ic_outline_error_outline_24px" />
+                        app:srcCompat="@drawable/ic_outline_error_outline_24px"
+                        app:tint="?colorControlNormal"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="@dimen/label_text"
                         android:text="@string/reset_bs_on_pause" />
 
                 </LinearLayout>
@@ -394,11 +467,16 @@
 
                     <ImageView
                         style="@style/IndexIcon"
-                        app:srcCompat="@drawable/ic_outline_error_outline_24px" />
+                        app:srcCompat="@drawable/ic_outline_error_outline_24px"
+                        app:tint="?colorControlNormal" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="@dimen/label_text"
                         android:text="@string/reset_unplugged" />
 
                 </LinearLayout>

@@ -465,7 +465,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
-        setTheme(R.style.AccaTheme_DayNight)
+        setTheme(R.style.Material3)
         super.onCreate(savedInstanceState)
         LogExt().d(javaClass.simpleName, "onCreate()")
 

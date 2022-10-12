@@ -14,12 +14,11 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AccaTheme.DayNight">
-
+        android:theme="@style/Material3">
         <activity
             android:name=".activities.MainActivity"
             android:launchMode="singleTop"
-            android:theme="@style/AccaTheme.DayNight.Launcher"
+            android:theme="@style/Material3"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -32,7 +31,8 @@
         <activity
             android:name=".activities.LogViewerActivity"
             android:label="@string/title_activity_log_view"
-            android:parentActivityName=".activities.MainActivity">
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/M3DayNight">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="mattecarra.accapp.activities.MainActivity" />
@@ -50,12 +50,17 @@
 
         <activity
             android:name=".activities.AboutActivity"
-            android:parentActivityName=".activities.MainActivity" />
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/M3DayNight"/>
 
-        <activity android:name=".activities.AccConfigEditorActivity" />
-        <activity android:name=".activities.SettingsActivity" />
-        <activity android:name=".activities.ExportProfilesActivity" />
-        <activity android:name=".activities.ImportProfilesActivity" />
+        <activity android:name=".activities.AccConfigEditorActivity"
+            android:theme="@style/M3DayNight"/>
+        <activity android:name=".activities.SettingsActivity"
+            android:theme="@style/M3DayNight"/>
+        <activity android:name=".activities.ExportProfilesActivity"
+            android:theme="@style/M3DayNight"/>
+        <activity android:name=".activities.ImportProfilesActivity"
+            android:theme="@style/M3DayNight"/>
 
         <service
             android:name=".services.AccProfileTileService"

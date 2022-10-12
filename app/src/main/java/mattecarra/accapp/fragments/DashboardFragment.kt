@@ -225,7 +225,7 @@ class DashboardFragment : ScopedFragment()
             binding.dashAccdStatusPb.visibility = View.GONE
             // Show and change icon
             binding.dashAccdStatusImageView.visibility = View.VISIBLE
-            binding.dashAccdStatusFrameLay.setBackgroundColor(getColor(requireActivity().baseContext, R.color.colorSuccessful))
+            binding.dashAccdStatusFrameLay.setBackgroundColor(getColor(requireActivity().baseContext, R.color.colorTransparent))
             binding.dashAccdStatusImageView.setImageResource(R.drawable.ic_outline_check_circle_24px)
             binding.dashAccdStatusTextView.setText(R.string.acc_daemon_status_running)
             // Enable buttons
@@ -240,7 +240,7 @@ class DashboardFragment : ScopedFragment()
             binding.dashAccdStatusPb.visibility = View.GONE
             // Show and change icon
             binding.dashAccdStatusImageView.visibility = View.VISIBLE
-            binding.dashAccdStatusFrameLay.setBackgroundColor(getColor(requireActivity().baseContext, R.color.color_error))
+            binding.dashAccdStatusFrameLay.setBackgroundColor(getColor(requireActivity().baseContext, R.color.colorTransparent))
             binding.dashAccdStatusImageView.setImageResource(R.drawable.ic_outline_error_outline_24px)
             binding.dashAccdStatusTextView.setText(R.string.acc_daemon_status_not_running)
             // Enable buttons

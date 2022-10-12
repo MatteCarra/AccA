@@ -4,34 +4,28 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:elevation="0dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/main_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                style="?toolbarStyle"/>
+            android:id="@+id/main_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            style="?toolbarStyle"
+            android:background="@color/colorToolbar"/>
     </com.google.android.material.appbar.AppBarLayout>
-
 
     <FrameLayout
             android:id="@+id/main_framelayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="?attr/actionBarSize"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-      <View
-        android:layout_width="match_parent"
-        android:layout_height="12dp"
-        android:background="@drawable/shadow"
-        app:layout_anchor="@+id/main_bottom_nav"
-        app:layout_anchorGravity="top"/>
+            android:layout_marginBottom="82dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/main_bottom_nav"
@@ -39,7 +33,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             app:menu="@menu/bottom_nav_menu"
+            app:itemTextAppearanceActive="@style/TextAppearance.AppCompat.Small.Acca"
+            app:itemTextAppearanceInactive="@style/TextAppearance.AppCompat.Small.Acca"
             app:labelVisibilityMode="labeled"
-        />
+            app:backgroundTint="@color/colorNavBar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

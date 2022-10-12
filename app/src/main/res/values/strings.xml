@@ -414,8 +414,8 @@
     <string name="about_acca_version_label">ACCA Version:</string>
     <string name="about_acc_daemon_version_label">ACC Daemon Version:</string>
     <string name="about_acc_api_version_label">ACCA⇄ACC API Version:</string>
-    <string name="about_project_github">AccA GitHub</string>
-    <string name="about_project_telegram">AccA Telegram</string>
+    <string name="about_project_github">GitHub</string>
+    <string name="about_project_telegram">Telegram</string>
     <string name="about_github">GitHub</string>
     <string name="about_website">Website</string>
     <string name="toast_no_browser_installed">Unable to open link!\nMake sure you have a web browser installed.</string>
@@ -450,7 +450,7 @@
         \n\nIf the error persists, please share the stack trace below along with ACC &amp; AccA version (via the 3-dot menu &gt; About) with the developers via Telegram.\n\n%s</string>
     <string name="automatic_switch_eanbled">Automatically cycle through switches</string>
 
-    <string name="info_voltage">Voltage</string>
+    <string name="info_voltage">Voltage:</string>
     <string name="profile_option_edit">Edit</string>
     <string name="profile_option_rename">Rename</string>
     <string name="profile_option_delete">Delete</string>

@@ -15,15 +15,15 @@
 
         <!-- Capacity Card -->
         <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.MaterialComponents.CardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/card_margin"
             android:layout_marginTop="@dimen/card_margin"
             android:layout_marginRight="@dimen/card_margin"
             android:foreground="?selectableItemBackground"
-            app:cardCornerRadius="@dimen/card_corner_radius"
-            app:cardElevation="3dp"
+            style="@style/M3Card"
+            app:cardBackgroundColor="@color/colorCard"
+            app:cardCornerRadius="30dp"
             app:contentPadding="@dimen/card_content_padding">
 
             <LinearLayout
@@ -42,8 +42,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceTitleLarge"
+                        android:textSize="24sp"
                         android:text="@string/title_capacity_control"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+                         />
 
                     <ImageView
                         android:id="@+id/capacity_restore"
@@ -89,8 +92,10 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:text="@string/shutdown_capacity"
-                            android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="16sp" />
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text" />
 
                         <TextView
                             android:id="@+id/resume_capacity_label"
@@ -101,8 +106,10 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:text="@string/resume_charge"
-                            android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="16sp" />
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text" />
 
                         <TextView
                             android:id="@+id/pause_capacity_label"
@@ -113,8 +120,10 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:text="@string/stop_charge"
-                            android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="16sp" />
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text" />
 
                     </LinearLayout>
 
@@ -167,8 +176,10 @@
                             android:paddingTop="8dp"
                             android:paddingBottom="8dp"
                             android:text="@string/charging_switch_label"
-                            android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="16sp" />
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text" />
 
                         <TextView
                             android:id="@+id/charging_switch_textview"
@@ -181,7 +192,10 @@
                             android:gravity="center_vertical"
                             android:onClick="editChargingSwitchOnClick"
                             android:text="@string/automatic"
-                            android:textSize="16sp" />
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text" />
                     </LinearLayout>
 
                     <androidx.appcompat.widget.SwitchCompat
@@ -201,15 +215,15 @@
 
         <!-- Voltage Control Card -->
         <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.MaterialComponents.CardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/card_margin"
             android:layout_marginTop="@dimen/card_margin"
             android:layout_marginRight="@dimen/card_margin"
             android:foreground="?selectableItemBackground"
-            app:cardCornerRadius="@dimen/card_corner_radius"
-            app:cardElevation="3dp"
+            style="@style/M3Card"
+            app:cardBackgroundColor="@color/colorCard"
+            app:cardCornerRadius="30dp"
             app:contentPadding="@dimen/card_content_padding">
 
             <LinearLayout
@@ -228,7 +242,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/title_power_control"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceTitleLarge"
+                        android:textSize="24sp" />
 
                     <ImageView
                         android:id="@+id/power_control_restore"
@@ -271,14 +287,19 @@
                             android:layout_marginEnd="5dp"
                             android:layout_marginRight="5dp"
                             android:text="@string/voltage_control_file"
-                            android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="16sp" />
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text"  />
 
                         <TextView
                             android:id="@+id/voltage_control_file_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp" />
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text"  />
 
                     </LinearLayout>
 
@@ -295,14 +316,19 @@
                             android:layout_marginEnd="5dp"
                             android:layout_marginRight="5dp"
                             android:text="@string/voltage_max"
-                            android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="16sp" />
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text"  />
 
                         <TextView
                             android:id="@+id/voltage_max_edit_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp" />
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text"  />
 
                     </LinearLayout>
 
@@ -320,20 +346,25 @@
                             android:layout_marginEnd="5dp"
                             android:layout_marginRight="5dp"
                             android:text="@string/current_max"
-                            android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="16sp" />
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text"  />
 
                         <TextView
                             android:id="@+id/current_max_edit_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp" />
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text"  />
 
                     </LinearLayout>
 
                     <Button
                         android:id="@+id/edit_voltage_limit"
-                        style="@style/Widget.AppCompat.Button.Colored"
+                        style="@style/M3Button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -349,15 +380,15 @@
 
         <!-- Battery idle control Card -->
         <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.MaterialComponents.CardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/card_margin"
             android:layout_marginTop="@dimen/card_margin"
             android:layout_marginRight="@dimen/card_margin"
             android:foreground="?selectableItemBackground"
-            app:cardCornerRadius="@dimen/card_corner_radius"
-            app:cardElevation="3dp"
+            style="@style/M3Card"
+            app:cardBackgroundColor="@color/colorCard"
+            app:cardCornerRadius="30dp"
             app:contentPadding="@dimen/card_content_padding">
 
             <LinearLayout
@@ -376,7 +407,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/prioritize_battery_idle"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceTitleLarge"
+                        android:textSize="24sp"/>
 
                     <ImageView
                         android:id="@+id/battery_idle_control_restore"
@@ -400,7 +433,7 @@
 
                 <Button
                     android:id="@+id/battery_idle_test_button"
-                    style="@style/Widget.AppCompat.Button.Colored"
+                    style="@style/M3Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -416,15 +449,15 @@
 
         <!-- Temperature Card -->
         <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.MaterialComponents.CardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/card_margin"
             android:layout_marginTop="@dimen/card_margin"
             android:layout_marginRight="@dimen/card_margin"
             android:foreground="?selectableItemBackground"
-            app:cardCornerRadius="@dimen/card_corner_radius"
-            app:cardElevation="3dp"
+            style="@style/M3Card"
+            app:cardBackgroundColor="@color/colorCard"
+            app:cardCornerRadius="30dp"
             app:contentPadding="@dimen/card_content_padding">
 
             <LinearLayout
@@ -444,7 +477,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/title_temperature_control"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceTitleLarge"
+                        android:textSize="24sp"/>
 
                     <ImageView
                         android:id="@+id/temperature_control_restore"
@@ -490,8 +525,10 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:text="@string/cooldown_temp"
-                            android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="14sp" />
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text"/>
 
                         <TextView
                             android:id="@+id/pause_charging_temp"
@@ -500,8 +537,10 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:text="@string/max_temp"
-                            android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="14sp" />
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text" />
 
                         <TextView
                             android:id="@+id/pause_label"
@@ -510,8 +549,10 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:text="@string/pause_seconds"
-                            android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="14sp" />
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text" />
 
                     </LinearLayout>
 
@@ -557,15 +598,15 @@
 
         <!-- Enable Cool Down Card -->
         <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.MaterialComponents.CardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/card_margin"
             android:layout_marginTop="@dimen/card_margin"
             android:layout_marginRight="@dimen/card_margin"
             android:foreground="?selectableItemBackground"
-            app:cardCornerRadius="@dimen/card_corner_radius"
-            app:cardElevation="3dp"
+            style="@style/M3Card"
+            app:cardBackgroundColor="@color/colorCard"
+            app:cardCornerRadius="30dp"
             app:contentPadding="@dimen/card_content_padding">
 
             <LinearLayout
@@ -585,7 +626,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/title_cooldown_control"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceTitleLarge"
+                        android:textSize="24sp" />
 
                     <ImageView
                         android:id="@+id/cooldown_restore"
@@ -629,8 +672,10 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:text="@string/cooldown_capacity"
-                            android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="14sp" />
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text" />
 
                         <TextView
                             android:id="@+id/charge_ratio"
@@ -639,8 +684,10 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:text="@string/charge_seconds"
-                            android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="14sp" />
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text" />
 
                         <TextView
                             android:id="@+id/pause_ratio"
@@ -649,8 +696,10 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:text="@string/pause_seconds"
-                            android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="14sp" />
+                            android:fontFamily="@font/google_sans"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/label_text" />
 
                     </LinearLayout>
 
@@ -698,15 +747,15 @@
 
         <!-- Exit On Boot Card -->
         <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.MaterialComponents.CardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/card_margin"
             android:layout_marginTop="@dimen/card_margin"
             android:layout_marginRight="@dimen/card_margin"
             android:foreground="?selectableItemBackground"
-            app:cardCornerRadius="@dimen/card_corner_radius"
-            app:cardElevation="3dp"
+            style="@style/M3Card"
+            app:cardBackgroundColor="@color/colorCard"
+            app:cardCornerRadius="30dp"
             app:contentPadding="@dimen/card_content_padding">
 
             <LinearLayout
@@ -725,7 +774,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/title_on_boot"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceTitleLarge"
+                        android:textSize="24sp"/>
 
                     <ImageView
                         android:id="@+id/apply_on_boot_restore"
@@ -760,8 +811,10 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
                         android:text="@string/label_on_boot"
-                        android:textColor="?android:attr/textColorPrimary"
-                        android:textSize="16sp" />
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="@dimen/label_text" />
 
                     <TextView
                         android:id="@+id/tv_config_on_boot"
@@ -773,7 +826,10 @@
                         android:drawableRight="@drawable/ic_outline_edit_24px"
                         android:onClick="editOnBootOnClick"
                         android:text="@string/voltage_control_file_not_set"
-                        android:textSize="16sp"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="@dimen/label_text"
                         app:drawableEndCompat="@drawable/ic_outline_edit_24px"
                         app:drawableRightCompat="@drawable/ic_outline_edit_24px" />
 
@@ -784,15 +840,15 @@
 
         <!-- On Plugged Card -->
         <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.MaterialComponents.CardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/card_margin"
             android:layout_marginTop="@dimen/card_margin"
             android:layout_marginRight="@dimen/card_margin"
             android:foreground="?selectableItemBackground"
-            app:cardCornerRadius="@dimen/card_corner_radius"
-            app:cardElevation="3dp"
+            style="@style/M3Card"
+            app:cardBackgroundColor="@color/colorCard"
+            app:cardCornerRadius="30dp"
             app:contentPadding="@dimen/card_content_padding">
 
             <LinearLayout
@@ -811,7 +867,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/title_on_plugged"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceTitleLarge"
+                        android:textSize="24sp" />
 
                     <ImageView
                         android:id="@+id/on_plugged_restore"
@@ -847,8 +905,10 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
                         android:text="@string/label_on_plugged"
-                        android:textColor="?android:attr/textColorPrimary"
-                        android:textSize="16sp" />
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="@dimen/label_text" />
 
                     <TextView
                         android:id="@+id/tv_config_on_plugged"
@@ -860,7 +920,10 @@
                         android:drawableRight="@drawable/ic_outline_edit_24px"
                         android:onClick="editOnPluggedOnClick"
                         android:text="@string/voltage_control_file_not_set"
-                        android:textSize="16sp"
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="@dimen/label_text"
                         app:drawableEndCompat="@drawable/ic_outline_edit_24px" />
                 </LinearLayout>
 
@@ -869,18 +932,16 @@
 
         <!-- Bottom most card - include android:layout_marginBottom for proper looks -->
         <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.MaterialComponents.CardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginLeft="@dimen/card_margin"
             android:layout_marginTop="@dimen/card_margin"
             android:layout_marginRight="@dimen/card_margin"
             android:layout_marginBottom="@dimen/card_bottom_margin"
-
             android:foreground="?selectableItemBackground"
-            app:cardCornerRadius="@dimen/card_corner_radius"
-            app:cardElevation="3dp"
+            style="@style/M3Card"
+            app:cardBackgroundColor="@color/colorCard"
+            app:cardCornerRadius="30dp"
             app:contentPadding="@dimen/card_content_padding">
 
             <LinearLayout
@@ -899,7 +960,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/title_miscellaneous_control"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+                        android:fontFamily="@font/google_sans"
+                        android:textAppearance="?attr/textAppearanceTitleLarge"
+                        android:textSize="24sp" />
 
                     <ImageView
                         android:id="@+id/miscellaneous_restore"
