@@ -25,7 +25,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         app:srcCompat="@drawable/ic_outline_add_24px"
-        android:tint="@color/color_surface"
         android:layout_margin="@dimen/fab_margin"
         app:elevation="@dimen/ttlm_default_elevation"
         android:onClick="accScheduleFabOnClick"/>
