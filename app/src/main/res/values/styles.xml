@@ -20,7 +20,7 @@
         <item name="android:textSize">15sp</item>
     </style>
 
-    <style name="StyleWidgetDialogActivity" parent="AccaTheme.DayNight">
+    <style name="StyleWidgetDialogActivity" parent="Material3">
         <item name="android:backgroundDimAmount">0.5</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowFrame">@null</item>
