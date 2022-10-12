@@ -9,33 +9,19 @@
     tools:context=".activities.AboutActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:layout_gravity="top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hapticFeedbackEnabled="true"
-        android:fitsSystemWindows="true">
+        app:elevation="0dp">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            style="?attr/collapsingToolbarLayoutLargeStyle"
-            app:expandedTitleTextAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/about_toolbar"
+            style="?toolbarStyle"
             android:layout_width="match_parent"
-            android:layout_height="?attr/collapsingToolbarLayoutLargeSize"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:titleCollapseMode="fade">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/about_toolbar"
-                style="?toolbarStyle"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:title="@string/about" />
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
+            android:layout_height="?attr/actionBarSize"
+            app:title="@string/about" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false"
@@ -484,6 +470,6 @@
 
          </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
